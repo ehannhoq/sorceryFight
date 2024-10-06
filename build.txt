@@ -1,0 +1,3 @@
+displayName = Sorcery Fight 
+author = ehann
+version = 0.1

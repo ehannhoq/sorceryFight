@@ -1,0 +1,56 @@
+Mods: {
+	sorceryFight: {
+		Items: {
+			ExampleSword: {
+				DisplayName: Example Sword
+				Tooltip: TEST
+			}
+
+			CursedKatana: {
+				DisplayName: Cursed Katana
+				Tooltip:
+					'''
+					A katana thats been
+					inbued with cursed
+					energy.
+					'''
+			}
+
+			CursedTechniqueItem: {
+				DisplayName: Cursed Technique
+				Tooltip: ""
+			}
+		}
+
+		Keybinds.OpenTechniqueUI.DisplayName: Open Technique UI
+
+		Projectiles: {
+			CursedTechnique.DisplayName: Cursed Technique
+			AmplificationBlue.DisplayName: Amplification Blue
+			HollowPurple.DisplayName: Hollow Purple
+			ReversalRed.DisplayName: Reversal Red
+			HollowPurple200Percent.DisplayName: Hollow Purple200 Percent
+			MaximumOutputBlue.DisplayName: Maximum Output Blue
+			NeutralInfinity.DisplayName: Neutral Infinity
+		}
+
+		Buffs: {
+			Infinity: {
+				DisplayName: Infinity
+				Description:
+					'''
+					The Infinity is the convergence 
+					of an immeasurable series, 
+					anything that approaches the 
+					infinity slows down and never 
+					reaches you.
+					'''
+			}
+
+			PassiveTechnique: {
+				Description: Mods.sorceryFight.Buffs.PassiveTechnique.Description
+				DisplayName: Passive Technique
+			}
+		}
+	}
+}
