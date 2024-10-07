@@ -7,6 +7,9 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {
+    /// <summary>
+    ///  This is a temporary class, used for testing Infinity.
+    /// </summary>
     public class NeutralInfinity : CursedTechnique
     {
         public override string Name { get; set; } = "Infinity";
@@ -36,11 +39,11 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             Projectile.height = 20;
             Projectile.tileCollide = true;
         }
-        public override void AI()
-        {   
+        public override void OnSpawn(IEntitySource source)
+        {
             Player player = Main.player[Projectile.owner];
             SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
-            sf.hasInfinity = true;
+            sf.hasInfinity = !sf.hasInfinity;
 
             Projectile.Kill();
         }
