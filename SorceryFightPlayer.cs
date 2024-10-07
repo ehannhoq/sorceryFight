@@ -67,6 +67,8 @@ namespace sorceryFight
         {
             if (hasInfinity)
                 Player.AddBuff(ModContent.BuffType<Infinity>(), 2);
+            Player.creativeGodMode = hasInfinity;
+
         }
 
         public override void UpdateDead()
