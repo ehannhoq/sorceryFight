@@ -67,37 +67,13 @@ namespace sorceryFight
         {
             if (hasInfinity)
                 Player.AddBuff(ModContent.BuffType<Infinity>(), 2);
+
+            Player.creativeGodMode = hasInfinity;
         }
 
         public override void UpdateDead()
         {
             hasInfinity = false;
-        }
-
-        public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
-        {
-            if (hasInfinity)
-            {
-                modifiers.FinalDamage *= 0;
-                modifiers.Knockback *= 0;
-                modifiers.IncomingDamageMultiplier *= 0;
-                modifiers.SourceDamage *= 0f;
-            }
-
-            base.ModifyHitByProjectile(proj, ref modifiers);  
-        }
-
-        public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
-        {
-            if (hasInfinity)
-            {
-                modifiers.FinalDamage *= 0;
-                modifiers.Knockback *= 0;
-                modifiers.IncomingDamageMultiplier *= 0;
-                modifiers.SourceDamage *= 0f;
-            }
-
-            base.ModifyHitByNPC(npc, ref modifiers);
         }
 
         private float calculateMaxCE()
@@ -114,6 +90,8 @@ namespace sorceryFight
         {
             float sum = 0f;
             float baseRegen = 1f;
+            
+            // This is where all the conditions will go for modifiers.
 
             return baseRegen + sum;
         }
