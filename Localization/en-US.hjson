@@ -39,7 +39,11 @@ Mods: {
 				DisplayName: Infinity
 				Description:
 					'''
-					The Infinity is the convergence 
+					CE Consumption: 6 CE/s
+					Each object stopped by Infinity
+					adds an additional 6 CE/s
+
+					Infinity is the convergence 
 					of an immeasurable series, 
 					anything that approaches the 
 					infinity slows down and never 
