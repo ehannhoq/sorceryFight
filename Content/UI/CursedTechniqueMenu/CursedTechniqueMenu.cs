@@ -8,12 +8,12 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace sorceryFight.Content.UI
+namespace sorceryFight.Content.UI.CursedTechniqueMenu
 {
     public class CursedTechniqueMenu : UIElement
     {
         SorceryFightPlayer player;
-        ValueBar masteryBar;
+        MasteryBar masteryBar;
         public CursedTechniqueMenu(SorceryFightPlayer player)
         {
             this.player = player;
@@ -42,7 +42,7 @@ namespace sorceryFight.Content.UI
             Texture2D masteryBarTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/Mastery_Bar").Value;
 
             UIImage masteryBorder = new UIImage(masteryBorderTexture);
-            masteryBar = new ValueBar(masteryBarTexture);
+            masteryBar = new MasteryBar(masteryBarTexture);
 
             float x = screenCenter.X - masteryBorderTexture.Width / 2;
             float y = screenCenter.Y + 140f;

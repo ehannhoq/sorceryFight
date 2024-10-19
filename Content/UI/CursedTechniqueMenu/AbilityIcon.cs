@@ -7,7 +7,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.UI;
 
-namespace sorceryFight.Content.UI
+namespace sorceryFight.Content.UI.CursedTechniqueMenu
 {
     public class AbilityIcon : UIElement
     {
@@ -31,13 +31,13 @@ namespace sorceryFight.Content.UI
 
             spriteBatch.Draw(texture, new Vector2(dimensions.X, dimensions.Y), Color.White);
         
-            if (isHovering(dimensions))
+            if (SorceryFightUI.MouseHovering(this, texture))
             {   
                 SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
                 Main.hoverItemName = $"{sfPlayer.innateTechnique.CursedTechniques[abilityID].Name}";
             }
 
-            if (Main.mouseLeft && Main.mouseLeftRelease && isHovering(dimensions))
+            if (Main.mouseLeft && Main.mouseLeftRelease && SorceryFightUI.MouseHovering(this, texture))
             {
                 Main.mouseLeftRelease = false;
                 SoundEngine.PlaySound(SoundID.MenuTick);
@@ -46,14 +46,6 @@ namespace sorceryFight.Content.UI
                 int index = CombatText.NewText(Main.LocalPlayer.getRect(), Color.LightYellow, $"Selected {sfPlayer.selectedTechnique.Name}");
 				Main.combatText[index].lifeTime = 180;
             }
-        }
-
-        private bool isHovering(CalculatedStyle dimensions)
-        {
-            Vector2 mousePos = Main.MouseScreen;
-            
-            return mousePos.X >= dimensions.X && mousePos.X <= dimensions.X + texture.Width && 
-                    mousePos.Y >= dimensions.Y && mousePos.Y <= dimensions.Y + texture.Height;
         }
     }
 }
