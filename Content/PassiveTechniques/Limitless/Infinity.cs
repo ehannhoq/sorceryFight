@@ -11,7 +11,7 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
     
     public class Infinity : PassiveTechnique
     {
-        public override float CostPerTick { get; set; } = 0.1f;
+        public override float CostPerSecond { get; set; } = 1f;
         public int numInInfinity = 0;
 
 
@@ -20,7 +20,7 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
             float projInfinityDistance = 100f;
             float npcInfinityDistance = 70f;
             numInInfinity = 0;
-            CostPerTick = 0.1f;
+            CostPerSecond = 1f;
 
             foreach (Projectile proj in Main.projectile)
             {
@@ -64,7 +64,7 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
                 }
             }
             
-            CostPerTick += (float)numInInfinity / 10;
+            CostPerSecond += numInInfinity;
 
             base.Update(player, ref buffIndex);
         }

@@ -8,8 +8,11 @@ using Terraria.ModLoader;
 namespace sorceryFight
 {
 	// Please read https://github.com/tModLoader/tModLoader/wiki/Basic-tModLoader-Modding-Guide#mod-skeleton-contents for more information about the various files in a mod.
-	public class sorceryFight : Mod
+	public class SorceryFight : Mod
 	{
-
+		public static float SecondsToTicks(float f)
+		{
+			return f / 60;
+		}
 	}
 }

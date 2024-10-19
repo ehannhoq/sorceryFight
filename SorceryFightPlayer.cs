@@ -21,7 +21,7 @@ namespace sorceryFight
         public float mastery = 0f;
         public float cursedEnergy = 100f;
         public float maxCursedEnergy = 100f;
-        public float cursedEnergyRegenRate = 0.1f; // The regen rate per tick
+        public float cursedEnergyRegenPerSecond;
 
         #endregion
 
@@ -48,7 +48,7 @@ namespace sorceryFight
             mastery = tag.ContainsKey("mastery") ? tag.GetFloat("mastery") : 0f;
             cursedEnergy = tag.ContainsKey("cursedEnergy") ? tag.GetFloat("cursedEnergy") : 0f;
 
-            cursedEnergyRegenRate = calculateCERegenRate();
+            cursedEnergyRegenPerSecond = calculateCERegenRate();
             maxCursedEnergy = calculateMaxCE(); // Will calculate at the very end, to ensure all buffs are accounted for.
         }
 
@@ -56,7 +56,7 @@ namespace sorceryFight
         {
             if (cursedEnergy < maxCursedEnergy)
             {
-                cursedEnergy += cursedEnergyRegenRate;
+                cursedEnergy += SorceryFight.SecondsToTicks(cursedEnergyRegenPerSecond);
                 if (cursedEnergy > maxCursedEnergy)
                 {
                     cursedEnergy = maxCursedEnergy;
@@ -96,7 +96,7 @@ namespace sorceryFight
         private float calculateCERegenRate()
         {
             float sum = 0f;
-            float baseRegen = 1f;
+            float baseRegen = 10f;
             
             // This is where all the conditions will go for modifiers.
 

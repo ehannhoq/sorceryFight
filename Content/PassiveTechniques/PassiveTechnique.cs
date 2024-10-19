@@ -6,7 +6,7 @@ namespace sorceryFight.Content.PassiveTechniques
 {
     public class PassiveTechnique : ModBuff
     {
-        public virtual float CostPerTick { get; set; } = 0f;
+        public virtual float CostPerSecond { get; set; } = 0f;
 
         public override void SetStaticDefaults()
         {
@@ -16,7 +16,7 @@ namespace sorceryFight.Content.PassiveTechniques
         public override void Update(Player player, ref int buffIndex)
         {
             SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
-            sf.cursedEnergy -= CostPerTick;
+            sf.cursedEnergy -= SorceryFight.SecondsToTicks(CostPerSecond);
         }
     }
 }

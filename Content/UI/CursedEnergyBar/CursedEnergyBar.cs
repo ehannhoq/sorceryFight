@@ -18,7 +18,7 @@ public class CursedEnergyBar : ValueBar
         {
             var player = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
             Main.hoverItemName = $"Cursed Energy: {Math.Round((decimal)player.cursedEnergy, 2)} / {player.maxCursedEnergy}\n" 
-                                +$"Regeneration Rate: {player.cursedEnergyRegenRate * 60} CE/s";
+                                +$"Regeneration Rate: {player.cursedEnergyRegenPerSecond} CE/s";
         }
     }
 }
