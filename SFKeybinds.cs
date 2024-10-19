@@ -8,7 +8,7 @@ namespace sorceryFight
 
         public override void Load()
         {
-            OpenTechniqueUI = KeybindLoader.RegisterKeybind(Mod, "OpenTechniqueUI", "C");
+            OpenTechniqueUI = KeybindLoader.RegisterKeybind(Mod, "CursedTechniqueMenu", "C");
         }
 
         public override void Unload()
