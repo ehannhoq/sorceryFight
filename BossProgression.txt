@@ -1,0 +1,47 @@
+[PRE HARDMODE]
+
+Eye of Cthulhu
+    Cursed Technique
+    Black Flash
+
+    LIMITLESS: INFINITY
+
+Skeletron
+    LIMITLESS: AMPLIFIED BLUE
+    SHRINE: DISMANTLE
+
+Wall of Flesh
+    LIMITLESS: AMPLIFIED AURA
+
+
+[HARDMODE]
+
+Mechanical Bosses:
+    LIMITLESS: MAXIMUM OUTPUT BLUE
+
+Golem
+    LIMITLESS: MAXIMUM AMPLIFIED AURA
+
+
+Lunatic Cultist
+    Reverse Cursed Technique
+
+    PRIVATE PURE LOVE TRAIN: IDLE DEATH GAMBLING (DE)
+    LIMITLESS: REVERSAL RED
+    SHRINE: CLEAVE~~`
+
+Moon Lord:
+    LIMITLESS: HOLLOW PURPLE
+    SHRINE: DIVINE FLAME
+
+[POST MOONLORD]
+
+Dragonfolly:
+    LIMITLESS: 200% HOLLOW PURPLE
+    SHRINE: WORLD CUTTING SLASH
+
+Providence:
+    Imperfect Domain Expansion
+
+Run of Kos:
+    Perfect Domain Expansion

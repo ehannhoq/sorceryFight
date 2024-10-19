@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoMod.Core.Platforms;
 using sorceryFight.Content.CursedTechniques;
+using sorceryFight.Content.PassiveTechniques;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
@@ -14,31 +17,74 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
     {
         SorceryFightPlayer player;
         MasteryBar masteryBar;
+        List<AbilityIcon> abilityIcons;
         public CursedTechniqueMenu(SorceryFightPlayer player)
         {
             this.player = player;
+            Vector2 screenCenter = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
+            abilityIcons = new List<AbilityIcon>();
 
+            DisplayCursedTechniques(screenCenter);
+            DisplayPassiveTechniques(screenCenter);
+            DisplayMasteryBar(screenCenter);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            masteryBar.fillPercentage = player.mastery / 100f;
+        }
+
+        private void DisplayCursedTechniques(Vector2 screenCenter)
+        {
             List<CursedTechnique> techniques = player.innateTechnique.CursedTechniques;
 
-            Vector2 screenCenter = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
-            
             float iconOffset = 15f;
             float rotation = 2 * (float)Math.PI / techniques.Count;
             float magnatude = 60f;
 
             for (int i = 0; i < techniques.Count; i++)
             {
-                Texture2D texture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{player.innateTechnique.Name}/{i}").Value;
-                AbilityIcon icon = new AbilityIcon(texture, i);
+                Texture2D texture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/CursedTechniqueIcons/{player.innateTechnique.Name}_{i}").Value;
+                AbilityIcon icon = new AbilityIcon(texture, i, AbilityIconType.CursedTechnique);
 
-                icon.Left.Set(screenCenter.X + magnatude * (float)Math.Cos(i * rotation) - iconOffset, 0f);
-                icon.Top.Set(screenCenter.Y + magnatude * (float)Math.Sin(i * rotation) - iconOffset, 0f);
+                if (player.selectedTechnique == techniques[i])
+                    icon.clicked = true;
+
+                abilityIcons.Add(icon);
+                icon.Left.Set(screenCenter.X - magnatude * (float)Math.Cos(i * rotation) - iconOffset, 0f);
+                icon.Top.Set(screenCenter.Y - magnatude * (float)Math.Sin(i * rotation) - iconOffset, 0f);
 
                 Append(icon);
             }
-            
+        }
 
-            Texture2D masteryBorderTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/Mastery_Bar_Border").Value;
+        private void DisplayPassiveTechniques(Vector2 screenCenter)
+        {
+            List<PassiveTechnique> techniques = player.innateTechnique.PassiveTechniques;
+            
+            if (techniques.Count == 0)
+                return;
+
+            for (int i = 0; i < techniques.Count; i++)
+            {
+                Texture2D texture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/PassiveTechniqueIcons/{player.innateTechnique.Name}_{i}").Value;
+                AbilityIcon icon = new AbilityIcon(texture, i, AbilityIconType.PassiveTechnique);
+
+                if (techniques[i].isActive)
+                {
+                    icon.clicked = true;
+                }
+                
+                icon.Left.Set(screenCenter.X + 100f, 0f);
+                icon.Top.Set(screenCenter.Y + (i * 40f), 0f);
+
+                Append(icon);
+            }
+        }
+        private void DisplayMasteryBar(Vector2 screenCenter)
+        {
+             Texture2D masteryBorderTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/Mastery_Bar_Border").Value;
             Texture2D masteryBarTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/Mastery_Bar").Value;
 
             UIImage masteryBorder = new UIImage(masteryBorderTexture);
@@ -55,12 +101,6 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
             Append(masteryBorder);
             Append(masteryBar);
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-            masteryBar.fillPercentage = player.mastery / 100f;
         }
     }
 }

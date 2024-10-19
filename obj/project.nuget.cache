@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9EvWtQ2gAzhC5zn8eAkD9pcTViHRfB9TerY7JLGpwHrJrWYV8dZG6R7DP4ZBCWWI5J2ej45ideoDjJCJ8YASdQ==",
+  "dgSpecHash": "RIosOsgx1M1IXRaVZscJF9WrRJ5fedoaLpCZMA1nwdxj7mHxPpgFwj1T1/+TruF2Hu9hejbkGVSoBQ2pIZeckw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Ehan\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\sorceryfight\\sorceryFight.csproj",
+  "projectFilePath": "C:\\Users\\Ehan\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\sorceryFight\\sorceryFight.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ehan\\.nuget\\packages\\tmodloader.codeassist\\0.1.5\\tmodloader.codeassist.0.1.5.nupkg.sha512"
   ],

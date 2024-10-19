@@ -39,7 +39,7 @@ namespace sorceryFight.Content.Items
 		
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
-			if (this.player.selectedTechnique == null)
+			if (player.selectedTechnique == null)
 				return;
 				
 			for (int i = tooltips.Count - 1; i >= 0; i --)
@@ -51,14 +51,15 @@ namespace sorceryFight.Content.Items
 			string keybind = SFKeybinds.OpenTechniqueUI.GetAssignedKeys().FirstOrDefault() ?? "Unbound";
 			tooltips.Add(new TooltipLine(Mod, "keybind", $"Press [{keybind}] to open menu."));
 
-			tooltips.Add(new TooltipLine(Mod, "ctName", $"Equipped: {this.player.selectedTechnique.Name}")
+			tooltips.Add(new TooltipLine(Mod, "ctName", $"Equipped: {player.selectedTechnique.Name}")
 			{
 				OverrideColor = new SorceryFightGold().RarityColor
 			});
 
 			if (this.player.selectedTechnique.Name != "None Selected.")
 			{
-				tooltips.Add(new TooltipLine(Mod, "ceCost", $"Cost: {CalculateCECost(this.player, this.player.selectedTechnique)} CE"));
+				tooltips.Add(new TooltipLine(Mod, "ceDamage", $"Damage: {player.selectedTechnique.Damage}"));
+				tooltips.Add(new TooltipLine(Mod, "ceCost", $"Cost: {CalculateCECost(player, player.selectedTechnique)} CE"));
 			}
 
 		}
