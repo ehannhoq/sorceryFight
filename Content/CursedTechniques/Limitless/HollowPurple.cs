@@ -22,7 +22,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             }
         }
         public override float Cost { get; set; } = -1f;
-        public override float CostPercentage { get; set; } = 100f;
+        public override float CostPercentage { get; set; } = 90f;
         public override float MasteryNeeded { get; set; } = 0f;
         public override Color textColor { get; set; } = new Color(235, 117, 233);
 

@@ -22,7 +22,10 @@ Mods: {
 			}
 		}
 
-		Keybinds.OpenTechniqueUI.DisplayName: Open Technique UI
+		Keybinds: {
+			OpenTechniqueUI.DisplayName: Open Technique UI
+			CursedTechniqueMenu.DisplayName: Cursed Technique Menu
+		}
 
 		CursedTechniques: {
 			CursedTechnique.DisplayName: Cursed Technique
