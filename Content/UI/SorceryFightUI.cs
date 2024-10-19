@@ -1,9 +1,7 @@
-using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight;
-using sorceryFight.Content.CursedTechniques;
-using sorceryFight.Content.UI;
+using sorceryFight.Content.UI.CursedTechniqueMenu;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
@@ -65,5 +63,14 @@ public class SorceryFightUI : UIState
 
         Append(borderBar);
         Append(ceBar);
+    }
+
+    public static bool MouseHovering(UIElement ui, Texture2D texture)
+    {
+        Vector2 mousePos = Main.MouseScreen;
+        CalculatedStyle dimensions = ui.GetDimensions();
+        
+        return mousePos.X >= dimensions.X && mousePos.X <= dimensions.X + texture.Width && 
+                mousePos.Y >= dimensions.Y && mousePos.Y <= dimensions.Y + texture.Height;
     }
 }
