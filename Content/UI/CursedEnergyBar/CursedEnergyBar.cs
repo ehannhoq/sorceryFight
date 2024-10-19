@@ -6,27 +6,13 @@ using Terraria;
 using Terraria.Chat.Commands;
 using Terraria.UI;
 
-public class CursedEnergyBar : UIElement
+public class CursedEnergyBar : ValueBar
 {
-    public Texture2D barTexture;
-    public float fillPercentage;
-
-    public CursedEnergyBar(Texture2D barTexture)
-    {
-        this.barTexture = barTexture;
-        Width.Set(barTexture.Width, 0f);
-        Height.Set(barTexture.Height, 0f);
-    }
+    public CursedEnergyBar(Texture2D barTexture) : base(barTexture) {}
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         base.DrawSelf(spriteBatch);
-        CalculatedStyle dimensions = GetDimensions();
-
-        int croppedWidth = (int)(barTexture.Width * fillPercentage);
-        Rectangle bar = new Rectangle(0, 0,  croppedWidth, barTexture.Height);
-
-        spriteBatch.Draw(barTexture, new Vector2(dimensions.X, dimensions.Y), bar, Color.White);
         
         if (IsMouseHovering) 
         {

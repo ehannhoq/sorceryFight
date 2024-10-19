@@ -1,5 +1,6 @@
 using System;
 using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
+using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.InnateTechniques;
 using sorceryFight.Content.PassiveTechniques.Limitless;
 using Terraria;
@@ -10,10 +11,14 @@ namespace sorceryFight
 {
     public class SorceryFightPlayer : ModPlayer
     {
+        #region Global Variables
+        public bool hasUIOpen = false;
+        #endregion
+
         #region Global Cursed Technique Stuff
-        public string innateTechnique = "No Innate Technique";
+        public InnateTechnique innateTechnique = new InnateTechnique();
+        public CursedTechnique selectedTechnique = new CursedTechnique();
         public float mastery = 0f;
-        public float masteryMax = 100f;
         public float cursedEnergy = 100f;
         public float maxCursedEnergy = 100f;
         public float cursedEnergyRegenRate = 0.1f; // The regen rate per tick
@@ -30,14 +35,16 @@ namespace sorceryFight
         
         public override void SaveData(TagCompound tag)
         {
-            tag["innateTechnique"] = innateTechnique;
+            tag["innateTechnique"] = innateTechnique.Name;
             tag["mastery"] = mastery;
             tag["cursedEnergy"] = cursedEnergy;
         }
 
         public override void LoadData(TagCompound tag)
         {
-            innateTechnique = tag.ContainsKey("innateTechnique") ? tag.GetString("innateTechnique") : "";
+            string innateTechniqueName = tag.ContainsKey("innateTechnique") ? tag.GetString("innateTechnique") : "";
+            innateTechnique = InnateTechnique.GetInnateTechnique(innateTechniqueName);
+            
             mastery = tag.ContainsKey("mastery") ? tag.GetFloat("mastery") : 0f;
             cursedEnergy = tag.ContainsKey("cursedEnergy") ? tag.GetFloat("cursedEnergy") : 0f;
 

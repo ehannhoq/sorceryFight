@@ -15,7 +15,6 @@ namespace sorceryFight.Content.Items
 	public class CursedTechniqueItem : ModItem
 	{
 		public SorceryFightPlayer player;
-		public CursedTechnique currentTechnique;
 		public override void SetDefaults()
 		{
 			Item.width = -1;
@@ -40,7 +39,7 @@ namespace sorceryFight.Content.Items
 		
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
-			if (currentTechnique == null)
+			if (this.player.selectedTechnique == null)
 				return;
 				
 			for (int i = tooltips.Count - 1; i >= 0; i --)
@@ -48,18 +47,18 @@ namespace sorceryFight.Content.Items
 				tooltips.RemoveAt(i);
 			}
 
-			tooltips.Add(new TooltipLine(Mod, "name", player.innateTechnique));
+			tooltips.Add(new TooltipLine(Mod, "name", player.innateTechnique.Name));
 			string keybind = SFKeybinds.OpenTechniqueUI.GetAssignedKeys().FirstOrDefault() ?? "Unbound";
 			tooltips.Add(new TooltipLine(Mod, "keybind", $"Press [{keybind}] to open menu."));
 
-			tooltips.Add(new TooltipLine(Mod, "ctName", $"Equipped: {currentTechnique.Name}")
+			tooltips.Add(new TooltipLine(Mod, "ctName", $"Equipped: {this.player.selectedTechnique.Name}")
 			{
 				OverrideColor = new SorceryFightGold().RarityColor
 			});
 
-			if (currentTechnique.Name != "None Selected.")
+			if (this.player.selectedTechnique.Name != "None Selected.")
 			{
-				tooltips.Add(new TooltipLine(Mod, "ceCost", $"Cost: {CalculateCECost(this.player, currentTechnique)} CE"));
+				tooltips.Add(new TooltipLine(Mod, "ceCost", $"Cost: {CalculateCECost(this.player, this.player.selectedTechnique)} CE"));
 			}
 
 		}
@@ -68,47 +67,43 @@ namespace sorceryFight.Content.Items
         {	
 			this.player = player.GetModPlayer<SorceryFightPlayer>();
 
-			if (currentTechnique != null)
+			if (this.player.selectedTechnique != null)
 			{
-				Item.shoot = currentTechnique.GetProjectileType();
+				Item.shoot = this.player.selectedTechnique.GetProjectileType();
 
-				Item.damage = currentTechnique.Damage;
-				Item.shootSpeed = currentTechnique.Speed;
+				Item.damage = this.player.selectedTechnique.Damage;
+				Item.shootSpeed = this.player.selectedTechnique.Speed;
 			}
 			else
 			{
-				currentTechnique = new CursedTechnique();
+				this.player.selectedTechnique = new CursedTechnique();
 			}
 
-
+			// Subject to change, once more innate techniques are added.
 			if (player.HeldItem.type == ModContent.ItemType<CursedTechniqueItem>() && SFKeybinds.OpenTechniqueUI.JustPressed)
 			{
-				Random rand = new Random();
-				int count = InnateTechnique.GetInnateTechnique(this.player.innateTechnique).CursedTechniques.Count;
-				int index = rand.Next(0, count);
-
-				currentTechnique = InnateTechnique.GetInnateTechnique(this.player.innateTechnique).CursedTechniques[index];
+				if (this.player.innateTechnique.Name == "No Innate Technique")
+				{
+					this.player.innateTechnique = new LimitlessTechnique();
+				}
 			}
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			if (!InnateTechnique.GetInnateTechnique(this.player.innateTechnique).IsValid)
+			if (this.player.hasUIOpen)
 			{
-				int index = CombatText.NewText(player.getRect(), Color.DarkRed, "Giving: Limitless"); // Soon this will for first time setting up innate technique.
-				Main.combatText[index].lifeTime = 180;
-
-				this.player.innateTechnique = new LimitlessTechnique().Name;
+				return false;
 			}
-
-			float ceDue = CalculateCECost(this.player, currentTechnique);
+			
+			float ceDue = CalculateCECost(this.player, this.player.selectedTechnique);
 
 			if (this.player.cursedEnergy >= ceDue)
 			{
 				this.player.cursedEnergy -= ceDue;
 				Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
 
-				int index = CombatText.NewText(player.getRect(), currentTechnique.textColor, currentTechnique.Name);
+				int index = CombatText.NewText(player.getRect(), this.player.selectedTechnique.textColor,this.player.selectedTechnique.Name);
 				Main.combatText[index].lifeTime = 180;
 			}
 			else

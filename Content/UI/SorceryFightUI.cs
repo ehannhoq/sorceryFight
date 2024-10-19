@@ -2,6 +2,8 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight;
+using sorceryFight.Content.CursedTechniques;
+using sorceryFight.Content.UI;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
@@ -10,6 +12,7 @@ using Terraria.UI;
 public class SorceryFightUI : UIState
 {
     public CursedEnergyBar ceBar;
+    public CursedTechniqueMenu ctMenu;
 
     public override void OnInitialize()
     {
@@ -21,6 +24,21 @@ public class SorceryFightUI : UIState
         base.Update(gameTime);
         var player = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
         ceBar.fillPercentage = player.cursedEnergy / player.maxCursedEnergy;
+
+        if (SFKeybinds.OpenTechniqueUI.JustPressed)
+        {
+            if (!Elements.Contains(ctMenu))
+            {
+                ctMenu = new CursedTechniqueMenu(player);
+                player.hasUIOpen = true;
+                Append(ctMenu);
+            }
+            else
+            {
+                Elements.Remove(ctMenu);
+                player.hasUIOpen = false;
+            }
+        }
     }
 
     public void LoadCEBar()
