@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.InnateTechniques;
+using sorceryFight.Content.PassiveTechniques;
 using sorceryFight.Content.PassiveTechniques.Limitless;
 using Terraria;
 using Terraria.ModLoader;
@@ -25,14 +28,9 @@ namespace sorceryFight
 
         #endregion
 
-        #region Passive Techniques
-        public bool hasInfinity = false;
-        #endregion
-
         #region Cursed Energy Modifiers
         #endregion
 
-        
         public override void SaveData(TagCompound tag)
         {
             tag["innateTechnique"] = innateTechnique.Name;
@@ -66,21 +64,27 @@ namespace sorceryFight
             if (cursedEnergy < 0)
             {
                 cursedEnergy = 0;
-                removeBuffs();
             }
-        }
 
-        public override void PostUpdateBuffs()
-        {
-            if (hasInfinity)
-                Player.AddBuff(ModContent.BuffType<Infinity>(), 2);
-
-            Player.creativeGodMode = hasInfinity;
+            foreach (PassiveTechnique passiveTechnique in innateTechnique.PassiveTechniques)
+            {
+                if (passiveTechnique.isActive)
+                {
+                    passiveTechnique.Apply(Player);
+                }
+                else
+                {
+                    passiveTechnique.Remove(Player);
+                }
+            }
         }
 
         public override void UpdateDead()
         {
-            hasInfinity = false;
+            foreach (PassiveTechnique passiveTechnique in innateTechnique.PassiveTechniques)
+            {
+                passiveTechnique.isActive = false;
+            }
         }
 
         private float calculateMaxCE()
@@ -102,11 +106,5 @@ namespace sorceryFight
 
             return baseRegen + sum;
         }
-
-        private void removeBuffs()
-        {
-            hasInfinity = false;
-        }
-
     }
 }

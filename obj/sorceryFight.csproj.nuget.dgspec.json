@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ehan\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\sorceryfight\\sorceryFight.csproj": {}
+    "C:\\Users\\Ehan\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\sorceryFight\\sorceryFight.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ehan\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\sorceryfight\\sorceryFight.csproj": {
+    "C:\\Users\\Ehan\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\sorceryFight\\sorceryFight.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ehan\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\sorceryfight\\sorceryFight.csproj",
+        "projectUniqueName": "C:\\Users\\Ehan\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\sorceryFight\\sorceryFight.csproj",
         "projectName": "sorceryFight",
-        "projectPath": "C:\\Users\\Ehan\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\sorceryfight\\sorceryFight.csproj",
+        "projectPath": "C:\\Users\\Ehan\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\sorceryFight\\sorceryFight.csproj",
         "packagesPath": "C:\\Users\\Ehan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ehan\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\sorceryfight\\obj\\",
+        "outputPath": "C:\\Users\\Ehan\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\sorceryFight\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Ehan\\AppData\\Roaming\\NuGet\\NuGet.Config"

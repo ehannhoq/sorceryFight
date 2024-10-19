@@ -3,6 +3,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
@@ -13,6 +14,13 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public static readonly int TICKS_PER_FRAME = 5;
 
         public override string Name { get; set; } = "Hollow Technique: Purple";
+        public override string Description
+        { 
+            get
+            {
+                return Language.GetText("Mods.sorceryFight.CursedTechniques.HollowPurple.Description").Value;
+            }
+        }
         public override float Cost { get; set; } = -1f;
         public override float CostPercentage { get; set; } = 100f;
         public override float MasteryNeeded { get; set; } = 0f;

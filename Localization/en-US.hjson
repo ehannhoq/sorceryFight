@@ -24,25 +24,70 @@ Mods: {
 
 		Keybinds.OpenTechniqueUI.DisplayName: Open Technique UI
 
-		Projectiles: {
+		CursedTechniques: {
 			CursedTechnique.DisplayName: Cursed Technique
-			AmplificationBlue.DisplayName: Amplification Blue
-			HollowPurple.DisplayName: Hollow Purple
-			ReversalRed.DisplayName: Reversal Red
-			HollowPurple200Percent.DisplayName: Hollow Purple200 Percent
-			MaximumOutputBlue.DisplayName: Maximum Output Blue
-			NeutralInfinity.DisplayName: Neutral Infinity
+
+			AmplificationBlue: {
+				DisplayName: Amplification Blue
+				Description:
+					'''
+					By pouring amplified cursed energy
+					into the Limitless technique, space
+					converges into a single point, creating
+					a powerful, attractive force.
+					'''
+			}
+
+			MaximumOutputBlue: {
+				DisplayName: Maximum Output Blue
+				Description:
+					'''
+					The mastered version of Blue, the 
+					projectile generates an even stronger 
+					gravitational field, and crushes
+					enemies instantly upon impact.
+					'''
+			}
+
+			ReversalRed: {
+				DisplayName: Reversal Red
+				Description:
+					'''
+					Powered by positive cursed energy
+					produced from reversed cursed technique,
+					Red brings the divergence of infinity
+					into reality, creating a strong
+					repelling force. The CE output is twice
+					as much as the amplified Limitless.
+					'''
+			}
+
+			HollowPurple: {
+				DisplayName: Hollow Purple
+				Description:
+					'''
+					By smashing both infinities, convergence
+					and divergence, an imaginary mass is formed.
+					The CE output far surpasses of Blue and Red.
+					'''
+			}
+
+			HollowPurple200Percent: {
+				DisplayName: Hollow Purple200 Percent
+				Description:
+					'''
+					By chanting the incantation and at the cost
+					of burning out your Cursed Technique,
+					the CE output doubles.
+					'''
+			}
 		}
 
-		Buffs: {
+		PassiveTechniques: {
 			Infinity: {
 				DisplayName: Infinity
 				Description:
 					'''
-					CE Consumption: 1 CE/s
-					Each object stopped by Infinity
-					adds an additional 1 CE/s
-
 					Infinity is the convergence 
 					of an immeasurable series, 
 					anything that approaches the 
@@ -55,6 +100,24 @@ Mods: {
 				Description: Mods.sorceryFight.Buffs.PassiveTechnique.Description
 				DisplayName: Passive Technique
 			}
+		}
+
+		Buffs: {
+			Infinity.DisplayName: Infinity
+
+			PassiveTechnique: {
+				DisplayName: Passive Technique
+				Description: Mods.sorceryFight.Buffs.PassiveTechnique.Description
+			}
+		}
+
+		Projectiles: {
+			CursedTechnique.DisplayName: Cursed Technique
+			AmplificationBlue.DisplayName: Amplification Blue
+			HollowPurple.DisplayName: Hollow Purple
+			HollowPurple200Percent.DisplayName: Hollow Purple200 Percent
+			MaximumOutputBlue.DisplayName: Maximum Output Blue
+			ReversalRed.DisplayName: Reversal Red
 		}
 	}
 }
