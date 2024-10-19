@@ -68,6 +68,11 @@ namespace sorceryFight
 
             foreach (PassiveTechnique passiveTechnique in innateTechnique.PassiveTechniques)
             {
+                if (cursedEnergy <= 0)
+                {
+                    passiveTechnique.isActive = false;
+                }
+
                 if (passiveTechnique.isActive)
                 {
                     passiveTechnique.Apply(Player);
