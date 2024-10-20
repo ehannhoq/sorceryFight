@@ -10,9 +10,14 @@ namespace sorceryFight
 	// Please read https://github.com/tModLoader/tModLoader/wiki/Basic-tModLoader-Modding-Guide#mod-skeleton-contents for more information about the various files in a mod.
 	public class SorceryFight : Mod
 	{
-		public static float SecondsToTicks(float f)
+		public static float SecondsToTicks(float seconds)
 		{
-			return f / 60;
+			return seconds * 60;
+		}
+
+		public static float TicksToSeconds(float ticks)
+		{
+			return ticks / 60;
 		}
 	}
 }

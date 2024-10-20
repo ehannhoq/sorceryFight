@@ -9,6 +9,7 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.InnateTechniques;
 using System;
+using sorceryFight.Content.PassiveTechniques;
 
 namespace sorceryFight.Content.Items
 { 
@@ -99,6 +100,12 @@ namespace sorceryFight.Content.Items
 			
 			float ceDue = CalculateCECost(this.player, this.player.selectedTechnique);
 
+			if (player.HasBuff<BurntTechnique>())
+			{
+				int index = CombatText.NewText(player.getRect(), Color.DarkRed, "You cannot use this technique!");
+				Main.combatText[index].lifeTime = 180;
+				return false;
+			}
 			if (this.player.cursedEnergy >= ceDue)
 			{
 				this.player.cursedEnergy -= ceDue;

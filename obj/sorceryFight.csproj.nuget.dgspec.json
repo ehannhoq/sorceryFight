@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ehan\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\sorceryFight\\sorceryFight.csproj": {}
+    "/Users/ehanhaque/Library/Application Support/Terraria/tModLoader/ModSources/sorceryFight/sorceryFight.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ehan\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\sorceryFight\\sorceryFight.csproj": {
+    "/Users/ehanhaque/Library/Application Support/Terraria/tModLoader/ModSources/sorceryFight/sorceryFight.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ehan\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\sorceryFight\\sorceryFight.csproj",
+        "projectUniqueName": "/Users/ehanhaque/Library/Application Support/Terraria/tModLoader/ModSources/sorceryFight/sorceryFight.csproj",
         "projectName": "sorceryFight",
-        "projectPath": "C:\\Users\\Ehan\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\sorceryFight\\sorceryFight.csproj",
-        "packagesPath": "C:\\Users\\Ehan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ehan\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\sorceryFight\\obj\\",
+        "projectPath": "/Users/ehanhaque/Library/Application Support/Terraria/tModLoader/ModSources/sorceryFight/sorceryFight.csproj",
+        "packagesPath": "/Users/ehanhaque/.nuget/packages/",
+        "outputPath": "/Users/ehanhaque/Library/Application Support/Terraria/tModLoader/ModSources/sorceryFight/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Ehan\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/ehanhaque/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -64,7 +64,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.402/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
