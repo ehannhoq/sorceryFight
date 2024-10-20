@@ -116,10 +116,10 @@ Mods: {
 			BurntTechnique: {
 				DisplayName: Burnt Technique
 				Description:
-				'''
-				Your Innate Technique has been exhuasted!
-				You won't be able to use any cursed techniques.
-				'''
+					'''
+					Your Innate Technique has been exhuasted!
+					You won't be able to use any cursed techniques.
+					'''
 			}
 		}
 

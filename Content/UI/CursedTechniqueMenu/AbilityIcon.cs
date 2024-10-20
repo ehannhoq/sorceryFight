@@ -2,9 +2,11 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.PassiveTechniques;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace sorceryFight.Content.UI.CursedTechniqueMenu
@@ -86,6 +88,14 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 clicked = !clicked;
                 sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
 
+                if (sfPlayer.Player.HasBuff<BurntTechnique>())
+                {
+                    clicked = false;
+                    int index1 = CombatText.NewText(Main.LocalPlayer.getRect(), Color.DarkRed, "You can't use this technique right now!");
+                    Main.combatText[index1].lifeTime = 180;
+                    return;
+                }
+
                 int index = 0;
 
                 switch (type)
@@ -97,6 +107,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                             text = $"Activated {sfPlayer.innateTechnique.PassiveTechniques[abilityID].Name}";
                         else
                             text = $"Deactivated {sfPlayer.innateTechnique.PassiveTechniques[abilityID].Name}";
+
+              
                         index = CombatText.NewText(Main.LocalPlayer.getRect(), Color.LightYellow, text);
                         break;
 
