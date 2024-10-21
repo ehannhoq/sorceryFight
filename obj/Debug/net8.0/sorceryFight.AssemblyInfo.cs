@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("sorceryFight")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ba7df800144591fd3ad2f092fb16fefbd4c5b907")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fbb1b467e92d5e4df93654c2f0d9a4dcadb79fae")]
 [assembly: System.Reflection.AssemblyProductAttribute("sorceryFight")]
 [assembly: System.Reflection.AssemblyTitleAttribute("sorceryFight")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
