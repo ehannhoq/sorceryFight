@@ -66,6 +66,11 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             if (techniques.Count == 0)
                 return;
 
+            float textureSide = 32;
+            float spacing = 40f;
+            float totalHeight = (textureSide * techniques.Count) + (spacing * (techniques.Count - 1));
+            float yOffset = totalHeight / techniques.Count;
+
             for (int i = 0; i < techniques.Count; i++)
             {
                 Texture2D texture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/PassiveTechniqueIcons/{player.innateTechnique.Name}_{i}").Value;
@@ -76,8 +81,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                     icon.selected = true;
                 }
                 
-                icon.Left.Set(screenCenter.X + 100f, 0f);
-                icon.Top.Set(screenCenter.Y + (i * 40f), 0f);
+                icon.Left.Set(screenCenter.X + 140f, 0f);
+                icon.Top.Set(screenCenter.Y - yOffset + (i * spacing), 0f);
 
                 Append(icon);
             }
