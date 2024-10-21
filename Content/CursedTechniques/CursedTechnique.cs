@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using sorceryFight.Content.PassiveTechniques;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -57,6 +58,37 @@ namespace sorceryFight.Content.CursedTechniques
         public override void AI()
         {
             Projectile.Kill();
+        }
+
+        public virtual bool Shoot(Terraria.DataStructures.IEntitySource spawnSource, Vector2 position, Vector2 velocity, Player player)
+        {
+            SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
+
+            if (sf.Player.HasBuff<BurntTechnique>())
+            {
+                int index = CombatText.NewText(player.getRect(), Color.DarkRed, "You cannot use this technique!");
+				Main.combatText[index].lifeTime = 180;
+				return false;
+            }
+
+            float ceCost = CalculateCECost(sf);
+
+            if (sf.cursedEnergy < ceCost)
+            {
+                int index = CombatText.NewText(player.getRect(), Color.DarkRed, "Not enough Cursed Energy!");
+				Main.combatText[index].lifeTime = 180;
+                return false;
+            }
+
+            sf.cursedEnergy -= ceCost;
+            int index1 = CombatText.NewText(player.getRect(), sf.selectedTechnique.textColor, sf.selectedTechnique.Name);
+			Main.combatText[index1].lifeTime = 180;
+            return true;
+        }
+
+        private float CalculateCECost(SorceryFightPlayer sf)
+        {
+            return Cost != -1 ? Cost : sf.maxCursedEnergy * (CostPercentage / 100);
         }
     }
 }

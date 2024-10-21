@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
+using Microsoft.Xna.Framework;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.InnateTechniques;
 using sorceryFight.Content.PassiveTechniques;
-using sorceryFight.Content.PassiveTechniques.Limitless;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -52,6 +48,10 @@ namespace sorceryFight
 
         public override void PostUpdate()
         {
+            if (SFKeybinds.UseTechnique.JustPressed)
+            {
+                ShootTechnique();
+            }
             if (cursedEnergy < maxCursedEnergy)
             {
                 cursedEnergy += SorceryFight.TicksToSeconds(cursedEnergyRegenPerSecond);
@@ -114,6 +114,21 @@ namespace sorceryFight
             // This is where all the conditions will go for modifiers.
 
             return baseRegen + sum;
+        }
+
+        private void ShootTechnique()
+        {
+            if (selectedTechnique.Name == "None Selected.")
+            {
+                return;
+            }
+
+            Vector2 playerPos = Player.MountedCenter;
+            Vector2 mousePos = Main.MouseWorld;
+            Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * selectedTechnique.Speed;
+            var entitySource = Player.GetSource_FromThis();
+
+            selectedTechnique.Shoot(entitySource, playerPos, dir, Player);
         }
     }
 }

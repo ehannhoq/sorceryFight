@@ -99,5 +99,12 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             base.OnHitNPC(target, hit, damageDone);
             Projectile.penetrate = 0;
         }
+
+        public override bool Shoot(Terraria.DataStructures.IEntitySource spawnSource, Vector2 position, Vector2 velocity, Player player)
+        {
+            if (base.Shoot(spawnSource, position, velocity, player))
+                Projectile.NewProjectile(spawnSource, position, velocity, ModContent.ProjectileType<AmplificationBlue>(), Damage, 0f, player.whoAmI);
+            return true;
+        }
     }
 }

@@ -25,6 +25,7 @@ Mods: {
 		Keybinds: {
 			OpenTechniqueUI.DisplayName: Open Technique UI
 			CursedTechniqueMenu.DisplayName: Cursed Technique Menu
+			UseCursedTechnique.DisplayName: Use Cursed Technique
 		}
 
 		CursedTechniques: {

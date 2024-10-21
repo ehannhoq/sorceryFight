@@ -120,5 +120,12 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {
             lockOnTarget = target; 
         }
+
+        public override bool Shoot(Terraria.DataStructures.IEntitySource spawnSource, Vector2 position, Vector2 velocity, Player player)
+        {
+            if (base.Shoot(spawnSource, position, velocity, player))
+                Projectile.NewProjectile(spawnSource, position, velocity, ModContent.ProjectileType<MaximumOutputBlue>(), Damage, 0f, player.whoAmI);
+            return true;
+        }
     }
 }
