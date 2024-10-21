@@ -12,7 +12,7 @@ namespace sorceryFight.Content.PassiveTechniques
         {
             get
             {
-                return $"CE Consumption: {CostPerSecond} CE/s";
+                return $"CE Consumption: {CostPerSecond} CE/s\n";
             }
         }
         public virtual bool isActive { get; set; } = false;

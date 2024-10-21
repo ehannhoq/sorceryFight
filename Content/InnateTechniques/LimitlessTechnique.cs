@@ -14,7 +14,9 @@ namespace sorceryFight.Content.InnateTechniques
         public override string Name { get; set; } = "Limitless";
         public override List<PassiveTechnique> PassiveTechniques { get; set; } = new List<PassiveTechnique>
         {
-            new Infinity() // 5% Mastery
+            new Infinity(), // 5% Mastery
+            new AmplifiedAura(),
+            new MaximumAmplifiedAura()
         };
         public override List<CursedTechnique> CursedTechniques { get; set; } = new List<CursedTechnique>
         {

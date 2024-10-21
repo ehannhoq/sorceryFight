@@ -100,6 +100,29 @@ Mods: {
 					'''
 			}
 
+			AmplifiedAura: {
+				DisplayName: Amplified Aura
+				Description:
+					'''
+					Covering yourself in a shroud
+					of the amplified Limitless,
+					you gain an increase in speed
+					and damage.
+					'''
+			}
+
+			MaximumAmplifiedAura: {
+				DisplayName: Maximum Cursed Energy Output: Amplified Aura
+				Description:
+					'''
+					Covering yourself in a shroud
+					of the amplified Limitless using
+					maximum cursed energy output,
+					you gain a major increase in
+					speed and damage.
+					'''
+			}
+
 			PassiveTechnique: {
 				Description: Mods.sorceryFight.Buffs.PassiveTechnique.Description
 				DisplayName: Passive Technique
@@ -108,6 +131,8 @@ Mods: {
 
 		Buffs: {
 			Infinity.DisplayName: Infinity
+			AmplifiedAura.DisplayName: Amplified Aura
+			MaximumAmplifiedAura.DisplayName: Maximum Cursed Energy Output: Amplified Aura
 
 			PassiveTechnique: {
 				DisplayName: Passive Technique

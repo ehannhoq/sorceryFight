@@ -49,7 +49,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 AbilityIcon icon = new AbilityIcon(texture, i, AbilityIconType.CursedTechnique);
 
                 if (player.selectedTechnique == techniques[i])
-                    icon.clicked = true;
+                    icon.selected = true;
 
                 abilityIcons.Add(icon);
                 icon.Left.Set(screenCenter.X - magnatude * (float)Math.Cos(i * rotation) - iconOffset, 0f);
@@ -73,7 +73,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
                 if (techniques[i].isActive)
                 {
-                    icon.clicked = true;
+                    icon.selected = true;
                 }
                 
                 icon.Left.Set(screenCenter.X + 100f, 0f);
