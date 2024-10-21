@@ -8,7 +8,7 @@ using Terraria.ModLoader.IO;
 
 namespace sorceryFight
 {
-    public class SorceryFightPlayer : ModPlayer
+    public partial class SorceryFightPlayer : ModPlayer
     {
         #region Global Variables
         public bool hasUIOpen = false;
