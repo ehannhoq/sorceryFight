@@ -54,21 +54,25 @@ namespace sorceryFight
         {
             if (cursedEnergy < maxCursedEnergy)
             {
-                cursedEnergy += SorceryFight.SecondsToTicks(cursedEnergyRegenPerSecond);
+                cursedEnergy += SorceryFight.TicksToSeconds(cursedEnergyRegenPerSecond);
                 if (cursedEnergy > maxCursedEnergy)
                 {
                     cursedEnergy = maxCursedEnergy;
                 }
             }
+        }
 
-            if (cursedEnergy < 0)
+        public override void PostUpdateBuffs()
+        {
+            if (cursedEnergy < 1)
             {
-                cursedEnergy = 0;
+                cursedEnergy = 1;
+                Player.AddBuff(ModContent.BuffType<BurntTechnique>(), (int)SorceryFight.SecondsToTicks(10));
             }
 
             foreach (PassiveTechnique passiveTechnique in innateTechnique.PassiveTechniques)
             {
-                if (cursedEnergy <= 0)
+                if (cursedEnergy <= 1)
                 {
                     passiveTechnique.isActive = false;
                 }

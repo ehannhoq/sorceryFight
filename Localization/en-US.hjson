@@ -112,6 +112,15 @@ Mods: {
 				DisplayName: Passive Technique
 				Description: Mods.sorceryFight.Buffs.PassiveTechnique.Description
 			}
+
+			BurntTechnique: {
+				DisplayName: Burnt Technique
+				Description:
+					'''
+					Your Innate Technique has been exhuasted!
+					You won't be able to use any cursed techniques.
+					'''
+			}
 		}
 
 		Projectiles: {
