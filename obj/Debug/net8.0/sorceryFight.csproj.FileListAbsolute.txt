@@ -1,6 +1,0 @@
-c:\Users\Ehan\Documents\My Games\Terraria\tModLoader\ModSources\sorceryfight\obj\Debug\net8.0\sorceryFight.csproj.AssemblyReference.cache
-c:\Users\Ehan\Documents\My Games\Terraria\tModLoader\ModSources\sorceryfight\obj\Debug\net8.0\sorceryFight.GeneratedMSBuildEditorConfig.editorconfig
-c:\Users\Ehan\Documents\My Games\Terraria\tModLoader\ModSources\sorceryfight\obj\Debug\net8.0\sorceryFight.AssemblyInfoInputs.cache
-c:\Users\Ehan\Documents\My Games\Terraria\tModLoader\ModSources\sorceryfight\obj\Debug\net8.0\sorceryFight.AssemblyInfo.cs
-c:\Users\Ehan\Documents\My Games\Terraria\tModLoader\ModSources\sorceryfight\obj\Debug\net8.0\sorceryFight.csproj.CoreCompileInputs.cache
-c:\Users\Ehan\Documents\My Games\Terraria\tModLoader\ModSources\sorceryfight\obj\Debug\net8.0\sorceryFight.sourcelink.json
