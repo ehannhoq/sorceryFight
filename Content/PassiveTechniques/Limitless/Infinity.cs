@@ -80,7 +80,10 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
                 }
             }
 
-            CostPerSecond += 3 * accumulativeDamage / (float)Math.Sqrt(accumulativeDamage + 1);
+            if (accumulativeDamage < 200)
+                CostPerSecond += 2 * accumulativeDamage;
+            else
+                CostPerSecond += 1/100 * (float)Math.Pow(accumulativeDamage - 100, 2.0) + 300;
 
             base.Update(player, ref buffIndex);
         }
