@@ -20,6 +20,11 @@ Mods: {
 				DisplayName: Cursed Technique
 				Tooltip: ""
 			}
+
+			CursedProfanedShards: {
+				Tooltip: ""
+				DisplayName: Cursed Profaned Shards
+			}
 		}
 
 		Keybinds: {

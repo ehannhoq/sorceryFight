@@ -18,7 +18,7 @@ Skeletron
     SHRINE: DISMANTLE
 
 Wall of Flesh
-    CE Regen Rate: 20 CE/s
+    CE Regen Rate: 25 CE/s
 
     LIMITLESS: AMPLIFIED AURA
 
@@ -26,7 +26,7 @@ Wall of Flesh
 [HARDMODE]
 
 Mechanical Bosses:
-    CE: 2000
+    CE: 2500
 
     LIMITLESS: MAXIMUM OUTPUT BLUE
 
@@ -47,7 +47,7 @@ Lunatic Cultist
     SHRINE: CLEAVE
 
 Moon Lord:
-    CE: 7500
+    CE: 5000
 
     LIMITLESS: HOLLOW PURPLE
     SHRINE: DIVINE FLAME

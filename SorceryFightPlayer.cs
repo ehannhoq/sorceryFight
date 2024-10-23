@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Security.Permissions;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.InnateTechniques;
@@ -17,21 +19,69 @@ namespace sorceryFight
         #region Global Cursed Technique Stuff
         public InnateTechnique innateTechnique = new InnateTechnique();
         public CursedTechnique selectedTechnique = new CursedTechnique();
-        public float mastery = 0f;
-        public float cursedEnergy = 100f;
-        public float maxCursedEnergy = 100f;
+        public float mastery;
+        public float cursedEnergy;
+        public float maxCursedEnergy;
         public float cursedEnergyRegenPerSecond;
 
         #endregion
 
-        #region Cursed Energy Modifiers
+        #region Max Cursed Energy Modifiers
+        public bool cursedSkull;
+        public bool cursedMechanicalSoul;
+        public bool cursedPhantasmalEye;
+        public bool cursedProfaneShards;
         #endregion
 
+        #region Cursed Energy Regen Modifiers
+        public bool cursedEye;
+        public bool cursedFlesh;
+        public bool cursedBulb;
+        public bool cursedMask;
+        public bool cursedEffulgentFeather;
+        public bool cursedRuneOfKos;
+        #endregion
+
+        public override void Initialize()
+        {
+            mastery = 0f;
+            cursedEnergy = 0f;
+            maxCursedEnergy = 100f;
+            cursedEnergyRegenPerSecond = 1f;
+
+            cursedSkull = false;
+            cursedMechanicalSoul = false;
+            cursedPhantasmalEye = false;
+            cursedProfaneShards = false;
+
+            cursedEye = false;
+            cursedFlesh = false;
+            cursedBulb = false;
+            cursedMask = false;
+            cursedEffulgentFeather = false;
+            cursedRuneOfKos = false;
+        }
         public override void SaveData(TagCompound tag)
         {
             tag["innateTechnique"] = innateTechnique.Name;
             tag["mastery"] = mastery;
             tag["cursedEnergy"] = cursedEnergy;
+
+            var maxCEModifiers = new List<string>();
+            maxCEModifiers.AddWithCondition("cursedSkull", cursedSkull);
+            maxCEModifiers.AddWithCondition("cursedMechanicalSoul", cursedMechanicalSoul);
+            maxCEModifiers.AddWithCondition("cursedPhantasmalEye", cursedPhantasmalEye);
+            maxCEModifiers.AddWithCondition("cursedProfanedShards", cursedProfaneShards);
+            tag["maxCEModifiers"] = maxCEModifiers;
+
+            var cursedEnergyRegenModifiers = new List<string>();
+            cursedEnergyRegenModifiers.AddWithCondition("cursedEye", cursedEye);
+            cursedEnergyRegenModifiers.AddWithCondition("cursedFlesh", cursedFlesh);
+            cursedEnergyRegenModifiers.AddWithCondition("cursedBulb", cursedBulb);
+            cursedEnergyRegenModifiers.AddWithCondition("curesdMask", cursedMask);
+            cursedEnergyRegenModifiers.AddWithCondition("cursedEffulgentFeather", cursedEffulgentFeather);
+            cursedEnergyRegenModifiers.AddWithCondition("cursedRuneOfKos", cursedRuneOfKos);
+            tag["cursedEnergyRegenModifiers"] = cursedEnergyRegenModifiers;
         }
 
         public override void LoadData(TagCompound tag)
@@ -42,8 +92,22 @@ namespace sorceryFight
             mastery = tag.ContainsKey("mastery") ? tag.GetFloat("mastery") : 0f;
             cursedEnergy = tag.ContainsKey("cursedEnergy") ? tag.GetFloat("cursedEnergy") : 0f;
 
+            var maxCEModifiers = new List<string>();
+            cursedSkull = maxCEModifiers.Contains("cursedSkull");
+            cursedMechanicalSoul = maxCEModifiers.Contains("cursedMechanicalSoul");
+            cursedPhantasmalEye = maxCEModifiers.Contains("cursedPhantasmalEye");
+            cursedProfaneShards = maxCEModifiers.Contains("cursedProfanedShards");
+
+            var cursedEnergyRegenModifiers = new List<string>();
+            cursedEye = cursedEnergyRegenModifiers.Contains("cursedEye");
+            cursedFlesh = cursedEnergyRegenModifiers.Contains("cursedFlesh");
+            cursedBulb = cursedEnergyRegenModifiers.Contains("cursedBulb");
+            cursedMask = cursedEnergyRegenModifiers.Contains("cursedMask");
+            cursedEffulgentFeather = cursedEnergyRegenModifiers.Contains("cursedEffulgentFeather");
+            cursedRuneOfKos = cursedEnergyRegenModifiers.Contains("cursedRuneOfKos");
+
+            maxCursedEnergy = calculateMaxCE();
             cursedEnergyRegenPerSecond = calculateCERegenRate();
-            maxCursedEnergy = calculateMaxCE(); // Will calculate at the very end, to ensure all buffs are accounted for.
         }
 
         public override void PostUpdate()
@@ -96,27 +160,53 @@ namespace sorceryFight
             }
         }
 
-        private float calculateMaxCE()
+        public float calculateMaxCE()
         {
-            float sum = 0f;
             float baseCE = 100f;
+            float sum = 0f;
 
-            // This is where all the conditions will go for modifiers.
+            if (cursedSkull)
+                sum += 900f; // 1000 total
+
+            if (cursedMechanicalSoul)
+                sum += 1400f; // 2500 total
+
+            if (cursedPhantasmalEye)
+                sum += 2400f; // 5000 total
+
+            if (cursedProfaneShards)
+                sum += 4900f; // 10000 total
 
             return baseCE + sum;
         }
 
-        private float calculateCERegenRate()
+        public float calculateCERegenRate()
         {
+            float baseRegen = 1f;
             float sum = 0f;
-            float baseRegen = 10f;
+
+            if (cursedEye)
+                sum += 9f; // 10 CE/s total
+
+            if (cursedFlesh)
+                sum += 15f; // 25 CE/s total
+
+            if (cursedBulb)
+                sum += 25f; // 50 CE/s total
             
-            // This is where all the conditions will go for modifiers.
+            if (cursedMask) 
+                sum += 50f; // 100 CE/s total
+
+            if (cursedEffulgentFeather)
+                sum += 400f; // 500 CE/s total
+
+            if (cursedRuneOfKos)
+                sum += 250f; // 750 CE/s total
 
             return baseRegen + sum;
         }
 
-        private void ShootTechnique()
+        public void ShootTechnique()
         {
             if (selectedTechnique.Name == "None Selected.")
             {
