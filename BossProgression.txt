@@ -1,47 +1,71 @@
 [PRE HARDMODE]
 
+100 CE
+1 CE/s
+
 Eye of Cthulhu
+    CE Regen Rate: 10 CE/s
+
     Cursed Technique
-    Black Flash
+    Black Flashs
 
     LIMITLESS: INFINITY
 
 Skeletron
+    CE: 1000
+
     LIMITLESS: AMPLIFIED BLUE
     SHRINE: DISMANTLE
 
 Wall of Flesh
+    CE Regen Rate: 20 CE/s
+
     LIMITLESS: AMPLIFIED AURA
 
 
 [HARDMODE]
 
 Mechanical Bosses:
+    CE: 2000
+
     LIMITLESS: MAXIMUM OUTPUT BLUE
+
+Planetera:
+    CE Regen Rate: 50 CE/s
 
 Golem
     LIMITLESS: MAXIMUM AMPLIFIED AURA
 
 
 Lunatic Cultist
+    CE Regen Rate: 100 CE/s
+
     Reverse Cursed Technique
 
     PRIVATE PURE LOVE TRAIN: IDLE DEATH GAMBLING (DE)
     LIMITLESS: REVERSAL RED
-    SHRINE: CLEAVE~~`
+    SHRINE: CLEAVE
 
 Moon Lord:
+    CE: 7500
+
     LIMITLESS: HOLLOW PURPLE
     SHRINE: DIVINE FLAME
 
 [POST MOONLORD]
 
 Dragonfolly:
+    CE Regen Rate: 500 CE/s
+
     LIMITLESS: 200% HOLLOW PURPLE
     SHRINE: WORLD CUTTING SLASH
 
 Providence:
+    CE: 10000
+
     Imperfect Domain Expansion
 
 Run of Kos:
+    CE Regen Rate: 750 CE/s
+
     Perfect Domain Expansion
