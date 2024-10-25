@@ -4,7 +4,7 @@
 1 CE/s
 
 Eye of Cthulhu
-    CE Regen Rate: 10 CE/s
+    CE Regen Rate: 5 CE/s
 
     Cursed Technique
     Black Flashs
@@ -18,7 +18,7 @@ Skeletron
     SHRINE: DISMANTLE
 
 Wall of Flesh
-    CE Regen Rate: 25 CE/s
+    CE Regen Rate: 10 CE/s
 
     LIMITLESS: AMPLIFIED AURA
 
@@ -26,19 +26,19 @@ Wall of Flesh
 [HARDMODE]
 
 Mechanical Bosses:
-    CE: 2500
+    CE: 500
 
     LIMITLESS: MAXIMUM OUTPUT BLUE
 
 Planetera:
-    CE Regen Rate: 50 CE/s
+    CE Regen Rate: 25 CE/s
 
 Golem
     LIMITLESS: MAXIMUM AMPLIFIED AURA
 
 
 Lunatic Cultist
-    CE Regen Rate: 100 CE/s
+    CE Regen Rate: 50 CE/s
 
     Reverse Cursed Technique
 
@@ -47,7 +47,7 @@ Lunatic Cultist
     SHRINE: CLEAVE
 
 Moon Lord:
-    CE: 5000
+    CE: 1000
 
     LIMITLESS: HOLLOW PURPLE
     SHRINE: DIVINE FLAME
@@ -55,17 +55,17 @@ Moon Lord:
 [POST MOONLORD]
 
 Dragonfolly:
-    CE Regen Rate: 500 CE/s
+    CE Regen Rate: 75 CE/s
 
     LIMITLESS: 200% HOLLOW PURPLE
     SHRINE: WORLD CUTTING SLASH
 
 Providence:
-    CE: 10000
+    CE: 2000
 
     Imperfect Domain Expansion
 
 Run of Kos:
-    CE Regen Rate: 750 CE/s
 
+    CE Regen Rate: 100 CE/s
     Perfect Domain Expansion

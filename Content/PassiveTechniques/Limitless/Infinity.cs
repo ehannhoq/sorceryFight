@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Ionic.Zip;
+using Microsoft.Build.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -32,21 +34,26 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
         public override void Apply(Player player)
         {
             player.AddBuff(ModContent.BuffType<Infinity>(), 2);
+      
             player.GetModPlayer<SorceryFightPlayer>().infinity = true;
         }
 
         public override void Remove(Player player)
         {
             player.GetModPlayer<SorceryFightPlayer>().infinity = false;
+            player.GetModPlayer<SorceryFightPlayer>().disabledRegen = false; // probably temporary
         }
 
         public override void Update(Player player, ref int buffIndex)
         {
+            SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
             float projInfinityDistance = 100f;
             float npcInfinityDistance = 70f;
             CostPerSecond = 1f;
-            float accumulativeDamage = 0f;
+            sf.disabledRegen = false;
 
+            float accumulativeDamage = 0f;
+            int numInInfinity = 0;
             foreach (Projectile proj in Main.projectile)
             {
    
@@ -56,6 +63,7 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
                     if (distance <= projInfinityDistance)
                     {
                         accumulativeDamage += proj.damage;
+                        numInInfinity ++;
 
                         proj.velocity *= 0.5f;
                         Vector2 vector = player.Center.DirectionTo(proj.Center);
@@ -63,27 +71,36 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
                     }
                 }
             }
-    
+            
             foreach (NPC npc in Main.npc)
             {
+                
                 if (!npc.friendly && npc.type != NPCID.TargetDummy)
                 {
                     float distance = Vector2.Distance(npc.Center, player.Center);
                     if (distance <= npcInfinityDistance)
                     {
                         accumulativeDamage += npc.damage;
+                        numInInfinity ++;
+
                         npc.velocity *= 0.5f;
-            
                         Vector2 vector = player.Center.DirectionTo(npc.Center);
                         npc.velocity = vector * (3f + player.velocity.Length()) * ((npcInfinityDistance - distance) / 50);
                     }
                 }
             }
 
-            if (accumulativeDamage < 200)
-                CostPerSecond += 2 * accumulativeDamage;
-            else
-                CostPerSecond += 1/100 * (float)Math.Pow(accumulativeDamage - 100, 2.0) + 300;
+
+            if (accumulativeDamage > 0 || numInInfinity > 0)
+            {
+                sf.disabledRegen = true;
+            }
+            CostPerSecond += (int)(0.1 * Math.Pow(accumulativeDamage, 2) * (1 + (numInInfinity / 10)));
+
+      
+
+            Main.NewText($"Damage blocked: {accumulativeDamage}");
+            Main.NewText($"Cost: {CostPerSecond}");
 
             base.Update(player, ref buffIndex);
         }

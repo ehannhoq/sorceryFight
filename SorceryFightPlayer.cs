@@ -13,12 +13,13 @@ namespace sorceryFight
     public partial class SorceryFightPlayer : ModPlayer
     {
         #region Global Variables
-        public bool hasUIOpen = false;
+        public bool hasUIOpen;
+        public bool disabledRegen;
         #endregion
 
         #region Global Cursed Technique Stuff
-        public InnateTechnique innateTechnique = new InnateTechnique();
-        public CursedTechnique selectedTechnique = new CursedTechnique();
+        public InnateTechnique innateTechnique;
+        public CursedTechnique selectedTechnique;
         public float mastery;
         public float cursedEnergy;
         public float maxCursedEnergy;
@@ -44,6 +45,11 @@ namespace sorceryFight
 
         public override void Initialize()
         {
+            hasUIOpen = false;
+            disabledRegen = false;
+
+            innateTechnique = new InnateTechnique();
+            selectedTechnique = new CursedTechnique();
             mastery = 0f;
             cursedEnergy = 0f;
             maxCursedEnergy = 100f;
@@ -116,7 +122,8 @@ namespace sorceryFight
             {
                 ShootTechnique();
             }
-            if (cursedEnergy < maxCursedEnergy)
+
+            if (cursedEnergy < maxCursedEnergy && !disabledRegen)
             {
                 cursedEnergy += SorceryFight.TicksToSeconds(cursedEnergyRegenPerSecond);
                 if (cursedEnergy > maxCursedEnergy)
@@ -162,46 +169,46 @@ namespace sorceryFight
 
         public float calculateMaxCE()
         {
-            float baseCE = 100f;
+            float baseCE = 500f;
             float sum = 0f;
 
             if (cursedSkull)
-                sum += 900f; // 1000 total
+                sum += 100f; // 200 total
 
             if (cursedMechanicalSoul)
-                sum += 1400f; // 2500 total
+                sum += 300f; // 500 total
 
             if (cursedPhantasmalEye)
-                sum += 2400f; // 5000 total
+                sum += 500f; // 1000 total
 
             if (cursedProfaneShards)
-                sum += 4900f; // 10000 total
+                sum += 1000f; // 2000 total
 
             return baseCE + sum;
         }
 
         public float calculateCERegenRate()
         {
-            float baseRegen = 1f;
+            float baseRegen = 10f;
             float sum = 0f;
 
-            if (cursedEye)
-                sum += 9f; // 10 CE/s total
+            if (cursedEye) 
+                sum += 4f; // 5 CE/s
 
             if (cursedFlesh)
-                sum += 15f; // 25 CE/s total
+                sum += 10f; // 10 CE/s total
 
             if (cursedBulb)
-                sum += 25f; // 50 CE/s total
+                sum += 15f; // 25 CE/s total
             
             if (cursedMask) 
-                sum += 50f; // 100 CE/s total
+                sum += 25f; // 50 CE/s total
 
             if (cursedEffulgentFeather)
-                sum += 400f; // 500 CE/s total
+                sum += 25f; // 75 CE/s
 
             if (cursedRuneOfKos)
-                sum += 250f; // 750 CE/s total
+                sum += 25f; // 100 CE/s total
 
             return baseRegen + sum;
         }
