@@ -97,11 +97,6 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
             }
             CostPerSecond += (int)(0.1 * Math.Pow(accumulativeDamage, 2) * (1 + (numInInfinity / 10)));
 
-      
-
-            Main.NewText($"Damage blocked: {accumulativeDamage}");
-            Main.NewText($"Cost: {CostPerSecond}");
-
             base.Update(player, ref buffIndex);
         }
     }
