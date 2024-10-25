@@ -13,6 +13,11 @@
 	<ItemGroup>
 	  <Folder Include="Content\UI\CursedTechniqueMenu\Limitless\" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Reference Include="CalamityMod">
+	    <HintPath>..\..\ModReader\CalamityMod\CalamityMod.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
 
 	<!-- References -->
 
