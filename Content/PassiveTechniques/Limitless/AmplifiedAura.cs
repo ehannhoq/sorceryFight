@@ -1,3 +1,5 @@
+using CalamityMod;
+using CalamityMod.CalPlayer;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -43,6 +45,7 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
             player.GetDamage(DamageClass.Ranged) *= (DamageMultiplier / 100) + 1;
             player.GetDamage(DamageClass.Magic) *= (DamageMultiplier / 100) + 1;
             player.GetDamage(DamageClass.Summon) *= (DamageMultiplier / 100) + 1;
+            player.GetDamage(RogueDamageClass.Throwing) *= (DamageMultiplier / 100) + 1;
         } 
     }
 }
