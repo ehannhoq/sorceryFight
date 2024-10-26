@@ -1,7 +1,8 @@
-using Microsoft.Build.Evaluation;
+using Microsoft.Build.Graph;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -42,8 +43,10 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         }
 
         public override int Damage { get; set ; } = 30;
-        public override float Speed { get; set; } = 10f;
+        public override float Speed { get; set; } = 15f;
         public override float LifeTime { get; set; } = 300f;
+        public virtual float AttractionRadius { get; set; } = 100f;
+        public virtual float AttractionStrength { get; set; } = 12f;
 
         public static Texture2D texture;
 
@@ -85,6 +88,37 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 if (Projectile.frame++ >= FRAME_COUNT - 1)
                 {
                     Projectile.frame = 0;
+                }
+            }
+
+            foreach (Projectile proj in Main.projectile)
+            {
+                if (!proj.hostile && proj != Main.projectile[Projectile.whoAmI])
+                {
+                    float distance = Vector2.Distance(proj.Center, Projectile.Center);
+                    
+                    if (distance <= AttractionRadius)
+                    {
+                        Vector2 direction = proj.Center.DirectionTo(Projectile.Center);
+                        Vector2 newVelocity = Vector2.Lerp(proj.velocity, direction * AttractionStrength, 0.1f);
+
+                        proj.velocity = newVelocity;
+                    }
+                }
+            }
+
+            foreach (NPC npc in Main.npc)
+            {
+                if (!npc.friendly && npc.type != NPCID.TargetDummy)
+                {
+                    float distance = Vector2.Distance(npc.Center, Projectile.Center);
+                    if (distance <= AttractionRadius)
+                    {
+                        Vector2 direction = npc.Center.DirectionTo(Projectile.Center);
+                        Vector2 newVelocity = Vector2.Lerp(npc.velocity, direction * AttractionStrength, 0.1f);
+
+                        npc.velocity = newVelocity;
+                    }
                 }
             }
         }

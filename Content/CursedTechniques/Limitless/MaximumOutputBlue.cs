@@ -2,6 +2,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -43,6 +44,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 return NPC.downedMechBossAny;
             }
         }
+        public virtual float AttractionRadius { get; set; } = 130f;
+        public virtual float AttractionStrength { get; set; } = 18f;
         public NPC lockOnTarget;
 
         public static Texture2D texture;
@@ -71,7 +74,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             Projectile.penetrate = 10;
         }
         public override void AI()
-        {
+        {   
             Projectile.ai[0] += 1;
 
             if (Projectile.ai[0] > LifeTime)
@@ -89,26 +92,44 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 }
             }
 
-            if (lockOnTarget != null)
+            // TODO:
+            // For some reason the second if statement (distance <= AttractionRadius) is never
+            // satisified.
+                
+            // foreach (Projectile proj in Main.projectile)
+            // {
+            //     if (!proj.hostile && proj != Main.projectile[Projectile.whoAmI])
+            //     {
+            //         float distance = Vector2.Distance(proj.Center, Projectile.Center);
+                    
+            //         if (distance <= AttractionRadius)
+            //         {
+            //             Vector2 direction = proj.Center.DirectionTo(Projectile.Center);
+            //             Vector2 newVelocity = Vector2.Lerp(proj.velocity, direction * AttractionStrength, 0.1f);
+
+            //             proj.velocity = newVelocity;
+            //         }
+            //     }
+            // }
+
+            foreach (NPC npc in Main.npc)
             {
-                Projectile.Center = lockOnTarget.Center;
-                Projectile.scale -= -0.1f;
-            }
-            else if (Projectile.ai[0] <= 30)
-            {
-                if (Main.myPlayer == Projectile.owner)
+                if (!npc.friendly && npc.type != NPCID.TargetDummy)
                 {
-                    Vector2 mousePos = Main.MouseWorld;
-                    Projectile.ai[1] = mousePos.X;
-                    Projectile.ai[2] = mousePos.Y;
-                    Projectile.netUpdate = true;
+                    float distance = Vector2.Distance(npc.Center, Projectile.Center);
+                    if (distance <= AttractionRadius)
+                    {
+                        Vector2 direction = npc.Center.DirectionTo(Projectile.Center);
+                        Vector2 newVelocity = Vector2.Lerp(npc.velocity, direction * AttractionStrength, 0.1f);
+
+                        npc.velocity = newVelocity;
+                    }
                 }
-
-                Vector2 targetPos = new Vector2(Projectile.ai[1], Projectile.ai[2]);
-                Vector2 direction = targetPos - Projectile.Center;
-
-                Projectile.velocity = direction.SafeNormalize(Vector2.Zero * Projectile.velocity.Length()) * Speed;
             }
+
+            Vector2 projDirection = Projectile.Center.DirectionTo(Main.MouseWorld);
+            Vector2 projVelocity = Vector2.Lerp(Projectile.velocity, projDirection * 30f, 0.1f);
+            Projectile.velocity = projVelocity;
         }
 
         public override bool PreDraw(ref Color lightColor)
