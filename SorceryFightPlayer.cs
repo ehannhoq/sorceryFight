@@ -185,14 +185,16 @@ namespace sorceryFight
             if (cursedProfaneShards)
                 sum += 1000f; // 2000 total
 
+            float total = baseCE + sum;
+
             if (Main.expertMode)
-                sum *= 1.5f;
+                total *= 1.5f;
 
             if (Main.masterMode)
-                sum *= 2.0f;
-                 
+                total *= 2.0f;
 
-            return baseCE + sum;
+
+            return total;
         }
 
         public float calculateCERegenRate()
@@ -218,13 +220,16 @@ namespace sorceryFight
             if (cursedRuneOfKos)
                 sum += 25f; // 100 CE/s total
 
+            float total = baseRegen + sum;
+
             if (Main.expertMode)
-                sum *= 1.5f;
+                total *= 1.5f;
 
             if (Main.masterMode)
-                sum *= 2.0f;
+                total *= 2.0f;
 
-            return baseRegen + sum;
+
+            return total;
         }
 
         public void ShootTechnique()

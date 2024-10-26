@@ -11,19 +11,11 @@ namespace sorceryFight
         public override bool ImmuneTo(PlayerDeathReason damageSource, int cooldownCounter, bool dodgeable)
         {
             if (Player == Main.LocalPlayer && infinity)
-                return true;
-
-            return base.ImmuneTo(damageSource, cooldownCounter, dodgeable);
-        }
-
-        public override void OnHurt(Player.HurtInfo info)
-        {
-            if (Player == Main.LocalPlayer && infinity) // Handles players hit by PvP swords - no clue if this works
             {
-                cursedEnergy -= 3 * info.Damage / (float)Math.Sqrt(info.Damage + 1);
+                return true;
             }
 
-            base.OnHurt(info);
+            return base.ImmuneTo(damageSource, cooldownCounter, dodgeable);
         }
     }
 }
