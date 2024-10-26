@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Security.Permissions;
+using CalamityMod.World;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.InnateTechniques;
@@ -184,6 +185,13 @@ namespace sorceryFight
             if (cursedProfaneShards)
                 sum += 1000f; // 2000 total
 
+            if (Main.expertMode)
+                sum *= 1.5f;
+
+            if (Main.masterMode)
+                sum *= 2.0f;
+                 
+
             return baseCE + sum;
         }
 
@@ -209,6 +217,12 @@ namespace sorceryFight
 
             if (cursedRuneOfKos)
                 sum += 25f; // 100 CE/s total
+
+            if (Main.expertMode)
+                sum *= 1.5f;
+
+            if (Main.masterMode)
+                sum *= 2.0f;
 
             return baseRegen + sum;
         }

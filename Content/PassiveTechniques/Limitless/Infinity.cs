@@ -95,7 +95,14 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
             {
                 sf.disabledRegen = true;
             }
-            CostPerSecond += (int)(0.1 * Math.Pow(accumulativeDamage, 2) * (1 + (numInInfinity / 10)));
+
+            float difficultyMultiplier = 0.1f;
+            if (Main.expertMode)
+                difficultyMultiplier = 0.15f;
+            if (Main.masterMode)
+                difficultyMultiplier = 0.15f;
+
+            CostPerSecond += (int)(difficultyMultiplier * Math.Pow(accumulativeDamage, 2) * (1 + (numInInfinity / 10)));
 
             base.Update(player, ref buffIndex);
         }
