@@ -99,13 +99,13 @@ namespace sorceryFight
             mastery = tag.ContainsKey("mastery") ? tag.GetFloat("mastery") : 0f;
             cursedEnergy = tag.ContainsKey("cursedEnergy") ? tag.GetFloat("cursedEnergy") : 0f;
 
-            var maxCEModifiers = new List<string>();
+            var maxCEModifiers = tag.GetList<string>("maxCEModifiers");
             cursedSkull = maxCEModifiers.Contains("cursedSkull");
             cursedMechanicalSoul = maxCEModifiers.Contains("cursedMechanicalSoul");
             cursedPhantasmalEye = maxCEModifiers.Contains("cursedPhantasmalEye");
             cursedProfaneShards = maxCEModifiers.Contains("cursedProfanedShards");
 
-            var cursedEnergyRegenModifiers = new List<string>();
+            var cursedEnergyRegenModifiers = tag.GetList<string>("cursedEnergyRegenModifiers");
             cursedEye = cursedEnergyRegenModifiers.Contains("cursedEye");
             cursedFlesh = cursedEnergyRegenModifiers.Contains("cursedFlesh");
             cursedBulb = cursedEnergyRegenModifiers.Contains("cursedBulb");
@@ -158,8 +158,6 @@ namespace sorceryFight
                     passiveTechnique.Remove(Player);
                 }
             }
-
-            innateTechnique.PostUpdate(this);
         }
 
         public override void UpdateDead()

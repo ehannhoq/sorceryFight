@@ -15,6 +15,6 @@ public static class SFUtils
     public static void AddWithCondition<T>(this List<T> list, T type, bool condition)
     {
         if (condition)
-        list.Add(type);
+            list.Add(type);
     }
 }
