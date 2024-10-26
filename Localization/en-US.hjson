@@ -45,6 +45,12 @@ Mods: {
 					converges into a single point, creating
 					a powerful, attractive force.
 					'''
+				LockedDescription:
+					'''
+					Upon defeating the one who gaurdes the
+					dungeon do you learn one of the
+					fundementals of the Limitless.
+					'''
 			}
 
 			MaximumOutputBlue: {
@@ -56,6 +62,7 @@ Mods: {
 					gravitational field, and crushes
 					enemies instantly upon impact.
 					'''
+				LockedDescription: "Slaying a mechanical being "
 			}
 
 			ReversalRed: {
@@ -69,6 +76,11 @@ Mods: {
 					repelling force. The CE output is twice
 					as much as the amplified Limitless.
 					'''
+				LockedDescription:
+					'''
+					At the brink of death do you awaken
+					the other half of the Limitless.
+					'''
 			}
 
 			HollowPurple: {
@@ -79,15 +91,25 @@ Mods: {
 					and divergence, an imaginary mass is formed.
 					The CE output far surpasses of Blue and Red.
 					'''
+				LockedDescription:
+					'''
+					Defeating the lunar god allows the existence
+					of an imaginary mass.
+					'''
 			}
 
 			HollowPurple200Percent: {
 				DisplayName: Hollow Purple200 Percent
 				Description:
 					'''
-					By chanting the incantation and at the cost
-					of burning out your Cursed Technique,
+					By chanting the incantation and at the 
+					cost of burning out your Cursed Technique,
 					the CE output doubles.
+					'''
+				LockedDescription:
+					'''
+					Defeating the lunar god allows the existence
+					of an imaginary mass.
 					'''
 			}
 		}
@@ -97,11 +119,16 @@ Mods: {
 				DisplayName: Infinity
 				Description:
 					'''
-					Infinity is the convergence 
-					of an immeasurable series, 
-					anything that approaches the 
-					infinity slows down and never 
-					reaches you.
+					Infinity is the convergence of an 
+					immeasurable series, anything that
+					approaches the infinity slows down 
+					and never reaches you.
+					'''
+				LockedDescription:
+					'''
+					An encounter with the eye creates an 
+					ideal environment to tap into the
+					Limitless.
 					'''
 			}
 
@@ -109,10 +136,14 @@ Mods: {
 				DisplayName: Amplified Aura
 				Description:
 					'''
-					Covering yourself in a shroud
-					of the amplified Limitless,
-					you gain an increase in speed
-					and damage.
+					Covering yourself in a shroud of 
+					the amplified Limitless, you gain 
+					an increase in speed and damage.
+					'''
+				LockedDescription:
+					'''
+					Freeing Hell will show you a unique
+					application of the Limitless.
 					'''
 			}
 
@@ -125,6 +156,11 @@ Mods: {
 					maximum cursed energy output,
 					you gain a major increase in
 					speed and damage.
+					'''
+				LockedDescription:
+					'''
+					The temple's golem will push your
+					innate potential to the max.
 					'''
 			}
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Microsoft.Build.FileSystem;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.CursedTechniques.Limitless;
 using sorceryFight.Content.PassiveTechniques;
@@ -32,5 +33,10 @@ namespace sorceryFight.Content.InnateTechniques
         };
 
         public override bool IsValid { get; set; } = true;
+
+        public override void PostUpdate(SorceryFightPlayer sf)
+        {
+            
+        }
     }
 }

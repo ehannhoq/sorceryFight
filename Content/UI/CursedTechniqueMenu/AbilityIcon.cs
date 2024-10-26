@@ -18,18 +18,23 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
     }
     public class AbilityIcon : UIElement
     {
-
         public Texture2D texture;
+        public Texture2D lockedTexture;
+
         public int abilityID;
         public AbilityIconType type;
+        public bool unlocked;
         public bool selected;
 
         public AbilityIcon(Texture2D texture, int abilityID, AbilityIconType type)
         {
             this.texture = texture;
+            lockedTexture = ModContent.Request<Texture2D>("sorceryfight/Content/UI/CursedTechniqueMenu/Locked_Icon").Value;
+
             this.abilityID = abilityID;
             this.type = type;
             selected = false;
+            unlocked = false;
         }
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
@@ -38,87 +43,103 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             Width.Set(texture.Width, 0f);
             Height.Set(texture.Height, 0f);
             CalculatedStyle dimensions = GetDimensions();
+
             Color color = new Color(255, 255, 255);
+
             if (selected)
             {
                 color = new Color(120, 120, 120);
             }
 
-            spriteBatch.Draw(texture, new Vector2(dimensions.X, dimensions.Y), color);
-
-
-
             SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
 
-
-            if (type == AbilityIconType.CursedTechnique)
+            if (sfPlayer.Player.HasBuff<BurntTechnique>())
             {
-                selected = sfPlayer.selectedTechnique == sfPlayer.innateTechnique.CursedTechniques[abilityID];
-            }
-            else
-            {
-                selected = sfPlayer.innateTechnique.PassiveTechniques[abilityID].isActive;
+                selected = false;
             }
 
-
-            string hoverText = "";
             switch (type)
             {
-                case AbilityIconType.PassiveTechnique:
-                    hoverText = $"{sfPlayer.innateTechnique.PassiveTechniques[abilityID].Name}\n"
-                                        + $"{sfPlayer.innateTechnique.PassiveTechniques[abilityID].Stats}\n"
-                                        + $"{sfPlayer.innateTechnique.PassiveTechniques[abilityID].Description.Value}";
-                    break;
-
                 case AbilityIconType.CursedTechnique:
-                    hoverText = $"{sfPlayer.innateTechnique.CursedTechniques[abilityID].Name}\n"
-                                        + $"{sfPlayer.innateTechnique.CursedTechniques[abilityID].Stats}\n"
-                                        + $"{sfPlayer.innateTechnique.CursedTechniques[abilityID].Description}";
+                    DrawCursedTechnique(sfPlayer);
+                    break;
+                case AbilityIconType.PassiveTechnique:
+                    DrawPassiveTechnique(sfPlayer);
                     break;
             }
-        
+
+            Texture2D finalTexture = unlocked ? texture : lockedTexture;
+
+            spriteBatch.Draw(finalTexture, new Vector2(dimensions.X, dimensions.Y), color);
+        }
+
+        private void DrawCursedTechnique(SorceryFightPlayer sfPlayer)
+        {
+            unlocked = sfPlayer.innateTechnique.CursedTechniques[abilityID].Unlocked;
+            selected = sfPlayer.selectedTechnique == sfPlayer.innateTechnique.CursedTechniques[abilityID];
+
             if (SorceryFightUI.MouseHovering(this, texture))
-            {   
-                Main.hoverItemName = hoverText;
-            }
-
-            if (Main.mouseLeft && Main.mouseLeftRelease && SorceryFightUI.MouseHovering(this, texture))
             {
-                Main.mouseLeftRelease = false;
-                SoundEngine.PlaySound(SoundID.MenuTick);
-                sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+                Main.hoverItemName = unlocked ? $"{sfPlayer.innateTechnique.CursedTechniques[abilityID].Name}\n"
+                                        + $"{sfPlayer.innateTechnique.CursedTechniques[abilityID].Stats}\n"
+                                        + $"{sfPlayer.innateTechnique.CursedTechniques[abilityID].Description}" : sfPlayer.innateTechnique.CursedTechniques[abilityID].LockedDescription;
 
-                if (sfPlayer.Player.HasBuff<BurntTechnique>())
+                if (Main.mouseLeft && Main.mouseLeftRelease && unlocked)
                 {
-                    selected = false;
-                    int index1 = CombatText.NewText(Main.LocalPlayer.getRect(), Color.DarkRed, "You can't use this technique right now!");
-                    Main.combatText[index1].lifeTime = 180;
-                    return;
+                    Main.mouseLeftRelease = false;
+                    SoundEngine.PlaySound(SoundID.MenuTick);
+
+                    if (sfPlayer.Player.HasBuff<BurntTechnique>())
+                    {
+                        int index1 = CombatText.NewText(Main.LocalPlayer.getRect(), Color.DarkRed, "You can't use this technique right now!");
+                        Main.combatText[index1].lifeTime = 180;
+                        return;
+                    }
+
+                    sfPlayer.selectedTechnique = sfPlayer.innateTechnique.CursedTechniques[abilityID];
+                    int index = CombatText.NewText(Main.LocalPlayer.getRect(), Color.LightYellow, $"Selected {sfPlayer.selectedTechnique.Name}");
+                    Main.combatText[index].lifeTime = 180;
                 }
+            }
+        }
 
-                int index = 0;
+        private void DrawPassiveTechnique(SorceryFightPlayer sfPlayer)
+        {
+            unlocked = sfPlayer.innateTechnique.PassiveTechniques[abilityID].Unlocked;
+            selected = sfPlayer.innateTechnique.PassiveTechniques[abilityID].isActive;
 
-                switch (type)
+            if (SorceryFightUI.MouseHovering(this, texture))
+            {
+                Main.hoverItemName = unlocked ? $"{sfPlayer.innateTechnique.PassiveTechniques[abilityID].Name}\n"
+                                     + $"{sfPlayer.innateTechnique.PassiveTechniques[abilityID].Stats}\n"
+                                     + $"{sfPlayer.innateTechnique.PassiveTechniques[abilityID].Description.Value}" : sfPlayer.innateTechnique.PassiveTechniques[abilityID].LockedDescription;
+
+                if (Main.mouseLeft && Main.mouseLeftRelease && unlocked)
                 {
-                    case AbilityIconType.PassiveTechnique:
-                        sfPlayer.innateTechnique.PassiveTechniques[abilityID].isActive = !sfPlayer.innateTechnique.PassiveTechniques[abilityID].isActive;
-                        string text = "";
-                        if (sfPlayer.innateTechnique.PassiveTechniques[abilityID].isActive)
-                            text = $"Activated {sfPlayer.innateTechnique.PassiveTechniques[abilityID].Name}";
-                        else
-                            text = $"Deactivated {sfPlayer.innateTechnique.PassiveTechniques[abilityID].Name}";
+                    Main.mouseLeftRelease = false;
+                    SoundEngine.PlaySound(SoundID.MenuTick);
 
-                        index = CombatText.NewText(Main.LocalPlayer.getRect(), Color.LightYellow, text);
-                        break;
+                    if (sfPlayer.Player.HasBuff<BurntTechnique>())
+                    {
+                        int index1 = CombatText.NewText(Main.LocalPlayer.getRect(), Color.DarkRed, "You can't use this technique right now!");
+                        Main.combatText[index1].lifeTime = 180;
+                        return;
+                    }
 
-                    case AbilityIconType.CursedTechnique:
-                        sfPlayer.selectedTechnique = sfPlayer.innateTechnique.CursedTechniques[abilityID];
-                        index = CombatText.NewText(Main.LocalPlayer.getRect(), Color.LightYellow, $"Selected {sfPlayer.selectedTechnique.Name}");
-                        break;
+                    sfPlayer.innateTechnique.PassiveTechniques[abilityID].isActive = !sfPlayer.innateTechnique.PassiveTechniques[abilityID].isActive;
+
+                    string text = "";
+                    if (sfPlayer.innateTechnique.PassiveTechniques[abilityID].isActive)
+                        text = $"Activated {sfPlayer.innateTechnique.PassiveTechniques[abilityID].Name}";
+
+                    else
+                        text = $"Deactivated {sfPlayer.innateTechnique.PassiveTechniques[abilityID].Name}";
+
+                    int index = CombatText.NewText(Main.LocalPlayer.getRect(), Color.LightYellow, text);
+                    Main.combatText[index].lifeTime = 180;
                 }
-                
-				Main.combatText[index].lifeTime = 180;
             }
         }
     }
 }
+

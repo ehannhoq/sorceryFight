@@ -20,14 +20,28 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 return Language.GetText("Mods.sorceryFight.CursedTechniques.ReversalRed.Description").Value;
             }
         }
-        public override float Cost { get; set; } = -1f;
-        public override float CostPercentage { get; set; } = 50f;
+        public override string LockedDescription
+        {
+            get
+            {
+                return Language.GetText("Mods.sorceryFight.CursedTechniques.ReversalRed.LockedDescription").Value;
+            }
+        }
+        public override float Cost { get; set; } = 350f; 
+        public override float CostPercentage { get; set; } = -1f;
         public override float MasteryNeeded { get; set; } = 0f;
         public override Color textColor { get; set; } = new Color(224, 74, 74);
 
-        public override int Damage { get; set ; } = 300;
+        public override int Damage { get; set ; } = 250;
         public override float Speed { get; set; } = 25f;
         public override float LifeTime { get; set; } = 300f;
+        public override bool Unlocked
+        {
+            get
+            {
+                return NPC.downedAncientCultist;
+            }
+        }
 
         public static Texture2D texture;
      

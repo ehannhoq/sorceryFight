@@ -25,10 +25,6 @@ namespace sorceryFight.Content.InnateTechniques
             return new InnateTechnique();
         }
 
-        public virtual void PostUpdateBuffs(Player player) {}
-
-        public virtual void UpdateDead(Player player) {}
-
-        public virtual void removeBuffs(Player player) {}
+        public virtual void PostUpdate(SorceryFightPlayer sf) {}
     }
 }

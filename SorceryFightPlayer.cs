@@ -158,6 +158,8 @@ namespace sorceryFight
                     passiveTechnique.Remove(Player);
                 }
             }
+
+            innateTechnique.PostUpdate(this);
         }
 
         public override void UpdateDead()
@@ -222,7 +224,7 @@ namespace sorceryFight
 
             float total = baseRegen + sum;
 
-            if (Main.expertMode)
+            if (Main.expertMode && !Main.masterMode)
                 total *= 1.5f;
 
             if (Main.masterMode)

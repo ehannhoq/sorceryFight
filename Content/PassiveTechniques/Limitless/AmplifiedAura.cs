@@ -23,8 +23,24 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
             }
         }
         public override LocalizedText Description => Language.GetText("Mods.sorceryFight.PassiveTechniques.AmplifiedAura.Description");
+
+        public override string LockedDescription
+        {
+            get
+            {
+                return Language.GetText("Mods.sorceryFight.PassiveTechniques.AmplifiedAura.LockedDescription").Value;
+            }
+        }
         public override bool isActive { get; set; } = false;
         public override float CostPerSecond { get; set; } = 5f;
+
+        public override bool Unlocked
+        {
+            get
+            {
+                return Main.hardMode;
+            }
+        }
 
         public override void Apply(Player player)
         {

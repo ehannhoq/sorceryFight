@@ -15,8 +15,14 @@ namespace sorceryFight.Content.PassiveTechniques
                 return $"CE Consumption: {CostPerSecond} CE/s\n";
             }
         }
+        public virtual string LockedDescription
+        {
+            get; set;
+        }
+
         public virtual bool isActive { get; set; } = false;
         public virtual float CostPerSecond { get; set; } = 0f;
+        public virtual bool Unlocked { get; set; } = false;
 
         public override void SetStaticDefaults()
         {

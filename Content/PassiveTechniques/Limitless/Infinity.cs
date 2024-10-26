@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CalamityMod;
 using Ionic.Zip;
 using Microsoft.Build.Tasks;
 using Microsoft.Xna.Framework;
@@ -28,8 +29,22 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
             }
         }
         public override LocalizedText Description => Language.GetText("Mods.sorceryFight.PassiveTechniques.Infinity.Description");
+        public override string LockedDescription
+        {
+            get
+            {
+                return Language.GetText("Mods.sorceryFight.PassiveTechniques.Infinity.LockedDescription").Value;
+            }
+        }
         public override bool isActive { get; set; } = false;
         public override float CostPerSecond { get; set; } = 1f;
+        public override bool Unlocked
+        { 
+            get
+            {
+                return NPC.downedBoss1; 
+            }
+        }
 
         public override void Apply(Player player)
         {

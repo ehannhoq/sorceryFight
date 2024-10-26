@@ -12,7 +12,7 @@ Eye of Cthulhu
     LIMITLESS: INFINITY
 
 Skeletron
-    CE: 1000
+    CE: 200
 
     LIMITLESS: AMPLIFIED BLUE
     SHRINE: DISMANTLE
@@ -50,6 +50,7 @@ Moon Lord:
     CE: 1000
 
     LIMITLESS: HOLLOW PURPLE
+    LIMITLESS: 200% HOLLOW PURPLE
     SHRINE: DIVINE FLAME
 
 [POST MOONLORD]
@@ -57,7 +58,6 @@ Moon Lord:
 Dragonfolly:
     CE Regen Rate: 75 CE/s
 
-    LIMITLESS: 200% HOLLOW PURPLE
     SHRINE: WORLD CUTTING SLASH
 
 Providence:

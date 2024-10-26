@@ -21,14 +21,28 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 return Language.GetText("Mods.sorceryFight.CursedTechniques.HollowPurple.Description").Value;
             }
         }
-        public override float Cost { get; set; } = -1f;
-        public override float CostPercentage { get; set; } = 90f;
+        public override string LockedDescription
+        {
+            get
+            {
+                return Language.GetText("Mods.sorceryFight.CursedTechniques.HollowPurple.LockedDescription").Value;
+            }
+        }
+        public override float Cost { get; set; } = 500f;
+        public override float CostPercentage { get; set; } = -1f;
         public override float MasteryNeeded { get; set; } = 0f;
         public override Color textColor { get; set; } = new Color(235, 117, 233);
 
         public override int Damage { get; set ; } = 5000;
         public override float Speed { get; set; } = 35f;
         public override float LifeTime { get; set; } = 500f;
+        public override bool Unlocked
+        {
+            get
+            {
+                return NPC.downedMoonlord;
+            }
+        }
 
         public static Texture2D texture;
 

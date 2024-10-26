@@ -25,6 +25,7 @@ namespace sorceryFight.Content.CursedTechniques
             }
         }
         public virtual string Description { get; set; } = "None Selected.";
+        public virtual string LockedDescription { get; set; } = "None Selected.";
         public virtual float Cost { get; set; } = 0;
         public virtual float CostPercentage { get; set; } = -1;
         public virtual float MasteryNeeded { get; set; } = 0f;
@@ -33,6 +34,7 @@ namespace sorceryFight.Content.CursedTechniques
         public virtual int Damage { get; set; } = 0;
         public virtual float Speed { get; set; } = 0f;
         public virtual float LifeTime { get; set; } = 30f;
+        public virtual bool Unlocked { get; set; } = false;
         public virtual int GetProjectileType()
         {
             return ModContent.ProjectileType<CursedTechnique>();

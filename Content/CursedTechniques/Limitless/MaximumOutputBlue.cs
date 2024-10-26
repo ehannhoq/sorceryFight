@@ -21,14 +21,28 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 return Language.GetText("Mods.sorceryFight.CursedTechniques.MaximumOutputBlue.Description").Value;
             }
         }
-        public override float Cost { get; set; } = -1f;
-        public override float CostPercentage { get; set; } = 30f;
+        public override string LockedDescription
+        {
+            get
+            {
+                return Language.GetText("Mods.sorceryFight.CursedTechniques.MaximumOutputBlue.LockedDescription").Value;
+            }
+        }
+        public override float Cost { get; set; } = 150f;
+        public override float CostPercentage { get; set; } = -1f;
         public override float MasteryNeeded { get; set; } = 0f;
         public override Color textColor { get; set; } = new Color(108, 158, 240);
 
-        public override int Damage { get; set ; } = 150;
+        public override int Damage { get; set ; } = 100;
         public override float Speed { get; set; } = 20f;
         public override float LifeTime { get; set; } = 300f;
+        public override bool Unlocked
+        {
+            get
+            {
+                return NPC.downedMechBossAny;
+            }
+        }
         public NPC lockOnTarget;
 
         public static Texture2D texture;
