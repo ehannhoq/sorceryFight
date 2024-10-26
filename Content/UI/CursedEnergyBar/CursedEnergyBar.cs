@@ -17,7 +17,7 @@ public class CursedEnergyBar : ValueBar
         if (IsMouseHovering) 
         {
             var player = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
-            Main.hoverItemName = $"Cursed Energy: {Math.Round((decimal)player.cursedEnergy, 2)} / {player.maxCursedEnergy}\n" 
+            Main.hoverItemName = $"Cursed Energy: {Math.Round((decimal)player.cursedEnergy, 0)} / {player.maxCursedEnergy}\n" 
                                 +$"Regeneration Rate: {player.cursedEnergyRegenPerSecond} CE/s";
         }
     }
