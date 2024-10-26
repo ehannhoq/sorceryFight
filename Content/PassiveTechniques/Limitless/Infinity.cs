@@ -116,8 +116,6 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
             float difficultyMultiplier = 0.1f;
             if (Main.expertMode)
                 difficultyMultiplier = 0.105f;
-            if (Main.masterMode)
-                difficultyMultiplier = 0.105f;
 
             CostPerSecond += (int)(difficultyMultiplier * Math.Pow(accumulativeDamage, 2) * (1 + (numInInfinity / 10)));
 
