@@ -45,8 +45,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             }
         }
         public virtual float AttractionRadius { get; set; } = 130f;
-        public virtual float AttractionStrength { get; set; } = 18f;
-        public NPC lockOnTarget;
+        public virtual float AttractionStrength { get; set; } = 15f;
 
         public static Texture2D texture;
 
@@ -92,25 +91,21 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 }
             }
 
-            // TODO:
-            // For some reason the second if statement (distance <= AttractionRadius) is never
-            // satisified.
-                
-            // foreach (Projectile proj in Main.projectile)
-            // {
-            //     if (!proj.hostile && proj != Main.projectile[Projectile.whoAmI])
-            //     {
-            //         float distance = Vector2.Distance(proj.Center, Projectile.Center);
+            foreach (Projectile proj in Main.ActiveProjectiles)
+            {
+                if (proj.hostile && proj != Main.projectile[Projectile.whoAmI])
+                {
+                    float distance = Vector2.Distance(proj.Center, Projectile.Center);
                     
-            //         if (distance <= AttractionRadius)
-            //         {
-            //             Vector2 direction = proj.Center.DirectionTo(Projectile.Center);
-            //             Vector2 newVelocity = Vector2.Lerp(proj.velocity, direction * AttractionStrength, 0.1f);
+                    if (distance <= AttractionRadius)
+                    {
+                        Vector2 direction = proj.Center.DirectionTo(Projectile.Center);
+                        Vector2 newVelocity = Vector2.Lerp(proj.velocity, direction * AttractionStrength, 0.1f);
 
-            //             proj.velocity = newVelocity;
-            //         }
-            //     }
-            // }
+                        proj.velocity = newVelocity;
+                    }
+                }
+            }
 
             foreach (NPC npc in Main.npc)
             {
@@ -149,11 +144,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             
             spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, 0.5f, SpriteEffects.None, 0f);
             return false;
-        }
-
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            lockOnTarget = target; 
         }
 
         public override bool Shoot(Terraria.DataStructures.IEntitySource spawnSource, Vector2 position, Vector2 velocity, Player player)
