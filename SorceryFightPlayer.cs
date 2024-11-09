@@ -44,6 +44,10 @@ namespace sorceryFight
         public bool cursedRuneOfKos;
         #endregion
 
+        #region One-off Variables
+        public bool yourPotentialSwitch;
+        #endregion
+
         public override void Initialize()
         {
             hasUIOpen = false;
@@ -67,6 +71,8 @@ namespace sorceryFight
             cursedMask = false;
             cursedEffulgentFeather = false;
             cursedRuneOfKos = false;
+
+            yourPotentialSwitch = false;
         }
         public override void SaveData(TagCompound tag)
         {

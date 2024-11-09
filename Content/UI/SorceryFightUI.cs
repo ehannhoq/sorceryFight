@@ -1,7 +1,9 @@
+using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight;
 using sorceryFight.Content.UI.CursedTechniqueMenu;
+using sorceryFight.Content.UI.InnateTechniqueSelector;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
@@ -12,19 +14,41 @@ public class SorceryFightUI : UIState
     public CursedEnergyBar ceBar;
     public CursedTechniqueMenu ctMenu;
 
-    public override void OnInitialize()
-    {
-        LoadCEBar();
-    }
-
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
         var player = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+
+        if (player.innateTechnique.Name == "No Innate Technique")
+        {
+
+            if (player.yourPotentialSwitch)
+                {
+                    InnateTechniqueSelector innateTechniqueSelector = new InnateTechniqueSelector();
+                    Append(innateTechniqueSelector);
+                    Recalculate();
+                    player.yourPotentialSwitch = false;
+                }
+
+            return;
+        }
+
+        if (player.yourPotentialSwitch)
+        {}
+
+        if (ceBar == null)
+            LoadCEBar();
+
         ceBar.fillPercentage = player.cursedEnergy / player.maxCursedEnergy;
 
         if (SFKeybinds.OpenTechniqueUI.JustPressed)
         {
+            {
+                Elements.Clear();
+                InnateTechniqueSelector innateTechniqueSelector = new InnateTechniqueSelector();
+                Append(innateTechniqueSelector);
+            }
+
             if (!Elements.Contains(ctMenu))
             {
                 ctMenu = new CursedTechniqueMenu(player);

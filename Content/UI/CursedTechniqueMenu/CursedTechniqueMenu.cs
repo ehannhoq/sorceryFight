@@ -17,16 +17,16 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
     {
         SorceryFightPlayer player;
         MasteryBar masteryBar;
-        List<AbilityIcon> abilityIcons;
         public CursedTechniqueMenu(SorceryFightPlayer player)
         {
             this.player = player;
             Vector2 screenCenter = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
-            abilityIcons = new List<AbilityIcon>();
 
             DisplayCursedTechniques(screenCenter);
             DisplayPassiveTechniques(screenCenter);
             DisplayMasteryBar(screenCenter);
+
+            Recalculate();
         }
 
         public override void Update(GameTime gameTime)
@@ -45,16 +45,16 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
             for (int i = 0; i < techniques.Count; i++)
             {
-                Texture2D texture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/CursedTechniqueIcons/{player.innateTechnique.Name}_{i}").Value;
+                Texture2D texture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/CursedTechniqueIcons/{player.innateTechnique.Name}_{i}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 AbilityIcon icon = new AbilityIcon(texture, i, AbilityIconType.CursedTechnique);
 
                 if (player.selectedTechnique == techniques[i])
                     icon.selected = true;
 
-                abilityIcons.Add(icon);
                 icon.Left.Set(screenCenter.X - magnatude * (float)Math.Cos(i * rotation) - iconOffset, 0f);
                 icon.Top.Set(screenCenter.Y - magnatude * (float)Math.Sin(i * rotation) - iconOffset, 0f);
 
+                icon.Recalculate();
                 Append(icon);
             }
         }

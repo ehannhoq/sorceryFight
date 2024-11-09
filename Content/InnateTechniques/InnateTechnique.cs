@@ -25,6 +25,18 @@ namespace sorceryFight.Content.InnateTechniques
             return new InnateTechnique();
         }
 
+        public static List<InnateTechnique> InnateTechniques
+        {
+            get
+            {
+                return new List<InnateTechnique>
+                {
+                    new LimitlessTechnique(),
+                    new ShrineTechnique()
+                };
+            }
+        }
+
         public virtual void PostUpdate(SorceryFightPlayer sf) {}
     }
 }

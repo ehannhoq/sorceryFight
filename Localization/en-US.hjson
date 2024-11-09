@@ -22,8 +22,17 @@ Mods: {
 			}
 
 			CursedProfanedShards: {
-				Tooltip: ""
 				DisplayName: Cursed Profaned Shards
+				Tooltip: ""
+			}
+
+			YourPotential: {
+				DisplayName: Your Potential
+				Tooltip:
+					'''
+					Your potential is yet to
+					be unleashed.
+					'''
 			}
 		}
 
