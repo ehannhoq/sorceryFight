@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Numerics;
+using CalamityMod.Particles;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.InnateTechniques;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -14,9 +15,13 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
     public class InnateTechniqueSelector : UIElement
     {
         private List<Vector2> iconPositions;
+        private int timeCounter;
+        bool animate;
         public InnateTechniqueSelector()
         {
             iconPositions = new List<Vector2>();
+            timeCounter = 0;
+            animate = false;
 
             Vector2 screenCenter = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
 
@@ -36,18 +41,18 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
             title.Top.Set(screenCenter.Y - 150, 0f);
             Append(title);
 
-            DrawLimitless(screenCenter);
+            DrawLimitless();
 
             Recalculate();
         }
 
-        private void DrawLimitless(Vector2 screenCenter)
+        private void DrawLimitless()
         {
                 InnateTechnique t = new LimitlessTechnique();
                 Texture2D iconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.Name}_Icon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 Texture2D backgroundTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.Name}_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 
-                RotatingUIElement background = new RotatingUIElement(backgroundTexture, -1f);
+                SpecialUIElement background = new SpecialUIElement(backgroundTexture, -1f, 0.05f);
                 background.Left.Set(iconPositions[0].X, 0f);
                 background.Top.Set(iconPositions[0].Y, 0f);
                 
@@ -61,17 +66,11 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
                 Append(background);
                 Append(button);
         }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            base.Draw(spriteBatch);
-        }
-
         public void OnClick()
         {
             SorceryFightUI sfUI = (SorceryFightUI)Parent;
             sfUI.LoadCEBar();
-            sfUI.RemoveChild(this);
+            sfUI.ToBeRemoved(this);
         }
     }
 }

@@ -1,4 +1,4 @@
-using Humanizer;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight;
@@ -14,14 +14,25 @@ public class SorceryFightUI : UIState
     public CursedEnergyBar ceBar;
     public CursedTechniqueMenu ctMenu;
 
+    private List<UIElement> elementsToRemove;
+
+    public override void OnInitialize()
+    {
+        elementsToRemove = new List<UIElement>();
+    }
+
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
         var player = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
 
+        foreach (UIElement element in elementsToRemove)
+        {
+            RemoveChild(element);
+        }
+
         if (player.innateTechnique.Name == "No Innate Technique")
         {
-
             if (player.yourPotentialSwitch)
                 {
                     InnateTechniqueSelector innateTechniqueSelector = new InnateTechniqueSelector();
@@ -32,9 +43,6 @@ public class SorceryFightUI : UIState
 
             return;
         }
-
-        if (player.yourPotentialSwitch)
-        {}
 
         if (ceBar == null)
             LoadCEBar();
@@ -96,5 +104,10 @@ public class SorceryFightUI : UIState
         
         return mousePos.X >= dimensions.X && mousePos.X <= dimensions.X + texture.Width && 
                 mousePos.Y >= dimensions.Y && mousePos.Y <= dimensions.Y + texture.Height;
+    }
+
+    public void ToBeRemoved(UIElement element)
+    {
+        elementsToRemove.Add(element);
     }
 }
