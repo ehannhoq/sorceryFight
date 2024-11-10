@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight;
@@ -13,50 +15,36 @@ public class SorceryFightUI : UIState
 {
     public CursedEnergyBar ceBar;
     public CursedTechniqueMenu ctMenu;
-
     private List<UIElement> elementsToRemove;
 
     public override void OnInitialize()
     {
+        LoadCEBar();
         elementsToRemove = new List<UIElement>();
     }
 
     public override void Update(GameTime gameTime)
     {
+        foreach (UIElement element in elementsToRemove)
+        {
+            Elements.Remove(element);
+        }
+
         base.Update(gameTime);
         var player = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
 
-        foreach (UIElement element in elementsToRemove)
+        if (player.yourPotentialSwitch)
         {
-            RemoveChild(element);
+            InnateTechniqueSelector innateTechniqueSelector = new InnateTechniqueSelector();
+            Append(innateTechniqueSelector);
+            Recalculate();
+            player.yourPotentialSwitch = false;
         }
-
-        if (player.innateTechnique.Name == "No Innate Technique")
-        {
-            if (player.yourPotentialSwitch)
-                {
-                    InnateTechniqueSelector innateTechniqueSelector = new InnateTechniqueSelector();
-                    Append(innateTechniqueSelector);
-                    Recalculate();
-                    player.yourPotentialSwitch = false;
-                }
-
-            return;
-        }
-
-        if (ceBar == null)
-            LoadCEBar();
 
         ceBar.fillPercentage = player.cursedEnergy / player.maxCursedEnergy;
 
         if (SFKeybinds.OpenTechniqueUI.JustPressed)
         {
-            {
-                Elements.Clear();
-                InnateTechniqueSelector innateTechniqueSelector = new InnateTechniqueSelector();
-                Append(innateTechniqueSelector);
-            }
-
             if (!Elements.Contains(ctMenu))
             {
                 ctMenu = new CursedTechniqueMenu(player);
@@ -66,7 +54,7 @@ public class SorceryFightUI : UIState
             else
             {
                 Elements.Remove(ctMenu);
-                player.hasUIOpen = false;
+                player.hasUIOpen = false; 
             }
         }
     }
@@ -106,7 +94,7 @@ public class SorceryFightUI : UIState
                 mousePos.Y >= dimensions.Y && mousePos.Y <= dimensions.Y + texture.Height;
     }
 
-    public void ToBeRemoved(UIElement element)
+    public void RemoveElement(UIElement element)
     {
         elementsToRemove.Add(element);
     }

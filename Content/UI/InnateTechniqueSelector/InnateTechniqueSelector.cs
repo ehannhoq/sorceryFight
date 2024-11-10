@@ -69,8 +69,7 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
         public void OnClick()
         {
             SorceryFightUI sfUI = (SorceryFightUI)Parent;
-            sfUI.LoadCEBar();
-            sfUI.ToBeRemoved(this);
+            sfUI.RemoveElement(this);
         }
     }
 }
