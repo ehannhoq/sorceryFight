@@ -73,7 +73,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
             for (int i = 0; i < techniques.Count; i++)
             {
-                Texture2D texture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/PassiveTechniqueIcons/{player.innateTechnique.Name}_{i}").Value;
+                Texture2D texture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/PassiveTechniqueIcons/{player.innateTechnique.Name}_{i}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 AbilityIcon icon = new AbilityIcon(texture, i, AbilityIconType.PassiveTechnique);
 
                 if (techniques[i].isActive)
@@ -89,8 +89,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
         }
         private void DisplayMasteryBar(Vector2 screenCenter)
         {
-             Texture2D masteryBorderTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/Mastery_Bar_Border").Value;
-            Texture2D masteryBarTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/Mastery_Bar").Value;
+            Texture2D masteryBorderTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/Mastery_Bar_Border", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D masteryBarTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/Mastery_Bar", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
             UIImage masteryBorder = new UIImage(masteryBorderTexture);
             masteryBar = new MasteryBar(masteryBarTexture);
