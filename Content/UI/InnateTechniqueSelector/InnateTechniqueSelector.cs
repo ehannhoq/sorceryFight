@@ -16,7 +16,9 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
     {
         private List<Vector2> iconPositions;
         private int timeCounter;
-        bool animate;
+        private bool animate;
+        private InnateTechnique selectedTechnique;
+
         public InnateTechniqueSelector()
         {
             iconPositions = new List<Vector2>();
@@ -48,25 +50,86 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
 
         private void DrawLimitless()
         {
-                InnateTechnique t = new LimitlessTechnique();
-                Texture2D iconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.Name}_Icon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                Texture2D backgroundTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.Name}_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            InnateTechnique t = new LimitlessTechnique();
+            Texture2D iconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.Name}_Icon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D backgroundTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.Name}_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 
-                SpecialUIElement background = new SpecialUIElement(backgroundTexture, -1f, 0.05f);
-                background.Left.Set(iconPositions[0].X, 0f);
-                background.Top.Set(iconPositions[0].Y, 0f);
+            SpecialUIElement background = new SpecialUIElement(backgroundTexture, -1f, 0.05f);
+            background.Left.Set(iconPositions[0].X, 0f);
+            background.Top.Set(iconPositions[0].Y, 0f);
                 
-                TechnqiueButton button = new TechnqiueButton(iconTexture, t.Name, t);
-                button.Left.Set(iconPositions[0].X, 0f);
-                button.Top.Set(iconPositions[0].Y, 0f);
+            TechnqiueButton button = new TechnqiueButton(iconTexture, t.Name, t);
+            button.Left.Set(iconPositions[0].X, 0f);
+            button.Top.Set(iconPositions[0].Y, 0f);
 
-                background.Recalculate();
-                button.Recalculate();
+            background.Recalculate();
+            button.Recalculate();
 
-                Append(background);
-                Append(button);
+            Append(background);
+            Append(button);
         }
-        public void OnClick()
+
+        public override void Update(GameTime gameTime)
+        {
+            if (animate && Elements.Count != 0)
+                Elements.Clear();
+
+            base.Update(gameTime);
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            base.DrawSelf(spriteBatch);
+
+            if (animate)
+            {
+                timeCounter++;
+
+                Vector2 pos = Main.LocalPlayer.Center;
+
+                if (timeCounter > 305)
+                {
+                    var player = Main.LocalPlayer;
+                    player.GetModPlayer<SorceryFightPlayer>().innateTechnique = selectedTechnique;
+                    RemoveSelf();
+                    animate = false;
+                    return;
+                }
+
+                int particleCount = timeCounter / 120 + 1;
+
+                if (timeCounter <= 300)
+                {
+                    for (int i = 0; i < particleCount; i++)
+                    {
+                        Vector2 offsetPos = pos + new Vector2(Main.rand.NextFloat(-100, 100), Main.rand.NextFloat(-100, 100));
+                        Vector2 vel = offsetPos.DirectionTo(pos) * 2;
+
+                        // Calamity Mod my beloved. -e
+                        SparkleParticle particle = new SparkleParticle(offsetPos, vel, Color.Wheat, Color.White, 0.5f, 35);
+                        GeneralParticleHandler.SpawnParticle(particle);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 20; i++)
+                    {
+                        Vector2 targetPos = pos + new Vector2(Main.rand.NextFloat(-100, 100), Main.rand.NextFloat(-100, 100));
+                        Vector2 vel = pos.DirectionTo(targetPos) * 5;
+
+                        SparkleParticle particle = new SparkleParticle(pos, vel, Color.Wheat, Color.White, 0.5f, 60);
+                        GeneralParticleHandler.SpawnParticle(particle);
+                    }
+                }
+            }
+        }
+        public void OnClick(InnateTechnique selectedTechnique)
+        {
+            this.selectedTechnique = selectedTechnique;
+            animate = true;
+        }
+
+        private void RemoveSelf()
         {
             SorceryFightUI sfUI = (SorceryFightUI)Parent;
             sfUI.RemoveElement(this);

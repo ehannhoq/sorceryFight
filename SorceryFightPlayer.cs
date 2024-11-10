@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Security.Permissions;
 using CalamityMod.World;
+using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.InnateTechniques;

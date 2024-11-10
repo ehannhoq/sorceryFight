@@ -13,6 +13,7 @@ namespace sorceryFight.Content.UI
     {
         internal UserInterface sfInterface;
         internal SorceryFightUI sfUI;
+
         private GameTime _lastUpdateUiGameTime;
 
         public override void Load()
