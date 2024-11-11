@@ -8,10 +8,13 @@
 		
 	</PropertyGroup>
 	<ItemGroup>
-	  <AdditionalFiles Remove="BossProgression.txt" />
+	  <AdditionalFiles Remove="Content\UI\CursedTechniqueMenu\Limitless\**" />
+	  <Compile Remove="Content\UI\CursedTechniqueMenu\Limitless\**" />
+	  <EmbeddedResource Remove="Content\UI\CursedTechniqueMenu\Limitless\**" />
+	  <None Remove="Content\UI\CursedTechniqueMenu\Limitless\**" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Content\UI\CursedTechniqueMenu\Limitless\" />
+	  <AdditionalFiles Remove="BossProgression.txt" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Reference Include="CalamityMod">

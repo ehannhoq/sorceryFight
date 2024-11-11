@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,7 @@ namespace sorceryFight
 	// Please read https://github.com/tModLoader/tModLoader/wiki/Basic-tModLoader-Modding-Guide#mod-skeleton-contents for more information about the various files in a mod.
 	public class SorceryFight : Mod
 	{
-
-		public static float SecondsToTicks(float seconds)
+        public static float SecondsToTicks(float seconds)
 		{
 			return seconds * 60;
 		}
@@ -21,7 +21,5 @@ namespace sorceryFight
 		{
 			return ticks / 60;
 		}
-
-     
     }
 }

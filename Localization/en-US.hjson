@@ -71,7 +71,11 @@ Mods: {
 					gravitational field, and crushes
 					enemies instantly upon impact.
 					'''
-				LockedDescription: "Slaying a mechanical being "
+				LockedDescription: 
+					'''
+					Slaying a mechanical will push you
+					to your upper limits.
+					'''
 			}
 
 			ReversalRed: {

@@ -31,7 +31,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             }
         }
         public override float Cost { get; set; } = 999f;
-        public override float CostPercentage { get; set; } = -1f;
         public override float MasteryNeeded { get; set; } = 0f;
         public override Color textColor { get; set; } = new Color(235, 117, 233);
         public override bool DisplayNameInGame { get; set; } = false;
@@ -161,11 +160,24 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Projectile red = Main.projectile[(int)Projectile.ai[2]];
 
                 if (Projectile.ai[0] >= 90 && blue.type == ModContent.ProjectileType<AmplificationBlue>())
+                { 
                     blue.Center = bluePosition;
 
+                    Vector2 particleOffsetPosition = bluePosition + new Vector2(Main.rand.NextFloat(-20f, 20f), Main.rand.NextFloat(-20f, 20f));
+                    Vector2 particleVelocity = particleOffsetPosition.DirectionTo(player.Center + new Vector2(0f, -20f)) * 2;
+                    LineParticle particle = new LineParticle(particleOffsetPosition, particleVelocity, false, 30, 0.5f, new Color(108, 158, 240));
+                    GeneralParticleHandler.SpawnParticle(particle);
+                }
+
                 if (Projectile.ai[0] >= 180 && red.type == ModContent.ProjectileType<ReversalRed>())
+                {
                     red.Center = redPosition;
 
+                    Vector2 particleOffsetPosition = redPosition + new Vector2(Main.rand.NextFloat(-20f, 20f), Main.rand.NextFloat(-20f, 20f));
+                    Vector2 particleVelocity = particleOffsetPosition.DirectionTo(player.Center + new Vector2(0f, -20f)) * 2;
+                    LineParticle particle = new LineParticle(particleOffsetPosition, particleVelocity, false, 30, 0.5f, new Color(224, 74, 74));
+                    GeneralParticleHandler.SpawnParticle(particle);
+                }
                 if (Projectile.ai[0] == 280)
                     SoundEngine.PlaySound(SorceryFightSounds.CommonWoosh, Projectile.Center);
 

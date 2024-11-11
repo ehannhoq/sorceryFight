@@ -12,22 +12,13 @@ namespace sorceryFight.Content.CursedTechniques
         {
             get
             {
-                if (Cost == -1)
-                {
-                    return $"Damage: {Damage}\n" 
-                        + $"CE Consumption: {CostPercentage}% of Max CE.\n";
-                }
-                else
-                {
-                    return $"Damage: {Damage}\n" 
-                        + $"CE Consumption: {Cost} CE\n";
-                }
+                return $"Damage: {Damage}\n" 
+                    + $"CE Consumption: {Cost} CE\n";
             }
         }
         public virtual string Description { get; set; } = "None Selected.";
         public virtual string LockedDescription { get; set; } = "None Selected.";
         public virtual float Cost { get; set; } = 0;
-        public virtual float CostPercentage { get; set; } = -1;
         public virtual float MasteryNeeded { get; set; } = 0f;
         public virtual Color textColor { get; set; } = new Color(255, 255, 255);
         public virtual bool DisplayNameInGame { get; set; } = true;
@@ -74,16 +65,14 @@ namespace sorceryFight.Content.CursedTechniques
 				return false;
             }
 
-            float ceCost = CalculateCECost(sf);
-
-            if (sf.cursedEnergy < ceCost)
+            if (sf.cursedEnergy < Cost)
             {
                 int index = CombatText.NewText(player.getRect(), Color.DarkRed, "Not enough Cursed Energy!");
 				Main.combatText[index].lifeTime = 180;
                 return false;
             }
 
-            sf.cursedEnergy -= ceCost;
+            sf.cursedEnergy -= Cost;
 
             if (sf.selectedTechnique.DisplayNameInGame)
             {
@@ -91,11 +80,6 @@ namespace sorceryFight.Content.CursedTechniques
                 Main.combatText[index1].lifeTime = 180;
             }
             return true;
-        }
-
-        private float CalculateCECost(SorceryFightPlayer sf)
-        {
-            return Cost != -1 ? Cost : sf.maxCursedEnergy * (CostPercentage / 100);
         }
     }
 }

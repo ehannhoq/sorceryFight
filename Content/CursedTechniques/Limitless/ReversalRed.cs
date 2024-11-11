@@ -30,8 +30,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 return Language.GetText("Mods.sorceryFight.CursedTechniques.ReversalRed.LockedDescription").Value;
             }
         }
-        public override float Cost { get; set; } = 350f; 
-        public override float CostPercentage { get; set; } = -1f;
+        public override float Cost { get; set; } = 350f;
         public override float MasteryNeeded { get; set; } = 0f;
         public override Color textColor { get; set; } = new Color(224, 74, 74);
 
@@ -113,6 +112,17 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                 if (Projectile.ai[1] != 1)
                     Projectile.Center = player.Center;
+                else
+                {
+                    float goalScale = 1.3f;
+
+                    if (animScale < goalScale)
+                    {
+                        animScale = (Projectile.ai[0] / beginAnim) + 0.3f;
+                    }
+                    else
+                        animScale = goalScale;
+                }
 
                 for (int i = 0; i < 2; i++)
                 {

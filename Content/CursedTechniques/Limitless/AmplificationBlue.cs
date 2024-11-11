@@ -34,7 +34,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         }
 
         public override float Cost { get; set; } = 50f;
-        public override float CostPercentage { get; set; } = -1f;
         public override float MasteryNeeded { get; set; } = 0f;
         public override Color textColor { get; set; } = new Color(108, 158, 240);
         public override bool Unlocked
@@ -78,7 +77,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             Projectile.height = 30;
             Projectile.tileCollide = true;
             animating = false;
-            animScale = 1f;
+            animScale = 0.75f;
         }
         public override void AI()
         {
@@ -139,7 +138,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
                 }
 
-                float goalScale = 1f;
+                float goalScale = 0.75f;
 
                 if (Projectile.ai[1] == 1) // Hook for if the projectile was spawned by a Hollow Purple
                     goalScale = 1.25f;

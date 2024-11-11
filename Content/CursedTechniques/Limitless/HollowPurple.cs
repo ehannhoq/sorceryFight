@@ -30,7 +30,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             }
         }
         public override float Cost { get; set; } = 500f;
-        public override float CostPercentage { get; set; } = -1f;
         public override float MasteryNeeded { get; set; } = 0f;
         public override Color textColor { get; set; } = new Color(235, 117, 233);
 
@@ -144,20 +143,34 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Projectile red = Main.projectile[(int)Projectile.ai[2]];
 
                 if (Projectile.ai[0] >= 1 && blue.type == ModContent.ProjectileType<AmplificationBlue>())
+                {
                     blue.Center = bluePosition;
+                    
+                    Vector2 particleOffsetPosition = bluePosition + new Vector2(Main.rand.NextFloat(-20f, 20f), Main.rand.NextFloat(-20f, 20f));
+                    Vector2 particleVelocity = particleOffsetPosition.DirectionTo(player.Center + new Vector2(0f, -20f)) * 2;
+                    LineParticle particle = new LineParticle(particleOffsetPosition, particleVelocity, false, 30, 0.5f, new Color(108, 158, 240));
+                    GeneralParticleHandler.SpawnParticle(particle);
+                }
 
                 if (Projectile.ai[0] >= 30 && red.type == ModContent.ProjectileType<ReversalRed>())
+                {
                     red.Center = redPosition;
+
+                    Vector2 particleOffsetPosition = redPosition + new Vector2(Main.rand.NextFloat(-20f, 20f), Main.rand.NextFloat(-20f, 20f));
+                    Vector2 particleVelocity = particleOffsetPosition.DirectionTo(player.Center + new Vector2(0f, -20f)) * 2;
+                    LineParticle particle = new LineParticle(particleOffsetPosition, particleVelocity, false, 30, 0.5f, new Color(224, 74, 74));
+                    GeneralParticleHandler.SpawnParticle(particle);
+                }
 
                 if (Projectile.ai[0] == 95)
                     SoundEngine.PlaySound(SorceryFightSounds.CommonWoosh, Projectile.Center);
 
                 if (Projectile.ai[0] > 120)
                 {
-                    blueOffset.X += 2f;
-                    redOffset.X -= 2f;
+                    this.blueOffset.X += 2f;
+                    this.redOffset.X -= 2f;
                     
-                    if (blueOffset.X >= redOffset.X)
+                    if (this.blueOffset.X >= this.redOffset.X)
                     {
                         for (int i = 0; i < 30; i++)
                         {
