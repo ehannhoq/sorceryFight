@@ -30,6 +30,7 @@ namespace sorceryFight.Content.CursedTechniques
         public virtual float CostPercentage { get; set; } = -1;
         public virtual float MasteryNeeded { get; set; } = 0f;
         public virtual Color textColor { get; set; } = new Color(255, 255, 255);
+        public virtual bool DisplayNameInGame { get; set; } = true;
 
         public virtual int Damage { get; set; } = 0;
         public virtual float Speed { get; set; } = 0f;
@@ -83,8 +84,12 @@ namespace sorceryFight.Content.CursedTechniques
             }
 
             sf.cursedEnergy -= ceCost;
-            int index1 = CombatText.NewText(player.getRect(), sf.selectedTechnique.textColor, sf.selectedTechnique.Name);
-			Main.combatText[index1].lifeTime = 180;
+
+            if (sf.selectedTechnique.DisplayNameInGame)
+            {
+                int index1 = CombatText.NewText(player.getRect(), sf.selectedTechnique.textColor, sf.selectedTechnique.Name);
+                Main.combatText[index1].lifeTime = 180;
+            }
             return true;
         }
 

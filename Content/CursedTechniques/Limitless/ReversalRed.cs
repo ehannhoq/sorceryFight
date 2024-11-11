@@ -1,7 +1,10 @@
 
+using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -44,7 +47,11 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         }
 
         public static Texture2D texture;
-     
+
+        public bool animating;
+        public float animScale;
+        public Rectangle hitbox;
+        
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<ReversalRed>();
@@ -63,9 +70,12 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 20;
-            Projectile.height = 20;
+            Projectile.width = 40;
+            Projectile.height = 40;
             Projectile.tileCollide = true;
+            animating = false;
+            animScale = 0f;
+            hitbox = Projectile.Hitbox;
         }
 
         public override Color? GetAlpha(Color lightColor)
@@ -75,12 +85,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public override void AI()
         {
-            Projectile.ai[0] += 1;
-
-            if (Projectile.ai[0] > LifeTime)
-            {
-                Projectile.Kill();
-            }
+            Projectile.ai[0]++;
 
             if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
             {
@@ -91,12 +96,66 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     Projectile.frame = 0;
                 }
             }
+
+            Player player = Main.player[Projectile.owner];
+
+            float beginAnim = 80f;
+
+            if (Projectile.ai[0] < beginAnim)
+            {
+                if (!animating)
+                {
+                    animating = true;
+                    SoundEngine.PlaySound(SorceryFightSounds.ReversalRedChargeUp, Projectile.Center);
+                    Projectile.damage = 0;
+                    Projectile.tileCollide = false;
+                }
+
+                if (Projectile.ai[1] != 1)
+                    Projectile.Center = player.Center;
+
+                for (int i = 0; i < 2; i++)
+                {
+                    Vector2 particleOffset = Projectile.Center + new Vector2(Main.rand.NextFloat(-80f, 80f), Main.rand.NextFloat(-80f, 80f));
+                    Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
+                    LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 10, 1, textColor);
+                    GeneralParticleHandler.SpawnParticle(particle);
+                }
+
+                return;
+            }
+
+            if (animating)
+            {
+                animating = false;
+                Projectile.velocity = Vector2.Zero;
+                animScale = 1.3f;
+
+                if (Projectile.ai[1] != 1)
+                {
+                    SoundEngine.PlaySound(SorceryFightSounds.CommonFire, Projectile.Center);
+                    Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
+                    Projectile.damage = Damage;
+                    Projectile.tileCollide = true;
+                }
+            }
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+
+            for (int i = 0; i < 50; i++)
+            {
+                Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 7), Main.rand.NextFloat(-7, 7));
+
+                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
+                GeneralParticleHandler.SpawnParticle(particle);
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
-            SpriteBatch spriteBatch = Main.spriteBatch;
-
             if (texture == null)
                 texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/ReversalRed").Value;
 
@@ -107,16 +166,31 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
 
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
-            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, 0.5f, SpriteEffects.None, 0f);
 
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
             return false;
         }
 
         public override bool Shoot(Terraria.DataStructures.IEntitySource spawnSource, Vector2 position, Vector2 velocity, Player player)
         {
-            if (base.Shoot(spawnSource, position, velocity, player))
+            if (base.Shoot(spawnSource, position, velocity, player) && Main.myPlayer == player.whoAmI)
+            {
                 Projectile.NewProjectile(spawnSource, position, velocity, ModContent.ProjectileType<ReversalRed>(), Damage, 0f, player.whoAmI);
+            }
             return true;
+        }
+
+        private void SpecialKill()
+        {
+            for (int i = 0; i < 40; i++)
+            {
+                Vector2 particleOffset = Projectile.Center + new Vector2(Main.rand.NextFloat(-120f, 120f), Main.rand.NextFloat(-120f, 120f));
+                Vector2 particleVelocity = particleOffset.DirectionFrom(Projectile.Center);
+                LineParticle particle = new LineParticle(Projectile.Center, particleVelocity * 3, false, 20, 1, textColor);
+                GeneralParticleHandler.SpawnParticle(particle);
+            }
+
+            Projectile.Kill();
         }
     }
 }

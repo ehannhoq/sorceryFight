@@ -235,8 +235,8 @@ namespace sorceryFight
             if (Main.masterMode)
                 total *= 2.0f;
 
-
-            return total;
+            return 300f;
+            //return total;
         }
 
         public void ShootTechnique()

@@ -1,6 +1,10 @@
+using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent.Bestiary;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -30,6 +34,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override float CostPercentage { get; set; } = -1f;
         public override float MasteryNeeded { get; set; } = 0f;
         public override Color textColor { get; set; } = new Color(235, 117, 233);
+        public override bool DisplayNameInGame { get; set; } = false;
 
         public override int Damage { get; set ; } = 9999;
         public override float Speed { get; set; } = 35f;
@@ -44,6 +49,14 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public static Texture2D texture;
 
+        public bool animating;
+        public float animScale;
+        public Rectangle hitbox;
+        public Vector2 blueOffset;
+        public Vector2 redOffset;
+        public int incantationsIndex;
+        public List<string> incantations;
+
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<HollowPurple200Percent>();
@@ -54,18 +67,36 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             return Speed;
         }
 
+
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 30;
-            Projectile.height = 30;
+            Projectile.width = 70;
+            Projectile.height = 70;
+            animating = false;
+            animScale = 1f;
+            hitbox = Projectile.Hitbox;
+
+            blueOffset = new Vector2(-60f, -20f);
+            redOffset = new Vector2(60f, -20f);
+            incantationsIndex = 0;
+            incantations = new List<string>()
+            {
+                "Nine Ropes.",
+                "Polarized Light.",
+                "Crow and Declaration.",
+                "Between Front and Back.",
+            };
         }
 
         public override void AI()
         {
             Projectile.ai[0] += 1;
+            Player player = Main.player[Projectile.owner];
 
-            if (Projectile.ai[0] > LifeTime)
+            float beginAnimTime = 600f;
+
+            if (Projectile.ai[0] > LifeTime + beginAnimTime)
             {
                 Projectile.Kill();
             }
@@ -78,6 +109,103 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 {
                     Projectile.frame = 0;
                 }
+            }
+
+            if (Projectile.ai[0] < beginAnimTime)
+            {
+                if (!animating)
+                {
+                    animating = true;
+                }
+
+                animScale = 0f;
+                Projectile.damage = 0;
+                Projectile.Hitbox = new Rectangle(0, 0, 0, 0);
+                Projectile.Center = player.Center + new Vector2(0f, -30f);
+
+                if (Projectile.ai[0] % 90 == 1)
+                {
+                    int index = CombatText.NewText(player.getRect(), textColor, incantations[incantationsIndex]);
+                    Main.combatText[index].lifeTime = 60;
+
+                    if (incantationsIndex < incantations.Count)
+                        incantationsIndex++;
+                }
+
+
+                Vector2 bluePosition = player.Center + blueOffset;
+                Vector2 redPosition = player.Center + redOffset;
+
+                if (Projectile.ai[0] == 90)
+                {
+                    if (Main.myPlayer == Projectile.owner)
+                    {
+                        int index = Projectile.NewProjectile(Projectile.GetSource_FromThis(), bluePosition, Vector2.Zero, ModContent.ProjectileType<AmplificationBlue>(), 0, 0f, Projectile.owner, default, 1);
+                        if (index >= 0)
+                            Projectile.ai[1] = index;
+                    }
+                }
+
+
+                if (Projectile.ai[0] == 180)
+                {
+                    if (Main.myPlayer == Projectile.owner)
+                    {
+                        int index = Projectile.NewProjectile(Projectile.GetSource_FromThis(), redPosition, Vector2.Zero, ModContent.ProjectileType<ReversalRed>(), 0, 0f, Projectile.owner, default, 1);
+                        if (index >= 0)
+                            Projectile.ai[2] = index;
+                    }
+                }
+
+                Projectile blue = Main.projectile[(int)Projectile.ai[1]];
+                Projectile red = Main.projectile[(int)Projectile.ai[2]];
+
+                if (Projectile.ai[0] >= 90 && blue.type == ModContent.ProjectileType<AmplificationBlue>())
+                    blue.Center = bluePosition;
+
+                if (Projectile.ai[0] >= 180 && red.type == ModContent.ProjectileType<ReversalRed>())
+                    red.Center = redPosition;
+
+                if (Projectile.ai[0] == 280)
+                    SoundEngine.PlaySound(SorceryFightSounds.CommonWoosh, Projectile.Center);
+
+                if (Projectile.ai[0] >= 320)
+                {
+                    blueOffset.X += 2f;
+                    redOffset.X -= 2f;
+
+                    if (blueOffset.X >= redOffset.X)
+                    {
+                        for (int i = 0; i < 30; i++)
+                        {
+                            Vector2 offsetParticlePosition = Projectile.Center + new Vector2(Main.rand.NextFloat(-300, 300), Main.rand.NextFloat(-300, 300));
+                            Vector2 offsetParticleVelocity = Projectile.Center.DirectionTo(offsetParticlePosition) * 10;
+
+                            AltSparkParticle particle = new AltSparkParticle(Projectile.Center, offsetParticleVelocity, false, 45, 1.5f, Color.White);
+                            GeneralParticleHandler.SpawnParticle(particle);
+                        }
+
+                        Projectile.ai[0] = beginAnimTime;
+                    }
+                }
+
+                return;
+            }
+
+            if (animating)
+            {
+                animating = false;
+                animScale = 2f;
+                Projectile.damage = Damage;
+                Projectile.Hitbox = hitbox;
+                Projectile.timeLeft = (int)LifeTime;
+                Main.projectile[(int)Projectile.ai[1]].Kill();
+                Main.projectile[(int)Projectile.ai[2]].Kill();
+                Projectile.Center = player.Center + new Vector2(0f, -40f);
+                Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
+                SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleSnap, Projectile.Center);
+                int index = CombatText.NewText(player.getRect(), textColor, "Hollow Technique: 200% Hollow Purple.");
+                Main.combatText[index].lifeTime = 180;
             }
         }
 
@@ -95,14 +223,14 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
 
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
-            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, 0.5f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
 
             return false;
         }
 
         public override bool Shoot(Terraria.DataStructures.IEntitySource spawnSource, Vector2 position, Vector2 velocity, Player player)
         {
-            if (base.Shoot(spawnSource, position, velocity, player))
+            if (base.Shoot(spawnSource, position, velocity, player) && Main.myPlayer == player.whoAmI)
                 Projectile.NewProjectile(spawnSource, position, velocity, ModContent.ProjectileType<HollowPurple200Percent>(), Damage, 0f, player.whoAmI);
             return true;
         }

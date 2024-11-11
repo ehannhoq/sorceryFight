@@ -1,7 +1,10 @@
+using CalamityMod.Particles;
+using CalamityMod.Sounds;
 using Microsoft.Build.Graph;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -50,6 +53,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public static Texture2D texture;
 
+        public bool animating;
+        public float animScale;
+
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = FRAME_COUNT;
@@ -71,12 +77,15 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             Projectile.width = 30;
             Projectile.height = 30;
             Projectile.tileCollide = true;
+            animating = false;
+            animScale = 1f;
         }
         public override void AI()
         {
             Projectile.ai[0] += 1;
+            float beginAnimTime = 30f;
 
-            if (Projectile.ai[0] > LifeTime)
+            if (Projectile.ai[0] > LifeTime + beginAnimTime)
             {
                 Projectile.Kill();
             }
@@ -121,6 +130,40 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     }
                 }
             }
+
+            if (Projectile.ai[0] < beginAnimTime)
+            {
+                if (!animating)
+                {
+                    animating = true;
+                    SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
+                }
+
+                float goalScale = 1f;
+
+                if (Projectile.ai[1] == 1) // Hook for if the projectile was spawned by a Hollow Purple
+                    goalScale = 1.25f;
+
+                if (animScale < goalScale)
+                    animScale = Projectile.ai[0] / beginAnimTime;
+                else
+                    animScale = goalScale;
+
+                
+                Vector2 particleOffset = Projectile.Center + new Vector2(Main.rand.NextFloat(-40f, 40f), Main.rand.NextFloat(-40f, 40f));
+                Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
+                LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 10, 1, textColor);
+                GeneralParticleHandler.SpawnParticle(particle);
+
+                return;
+            }
+
+            if (animating)
+            {
+                Projectile.tileCollide = true;
+                animating = false;
+
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -137,7 +180,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
 
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
-            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, 0.5f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
 
             return false;
         }
@@ -146,11 +189,19 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {
             base.OnHitNPC(target, hit, damageDone);
             Projectile.penetrate = 0;
+
+            for (int i = 0; i < 6; i++)
+            {
+                Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
+
+                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
+                GeneralParticleHandler.SpawnParticle(particle);
+            }
         }
 
         public override bool Shoot(Terraria.DataStructures.IEntitySource spawnSource, Vector2 position, Vector2 velocity, Player player)
         {
-            if (base.Shoot(spawnSource, position, velocity, player))
+            if (base.Shoot(spawnSource, position, velocity, player) && Main.myPlayer == player.whoAmI)
                 Projectile.NewProjectile(spawnSource, position, velocity, ModContent.ProjectileType<AmplificationBlue>(), Damage, 0f, player.whoAmI);
             return true;
         }
