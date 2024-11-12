@@ -16,7 +16,9 @@ namespace sorceryFight
     {
         #region Global Variables
         public bool hasUIOpen;
-        public bool disabledRegen;
+        public bool disableRegenFromProjectiles;
+        public bool disableRegenFromBuffs;
+        public bool disableRegenFromDE;
         #endregion
 
         #region Global Cursed Technique Stuff
@@ -52,7 +54,9 @@ namespace sorceryFight
         public override void Initialize()
         {
             hasUIOpen = false;
-            disabledRegen = false;
+            disableRegenFromProjectiles = false;
+            disableRegenFromBuffs = false;
+            disableRegenFromDE = false;
 
             innateTechnique = new InnateTechnique();
             selectedTechnique = new CursedTechnique();
@@ -130,6 +134,8 @@ namespace sorceryFight
             {
                 ShootTechnique();
             }
+
+            bool disabledRegen = disableRegenFromBuffs || disableRegenFromProjectiles || disableRegenFromDE;
 
             if (cursedEnergy < maxCursedEnergy && !disabledRegen)
             {

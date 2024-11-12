@@ -55,8 +55,9 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
 
         public override void Remove(Player player)
         {
-            player.GetModPlayer<SorceryFightPlayer>().infinity = false;
-            player.GetModPlayer<SorceryFightPlayer>().disabledRegen = false; // probably temporary
+            SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
+            sf.infinity = false;
+            sf.disableRegenFromBuffs = false; // Most likely temporary, up until there's another buff that requires disabling regen.
         }
 
         public override void Update(Player player, ref int buffIndex)
@@ -65,7 +66,8 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
             float projInfinityDistance = 100f;
             float npcInfinityDistance = 70f;
             CostPerSecond = 1f;
-            sf.disabledRegen = false;
+
+            sf.disableRegenFromBuffs = false;
 
             float accumulativeDamage = 0f;
             int numInInfinity = 0;
@@ -108,7 +110,7 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
 
             if (accumulativeDamage > 0 || numInInfinity > 0)
             {
-                sf.disabledRegen = true;
+                sf.disableRegenFromBuffs = true;
             }
 
             accumulativeDamage -= player.statDefense;

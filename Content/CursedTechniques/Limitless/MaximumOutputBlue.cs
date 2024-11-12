@@ -82,6 +82,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {   
             Projectile.ai[0] += 1;
             float beginAnimTime = 30;
+            Player player = Main.player[Projectile.owner];
 
             if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
             {
@@ -143,6 +144,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 {
                     animating = true;
                     SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
+                    player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = true;
                 }
 
                 if (animScale < 1f)
@@ -165,6 +167,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 Projectile.tileCollide = true;
                 animating = false;
+                player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
             }
         }
 
@@ -172,7 +175,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {
             base.OnHitNPC(target, hit, damageDone);
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 10; i++)
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 7), Main.rand.NextFloat(-7, 7));
 

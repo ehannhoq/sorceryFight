@@ -16,7 +16,5 @@ namespace sorceryFight.Content.PassiveTechniques
         {
             return false;
         }
-
-
     }
 }

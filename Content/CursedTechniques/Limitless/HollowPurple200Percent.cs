@@ -115,6 +115,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 if (!animating)
                 {
                     animating = true;
+                    player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = true;
                 }
 
                 animScale = 0f;
@@ -216,8 +217,23 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Projectile.Center = player.Center + new Vector2(0f, -40f);
                 Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
                 SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleSnap, Projectile.Center);
+                player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
                 int index = CombatText.NewText(player.getRect(), textColor, "Hollow Technique: 200% Hollow Purple.");
                 Main.combatText[index].lifeTime = 180;
+
+            }
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+
+            for (int i = 0; i < 40; i++)
+            {
+                Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 7), Main.rand.NextFloat(-7, 7));
+
+                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
+                GeneralParticleHandler.SpawnParticle(particle);
             }
         }
 

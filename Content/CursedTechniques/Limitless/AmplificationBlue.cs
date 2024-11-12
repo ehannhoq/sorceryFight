@@ -83,6 +83,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {
             Projectile.ai[0] += 1;
             float beginAnimTime = 30f;
+            bool spawnedFromPurple = Projectile.ai[1] == 1;
+            Player player = Main.player[Projectile.owner];
 
             if (Projectile.ai[0] > LifeTime + beginAnimTime)
             {
@@ -136,11 +138,13 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 {
                     animating = true;
                     SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
+
+                    player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = true;
                 }
 
                 float goalScale = 0.75f;
 
-                if (Projectile.ai[1] == 1) // Hook for if the projectile was spawned by a Hollow Purple
+                if (spawnedFromPurple) // Hook for if the projectile was spawned by a Hollow Purple
                     goalScale = 1.25f;
 
                 if (animScale < goalScale)
@@ -162,6 +166,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Projectile.tileCollide = true;
                 animating = false;
 
+                if (!spawnedFromPurple)
+                    player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
             }
         }
 

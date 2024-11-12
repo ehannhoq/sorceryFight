@@ -85,6 +85,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override void AI()
         {
             Projectile.ai[0]++;
+            bool spawnedFromPurple = Projectile.ai[1] == 1;
+            Player player = Main.player[Projectile.owner];
 
             if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
             {
@@ -96,7 +98,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 }
             }
 
-            Player player = Main.player[Projectile.owner];
 
             float beginAnim = 80f;
 
@@ -108,9 +109,10 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     SoundEngine.PlaySound(SorceryFightSounds.ReversalRedChargeUp, Projectile.Center);
                     Projectile.damage = 0;
                     Projectile.tileCollide = false;
+                    player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = true;
                 }
 
-                if (Projectile.ai[1] != 1)
+                if (!spawnedFromPurple)
                     Projectile.Center = player.Center;
                 else
                 {
@@ -141,12 +143,13 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Projectile.velocity = Vector2.Zero;
                 animScale = 1.3f;
 
-                if (Projectile.ai[1] != 1)
+                if (!spawnedFromPurple)
                 {
                     SoundEngine.PlaySound(SorceryFightSounds.CommonFire, Projectile.Center);
                     Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
                     Projectile.damage = Damage;
                     Projectile.tileCollide = true;
+                    player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
                 }
             }
         }
@@ -155,7 +158,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {
             base.OnHitNPC(target, hit, damageDone);
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 10; i++)
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 7), Main.rand.NextFloat(-7, 7));
 
