@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.Localization;
@@ -5,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.PassiveTechniques.Limitless
 {
-    public class MaximumAmplifiedAura : AmplifiedAura
+    public class MaximumAmplifiedAuraBuff : AmplifiedAuraBuff
     {
         public override float SpeedMultiplier { get; set; } = 100f;
         public override float DamageMultiplier { get; set; } = 50f;
@@ -27,14 +28,22 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
                 return NPC.downedGolemBoss;
             }
         }
-
         public override void Apply(Player player)
         {
-            player.AddBuff(ModContent.BuffType<MaximumAmplifiedAura>(), 2);
-            
-            if (player.HasBuff<AmplifiedAura>())
+            player.AddBuff(ModContent.BuffType<MaximumAmplifiedAuraBuff>(), 2);
+
+            if (player.HasBuff<AmplifiedAuraBuff>())
             {
                 player.GetModPlayer<SorceryFightPlayer>().innateTechnique.PassiveTechniques[1].isActive = false;
+            }
+
+            if (auraIndex == -1)
+            {
+                Vector2 playerPos = player.MountedCenter;
+                var entitySource = player.GetSource_FromThis();
+
+                if (Main.myPlayer == player.whoAmI)
+                    auraIndex = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<MaximumAmplifiedAuraProjectile>(), 0, 0, player.whoAmI);
             }
         }
     }

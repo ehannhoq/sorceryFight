@@ -184,10 +184,6 @@ Mods: {
 		}
 
 		Buffs: {
-			Infinity.DisplayName: Infinity
-			AmplifiedAura.DisplayName: Amplified Aura
-			MaximumAmplifiedAura.DisplayName: Maximum Cursed Energy Output: Amplified Aura
-
 			PassiveTechnique: {
 				DisplayName: Passive Technique
 				Description: Mods.sorceryFight.Buffs.PassiveTechnique.Description
@@ -201,6 +197,10 @@ Mods: {
 					You won't be able to use any cursed techniques.
 					'''
 			}
+
+			AmplifiedAuraBuff.DisplayName: Amplified Aura
+			InfinityBuff.DisplayName: Infinity
+			MaximumAmplifiedAuraBuff.DisplayName: Maximum Amplified Aura
 		}
 
 		Projectiles: {
@@ -210,6 +210,8 @@ Mods: {
 			HollowPurple200Percent.DisplayName: Hollow Purple200 Percent
 			MaximumOutputBlue.DisplayName: Maximum Output Blue
 			ReversalRed.DisplayName: Reversal Red
+			AmplifiedAuraProjectile.DisplayName: Amplified Aura Projectile
+			MaximumAmplifiedAuraProjectile.DisplayName: Maximum Amplified Aura Projectile
 		}
 	}
 }

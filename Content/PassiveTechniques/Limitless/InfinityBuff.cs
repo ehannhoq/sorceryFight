@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 namespace sorceryFight.Content.PassiveTechniques.Limitless
 {
     
-    public class Infinity : PassiveTechnique
+    public class InfinityBuff : PassiveTechnique
     {
         public override string Name { get; set; } = "Infinity";
         public override string Stats 
@@ -48,7 +48,7 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
 
         public override void Apply(Player player)
         {
-            player.AddBuff(ModContent.BuffType<Infinity>(), 2);
+            player.AddBuff(ModContent.BuffType<InfinityBuff>(), 2);
       
             player.GetModPlayer<SorceryFightPlayer>().infinity = true;
         }
