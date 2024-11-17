@@ -56,7 +56,7 @@ Mods: {
 					'''
 				LockedDescription:
 					'''
-					Upon defeating the one who gaurdes the
+					Upon defeating the one who gaurds the
 					dungeon do you learn one of the
 					fundementals of the Limitless.
 					'''
@@ -73,8 +73,8 @@ Mods: {
 					'''
 				LockedDescription:
 					'''
-					Slaying a mechanical will push you
-					to your upper limits.
+					Slaying a mechanical being will push 
+					you to your upper limits.
 					'''
 			}
 
@@ -91,7 +91,8 @@ Mods: {
 					'''
 				LockedDescription:
 					'''
-					At the brink of death do you awaken
+					At the brink of death at the hands
+					of the lunar god do you awaken
 					the other half of the Limitless.
 					'''
 			}
@@ -106,8 +107,9 @@ Mods: {
 					'''
 				LockedDescription:
 					'''
-					Defeating the lunar god allows the existence
-					of an imaginary mass.
+					At the brink of death at the hands
+					of the lunar god do you awaken
+					the other half of the Limitless.
 					'''
 			}
 

@@ -34,8 +34,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override float MasteryNeeded { get; set; } = 0f;
         public override Color textColor { get; set; } = new Color(224, 74, 74);
 
-        public override int Damage { get; set ; } = 250;
-        public override float Speed { get; set; } = 25f;
+        public override int Damage { get; set ; } = 1500;
+        public override float Speed { get; set; } = 30f;
         public override float LifeTime { get; set; } = 300f;
         public override bool Unlocked
         {
@@ -99,7 +99,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             }
 
 
-            float beginAnim = 80f;
+            float beginAnim = 60f;
 
             if (Projectile.ai[0] < beginAnim)
             {

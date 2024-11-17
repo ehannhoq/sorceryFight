@@ -35,9 +35,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override float MasteryNeeded { get; set; } = 0f;
         public override Color textColor { get; set; } = new Color(108, 158, 240);
 
-        public override int Damage { get; set ; } = 100;
+        public override int Damage { get; set ; } = 300;
         public override float Speed { get; set; } = 20f;
-        public override float LifeTime { get; set; } = 300f;
+        public override float LifeTime { get; set; } = 120f;
         public override bool Unlocked
         {
             get
@@ -52,6 +52,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public bool animating;
         public float animScale;
+        public bool justSpawned;
 
         public override void SetStaticDefaults()
         {
@@ -77,9 +78,28 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             Projectile.penetrate = 10;
             animating = false;
             animScale = 0f;
+            justSpawned = true;
         }
         public override void AI()
         {   
+            if (justSpawned)
+            {
+                for (int i = 0; i < Main.projectile.Length; i ++)
+                {
+                    if (i == Projectile.whoAmI)
+                        continue;
+
+                    Projectile proj = Main.projectile[i];
+
+                    if (proj.type == ModContent.ProjectileType<MaximumOutputBlue>())
+                    {
+                        proj.Kill();
+                    }
+                }
+
+                justSpawned = false;
+            }
+
             Projectile.ai[0] += 1;
             float beginAnimTime = 30;
             Player player = Main.player[Projectile.owner];
@@ -144,7 +164,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 {
                     animating = true;
                     SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
-                    player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = true;
                 }
 
                 if (animScale < 1f)
@@ -167,7 +186,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 Projectile.tileCollide = true;
                 animating = false;
-                player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
             }
         }
 

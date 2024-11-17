@@ -130,6 +130,8 @@ namespace sorceryFight
 
         public override void PostUpdate()
         {
+            innateTechnique.PostUpdate(this);
+
             if (SFKeybinds.UseTechnique.JustPressed)
             {
                 ShootTechnique();
@@ -247,7 +249,7 @@ namespace sorceryFight
 
         public void ShootTechnique()
         {
-            if (selectedTechnique.Name == "None Selected.")
+            if (selectedTechnique.Name == "None Selected." || disableRegenFromProjectiles)
             {
                 return;
             }
@@ -259,5 +261,6 @@ namespace sorceryFight
 
             selectedTechnique.Shoot(entitySource, playerPos, dir, Player);
         }
+
     }
 }

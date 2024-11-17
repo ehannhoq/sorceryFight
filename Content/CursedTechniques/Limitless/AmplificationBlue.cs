@@ -44,7 +44,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             }
         }
 
-        public override int Damage { get; set ; } = 30;
+        public override int Damage { get; set ; } = 150;
         public override float Speed { get; set; } = 15f;
         public override float LifeTime { get; set; } = 300f;
         public virtual float AttractionRadius { get; set; } = 100f;

@@ -1,71 +1,66 @@
-[PRE HARDMODE]
+GENERAL:
 
-100 CE
-1 CE/s
+	MAX CE:
+	Base - 100
+	Skeletron - 200
+	A Mechanical Boss - 500
+	Moonlord - 1000
+	Providence - 2000
 
-Eye of Cthulhu
-    CE Regen Rate: 5 CE/s
+	CE REGEN
+	Base - 1 CE/s
+	Eye of Cthulhu - 5 CE/s
+	Wall of Flesh - 10 CE/s
+	Plantera - 25 CE/s
+	Lunatic Cultist - 50 CE/s
+	Dragonfolly - 75 CE/s
+	One Run of Kos - 100 CE/s
 
-    Cursed Technique
-    Black Flashs
-
-    LIMITLESS: INFINITY
-
-Skeletron
-    CE: 200
-
-    LIMITLESS: AMPLIFIED BLUE
-    SHRINE: DISMANTLE
-
-Wall of Flesh
-    CE Regen Rate: 10 CE/s
-
-    LIMITLESS: AMPLIFIED AURA
+	Imperfect Domain Expansion - Providence
+	Perfect Domain Expansion - Polterghast
 
 
-[HARDMODE]
 
-Mechanical Bosses:
-    CE: 500
+LIMITLESS:
 
-    LIMITLESS: MAXIMUM OUTPUT BLUE
+	INFINITY
+	Unlocked by killing the Eye of Cthulu
 
-Planetera:
-    CE Regen Rate: 25 CE/s
+	AMPLIFIED BLUE
+	Unlocked by killing Skeletron
 
-Golem
-    LIMITLESS: MAXIMUM AMPLIFIED AURA
+	AMPLIFIED AURA
+	Unlocked by killing WoF
+
+	MAXIMUM OUTPUT: AMPLIFIED BLUE
+	Unlocked by killing a Mechnical Boss
+
+	MAXIMUM OUTPUT: AMPLIFIED AURA
+	Unlocked by killing Golem
+
+	REVERSAL RED
+	Unlocked by almost dying to Moon Lord
+
+	HOLLOW PURPLE
+	Unlocked by defeating Providence
+
+	200% HOLLOW PURPLE
+	Unlocked by defeating Polterghast
 
 
-Lunatic Cultist
-    CE Regen Rate: 50 CE/s
 
-    Reverse Cursed Technique
+SHRINE:
 
-    PRIVATE PURE LOVE TRAIN: IDLE DEATH GAMBLING (DE)
-    LIMITLESS: REVERSAL RED
-    SHRINE: CLEAVE
+	DISMANTLE
+	Unlocked by defeating Skeletron
 
-Moon Lord:
-    CE: 1000
+	CLEAVE
+	Unlocked by defeating Lunatic Cultist
 
-    LIMITLESS: HOLLOW PURPLE
-    LIMITLESS: 200% HOLLOW PURPLE
-    SHRINE: DIVINE FLAME
 
-[POST MOONLORD]
+	DIVINE FLAME
+	Unlocked by defeating Moon Lord
 
-Dragonfolly:
-    CE Regen Rate: 75 CE/s
 
-    SHRINE: WORLD CUTTING SLASH
-
-Providence:
-    CE: 2000
-
-    Imperfect Domain Expansion
-
-Run of Kos:
-
-    CE Regen Rate: 100 CE/s
-    Perfect Domain Expansion
+	WORLD CUTTING SLASH
+	Unlocked by defeating Dragonfolly

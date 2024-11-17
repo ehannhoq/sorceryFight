@@ -33,8 +33,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override float MasteryNeeded { get; set; } = 0f;
         public override Color textColor { get; set; } = new Color(235, 117, 233);
 
-        public override int Damage { get; set ; } = 5000;
-        public override float Speed { get; set; } = 35f;
+        public override int Damage { get; set ; } = 6000;
+        public override float Speed { get; set; } = 40f;
         public override float LifeTime { get; set; } = 500f;
         public override bool Unlocked
         {
@@ -163,10 +163,10 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     GeneralParticleHandler.SpawnParticle(particle);
                 }
 
-                if (Projectile.ai[0] == 95)
+                if (Projectile.ai[0] == 75)
                     SoundEngine.PlaySound(SorceryFightSounds.CommonWoosh, Projectile.Center);
 
-                if (Projectile.ai[0] > 120)
+                if (Projectile.ai[0] > 100)
                 {
                     this.blueOffset.X += 2f;
                     this.redOffset.X -= 2f;
