@@ -185,7 +185,7 @@ namespace sorceryFight
 
         public float calculateMaxCE()
         {
-            float baseCE = 500f;
+            float baseCE = 100f;
             float sum = 0f;
 
             if (cursedSkull)
@@ -208,13 +208,12 @@ namespace sorceryFight
             if (Main.masterMode)
                 total *= 2.0f;
 
-
             return total;
         }
 
         public float calculateCERegenRate()
         {
-            float baseRegen = 10f;
+            float baseRegen = 1f;
             float sum = 0f;
 
             if (cursedEye) 
@@ -243,8 +242,7 @@ namespace sorceryFight
             if (Main.masterMode)
                 total *= 2.0f;
 
-            return 300f;
-            //return total;
+            return total;
         }
 
         public void ShootTechnique()

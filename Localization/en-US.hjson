@@ -21,11 +21,6 @@ Mods: {
 				Tooltip: ""
 			}
 
-			CursedProfanedShards: {
-				DisplayName: Cursed Profaned Shards
-				Tooltip: ""
-			}
-
 			YourPotential: {
 				DisplayName: Your Potential
 				Tooltip:
@@ -33,6 +28,101 @@ Mods: {
 					Your potential is yet to
 					be unleashed.
 					'''
+			}
+
+			CursedBulb: {
+				DisplayName: Cursed Bulb
+				Tooltip:
+					'''
+					Radiating in cursed energy.
+					Increases your Cursed Energy regeneration by 15 CE/s.
+					'''
+			}
+
+			CursedEffulgentFeather: {
+				DisplayName: Cursed Effulgent Feather
+				Tooltip:
+					'''
+					Radiating in cursed energy.
+					Increases your Cursed Energy regeneration by 25 CE/s.
+					'''
+			}
+
+			CursedEye: {
+				DisplayName: Cursed Eye
+				Tooltip:
+					'''
+					Radiating in cursed energy.
+					Increases your Cursed Energy regeneration by 4 CE/s.
+					'''
+			}
+
+			CursedFlesh: {
+				DisplayName: Cursed Flesh
+				Tooltip:
+					'''
+					Radiating in cursed energy.
+					Increases your Cursed Energy regeneration by 10 CE/s.
+					'''
+			}
+
+			CursedMask: {
+				DisplayName: Cursed Mask
+				Tooltip:
+					'''
+					Radiating in cursed energy.
+					Increases your Cursed Energy regeneration by 25 CE/s.
+					'''
+			}
+
+			CursedMechanicalSoul: {
+				DisplayName: Cursed Mechanical Soul
+				Tooltip:
+					'''
+					Radiating in cursed energy.
+					Increases your max Cursed Energy by 300.
+					'''
+			}
+
+			CursedPhantasmalEye: {
+				DisplayName: Cursed Phantasmal Eye
+				Tooltip:
+					'''
+					Radiating in cursed energy.
+					Increases your max Cursed Energy by 500.
+					'''
+			}
+
+			CursedRuneOfKos: {
+				DisplayName: Cursed Rune Of Kos
+				Tooltip:
+					'''
+					Radiating in cursed energy.
+					Increases your Cursed Energy regeneration by 25 CE/s.
+					'''
+			}
+
+			CursedSkull: {
+				DisplayName: Cursed Skull
+				Tooltip:
+					'''
+					Radiating in cursed energy.
+					Increases your max Cursed Energy by 100.
+					'''
+			}
+
+			CursedProfanedShards: {
+				DisplayName: Cursed Profaned Shards
+				Tooltip:
+					'''
+					Radiating in cursed energy.
+					Increases your max Cursed Energy by 1000.
+					'''
+			}
+
+			CursedRock: {
+				DisplayName: Cursed Rock
+				Tooltip: ""
 			}
 		}
 

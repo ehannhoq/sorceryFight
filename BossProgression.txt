@@ -2,19 +2,19 @@ GENERAL:
 
 	MAX CE:
 	Base - 100
-	Skeletron - 200
-	A Mechanical Boss - 500
-	Moonlord - 1000
-	Providence - 2000
+	Skeletron - 200 			| Cursed Skull
+	A Mechanical Boss - 500 	| Cursed Mechanical Soul
+	Moonlord - 1000 			| Cursed Phantasmal Eye
+	Providence - 2000			| Cursed Profane Shards
 
 	CE REGEN
-	Base - 1 CE/s
-	Eye of Cthulhu - 5 CE/s
-	Wall of Flesh - 10 CE/s
-	Plantera - 25 CE/s
-	Lunatic Cultist - 50 CE/s
-	Dragonfolly - 75 CE/s
-	One Run of Kos - 100 CE/s
+	Base - 1 CE/s 
+	Eye of Cthulhu - 5 CE/s 	| Cursed Eye
+	Wall of Flesh - 10 CE/s 	| Cursed Flesh
+	Plantera - 25 CE/s 			| Cursed Bulb
+	Golem - 50 CE/s 			| Cursed Rock
+	Dragonfolly - 75 CE/s 		| Cursed Effulgent Feather
+	One Run of Kos - 100 CE/s 	| Curesd Signus
 
 	Imperfect Domain Expansion - Providence
 	Perfect Domain Expansion - Polterghast

@@ -4,6 +4,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Terraria.Audio;
+using CalamityMod.Items.TreasureBags;
+using Terraria.GameContent.ItemDropRules;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items;
 
 namespace sorceryFight.Content.Items.Consumables
 {
@@ -20,6 +24,7 @@ namespace sorceryFight.Content.Items.Consumables
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.rare = ItemRarityID.Master;
         }
 
         public override bool? UseItem(Player player)
@@ -30,7 +35,6 @@ namespace sorceryFight.Content.Items.Consumables
                 SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
                 sf.cursedProfaneShards = !sf.cursedProfaneShards; // temp
                 sf.maxCursedEnergy = sf.calculateMaxCE();
-
             }
             return true;
         }

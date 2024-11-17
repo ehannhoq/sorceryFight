@@ -1,4 +1,5 @@
 using System;
+using CsvHelper;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -7,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Items.Consumables
 {
-    public class CursedMechanicalSoul : ModItem
+    public class CursedRock : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -29,8 +30,8 @@ namespace sorceryFight.Content.Items.Consumables
             {
                 SoundEngine.PlaySound(SoundID.Item4);
                 SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
-                sf.cursedMechanicalSoul = !sf.cursedMechanicalSoul; // temp
-                sf.maxCursedEnergy = sf.calculateMaxCE();
+                sf.cursedMask = !sf.cursedMask; // temp
+                sf.cursedEnergyRegenPerSecond = sf.calculateCERegenRate();
             }
             return true;
         }
