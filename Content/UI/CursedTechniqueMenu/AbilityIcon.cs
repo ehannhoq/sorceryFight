@@ -29,7 +29,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
         public AbilityIcon(Texture2D texture, int abilityID, AbilityIconType type)
         {
             this.texture = texture;
-            lockedTexture = ModContent.Request<Texture2D>("sorceryfight/Content/UI/CursedTechniqueMenu/Locked_Icon").Value;
+            lockedTexture = ModContent.Request<Texture2D>("sorceryfight/Content/UI/CursedTechniqueMenu/Locked_Icon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
             this.abilityID = abilityID;
             this.type = type;

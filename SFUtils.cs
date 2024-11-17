@@ -7,6 +7,8 @@ public static class SFUtils
 {
     /// <summary>
     /// THANK YOU CALAMITY MOD SOURCE CODE FOR THIS !!
+    /// 
+    /// Adds to a list on a given condition.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="list"></param>

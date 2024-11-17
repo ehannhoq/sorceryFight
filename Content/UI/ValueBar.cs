@@ -23,7 +23,11 @@ public class ValueBar : UIElement
         base.DrawSelf(spriteBatch);
         CalculatedStyle dimensions = GetDimensions();
 
+        if (fillPercentage > 1f)
+            fillPercentage = 1;
+
         int croppedWidth = (int)(barTexture.Width * fillPercentage);
+
         Rectangle bar = new Rectangle(0, 0,  croppedWidth, barTexture.Height);
 
         spriteBatch.Draw(barTexture, new Vector2(dimensions.X, dimensions.Y), bar, Color.White);

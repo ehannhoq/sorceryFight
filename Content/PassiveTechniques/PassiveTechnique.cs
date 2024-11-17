@@ -36,7 +36,7 @@ namespace sorceryFight.Content.PassiveTechniques
         public override void Update(Player player, ref int buffIndex)
         {
             SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
-            sf.cursedEnergy -= SorceryFight.TicksToSeconds(CostPerSecond);
+            sf.cursedEnergyUsagePerSecond += CostPerSecond;
         }
     }
 }

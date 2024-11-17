@@ -30,7 +30,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 return Language.GetText("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.LockedDescription").Value;
             }
         }
-        public override float Cost { get; set; } = 999f;
+        public override float Cost { get; set; } = 2000f;
         public override float MasteryNeeded { get; set; } = 0f;
         public override Color textColor { get; set; } = new Color(235, 117, 233);
         public override bool DisplayNameInGame { get; set; } = false;

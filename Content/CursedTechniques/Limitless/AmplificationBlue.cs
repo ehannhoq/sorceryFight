@@ -138,8 +138,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 {
                     animating = true;
                     SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
-
-                    player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = true;
                 }
 
                 float goalScale = 0.75f;
@@ -165,9 +163,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 Projectile.tileCollide = true;
                 animating = false;
-
-                if (!spawnedFromPurple)
-                    player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
             }
         }
 

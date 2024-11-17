@@ -28,6 +28,7 @@ namespace sorceryFight
         public float cursedEnergy;
         public float maxCursedEnergy;
         public float cursedEnergyRegenPerSecond;
+        public float cursedEnergyUsagePerSecond;
 
         #endregion
 
@@ -64,6 +65,7 @@ namespace sorceryFight
             cursedEnergy = 0f;
             maxCursedEnergy = 100f;
             cursedEnergyRegenPerSecond = 1f;
+            cursedEnergyUsagePerSecond = 0f;
 
             cursedSkull = false;
             cursedMechanicalSoul = false;
@@ -96,7 +98,7 @@ namespace sorceryFight
             cursedEnergyRegenModifiers.AddWithCondition("cursedEye", cursedEye);
             cursedEnergyRegenModifiers.AddWithCondition("cursedFlesh", cursedFlesh);
             cursedEnergyRegenModifiers.AddWithCondition("cursedBulb", cursedBulb);
-            cursedEnergyRegenModifiers.AddWithCondition("curesdMask", cursedMask);
+            cursedEnergyRegenModifiers.AddWithCondition("cursedMask", cursedMask);
             cursedEnergyRegenModifiers.AddWithCondition("cursedEffulgentFeather", cursedEffulgentFeather);
             cursedEnergyRegenModifiers.AddWithCondition("cursedRuneOfKos", cursedRuneOfKos);
             tag["cursedEnergyRegenModifiers"] = cursedEnergyRegenModifiers;
@@ -139,6 +141,16 @@ namespace sorceryFight
 
             bool disabledRegen = disableRegenFromBuffs || disableRegenFromProjectiles || disableRegenFromDE;
 
+            if (cursedEnergy > 0)
+            {
+                cursedEnergy -= SorceryFight.TicksToSeconds(cursedEnergyUsagePerSecond);
+                
+                if (cursedEnergy < 0)
+                {
+                    cursedEnergy = 0;
+                }
+            }
+
             if (cursedEnergy < maxCursedEnergy && !disabledRegen)
             {
                 cursedEnergy += SorceryFight.TicksToSeconds(cursedEnergyRegenPerSecond);
@@ -147,6 +159,8 @@ namespace sorceryFight
                     cursedEnergy = maxCursedEnergy;
                 }
             }
+
+            cursedEnergyUsagePerSecond = 0f;
         }
 
         public override void PostUpdateBuffs()
@@ -200,15 +214,7 @@ namespace sorceryFight
             if (cursedProfaneShards)
                 sum += 1000f; // 2000 total
 
-            float total = baseCE + sum;
-
-            if (Main.expertMode)
-                total *= 1.5f;
-
-            if (Main.masterMode)
-                total *= 2.0f;
-
-            return total;
+            return baseCE + sum;
         }
 
         public float calculateCERegenRate()
@@ -220,13 +226,13 @@ namespace sorceryFight
                 sum += 4f; // 5 CE/s
 
             if (cursedFlesh)
-                sum += 10f; // 10 CE/s total
+                sum += 10f; // 15 CE/s total
 
             if (cursedBulb)
-                sum += 15f; // 25 CE/s total
+                sum += 15f; // 30 CE/s total
             
             if (cursedMask) 
-                sum += 25f; // 50 CE/s total
+                sum += 20f; // 50 CE/s total
 
             if (cursedEffulgentFeather)
                 sum += 25f; // 75 CE/s
@@ -234,15 +240,7 @@ namespace sorceryFight
             if (cursedRuneOfKos)
                 sum += 25f; // 100 CE/s total
 
-            float total = baseRegen + sum;
-
-            if (Main.expertMode && !Main.masterMode)
-                total *= 1.5f;
-
-            if (Main.masterMode)
-                total *= 2.0f;
-
-            return total;
+            return baseRegen + sum;
         }
 
         public void ShootTechnique()

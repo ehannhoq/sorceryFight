@@ -71,7 +71,7 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
 
             float accumulativeDamage = 0f;
             int numInInfinity = 0;
-            foreach (Projectile proj in Main.projectile)
+            foreach (Projectile proj in Main.ActiveProjectiles)
             {
    
                 if (proj.hostile)
@@ -92,7 +92,7 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
             foreach (NPC npc in Main.npc)
             {
                 
-                if (!npc.friendly && npc.type != NPCID.TargetDummy)
+                if (!npc.friendly && npc.type != NPCID.TargetDummy && npc.active)
                 {
                     float distance = Vector2.Distance(npc.Center, player.Center);
                     if (distance <= npcInfinityDistance)
@@ -115,11 +115,7 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
 
             accumulativeDamage -= player.statDefense;
 
-            float difficultyMultiplier = 0.1f;
-            if (Main.expertMode)
-                difficultyMultiplier = 0.105f;
-
-            CostPerSecond += (int)(difficultyMultiplier * Math.Pow(accumulativeDamage, 2) * (1 + (numInInfinity / 10)));
+            CostPerSecond += accumulativeDamage;
 
             base.Update(player, ref buffIndex);
         }
