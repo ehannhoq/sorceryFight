@@ -29,9 +29,9 @@ namespace sorceryFight
 		/// </summary>
 		/// <param name="ticks"></param>
 		/// <returns>The number of seconds in a given amount of ticks.</returns>
-		public static int TicksToSeconds(int ticks)
+		public static int TicksToSeconds(float ticks)
 		{
-			return ticks / 60;
+			return (int)ticks / 60;
 		}
 
 		/// <summary>
