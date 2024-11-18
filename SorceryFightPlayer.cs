@@ -184,9 +184,10 @@ namespace sorceryFight
                 Player.AddBuff(ModContent.BuffType<BurntTechnique>(), (int)SorceryFight.SecondsToTicks(10));
             }
 
+
             foreach (PassiveTechnique passiveTechnique in innateTechnique.PassiveTechniques)
             {
-                if (cursedEnergy <= 1)
+                if (cursedEnergy <= 1 || Player.HasBuff<BurntTechnique>())
                 {
                     passiveTechnique.isActive = false;
                 }

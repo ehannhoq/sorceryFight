@@ -143,7 +143,11 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 float goalScale = 0.75f;
 
                 if (spawnedFromPurple) // Hook for if the projectile was spawned by a Hollow Purple
+                {
                     goalScale = 1.25f;
+                    Projectile.tileCollide = false;
+                }
+
 
                 if (animScale < goalScale)
                     animScale = Projectile.ai[0] / beginAnimTime;
