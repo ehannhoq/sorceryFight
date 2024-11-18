@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CalamityMod;
 using CalamityMod.Items;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.Particles;
@@ -73,7 +74,7 @@ namespace sorceryFight.Content.DomainExpansions
             if (sfPlayer.cursedEnergy < 2)
             {
                 sfPlayer.disableRegenFromDE = false;
-                player.AddBuff(ModContent.BuffType<BurntTechnique>(), (int)SorceryFight.SecondsToTicks(30));
+                player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.SecondsToTicks(30));
 
                 player = null;
                 NPC.active = false;
@@ -88,7 +89,11 @@ namespace sorceryFight.Content.DomainExpansions
                     float distance = Vector2.Distance(npc.Center, NPC.Center);
                     if (distance < 1000f)
                     {
-                        npc.AddBuff(ModContent.BuffType<UnlimitedVoidBuff>(), (int)SorceryFight.SecondsToTicks(5));
+                        int duration = 10;
+                        if (npc.IsABoss()) // Using Calamity's method as it has some extra logic that would probably be needed.
+                            duration = 5;
+
+                        npc.AddBuff(ModContent.BuffType<UnlimitedVoidBuff>(), SorceryFight.SecondsToTicks(duration));
                     }
                 }
             }

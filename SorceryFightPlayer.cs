@@ -181,7 +181,7 @@ namespace sorceryFight
             if (cursedEnergy < 1)
             {
                 cursedEnergy = 1;
-                Player.AddBuff(ModContent.BuffType<BurntTechnique>(), (int)SorceryFight.SecondsToTicks(10));
+                Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.SecondsToTicks(10));
             }
 
 
@@ -291,7 +291,7 @@ namespace sorceryFight
                 if (domainIndex != -1)
                 {
                     Main.npc[domainIndex].active = false;
-                    Player.AddBuff(ModContent.BuffType<BurntTechnique>(), (int)SorceryFight.SecondsToTicks(30));
+                    Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.SecondsToTicks(30));
                     expandedDomain = false;
                     disableRegenFromDE = false;
                 }
