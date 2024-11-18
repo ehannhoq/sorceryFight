@@ -6,17 +6,20 @@ namespace sorceryFight
     {
         public static ModKeybind OpenTechniqueUI { get; private set; }
         public static ModKeybind UseTechnique { get; private set; }
+        public static ModKeybind DomainExpansion { get; private set;}
 
         public override void Load()
         {
             OpenTechniqueUI = KeybindLoader.RegisterKeybind(Mod, "CursedTechniqueMenu", "C");
             UseTechnique = KeybindLoader.RegisterKeybind(Mod, "UseCursedTechnique", "Q");
+            DomainExpansion = KeybindLoader.RegisterKeybind(Mod, "DomainExpansion", "F");
         }
 
         public override void Unload()
         {
             OpenTechniqueUI = null;
             UseTechnique = null;
+            DomainExpansion = null;
         }
     }
 }

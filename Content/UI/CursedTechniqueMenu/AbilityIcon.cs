@@ -2,7 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.PassiveTechniques;
+using sorceryFight.Content.Buffs;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -121,7 +121,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
                     if (sfPlayer.Player.HasBuff<BurntTechnique>())
                     {
-                        int index1 = CombatText.NewText(Main.LocalPlayer.getRect(), Color.DarkRed, "You can't use this technique right now!");
+                        int index1 = CombatText.NewText(Main.LocalPlayer.getRect(), Color.DarkRed, "Your technique is exhausted!");
                         Main.combatText[index1].lifeTime = 180;
                         return;
                     }

@@ -1,7 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.PassiveTechniques
+namespace sorceryFight.Content.Buffs
 {
     public class BurntTechnique : ModBuff
     {

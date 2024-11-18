@@ -1,5 +1,5 @@
 using Microsoft.Xna.Framework;
-using sorceryFight.Content.PassiveTechniques;
+using sorceryFight.Content.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -60,7 +60,7 @@ namespace sorceryFight.Content.CursedTechniques
 
             if (sf.Player.HasBuff<BurntTechnique>())
             {
-                int index = CombatText.NewText(player.getRect(), Color.DarkRed, "You cannot use this technique!");
+                int index = CombatText.NewText(player.getRect(), Color.DarkRed, "Your technique is exhausted!");
 				Main.combatText[index].lifeTime = 180;
 				return false;
             }

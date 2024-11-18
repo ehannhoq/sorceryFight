@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
+using sorceryFight.Content.DomainExpansions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
 
@@ -20,6 +22,11 @@ namespace sorceryFight
 		public static float TicksToSeconds(float ticks)
 		{
 			return ticks / 60;
+		}
+
+		public static bool IsDomain(NPC npc)
+		{
+			return npc.type == ModContent.NPCType<UnlimitedVoid>();
 		}
     }
 }

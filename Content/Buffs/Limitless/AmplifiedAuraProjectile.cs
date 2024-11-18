@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.PassiveTechniques.Limitless
+namespace sorceryFight.Content.Buffs.Limitless
 {
     public class AmplifiedAuraProjectile : ModProjectile
     {
@@ -38,7 +38,7 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = ModContent.Request<Texture2D>($"sorceryFight/Content/PassiveTechniques/Limitless/AmplifiedAuraProjectile", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Buffs/Limitless/AmplifiedAuraProjectile", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
             int frameHeight = texture.Height / FrameCount;
             int frameY = Projectile.frame * frameHeight;

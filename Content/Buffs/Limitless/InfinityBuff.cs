@@ -11,7 +11,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.PassiveTechniques.Limitless
+namespace sorceryFight.Content.Buffs.Limitless
 {
     
     public class InfinityBuff : PassiveTechnique
@@ -92,7 +92,7 @@ namespace sorceryFight.Content.PassiveTechniques.Limitless
             foreach (NPC npc in Main.npc)
             {
                 
-                if (!npc.friendly && npc.type != NPCID.TargetDummy && npc.active)
+                if (!npc.friendly && npc.type != NPCID.TargetDummy && npc.active && !SorceryFight.IsDomain(npc))
                 {
                     float distance = Vector2.Distance(npc.Center, player.Center);
                     if (distance <= npcInfinityDistance)

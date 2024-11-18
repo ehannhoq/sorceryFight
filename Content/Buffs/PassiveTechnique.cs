@@ -1,9 +1,9 @@
-using sorceryFight.Content.PassiveTechniques.Limitless;
+using sorceryFight.Content.Buffs.Limitless;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.PassiveTechniques
+namespace sorceryFight.Content.Buffs
 {
     public class PassiveTechnique : ModBuff
     {

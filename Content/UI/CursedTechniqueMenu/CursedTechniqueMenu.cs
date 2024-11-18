@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Core.Platforms;
 using sorceryFight.Content.CursedTechniques;
-using sorceryFight.Content.PassiveTechniques;
+using sorceryFight.Content.Buffs;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;

@@ -130,6 +130,7 @@ Mods: {
 			OpenTechniqueUI.DisplayName: Open Technique UI
 			CursedTechniqueMenu.DisplayName: Cursed Technique Menu
 			UseCursedTechnique.DisplayName: Use Cursed Technique
+			DomainExpansion.DisplayName: Domain Expansion
 		}
 
 		CursedTechniques: {
@@ -293,6 +294,11 @@ Mods: {
 			AmplifiedAuraBuff.DisplayName: Amplified Aura
 			InfinityBuff.DisplayName: Infinity
 			MaximumAmplifiedAuraBuff.DisplayName: Maximum Amplified Aura
+
+			UnlimitedVoidBuff: {
+				DisplayName: Unlimited Void Buff
+				Description: Mods.sorceryFight.Buffs.UnlimitedVoidBuff.Description
+			}
 		}
 
 		Projectiles: {
@@ -304,6 +310,9 @@ Mods: {
 			ReversalRed.DisplayName: Reversal Red
 			AmplifiedAuraProjectile.DisplayName: Amplified Aura Projectile
 			MaximumAmplifiedAuraProjectile.DisplayName: Maximum Amplified Aura Projectile
+			UnlimitedVoid.DisplayName: Unlimited Void
 		}
+
+		NPCs.UnlimitedVoid.DisplayName: Unlimited Void
 	}
 }

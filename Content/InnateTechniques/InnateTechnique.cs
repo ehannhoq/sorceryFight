@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using sorceryFight.Content.CursedTechniques;
-using sorceryFight.Content.PassiveTechniques;
+using sorceryFight.Content.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -38,5 +38,7 @@ namespace sorceryFight.Content.InnateTechniques
         }
 
         public virtual void PostUpdate(SorceryFightPlayer sf) {}
+
+        public virtual void DomainExpansion(SorceryFightPlayer sf) { }
     }
 }

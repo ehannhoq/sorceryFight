@@ -26,7 +26,7 @@ namespace sorceryFight
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CursedSkull>(), 1, 1, 1));
 
             if (npc.type == NPCID.SkeletronPrime || npc.type == NPCID.TheDestroyer 
-            || npc.type == NPCID.Retinazer || npc.type == NPCID.Spazmatism)
+            || npc.type == NPCID.Retinazer)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CursedMechanicalSoul>(), 1, 1, 1));
 
             if (npc.type == NPCID.MoonLordCore)

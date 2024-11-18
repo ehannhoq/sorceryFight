@@ -5,10 +5,11 @@ using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.InnateTechniques;
-using sorceryFight.Content.PassiveTechniques;
+using sorceryFight.Content.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using System.Linq.Expressions;
 
 namespace sorceryFight
 {
@@ -52,6 +53,10 @@ namespace sorceryFight
         public bool yourPotentialSwitch;
         #endregion
 
+        public bool unlockedDomain;
+        public bool expandedDomain;
+        public int domainIndex;
+
         public override void Initialize()
         {
             hasUIOpen = false;
@@ -80,6 +85,9 @@ namespace sorceryFight
             cursedRuneOfKos = false;
 
             yourPotentialSwitch = false;
+
+            // unlockedDomain = false;
+            expandedDomain = false;
         }
         public override void SaveData(TagCompound tag)
         {
@@ -137,6 +145,11 @@ namespace sorceryFight
             if (SFKeybinds.UseTechnique.JustPressed)
             {
                 ShootTechnique();
+            }
+
+            if (SFKeybinds.DomainExpansion.JustReleased)
+            {
+                DomainExpansion();
             }
 
             bool disabledRegen = disableRegenFromBuffs || disableRegenFromProjectiles || disableRegenFromDE;
@@ -258,5 +271,30 @@ namespace sorceryFight
             selectedTechnique.Shoot(entitySource, playerPos, dir, Player);
         }
 
+        public void DomainExpansion()
+        {
+            if (Player.HasBuff<BurntTechnique>())
+            {
+                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
+                Main.combatText[index].lifeTime = 60;
+                return;
+            }
+
+            if (!expandedDomain)
+            { 
+                innateTechnique.DomainExpansion(this);
+                expandedDomain = true;
+            }
+            else
+            {
+                if (domainIndex != -1)
+                {
+                    Main.npc[domainIndex].active = false;
+                    Player.AddBuff(ModContent.BuffType<BurntTechnique>(), (int)SorceryFight.SecondsToTicks(30));
+                    expandedDomain = false;
+                    disableRegenFromDE = false;
+                }
+            }
+        }
     }
 }

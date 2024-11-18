@@ -7,7 +7,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.PassiveTechniques.Limitless
+namespace sorceryFight.Content.Buffs.Limitless
 {
     public class AmplifiedAuraBuff : PassiveTechnique
     {
