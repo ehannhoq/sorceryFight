@@ -22,8 +22,6 @@ namespace sorceryFight.Content.DomainExpansions
         private Texture2D texture;
         private Texture2D bgTexture;
         private float scale;
-        private Dictionary<int, Vector2> frozenPositions;
-        private Dictionary<int, float[]> frozenAIs;
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = FRAME_COUNT;
@@ -45,9 +43,6 @@ namespace sorceryFight.Content.DomainExpansions
             scale = 0.1f;
             NPC.hide = false;
             NPC.behindTiles = true;
-
-            frozenPositions = new Dictionary<int, Vector2>();
-            frozenAIs = new Dictionary<int, float[]>();
         }
 
         public override void AI()
@@ -80,8 +75,6 @@ namespace sorceryFight.Content.DomainExpansions
                 sfPlayer.disableRegenFromDE = false;
                 player.AddBuff(ModContent.BuffType<BurntTechnique>(), (int)SorceryFight.SecondsToTicks(30));
 
-                frozenAIs = null;
-                frozenPositions = null;
                 player = null;
                 NPC.active = false;
             }
@@ -90,37 +83,15 @@ namespace sorceryFight.Content.DomainExpansions
 
             foreach (NPC npc in Main.npc)
             {
-                if (npc.active && !npc.friendly && npc.type != NPCID.TargetDummy && npc.type != ModContent.NPCType<SuperDummyNPC>() && npc.type != ModContent.NPCType<UnlimitedVoid>())
+                if (npc.active && !npc.friendly && npc.type != NPCID.TargetDummy && npc.type != ModContent.NPCType<SuperDummyNPC>() && !SorceryFight.IsDomain(npc))
                 {
                     float distance = Vector2.Distance(npc.Center, NPC.Center);
                     if (distance < 1000f)
                     {
-                        SetFrozen(npc);
+                        npc.AddBuff(ModContent.BuffType<UnlimitedVoidBuff>(), (int)SorceryFight.SecondsToTicks(5));
                     }
                 }
             }
-        }
-
-        public void SetFrozen(NPC npc)
-        {
-            if (!frozenPositions.ContainsKey(npc.whoAmI))
-            {
-                frozenPositions[npc.whoAmI] = npc.Center;
-            }
-
-            npc.Center = frozenPositions[npc.whoAmI];
-
-            if (!frozenAIs.ContainsKey(npc.whoAmI))
-            {
-                frozenAIs[npc.whoAmI] = new float[4];
-                Array.Copy(npc.ai, frozenAIs[npc.whoAmI], 4);
-            }
-
-            npc.ai[0] = frozenAIs[npc.whoAmI][0];
-            npc.ai[1] = frozenAIs[npc.whoAmI][1];
-            npc.ai[2] = frozenAIs[npc.whoAmI][2];
-            npc.ai[3] = frozenAIs[npc.whoAmI][3];
-
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -140,10 +111,5 @@ namespace sorceryFight.Content.DomainExpansions
 
             return false;
         }
-
-        //public override void DrawBehind(int index)
-        //{
-        //    Main.instance.DrawCacheProjsBehindNPCs.Add(index);
-        //}
     }
 }
