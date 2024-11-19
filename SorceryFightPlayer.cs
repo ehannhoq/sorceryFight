@@ -311,17 +311,6 @@ namespace sorceryFight
                 return;
             }
 
-            if (Main.myPlayer == Player.whoAmI && rctAuraIndex == -1)
-            {
-                IEntitySource source = Player.GetSource_FromThis();
-                rctAuraIndex = Projectile.NewProjectile(source, Player.Center, Vector2.Zero, ModContent.ProjectileType<ReverseCursedTechniqueAuraProjectile>(), 0, 0, Player.whoAmI);
-            }
-
-            cursedEnergy -= 10;
-            Player.Heal(1);
-        }
-        public void DomainExpansion()
-        {
             if (Player.HasBuff<BurntTechnique>())
             {
                 int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
@@ -329,9 +318,30 @@ namespace sorceryFight
                 return;
             }
 
+            if (Main.myPlayer == Player.whoAmI && rctAuraIndex == -1)
+            {
+                IEntitySource source = Player.GetSource_FromThis();
+                rctAuraIndex = Projectile.NewProjectile(source, Player.Center, Vector2.Zero, ModContent.ProjectileType<ReverseCursedTechniqueAuraProjectile>(), 0, 0, Player.whoAmI);
+            }
+
+            if (cursedEnergy >= 10)
+            {
+                cursedEnergy -= 10;
+                Player.Heal(1);
+            }
+        }
+        public void DomainExpansion()
+        {
             if (!unlockedDomain)
             {
                 int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You haven't unlocked this yet!");
+                Main.combatText[index].lifeTime = 60;
+                return;
+            }
+
+            if (Player.HasBuff<BurntTechnique>())
+            {
+                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
                 Main.combatText[index].lifeTime = 60;
                 return;
             }
@@ -344,7 +354,7 @@ namespace sorceryFight
             else if (domainIndex != -1)
             {
                 Main.npc[domainIndex].active = false;
-                Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.SecondsToTicks(30));
+                Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.SecondsToTicks(1));
                 expandedDomain = false;
                 disableRegenFromDE = false;
             }

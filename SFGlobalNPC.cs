@@ -17,6 +17,11 @@ namespace sorceryFight
     {
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
+            AddDrops(npc, npcLoot);
+        }
+
+        private void AddDrops(NPC npc, NPCLoot npcLoot)
+        {
             if (Main.expertMode || Main.masterMode)
             {
                 return;

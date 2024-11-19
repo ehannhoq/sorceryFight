@@ -22,7 +22,9 @@ namespace sorceryFight.Content.DomainExpansions
         public Player player;
         private Texture2D texture;
         private Texture2D bgTexture;
+        private float goalScale;
         private float scale;
+        private float bgScale;
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = FRAME_COUNT;
@@ -41,7 +43,9 @@ namespace sorceryFight.Content.DomainExpansions
             NPC.noTileCollide = true;
             NPC.dontTakeDamage = true;
             NPC.scale = 0.1f;
+            goalScale = 2f;
             scale = 0.1f;
+            bgScale = 0.1f;
             NPC.hide = false;
             NPC.behindTiles = true;
         }
@@ -51,21 +55,34 @@ namespace sorceryFight.Content.DomainExpansions
             player = Main.player[(int)NPC.ai[1]];
             SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
             NPC.ai[0]++;
-            float goalScale = 2f;
- 
-            for (int i = 0; i < 3; i++)
-            {
-                Vector2 offsetPos = NPC.Center + new Vector2(Main.rand.NextFloat(-2000f, 2000f), Main.rand.NextFloat(-2000f, 2000f));
-                Vector2 velocity = NPC.Center.DirectionTo(offsetPos) * 40f;
+  
+            float logBase = 10f;
+            float maxAIValue = 30f;
 
-                LineParticle particle = new LineParticle(NPC.Center, velocity, false, 180, 1, Color.LightSteelBlue);
-                GeneralParticleHandler.SpawnParticle(particle);
-            }
-
-            if (NPC.ai[0] < 60)
+            if (NPC.ai[0] < 30)
             {
                 NPC.Center = player.Center;
-                scale = goalScale * (NPC.ai[0] / 60);
+
+                float progress = Math.Clamp(NPC.ai[0] / maxAIValue, 0.01f, 1f);
+                bgScale = goalScale * 4 * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
+            }
+
+            if (NPC.ai[0] > 30 && NPC.ai[0] < 200)
+            {
+                float progress = Math.Clamp((NPC.ai[0] - 30) / (maxAIValue + 170), 0.01f, 1f);
+                scale = goalScale * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
+            }
+
+            if (NPC.ai[0] < 200)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 offsetPos = NPC.Center + new Vector2(Main.rand.NextFloat(-2000f, 2000f), Main.rand.NextFloat(-2000f, 2000f));
+                    Vector2 velocity = NPC.Center.DirectionTo(offsetPos) * 40f;
+
+                    LineParticle particle = new LineParticle(NPC.Center, velocity, false, 180, 1, Color.LightSteelBlue);
+                    GeneralParticleHandler.SpawnParticle(particle);
+                }
             }
 
             sfPlayer.disableRegenFromDE = true;
@@ -79,8 +96,6 @@ namespace sorceryFight.Content.DomainExpansions
                 player = null;
                 NPC.active = false;
             }
-
-       
 
             foreach (NPC npc in Main.npc)
             {
@@ -109,7 +124,7 @@ namespace sorceryFight.Content.DomainExpansions
 
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
 
-            spriteBatch.Draw(bgTexture, NPC.Center - Main.screenPosition, default, Color.White, NPC.rotation, bgOrigin, scale * 4, SpriteEffects.None, 0f);
+            spriteBatch.Draw(bgTexture, NPC.Center - Main.screenPosition, default, Color.White, NPC.rotation, bgOrigin, bgScale, SpriteEffects.None, 0f);
             spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, sourceRectangle, Color.White, NPC.rotation, origin, scale, SpriteEffects.None, 0f);
 
             return false;
