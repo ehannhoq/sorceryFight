@@ -17,6 +17,8 @@ namespace sorceryFight
         public static SoundStyle ReversalRedChargeUp;
         public static SoundStyle HollowPurpleSnap;
 
+        public static SoundStyle UnlimitedVoid;
+
         public override void Load()
         {
             CommonFire = new("sorceryFight/Content/Sounds/CommonFire") { Volume = 1f };
@@ -26,6 +28,9 @@ namespace sorceryFight
             AmplificationBlueChargeUp = new("sorceryFight/Content/Sounds/Projectiles/AmplificationBlueChargeUp") { Volume = 1f };
             ReversalRedChargeUp = new("sorceryFight/Content/Sounds/Projectiles/ReversalRedChargeUp") { Volume = 1f };
             HollowPurpleSnap = new("sorceryFight/Content/Sounds/Projectiles/HollowPurpleSnap") { Volume = 1f };
+
+            UnlimitedVoid = new("sorceryFight/Content/Sounds/DomainExpansions/UnlimitedVoid") { Volume = 1f };
+
 
         }
     }

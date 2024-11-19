@@ -131,6 +131,7 @@ Mods: {
 			CursedTechniqueMenu.DisplayName: Cursed Technique Menu
 			UseCursedTechnique.DisplayName: Use Cursed Technique
 			DomainExpansion.DisplayName: Domain Expansion
+			UseRCT.DisplayName: Use R C T
 		}
 
 		CursedTechniques: {
@@ -311,6 +312,7 @@ Mods: {
 			AmplifiedAuraProjectile.DisplayName: Amplified Aura Projectile
 			MaximumAmplifiedAuraProjectile.DisplayName: Maximum Amplified Aura Projectile
 			UnlimitedVoid.DisplayName: Unlimited Void
+			ReverseCursedTechniqueAuraProjectile.DisplayName: Reverse Cursed Technique Aura Projectile
 		}
 
 		NPCs.UnlimitedVoid.DisplayName: Unlimited Void

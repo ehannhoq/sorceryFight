@@ -1,7 +1,4 @@
 using System.Collections.Generic;
-using System.Security.Permissions;
-using CalamityMod.World;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.InnateTechniques;
@@ -9,7 +6,8 @@ using sorceryFight.Content.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using System.Linq.Expressions;
+using Terraria.DataStructures;
+using Terraria.Audio;
 
 namespace sorceryFight
 {
@@ -53,9 +51,14 @@ namespace sorceryFight
         public bool yourPotentialSwitch;
         #endregion
 
+        #region Domain Expansion Variables
         public bool unlockedDomain;
         public bool expandedDomain;
         public int domainIndex;
+        #endregion
+
+        public bool unlockedRCT;
+        public int rctAuraIndex;
 
         public override void Initialize()
         {
@@ -86,8 +89,13 @@ namespace sorceryFight
 
             yourPotentialSwitch = false;
 
-            // unlockedDomain = false;
+            unlockedDomain = false;
             expandedDomain = false;
+            domainIndex = -1;
+
+            unlockedRCT = false;
+            rctAuraIndex = -1;
+
         }
         public override void SaveData(TagCompound tag)
         {
@@ -110,6 +118,12 @@ namespace sorceryFight
             cursedEnergyRegenModifiers.AddWithCondition("cursedEffulgentFeather", cursedEffulgentFeather);
             cursedEnergyRegenModifiers.AddWithCondition("cursedRuneOfKos", cursedRuneOfKos);
             tag["cursedEnergyRegenModifiers"] = cursedEnergyRegenModifiers;
+            
+            var generalBooleans = new List<string>();
+            generalBooleans.AddWithCondition("unlockedRCT", unlockedRCT);
+            generalBooleans.AddWithCondition("unlockedDomain", unlockedDomain);
+            tag["generalBooleans"] = generalBooleans;
+
         }
 
         public override void LoadData(TagCompound tag)
@@ -134,6 +148,13 @@ namespace sorceryFight
             cursedEffulgentFeather = cursedEnergyRegenModifiers.Contains("cursedEffulgentFeather");
             cursedRuneOfKos = cursedEnergyRegenModifiers.Contains("cursedRuneOfKos");
 
+            var generalBooleans = tag.GetList<string>("generalBooleans");
+
+            // unlockedRCT = generalBooleans.Contains("unlockedRCT");
+            // unlockedDomain = generalBooleans.Contains("unlockedDomain");
+            unlockedRCT = true;
+            unlockedDomain = true;
+
             maxCursedEnergy = calculateMaxCE();
             cursedEnergyRegenPerSecond = calculateCERegenRate();
         }
@@ -142,22 +163,31 @@ namespace sorceryFight
         {
             innateTechnique.PostUpdate(this);
 
+
             if (SFKeybinds.UseTechnique.JustPressed)
-            {
                 ShootTechnique();
-            }
+
+
+            if (SFKeybinds.UseRCT.Current)
+                UseRCT();
+
+            if (SFKeybinds.UseRCT.JustReleased)
+                if (rctAuraIndex != -1)
+                {
+                    Main.projectile[rctAuraIndex].Kill();
+                    rctAuraIndex = -1;
+                }
+
 
             if (SFKeybinds.DomainExpansion.JustReleased)
-            {
                 DomainExpansion();
-            }
+
 
             bool disabledRegen = disableRegenFromBuffs || disableRegenFromProjectiles || disableRegenFromDE;
 
             if (cursedEnergy > 0)
             {
                 cursedEnergy -= SorceryFight.TicksToSeconds(cursedEnergyUsagePerSecond);
-                
                 if (cursedEnergy < 0)
                 {
                     cursedEnergy = 0;
@@ -272,6 +302,24 @@ namespace sorceryFight
             selectedTechnique.Shoot(entitySource, playerPos, dir, Player);
         }
 
+        public void UseRCT()
+        {
+            if (!unlockedRCT)
+            {
+                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You haven't unlocked this yet!");
+                Main.combatText[index].lifeTime = 60;
+                return;
+            }
+
+            if (Main.myPlayer == Player.whoAmI && rctAuraIndex == -1)
+            {
+                IEntitySource source = Player.GetSource_FromThis();
+                rctAuraIndex = Projectile.NewProjectile(source, Player.Center, Vector2.Zero, ModContent.ProjectileType<ReverseCursedTechniqueAuraProjectile>(), 0, 0, Player.whoAmI);
+            }
+
+            cursedEnergy -= 10;
+            Player.Heal(1);
+        }
         public void DomainExpansion()
         {
             if (Player.HasBuff<BurntTechnique>())
@@ -281,20 +329,24 @@ namespace sorceryFight
                 return;
             }
 
+            if (!unlockedDomain)
+            {
+                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You haven't unlocked this yet!");
+                Main.combatText[index].lifeTime = 60;
+                return;
+            }
+
             if (!expandedDomain)
             { 
                 innateTechnique.DomainExpansion(this);
                 expandedDomain = true;
             }
-            else
+            else if (domainIndex != -1)
             {
-                if (domainIndex != -1)
-                {
-                    Main.npc[domainIndex].active = false;
-                    Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.SecondsToTicks(30));
-                    expandedDomain = false;
-                    disableRegenFromDE = false;
-                }
+                Main.npc[domainIndex].active = false;
+                Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.SecondsToTicks(30));
+                expandedDomain = false;
+                disableRegenFromDE = false;
             }
         }
     }

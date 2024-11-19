@@ -7,6 +7,7 @@ using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Buffs.Limitless;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.Audio;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -57,6 +58,11 @@ namespace sorceryFight.Content.InnateTechniques
                 Main.combatText[index].lifeTime = 90;
             }
 
+            if (domainExpansionTimer == 181)
+            {
+                SoundEngine.PlaySound(SorceryFightSounds.UnlimitedVoid, sf.Player.Center);
+            }
+            
             if (domainExpansionTimer == 211)
             {
                 Terraria.DataStructures.IEntitySource entitySource = sf.Player.GetSource_FromThis();
@@ -64,7 +70,9 @@ namespace sorceryFight.Content.InnateTechniques
 
                 if (Main.myPlayer == sf.Player.whoAmI)
                     sf.domainIndex = NPC.NewNPC(entitySource, (int)position.X, (int)position.Y, ModContent.NPCType<UnlimitedVoid>(), 0, default, sf.Player.whoAmI);
+                domainExpansionTimer = -1;
             }
+
         }
 
         public override void DomainExpansion(SorceryFightPlayer sf)

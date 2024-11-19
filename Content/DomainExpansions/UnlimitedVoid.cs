@@ -101,8 +101,6 @@ namespace sorceryFight.Content.DomainExpansions
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-
-               
             int frameHeight = texture.Height / FRAME_COUNT;
             int frameY = NPC.frame.Y * frameHeight;
 

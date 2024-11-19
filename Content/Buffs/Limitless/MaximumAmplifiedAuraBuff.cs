@@ -37,13 +37,12 @@ namespace sorceryFight.Content.Buffs.Limitless
                 player.GetModPlayer<SorceryFightPlayer>().innateTechnique.PassiveTechniques[1].isActive = false;
             }
 
-            if (auraIndex == -1)
+            if (Main.myPlayer == player.whoAmI && !auraIndices.ContainsKey(player.whoAmI))
             {
                 Vector2 playerPos = player.MountedCenter;
                 var entitySource = player.GetSource_FromThis();
 
-                if (Main.myPlayer == player.whoAmI)
-                    auraIndex = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<MaximumAmplifiedAuraProjectile>(), 0, 0, player.whoAmI);
+                auraIndices[player.whoAmI] = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<MaximumAmplifiedAuraProjectile>(), 0, 0, player.whoAmI);
             }
         }
     }

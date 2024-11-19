@@ -2,6 +2,7 @@ using CalamityMod;
 using CalamityMod.CalPlayer;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -44,8 +45,7 @@ namespace sorceryFight.Content.Buffs.Limitless
             }
         }
 
-        protected int auraIndex = -1;
-
+        protected Dictionary<int, int> auraIndices;
         public override void Apply(Player player)
         {
             player.AddBuff(ModContent.BuffType<AmplifiedAuraBuff>(), 2);
@@ -55,22 +55,27 @@ namespace sorceryFight.Content.Buffs.Limitless
                 player.GetModPlayer<SorceryFightPlayer>().innateTechnique.PassiveTechniques[2].isActive = false;
             }
 
-            if (auraIndex == -1)
+            if (auraIndices == null)
+                auraIndices = new Dictionary<int, int>();
+
+            if (Main.myPlayer == player.whoAmI && !auraIndices.ContainsKey(player.whoAmI))
             {
                 Vector2 playerPos = player.MountedCenter;
                 var entitySource = player.GetSource_FromThis();
-  
-                if (Main.myPlayer == player.whoAmI)
-                    auraIndex = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<AmplifiedAuraProjectile>(), 0, 0, player.whoAmI);
+
+                auraIndices[player.whoAmI] = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<AmplifiedAuraProjectile>(), 0, 0, player.whoAmI);
             }
         }
 
         public override void Remove(Player player)
         {
-            if (auraIndex != -1)
+            if (auraIndices == null)
+                auraIndices = new Dictionary<int, int>();
+
+            if (auraIndices.ContainsKey(player.whoAmI))
             { 
-                Main.projectile[auraIndex].Kill();
-                auraIndex = -1;
+                Main.projectile[auraIndices[player.whoAmI]].Kill();
+                auraIndices.Remove(player.whoAmI);
             }
         }
 

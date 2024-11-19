@@ -14,10 +14,16 @@ namespace sorceryFight.Content.Buffs.Limitless
     {
         public override int TicksPerFrame { get; set; } = 3;
 
+        public override void SetDefaults()
+        {
+            Projectile.damage = 0;
+            Projectile.tileCollide = false;
+            Projectile.Hitbox = new Rectangle(0, 0, 0, 0);
+            texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Buffs/Limitless/MaximumAmplifiedAuraProjectile", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Buffs/Limitless/MaximumAmplifiedAuraProjectile", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
             int frameHeight = texture.Height / FrameCount;
             int frameY = Projectile.frame * frameHeight;
 
