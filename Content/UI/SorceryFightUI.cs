@@ -41,6 +41,8 @@ public class SorceryFightUI : UIState
             player.yourPotentialSwitch = false;
         }
 
+        if (player.innateTechnique == null) return;
+
         ceBar.fillPercentage = player.cursedEnergy / player.maxCursedEnergy;
 
         if (SFKeybinds.OpenTechniqueUI.JustPressed)

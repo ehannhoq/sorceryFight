@@ -11,12 +11,28 @@ using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Buffs.Limitless;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.DomainExpansions
 {
-    public class UnlimitedVoid : ModNPC
+    public class UnlimitedVoid : DomainExpansion
     {
+        public override string Name { get; } = "Unlimited Void";
+        public override string Description 
+        {
+            get
+            {
+                return Language.GetText("Mods.sorceryFight.DomainExpansions.UnlimitedVoid.Description").Value;
+            }
+        }
+        public override string LockedDescription 
+        {
+            get
+            {
+                return Language.GetText("Mods.sorceryFight.DomainExpansions.UnlimitedVoid.LockedDescription").Value;
+            }
+        }
         public static int FRAME_COUNT = 1;
         public static int TICKS_PER_FRAME = 1;
         public static Dictionary<int, float[]> frozenValues;
@@ -102,7 +118,7 @@ namespace sorceryFight.Content.DomainExpansions
                     float distance = Vector2.Distance(npc.Center, NPC.Center);
                     if (distance < 1000f)
                     {
-                        FreezeNPC(npc);
+                        NPCDomainEffect(npc);
                     }
                 }
             }
@@ -120,7 +136,7 @@ namespace sorceryFight.Content.DomainExpansions
             }
         }
 
-        private void FreezeNPC(NPC npc)
+        public override void NPCDomainEffect(NPC npc)
         {
             int npcID = npc.whoAmI;
             if (!frozenValues.ContainsKey(npcID))

@@ -4,15 +4,17 @@ using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.Buffs;
 using Terraria;
 using Terraria.ModLoader;
+using sorceryFight.Content.DomainExpansions;
 
 namespace sorceryFight.Content.InnateTechniques
 {
-    public class InnateTechnique()
+    public abstract class InnateTechnique()
     {
-        public virtual string Name { get; set; } = "No Innate Technique";
-        public virtual List<PassiveTechnique> PassiveTechniques { get; set; } = new List<PassiveTechnique> {};
-        public virtual List<CursedTechnique> CursedTechniques { get; set; } = new List<CursedTechnique> {};
-        public virtual bool IsValid { get; set; } = false;
+        public abstract string Name { get; }
+        public abstract List<PassiveTechnique> PassiveTechniques { get; }
+        public abstract List<CursedTechnique> CursedTechniques { get; }
+        public abstract DomainExpansion DomainExpansion { get; }
+        public abstract bool IsValid { get; }
 
         public static InnateTechnique GetInnateTechnique(string name)
         {
@@ -22,7 +24,7 @@ namespace sorceryFight.Content.InnateTechniques
                     return new LimitlessTechnique();
             }
 
-            return new InnateTechnique();
+            return null;
         }
 
         public static List<InnateTechnique> InnateTechniques
@@ -31,15 +33,14 @@ namespace sorceryFight.Content.InnateTechniques
             {
                 return new List<InnateTechnique>
                 {
-                    new LimitlessTechnique(),
-                    new ShrineTechnique()
+                    new LimitlessTechnique()
                 };
             }
         }
 
         public virtual void PostUpdate(SorceryFightPlayer sf) {}
 
-        public virtual void DomainExpansion(SorceryFightPlayer sf) { }
+        public virtual void ExpandDomain(SorceryFightPlayer sf) { }
         public virtual void CloseDomain(SorceryFightPlayer sf)
         {
             Main.npc[sf.domainIndex].active = false;

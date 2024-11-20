@@ -15,27 +15,27 @@ namespace sorceryFight.Content.InnateTechniques
     {
         public bool hasInfinity = false;
         public int domainExpansionTimer = -1;
-        public override string Name { get; set; } = "Limitless";
-        public override List<PassiveTechnique> PassiveTechniques { get; set; } = new List<PassiveTechnique>
+        public override string Name { get; } = "Limitless";
+        public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
-            new InfinityBuff(), // 5% Mastery
+            new InfinityBuff(),
             new AmplifiedAuraBuff(),
             new MaximumAmplifiedAuraBuff()
         };
-        public override List<CursedTechnique> CursedTechniques { get; set; } = new List<CursedTechnique>
+        public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
-            new AmplificationBlue(), // 0% Mastery
-            new MaximumOutputBlue(), // 10% Mastery
+            new AmplificationBlue(),
+            new MaximumOutputBlue(),
 
-            new ReversalRed(), // 40% Mastery
-            new HollowPurple(), // 60% Mastery
+            new ReversalRed(),
+            new HollowPurple(),
 
-            new HollowPurple200Percent() // 80% Mastery
-
-            // new UnlimitedVoid() // 100% Mastery
+            new HollowPurple200Percent()
         };
 
-        public override bool IsValid { get; set; } = true;
+        public override DomainExpansion DomainExpansion { get; } = new UnlimitedVoid();
+
+        public override bool IsValid { get; } = true;
 
         public override void PostUpdate(SorceryFightPlayer sf)
         {
@@ -75,7 +75,7 @@ namespace sorceryFight.Content.InnateTechniques
 
         }
 
-        public override void DomainExpansion(SorceryFightPlayer sf)
+        public override void ExpandDomain(SorceryFightPlayer sf)
         {
             domainExpansionTimer = 0;
         }

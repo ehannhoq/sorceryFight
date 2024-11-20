@@ -17,7 +17,13 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public static readonly int FRAME_COUNT = 8; 
         public static readonly int TICKS_PER_FRAME = 5;
 
-        public override string Name { get; set; } = "Cursed Technique Amplification: Blue";
+        public override string Name
+        {
+            get
+            {
+                return Language.GetText("Mods.sorceryFight.CursedTechniques.AmplificationBlue.Name").Value;
+            }
+        }
         public override string Description
         { 
             get
@@ -32,25 +38,30 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 return Language.GetText("Mods.sorceryFight.CursedTechniques.AmplificationBlue.LockedDescription").Value;
             }
         }
+        public override float Cost { get; } = 50f;
+        public override float MasteryNeeded { get;} = 0f;
+        public override Color textColor { get; } = new Color(108, 158, 240);
+        public override bool DisplayNameInGame { get; } = true;
 
-        public override float Cost { get; set; } = 50f;
-        public override float MasteryNeeded { get; set; } = 0f;
-        public override Color textColor { get; set; } = new Color(108, 158, 240);
+        public override int Damage { get; } = 150;
+        public override float Speed { get; } = 15f;
+        public override float LifeTime { get; } = 300f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
             return NPC.downedBoss3;
         }
+        
 
-        public override int Damage { get; set ; } = 150;
-        public override float Speed { get; set; } = 15f;
-        public override float LifeTime { get; set; } = 300f;
-        public virtual float AttractionRadius { get; set; } = 100f;
-        public virtual float AttractionStrength { get; set; } = 12f;
+
+
+        public virtual float AttractionRadius { get; } = 100f;
+        public virtual float AttractionStrength { get; } = 12f;
 
         public static Texture2D texture;
 
         public bool animating;
         public float animScale;
+
 
         public override void SetStaticDefaults()
         {
@@ -61,11 +72,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {
             return ModContent.ProjectileType<AmplificationBlue>();
         } 
-
-        public override float GetProjectileSpeed()
-        {
-            return Speed;
-        }
+        
 
         public override void SetDefaults()
         {
@@ -198,13 +205,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
                 GeneralParticleHandler.SpawnParticle(particle);
             }
-        }
-
-        public override bool Shoot(Terraria.DataStructures.IEntitySource spawnSource, Vector2 position, Vector2 velocity, Player player)
-        {
-            if (base.Shoot(spawnSource, position, velocity, player) && Main.myPlayer == player.whoAmI)
-                Projectile.NewProjectile(spawnSource, position, velocity, ModContent.ProjectileType<AmplificationBlue>(), Damage, 0f, player.whoAmI);
-            return true;
         }
     }
 }

@@ -5,36 +5,29 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.CursedTechniques
 {
-    public class CursedTechnique : ModProjectile
+    public abstract class CursedTechnique : ModProjectile
     {
-        public virtual new string Name { get; set; } = "None Selected.";
+        public abstract new string Name { get; }
         public virtual string Stats 
         {
             get
             {
                 return $"Damage: {Damage}\n" 
-                    + $"CE Consumption: {Cost} CE\n";
+                    + $"Cost: {Cost} CE\n";
             }
         }
-        public virtual string Description { get; set; } = "None Selected.";
-        public virtual string LockedDescription { get; set; } = "None Selected.";
-        public virtual float Cost { get; set; } = 0;
-        public virtual float MasteryNeeded { get; set; } = 0f;
-        public virtual Color textColor { get; set; } = new Color(255, 255, 255);
-        public virtual bool DisplayNameInGame { get; set; } = true;
+        public abstract string Description { get; }
+        public abstract string LockedDescription { get; } 
+        public abstract float Cost { get; }
+        public abstract float MasteryNeeded { get; }
+        public abstract Color textColor { get; }
+        public abstract bool DisplayNameInGame { get; }
 
-        public virtual int Damage { get; set; } = 0;
-        public virtual float Speed { get; set; } = 0f;
-        public virtual float LifeTime { get; set; } = 30f;
-        public virtual bool Unlocked(SorceryFightPlayer sf) { return false; }
-        public virtual int GetProjectileType()
-        {
-            return ModContent.ProjectileType<CursedTechnique>();
-        }
-        public virtual float GetProjectileSpeed()
-        {
-            return Speed;
-        }
+        public abstract int Damage { get; }
+        public abstract float Speed { get; }
+        public abstract float LifeTime { get; }
+        public abstract bool Unlocked(SorceryFightPlayer sf);
+        public abstract int GetProjectileType();
 
         public override void SetDefaults()
         {
@@ -52,34 +45,6 @@ namespace sorceryFight.Content.CursedTechniques
         public override void AI()
         {
             Projectile.Kill();
-        }
-
-        public virtual bool Shoot(Terraria.DataStructures.IEntitySource spawnSource, Vector2 position, Vector2 velocity, Player player)
-        {
-            SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
-
-            if (sf.Player.HasBuff<BurntTechnique>())
-            {
-                int index = CombatText.NewText(player.getRect(), Color.DarkRed, "Your technique is exhausted!");
-				Main.combatText[index].lifeTime = 180;
-				return false;
-            }
-
-            if (sf.cursedEnergy < Cost)
-            {
-                int index = CombatText.NewText(player.getRect(), Color.DarkRed, "Not enough Cursed Energy!");
-				Main.combatText[index].lifeTime = 180;
-                return false;
-            }
-
-            sf.cursedEnergy -= Cost;
-
-            if (sf.selectedTechnique.DisplayNameInGame)
-            {
-                int index1 = CombatText.NewText(player.getRect(), sf.selectedTechnique.textColor, sf.selectedTechnique.Name);
-                Main.combatText[index1].lifeTime = 180;
-            }
-            return true;
         }
     }
 }

@@ -138,7 +138,7 @@ Mods: {
 			CursedTechnique.DisplayName: Cursed Technique
 
 			AmplificationBlue: {
-				DisplayName: Amplification Blue
+				Name: Amplification Blue
 				Description:
 					'''
 					By pouring amplified cursed energy
@@ -146,14 +146,11 @@ Mods: {
 					converges into a single point, creating
 					a powerful, attractive force.
 					'''
-				LockedDescription:
-					'''
-					Defeat the one who guards the Dungeon.
-					'''
+				LockedDescription: Defeat the one who guards the Dungeon.
 			}
 
 			MaximumOutputBlue: {
-				DisplayName: Maximum Output Blue
+				Name: Maximum Output Blue
 				Description:
 					'''
 					The mastered version of Blue, the 
@@ -169,7 +166,7 @@ Mods: {
 			}
 
 			ReversalRed: {
-				DisplayName: Reversal Red
+				Name: Reversal Red
 				Description:
 					'''
 					Powered by positive cursed energy
@@ -187,7 +184,7 @@ Mods: {
 			}
 
 			HollowPurple: {
-				DisplayName: Hollow Purple
+				Name: Hollow Purple
 				Description:
 					'''
 					By smashing both infinities, convergence
@@ -202,7 +199,7 @@ Mods: {
 			}
 
 			HollowPurple200Percent: {
-				DisplayName: Hollow Purple200 Percent
+				Name: 200% Hollow Purple
 				Description:
 					'''
 					By chanting the incantation and at the 
@@ -227,10 +224,7 @@ Mods: {
 					approaches the infinity slows down 
 					and never reaches you.
 					'''
-				LockedDescription:
-					'''
-					Kill the eye.
-					'''
+				LockedDescription: Kill the eye.
 			}
 
 			AmplifiedAura: {
@@ -241,10 +235,7 @@ Mods: {
 					the amplified Limitless, you gain 
 					an increase in speed and damage.
 					'''
-				LockedDescription:
-					'''
-					Free Hell.
-					'''
+				LockedDescription: Free Hell.
 			}
 
 			MaximumAmplifiedAura: {
@@ -257,15 +248,26 @@ Mods: {
 					you gain a major increase in
 					speed and damage.
 					'''
-				LockedDescription:
-					'''
-					Defeat the one who guards the Temple.
-					'''
+				LockedDescription: Defeat the one who guards the Temple.
 			}
 
 			PassiveTechnique: {
 				Description: Mods.sorceryFight.Buffs.PassiveTechnique.Description
 				DisplayName: Passive Technique
+			}
+		}
+
+		DomainExpansions: {
+			UnlimitedVoid: {
+				Name: Unlimited Void
+				Description:
+					'''
+					By expanding your domain, anything
+					caught in the sure-hit will flood
+					its brain with information, rendering
+					them unable to move or think.
+					'''
+				LockedDescription: Locked.
 			}
 		}
 
@@ -294,19 +296,17 @@ Mods: {
 			}
 		}
 
+		NPCs.UnlimitedVoid.DisplayName: Unlimited Void
+
 		Projectiles: {
-			CursedTechnique.DisplayName: Cursed Technique
+			AmplifiedAuraProjectile.DisplayName: Amplified Aura Projectile
+			MaximumAmplifiedAuraProjectile.DisplayName: Maximum Amplified Aura Projectile
+			ReverseCursedTechniqueAuraProjectile.DisplayName: Reverse Cursed Technique Aura Projectile
 			AmplificationBlue.DisplayName: Amplification Blue
 			HollowPurple.DisplayName: Hollow Purple
 			HollowPurple200Percent.DisplayName: Hollow Purple200 Percent
 			MaximumOutputBlue.DisplayName: Maximum Output Blue
 			ReversalRed.DisplayName: Reversal Red
-			AmplifiedAuraProjectile.DisplayName: Amplified Aura Projectile
-			MaximumAmplifiedAuraProjectile.DisplayName: Maximum Amplified Aura Projectile
-			UnlimitedVoid.DisplayName: Unlimited Void
-			ReverseCursedTechniqueAuraProjectile.DisplayName: Reverse Cursed Technique Aura Projectile
 		}
-
-		NPCs.UnlimitedVoid.DisplayName: Unlimited Void
 	}
 }

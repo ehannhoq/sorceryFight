@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoMod.Core.Platforms;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.Buffs;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.UI;
+using sorceryFight.Content.DomainExpansions;
 
 namespace sorceryFight.Content.UI.CursedTechniqueMenu
 {
@@ -24,6 +24,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
             DisplayCursedTechniques(screenCenter);
             DisplayPassiveTechniques(screenCenter);
+            DisplayDomainExpansionIcon(screenCenter);
             DisplayMasteryBar(screenCenter);
 
             Recalculate();
@@ -86,6 +87,18 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
                 Append(icon);
             }
+        }
+
+        private void DisplayDomainExpansionIcon(Vector2 screenCenter)
+        {
+            DomainExpansion de = player.innateTechnique.DomainExpansion;
+            Texture2D texture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/DomainExpansionIcons/{de.Name}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            DomainExpansionIcon icon = new DomainExpansionIcon(texture);
+
+            icon.Left.Set(screenCenter.X - 140f, 0f);
+            icon.Top.Set(screenCenter.Y, 0f);
+            Append(icon);
+
         }
         private void DisplayMasteryBar(Vector2 screenCenter)
         {

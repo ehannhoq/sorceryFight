@@ -15,7 +15,13 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public static readonly int FRAME_COUNT = 7; 
         public static readonly int TICKS_PER_FRAME = 5;
 
-        public override string Name { get; set; } = "Cursed Technique Reversal: Red";
+        public override string Name
+        {
+            get
+            {
+                return Language.GetText("Mods.sorceryFight.CursedTechniques.ReversalRed.Name").Value;
+            }
+        }
         public override string Description
         { 
             get
@@ -30,19 +36,20 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 return Language.GetText("Mods.sorceryFight.CursedTechniques.ReversalRed.LockedDescription").Value;
             }
         }
-        public override float Cost { get; set; } = 350f;
-        public override float MasteryNeeded { get; set; } = 0f;
-        public override Color textColor { get; set; } = new Color(224, 74, 74);
+        public override float Cost { get; } = 350f;
+        public override float MasteryNeeded { get; } = 0f;
+        public override Color textColor { get; } = new Color(224, 74, 74);
 
-        public override int Damage { get; set ; } = 1500;
-        public override float Speed { get; set; } = 30f;
-        public override float LifeTime { get; set; } = 300f;
+        public override int Damage { get; } = 1500;
+        public override float Speed { get; } = 30f;
+        public override float LifeTime { get; } = 300f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
             return sf.unlockedRCT;
         }
 
         public static Texture2D texture;
+        public override bool DisplayNameInGame { get; } = true;
 
         public bool animating;
         public float animScale;
@@ -52,11 +59,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {
             return ModContent.ProjectileType<ReversalRed>();
         } 
-
-        public override float GetProjectileSpeed()
-        {
-            return Speed;
-        }
 
         public override void SetStaticDefaults()
         {
@@ -179,15 +181,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
             return false;
-        }
-
-        public override bool Shoot(Terraria.DataStructures.IEntitySource spawnSource, Vector2 position, Vector2 velocity, Player player)
-        {
-            if (base.Shoot(spawnSource, position, velocity, player) && Main.myPlayer == player.whoAmI)
-            {
-                Projectile.NewProjectile(spawnSource, position, velocity, ModContent.ProjectileType<ReversalRed>(), Damage, 0f, player.whoAmI);
-            }
-            return true;
         }
 
         private void SpecialKill()

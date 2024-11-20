@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.DataStructures;
 using Terraria.Audio;
+using Microsoft.CodeAnalysis;
 
 namespace sorceryFight
 {
@@ -73,8 +74,8 @@ namespace sorceryFight
             disableRegenFromBuffs = false;
             disableRegenFromDE = false;
 
-            innateTechnique = new InnateTechnique();
-            selectedTechnique = new CursedTechnique();
+            innateTechnique = null;
+            selectedTechnique = null;
             mastery = 0f;
             cursedEnergy = 0f;
             maxCursedEnergy = 100f;
@@ -290,7 +291,7 @@ namespace sorceryFight
 
         public void ShootTechnique()
         {
-            if (selectedTechnique.Name == "None Selected." || disableRegenFromProjectiles)
+            if (selectedTechnique.Name == null || disableRegenFromProjectiles)
             {
                 return;
             }
@@ -300,7 +301,32 @@ namespace sorceryFight
             Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * selectedTechnique.Speed;
             var entitySource = Player.GetSource_FromThis();
 
-            selectedTechnique.Shoot(entitySource, playerPos, dir, Player);
+            if (Player.HasBuff<BurntTechnique>())
+            {
+                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
+				Main.combatText[index].lifeTime = 180;
+                return;
+            }
+
+            if (cursedEnergy < selectedTechnique.Cost)
+            {
+                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Not enough Cursed Energy!");
+				Main.combatText[index].lifeTime = 180;
+                return;
+            }
+
+            cursedEnergy -= selectedTechnique.Cost;
+
+            if (selectedTechnique.DisplayNameInGame)
+            {
+                int index1 = CombatText.NewText(Player.getRect(), selectedTechnique.textColor, selectedTechnique.Name);
+                Main.combatText[index1].lifeTime = 180;
+            }
+            
+            if (Player.whoAmI == Main.myPlayer)
+            {
+                Projectile.NewProjectile(entitySource, Player.Center, dir, selectedTechnique.GetProjectileType(), selectedTechnique.Damage, 0, Player.whoAmI);
+            }
         }
 
         public void UseRCT()
@@ -349,7 +375,7 @@ namespace sorceryFight
 
             if (!expandedDomain)
             { 
-                innateTechnique.DomainExpansion(this);
+                innateTechnique.ExpandDomain(this);
                 expandedDomain = true;
             }
             else if (domainIndex != -1)

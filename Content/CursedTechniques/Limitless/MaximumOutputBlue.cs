@@ -16,7 +16,13 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public static readonly int FRAME_COUNT = 8; 
         public static readonly int TICKS_PER_FRAME = 5;
 
-        public override string Name { get; set; } = "Maximum Cursed Energy Output: Blue";
+        public override string Name
+        {
+            get
+            {
+                return Language.GetText("Mods.sorceryFight.CursedTechniques.MaximumOutputBlue.Name").Value;
+            }
+        }
         public override string Description
         { 
             get
@@ -31,13 +37,14 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 return Language.GetText("Mods.sorceryFight.CursedTechniques.MaximumOutputBlue.LockedDescription").Value;
             }
         }
-        public override float Cost { get; set; } = 150f;
-        public override float MasteryNeeded { get; set; } = 0f;
-        public override Color textColor { get; set; } = new Color(108, 158, 240);
+        public override float Cost { get; } = 150f;
+        public override float MasteryNeeded { get; } = 0f;
+        public override Color textColor { get; } = new Color(108, 158, 240);
+        public override bool DisplayNameInGame { get; } = true;
 
-        public override int Damage { get; set ; } = 300;
-        public override float Speed { get; set; } = 20f;
-        public override float LifeTime { get; set; } = 120f;
+        public override int Damage { get; } = 300;
+        public override float Speed { get; } = 20f;
+        public override float LifeTime { get; } = 120f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
             return NPC.downedMechBossAny;
@@ -60,11 +67,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {
             return ModContent.ProjectileType<MaximumOutputBlue>();
         } 
-
-        public override float GetProjectileSpeed()
-        {
-            return Speed;
-        }
 
         public override void SetDefaults()
         {
@@ -215,16 +217,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
             return false;
         }
-
-        public override bool Shoot(Terraria.DataStructures.IEntitySource spawnSource, Vector2 position, Vector2 velocity, Player player)
-        {
-            if (base.Shoot(spawnSource, position, velocity, player) && Main.myPlayer == player.whoAmI)
-            {
-                Projectile.NewProjectile(spawnSource, position - new Vector2(0, 30f), velocity, ModContent.ProjectileType<MaximumOutputBlue>(), Damage, 0f, player.whoAmI);
-            }
-            return true;
-        }
-
         private void SpecialKill()
         {
             for (int i = 0; i < 40; i++)
