@@ -154,8 +154,7 @@ namespace sorceryFight
 
             var generalBooleans = tag.GetList<string>("generalBooleans");
 
-            // unlockedRCT = generalBooleans.Contains("unlockedRCT");
-            unlockedRCT = false;
+            unlockedRCT = generalBooleans.Contains("unlockedRCT");
 
             maxCursedEnergy = calculateMaxCE();
             cursedEnergyRegenPerSecond = calculateCERegenRate();
