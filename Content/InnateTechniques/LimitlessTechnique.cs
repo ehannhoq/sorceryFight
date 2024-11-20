@@ -79,5 +79,11 @@ namespace sorceryFight.Content.InnateTechniques
         {
             domainExpansionTimer = 0;
         }
+
+        public override void CloseDomain(SorceryFightPlayer sf)
+        {
+            UnlimitedVoid.frozenValues.Clear();
+            base.CloseDomain(sf);
+        }
     }
 }

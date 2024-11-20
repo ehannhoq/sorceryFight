@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CalamityMod;
 using CalamityMod.Items;
 using CalamityMod.NPCs.NormalNPCs;
@@ -18,8 +19,9 @@ namespace sorceryFight.Content.DomainExpansions
     {
         public static int FRAME_COUNT = 1;
         public static int TICKS_PER_FRAME = 1;
+        public static Dictionary<int, float[]> frozenValues;
 
-        public Player player;
+        private Player player;
         private Texture2D texture;
         private Texture2D bgTexture;
         private float goalScale;
@@ -34,7 +36,6 @@ namespace sorceryFight.Content.DomainExpansions
             texture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/UnlimitedVoid", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             bgTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/DomainExpansionBackground", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-
             NPC.damage = 0;
             NPC.width = 1;
             NPC.height = NPC.width;
@@ -46,8 +47,9 @@ namespace sorceryFight.Content.DomainExpansions
             goalScale = 2f;
             scale = 0.1f;
             bgScale = 0.1f;
-            NPC.hide = false;
-            NPC.behindTiles = true;
+            NPC.hide = true;
+            NPC.behindTiles = false;
+            frozenValues = new Dictionary<int, float[]>();
         }
 
         public override void AI()
@@ -90,11 +92,7 @@ namespace sorceryFight.Content.DomainExpansions
 
             if (sfPlayer.cursedEnergy < 2)
             {
-                sfPlayer.disableRegenFromDE = false;
-                player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.SecondsToTicks(30));
-
-                player = null;
-                NPC.active = false;
+                Remove(sfPlayer);
             }
 
             foreach (NPC npc in Main.npc)
@@ -104,14 +102,49 @@ namespace sorceryFight.Content.DomainExpansions
                     float distance = Vector2.Distance(npc.Center, NPC.Center);
                     if (distance < 1000f)
                     {
-                        int duration = 10;
-                        if (npc.IsABoss()) // Using Calamity's method as it has some extra logic that would probably be needed.
-                            duration = 5;
-
-                        npc.AddBuff(ModContent.BuffType<UnlimitedVoidBuff>(), SorceryFight.SecondsToTicks(duration));
+                        FreezeNPC(npc);
                     }
                 }
             }
+
+            foreach (Projectile proj in Main.ActiveProjectiles)
+            {
+                if (!proj.friendly)
+                {
+                    float distance = Vector2.Distance(proj.Center, NPC.Center);
+                    if (distance < 1000f)
+                    {
+                        proj.Kill();
+                    }
+                }
+            }
+        }
+
+        private void FreezeNPC(NPC npc)
+        {
+            int npcID = npc.whoAmI;
+            if (!frozenValues.ContainsKey(npcID))
+            {
+                frozenValues[npcID] = new float[6];
+                float[] data = [npc.ai[0], npc.ai[1], npc.ai[2], npc.ai[3], npc.position.X, npc.position.Y];
+                Array.Copy(data, frozenValues[npcID], 6);
+            }
+
+            npc.ai[0] = frozenValues[npcID][0];
+            npc.ai[1] = frozenValues[npcID][1];
+            npc.ai[2] = frozenValues[npcID][2];
+            npc.ai[3] = frozenValues[npcID][3];
+            npc.position = new Vector2(frozenValues[npcID][4], frozenValues[npcID][5]);
+        }
+
+        private void Remove(SorceryFightPlayer sfPlayer)
+        {
+            sfPlayer.disableRegenFromDE = false;
+            player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.SecondsToTicks(30));
+            player = null;
+            frozenValues.Clear();
+
+            NPC.active = false;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -128,6 +161,19 @@ namespace sorceryFight.Content.DomainExpansions
             spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, sourceRectangle, Color.White, NPC.rotation, origin, scale, SpriteEffects.None, 0f);
 
             return false;
+        }
+
+        public override void DrawBehind(int index)
+        {
+            List<int> newCache = new List<int>(200);
+            newCache.Add(index);
+
+            foreach (int i in Main.instance.DrawCacheNPCsMoonMoon)
+            {
+                newCache.Add(i);
+            }
+
+            Main.instance.DrawCacheNPCsMoonMoon = newCache;
         }
     }
 }

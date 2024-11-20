@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Intrinsics;
 using CalamityMod;
 using Ionic.Zip;
 using Microsoft.Build.Tasks;
@@ -16,6 +17,7 @@ namespace sorceryFight.Content.Buffs.Limitless
     
     public class InfinityBuff : PassiveTechnique
     {
+        private Dictionary<int, Vector2> velocityData = new Dictionary<int, Vector2>();
         public override string Name { get; set; } = "Infinity";
         public override string Stats 
         {
@@ -70,7 +72,7 @@ namespace sorceryFight.Content.Buffs.Limitless
             sf.disableRegenFromBuffs = false;
 
             float accumulativeDamage = 0f;
-            int numInInfinity = 0;
+            int npcInInfinity = 0;
             foreach (Projectile proj in Main.ActiveProjectiles)
             {
    
@@ -80,7 +82,7 @@ namespace sorceryFight.Content.Buffs.Limitless
                     if (distance <= projInfinityDistance)
                     {
                         accumulativeDamage += proj.damage;
-                        numInInfinity ++;
+                        npcInInfinity ++;
 
                         proj.velocity *= 0.5f;
                         Vector2 vector = player.Center.DirectionTo(proj.Center);
@@ -98,17 +100,28 @@ namespace sorceryFight.Content.Buffs.Limitless
                     if (distance <= npcInfinityDistance)
                     {
                         accumulativeDamage += npc.damage;
-                        numInInfinity ++;
+
+                        if (!velocityData.ContainsKey(npc.whoAmI))
+                        {
+                            velocityData[npc.whoAmI] = npc.velocity;
+                        }
 
                         npc.velocity *= 0.5f;
                         Vector2 vector = player.Center.DirectionTo(npc.Center);
                         npc.velocity = vector * (3f + player.velocity.Length()) * ((npcInfinityDistance - distance) / 50);
                     }
+
+                    else if (velocityData.ContainsKey(npc.whoAmI))
+                    {
+                        npc.velocity = velocityData[npc.whoAmI];
+                        velocityData.Remove(npc.whoAmI); 
+                    }
+
                 }
             }
 
 
-            if (accumulativeDamage > 0 || numInInfinity > 0)
+            if (accumulativeDamage > 0)
             {
                 sf.disableRegenFromBuffs = true;
             }

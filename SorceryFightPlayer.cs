@@ -52,7 +52,13 @@ namespace sorceryFight
         #endregion
 
         #region Domain Expansion Variables
-        public bool unlockedDomain;
+        public bool UnlockedDomain
+        {
+            get
+            {
+                return CalamityMod.DownedBossSystem.downedDoG;
+            }
+        }
         public bool expandedDomain;
         public int domainIndex;
         #endregion
@@ -89,7 +95,6 @@ namespace sorceryFight
 
             yourPotentialSwitch = false;
 
-            unlockedDomain = false;
             expandedDomain = false;
             domainIndex = -1;
 
@@ -121,7 +126,6 @@ namespace sorceryFight
             
             var generalBooleans = new List<string>();
             generalBooleans.AddWithCondition("unlockedRCT", unlockedRCT);
-            generalBooleans.AddWithCondition("unlockedDomain", unlockedDomain);
             tag["generalBooleans"] = generalBooleans;
 
         }
@@ -151,9 +155,7 @@ namespace sorceryFight
             var generalBooleans = tag.GetList<string>("generalBooleans");
 
             // unlockedRCT = generalBooleans.Contains("unlockedRCT");
-            // unlockedDomain = generalBooleans.Contains("unlockedDomain");
-            unlockedRCT = true;
-            unlockedDomain = true;
+            unlockedRCT = false;
 
             maxCursedEnergy = calculateMaxCE();
             cursedEnergyRegenPerSecond = calculateCERegenRate();
@@ -332,7 +334,7 @@ namespace sorceryFight
         }
         public void DomainExpansion()
         {
-            if (!unlockedDomain)
+            if (!UnlockedDomain)
             {
                 int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You haven't unlocked this yet!");
                 Main.combatText[index].lifeTime = 60;
@@ -353,10 +355,7 @@ namespace sorceryFight
             }
             else if (domainIndex != -1)
             {
-                Main.npc[domainIndex].active = false;
-                Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.SecondsToTicks(1));
-                expandedDomain = false;
-                disableRegenFromDE = false;
+                innateTechnique.CloseDomain(this);
             }
         }
     }

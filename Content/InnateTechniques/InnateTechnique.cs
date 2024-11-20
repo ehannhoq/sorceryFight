@@ -40,5 +40,12 @@ namespace sorceryFight.Content.InnateTechniques
         public virtual void PostUpdate(SorceryFightPlayer sf) {}
 
         public virtual void DomainExpansion(SorceryFightPlayer sf) { }
+        public virtual void CloseDomain(SorceryFightPlayer sf)
+        {
+            Main.npc[sf.domainIndex].active = false;
+            sf.Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.SecondsToTicks(30));
+            sf.expandedDomain = false;
+            sf.disableRegenFromDE = false;
+        }
     }
 }
