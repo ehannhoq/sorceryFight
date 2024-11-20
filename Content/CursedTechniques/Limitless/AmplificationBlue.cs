@@ -36,12 +36,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override float Cost { get; set; } = 50f;
         public override float MasteryNeeded { get; set; } = 0f;
         public override Color textColor { get; set; } = new Color(108, 158, 240);
-        public override bool Unlocked
+        public override bool Unlocked(SorceryFightPlayer sf)
         {
-            get
-            {
-                return NPC.downedBoss3;
-            }
+            return NPC.downedBoss3;
         }
 
         public override int Damage { get; set ; } = 150;

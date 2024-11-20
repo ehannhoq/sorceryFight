@@ -37,12 +37,9 @@ namespace sorceryFight.Content.Buffs.Limitless
         public override bool isActive { get; set; } = false;
         public override float CostPerSecond { get; set; } = 5f;
 
-        public override bool Unlocked
+        public override bool Unlocked(SorceryFightPlayer sf)
         {
-            get
-            {
-                return Main.hardMode;
-            }
+            return Main.hardMode;
         }
 
         protected Dictionary<int, int> auraIndices;

@@ -22,7 +22,7 @@ namespace sorceryFight.Content.Buffs
 
         public virtual bool isActive { get; set; } = false;
         public virtual float CostPerSecond { get; set; } = 0f;
-        public virtual bool Unlocked { get; set; } = false;
+        public virtual bool Unlocked(SorceryFightPlayer sf) { return false; }
 
         public override void SetStaticDefaults()
         {

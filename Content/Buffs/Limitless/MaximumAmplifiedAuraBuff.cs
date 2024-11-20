@@ -21,12 +21,9 @@ namespace sorceryFight.Content.Buffs.Limitless
         }
         public override bool isActive { get; set; } = false;
         public override float CostPerSecond { get; set; } = 10f;
-        public override bool Unlocked
+        public override bool Unlocked(SorceryFightPlayer sf)
         {
-            get
-            {
-                return NPC.downedGolemBoss;
-            }
+            return NPC.downedGolemBoss;
         }
         public override void Apply(Player player)
         {

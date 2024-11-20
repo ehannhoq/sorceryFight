@@ -37,12 +37,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override int Damage { get; set ; } = 1500;
         public override float Speed { get; set; } = 30f;
         public override float LifeTime { get; set; } = 300f;
-        public override bool Unlocked
+        public override bool Unlocked(SorceryFightPlayer sf)
         {
-            get
-            {
-                return NPC.downedAncientCultist;
-            }
+            return sf.unlockedRCT;
         }
 
         public static Texture2D texture;

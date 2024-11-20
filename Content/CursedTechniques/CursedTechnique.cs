@@ -26,7 +26,7 @@ namespace sorceryFight.Content.CursedTechniques
         public virtual int Damage { get; set; } = 0;
         public virtual float Speed { get; set; } = 0f;
         public virtual float LifeTime { get; set; } = 30f;
-        public virtual bool Unlocked { get; set; } = false;
+        public virtual bool Unlocked(SorceryFightPlayer sf) { return false; }
         public virtual int GetProjectileType()
         {
             return ModContent.ProjectileType<CursedTechnique>();

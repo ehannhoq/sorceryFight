@@ -75,7 +75,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
         private void DrawCursedTechnique(SorceryFightPlayer sfPlayer)
         {
-            unlocked = sfPlayer.innateTechnique.CursedTechniques[abilityID].Unlocked;
+            unlocked = sfPlayer.innateTechnique.CursedTechniques[abilityID].Unlocked(sfPlayer);
             selected = sfPlayer.selectedTechnique == sfPlayer.innateTechnique.CursedTechniques[abilityID];
 
             if (SorceryFightUI.MouseHovering(this, texture))
@@ -105,7 +105,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
         private void DrawPassiveTechnique(SorceryFightPlayer sfPlayer)
         {
-            unlocked = sfPlayer.innateTechnique.PassiveTechniques[abilityID].Unlocked;
+            unlocked = sfPlayer.innateTechnique.PassiveTechniques[abilityID].Unlocked(sfPlayer);
             selected = sfPlayer.innateTechnique.PassiveTechniques[abilityID].isActive;
 
             if (SorceryFightUI.MouseHovering(this, texture))

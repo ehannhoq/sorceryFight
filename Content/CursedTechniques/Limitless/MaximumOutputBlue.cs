@@ -38,12 +38,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override int Damage { get; set ; } = 300;
         public override float Speed { get; set; } = 20f;
         public override float LifeTime { get; set; } = 120f;
-        public override bool Unlocked
+        public override bool Unlocked(SorceryFightPlayer sf)
         {
-            get
-            {
-                return NPC.downedMechBossAny;
-            }
+            return NPC.downedMechBossAny;
         }
         public virtual float AttractionRadius { get; set; } = 130f;
         public virtual float AttractionStrength { get; set; } = 15f;
