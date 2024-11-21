@@ -291,15 +291,10 @@ namespace sorceryFight
 
         public void ShootTechnique()
         {
-            if (selectedTechnique.Name == null || disableRegenFromProjectiles)
+            if (selectedTechnique == null || disableRegenFromProjectiles)
             {
                 return;
             }
-
-            Vector2 playerPos = Player.MountedCenter;
-            Vector2 mousePos = Main.MouseWorld;
-            Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * selectedTechnique.Speed;
-            var entitySource = Player.GetSource_FromThis();
 
             if (Player.HasBuff<BurntTechnique>())
             {
@@ -314,6 +309,11 @@ namespace sorceryFight
 				Main.combatText[index].lifeTime = 180;
                 return;
             }
+
+            Vector2 playerPos = Player.MountedCenter;
+            Vector2 mousePos = Main.MouseWorld;
+            Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * selectedTechnique.Speed;
+            var entitySource = Player.GetSource_FromThis();
 
             cursedEnergy -= selectedTechnique.Cost;
 
@@ -333,15 +333,11 @@ namespace sorceryFight
         {
             if (!unlockedRCT)
             {
-                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You haven't unlocked this yet!");
-                Main.combatText[index].lifeTime = 60;
                 return;
             }
 
             if (Player.HasBuff<BurntTechnique>())
             {
-                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
-                Main.combatText[index].lifeTime = 60;
                 return;
             }
 

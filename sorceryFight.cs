@@ -33,18 +33,5 @@ namespace sorceryFight
 		{
 			return (int)ticks / 60;
 		}
-
-		/// <summary>
-		/// Checks if an npc is a Domain Expansion.
-		/// Domain Expansions are ModNPC's, as they have
-		/// more wiggle room for what layer they are drawn
-		/// on.
-		/// </summary>
-		/// <param name="npc"></param>
-		/// <returns></returns>
-		public static bool IsDomain(NPC npc)
-		{
-			return npc.type == ModContent.NPCType<UnlimitedVoid>();
-		}
-    }
+	}
 }

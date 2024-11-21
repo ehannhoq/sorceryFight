@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using sorceryFight.Content.DomainExpansions;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace sorceryFight;
 
@@ -19,5 +21,10 @@ public static class SFUtils
     {
         if (condition)
             list.Add(type);
+    }
+
+    public static bool IsDomain (this NPC npc)
+    {
+        return npc.type == ModContent.NPCType<UnlimitedVoid>();
     }
 }

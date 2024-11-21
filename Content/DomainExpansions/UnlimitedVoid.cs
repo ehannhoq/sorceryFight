@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CalamityMod;
+using CalamityMod.Events;
 using CalamityMod.Items;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.Particles;
@@ -66,6 +67,7 @@ namespace sorceryFight.Content.DomainExpansions
             NPC.hide = true;
             NPC.behindTiles = false;
             frozenValues = new Dictionary<int, float[]>();
+            NPC.boss = true;
         }
 
         public override void AI()
@@ -73,6 +75,11 @@ namespace sorceryFight.Content.DomainExpansions
             player = Main.player[(int)NPC.ai[1]];
             SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
             NPC.ai[0]++;
+
+            if (!NPC.active && BossRushEvent.BossRushActive)
+            {
+                NPC.active = true;
+            }
   
             float logBase = 10f;
             float maxAIValue = 30f;
@@ -113,7 +120,7 @@ namespace sorceryFight.Content.DomainExpansions
 
             foreach (NPC npc in Main.npc)
             {
-                if (npc.active && !npc.friendly && npc.type != NPCID.TargetDummy && npc.type != ModContent.NPCType<SuperDummyNPC>() && !SorceryFight.IsDomain(npc))
+                if (npc.active && !npc.friendly && npc.type != NPCID.TargetDummy && npc.type != ModContent.NPCType<SuperDummyNPC>() && !npc.IsDomain())
                 {
                     float distance = Vector2.Distance(npc.Center, NPC.Center);
                     if (distance < 1000f)
@@ -181,8 +188,10 @@ namespace sorceryFight.Content.DomainExpansions
 
         public override void DrawBehind(int index)
         {
-            List<int> newCache = new List<int>(200);
-            newCache.Add(index);
+            List<int> newCache = new List<int>(200)
+            {
+                index
+            };
 
             foreach (int i in Main.instance.DrawCacheNPCsMoonMoon)
             {

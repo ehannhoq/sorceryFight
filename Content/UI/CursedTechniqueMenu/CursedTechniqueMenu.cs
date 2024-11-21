@@ -96,7 +96,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             DomainExpansionIcon icon = new DomainExpansionIcon(texture);
 
             icon.Left.Set(screenCenter.X - 140f, 0f);
-            icon.Top.Set(screenCenter.Y, 0f);
+            icon.Top.Set(screenCenter.Y - texture.Height / 2, 0f);
             Append(icon);
 
         }

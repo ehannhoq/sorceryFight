@@ -137,9 +137,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 }
             }
 
-            foreach (NPC npc in Main.npc)
+            foreach (NPC npc in Main.ActiveNPCs)
             {
-                if (!npc.friendly && npc.type != NPCID.TargetDummy)
+                if (!npc.friendly && npc.type != NPCID.TargetDummy && !npc.IsDomain())
                 {
                     float distance = Vector2.Distance(npc.Center, Projectile.Center);
                     if (distance <= AttractionRadius)
