@@ -11,6 +11,7 @@ namespace sorceryFight.Content.InnateTechniques
     public abstract class InnateTechnique()
     {
         public abstract string Name { get; }
+        public abstract string DisplayName { get; }
         public abstract List<PassiveTechnique> PassiveTechniques { get; }
         public abstract List<CursedTechnique> CursedTechniques { get; }
         public abstract DomainExpansion DomainExpansion { get; }

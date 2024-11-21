@@ -16,6 +16,7 @@ namespace sorceryFight.Content.InnateTechniques
         public bool hasInfinity = false;
         public int domainExpansionTimer = -1;
         public override string Name => "Limitless";
+        public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.Limitless.DisplayName");
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
             new InfinityBuff(),
