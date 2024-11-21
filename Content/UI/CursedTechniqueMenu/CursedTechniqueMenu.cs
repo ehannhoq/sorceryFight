@@ -92,7 +92,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
         private void DisplayDomainExpansionIcon(Vector2 screenCenter)
         {
             DomainExpansion de = player.innateTechnique.DomainExpansion;
-            Texture2D texture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/DomainExpansionIcons/{de.Name}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D texture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/DomainExpansionIcons/{de.DisplayName.Value}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             DomainExpansionIcon icon = new DomainExpansionIcon(texture);
 
             icon.Left.Set(screenCenter.X - 140f, 0f);

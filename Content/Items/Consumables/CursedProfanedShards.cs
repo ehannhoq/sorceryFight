@@ -8,11 +8,14 @@ using CalamityMod.Items.TreasureBags;
 using Terraria.GameContent.ItemDropRules;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items;
+using Terraria.Localization;
 
 namespace sorceryFight.Content.Items.Consumables
 {
     public class CursedProfanedShards : ModItem
     {
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.CursedProfanedShards.DisplayName");
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.CursedProfanedShards.Tooltip");
         public override void SetStaticDefaults()
         {
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 8));

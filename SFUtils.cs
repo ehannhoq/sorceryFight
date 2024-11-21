@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using sorceryFight.Content.DomainExpansions;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace sorceryFight;
@@ -26,5 +27,15 @@ public static class SFUtils
     public static bool IsDomain (this NPC npc)
     {
         return npc.type == ModContent.NPCType<UnlimitedVoid>();
+    }
+    
+    public static LocalizedText GetLocalization(string key)
+    {
+        return Language.GetText(key);
+    }
+
+    public static string GetLocalizationValue(string key)
+    {
+        return Language.GetTextValue(key);
     }
 }

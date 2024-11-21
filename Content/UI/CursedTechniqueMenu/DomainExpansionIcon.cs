@@ -32,8 +32,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
             if (SorceryFightUI.MouseHovering(this, texture))
             {
-                Main.hoverItemName = unlocked ? sfPlayer.innateTechnique.DomainExpansion.Name + "\n" 
-                                                + sfPlayer.innateTechnique.DomainExpansion.Description 
+                Main.hoverItemName = unlocked ? sfPlayer.innateTechnique.DomainExpansion.DisplayName.Value + "\n" 
+                                                + sfPlayer.innateTechnique.DomainExpansion.Description
                 
                                                 : sfPlayer.innateTechnique.DomainExpansion.LockedDescription;
             }

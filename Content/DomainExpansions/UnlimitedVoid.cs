@@ -19,21 +19,9 @@ namespace sorceryFight.Content.DomainExpansions
 {
     public class UnlimitedVoid : DomainExpansion
     {
-        public override string Name { get; } = "Unlimited Void";
-        public override string Description 
-        {
-            get
-            {
-                return Language.GetText("Mods.sorceryFight.DomainExpansions.UnlimitedVoid.Description").Value;
-            }
-        }
-        public override string LockedDescription 
-        {
-            get
-            {
-                return Language.GetText("Mods.sorceryFight.DomainExpansions.UnlimitedVoid.LockedDescription").Value;
-            }
-        }
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.DomainExpansions.UnlimitedVoid.DisplayName");
+        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.UnlimitedVoid.Description");
+        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.UnlimitedVoid.LockedDescription");
         public static int FRAME_COUNT = 1;
         public static int TICKS_PER_FRAME = 1;
         public static Dictionary<int, float[]> frozenValues;

@@ -319,7 +319,7 @@ namespace sorceryFight
 
             if (selectedTechnique.DisplayNameInGame)
             {
-                int index1 = CombatText.NewText(Player.getRect(), selectedTechnique.textColor, selectedTechnique.Name);
+                int index1 = CombatText.NewText(Player.getRect(), selectedTechnique.textColor, selectedTechnique.DisplayName.Value);
                 Main.combatText[index1].lifeTime = 180;
             }
             

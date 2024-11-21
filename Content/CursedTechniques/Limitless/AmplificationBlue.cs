@@ -16,28 +16,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public static readonly int FRAME_COUNT = 8; 
         public static readonly int TICKS_PER_FRAME = 5;
-
-        public override string Name
-        {
-            get
-            {
-                return Language.GetText("Mods.sorceryFight.CursedTechniques.AmplificationBlue.Name").Value;
-            }
-        }
-        public override string Description
-        { 
-            get
-            {
-                return Language.GetText("Mods.sorceryFight.CursedTechniques.AmplificationBlue.Description").Value;
-            }
-        }
-        public override string LockedDescription
-        {
-            get
-            {
-                return Language.GetText("Mods.sorceryFight.CursedTechniques.AmplificationBlue.LockedDescription").Value;
-            }
-        }
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.AmplificationBlue.DisplayName");
+        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.AmplificationBlue.Description");
+        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.AmplificationBlue.LockedDescription");
         public override float Cost { get; } = 50f;
         public override float MasteryNeeded { get;} = 0f;
         public override Color textColor { get; } = new Color(108, 158, 240);

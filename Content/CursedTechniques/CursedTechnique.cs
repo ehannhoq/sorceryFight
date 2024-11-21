@@ -1,13 +1,13 @@
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.CursedTechniques
 {
     public abstract class CursedTechnique : ModProjectile
     {
-        public abstract new string Name { get; }
         public virtual string Stats 
         {
             get

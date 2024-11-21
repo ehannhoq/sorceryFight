@@ -18,7 +18,7 @@ namespace sorceryFight.Content.Buffs.Limitless
     public class InfinityBuff : PassiveTechnique
     {
         private Dictionary<int, Vector2> velocityData = new Dictionary<int, Vector2>();
-        public override string Name { get; set; } = "Infinity";
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.Infinity.DisplayName");
         public override string Stats 
         {
             get
@@ -30,14 +30,9 @@ namespace sorceryFight.Content.Buffs.Limitless
                         
             }
         }
-        public override LocalizedText Description => Language.GetText("Mods.sorceryFight.PassiveTechniques.Infinity.Description");
-        public override string LockedDescription
-        {
-            get
-            {
-                return Language.GetText("Mods.sorceryFight.PassiveTechniques.Infinity.LockedDescription").Value;
-            }
-        }
+        public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.Infinity.Description");
+        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.PassiveTechniques.Infinity.LockedDescription");
+
         public override bool isActive { get; set; } = false;
         public override float CostPerSecond { get; set; } = 1f;
         public override bool Unlocked(SorceryFightPlayer sf)

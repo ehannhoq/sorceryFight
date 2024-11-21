@@ -15,7 +15,7 @@ namespace sorceryFight.Content.Buffs.Limitless
         public virtual float SpeedMultiplier { get; set; } = 50f;
         public virtual float DamageMultiplier { get; set; } = 10f;
 
-        public override string Name { get; set; } = "Amplified Aura";
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.AmplifiedAuraBuff.DisplayName");
         public override string Stats 
         {
             get
@@ -25,15 +25,9 @@ namespace sorceryFight.Content.Buffs.Limitless
                         + $"+{DamageMultiplier}% damage boost.\n";
             }
         }
-        public override LocalizedText Description => Language.GetText("Mods.sorceryFight.PassiveTechniques.AmplifiedAura.Description");
+        public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.AmplifiedAuraBuff.Description");
 
-        public override string LockedDescription
-        {
-            get
-            {
-                return Language.GetText("Mods.sorceryFight.PassiveTechniques.AmplifiedAura.LockedDescription").Value;
-            }
-        }
+        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.Buffs.AmplifiedAuraBuff.LockedDescription");
         public override bool isActive { get; set; } = false;
         public override float CostPerSecond { get; set; } = 5f;
 

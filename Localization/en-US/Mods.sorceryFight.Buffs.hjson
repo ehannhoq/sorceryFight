@@ -1,0 +1,41 @@
+BurntTechnique: {
+	DisplayName: Burnt Technique
+	Description:
+		'''
+		Your Innate Technique has been exhuasted!
+		You won't be able to use any cursed techniques.
+		'''
+}
+
+AmplifiedAuraBuff: {
+	DisplayName: Amplified Aura
+	Description:
+		'''
+		Covering yourself in a shroud of 
+		the amplified Limitless, you gain 
+		an increase in speed and damage.
+		'''
+}
+
+Infinity: {
+	DisplayName: Infinity
+	Description:
+		'''
+		Infinity is the convergence of an 
+		immeasurable series, anything that
+		approaches the infinity slows down 
+		and never reaches you.
+		'''
+}
+
+MaximumAmplifiedAuraBuff: {
+	DisplayName: Maximum Output: Amplified Aura
+	Description:
+		'''
+		Covering yourself in a shroud
+		of the amplified Limitless using
+		maximum cursed energy output,
+		you gain a major increase in
+		speed and damage.
+		'''
+}

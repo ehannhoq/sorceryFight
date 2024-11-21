@@ -1,0 +1,75 @@
+AmplificationBlue: {
+	DisplayName: Cursed Technique Amplification: Blue
+	Description:
+		'''
+		By pouring amplified cursed energy
+		into the Limitless technique, space
+		converges into a single point, creating
+		a powerful, attractive force.
+		'''
+	LockedDescription: Defeat the one who guards the Dungeon.
+}
+
+MaximumOutputBlue: {
+	DisplayName: Cursed Technique: Maximum Output: Blue
+	Description:
+		'''
+		The mastered version of Blue, the 
+		projectile generates an even stronger 
+		gravitational field, and crushes
+		enemies instantly upon impact.
+		'''
+	LockedDescription:
+		'''
+		Slay a being of that who resembles
+		the original three.
+		'''
+}
+
+ReversalRed: {
+	DisplayName: Cursed Technique Reversal: Red
+	Description:
+		'''
+		Powered by positive cursed energy
+		produced from reversed cursed technique,
+		Red brings the divergence of infinity
+		into reality, creating a strong
+		repelling force. The CE output is twice
+		as much as the amplified Limitless.
+		'''
+	LockedDescription:
+		'''
+		Be at the brink of death at the hands
+		of the lunar god.
+		'''
+}
+
+HollowPurple: {
+	DisplayName: Hollow Technique: Purple
+	Description:
+		'''
+		By smashing both infinities, convergence
+		and divergence, an imaginary mass is formed.
+		The CE output far surpasses of Blue and Red.
+		'''
+	LockedDescription:
+		'''
+		Defeat the Goddess who slew a dragon and
+		gorged Herself in its auric soul of Flame.
+		'''
+}
+
+HollowPurple200Percent: {
+	DisplayName: 200% Hollow Technqiue: Purple
+	Description:
+		'''
+		By chanting the incantation and at the 
+		cost of burning out your Cursed Technique,
+		the CE output doubles.
+		'''
+	LockedDescription:
+		'''
+		Vanquish the feral amalgamation that roams
+		in the deepest parts of the Dungeon.
+		'''
+}

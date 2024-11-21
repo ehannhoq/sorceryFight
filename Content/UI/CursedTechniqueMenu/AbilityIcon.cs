@@ -80,7 +80,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
             if (SorceryFightUI.MouseHovering(this, texture))
             {
-                Main.hoverItemName = unlocked ? $"{sfPlayer.innateTechnique.CursedTechniques[abilityID].Name}\n"
+                Main.hoverItemName = unlocked ? $"{sfPlayer.innateTechnique.CursedTechniques[abilityID].DisplayName.Value}\n"
                                         + $"{sfPlayer.innateTechnique.CursedTechniques[abilityID].Stats}\n"
                                         + $"{sfPlayer.innateTechnique.CursedTechniques[abilityID].Description}" : sfPlayer.innateTechnique.CursedTechniques[abilityID].LockedDescription;
 
@@ -97,7 +97,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                     }
 
                     sfPlayer.selectedTechnique = sfPlayer.innateTechnique.CursedTechniques[abilityID];
-                    int index = CombatText.NewText(Main.LocalPlayer.getRect(), Color.LightYellow, $"Selected {sfPlayer.selectedTechnique.Name}");
+                    int index = CombatText.NewText(Main.LocalPlayer.getRect(), Color.LightYellow, $"Selected {sfPlayer.selectedTechnique.DisplayName.Value}");
                     Main.combatText[index].lifeTime = 180;
                 }
             }
@@ -110,7 +110,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
             if (SorceryFightUI.MouseHovering(this, texture))
             {
-                Main.hoverItemName = unlocked ? $"{sfPlayer.innateTechnique.PassiveTechniques[abilityID].Name}\n"
+                Main.hoverItemName = unlocked ? $"{sfPlayer.innateTechnique.PassiveTechniques[abilityID].DisplayName.Value}\n"
                                      + $"{sfPlayer.innateTechnique.PassiveTechniques[abilityID].Stats}\n"
                                      + $"{sfPlayer.innateTechnique.PassiveTechniques[abilityID].Description.Value}" : sfPlayer.innateTechnique.PassiveTechniques[abilityID].LockedDescription;
 
@@ -130,10 +130,10 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
                     string text = "";
                     if (sfPlayer.innateTechnique.PassiveTechniques[abilityID].isActive)
-                        text = $"Activated {sfPlayer.innateTechnique.PassiveTechniques[abilityID].Name}";
+                        text = $"Activated {sfPlayer.innateTechnique.PassiveTechniques[abilityID].DisplayName.Value}";
 
                     else
-                        text = $"Deactivated {sfPlayer.innateTechnique.PassiveTechniques[abilityID].Name}";
+                        text = $"Deactivated {sfPlayer.innateTechnique.PassiveTechniques[abilityID].DisplayName.Value}";
 
                     int index = CombatText.NewText(Main.LocalPlayer.getRect(), Color.LightYellow, text);
                     Main.combatText[index].lifeTime = 180;

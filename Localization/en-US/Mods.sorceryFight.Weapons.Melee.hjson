@@ -1,0 +1,14 @@
+ExampleSword: {
+	DisplayName: Example Sword
+	Tooltip: TEST
+}
+
+CursedKatana: {
+	DisplayName: Cursed Katana
+	Tooltip:
+		'''
+		A katana thats been
+		inbued with cursed
+		energy.
+		'''
+}

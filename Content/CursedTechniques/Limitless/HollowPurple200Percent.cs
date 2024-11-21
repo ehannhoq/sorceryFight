@@ -15,27 +15,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public static readonly int FRAME_COUNT = 4;
         public static readonly int TICKS_PER_FRAME = 5;
 
-        public override string Name
-        {
-            get
-            {
-                return Language.GetText("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.Name").Value;
-            }
-        }
-        public override string Description
-        { 
-            get
-            {
-                return Language.GetText("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.Description").Value;
-            }
-        }
-        public override string LockedDescription
-        {
-            get
-            {
-                return Language.GetText("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.LockedDescription").Value;
-            }
-        }
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.DisplayName");
+        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.Description");
+        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.LockedDescription");
         public override float Cost { get; } = 2000f;
         public override float MasteryNeeded { get; } = 0f;
         public override Color textColor { get; } = new Color(235, 117, 233);

@@ -15,7 +15,7 @@ namespace sorceryFight.Content.InnateTechniques
     {
         public bool hasInfinity = false;
         public int domainExpansionTimer = -1;
-        public override string Name { get; } = "Limitless";
+        public override string Name => "Limitless";
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
             new InfinityBuff(),
