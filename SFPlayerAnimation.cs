@@ -51,7 +51,7 @@ namespace sorceryFight
                 rctAnimation = false;
                 rctTimer = 0;
                 rctFrozenPosition = Vector2.Zero;
-                // unlockedRCT = true;
+                unlockedRCT = true;
 
                 for (int i = 0; i < 100; i ++)
                 {
