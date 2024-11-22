@@ -1,4 +1,4 @@
-Sorcery Fight is heavily inspired by anime/manga Jujutsu Kaisen. It adds two Cursed Techniques, nine unique abilities, two Domain Expansions, and more.
+Sorcery Fight is heavily inspired by anime/manga Jujutsu Kaisen. It adds one Innate Technique, five Cursed Technqiues, three Passive Techniques, and one Domain Expansion.
 
 NOTE: This mod requires Calamity Mod and its dependencies in order to install.
 
