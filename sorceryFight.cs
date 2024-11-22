@@ -15,23 +15,23 @@ namespace sorceryFight
 	public class SorceryFight : Mod
 	{
 		/// <summary>
-		/// Converts given seconds into ticks.
+		/// Converts seconds into buff time.
 		/// </summary>
 		/// <param name="seconds"></param>
-		/// <returns>The number of ticks in a given amount of seconds.</returns>
-        public static int SecondsToTicks(float seconds)
+		/// <returns>The number of ticks in a second.</returns>
+        public static int BuffSecondsToTicks(float seconds)
 		{
 			return (int)(seconds * 60);
 		}
 
 		/// <summary>
-		/// Converts given ticks into seconds.
+		/// Converts x/second into x/ticks. Usually used for CE regen and CE consumption.
 		/// </summary>
 		/// <param name="ticks"></param>
-		/// <returns>The number of seconds in a given amount of ticks.</returns>
-		public static int TicksToSeconds(float ticks)
+		/// <returns>The rate per tick.</returns>
+		public static float RateSecondsToTicks(float ticks)
 		{
-			return (int)ticks / 60;
+			return ticks / 60;
 		}
 	}
 }

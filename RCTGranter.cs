@@ -9,7 +9,6 @@ namespace sorceryFight.Content
     public class RCTGranter : ModSystem
     {
         private int moonLordIndex = -1;
-        private bool moonLordAlive = false;
         public override void PreUpdatePlayers()
         {
             if (!CheckMoonLord()) return;
@@ -23,8 +22,12 @@ namespace sorceryFight.Content
 
                 if (player.statLife < 10)
                 {
-                    player.statLife = player.statLifeMax2;
-                    sfPlayer.unlockedRCT = true;
+                    player.dead = false;
+                    player.immuneTime = 120;
+                    player.respawnTimer = 0;
+                    player.statLife = 1;
+                    player.creativeGodMode = true;
+                    sfPlayer.rctAnimation = true;
                 }
             }
         }

@@ -105,7 +105,9 @@ namespace sorceryFight
         }
         public override void SaveData(TagCompound tag)
         {
-            tag["innateTechnique"] = innateTechnique.Name;
+            if (innateTechnique != null)
+                tag["innateTechnique"] = innateTechnique.Name;
+                
             tag["mastery"] = mastery;
             tag["cursedEnergy"] = cursedEnergy;
 
@@ -137,7 +139,7 @@ namespace sorceryFight
             innateTechnique = InnateTechnique.GetInnateTechnique(innateTechniqueName);
             
             mastery = tag.ContainsKey("mastery") ? tag.GetFloat("mastery") : 0f;
-            cursedEnergy = tag.ContainsKey("cursedEnergy") ? tag.GetFloat("cursedEnergy") : 0f;
+            cursedEnergy = tag.ContainsKey("cursedEnergy") ? tag.GetFloat("cursedEnergy") : 1f;
 
             var maxCEModifiers = tag.GetList<string>("maxCEModifiers");
             cursedSkull = maxCEModifiers.Contains("cursedSkull");
@@ -163,8 +165,10 @@ namespace sorceryFight
 
         public override void PostUpdate()
         {
-            innateTechnique.PostUpdate(this);
+            if (innateTechnique == null) return;    
 
+            innateTechnique.PostUpdate(this);
+            AnimUpdate();
 
             if (SFKeybinds.UseTechnique.JustPressed)
                 ShootTechnique();
@@ -189,7 +193,7 @@ namespace sorceryFight
 
             if (cursedEnergy > 0)
             {
-                cursedEnergy -= SorceryFight.TicksToSeconds(cursedEnergyUsagePerSecond);
+                cursedEnergy -= SorceryFight.RateSecondsToTicks(cursedEnergyUsagePerSecond);
                 if (cursedEnergy < 0)
                 {
                     cursedEnergy = 0;
@@ -198,7 +202,7 @@ namespace sorceryFight
 
             if (cursedEnergy < maxCursedEnergy && !disabledRegen)
             {
-                cursedEnergy += SorceryFight.TicksToSeconds(cursedEnergyRegenPerSecond);
+                cursedEnergy += SorceryFight.RateSecondsToTicks(cursedEnergyRegenPerSecond);
                 if (cursedEnergy > maxCursedEnergy)
                 {
                     cursedEnergy = maxCursedEnergy;
@@ -210,10 +214,12 @@ namespace sorceryFight
 
         public override void PostUpdateBuffs()
         {
+            if (innateTechnique == null) return;
+
             if (cursedEnergy < 1)
             {
                 cursedEnergy = 1;
-                Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.SecondsToTicks(10));
+                Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(10));
             }
 
 
@@ -237,9 +243,11 @@ namespace sorceryFight
 
         public override void UpdateDead()
         {
-            foreach (PassiveTechnique passiveTechnique in innateTechnique.PassiveTechniques)
+            ResetBuffs();
+            
+            if (rctAnimation)
             {
-                passiveTechnique.isActive = false;
+                PreventRCTAnimDeath();
             }
         }
 
@@ -287,6 +295,14 @@ namespace sorceryFight
                 sum += 25f; // 100 CE/s total
 
             return baseRegen + sum;
+        }
+
+        public void ResetBuffs()
+        {
+            foreach (PassiveTechnique passiveTechnique in innateTechnique.PassiveTechniques)
+            {
+                passiveTechnique.isActive = false;
+            }
         }
 
         public void ShootTechnique()

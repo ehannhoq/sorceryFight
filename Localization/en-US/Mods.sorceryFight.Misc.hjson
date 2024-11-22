@@ -1,8 +1,11 @@
 InnateTechniques: {
-    Limitless: {
-        DisplayName: Limitless
-        Description:
-            '''
-            '''
-    }
+	Limitless: {
+		DisplayName: Limitless
+		Description: placeholder
+	}
+}
+
+UnlockedRCT: {
+	GeneralMessage: At the brink of death, you understand the nature of the Reverse Cursed Technique.
+	KeyBindMessage: ": Hold down to use your cursed energy to heal yourself!"
 }

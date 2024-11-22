@@ -151,7 +151,7 @@ namespace sorceryFight.Content.DomainExpansions
         private void Remove(SorceryFightPlayer sfPlayer)
         {
             sfPlayer.disableRegenFromDE = false;
-            player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.SecondsToTicks(30));
+            player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(30));
             player = null;
             frozenValues.Clear();
 

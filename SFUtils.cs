@@ -38,4 +38,9 @@ public static class SFUtils
     {
         return Language.GetTextValue(key);
     }
+
+    public static NetworkText GetNetworkText(string key)
+    {
+        return NetworkText.FromKey(key);
+    }
 }

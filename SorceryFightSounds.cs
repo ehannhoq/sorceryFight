@@ -12,6 +12,7 @@ namespace sorceryFight
     {
         public static SoundStyle CommonFire;
         public static SoundStyle CommonWoosh;
+        public static SoundStyle CommonHeartBeat;
 
         public static SoundStyle AmplificationBlueChargeUp;
         public static SoundStyle ReversalRedChargeUp;
@@ -23,6 +24,7 @@ namespace sorceryFight
         {
             CommonFire = new("sorceryFight/Content/Sounds/CommonFire") { Volume = 1f };
             CommonWoosh = new("sorceryFight/Content/Sounds/CommonWoosh") { Volume = 1f };
+            CommonHeartBeat = new("sorceryFight/Content/Sounds/CommonHeartBeat") { Volume = 1f };
 
 
             AmplificationBlueChargeUp = new("sorceryFight/Content/Sounds/Projectiles/AmplificationBlueChargeUp") { Volume = 1f };
