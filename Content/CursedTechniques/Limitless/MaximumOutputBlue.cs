@@ -72,7 +72,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                     Projectile proj = Main.projectile[i];
 
-                    if (proj.type == ModContent.ProjectileType<MaximumOutputBlue>())
+                    if (proj.type == ModContent.ProjectileType<MaximumOutputBlue>() && proj.owner == Projectile.owner)
                     {
                         proj.Kill();
                     }
