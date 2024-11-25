@@ -99,5 +99,9 @@ CursedProfanedShards: {
 
 CursedRock: {
 	DisplayName: Cursed Rock
-	Tooltip: ""
+	Tooltip:
+		'''
+		Radiating in cursed energy.
+		Increases your Cursed Energy regeneration by 20 CE/s.
+		'''
 }

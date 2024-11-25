@@ -11,8 +11,8 @@ namespace sorceryFight.Content.Items.Consumables
 {
     public class CursedRuneOfKos : ModItem
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.CursedRock.DisplayName");
-        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.CursedRock.Tooltip");
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.CursedRuneOfKos.DisplayName");
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.CursedRuneOfKos.Tooltip");
         public override void SetStaticDefaults()
         {
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 8));
