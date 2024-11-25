@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.InnateTechniques;
 using Terraria;
+using Terraria.Chat;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,20 +28,20 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
 
             Vector2 screenCenter = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
 
-            float magnatude = 60f;
+            float magnatude = 150f;
             float rotation = 2 * (float)Math.PI / InnateTechnique.InnateTechniques.Count;
             for (int i = 0; i < InnateTechnique.InnateTechniques.Count; i++)
             {
                 iconPositions.Add(new Vector2(
-                    screenCenter.X - magnatude * (float)Math.Cos(i * rotation),
-                    screenCenter.Y - magnatude * (float)Math.Sin(i * rotation)
+                    screenCenter.X + magnatude * (float)Math.Cos(i * rotation),
+                    screenCenter.Y + magnatude * (float)Math.Sin(i * rotation)
                 ));
             }
 
             
             UIText title = new UIText("Choose your Innate Technique.", 1.5f, false);
             title.Left.Set(screenCenter.X - 180f, 0f);
-            title.Top.Set(screenCenter.Y - 150, 0f);
+            title.Top.Set(screenCenter.Y - 100, 0f);
             Append(title);
 
             DrawLimitless();
@@ -55,12 +56,12 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
             Texture2D backgroundTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.Name}_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 
             SpecialUIElement background = new SpecialUIElement(backgroundTexture, -1f, 0.05f);
-            background.Left.Set(iconPositions[0].X, 0f);
-            background.Top.Set(iconPositions[0].Y, 0f);
+            background.Left.Set(iconPositions[0].X - (backgroundTexture.Width / 2), 0f);
+            background.Top.Set(iconPositions[0].Y - (backgroundTexture.Height / 2), 0f);
                 
             TechnqiueButton button = new TechnqiueButton(iconTexture, t.Name, t);
-            button.Left.Set(iconPositions[0].X, 0f);
-            button.Top.Set(iconPositions[0].Y, 0f);
+            button.Left.Set(iconPositions[0].X - (iconTexture.Width / 2), 0f);
+            button.Top.Set(iconPositions[0].Y - (iconTexture.Height / 2), 0f);
 
             background.Recalculate();
             button.Recalculate();
@@ -91,6 +92,7 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
                 {
                     var player = Main.LocalPlayer;
                     player.GetModPlayer<SorceryFightPlayer>().innateTechnique = selectedTechnique;
+                    ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.{selectedTechnique.Name}"), Color.Aqua, player.whoAmI);
                     RemoveSelf();
                     animate = false;
                     return;
@@ -105,7 +107,6 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
                         Vector2 offsetPos = pos + new Vector2(Main.rand.NextFloat(-100, 100), Main.rand.NextFloat(-100, 100));
                         Vector2 vel = offsetPos.DirectionTo(pos) * 2;
 
-                        // Calamity Mod my beloved. -e
                         SparkleParticle particle = new SparkleParticle(offsetPos, vel, Color.Wheat, Color.White, 0.5f, 35);
                         GeneralParticleHandler.SpawnParticle(particle);
                     }

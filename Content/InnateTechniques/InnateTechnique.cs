@@ -48,6 +48,7 @@ namespace sorceryFight.Content.InnateTechniques
             sf.Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(30));
             sf.expandedDomain = false;
             sf.disableRegenFromDE = false;
+            sf.domainIndex = -1;
         }
     }
 }

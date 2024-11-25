@@ -159,6 +159,8 @@ namespace sorceryFight.Content.DomainExpansions
         private void Remove(SorceryFightPlayer sfPlayer)
         {
             sfPlayer.disableRegenFromDE = false;
+            sfPlayer.domainIndex = -1;
+            sfPlayer.expandedDomain = false;
             Owner.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(30));
             Owner = null;
             frozenValues.Clear();
