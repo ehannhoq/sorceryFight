@@ -357,6 +357,11 @@ namespace sorceryFight
                 return;
             }
 
+            if (Player.statLife >= Player.statLifeMax2)
+            {
+                return;
+            }
+
             if (Main.myPlayer == Player.whoAmI && rctAuraIndex == -1)
             {
                 IEntitySource source = Player.GetSource_FromThis();

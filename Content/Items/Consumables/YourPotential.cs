@@ -1,4 +1,6 @@
 using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -9,8 +11,13 @@ namespace sorceryFight.Content.Items.Consumables
 {
     public class YourPotential : ModItem
     {
+        
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.YourPotential.DisplayName");
         public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.YourPotential.Tooltip");
+        public override void SetStaticDefaults()
+        {
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 4));
+        }
         public override void SetDefaults()
         {
             Item.consumable = true;

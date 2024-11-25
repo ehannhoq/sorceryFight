@@ -22,11 +22,10 @@ namespace sorceryFight.Content.DomainExpansions
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.DomainExpansions.UnlimitedVoid.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.UnlimitedVoid.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.UnlimitedVoid.LockedDescription");
+        public override Player Owner { get; set; }
         public static int FRAME_COUNT = 1;
         public static int TICKS_PER_FRAME = 1;
         public static Dictionary<int, float[]> frozenValues;
-
-        private Player player;
         private Texture2D texture;
         private Texture2D bgTexture;
         private float goalScale;
@@ -55,18 +54,27 @@ namespace sorceryFight.Content.DomainExpansions
             NPC.hide = true;
             NPC.behindTiles = false;
             frozenValues = new Dictionary<int, float[]>();
-            NPC.boss = true;
         }
 
         public override void AI()
         {
-            player = Main.player[(int)NPC.ai[1]];
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            if (Owner == null)
+            {
+                Owner = Main.player[(int)NPC.ai[1]];
+            }
+
+            Owner = Main.player[(int)NPC.ai[1]];
+            SorceryFightPlayer sfPlayer = Owner.GetModPlayer<SorceryFightPlayer>();
             NPC.ai[0]++;
 
             if (!NPC.active && BossRushEvent.BossRushActive)
             {
                 NPC.active = true;
+            }
+
+            if (Owner.dead)
+            {
+                Remove(sfPlayer);
             }
   
             float logBase = 10f;
@@ -74,7 +82,7 @@ namespace sorceryFight.Content.DomainExpansions
 
             if (NPC.ai[0] < 30)
             {
-                NPC.Center = player.Center;
+                NPC.Center = Owner.Center;
 
                 float progress = Math.Clamp(NPC.ai[0] / maxAIValue, 0.01f, 1f);
                 bgScale = goalScale * 4 * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
@@ -151,8 +159,8 @@ namespace sorceryFight.Content.DomainExpansions
         private void Remove(SorceryFightPlayer sfPlayer)
         {
             sfPlayer.disableRegenFromDE = false;
-            player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(30));
-            player = null;
+            Owner.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(30));
+            Owner = null;
             frozenValues.Clear();
 
             NPC.active = false;
