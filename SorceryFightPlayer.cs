@@ -343,7 +343,7 @@ namespace sorceryFight
             {
                 Projectile.NewProjectile(entitySource, Player.Center, dir, selectedTechnique.GetProjectileType(), selectedTechnique.CalculateTrueDamage(this), 0, Player.whoAmI);
 
-                if (mastery < selectedTechnique.MaxDamage)
+                if (mastery < selectedTechnique.MaxMastery)
                 {
                     mastery += 0.5f;
                 }
