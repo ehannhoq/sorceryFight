@@ -1,5 +1,10 @@
 using System;
+using CalamityMod.Events;
+using CalamityMod.NPCs.NormalNPCs;
+using Microsoft.Xna.Framework;
+using sorceryFight.Content.Buffs;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -11,6 +16,52 @@ namespace sorceryFight.Content.DomainExpansions
         public abstract string Description { get; }
         public abstract string LockedDescription { get; }
         public abstract Player Owner { get; set; }
+        public abstract int CostPerSecond { get; }
         public abstract void NPCDomainEffect(NPC npc);
+
+        public override void AI()
+        {
+            Owner??= Main.player[(int)NPC.ai[1]];
+            SorceryFightPlayer sfPlayer = Owner.GetModPlayer<SorceryFightPlayer>();
+
+
+            if (!NPC.active && BossRushEvent.BossRushActive)
+            {
+                NPC.active = true;
+            }
+
+            sfPlayer.disableRegenFromDE = true;
+            sfPlayer.cursedEnergy -= SorceryFight.RateSecondsToTicks(CostPerSecond);
+
+            if (Owner.dead || sfPlayer.cursedEnergy < 2)
+            {
+                Remove(sfPlayer);
+            }
+
+            
+            foreach (NPC npc in Main.npc)
+            {
+                if (npc.active && !npc.friendly && npc.type != NPCID.TargetDummy && npc.type != ModContent.NPCType<SuperDummyNPC>() && !npc.IsDomain())
+                {
+                    float distance = Vector2.Distance(npc.Center, NPC.Center);
+                    if (distance < 1000f)
+                    {
+                        NPCDomainEffect(npc);
+                    }
+                }
+            }
+
+            NPC.ai[0]++;
+        }
+
+        public virtual void Remove(SorceryFightPlayer sfPlayer)
+        {
+            sfPlayer.disableRegenFromDE = false;
+            sfPlayer.domainIndex = -1;
+            sfPlayer.expandedDomain = false;
+            Owner.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(30));
+            Owner = null;
+            NPC.active = false;
+        }
     }
 }

@@ -1,17 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using CalamityMod;
-using CalamityMod.Events;
-using CalamityMod.Items;
-using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.Buffs;
-using sorceryFight.Content.Buffs.Limitless;
 using Terraria;
-using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -23,6 +15,7 @@ namespace sorceryFight.Content.DomainExpansions
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.UnlimitedVoid.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.UnlimitedVoid.LockedDescription");
         public override Player Owner { get; set; }
+        public override int CostPerSecond => 200;
         public static int FRAME_COUNT = 1;
         public static int TICKS_PER_FRAME = 1;
         public static Dictionary<int, float[]> frozenValues;
@@ -58,25 +51,8 @@ namespace sorceryFight.Content.DomainExpansions
 
         public override void AI()
         {
-            if (Owner == null)
-            {
-                Owner = Main.player[(int)NPC.ai[1]];
-            }
+            base.AI();
 
-            Owner = Main.player[(int)NPC.ai[1]];
-            SorceryFightPlayer sfPlayer = Owner.GetModPlayer<SorceryFightPlayer>();
-            NPC.ai[0]++;
-
-            if (!NPC.active && BossRushEvent.BossRushActive)
-            {
-                NPC.active = true;
-            }
-
-            if (Owner.dead)
-            {
-                Remove(sfPlayer);
-            }
-  
             float logBase = 10f;
             float maxAIValue = 30f;
 
@@ -103,26 +79,6 @@ namespace sorceryFight.Content.DomainExpansions
 
                     LineParticle particle = new LineParticle(NPC.Center, velocity, false, 180, 1, Color.LightSteelBlue);
                     GeneralParticleHandler.SpawnParticle(particle);
-                }
-            }
-
-            sfPlayer.disableRegenFromDE = true;
-            sfPlayer.cursedEnergy -= 1;
-
-            if (sfPlayer.cursedEnergy < 2)
-            {
-                Remove(sfPlayer);
-            }
-
-            foreach (NPC npc in Main.npc)
-            {
-                if (npc.active && !npc.friendly && npc.type != NPCID.TargetDummy && npc.type != ModContent.NPCType<SuperDummyNPC>() && !npc.IsDomain())
-                {
-                    float distance = Vector2.Distance(npc.Center, NPC.Center);
-                    if (distance < 1000f)
-                    {
-                        NPCDomainEffect(npc);
-                    }
                 }
             }
 
@@ -156,16 +112,10 @@ namespace sorceryFight.Content.DomainExpansions
             npc.position = new Vector2(frozenValues[npcID][4], frozenValues[npcID][5]);
         }
 
-        private void Remove(SorceryFightPlayer sfPlayer)
+        public override void Remove(SorceryFightPlayer sfPlayer)
         {
-            sfPlayer.disableRegenFromDE = false;
-            sfPlayer.domainIndex = -1;
-            sfPlayer.expandedDomain = false;
-            Owner.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(30));
-            Owner = null;
             frozenValues.Clear();
-
-            NPC.active = false;
+            base.Remove(sfPlayer);   
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
