@@ -23,7 +23,10 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override Color textColor { get; } = new Color(235, 117, 233);
         public override bool DisplayNameInGame { get; } = true;
 
-        public override int Damage { get; } = 6000;
+        
+        public override int BaseDamage => 5000;
+        public override int MaxDamage => 6000;
+        public override float MaxMastery => 95f;
         public override float Speed { get; } = 40f;
         public override float LifeTime { get; } = 500f;
         public override bool Unlocked(SorceryFightPlayer sf)
@@ -175,7 +178,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 animating = false;
                 animScale = 1f;
-                Projectile.damage = Damage;
+                Projectile.damage = CalculateTrueDamage(player.GetModPlayer<SorceryFightPlayer>());
                 Projectile.Hitbox = hitbox;
                 Projectile.timeLeft = (int)LifeTime;
                 Main.projectile[(int)Projectile.ai[1]].Kill();

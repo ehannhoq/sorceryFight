@@ -22,7 +22,10 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override float MasteryNeeded { get; } = 0f;
         public override Color textColor { get; } = new Color(224, 74, 74);
 
-        public override int Damage { get; } = 1500;
+       
+        public override int BaseDamage => 300;
+        public override int MaxDamage => 1500;
+        public override float MaxMastery => 10f;
         public override float Speed { get; } = 30f;
         public override float LifeTime { get; } = 300f;
         public override bool Unlocked(SorceryFightPlayer sf)
@@ -128,7 +131,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 {
                     SoundEngine.PlaySound(SorceryFightSounds.CommonFire, Projectile.Center);
                     Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
-                    Projectile.damage = Damage;
+                    Projectile.damage = CalculateTrueDamage(player.GetModPlayer<SorceryFightPlayer>());
                     Projectile.tileCollide = true;
                     player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
                 }

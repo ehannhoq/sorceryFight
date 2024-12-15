@@ -7,16 +7,6 @@ BurntTechnique: {
 		'''
 }
 
-AmplifiedAuraBuff: {
-	DisplayName: Amplified Aura
-	Description:
-		'''
-		Covering yourself in a shroud of 
-		the amplified Limitless, you gain 
-		an increase in speed and damage.
-		'''
-}
-
 Infinity: {
 	DisplayName: Infinity
 	Description:
@@ -26,6 +16,22 @@ Infinity: {
 		approaches the infinity slows down 
 		and never reaches you.
 		'''
+	LockedDescription:
+		'''
+		Slay the piece of Cthulhu that was
+		ripped out centuries ago.
+		'''
+}
+
+AmplifiedAuraBuff: {
+	DisplayName: Amplified Aura
+	Description:
+		'''
+		Covering yourself in a shroud of 
+		the amplified Limitless, you gain 
+		an increase in speed and damage.
+		'''
+	LockedDescription: Free Hell.
 }
 
 MaximumAmplifiedAuraBuff: {
@@ -38,4 +44,5 @@ MaximumAmplifiedAuraBuff: {
 		you gain a major increase in
 		speed and damage.
 		'''
+	LockedDescription: Defeat the gaurdian of the Temple.
 }

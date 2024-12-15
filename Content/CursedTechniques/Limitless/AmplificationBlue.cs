@@ -19,14 +19,17 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.AmplificationBlue.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.AmplificationBlue.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.AmplificationBlue.LockedDescription");
-        public override float Cost { get; } = 50f;
-        public override float MasteryNeeded { get;} = 0f;
-        public override Color textColor { get; } = new Color(108, 158, 240);
-        public override bool DisplayNameInGame { get; } = true;
+        public override float Cost => 50f;
+        public override float MasteryNeeded => 0f;
+        public override Color textColor => new Color(108, 158, 240);
+        public override bool DisplayNameInGame => true;
 
-        public override int Damage { get; } = 150;
-        public override float Speed { get; } = 15f;
-        public override float LifeTime { get; } = 300f;
+        public override int BaseDamage => 30;
+        public override int MaxDamage => 300;
+        public override float MaxMastery => 10f;
+
+        public override float Speed => 15f;
+        public override float LifeTime => 300f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
             return NPC.downedBoss3;

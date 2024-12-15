@@ -81,7 +81,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             if (SorceryFightUI.MouseHovering(this, texture))
             {
                 Main.hoverItemName = unlocked ? $"{sfPlayer.innateTechnique.CursedTechniques[abilityID].DisplayName.Value}\n"
-                                        + $"{sfPlayer.innateTechnique.CursedTechniques[abilityID].Stats}\n"
+                                        + $"{sfPlayer.innateTechnique.CursedTechniques[abilityID].GetStats(sfPlayer)}\n"
                                         + $"{sfPlayer.innateTechnique.CursedTechniques[abilityID].Description}" : sfPlayer.innateTechnique.CursedTechniques[abilityID].LockedDescription;
 
                 if (Main.mouseLeft && Main.mouseLeftRelease && unlocked)
