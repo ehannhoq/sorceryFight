@@ -29,7 +29,7 @@ namespace sorceryFight.Content.Buffs.Limitless
 
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.Buffs.AmplifiedAuraBuff.LockedDescription");
         public override bool isActive { get; set; } = false;
-        public override float CostPerSecond { get; set; } = 5f;
+        public override float CostPerSecond { get; set; }
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
@@ -68,13 +68,19 @@ namespace sorceryFight.Content.Buffs.Limitless
                 Main.projectile[auraIndices[player.whoAmI]].Kill();
                 auraIndices.Remove(player.whoAmI);
             }
+
+            CostPerSecond = 10f; // Base
+            
+            SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
+            float newCPS = sf.maxCursedEnergy / 100 + CostPerSecond;
+
+            if (newCPS > CostPerSecond)
+                CostPerSecond = newCPS;
         }
 
         public override void Update(Player player, ref int buffIndex)
         {
             base.Update(player, ref buffIndex);
-
- 
 
             player.moveSpeed *= (SpeedMultiplier / 100) + 1;
             player.GetDamage(DamageClass.Melee) *= (DamageMultiplier / 100) + 1;
