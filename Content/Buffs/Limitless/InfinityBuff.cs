@@ -26,7 +26,8 @@ namespace sorceryFight.Content.Buffs.Limitless
                 return $"Base CE Consumption: 1 CE/s\n"
                         + "Each object blocked by Infinity\n"
                         + "increases CE consumption dependent\n"
-                        + "on the object's damamge.\n";
+                        + "on the object's damamge.\n"
+                        + "Infinity takes 4x more CE during boss fights.\n";
                         
             }
         }
@@ -118,9 +119,14 @@ namespace sorceryFight.Content.Buffs.Limitless
                 sf.disableRegenFromBuffs = true;
             }
 
+            int multiplier = 1;
+            if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
+            {
+                multiplier = 4;
+            }
             accumulativeDamage -= player.statDefense;
 
-            CostPerSecond += accumulativeDamage;
+            CostPerSecond += accumulativeDamage *= multiplier;
 
             base.Update(player, ref buffIndex);
         }
