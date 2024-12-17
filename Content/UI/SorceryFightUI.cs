@@ -75,7 +75,7 @@ public class SorceryFightUI : UIState
         UIImage borderBar = new UIImage(borderTexture);
         ceBar = new CursedEnergyBar(barTexture, Orientation.Vertical);
 
-        int x = 1500;
+        int x = Main.screenWidth - 300;
         int y = 20;
 
         borderBar.Left.Set(x, 0f);
