@@ -73,10 +73,10 @@ public class SorceryFightUI : UIState
         var barTexture = ModContent.Request<Texture2D>(fillBarPath).Value;
 
         UIImage borderBar = new UIImage(borderTexture);
-        ceBar = new CursedEnergyBar(barTexture);
+        ceBar = new CursedEnergyBar(barTexture, Orientation.Vertical);
 
-        int x = 200;
-        int y = 200;
+        int x = 1500;
+        int y = 20;
 
         borderBar.Left.Set(x, 0f);
         borderBar.Top.Set(y, 0f);

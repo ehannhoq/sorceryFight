@@ -8,7 +8,7 @@ using Terraria.UI;
 
 public class MasteryBar : ValueBar
 {
-    public MasteryBar(Texture2D barTexture) : base(barTexture) {}
+    public MasteryBar(Texture2D barTexture, Orientation orientation) : base(barTexture, orientation) {}
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {

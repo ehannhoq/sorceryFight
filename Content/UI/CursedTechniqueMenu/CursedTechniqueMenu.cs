@@ -106,7 +106,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             Texture2D masteryBarTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/Mastery_Bar", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
             UIImage masteryBorder = new UIImage(masteryBorderTexture);
-            masteryBar = new MasteryBar(masteryBarTexture);
+            masteryBar = new MasteryBar(masteryBarTexture, Orientation.Horizontal);
 
             float x = screenCenter.X - masteryBorderTexture.Width / 2;
             float y = screenCenter.Y + 140f;

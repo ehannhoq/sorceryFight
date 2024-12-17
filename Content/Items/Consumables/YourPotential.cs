@@ -34,5 +34,13 @@ namespace sorceryFight.Content.Items.Consumables
 
             return true;
         }
+
+        public override void AddRecipes()
+        {
+            base.AddRecipes();
+            Recipe recipe = CreateRecipe();
+            recipe.AddIngredient(ItemID.DirtBlock, 1);
+            recipe.Register();
+        }
     }
 }

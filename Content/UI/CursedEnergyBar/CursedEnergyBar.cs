@@ -8,7 +8,7 @@ using Terraria.UI;
 
 public class CursedEnergyBar : ValueBar
 {
-    public CursedEnergyBar(Texture2D barTexture) : base(barTexture) {}
+    public CursedEnergyBar(Texture2D barTexture, Orientation orientation) : base(barTexture, orientation) {}
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
