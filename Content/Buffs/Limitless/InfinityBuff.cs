@@ -27,7 +27,7 @@ namespace sorceryFight.Content.Buffs.Limitless
                         + "Each object blocked by Infinity\n"
                         + "increases CE consumption dependent\n"
                         + "on the object's damamge.\n"
-                        + "Infinity takes 3x more CE during boss fights.\n";
+                        + "Infinity takes 4x more CE during boss fights.\n";
                         
             }
         }
