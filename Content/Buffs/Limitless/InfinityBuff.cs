@@ -32,7 +32,7 @@ namespace sorceryFight.Content.Buffs.Limitless
             }
         }
         public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.Infinity.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.PassiveTechniques.Infinity.LockedDescription");
+        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.Buffs.Infinity.LockedDescription");
 
         public override bool isActive { get; set; } = false;
         public override float CostPerSecond { get; set; } = 1f;
@@ -119,7 +119,7 @@ namespace sorceryFight.Content.Buffs.Limitless
                 sf.disableRegenFromBuffs = true;
             }
 
-            int multiplier = 2;
+            int multiplier = 1;
             if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
             {
                 multiplier = 4;

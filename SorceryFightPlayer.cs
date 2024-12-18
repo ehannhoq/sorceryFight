@@ -219,7 +219,7 @@ namespace sorceryFight
             if (cursedEnergy < 1)
             {
                 cursedEnergy = 1;
-                Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(10));
+                Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(30));
             }
 
 
