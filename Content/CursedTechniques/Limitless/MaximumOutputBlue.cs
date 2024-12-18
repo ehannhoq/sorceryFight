@@ -64,6 +64,11 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         }
         public override void AI()
         {   
+            if (Main.myPlayer != Projectile.owner)
+            {
+                return;
+            }
+            
             if (justSpawned)
             {
                 for (int i = 0; i < Main.projectile.Length; i ++)

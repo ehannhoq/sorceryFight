@@ -119,12 +119,11 @@ namespace sorceryFight.Content.Buffs.Limitless
                 sf.disableRegenFromBuffs = true;
             }
 
-            int multiplier = 1;
+            int multiplier = 2;
             if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
             {
-                multiplier = 3;
+                multiplier = 4;
             }
-            accumulativeDamage -= player.statDefense;
 
             CostPerSecond += accumulativeDamage *= multiplier;
 

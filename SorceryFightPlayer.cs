@@ -7,8 +7,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.DataStructures;
-using Terraria.Audio;
-using Microsoft.CodeAnalysis;
 
 namespace sorceryFight
 {
@@ -194,24 +192,21 @@ namespace sorceryFight
             if (cursedEnergy > 0)
             {
                 cursedEnergy -= SorceryFight.RateSecondsToTicks(cursedEnergyUsagePerSecond);
-                if (cursedEnergy < 0)
-                {
-                    cursedEnergy = 0;
-                }
             }
 
             if (cursedEnergy < maxCursedEnergy && !disabledRegen)
             {
                 cursedEnergy += SorceryFight.RateSecondsToTicks(cursedEnergyRegenPerSecond);
-                if (cursedEnergy > maxCursedEnergy)
-                {
-                    cursedEnergy = maxCursedEnergy;
-                }
             }
 
             if (cursedEnergy > maxCursedEnergy)
             {
                 cursedEnergy = maxCursedEnergy;
+            }
+
+            if (cursedEnergy < 0)
+            {
+                cursedEnergy = 0;
             }
 
             cursedEnergyUsagePerSecond = 0f;
