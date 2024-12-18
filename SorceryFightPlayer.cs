@@ -209,6 +209,11 @@ namespace sorceryFight
                 }
             }
 
+            if (cursedEnergy > maxCursedEnergy)
+            {
+                cursedEnergy = maxCursedEnergy;
+            }
+
             cursedEnergyUsagePerSecond = 0f;
         }
 
