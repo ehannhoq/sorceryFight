@@ -48,6 +48,14 @@ namespace sorceryFight.Content.Buffs.Limitless
 
                 auraIndices[player.whoAmI] = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<MaximumAmplifiedAuraProjectile>(), 0, 0, player.whoAmI);
             }
+
+            CostPerSecond = 50f; // Base
+            
+            SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
+            float newCPS = sf.maxCursedEnergy / 50 + CostPerSecond;
+
+            if (newCPS > CostPerSecond)
+                CostPerSecond = newCPS;
         }
 
         public override void Remove(Player player)
@@ -61,13 +69,7 @@ namespace sorceryFight.Content.Buffs.Limitless
                 auraIndices.Remove(player.whoAmI);
             }
 
-            CostPerSecond = 50f; // Base
-            
-            SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
-            float newCPS = sf.maxCursedEnergy / 50 + CostPerSecond;
 
-            if (newCPS > CostPerSecond)
-                CostPerSecond = newCPS;
         }
 
         public override void Update(Player player, ref int buffIndex)

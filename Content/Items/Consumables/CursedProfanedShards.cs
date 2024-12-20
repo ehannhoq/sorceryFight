@@ -36,7 +36,7 @@ namespace sorceryFight.Content.Items.Consumables
             {
                 SoundEngine.PlaySound(SoundID.Item4);
                 SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
-                sf.cursedProfaneShards = !sf.cursedProfaneShards; // temp
+                sf.cursedProfaneShards = true;
                 sf.maxCursedEnergy = sf.calculateMaxCE();
             }
             return true;

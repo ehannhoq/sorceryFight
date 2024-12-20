@@ -33,7 +33,7 @@ namespace sorceryFight.Content.Items.Consumables
             {
                 SoundEngine.PlaySound(SoundID.Item4);
                 SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
-                sf.cursedEffulgentFeather = !sf.cursedEffulgentFeather; // temp
+                sf.cursedEffulgentFeather = true;
                 sf.cursedEnergyRegenPerSecond = sf.calculateCERegenRate();
             }
             return true;

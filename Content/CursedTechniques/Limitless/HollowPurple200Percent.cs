@@ -197,11 +197,13 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Main.projectile[(int)Projectile.ai[1]].Kill();
                 Main.projectile[(int)Projectile.ai[2]].Kill();
                 Projectile.Center = player.Center + new Vector2(0f, -40f);
-                Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
                 SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleSnap, Projectile.Center);
                 player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
                 int index = CombatText.NewText(player.getRect(), textColor, "Hollow Technique: 200% Hollow Purple.");
                 Main.combatText[index].lifeTime = 180;
+
+                if (Main.myPlayer == Projectile.owner)
+                    Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
 
             }
         }

@@ -130,10 +130,12 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 if (!spawnedFromPurple)
                 {
                     SoundEngine.PlaySound(SorceryFightSounds.CommonFire, Projectile.Center);
-                    Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
                     Projectile.damage = CalculateTrueDamage(player.GetModPlayer<SorceryFightPlayer>());
                     Projectile.tileCollide = true;
                     player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
+
+                    if (Main.myPlayer == Projectile.owner)
+                        Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
                 }
             }
         }

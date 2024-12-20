@@ -32,7 +32,7 @@ namespace sorceryFight.Content.Items.Consumables
             {
                 SoundEngine.PlaySound(SoundID.Item4);
                 SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
-                sf.cursedMechanicalSoul = !sf.cursedMechanicalSoul; // temp
+                sf.cursedMechanicalSoul = true;
                 sf.maxCursedEnergy = sf.calculateMaxCE();
             }
             return true;

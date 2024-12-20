@@ -64,10 +64,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         }
         public override void AI()
         {   
-            if (Main.myPlayer != Projectile.owner)
-            {
-                return;
-            }
             
             if (justSpawned)
             {
@@ -140,9 +136,12 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 }
             }
 
-            Vector2 projDirection = Projectile.Center.DirectionTo(Main.MouseWorld);
-            Vector2 projVelocity = Vector2.Lerp(Projectile.velocity, projDirection * 30f, 0.1f);
-            Projectile.velocity = projVelocity;
+            if (Main.myPlayer == Projectile.owner)
+            {
+                Vector2 projDirection = Projectile.Center.DirectionTo(Main.MouseWorld);
+                Vector2 projVelocity = Vector2.Lerp(Projectile.velocity, projDirection * 30f, 0.1f);
+                Projectile.velocity = projVelocity;
+            }
 
 
             if (Projectile.ai[0] < beginAnimTime)
