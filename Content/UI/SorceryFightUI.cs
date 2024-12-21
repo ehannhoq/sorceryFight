@@ -43,7 +43,7 @@ public class SorceryFightUI : UIState
 
         if (player.innateTechnique == null) return;
 
-        ceBar.fillPercentage = player.cursedEnergy / player.maxCursedEnergy;
+        ceBar.ceBar.fillPercentage = player.cursedEnergy / player.maxCursedEnergy;
 
         if (SFKeybinds.OpenTechniqueUI.JustPressed)
         {
@@ -72,18 +72,8 @@ public class SorceryFightUI : UIState
         var borderTexture = ModContent.Request<Texture2D>(borderBarPath).Value;
         var barTexture = ModContent.Request<Texture2D>(fillBarPath).Value;
 
-        UIImage borderBar = new UIImage(borderTexture);
-        ceBar = new CursedEnergyBar(barTexture, Orientation.Vertical);
+        ceBar = new CursedEnergyBar(borderTexture, barTexture);
 
-        int x = Main.screenWidth - 300;
-        int y = 20;
-
-        borderBar.Left.Set(x, 0f);
-        borderBar.Top.Set(y, 0f);
-        ceBar.Left.Set(x + ((borderTexture.Width - barTexture.Width) / 2), 0f);
-        ceBar.Top.Set(y, 0f);
-
-        Append(borderBar);
         Append(ceBar);
     }
 
