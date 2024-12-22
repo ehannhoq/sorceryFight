@@ -32,10 +32,22 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
             if (SorceryFightUI.MouseHovering(this, texture))
             {
-                Main.hoverItemName = unlocked ? sfPlayer.innateTechnique.DomainExpansion.DisplayName.Value + "\n" 
-                                                + sfPlayer.innateTechnique.DomainExpansion.Description
+                string hoverName;
+                if (unlocked)
+                    hoverName = sfPlayer.innateTechnique.DomainExpansion.DisplayName.Value + "\n" 
+                                + sfPlayer.innateTechnique.DomainExpansion.Description;
+                else
+                {
+                    if (CalamityMod.DownedBossSystem.downedDoG)
+                    {
+                        hoverName = sfPlayer.innateTechnique.DomainExpansion.PostDoGLockedDescription;
+                    }
+
+                    else
+                        hoverName = sfPlayer.innateTechnique.DomainExpansion.PreDoGLockedDescription;
+                }
                 
-                                                : sfPlayer.innateTechnique.DomainExpansion.LockedDescription;
+                Main.hoverItemName = hoverName;
             }
 
             Texture2D textureToDraw = unlocked ? texture : lockedTexture;

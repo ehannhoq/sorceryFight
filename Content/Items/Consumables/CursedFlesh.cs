@@ -34,7 +34,6 @@ namespace sorceryFight.Content.Items.Consumables
                 SoundEngine.PlaySound(SoundID.Item4);
                 SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
                 sf.cursedFlesh = true;
-                sf.cursedEnergyRegenPerSecond = sf.calculateCERegenRate();
             }
             return true;
         }

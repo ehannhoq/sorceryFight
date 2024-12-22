@@ -1,6 +1,7 @@
 using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Buffs;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -18,7 +19,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.LockedDescription");
-        public override float Cost { get; } = 2000f;
+        public override float Cost { get; } = 1500f;
         public override float MasteryNeeded { get; } = 0f;
         public override Color textColor { get; } = new Color(235, 117, 233);
         public override bool DisplayNameInGame { get; } = false;
@@ -31,7 +32,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override float LifeTime { get; } = 500f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return CalamityMod.DownedBossSystem.downedPolterghast;
+            return CalamityMod.DownedBossSystem.downedDoG;
         }
 
         public static Texture2D texture;
@@ -203,8 +204,10 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Main.combatText[index].lifeTime = 180;
 
                 if (Main.myPlayer == Projectile.owner)
+                {
                     Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
-
+                    player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(10));
+                }
             }
         }
 

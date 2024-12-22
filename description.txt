@@ -4,6 +4,16 @@ NOTE: This mod requires Calamity Mod and its dependencies in order to install.
 
 Changelog:
 
+0.1.8:
+- Hollow Purple now consumes 750 CE, instead of 500.
+- 200% Hollow Purple now consumes 1500 CE, instead of 2000.
+- 200% Hollow Purple is now unlocked after Devourer of Gods.
+- Domain Expansions now have a seperate locked message if the player defeats DoG but doesn't have 100% mastery.
+
+
+- Updated Icon
+- Fixed bug where Skeletons dropped the Cursed Skull instead of Skeletron (in non-Expert/Master mode worlds)
+
 0.1.7:
 - Buffed Limitless:
 Blue Damage: 30 at 0% Mastery/300 at 100% Mastery -> 30 at 0% Mastery/1,000 at 100% Mastery

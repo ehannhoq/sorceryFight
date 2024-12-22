@@ -35,6 +35,7 @@ namespace sorceryFight
         public bool cursedMechanicalSoul;
         public bool cursedPhantasmalEye;
         public bool cursedProfaneShards;
+        public float maxCursedEnergyFromOtherSources;
         #endregion
 
         #region Cursed Energy Regen Modifiers
@@ -44,6 +45,7 @@ namespace sorceryFight
         public bool cursedMask;
         public bool cursedEffulgentFeather;
         public bool cursedRuneOfKos;
+        public float cursedEnergyRegenFromOtherSources;
         #endregion
 
         #region One-off Variables
@@ -55,7 +57,7 @@ namespace sorceryFight
         {
             get
             {
-                return CalamityMod.DownedBossSystem.downedDoG;
+                return CalamityMod.DownedBossSystem.downedDoG && mastery >= 100;
             }
         }
         public bool expandedDomain;
@@ -84,6 +86,7 @@ namespace sorceryFight
             cursedMechanicalSoul = false;
             cursedPhantasmalEye = false;
             cursedProfaneShards = false;
+            maxCursedEnergyFromOtherSources = 0f;
 
             cursedEye = false;
             cursedFlesh = false;
@@ -91,6 +94,7 @@ namespace sorceryFight
             cursedMask = false;
             cursedEffulgentFeather = false;
             cursedRuneOfKos = false;
+            cursedEnergyRegenFromOtherSources = 0f;
 
             yourPotentialSwitch = false;
 
@@ -157,47 +161,13 @@ namespace sorceryFight
 
             unlockedRCT = generalBooleans.Contains("unlockedRCT");
 
-            maxCursedEnergy = calculateMaxCE();
-            cursedEnergyRegenPerSecond = calculateCERegenRate();
+            maxCursedEnergy = calculateBaseMaxCE();
+            cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
         }
 
         public override void PostUpdate()
         {
             if (innateTechnique == null) return;    
-
-            innateTechnique.PostUpdate(this);
-            AnimUpdate();
-
-            if (SFKeybinds.UseTechnique.JustPressed)
-                ShootTechnique();
-
-
-            if (SFKeybinds.UseRCT.Current)
-                UseRCT();
-
-            if (SFKeybinds.UseRCT.JustReleased)
-                if (rctAuraIndex != -1)
-                {
-                    Main.projectile[rctAuraIndex].Kill();
-                    rctAuraIndex = -1;
-                }
-
-
-            if (SFKeybinds.DomainExpansion.JustReleased)
-                DomainExpansion();
-
-
-            bool disabledRegen = disableRegenFromBuffs || disableRegenFromProjectiles || disableRegenFromDE;
-
-            if (cursedEnergy > 0)
-            {
-                cursedEnergy -= SorceryFight.RateSecondsToTicks(cursedEnergyUsagePerSecond);
-            }
-
-            if (cursedEnergy < maxCursedEnergy && !disabledRegen)
-            {
-                cursedEnergy += SorceryFight.RateSecondsToTicks(cursedEnergyRegenPerSecond);
-            }
 
             if (cursedEnergy > maxCursedEnergy)
             {
@@ -209,7 +179,31 @@ namespace sorceryFight
                 cursedEnergy = 0;
             }
 
+
+            innateTechnique.PostUpdate(this);
+            AnimUpdate();
+            Keybinds();
+
             cursedEnergyUsagePerSecond = 0f;
+            cursedEnergyRegenPerSecond = 0f;
+            maxCursedEnergy = 0f;
+
+            cursedEnergyRegenPerSecond = calculateBaseCERegenRate() + cursedEnergyRegenFromOtherSources;
+            maxCursedEnergy = calculateBaseMaxCE() + maxCursedEnergyFromOtherSources;
+
+            if (cursedEnergy > 0)
+            {
+                cursedEnergy -= SorceryFight.RateSecondsToTicks(cursedEnergyUsagePerSecond);
+            }
+
+            bool disabledRegen = disableRegenFromBuffs || disableRegenFromProjectiles || disableRegenFromDE;
+            
+            if (cursedEnergy < maxCursedEnergy && !disabledRegen)
+            {
+                cursedEnergy += SorceryFight.RateSecondsToTicks(cursedEnergyRegenPerSecond);
+            }
+
+
         }
 
         public override void PostUpdateBuffs()
@@ -251,7 +245,7 @@ namespace sorceryFight
             }
         }
 
-        public float calculateMaxCE()
+        public float calculateBaseMaxCE()
         {
             float baseCE = 100f;
             float sum = 0f;
@@ -271,7 +265,7 @@ namespace sorceryFight
             return baseCE + sum;
         }
 
-        public float calculateCERegenRate()
+        public float calculateBaseCERegenRate()
         {
             float baseRegen = 1f;
             float sum = 0f;
@@ -305,6 +299,25 @@ namespace sorceryFight
             }
         }
 
+        private void Keybinds()
+        {
+           if (SFKeybinds.UseTechnique.JustPressed)
+                ShootTechnique();
+
+
+            if (SFKeybinds.UseRCT.Current)
+                UseRCT();
+
+            if (SFKeybinds.UseRCT.JustReleased)
+                if (rctAuraIndex != -1)
+                {
+                    Main.projectile[rctAuraIndex].Kill();
+                    rctAuraIndex = -1;
+                }
+
+            if (SFKeybinds.DomainExpansion.JustReleased)
+                DomainExpansion();
+        }
         public void ShootTechnique()
         {
             if (selectedTechnique == null || disableRegenFromProjectiles)

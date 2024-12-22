@@ -18,7 +18,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.HollowPurple.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HollowPurple.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HollowPurple.LockedDescription");
-        public override float Cost { get; } = 500f;
+        public override float Cost { get; } = 750f;
         public override float MasteryNeeded { get; } = 0f;
         public override Color textColor { get; } = new Color(235, 117, 233);
         public override bool DisplayNameInGame { get; } = true;
@@ -26,7 +26,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         
         public override int BaseDamage => 20000;
         public override int MaxDamage => 45000;
-        public override float MaxMastery => 95f;
+        public override float MaxMastery => 100f;
         public override float Speed { get; } = 40f;
         public override float LifeTime { get; } = 500f;
         public override bool Unlocked(SorceryFightPlayer sf)

@@ -19,11 +19,7 @@ MaximumOutputBlue: {
 		gravitational field, and crushes
 		enemies instantly upon impact.
 		'''
-	LockedDescription:
-		'''
-		Slay a being of that who resembles
-		the original three.
-		'''
+	LockedDescription: Slay a war machine fueled by soul energy.
 }
 
 ReversalRed: {
@@ -67,9 +63,5 @@ HollowPurple200Percent: {
 		cost of burning out your Cursed Technique,
 		the CE output doubles.
 		'''
-	LockedDescription:
-		'''
-		Vanquish the feral amalgamation that roams
-		in the deepest parts of the Dungeon.
-		'''
+	LockedDescription: Vanquish the Devourer of Gods.
 }

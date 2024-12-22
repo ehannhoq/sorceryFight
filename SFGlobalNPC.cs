@@ -30,7 +30,7 @@ namespace sorceryFight
                 return;
             }
 
-            if (npc.type == NPCID.Skeleton)
+            if (npc.type == NPCID.SkeletronHead)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CursedSkull>(), 1, 1, 1));
 
             if (npc.type == NPCID.SkeletronPrime || npc.type == NPCID.TheDestroyer 
