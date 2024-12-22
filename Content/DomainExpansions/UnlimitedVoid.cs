@@ -4,6 +4,7 @@ using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -81,6 +82,7 @@ namespace sorceryFight.Content.DomainExpansions
         public override void NPCDomainEffect(NPC npc)
         {
             int npcID = npc.whoAmI;
+            
             if (!frozenValues.ContainsKey(npcID))
             {
                 frozenValues[npcID] = new float[6];
@@ -88,11 +90,17 @@ namespace sorceryFight.Content.DomainExpansions
                 Array.Copy(data, frozenValues[npcID], 6);
             }
 
+            npc.position = new Vector2(frozenValues[npcID][4], frozenValues[npcID][5]);
+
+            if (!AffectedByFrozenAI(npc))
+            {
+                return;
+            }
             npc.ai[0] = frozenValues[npcID][0];
             npc.ai[1] = frozenValues[npcID][1];
             npc.ai[2] = frozenValues[npcID][2];
             npc.ai[3] = frozenValues[npcID][3];
-            npc.position = new Vector2(frozenValues[npcID][4], frozenValues[npcID][5]);
+
         }
 
         public override void Remove(SorceryFightPlayer sfPlayer)
@@ -130,6 +138,16 @@ namespace sorceryFight.Content.DomainExpansions
             }
 
             Main.instance.DrawCacheNPCsMoonMoon = newCache;
+        }
+
+        private bool AffectedByFrozenAI(NPC npc)
+        {
+            if (npc.type == NPCID.MoonLordHand)
+                return false;
+            if (npc.type == NPCID.MoonLordHead)
+                return false;
+
+            return true;
         }
     }
 }

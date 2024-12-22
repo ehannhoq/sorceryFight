@@ -47,7 +47,7 @@ public class CursedEnergyBar : UIElement
     {
         base.Update(gameTime);
 
-        if (SorceryFightUI.MouseHovering(this, ceBar.barTexture) && Main.mouseLeft && !isDragging)
+        if (Main.playerInventory && SorceryFightUI.MouseHovering(this, ceBar.barTexture) && Main.mouseLeft && !isDragging)
         {
             isDragging = true;
             offset = new Vector2(Main.mouseX, Main.mouseY) - new Vector2(Left.Pixels, Top.Pixels);
@@ -58,12 +58,21 @@ public class CursedEnergyBar : UIElement
             Left.Set(Main.mouseX - offset.X, 0f);
             Top.Set(Main.mouseY - offset.Y, 0f);
 
+
+
             Recalculate();
         }
 
         if (!Main.mouseLeft)
         {
             isDragging = false;
+
+            if (Left.Pixels > Main.screenWidth || Top.Pixels > Main.screenHeight)
+            {
+                Left.Set(1300, 0f);
+                Top.Set(20, 0f);
+                Recalculate();
+            }
         }
     }
 }

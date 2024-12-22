@@ -1,11 +1,45 @@
 Sorcery Fight is heavily inspired by anime/manga Jujutsu Kaisen. It adds five Cursed Technqiues, three Passive Techniques, and one Domain Expansion.
+
 NOTE: This mod requires Calamity Mod and its dependencies in order to install.
 
-Here is a list of known issues with the mod. It is important to note that all multiplayer compatibilties were tested with the Infernum Mod, which may or may not have contributed to these issues:
-- Maximum Output Blue, Red, Hollow Purple, 200% Hollow Purple are visually bugged in multiplayer.
-- Amplified Aura and Maximum Output: Amplified Aura do not consume CE in multiplayer.
-- Unlimited Void randomly despawns when fighting Dragonfolly in multiplayer.
-- Unlimited Void does not work properly against Moon Lord.
+Changelog:
 
+0.1.7:
+- Buffed Limitless:
+Blue Damage: 30 at 0% Mastery/300 at 100% Mastery -> 30 at 0% Mastery/1,000 at 100% Mastery
+Maximum Output: Blue Damage: 150/600 -> 300/5,000
+Red Damage: 300/1,500 -> 5,000 -> 20,000
+Hollow Purple Damage: 5,000/6,000 -> 20,000 -> 45,000
+200% Hollow Purple Damage: 12,000/12,000 -> 90,000/100,000
+
+- Buffed RCT:
+1 HP / 10 CE -> 1 HP / 5 CE
+
+- Fixed bug where Amplified Aura and Maximum Output: Amplified Aura doesn't consume CE.
+- Fixed bug where any variant of Blue could move the Old One Army's spawning portals.
+- The Cursed Energy bar can only be moved if the player has their inventory open.
+- The Cursed Energy bar will also be set back to its default position if dragged off screen.
+- Blue no longer moves the Amplified Aura/Maximum Output: Amplified Aura/RCT sprites.
+- Unlimited Void now works properly against Moon Lord.
+
+
+Future Plans:
+- Shrine Innate Technique (Sukuna)
+- Ten Shadows Technique (Megumi Fushiguro)
+- Zenin clan NPC, serving as the spawner for:
+- Mahoraga boss fight
+- Wheel of Adaptation buff
+- Cursed Energy potions (mirroring Healing and Mana potions)
+- Accessories that modify max CE and CE regeneration
+- Update Cursed Technique selection wheel.
+- Add Cursed Energy weapons from the anime/manga as well as some original weapons.
+- Binding Vows (somehow)
+
+
+Known Bugs:
+- Maximum Output Blue, Red, Hollow Purple, 200% Hollow Purple are visually bugged in multiplayer.
+
+If you found a bug and it is not listed above, please report it here:
+https://github.com/ehannhoq/sorceryFight/issues
 
 The creator of this mod does not own the rights to the content that is from Jujutsu Kaisen. All rights belong to the owner. No Copyright Infringement intended.

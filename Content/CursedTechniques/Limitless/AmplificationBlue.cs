@@ -25,7 +25,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override bool DisplayNameInGame => true;
 
         public override int BaseDamage => 30;
-        public override int MaxDamage => 300;
+        public override int MaxDamage => 1000;
         public override float MaxMastery => 10f;
 
         public override float Speed => 15f;
@@ -91,7 +91,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
             foreach (Projectile proj in Main.ActiveProjectiles)
             {
-                if (!proj.hostile && proj != Main.projectile[Projectile.whoAmI])
+                if (!proj.hostile && proj != Main.projectile[Projectile.whoAmI] && proj.MoveableByBlue())
                 {
                     float distance = Vector2.Distance(proj.Center, Projectile.Center);
                     
@@ -107,7 +107,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
             foreach (NPC npc in Main.ActiveNPCs)
             {
-                if (!npc.friendly && npc.type != NPCID.TargetDummy && !npc.IsDomain())
+                if (!npc.friendly && npc.type != NPCID.TargetDummy && !npc.IsDomain() && npc.MoveableByBlue())
                 {
                     float distance = Vector2.Distance(npc.Center, Projectile.Center);
                     if (distance <= AttractionRadius)
@@ -190,5 +190,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 GeneralParticleHandler.SpawnParticle(particle);
             }
         }
+
     }
 }

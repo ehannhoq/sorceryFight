@@ -378,9 +378,9 @@ namespace sorceryFight
                 rctAuraIndex = Projectile.NewProjectile(source, Player.Center, Vector2.Zero, ModContent.ProjectileType<ReverseCursedTechniqueAuraProjectile>(), 0, 0, Player.whoAmI);
             }
 
-            if (cursedEnergy >= 10)
+            if (cursedEnergy >= 5)
             {
-                cursedEnergy -= 10;
+                cursedEnergy -= 5;
                 Player.Heal(1);
             }
         }

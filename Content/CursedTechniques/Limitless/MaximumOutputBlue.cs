@@ -23,8 +23,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override float MasteryNeeded { get; } = 0f;
         public override Color textColor { get; } = new Color(108, 158, 240);
         public override bool DisplayNameInGame { get; } = true;
-        public override int BaseDamage => 150;
-        public override int MaxDamage => 600;
+        public override int BaseDamage => 300;
+        public override int MaxDamage => 5000;
         public override float MaxMastery => 49.5f;
         public override float Speed { get; } = 20f;
         public override float LifeTime { get; } = 120f;
@@ -107,7 +107,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
             foreach (Projectile proj in Main.ActiveProjectiles)
             {
-                if (proj.hostile && proj != Main.projectile[Projectile.whoAmI])
+                if (proj.hostile && proj != Main.projectile[Projectile.whoAmI] && proj.MoveableByBlue())
                 {
                     float distance = Vector2.Distance(proj.Center, Projectile.Center);
                     
@@ -123,7 +123,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
             foreach (NPC npc in Main.ActiveNPCs)
             {
-                if (!npc.friendly && npc.type != NPCID.TargetDummy && !npc.IsDomain())
+                if (!npc.friendly && npc.type != NPCID.TargetDummy && !npc.IsDomain() && npc.MoveableByBlue())
                 {
                     float distance = Vector2.Distance(npc.Center, Projectile.Center);
                     if (distance <= AttractionRadius)
