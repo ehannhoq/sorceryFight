@@ -5,6 +5,7 @@ Here is a list of known issues with the mod. It is important to note that all mu
 - Maximum Output Blue, Red, Hollow Purple, 200% Hollow Purple are visually bugged in multiplayer.
 - Amplified Aura and Maximum Output: Amplified Aura do not consume CE in multiplayer.
 - Unlimited Void randomly despawns when fighting Dragonfolly in multiplayer.
+- Unlimited Void does not work properly against Moon Lord.
 
 
 The creator of this mod does not own the rights to the content that is from Jujutsu Kaisen. All rights belong to the owner. No Copyright Infringement intended.
