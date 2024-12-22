@@ -41,6 +41,7 @@ Known Bugs:
 
 If you found a bug and it is not listed above, please report it here:
 https://github.com/ehannhoq/sorceryFight/issues
+or leave a comment, though it will be less likely to be seen.
 
 The creator of this mod does not own the rights to the content that is from Jujutsu Kaisen. All rights belong to the owner. No Copyright Infringement intended.[quote=tModLoader sorceryFight]
 Developed By ehann[/quote]
