@@ -1,6 +1,10 @@
-Sorcery Fight is heavily inspired by anime/manga Jujutsu Kaisen. It adds one Innate Technique, five Cursed Technqiues, three Passive Techniques, and one Domain Expansion.
-
+Sorcery Fight is heavily inspired by anime/manga Jujutsu Kaisen. It adds five Cursed Technqiues, three Passive Techniques, and one Domain Expansion.
 NOTE: This mod requires Calamity Mod and its dependencies in order to install.
+
+Here is a list of known issues with the mod. It is important to note that all multiplayer compatibilties were tested with the Infernum Mod, which may or may not have contributed to these issues:
+- Maximum Output Blue, Red, Hollow Purple, 200% Hollow Purple are visually bugged in multiplayer.
+- Amplified Aura and Maximum Output: Amplified Aura do not consume CE in multiplayer.
+- Unlimited Void randomly despawns when fighting Dragonfolly in multiplayer.
 
 
 The creator of this mod does not own the rights to the content that is from Jujutsu Kaisen. All rights belong to the owner. No Copyright Infringement intended.

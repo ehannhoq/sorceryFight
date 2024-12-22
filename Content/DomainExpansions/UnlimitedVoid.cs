@@ -19,40 +19,23 @@ namespace sorceryFight.Content.DomainExpansions
         public static int FRAME_COUNT = 1;
         public static int TICKS_PER_FRAME = 1;
         public static Dictionary<int, float[]> frozenValues;
-        private Texture2D texture;
-        private Texture2D bgTexture;
-        private float goalScale;
-        private float scale;
-        private float bgScale;
-        public override void SetStaticDefaults()
-        {
-            Main.npcFrameCount[NPC.type] = FRAME_COUNT;
-        }
         public override void SetDefaults()
         {
-            texture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/UnlimitedVoid", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            bgTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/DomainExpansionBackground", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-            NPC.damage = 0;
-            NPC.width = 1;
-            NPC.height = NPC.width;
-            NPC.lifeMax = 1;
-            NPC.noGravity = true;
-            NPC.noTileCollide = true;
-            NPC.dontTakeDamage = true;
-            NPC.scale = 0.1f;
-            goalScale = 2f;
-            scale = 0.1f;
-            bgScale = 0.1f;
-            NPC.hide = true;
-            NPC.behindTiles = false;
+            DomainTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/UnlimitedVoid", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            BackgroundTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/DomainExpansionBackground", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             frozenValues = new Dictionary<int, float[]>();
+
+            Scale = 0.1f;
+            BackgroundScale = 0.1f;
+            GoalScale = 2f;
+
+            base.SetDefaults();
         }
 
         public override void AI()
         {
             base.AI();
-
+            
             float logBase = 10f;
             float maxAIValue = 30f;
 
@@ -61,13 +44,13 @@ namespace sorceryFight.Content.DomainExpansions
                 NPC.Center = Owner.Center;
 
                 float progress = Math.Clamp(NPC.ai[0] / maxAIValue, 0.01f, 1f);
-                bgScale = goalScale * 4 * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
+                BackgroundScale = GoalScale * 4 * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
             }
 
             if (NPC.ai[0] > 30 && NPC.ai[0] < 200)
             {
                 float progress = Math.Clamp((NPC.ai[0] - 30) / (maxAIValue + 170), 0.01f, 1f);
-                scale = goalScale * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
+                Scale = GoalScale * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
             }
 
             if (NPC.ai[0] < 200)
@@ -115,21 +98,21 @@ namespace sorceryFight.Content.DomainExpansions
         public override void Remove(SorceryFightPlayer sfPlayer)
         {
             frozenValues.Clear();
-            base.Remove(sfPlayer);   
+            base.Remove(sfPlayer);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            int frameHeight = texture.Height / FRAME_COUNT;
+            int frameHeight = DomainTexture.Height / FRAME_COUNT;
             int frameY = NPC.frame.Y * frameHeight;
 
-            Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
-            Vector2 bgOrigin = new Vector2(bgTexture.Width / 2, bgTexture.Height / 2);
+            Vector2 origin = new Vector2(DomainTexture.Width / 2, frameHeight / 2);
+            Vector2 bgOrigin = new Vector2(BackgroundTexture.Width / 2, BackgroundTexture.Height / 2);
 
-            Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
+            Rectangle sourceRectangle = new Rectangle(0, frameY, DomainTexture.Width, frameHeight);
 
-            spriteBatch.Draw(bgTexture, NPC.Center - Main.screenPosition, default, Color.White, NPC.rotation, bgOrigin, bgScale, SpriteEffects.None, 0f);
-            spriteBatch.Draw(texture, NPC.Center - Main.screenPosition, sourceRectangle, Color.White, NPC.rotation, origin, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(BackgroundTexture, NPC.Center - Main.screenPosition, default, Color.White, NPC.rotation, bgOrigin, BackgroundScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(DomainTexture, NPC.Center - Main.screenPosition, sourceRectangle, Color.White, NPC.rotation, origin, Scale, SpriteEffects.None, 0f);
 
             return false;
         }

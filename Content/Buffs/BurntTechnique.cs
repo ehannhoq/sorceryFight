@@ -14,7 +14,7 @@ namespace sorceryFight.Content.Buffs
 
         public override bool RightClick(int buffIndex)
         {
-            return false;
+            return true;
         }
     }
 }
