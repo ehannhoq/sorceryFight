@@ -10,12 +10,14 @@ namespace sorceryFight.Content.SFPlayer
 
         public float percentBurntTechnqiueReduction;
 
-        public override void PreUpdate()
+        public void PreAccessoryUpdate()
         {
             if (celestialAmulet)
             {
                 percentBurntTechnqiueReduction += 0.2f;
             }
+
+            ResetAccessories();
         }
 
         private void ResetAccessories()

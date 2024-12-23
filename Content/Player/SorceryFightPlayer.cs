@@ -170,6 +170,11 @@ namespace sorceryFight.Content.SFPlayer
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
         }
 
+        public override void PreUpdate()
+        {
+            PreAccessoryUpdate();
+        }
+        
         public override void PostUpdate()
         {
             if (innateTechnique == null) return;    
@@ -211,7 +216,7 @@ namespace sorceryFight.Content.SFPlayer
                 cursedEnergy = 0;
             }
 
-            ResetAccessories();
+
         }
 
         public override void PostUpdateBuffs()
@@ -243,6 +248,7 @@ namespace sorceryFight.Content.SFPlayer
                     passiveTechnique.Remove(Player);
                 }
             }
+
 
             percentBurntTechnqiueReduction = 0f;
         }
