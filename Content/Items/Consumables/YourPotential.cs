@@ -1,6 +1,4 @@
-using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.SFPlayer;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

@@ -1,8 +1,7 @@
 using Microsoft.Xna.Framework;
-using sorceryFight.Content.Buffs;
 using Terraria;
-using Terraria.Localization;
 using Terraria.ModLoader;
+using sorceryFight.Content.SFPlayer;
 
 namespace sorceryFight.Content.CursedTechniques
 {

@@ -1,4 +1,4 @@
-using System;
+using sorceryFight.Content.SFPlayer;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.InnateTechniques;
 using Terraria;

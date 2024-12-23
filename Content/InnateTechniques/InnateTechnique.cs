@@ -5,6 +5,7 @@ using sorceryFight.Content.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 using sorceryFight.Content.DomainExpansions;
+using sorceryFight.Content.SFPlayer;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -45,7 +46,7 @@ namespace sorceryFight.Content.InnateTechniques
         public virtual void CloseDomain(SorceryFightPlayer sf)
         {
             Main.npc[sf.domainIndex].active = false;
-            sf.Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(210));
+            sf.Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(SorceryFightPlayer.defaultBurntTechniqueDurationFromDE - sf.burntDurationReduction));
             sf.expandedDomain = false;
             sf.disableRegenFromDE = false;
             sf.domainIndex = -1;

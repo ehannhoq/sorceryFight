@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
-namespace sorceryFight
+namespace sorceryFight.Content.SFPlayer
 {
     public partial class SorceryFightPlayer : ModPlayer
     {

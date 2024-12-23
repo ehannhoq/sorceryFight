@@ -1,9 +1,8 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using sorceryFight;
+using sorceryFight.Content.SFPlayer;
 using Terraria;
-using Terraria.Chat.Commands;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 

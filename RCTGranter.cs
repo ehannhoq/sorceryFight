@@ -1,5 +1,4 @@
-using System;
-using Microsoft.Xna.Framework;
+using sorceryFight.Content.SFPlayer;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

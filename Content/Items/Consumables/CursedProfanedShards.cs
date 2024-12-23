@@ -1,13 +1,9 @@
-using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Terraria.Audio;
-using CalamityMod.Items.TreasureBags;
-using Terraria.GameContent.ItemDropRules;
-using CalamityMod.Items.Accessories;
-using CalamityMod.Items;
+using sorceryFight.Content.SFPlayer;
 using Terraria.Localization;
 
 namespace sorceryFight.Content.Items.Consumables

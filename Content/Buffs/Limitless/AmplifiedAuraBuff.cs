@@ -1,10 +1,8 @@
 using CalamityMod;
-using CalamityMod.CalPlayer;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
+using sorceryFight.Content.SFPlayer;
 using Terraria.Localization;
 using Terraria.ModLoader;
 

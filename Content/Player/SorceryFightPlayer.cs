@@ -8,11 +8,14 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.DataStructures;
 
-namespace sorceryFight
+namespace sorceryFight.Content.SFPlayer
 {
     public partial class SorceryFightPlayer : ModPlayer
     {
         #region Global Variables
+        internal static readonly float defaultBurntTechniqueDuration = 30;
+        internal static readonly float defaultBurntTechniqueDurationFromDE = 120;
+
         public bool hasUIOpen;
         public bool disableRegenFromProjectiles;
         public bool disableRegenFromBuffs;
@@ -104,6 +107,8 @@ namespace sorceryFight
             unlockedRCT = false;
             rctAuraIndex = -1;
 
+            celestialAmulet = false;
+            burntDurationReduction = 0f;
         }
         public override void SaveData(TagCompound tag)
         {
@@ -169,22 +174,10 @@ namespace sorceryFight
         {
             if (innateTechnique == null) return;    
 
-            if (cursedEnergy > maxCursedEnergy)
-            {
-                cursedEnergy = maxCursedEnergy;
-            }
-
-            if (cursedEnergy < 0)
-            {
-                cursedEnergy = 0;
-            }
-
-
             innateTechnique.PostUpdate(this);
-            AnimUpdate();
+            PostAnimUpdate();
             Keybinds();
 
-            cursedEnergyUsagePerSecond = 0f;
             cursedEnergyRegenPerSecond = 0f;
             maxCursedEnergy = 0f;
 
@@ -203,7 +196,23 @@ namespace sorceryFight
                 cursedEnergy += SorceryFight.RateSecondsToTicks(cursedEnergyRegenPerSecond);
             }
 
+            cursedEnergyUsagePerSecond = 0f;
+            cursedEnergyRegenFromOtherSources = 0f;
+            maxCursedEnergyFromOtherSources = 0f;
 
+
+            if (cursedEnergy > maxCursedEnergy)
+            {
+                cursedEnergy = maxCursedEnergy;
+            }
+
+            if (cursedEnergy < 0)
+            {
+                cursedEnergy = 0;
+            }
+
+
+            ResetAccessories();
         }
 
         public override void PostUpdateBuffs()
@@ -213,7 +222,7 @@ namespace sorceryFight
             if (cursedEnergy < 1)
             {
                 cursedEnergy = 1;
-                Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(30));
+                Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(defaultBurntTechniqueDuration - burntDurationReduction));
             }
 
 

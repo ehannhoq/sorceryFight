@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using sorceryFight.Content.SFPlayer;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {

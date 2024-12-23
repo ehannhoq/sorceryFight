@@ -1,6 +1,5 @@
-using sorceryFight.Content.Buffs.Limitless;
+using sorceryFight.Content.SFPlayer;
 using Terraria;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Buffs

@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using sorceryFight.Content.SFPlayer;
 
 namespace sorceryFight.Content.DomainExpansions
 {

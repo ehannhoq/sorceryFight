@@ -1,0 +1,8 @@
+CelestialAmulet: {
+	DisplayName: Lunar Amulet
+	Tooltip:
+		'''
+		"Forged with the ambient cursed energy of the Moon."
+		Reduces Burnt Technique duration by 10%.
+		'''
+}

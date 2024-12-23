@@ -5,6 +5,7 @@ NOTE: This mod requires Calamity Mod and its dependencies in order to install.
 Changelog:
 
 0.1.8:
+- Added Lunar Amulet, an accessory dropped by Moon Lord.
 - Hollow Purple now consumes 750 CE, instead of 500.
 - 200% Hollow Purple now consumes 1500 CE, instead of 2000.
 - 200% Hollow Purple is now unlocked after Devourer of Gods.

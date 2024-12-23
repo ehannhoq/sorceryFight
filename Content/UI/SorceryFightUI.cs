@@ -1,13 +1,11 @@
-using System;
 using System.Collections.Generic;
-using System.Configuration;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight;
 using sorceryFight.Content.UI.CursedTechniqueMenu;
 using sorceryFight.Content.UI.InnateTechniqueSelector;
 using Terraria;
-using Terraria.GameContent.UI.Elements;
+using sorceryFight.Content.SFPlayer;
 using Terraria.ModLoader;
 using Terraria.UI;
 

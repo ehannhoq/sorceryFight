@@ -1,4 +1,3 @@
-using System;
 using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -7,14 +6,15 @@ using Terraria.Chat;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace sorceryFight
+namespace sorceryFight.Content.SFPlayer
 {
     public partial class SorceryFightPlayer : ModPlayer
     {
         public bool rctAnimation = false;
         public int rctTimer = 0;
         public Vector2 rctFrozenPosition = Vector2.Zero;
-        public void AnimUpdate()
+
+        public void PostAnimUpdate()
         {
             if (!rctAnimation) return;
 

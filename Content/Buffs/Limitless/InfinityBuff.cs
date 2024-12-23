@@ -1,13 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Runtime.Intrinsics;
-using CalamityMod;
-using Ionic.Zip;
-using Microsoft.Build.Tasks;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.Enums;
+using sorceryFight.Content.SFPlayer;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
