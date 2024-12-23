@@ -46,8 +46,7 @@ namespace sorceryFight.Content.InnateTechniques
         public virtual void CloseDomain(SorceryFightPlayer sf)
         {
             Main.npc[sf.domainIndex].active = false;
-            int duration = SorceryFight.BuffSecondsToTicks(SorceryFightPlayer.defaultBurntTechniqueDurationFromDE);
-            Main.NewText($"Adding Burnt Technique for {duration}");
+            int duration = SorceryFight.BuffSecondsToTicks(SorceryFightPlayer.defaultBurntTechniqueDurationFromDE - (SorceryFightPlayer.defaultBurntTechniqueDurationFromDE * sf.percentBurntTechnqiueReduction));
             sf.Player.AddBuff(ModContent.BuffType<BurntTechnique>(), duration);
             sf.expandedDomain = false;
             sf.disableRegenFromDE = false;
