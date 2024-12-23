@@ -10,8 +10,6 @@ Changelog:
 - 200% Hollow Purple now consumes 1500 CE, instead of 2000.
 - 200% Hollow Purple is now unlocked after Devourer of Gods.
 - Domain Expansions now have a seperate locked message if the player defeats DoG but doesn't have 100% mastery.
-
-
 - Updated Icon
 - Fixed bug where Skeletons dropped the Cursed Skull instead of Skeletron (in non-Expert/Master mode worlds)
 
