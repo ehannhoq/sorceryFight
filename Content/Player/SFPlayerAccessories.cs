@@ -1,4 +1,5 @@
 using System;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.SFPlayer
@@ -7,20 +8,19 @@ namespace sorceryFight.Content.SFPlayer
     {
         public bool celestialAmulet;
 
-        public float burntDurationReduction;
+        public float percentBurntTechnqiueReduction;
 
-        public override void UpdateEquips()
+        public override void PreUpdate()
         {
             if (celestialAmulet)
             {
-                burntDurationReduction += defaultBurntTechniqueDuration * 0.10f;
+                percentBurntTechnqiueReduction += 0.2f;
             }
         }
 
         private void ResetAccessories()
         {
             celestialAmulet = false;
-            burntDurationReduction = 0f;
         }
     }
 }

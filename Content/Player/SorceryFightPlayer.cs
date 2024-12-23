@@ -108,7 +108,7 @@ namespace sorceryFight.Content.SFPlayer
             rctAuraIndex = -1;
 
             celestialAmulet = false;
-            burntDurationReduction = 0f;
+            percentBurntTechnqiueReduction = 0f;
         }
         public override void SaveData(TagCompound tag)
         {
@@ -211,7 +211,6 @@ namespace sorceryFight.Content.SFPlayer
                 cursedEnergy = 0;
             }
 
-
             ResetAccessories();
         }
 
@@ -222,7 +221,9 @@ namespace sorceryFight.Content.SFPlayer
             if (cursedEnergy < 1)
             {
                 cursedEnergy = 1;
-                Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(defaultBurntTechniqueDuration - burntDurationReduction));
+                int duration = SorceryFight.BuffSecondsToTicks(defaultBurntTechniqueDuration - (defaultBurntTechniqueDuration * percentBurntTechnqiueReduction));
+                Player.AddBuff(ModContent.BuffType<BurntTechnique>(), duration);
+                Main.NewText($"Adding Burnt Technique for {duration} (Percent Reduced: {percentBurntTechnqiueReduction}%)");
             }
 
 
@@ -242,6 +243,8 @@ namespace sorceryFight.Content.SFPlayer
                     passiveTechnique.Remove(Player);
                 }
             }
+
+            percentBurntTechnqiueReduction = 0f;
         }
 
         public override void UpdateDead()
