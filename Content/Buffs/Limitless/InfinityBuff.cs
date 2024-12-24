@@ -52,8 +52,7 @@ namespace sorceryFight.Content.Buffs.Limitless
         public override void Update(Player player, ref int buffIndex)
         {
             SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
-            float projInfinityDistance = 100f;
-            float npcInfinityDistance = 70f;
+            float infinityDistance = 50f;
             CostPerSecond = 1f;
 
             sf.disableRegenFromBuffs = false;
@@ -66,14 +65,14 @@ namespace sorceryFight.Content.Buffs.Limitless
                 if (proj.hostile)
                 {
                     float distance = Vector2.Distance(proj.Center, player.Center);
-                    if (distance <= projInfinityDistance)
+                    if (distance <= infinityDistance)
                     {
                         accumulativeDamage += proj.damage;
                         npcInInfinity ++;
 
                         proj.velocity *= 0.5f;
                         Vector2 vector = player.Center.DirectionTo(proj.Center);
-                        proj.velocity = vector * (3f + player.velocity.Length()) * ((projInfinityDistance - distance) / 75);
+                        proj.velocity = vector * (3f + player.velocity.Length()) * ((infinityDistance - distance) / 75);
                     }
                 }
             }
@@ -84,7 +83,7 @@ namespace sorceryFight.Content.Buffs.Limitless
                 if (!npc.friendly && npc.type != NPCID.TargetDummy && npc.active && !npc.IsDomain())
                 {
                     float distance = Vector2.Distance(npc.Center, player.Center);
-                    if (distance <= npcInfinityDistance)
+                    if (distance <= infinityDistance)
                     {
                         accumulativeDamage += npc.damage;
 
@@ -95,7 +94,7 @@ namespace sorceryFight.Content.Buffs.Limitless
 
                         npc.velocity *= 0.5f;
                         Vector2 vector = player.Center.DirectionTo(npc.Center);
-                        npc.velocity = vector * (3f + player.velocity.Length()) * ((npcInfinityDistance - distance) / 50);
+                        npc.velocity = vector * (3f + player.velocity.Length()) * ((infinityDistance - distance) / 50);
                     }
 
                     else if (velocityData.ContainsKey(npc.whoAmI))

@@ -5,6 +5,6 @@ namespace sorceryFight.Rarities
 {
     public class SorceryFightBlue : ModRarity
     {
-        public override Color RarityColor => new Color(165, 194, 242);
+        public override Color RarityColor => new Color(140, 52, 73);
     }
 }

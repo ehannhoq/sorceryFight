@@ -23,8 +23,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override float MasteryNeeded { get; } = 0f;
         public override Color textColor { get; } = new Color(235, 117, 233);
         public override bool DisplayNameInGame { get; } = true;
-
-        
         public override int BaseDamage => 20000;
         public override int MaxDamage => 45000;
         public override float MaxMastery => 100f;
