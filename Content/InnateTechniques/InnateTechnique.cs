@@ -16,7 +16,7 @@ namespace sorceryFight.Content.InnateTechniques
         public abstract List<PassiveTechnique> PassiveTechniques { get; }
         public abstract List<CursedTechnique> CursedTechniques { get; }
         public abstract DomainExpansion DomainExpansion { get; }
-        public abstract bool IsValid { get; }
+        public virtual int DomainExpansionTimer { get; set; } = -1;
 
         public static InnateTechnique GetInnateTechnique(string name)
         {
@@ -24,6 +24,8 @@ namespace sorceryFight.Content.InnateTechniques
             {
                 case "Limitless":
                     return new LimitlessTechnique();
+                case "Shrine":
+                    return new ShrineTechnique();
             }
 
             return null;
@@ -35,7 +37,8 @@ namespace sorceryFight.Content.InnateTechniques
             {
                 return new List<InnateTechnique>
                 {
-                    new LimitlessTechnique()
+                    new LimitlessTechnique(),
+                    new ShrineTechnique()
                 };
             }
         }

@@ -14,8 +14,6 @@ namespace sorceryFight.Content.InnateTechniques
 {
     public class LimitlessTechnique : InnateTechnique
     {
-        public bool hasInfinity = false;
-        public int domainExpansionTimer = -1;
         public override string Name => "Limitless";
         public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.Limitless.DisplayName");
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
@@ -36,50 +34,48 @@ namespace sorceryFight.Content.InnateTechniques
         };
 
         public override DomainExpansion DomainExpansion { get; } = new UnlimitedVoid();
-
-        public override bool IsValid { get; } = true;
-
+        
         public override void PostUpdate(SorceryFightPlayer sf)
         {
-            if (domainExpansionTimer == -1)
+            if (DomainExpansionTimer == -1)
             {
                 return;
             }
 
-            domainExpansionTimer ++;
+            DomainExpansionTimer ++;
 
-            if (domainExpansionTimer == 1)
+            if (DomainExpansionTimer == 1)
             {
                 int index = CombatText.NewText(sf.Player.getRect(), Color.White, "Domain Expansion:");
                 Main.combatText[index].lifeTime = 90;
             }
 
-            if (domainExpansionTimer == 101)
+            if (DomainExpansionTimer == 101)
             {
                 int index = CombatText.NewText(sf.Player.getRect(), Color.White, "Unlimited Void");
                 Main.combatText[index].lifeTime = 90;
             }
 
-            if (domainExpansionTimer == 181)
+            if (DomainExpansionTimer == 181)
             {
                 SoundEngine.PlaySound(SorceryFightSounds.UnlimitedVoid, sf.Player.Center);
             }
             
-            if (domainExpansionTimer == 211)
+            if (DomainExpansionTimer == 211)
             {
                 Terraria.DataStructures.IEntitySource entitySource = sf.Player.GetSource_FromThis();
                 Vector2 position = sf.Player.Center;
 
                 if (Main.myPlayer == sf.Player.whoAmI)
                     sf.domainIndex = NPC.NewNPC(entitySource, (int)position.X, (int)position.Y, ModContent.NPCType<UnlimitedVoid>(), 0, default, sf.Player.whoAmI);
-                domainExpansionTimer = -1;
+                DomainExpansionTimer = -1;
             }
 
         }
 
         public override void ExpandDomain(SorceryFightPlayer sf)
         {
-            domainExpansionTimer = 0;
+            DomainExpansionTimer = 0;
         }
 
         public override void CloseDomain(SorceryFightPlayer sf)

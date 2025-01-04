@@ -38,36 +38,39 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
                 ));
             }
 
-            
+
             UIText title = new UIText("Choose your Innate Technique.", 1.5f, false);
             title.Left.Set(screenCenter.X - 180f, 0f);
             title.Top.Set(screenCenter.Y - 100, 0f);
             Append(title);
 
-            DrawLimitless();
+            DrawTechniques();
 
             Recalculate();
         }
 
-        private void DrawLimitless()
+        private void DrawTechniques()
         {
-            InnateTechnique t = new LimitlessTechnique();
-            Texture2D iconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.Name}_Icon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            Texture2D backgroundTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.Name}_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                
-            SpecialUIElement background = new SpecialUIElement(backgroundTexture, -1f, 0.05f);
-            background.Left.Set(iconPositions[0].X - (backgroundTexture.Width / 2), 0f);
-            background.Top.Set(iconPositions[0].Y - (backgroundTexture.Height / 2), 0f);
-                
-            TechnqiueButton button = new TechnqiueButton(iconTexture, t.Name, t);
-            button.Left.Set(iconPositions[0].X - (iconTexture.Width / 2), 0f);
-            button.Top.Set(iconPositions[0].Y - (iconTexture.Height / 2), 0f);
+            for (int i = 0; i < InnateTechnique.InnateTechniques.Count; i++)
+            {
+                InnateTechnique t = InnateTechnique.InnateTechniques[i];
+                Texture2D iconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.Name}_Icon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                Texture2D backgroundTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.Name}_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-            background.Recalculate();
-            button.Recalculate();
+                SpecialUIElement background = new SpecialUIElement(backgroundTexture, -1f, 0.05f);
+                background.Left.Set(iconPositions[i].X - (backgroundTexture.Width / 2), 0f);
+                background.Top.Set(iconPositions[i].Y - (backgroundTexture.Height / 2), 0f);
 
-            Append(background);
-            Append(button);
+                TechnqiueButton button = new TechnqiueButton(iconTexture, t.Name, t);
+                button.Left.Set(iconPositions[i].X - (iconTexture.Width / 2), 0f);
+                button.Top.Set(iconPositions[i].Y - (iconTexture.Height / 2), 0f);
+
+                background.Recalculate();
+                button.Recalculate();
+
+                Append(background);
+                Append(button);
+            }
         }
 
         public override void Update(GameTime gameTime)

@@ -58,10 +58,8 @@ SHRINE:
 	CLEAVE
 	Unlocked by defeating Lunatic Cultist
 
-
 	DIVINE FLAME
-	Unlocked by defeating Moon Lord
-
+	Unlocked by defeating Moon Lord 	
 
 	WORLD CUTTING SLASH
 	Unlocked by defeating Dragonfolly

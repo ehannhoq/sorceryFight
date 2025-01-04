@@ -65,3 +65,9 @@ HollowPurple200Percent: {
 		'''
 	LockedDescription: Vanquish the Devourer of Gods.
 }
+
+Dismantle: {
+	DisplayName: Dismantle
+	Description: placeholder
+	LockedDescription: placeholder
+}

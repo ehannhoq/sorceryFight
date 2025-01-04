@@ -3,34 +3,7 @@ Sorcery Fight is heavily inspired by anime/manga Jujutsu Kaisen. It adds five Cu
 NOTE: This mod requires Calamity Mod and its dependencies in order to install.
 
 Changelog:
-
-0.1.8:
-- Added the Lunar Amulet, an accessory dropped by Moon Lord.
-- Hollow Purple now consumes 750 CE, instead of 500.
-- 200% Hollow Purple now consumes 1500 CE, instead of 2000.
-- 200% Hollow Purple is now unlocked after Devourer of Gods.
-- Domain Expansions now have a seperate locked message if the player defeats DoG but doesn't have 100% mastery.
-- Updated Icon
-- Fixed bug where Skeletons dropped the Cursed Skull instead of Skeletron (in non-Expert/Master mode worlds)
-
-0.1.7:
-- Buffed Limitless:
-Blue Damage: 30 at 0% Mastery/300 at 100% Mastery -> 30 at 0% Mastery/1,000 at 100% Mastery
-Maximum Output: Blue Damage: 150/600 -> 300/5,000
-Red Damage: 300/1,500 -> 5,000/20,000
-Hollow Purple Damage: 5,000/6,000 -> 20,000/45,000
-200% Hollow Purple Damage: 12,000/12,000 -> 90,000/100,000
-
-- Buffed RCT:
-1 HP / 10 CE -> 1 HP / 5 CE
-
-- Fixed bug where Amplified Aura and Maximum Output: Amplified Aura doesn't consume CE.
-- Fixed bug where any variant of Blue could move the Old One Army's spawning portals.
-- The Cursed Energy bar can only be moved if the player has their inventory open.
-- The Cursed Energy bar will also be set back to its default position if dragged off screen.
-- Blue no longer moves the Amplified Aura/Maximum Output: Amplified Aura/RCT sprites.
-- Unlimited Void now works properly against Moon Lord.
-
+https://docs.google.com/document/d/1avF8o3fXDvVdUV7az7U6Lp_6NkAF-goxyddqzmgr-Js/edit?usp=sharing
 
 Future Plans:
 - Shrine Innate Technique (Sukuna)
@@ -43,7 +16,6 @@ Future Plans:
 - Update Cursed Technique selection wheel.
 - Add Cursed Energy weapons from the anime/manga as well as some original weapons.
 - Binding Vows (somehow)
-
 
 Known Bugs:
 - Maximum Output Blue, Red, Hollow Purple, 200% Hollow Purple are visually bugged in multiplayer.

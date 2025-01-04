@@ -228,7 +228,6 @@ namespace sorceryFight.Content.SFPlayer
                 cursedEnergy = 1;
                 int duration = SorceryFight.BuffSecondsToTicks(defaultBurntTechniqueDuration - (defaultBurntTechniqueDuration * percentBurntTechnqiueReduction));
                 Player.AddBuff(ModContent.BuffType<BurntTechnique>(), duration);
-                Main.NewText($"Adding Burnt Technique for {duration} (Percent Reduced: {percentBurntTechnqiueReduction}%)");
             }
 
 
@@ -357,32 +356,16 @@ namespace sorceryFight.Content.SFPlayer
                 return;
             }
 
-            Vector2 playerPos = Player.MountedCenter;
-            Vector2 mousePos = Main.MouseWorld;
-            Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * selectedTechnique.Speed;
-            var entitySource = Player.GetSource_FromThis();
-
-            cursedEnergy -= selectedTechnique.Cost;
-
-            if (selectedTechnique.DisplayNameInGame)
-            {
-                int index1 = CombatText.NewText(Player.getRect(), selectedTechnique.textColor, selectedTechnique.DisplayName.Value);
-                Main.combatText[index1].lifeTime = 180;
-            }
+            selectedTechnique.UseTechnique(this);
             
-            if (Player.whoAmI == Main.myPlayer)
+            if (mastery < selectedTechnique.MaxMastery)
             {
-                Projectile.NewProjectile(entitySource, Player.Center, dir, selectedTechnique.GetProjectileType(), selectedTechnique.CalculateTrueDamage(this), 0, Player.whoAmI);
+                mastery += 0.5f;
+            }
 
-                if (mastery < selectedTechnique.MaxMastery)
-                {
-                    mastery += 0.5f;
-                }
-
-                if (mastery > 100)
-                {
-                    mastery = 100f;
-                }
+            if (mastery > 100)
+            {
+                mastery = 100f;
             }
         }
 
