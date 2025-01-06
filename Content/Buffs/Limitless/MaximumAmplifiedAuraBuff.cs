@@ -1,6 +1,6 @@
 using CalamityMod;
 using Microsoft.Xna.Framework;
-using sorceryFight.Content.SFPlayer;
+using sorceryFight.SFPlayer;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Localization;

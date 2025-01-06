@@ -2,7 +2,7 @@ using System;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.SFPlayer
+namespace sorceryFight.SFPlayer
 {
     public partial class SorceryFightPlayer : ModPlayer
     {

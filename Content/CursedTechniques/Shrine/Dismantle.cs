@@ -2,7 +2,7 @@ using System;
 using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.SFPlayer;
+using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;

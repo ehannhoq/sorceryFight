@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Terraria.Audio;
-using sorceryFight.Content.SFPlayer;
+using sorceryFight.SFPlayer;
 using Terraria.Localization;
 
 namespace sorceryFight.Content.Items.Consumables

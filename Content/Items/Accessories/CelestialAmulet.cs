@@ -2,7 +2,7 @@ using sorceryFight.Rarities;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using sorceryFight.Content.SFPlayer;
+using sorceryFight.SFPlayer;
 
 namespace sorceryFight.Content.Items.Accessories
 {

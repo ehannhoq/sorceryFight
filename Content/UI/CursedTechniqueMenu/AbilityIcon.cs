@@ -1,5 +1,5 @@
 using Microsoft.Xna.Framework;
-using sorceryFight.Content.SFPlayer;
+using sorceryFight.SFPlayer;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
 using Terraria;

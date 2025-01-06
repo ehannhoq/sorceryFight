@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.DataStructures;
 
-namespace sorceryFight.Content.SFPlayer
+namespace sorceryFight.SFPlayer
 {
     public partial class SorceryFightPlayer : ModPlayer
     {
@@ -247,7 +247,6 @@ namespace sorceryFight.Content.SFPlayer
                     passiveTechnique.Remove(Player);
                 }
             }
-
 
             percentBurntTechnqiueReduction = 0f;
         }

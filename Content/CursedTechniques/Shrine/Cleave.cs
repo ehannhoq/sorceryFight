@@ -1,6 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
-using sorceryFight.Content.SFPlayer;
+using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;

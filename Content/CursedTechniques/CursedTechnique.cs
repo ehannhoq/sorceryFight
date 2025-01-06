@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
-using sorceryFight.Content.SFPlayer;
+using sorceryFight.SFPlayer;
 using Microsoft.Build.Tasks;
 
 namespace sorceryFight.Content.CursedTechniques

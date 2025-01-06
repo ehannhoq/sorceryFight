@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
-using sorceryFight.Content.SFPlayer;
+using sorceryFight.SFPlayer;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;

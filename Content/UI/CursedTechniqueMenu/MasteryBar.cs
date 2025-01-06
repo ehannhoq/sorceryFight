@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using sorceryFight.Content.SFPlayer;
+using sorceryFight.SFPlayer;
 
 public class MasteryBar : ValueBar
 {

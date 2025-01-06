@@ -7,7 +7,7 @@ using sorceryFight.Content.InnateTechniques;
 using Terraria;
 using Terraria.Chat;
 using Terraria.GameContent.UI.Elements;
-using sorceryFight.Content.SFPlayer;
+using sorceryFight.SFPlayer;
 using Terraria.ModLoader;
 using Terraria.UI;
 

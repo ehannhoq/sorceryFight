@@ -8,7 +8,7 @@ using sorceryFight.Content.Buffs.Limitless;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.Audio;
-using sorceryFight.Content.SFPlayer;
+using sorceryFight.SFPlayer;
 
 namespace sorceryFight.Content.InnateTechniques
 {

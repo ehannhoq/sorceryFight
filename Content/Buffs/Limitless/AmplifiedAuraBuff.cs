@@ -2,7 +2,7 @@ using CalamityMod;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
-using sorceryFight.Content.SFPlayer;
+using sorceryFight.SFPlayer;
 using Terraria.Localization;
 using Terraria.ModLoader;
 

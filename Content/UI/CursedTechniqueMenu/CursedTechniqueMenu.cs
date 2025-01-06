@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using sorceryFight.Content.SFPlayer;
+using sorceryFight.SFPlayer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.CursedTechniques;

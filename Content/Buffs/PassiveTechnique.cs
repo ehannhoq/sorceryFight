@@ -1,4 +1,4 @@
-using sorceryFight.Content.SFPlayer;
+using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ModLoader;
 

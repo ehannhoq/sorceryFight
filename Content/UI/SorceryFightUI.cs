@@ -5,7 +5,7 @@ using sorceryFight;
 using sorceryFight.Content.UI.CursedTechniqueMenu;
 using sorceryFight.Content.UI.InnateTechniqueSelector;
 using Terraria;
-using sorceryFight.Content.SFPlayer;
+using sorceryFight.SFPlayer;
 using Terraria.ModLoader;
 using Terraria.UI;
 

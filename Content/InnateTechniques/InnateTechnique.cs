@@ -5,7 +5,7 @@ using sorceryFight.Content.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 using sorceryFight.Content.DomainExpansions;
-using sorceryFight.Content.SFPlayer;
+using sorceryFight.SFPlayer;
 
 namespace sorceryFight.Content.InnateTechniques
 {
