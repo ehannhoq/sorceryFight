@@ -17,7 +17,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override bool DisplayNameInGame => true;
         public override int BaseDamage => 1;
         public override int MaxDamage => 1;
-        public override float MaxMastery => 49.5f;
         public override float Speed => 0f;
         public override float LifeTime => 2f;
         public override int GetProjectileType()

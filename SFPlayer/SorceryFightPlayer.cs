@@ -25,7 +25,6 @@ namespace sorceryFight.SFPlayer
         #region Global Cursed Technique Stuff
         public InnateTechnique innateTechnique;
         public CursedTechnique selectedTechnique;
-        public float mastery;
         public float cursedEnergy;
         public float maxCursedEnergy;
         public float cursedEnergyRegenPerSecond;
@@ -60,7 +59,7 @@ namespace sorceryFight.SFPlayer
         {
             get
             {
-                return CalamityMod.DownedBossSystem.downedDoG && mastery >= 100;
+                return CalamityMod.DownedBossSystem.downedDoG;
             }
         }
         public bool expandedDomain;
@@ -79,11 +78,12 @@ namespace sorceryFight.SFPlayer
 
             innateTechnique = null;
             selectedTechnique = null;
-            mastery = 0f;
             cursedEnergy = 0f;
             maxCursedEnergy = 100f;
             cursedEnergyRegenPerSecond = 1f;
             cursedEnergyUsagePerSecond = 0f;
+
+            bossesDefeated = new List<int>();
 
             cursedSkull = false;
             cursedMechanicalSoul = false;
@@ -114,9 +114,10 @@ namespace sorceryFight.SFPlayer
         {
             if (innateTechnique != null)
                 tag["innateTechnique"] = innateTechnique.Name;
-                
-            tag["mastery"] = mastery;
+            
             tag["cursedEnergy"] = cursedEnergy;
+
+            tag["bossesDefeated"] = bossesDefeated;
 
             var maxCEModifiers = new List<string>();
             maxCEModifiers.AddWithCondition("cursedSkull", cursedSkull);
@@ -124,6 +125,7 @@ namespace sorceryFight.SFPlayer
             maxCEModifiers.AddWithCondition("cursedPhantasmalEye", cursedPhantasmalEye);
             maxCEModifiers.AddWithCondition("cursedProfanedShards", cursedProfaneShards);
             tag["maxCEModifiers"] = maxCEModifiers;
+
 
             var cursedEnergyRegenModifiers = new List<string>();
             cursedEnergyRegenModifiers.AddWithCondition("cursedEye", cursedEye);
@@ -145,8 +147,9 @@ namespace sorceryFight.SFPlayer
             string innateTechniqueName = tag.ContainsKey("innateTechnique") ? tag.GetString("innateTechnique") : "";
             innateTechnique = InnateTechnique.GetInnateTechnique(innateTechniqueName);
             
-            mastery = tag.ContainsKey("mastery") ? tag.GetFloat("mastery") : 0f;
             cursedEnergy = tag.ContainsKey("cursedEnergy") ? tag.GetFloat("cursedEnergy") : 1f;
+            var defeatedBosses = tag.ContainsKey("bossesDefeated") ? tag.GetList<int>("bossesDefeated") : new List<int>();
+            bossesDefeated = defeatedBosses as List<int>;
 
             var maxCEModifiers = tag.GetList<string>("maxCEModifiers");
             cursedSkull = maxCEModifiers.Contains("cursedSkull");
@@ -356,16 +359,6 @@ namespace sorceryFight.SFPlayer
             }
 
             selectedTechnique.UseTechnique(this);
-            
-            if (mastery < selectedTechnique.MaxMastery)
-            {
-                mastery += 0.5f;
-            }
-
-            if (mastery > 100)
-            {
-                mastery = 100f;
-            }
         }
 
         public void UseRCT()

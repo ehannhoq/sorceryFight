@@ -15,7 +15,6 @@ namespace sorceryFight.Content.CursedTechniques
         public abstract bool DisplayNameInGame { get; }
         public abstract int BaseDamage { get; }
         public abstract int MaxDamage { get; }
-        public abstract float MaxMastery { get; }
         public abstract float Speed { get; }
         public abstract float LifeTime { get; }
         public abstract bool Unlocked(SorceryFightPlayer sf);
@@ -27,8 +26,7 @@ namespace sorceryFight.Content.CursedTechniques
         }
         public virtual int CalculateTrueDamage(SorceryFightPlayer sf)
         {
-            float slope = (MaxDamage - BaseDamage) / 100;
-            return (int)(slope * sf.mastery + BaseDamage);
+            return BaseDamage;
         }
         public override void SetDefaults()
         {

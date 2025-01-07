@@ -25,7 +25,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
        
         public override int BaseDamage => 5000;
         public override int MaxDamage => 20000;
-        public override float MaxMastery => 80f;
         public override float Speed { get; } = 30f;
         public override float LifeTime { get; } = 300f;
         public override bool Unlocked(SorceryFightPlayer sf)

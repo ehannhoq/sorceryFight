@@ -26,7 +26,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public override int BaseDamage => 30;
         public override int MaxDamage => 1000;
-        public override float MaxMastery => 10f;
 
         public override float Speed => 15f;
         public override float LifeTime => 300f;
