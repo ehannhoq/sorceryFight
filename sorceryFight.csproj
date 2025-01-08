@@ -19,12 +19,23 @@
 	  <AdditionalFiles Remove="Localization\en-US\Mods.sorceryFight.Weapons.Melee.hjson" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Content Include="Content\UI\CursedTechniqueMenu\Limitless\0.png" />
+	  <Content Include="Content\UI\CursedTechniqueMenu\Limitless\1.png" />
+	  <Content Include="Content\UI\CursedTechniqueMenu\Limitless\2.png" />
+	  <Content Include="Content\UI\CursedTechniqueMenu\Limitless\3.png" />
+	  <Content Include="Content\UI\CursedTechniqueMenu\Limitless\4.png" />
+	  <Content Include="Content\UI\CursedTechniqueMenu\Limitless\5.png" />
+	  <Content Include="Content\UI\CursedTechniqueMenu\Limitless\6.png" />
+	  <Content Include="Content\UI\CursedTechniqueMenu\Limitless\7.png" />
+	  <Content Include="Content\UI\CursedTechniqueMenu\Limitless\Background.png" />
+	  <Content Include="Content\UI\CursedTechniqueMenu\Limitless\Domain.png" />
+	</ItemGroup>
+	<ItemGroup>
 	  <Reference Include="CalamityMod">
 	    <HintPath>..\..\ModReader\CalamityMod\CalamityMod.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Content/UI/CursedTechniqueMenu/DomainExpansionIcons/" />
 	  <Folder Include="Content\Buffs\Shrine\" />
 	</ItemGroup>
 

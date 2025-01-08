@@ -1,31 +1,71 @@
 using System;
-using System.Collections.Generic;
 using sorceryFight.SFPlayer;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.CursedTechniques;
-using sorceryFight.Content.Buffs;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.UI;
-using sorceryFight.Content.DomainExpansions;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace sorceryFight.Content.UI.CursedTechniqueMenu
 {
     public class CursedTechniqueMenu : UIElement
     {
+        internal class CTMenuCloseButton : SFButton
+        {
+            public CTMenuCloseButton(Texture2D texture, string hoverText) : base(texture, hoverText) { }
+
+            public override void OnClick()
+            {
+                var ctMenu = (CursedTechniqueMenu)Parent;
+                var sfUI = (SorceryFightUI)ctMenu.Parent;
+                sfUI.RemoveElement(ctMenu);
+            }
+        }
+
         SorceryFightPlayer player;
-        MasteryBar masteryBar;
+        Texture2D borderTexture;
+        Texture2D closeButtonTexture;
+        SpecialUIElement moveButton;
+        Texture2D moveButtonTexture;
+        CursedTechniqueTree ctTree;
+        bool isDragging;
+        Vector2 offset;
+
         public CursedTechniqueMenu(SorceryFightPlayer player)
         {
             this.player = player;
-            Vector2 screenCenter = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
+            isDragging = false;
 
-            DisplayCursedTechniques(screenCenter);
-            DisplayPassiveTechniques(screenCenter);
-            DisplayDomainExpansionIcon(screenCenter);
-            DisplayMasteryBar(screenCenter);
+            Texture2D treeBGTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{player.innateTechnique.Name}/Background", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            borderTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/CursedTechniqueMenuBGBorder", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            closeButtonTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/CursedTechniqueMenuBGCloseButton", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            moveButtonTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/CursedTechniqueMenuBGMoveButton", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+            float left = Main.screenWidth - borderTexture.Width - 300f;
+            float top = Main.screenHeight - borderTexture.Height - 100f;
+            Left.Set(left, 0f);
+            Top.Set(top, 0f);
+
+            UIImage background = new UIImage(borderTexture);
+            CTMenuCloseButton closeButton = new CTMenuCloseButton(closeButtonTexture, "");
+            moveButton = new SpecialUIElement(moveButtonTexture, "Drag me!");
+
+            background.Left.Set(0f, 0f);
+            background.Top.Set(closeButtonTexture.Height + 6f, 0f);
+            closeButton.Left.Set(0f, 0f);
+            closeButton.Top.Set(0f, 0f);
+            moveButton.Left.Set(closeButtonTexture.Width + 12f, 0f);
+            moveButton.Top.Set(closeButtonTexture.Height / 2f - moveButtonTexture.Height / 2f, 0f);
+
+            Append(background);
+            Append(closeButton);
+            Append(moveButton);
+
+            CursedTechniqueTree ctTree = new CursedTechniqueTree(closeButtonTexture, treeBGTexture);
+            ctTree.Left.Set(0f, 0f);
+            ctTree.Top.Set(0f, 0f);
+            Append(ctTree);
 
             Recalculate();
         }
@@ -33,92 +73,31 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            masteryBar.fillPercentage = player.mastery / 100f;
-        }
 
-        private void DisplayCursedTechniques(Vector2 screenCenter)
-        {
-            List<CursedTechnique> techniques = player.innateTechnique.CursedTechniques;
+            bool isHovering = SorceryFightUI.MouseHovering(moveButton, moveButtonTexture);
 
-            float iconOffset = 15f;
-            float rotation = 2 * (float)Math.PI / techniques.Count;
-            float magnatude = 60f;
-
-            for (int i = 0; i < techniques.Count; i++)
+            if (isHovering && Main.mouseLeft && !isDragging)
             {
-                Texture2D texture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/CursedTechniqueIcons/{player.innateTechnique.Name}_{i}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                AbilityIcon icon = new AbilityIcon(texture, i, AbilityIconType.CursedTechnique);
-
-                if (player.selectedTechnique == techniques[i])
-                    icon.selected = true;
-
-                icon.Left.Set(screenCenter.X - magnatude * (float)Math.Cos(i * rotation) - iconOffset, 0f);
-                icon.Top.Set(screenCenter.Y - magnatude * (float)Math.Sin(i * rotation) - iconOffset, 0f);
-
-                icon.Recalculate();
-                Append(icon);
+                isDragging = true;
+                offset = new Vector2(Main.mouseX, Main.mouseY) - new Vector2(Left.Pixels, Top.Pixels);
             }
-        }
 
-        private void DisplayPassiveTechniques(Vector2 screenCenter)
-        {
-            List<PassiveTechnique> techniques = player.innateTechnique.PassiveTechniques;
-            
-            if (techniques.Count == 0)
-                return;
-
-            float textureSide = 32;
-            float spacing = 40f;
-            float totalHeight = (textureSide * techniques.Count) + (spacing * (techniques.Count - 1));
-            float yOffset = totalHeight / techniques.Count;
-
-            for (int i = 0; i < techniques.Count; i++)
+            if (isDragging)
             {
-                Texture2D texture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/PassiveTechniqueIcons/{player.innateTechnique.Name}_{i}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                AbilityIcon icon = new AbilityIcon(texture, i, AbilityIconType.PassiveTechnique);
+                float clampedLeft = Math.Clamp(Main.mouseX - offset.X, 6f, Main.screenWidth - borderTexture.Width);
+                float clampedTop = Math.Clamp(Main.mouseY - offset.Y, 0, Main.screenHeight - borderTexture.Height - closeButtonTexture.Height - 6f);
 
-                if (techniques[i].isActive)
+                Left.Set(clampedLeft, 0f);
+                Top.Set(clampedTop, 0f);
+
+                Recalculate();
+
+                if (!Main.mouseLeft)
                 {
-                    icon.selected = true;
+                    isDragging = false;
+                    Recalculate();
                 }
-                
-                icon.Left.Set(screenCenter.X + 140f, 0f);
-                icon.Top.Set(screenCenter.Y - yOffset + (i * spacing), 0f);
-
-                Append(icon);
             }
-        }
-
-        private void DisplayDomainExpansionIcon(Vector2 screenCenter)
-        {
-            DomainExpansion de = player.innateTechnique.DomainExpansion;
-            Texture2D texture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/DomainExpansionIcons/{de.DisplayName.Value}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            DomainExpansionIcon icon = new DomainExpansionIcon(texture);
-
-            icon.Left.Set(screenCenter.X - 140f, 0f);
-            icon.Top.Set(screenCenter.Y - texture.Height / 2, 0f);
-            Append(icon);
-
-        }
-        private void DisplayMasteryBar(Vector2 screenCenter)
-        {
-            Texture2D masteryBorderTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/Mastery_Bar_Border", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            Texture2D masteryBarTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/Mastery_Bar", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-            UIImage masteryBorder = new UIImage(masteryBorderTexture);
-            masteryBar = new MasteryBar(masteryBarTexture, Orientation.Horizontal);
-
-            float x = screenCenter.X - masteryBorderTexture.Width / 2;
-            float y = screenCenter.Y + 140f;
-
-            masteryBorder.Left.Set(x, 0f);
-            masteryBorder.Top.Set(y, 0f);
-
-            masteryBar.Left.Set(x + ((masteryBorderTexture.Width - masteryBarTexture.Width) / 2), 0f);
-            masteryBar.Top.Set(y, 0f);
-
-            Append(masteryBorder);
-            Append(masteryBar);
         }
     }
 }

@@ -1,5 +1,6 @@
-using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Buffs.Limitless;
 using sorceryFight.Content.DomainExpansions;
@@ -27,7 +28,7 @@ public static class SFUtils
             list.Add(type);
     }
 
-    public static bool IsDomain (this NPC npc)
+    public static bool IsDomain(this NPC npc)
     {
         return npc.type == ModContent.NPCType<UnlimitedVoid>();
     }
@@ -53,7 +54,7 @@ public static class SFUtils
 
         return true;
     }
-    
+
     public static LocalizedText GetLocalization(string key)
     {
         return Language.GetText(key);
@@ -67,5 +68,27 @@ public static class SFUtils
     public static NetworkText GetNetworkText(string key)
     {
         return NetworkText.FromKey(key);
+    }
+
+
+
+    /// <summary>
+    /// Draws a line between two points using a sprite batch. TAKEN FROM CALAMITY MOD.
+    /// </summary>
+    /// <param name="spriteBatch">The sprite batch to draw with.</param>
+    /// <param name="start">The starting point of the line.</param>
+    /// <param name="end">The ending point of the line.</param>
+    /// <param name="color">The color to draw the line with.</param>
+    /// <param name="width">The width of the line.</param>
+    public static void DrawLineUI(this SpriteBatch spriteBatch, Vector2 start, Vector2 end, Color color, float width)
+    {
+        if (start == end)
+            return;
+
+        Texture2D line = ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Line").Value;
+        float rotation = (end - start).ToRotation();
+        Vector2 scale = new Vector2(Vector2.Distance(start, end) / line.Width, width);
+
+        spriteBatch.Draw(line, start, null, color, rotation, line.Size() * Vector2.UnitY * 0.5f, scale, SpriteEffects.None, 0f);
     }
 }

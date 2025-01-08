@@ -57,7 +57,7 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
                 Texture2D iconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.Name}_Icon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 Texture2D backgroundTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.Name}_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                SpecialUIElement background = new SpecialUIElement(backgroundTexture, -1f, 0.05f);
+                SpecialUIElement background = new SpecialUIElement(backgroundTexture, default, -1f, 0.05f);
                 background.Left.Set(iconPositions[i].X - (backgroundTexture.Width / 2), 0f);
                 background.Top.Set(iconPositions[i].Y - (backgroundTexture.Height / 2), 0f);
 

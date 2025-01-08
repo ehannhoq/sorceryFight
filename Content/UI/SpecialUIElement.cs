@@ -2,25 +2,30 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.UI.InnateTechniqueSelector;
+using Terraria;
 using Terraria.UI;
 
 namespace sorceryFight.Content.UI
 {
     public class SpecialUIElement : UIElement
     {
+        public Texture2D texture;
         private float timeCounter;
-        private Texture2D texture;
+        private string hoverText;
         private float rotationAngle;
         private float rotationSpeed;
         private float scaleOscillate;
+        private float baseScale;
 
-        public SpecialUIElement(Texture2D texture, float rotationSpeed = 0f, float scaleOscillate = 0f)
+        public SpecialUIElement(Texture2D texture, string hoverText = "", float rotationSpeed = 0f, float scaleOscillate = 0f, float baseScale = 1f)
         {
             timeCounter = 0;
             this.texture = texture;
+            this.hoverText = hoverText;
             rotationAngle = 0f;
             this.rotationSpeed = MathHelper.ToRadians(rotationSpeed);
             this.scaleOscillate = scaleOscillate;
+            this.baseScale = baseScale;
 
             Width.Set(texture.Width, 0f);
             Height.Set(texture.Height, 0f);
@@ -30,11 +35,15 @@ namespace sorceryFight.Content.UI
         {
             base.DrawSelf(spriteBatch);
 
+            if (SorceryFightUI.MouseHovering(this, texture))
+            {
+                Main.hoverItemName = hoverText;
+            }
+
             timeCounter += 0.1f;
             if (timeCounter > 2 * MathF.PI)
                 timeCounter = 0;
 
-            float baseScale = 1f;
             float scale = baseScale + scaleOscillate * MathF.Sin(timeCounter);
 
             Vector2 pos = GetDimensions().Position();

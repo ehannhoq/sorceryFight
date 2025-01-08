@@ -12,9 +12,12 @@ public class CursedEnergyBar : UIElement
     public ValueBar ceBar;
     bool isDragging;
     Vector2 offset;
+    Texture2D borderTexture;
 
     public CursedEnergyBar(Texture2D borderTexture, Texture2D barTexture)
     {
+        this.borderTexture = borderTexture;
+
         Width.Set(borderTexture.Width, 0f);
         Height.Set(borderTexture.Height, 0f);
 
@@ -33,12 +36,12 @@ public class CursedEnergyBar : UIElement
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         base.DrawSelf(spriteBatch);
-        
-        if (IsMouseHovering) 
+
+        if (IsMouseHovering)
         {
             var player = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
-            Main.hoverItemName = $"Cursed Energy: {Math.Round((decimal)player.cursedEnergy, 0)} / {player.maxCursedEnergy}\n" 
-                                +$"Regeneration Rate: {player.cursedEnergyRegenPerSecond} CE/s";
+            Main.hoverItemName = $"Cursed Energy: {Math.Round((decimal)player.cursedEnergy, 0)} / {player.maxCursedEnergy}\n"
+                                + $"Regeneration Rate: {player.cursedEnergyRegenPerSecond} CE/s";
         }
     }
 
@@ -54,24 +57,20 @@ public class CursedEnergyBar : UIElement
 
         if (isDragging)
         {
-            Left.Set(Main.mouseX - offset.X, 0f);
-            Top.Set(Main.mouseY - offset.Y, 0f);
+            float clampedLeft = Math.Clamp(Main.mouseX - offset.X, 0f, Main.screenWidth - borderTexture.Width);
+            float clampedTop = Math.Clamp(Main.mouseY - offset.Y, 0f, Main.screenHeight - borderTexture.Height);
 
-
-
+            Left.Set(clampedLeft, 0f);
+            Top.Set(clampedTop, 0f);
             Recalculate();
-        }
 
-        if (!Main.mouseLeft)
-        {
-            isDragging = false;
-
-            if (Left.Pixels > Main.screenWidth || Top.Pixels > Main.screenHeight)
+            if (!Main.mouseLeft)
             {
-                Left.Set(1300, 0f);
-                Top.Set(20, 0f);
+                isDragging = false;
                 Recalculate();
             }
         }
+
+
     }
 }
