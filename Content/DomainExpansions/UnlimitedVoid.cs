@@ -19,7 +19,7 @@ namespace sorceryFight.Content.DomainExpansions
         public override string PostDoGLockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.UnlimitedVoid.PostDoGLockedDescription");
 
         public override Player Owner { get; set; }
-        public override int CostPerSecond => 200;
+        public override int CostPerSecond => 100;
         public static int FRAME_COUNT = 1;
         public static int TICKS_PER_FRAME = 1;
         public static Dictionary<int, float[]> frozenValues;
