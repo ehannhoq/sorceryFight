@@ -24,9 +24,7 @@ BossKillIcon: {
 	Main:
 		'''
 		Innate Technqiue Mastery
-		The more bosses you defeat along your journey, the more powerful and efficient your Innate Technique grows.
+		The more bosses you defeat along your journey, the more powerful and efficient your Innate Technique becomes.
 		'''
 	BossesDefeated: Bosses Defeated:
-	DamageBuff: Damage:
-	CostBuff: CE Cost:
 }

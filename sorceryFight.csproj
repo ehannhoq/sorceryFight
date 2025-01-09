@@ -19,9 +19,6 @@
 	  <AdditionalFiles Remove="Localization\en-US\Mods.sorceryFight.Weapons.Melee.hjson" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Content Include="Content\UI\CursedTechniqueMenu\Limitless\0.png" />
-	  <Content Include="Content\UI\CursedTechniqueMenu\Limitless\1.png" />
-	  <Content Include="Content\UI\CursedTechniqueMenu\Limitless\2.png" />
 	  <Content Include="Content\UI\CursedTechniqueMenu\Limitless\3.png" />
 	  <Content Include="Content\UI\CursedTechniqueMenu\Limitless\4.png" />
 	  <Content Include="Content\UI\CursedTechniqueMenu\Limitless\5.png" />

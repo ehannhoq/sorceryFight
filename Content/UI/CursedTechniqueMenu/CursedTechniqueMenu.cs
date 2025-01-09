@@ -40,9 +40,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 if (SorceryFightUI.MouseHovering(this, texture))
                 {
                     Main.hoverItemName = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.BossKillIcon.Main")}" +
-                                        $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.BossKillIcon.BossesDefeated")} {sfPlayer.bossesDefeated.Count}" +
-                                        $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.BossKillIcon.DamageBuff")} +{sfPlayer.MasteryDamage()}" + 
-                                        $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.BossKillIcon.CostBuff")} -{sfPlayer.MasteryCECost()}%";
+                                        $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.BossKillIcon.BossesDefeated")} {sfPlayer.bossesDefeated.Count}";
 
                 }
             }

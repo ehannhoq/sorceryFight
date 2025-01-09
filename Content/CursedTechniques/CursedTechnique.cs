@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using Microsoft.Build.Tasks;
+using System;
 
 namespace sorceryFight.Content.CursedTechniques
 {
@@ -13,20 +14,25 @@ namespace sorceryFight.Content.CursedTechniques
         public abstract float Cost { get; }
         public abstract Color textColor { get; }
         public abstract bool DisplayNameInGame { get; }
-        public abstract int BaseDamage { get; }
-        public abstract int MaxDamage { get; }
+        public abstract int Damage { get; }
+        public abstract int MasteryDamageMultiplier { get; }
         public abstract float Speed { get; }
         public abstract float LifeTime { get; }
         public abstract bool Unlocked(SorceryFightPlayer sf);
         public abstract int GetProjectileType();
         public virtual string GetStats(SorceryFightPlayer sf)
         {
-            return $"Damage: {CalculateTrueDamage(sf)}\n"
-                + $"Cost: {Cost} CE\n";
+            return $"Damage: {Damage} + {MasteryDamageMultiplier * sf.bossesDefeated.Count} ({CalculateTrueDamage(sf)})\n"
+                + $"Cost: {Cost} - {sf.bossesDefeated.Count}% ({CalculateTrueCost(sf)}) CE\n";
         }
         public virtual int CalculateTrueDamage(SorceryFightPlayer sf)
         {
-            return BaseDamage;
+            return Damage + (sf.bossesDefeated.Count * MasteryDamageMultiplier);
+        }
+
+        public virtual float CalculateTrueCost(SorceryFightPlayer sf)
+        {
+            return Cost - (Cost * (sf.bossesDefeated.Count / 100f));
         }
         public override void SetDefaults()
         {

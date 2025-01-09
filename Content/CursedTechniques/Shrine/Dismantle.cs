@@ -19,8 +19,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override float Cost => 50f;
         public override Color textColor => new Color(184, 130, 101);
         public override bool DisplayNameInGame => false;
-        public override int BaseDamage => 30;
-        public override int MaxDamage => 900;
+        public override int Damage => 30;
+        public override int MasteryDamageMultiplier => 900;
         public override float Speed => 0f;
         public override float LifeTime => 2f;
 
