@@ -18,8 +18,8 @@ Infinity: {
 		'''
 	LockedDescription:
 		'''
-		Slay the piece of Cthulhu that was
-		ripped out centuries ago.
+		Defeat the piece of Cthulhu that was
+		ripped out from him centuries ago.
 		'''
 }
 
@@ -31,7 +31,7 @@ AmplifiedAuraBuff: {
 		the amplified Limitless, you gain 
 		an increase in speed and damage.
 		'''
-	LockedDescription: Free Hell.
+	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
 }
 
 MaximumAmplifiedAuraBuff: {
@@ -44,5 +44,5 @@ MaximumAmplifiedAuraBuff: {
 		you gain a major increase in
 		speed and damage.
 		'''
-	LockedDescription: Defeat the gaurdian of the Temple.
+	LockedDescription: Defeat the stone-faced ritualistic idol of the Lihzahrd tribe.
 }

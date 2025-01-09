@@ -19,7 +19,7 @@ MaximumOutputBlue: {
 		gravitational field, and crushes
 		enemies instantly upon impact.
 		'''
-	LockedDescription: Slay a war machine fueled by soul energy.
+	LockedDescription: Defeat the mechanical recreation of Cthulu's skeleton.
 }
 
 ReversalRed: {
@@ -63,7 +63,7 @@ HollowPurple200Percent: {
 		cost of burning out your Cursed Technique,
 		the CE output doubles.
 		'''
-	LockedDescription: Vanquish the Devourer of Gods.
+	LockedDescription: Defeat the Devourer of Gods.
 }
 
 Dismantle: {
