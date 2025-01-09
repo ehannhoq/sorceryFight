@@ -22,8 +22,8 @@ namespace sorceryFight.Content.CursedTechniques
         public abstract int GetProjectileType();
         public virtual string GetStats(SorceryFightPlayer sf)
         {
-            return $"Damage: {Damage} + {MasteryDamageMultiplier * sf.bossesDefeated.Count} ({CalculateTrueDamage(sf)})\n"
-                + $"Cost: {Cost} - {sf.bossesDefeated.Count}% ({CalculateTrueCost(sf)}) CE\n";
+            return $"Damage: {CalculateTrueDamage(sf)}\n"
+                + $"Cost: {CalculateTrueCost(sf)} CE\n";
         }
         public virtual int CalculateTrueDamage(SorceryFightPlayer sf)
         {

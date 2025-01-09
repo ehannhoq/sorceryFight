@@ -1,0 +1,40 @@
+MasteryIcon: {
+	Info:
+		'''
+		Innate Technqiue Mastery
+		The more bosses you defeat along your journey, the more powerful and efficient your Innate Technique becomes.
+		'''
+	BossesDefeated: Bosses Defeated:
+	CostReduction: Cursed Energy cost reduction:
+}
+
+RCTIcon: {
+	Info:
+		'''
+		The Reverse Cursed Technique produces positive Cursed Energy by
+		multiplying negative Cursed Energy together. This positive energy
+		allows one to heal any wound of the user, fatal or not.
+		'''
+
+	ContinuousRCT: {
+		Info:
+			'''
+			Continuous RCT allows you to gradually expend your Cursed Energy
+			in exchange for health. You cannot use Cursed Techniques while
+			using Continuous RCT.
+			'''
+		Keybind: Press and hold:
+	}
+
+	SpontaniousRCT.Info:
+		'''
+		Spontanious RCT heals a lot of health instantly, but requires the 
+		up most focus.
+		'''
+}
+
+CursedEnergyBar: {
+	CE: Cursed Energy:
+	RegenRate: Regeneration Rate:
+	ToolTip: This bar is draggable when your inventory is open.
+}

@@ -6,6 +6,7 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace sorceryFight.Content.UI.CursedTechniqueMenu
 {
@@ -20,29 +21,6 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 var ctMenu = (CursedTechniqueMenu)Parent;
                 var sfUI = (SorceryFightUI)ctMenu.Parent;
                 sfUI.RemoveElement(ctMenu);
-            }
-        }
-
-        internal class BossKillsIcon : UIImage
-        {
-            SorceryFightPlayer sfPlayer;
-            Texture2D texture;
-            public BossKillsIcon(Texture2D texture) : base(texture) 
-            {
-                sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
-                this.texture = texture;
-            }
-
-            protected override void DrawSelf(SpriteBatch spriteBatch)
-            {
-                base.DrawSelf(spriteBatch);
-                
-                if (SorceryFightUI.MouseHovering(this, texture))
-                {
-                    Main.hoverItemName = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.BossKillIcon.Main")}" +
-                                        $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.BossKillIcon.BossesDefeated")} {sfPlayer.bossesDefeated.Count}";
-
-                }
             }
         }
 
@@ -62,7 +40,9 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             borderTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/CursedTechniqueMenuBGBorder", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             closeButtonTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/CursedTechniqueMenuBGCloseButton", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             moveButtonTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/CursedTechniqueMenuBGMoveButton", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            Texture2D bossKillsIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/BossKillsIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D masteryIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/BossKillsIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D rctIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/RCTIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
 
 
             float left = 100f - 6f - closeButtonTexture.Height;
@@ -90,10 +70,32 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             ctTree.Top.Set(0f, 0f);
             Append(ctTree);
 
-            BossKillsIcon bossKillsIcon = new BossKillsIcon(bossKillsIconTexture);
-            bossKillsIcon.Left.Set(borderTexture.Width - bossKillsIconTexture.Width - 28f, 0f);
-            bossKillsIcon.Top.Set(closeButtonTexture.Height + 34f, 0f);
-            Append(bossKillsIcon);
+            string masteryIconHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.Info")}" +
+                                        $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.BossesDefeated")} {sfPlayer.bossesDefeated.Count}" +
+                                        $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.CostReduction")} {sfPlayer.bossesDefeated.Count}%";
+            SpecialUIElement masteryIcon = new SpecialUIElement(masteryIconTexture, masteryIconHoverText);
+            masteryIcon.Left.Set(borderTexture.Width - masteryIconTexture.Width - 28f, 0f);
+            masteryIcon.Top.Set(closeButtonTexture.Height + 34f, 0f);
+            Append(masteryIcon);
+
+            List<Vector2> conditionalIconPositions = new List<Vector2>();
+            int conditionalIconsCount = 1; // temp
+            int conditionalIconSize = 40;
+            for (int i = 0; i < conditionalIconsCount; i++)
+            {
+                Vector2 pos = new Vector2(borderTexture.Width - conditionalIconSize - 28f, closeButtonTexture.Height + 34f + (i + 1) * (conditionalIconSize + 6f));
+                conditionalIconPositions.Add(pos);
+            }
+
+            if (sfPlayer.unlockedRCT)
+            {
+                string rctIconHoverText = "";
+                SpecialUIElement rctIcon = new SpecialUIElement(rctIconTexture, rctIconHoverText);
+                rctIcon.Left.Set(conditionalIconPositions[0].X, 0f);
+                rctIcon.Top.Set(conditionalIconPositions[0].Y, 0f);
+                Append(rctIcon);
+                conditionalIconPositions.RemoveAt(0);
+            }
 
             Recalculate();
         }
