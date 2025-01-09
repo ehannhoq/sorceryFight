@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
@@ -40,8 +41,9 @@ public class CursedEnergyBar : UIElement
         if (IsMouseHovering)
         {
             var player = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
-            Main.hoverItemName = $"Cursed Energy: {Math.Round((decimal)player.cursedEnergy, 0)} / {player.maxCursedEnergy}\n"
-                                + $"Regeneration Rate: {player.cursedEnergyRegenPerSecond} CE/s";
+            Main.hoverItemName = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.CursedEnergyBar.CE")} {Math.Round((decimal)player.cursedEnergy, 0)} / {player.maxCursedEnergy}\n"
+                                + $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.CursedEnergyBar.RegenRate")} {player.cursedEnergyRegenPerSecond} CE/s"
+                                + SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.CursedEnergyBar.ToolTip");
         }
     }
 

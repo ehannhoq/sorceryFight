@@ -65,7 +65,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             Texture2D bossKillsIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/BossKillsIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
 
-            float left = borderTexture.Width - 300f;
+            float left = 100f - 6f - closeButtonTexture.Height;
             float top = Main.screenHeight - borderTexture.Height - 100f;
             Left.Set(left, 0f);
             Top.Set(top, 0f);
@@ -112,8 +112,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
             if (isDragging)
             {
-                float clampedLeft = Math.Clamp(Main.mouseX - offset.X, 6f, Main.screenWidth - borderTexture.Width);
-                float clampedTop = Math.Clamp(Main.mouseY - offset.Y, 0, Main.screenHeight - borderTexture.Height - closeButtonTexture.Height - 6f);
+                float clampedLeft = Math.Clamp(Main.mouseX - offset.X, 0f, Main.screenWidth - borderTexture.Width);
+                float clampedTop = Math.Clamp(Main.mouseY - offset.Y, 6f, Main.screenHeight - borderTexture.Height - closeButtonTexture.Height - 6f);
 
                 Left.Set(clampedLeft, 0f);
                 Top.Set(clampedTop, 0f);

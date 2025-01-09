@@ -28,3 +28,9 @@ BossKillIcon: {
 		'''
 	BossesDefeated: Bosses Defeated:
 }
+
+CursedEnergyBar: {
+	CE: Cursed Energy:
+	RegenRate: Regeneration Rate:
+	ToolTip: This bar is draggable when your inventory is open.
+}
