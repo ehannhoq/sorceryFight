@@ -31,7 +31,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override float LifeTime => 300f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return NPC.downedBoss3;
+            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
         }
         
 

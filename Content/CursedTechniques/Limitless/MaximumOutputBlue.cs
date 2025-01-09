@@ -29,7 +29,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override float LifeTime { get; } = 120f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return NPC.downedMechBossAny;
+            return sf.HasDefeatedBoss(NPCID.SkeletronPrime);
         }
         public virtual float AttractionRadius { get; set; } = 130f;
         public virtual float AttractionStrength { get; set; } = 15f;

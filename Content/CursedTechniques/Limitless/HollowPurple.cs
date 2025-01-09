@@ -7,6 +7,7 @@ using Terraria.Audio;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
+using CalamityMod.NPCs.Providence;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {
@@ -28,7 +29,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override float LifeTime { get; } = 500f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return CalamityMod.DownedBossSystem.downedProvidence;
+            return sf.HasDefeatedBoss(ModContent.NPCType<Providence>());
         }
 
         public static Texture2D texture;

@@ -17,9 +17,9 @@ namespace sorceryFight.SFPlayer
                 bossesDefeated.Add(boss.type);
         }
 
-        public bool HasDefeatedBoss(NPC boss)
+        public bool HasDefeatedBoss(int id)
         {
-            return bossesDefeated.Contains(boss.type);
+            return bossesDefeated.Contains(id);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace sorceryFight.Content.Buffs.Limitless
         public override float CostPerSecond { get; set; } = 1f;
         public override bool Unlocked(SorceryFightPlayer sf)
         { 
-            return NPC.downedBoss1; 
+            return sf.HasDefeatedBoss(NPCID.EyeofCthulhu);
         }
 
         public override void Apply(Player player)

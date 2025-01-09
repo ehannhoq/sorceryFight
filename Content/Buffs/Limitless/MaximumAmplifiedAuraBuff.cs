@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using sorceryFight.SFPlayer;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -29,7 +30,7 @@ namespace sorceryFight.Content.Buffs.Limitless
         public override float CostPerSecond { get; set; } = 10f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return NPC.downedGolemBoss;
+            return sf.HasDefeatedBoss(NPCID.Golem);
         }
         protected Dictionary<int, int> auraIndices;
         public override void Apply(Player player)

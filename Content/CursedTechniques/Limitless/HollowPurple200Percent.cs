@@ -9,6 +9,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
+using CalamityMod.NPCs.DevourerofGods;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {
@@ -31,7 +32,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override float LifeTime { get; } = 500f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return CalamityMod.DownedBossSystem.downedDoG;
+            return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
         }
 
         public static Texture2D texture;

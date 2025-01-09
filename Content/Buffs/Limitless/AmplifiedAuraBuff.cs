@@ -5,6 +5,7 @@ using Terraria;
 using sorceryFight.SFPlayer;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace sorceryFight.Content.Buffs.Limitless
 {
@@ -31,7 +32,7 @@ namespace sorceryFight.Content.Buffs.Limitless
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return Main.hardMode;
+            return sf.HasDefeatedBoss(NPCID.WallofFlesh);
         }
 
         protected Dictionary<int, int> auraIndices;

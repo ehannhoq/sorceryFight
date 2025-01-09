@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using sorceryFight.SFPlayer;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -25,7 +26,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         }
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return NPC.downedGolemBoss;
+            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
         }
         public override void UseTechnique(SorceryFightPlayer sf)
         {
