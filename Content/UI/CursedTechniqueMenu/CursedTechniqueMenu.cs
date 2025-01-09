@@ -23,7 +23,31 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             }
         }
 
-        SorceryFightPlayer player;
+        internal class BossKillsIcon : UIImage
+        {
+            SorceryFightPlayer sfPlayer;
+            Texture2D texture;
+            public BossKillsIcon(Texture2D texture) : base(texture) 
+            {
+                sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+                this.texture = texture;
+            }
+
+            protected override void DrawSelf(SpriteBatch spriteBatch)
+            {
+                base.DrawSelf(spriteBatch);
+                
+                if (SorceryFightUI.MouseHovering(this, texture))
+                {
+                    Main.hoverItemName = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.BossKillIcon.Main")}" +
+                                        $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.BossKillIcon.BossesDefeated")} {sfPlayer.bossesDefeated.Count}" +
+                                        $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.BossKillIcon.DamageBuff")} +{sfPlayer.MasteryDamage()}" + 
+                                        $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.BossKillIcon.CostBuff")} -{sfPlayer.MasteryCECost()}%";
+
+                }
+            }
+        }
+
         Texture2D borderTexture;
         Texture2D closeButtonTexture;
         SpecialUIElement moveButton;
@@ -32,17 +56,18 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
         bool isDragging;
         Vector2 offset;
 
-        public CursedTechniqueMenu(SorceryFightPlayer player)
+        public CursedTechniqueMenu(SorceryFightPlayer sfPlayer)
         {
-            this.player = player;
             isDragging = false;
 
-            Texture2D treeBGTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{player.innateTechnique.Name}/Background", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D treeBGTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{sfPlayer.innateTechnique.Name}/Background", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             borderTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/CursedTechniqueMenuBGBorder", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             closeButtonTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/CursedTechniqueMenuBGCloseButton", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             moveButtonTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/CursedTechniqueMenuBGMoveButton", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D bossKillsIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/BossKillsIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-            float left = Main.screenWidth - borderTexture.Width - 300f;
+
+            float left = borderTexture.Width - 300f;
             float top = Main.screenHeight - borderTexture.Height - 100f;
             Left.Set(left, 0f);
             Top.Set(top, 0f);
@@ -66,6 +91,11 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             ctTree.Left.Set(0f, 0f);
             ctTree.Top.Set(0f, 0f);
             Append(ctTree);
+
+            BossKillsIcon bossKillsIcon = new BossKillsIcon(bossKillsIconTexture);
+            bossKillsIcon.Left.Set(borderTexture.Width - bossKillsIconTexture.Width - 28f, 0f);
+            bossKillsIcon.Top.Set(closeButtonTexture.Height + 34f, 0f);
+            Append(bossKillsIcon);
 
             Recalculate();
         }

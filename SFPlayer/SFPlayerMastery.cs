@@ -21,5 +21,15 @@ namespace sorceryFight.SFPlayer
         {
             return bossesDefeated.Contains(id);
         }
+
+        public float MasteryDamage()
+        {
+            return 100 * bossesDefeated.Count;
+        }
+        
+        public float MasteryCECost()
+        {
+            return bossesDefeated.Count;
+        }
     }
 }

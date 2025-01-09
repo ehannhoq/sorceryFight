@@ -19,3 +19,14 @@ InnateTechniqueUnlocker: {
 	Limitless: The essense of Infinity begins to flow through your veins.
 	Shrine: The depths of hell opens up to welcome its potential king.
 }
+
+BossKillIcon: {
+	Main:
+		'''
+		Innate Technqiue Mastery
+		The more bosses you defeat along your journey, the more powerful and efficient your Innate Technique grows.
+		'''
+	BossesDefeated: Bosses Defeated:
+	DamageBuff: Damage:
+	CostBuff: CE Cost:
+}
