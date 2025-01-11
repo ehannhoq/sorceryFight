@@ -351,7 +351,7 @@ namespace sorceryFight.SFPlayer
                 return;
             }
 
-            if (cursedEnergy < selectedTechnique.Cost)
+            if (cursedEnergy < selectedTechnique.CalculateTrueCost(this))
             {
                 int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Not enough Cursed Energy!");
 				Main.combatText[index].lifeTime = 180;

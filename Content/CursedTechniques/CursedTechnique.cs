@@ -63,7 +63,7 @@ namespace sorceryFight.Content.CursedTechniques
                 Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * Speed;
                 var entitySource = player.GetSource_FromThis();
 
-                sf.cursedEnergy -= Cost;
+                sf.cursedEnergy -= CalculateTrueCost(sf);
 
                 if (DisplayNameInGame)
                 {
