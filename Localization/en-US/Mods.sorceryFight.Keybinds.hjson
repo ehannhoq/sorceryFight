@@ -4,3 +4,5 @@ UseCursedTechnique.DisplayName: Use Cursed Technique
 DomainExpansion.DisplayName: Domain Expansion
 UseRCT.DisplayName: Use RCT
 "Toggle Developer Mode.DisplayName": Toggle  Developer  Mode
+UseCursedTechniqueBackward.DisplayName: Use Cursed Technique Backward
+CycleSelectedTechniqueForward.DisplayName: Cycle Selected Technique Forward

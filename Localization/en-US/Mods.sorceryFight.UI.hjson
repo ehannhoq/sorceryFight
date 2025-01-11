@@ -19,11 +19,16 @@ RCTIcon: {
 	ContinuousRCT: {
 		Info:
 			'''
-			Continuous RCT allows you to gradually expend your Cursed Energy
-			in exchange for health. You cannot use Cursed Techniques while
-			using Continuous RCT.
+			RCT allows you to gradually expend your Cursed Energy
+			in exchange for health.
+			Heal rate: 1HP / 5 CE
 			'''
 		Keybind: Press and hold:
+	}
+
+	BurstRCT: {
+		Info: placeholder
+		KeyBind: Press:
 	}
 
 	SpontaniousRCT.Info:

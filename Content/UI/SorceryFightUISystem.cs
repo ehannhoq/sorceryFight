@@ -33,6 +33,18 @@ namespace sorceryFight.Content.UI
             sfUI = null;
         }
 
+        public override void OnWorldLoad()
+        {
+            sfUI = new SorceryFightUI();
+            sfUI.Activate();
+            sfInterface.SetState(sfUI);
+        }
+
+        public override void OnWorldUnload()
+        {
+            sfUI = null;
+        }
+
         public override void UpdateUI(GameTime gameTime)
         {
             _lastUpdateUiGameTime = gameTime;
