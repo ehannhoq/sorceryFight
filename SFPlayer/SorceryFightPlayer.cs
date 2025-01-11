@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.DataStructures;
+using CalamityMod.NPCs.DevourerofGods;
 
 namespace sorceryFight.SFPlayer
 {
@@ -59,7 +60,7 @@ namespace sorceryFight.SFPlayer
         {
             get
             {
-                return CalamityMod.DownedBossSystem.downedDoG;
+                return HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
             }
         }
         public bool expandedDomain;

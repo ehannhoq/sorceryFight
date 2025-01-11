@@ -17,10 +17,7 @@ RCTIcon: {
 		'''
 
 	ContinuousRCT: {
-		Info:
-			'''
-			Heal rate: 1HP / 5 CE
-			'''
+		Info: Heal rate: 1HP / 5 CE
 		Keybind: Press and hold:
 	}
 
