@@ -14,7 +14,10 @@ namespace sorceryFight.SFPlayer
         public void AddDefeatedBoss(NPC boss)
         {
             if (!bossesDefeated.Contains(boss.type))
+            {
                 bossesDefeated.Add(boss.type);
+                SorceryFightUI.UpdateTechniqueUI.Invoke();
+            }
         }
 
         public bool HasDefeatedBoss(int id)
