@@ -71,3 +71,27 @@ Dismantle: {
 	Description: placeholder
 	LockedDescription: placeholder
 }
+
+Cleave: {
+	DisplayName: Cleave
+	Description: placeholder
+	LockedDescription: placeholder
+}
+
+InstantDismantle: {
+	DisplayName: Instantanious Dismantle
+	Description: placeholder
+	LockedDescription: placeholder
+}
+
+DivineFlame: {
+	DisplayName: Divine Flame
+	Description: placeholder
+	LockedDescription: placeholder
+}
+
+WorldCuttingSlash: {
+	DisplayName: World Cutting Slash
+	Description: placeholder
+	LockedDescription: placeholder
+}

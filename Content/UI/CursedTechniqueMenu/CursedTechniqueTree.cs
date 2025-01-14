@@ -199,7 +199,109 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
         void DrawShrine(Vector2 center, SorceryFightPlayer player)
         {
+            List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
+            List<PassiveTechnique> passiveTechniques = player.innateTechnique.PassiveTechniques;
 
+            float iconSize = 30;
+            int originIconCount = 3;
+            float distance = 80f;
+            Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
+
+            List<TechniqueIcon> ctIcons = new List<TechniqueIcon>();
+            List<TechniqueIcon> ptIcons = new List<TechniqueIcon>();
+
+            for (int i = 0; i < cursedTechniques.Count; i++)
+            {
+                CursedTechnique ct = cursedTechniques[i];
+                string texturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Shrine/c{i}";
+                Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+                bool unlocked = ct.Unlocked(player);
+                string hoverText = unlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+
+                TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
+                ctIcons.Add(icon);
+            }
+
+            for (int i = 0; i < passiveTechniques.Count; i++)
+            {
+                PassiveTechnique pt = passiveTechniques[i];
+                string texturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Shrine/p{i}";
+                Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+                bool unlocked = pt.Unlocked(player);
+                string hoverText = unlocked ? $"{pt.DisplayName}\n{pt.Stats}\n{pt.Description}" : $"{pt.LockedDescription}";
+
+                TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
+                ptIcons.Add(icon);
+            }
+
+            Span<TechniqueIcon> ctIconsSpan = CollectionsMarshal.AsSpan(ctIcons);
+            Span<TechniqueIcon> ptIconsSpan = CollectionsMarshal.AsSpan(ptIcons);
+
+            ref TechniqueIcon dismantleIcon = ref ctIconsSpan[0];
+            ref TechniqueIcon cleaveIcon = ref ctIconsSpan[1];
+            ref TechniqueIcon instantDismantleIcon = ref ctIconsSpan[2];
+            ref TechniqueIcon divineFlameIcon = ref ctIconsSpan[3];
+            ref TechniqueIcon worldCuttingSlashIcon = ref ctIconsSpan[4];
+
+            ref TechniqueIcon domainAmpIcon = ref ptIconsSpan[0];
+            ref TechniqueIcon hollowWickerBasketIcon = ref ptIconsSpan[1];
+
+            ref Vector2 domainAmpPos = ref originPositions[0];
+            ref Vector2 dismantlePos = ref originPositions[1];
+            ref Vector2 cleavePos = ref originPositions[2];
+
+            dismantleIcon.Left.Set(dismantlePos.X, 0f);
+            dismantleIcon.Top.Set(dismantlePos.Y, 0f);
+
+            cleaveIcon.Left.Set(cleavePos.X, 0f);
+            cleaveIcon.Top.Set(cleavePos.Y, 0f);
+
+            domainAmpIcon.Left.Set(domainAmpPos.X, 0f);
+            domainAmpIcon.Top.Set(domainAmpPos.Y, 0f);
+
+            Vector2 hollowWickerBasketPos = domainAmpPos + new Vector2(distance, 0f);
+            hollowWickerBasketIcon.Left.Set(hollowWickerBasketPos.X, 0f);
+            hollowWickerBasketIcon.Top.Set(hollowWickerBasketPos.Y, 0f);
+
+            Vector2 instantDismantlePos = new Vector2(dismantlePos.X + iconSize / 2, dismantlePos.Y + iconSize / 2); 
+            instantDismantlePos = instantDismantlePos.DirectionFrom(center);
+            instantDismantlePos = instantDismantlePos.RotatedBy(0.2f);
+            instantDismantlePos.Normalize();
+            instantDismantlePos *= distance * 2;
+            instantDismantleIcon.Left.Set(instantDismantlePos.X + center.X - iconSize / 2, 0f);
+            instantDismantleIcon.Top.Set(instantDismantlePos.Y + center.Y - iconSize / 2, 0f);
+
+            Vector2 divineFlamePos = new Vector2(cleavePos.X + iconSize / 2, cleavePos.Y + iconSize / 2);
+            divineFlamePos = divineFlamePos.DirectionFrom(center);
+            divineFlamePos = divineFlamePos.RotatedBy(-0.2f);
+            divineFlamePos.Normalize();
+            divineFlamePos *= distance * 2;
+            divineFlameIcon.Left.Set(divineFlamePos.X + center.X - iconSize / 2, 0f);
+            divineFlameIcon.Top.Set(divineFlamePos.Y + center.Y - iconSize / 2, 0f);
+
+            Vector2 worldCuttingSlashPos = instantDismantlePos + new Vector2(-distance, 0f);
+            worldCuttingSlashIcon.Left.Set(worldCuttingSlashPos.X + center.X - iconSize / 2, 0f);
+            worldCuttingSlashIcon.Top.Set(worldCuttingSlashPos.Y + center.Y - iconSize / 2, 0f);
+
+            hollowWickerBasketIcon.parents.Add(domainAmpIcon);
+            instantDismantleIcon.parents.Add(dismantleIcon);
+            divineFlameIcon.parents.AddRange([dismantleIcon, cleaveIcon]);
+            worldCuttingSlashIcon.parents.Add(instantDismantleIcon);
+            
+
+            foreach (TechniqueIcon icon in ctIcons)
+            {
+                Append(icon);
+                techniqueIcons.Add(icon);
+            }
+
+            foreach (TechniqueIcon icon in ptIcons)
+            {
+                Append(icon);
+                techniqueIcons.Add(icon);
+            }
         }
 
 

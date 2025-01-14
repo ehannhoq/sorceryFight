@@ -1,4 +1,6 @@
 using System;
+using CalamityMod.NPCs.DevourerofGods;
+using CalamityMod.NPCs.Providence;
 using Microsoft.Xna.Framework;
 using sorceryFight.SFPlayer;
 using Terraria;
@@ -8,11 +10,11 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.CursedTechniques.Shrine
 {
-    public class Dismantle : CursedTechnique
+    public class WorldCuttingSlash : CursedTechnique
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.Dismantle.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Dismantle.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Dismantle.LockedDescription");
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.WorldCuttingSlash.DisplayName");
+        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.WorldCuttingSlash.Description");
+        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.WorldCuttingSlash.LockedDescription");
         public override float Cost => 150f;
         public override Color textColor => new Color(120, 21, 8);
         public override bool DisplayNameInGame => true;
@@ -22,11 +24,11 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override float LifeTime => 2f;
         public override int GetProjectileType()
         {
-            return ModContent.ProjectileType<Dismantle>();
+            return ModContent.ProjectileType<WorldCuttingSlash>();
         }
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.EyeofCthulhu);
+            return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
         }
     }
 }

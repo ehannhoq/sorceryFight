@@ -28,25 +28,5 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         {
             return sf.HasDefeatedBoss(NPCID.SkeletronHead);
         }
-        public override void UseTechnique(SorceryFightPlayer sf)
-        {
-            Player player = sf.Player;
-            
-            if (player.whoAmI == Main.myPlayer)
-            {
-                Vector2 playerPos = player.MountedCenter;
-                Vector2 mousePos = Main.MouseWorld;
-                Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * Speed;
-                var entitySource = player.GetSource_FromThis();
-
-                sf.cursedEnergy -= Cost;
-
-                if (DisplayNameInGame)
-                {
-                    int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
-                    Main.combatText[index1].lifeTime = 180;
-                }
-            }
-        }
     }
 }

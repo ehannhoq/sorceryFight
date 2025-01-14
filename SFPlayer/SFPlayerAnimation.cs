@@ -64,6 +64,7 @@ namespace sorceryFight.SFPlayer
                 string keybindText = "[" + SFKeybinds.UseRCT.GetAssignedKeys()[Player.whoAmI] + "]" + SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.UnlockedRCT.KeyBindMessage");
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText("Mods.sorceryFight.Misc.UnlockedRCT.GeneralMessage"), Color.Green, Player.whoAmI);
                 ChatHelper.SendChatMessageToClient(NetworkText.FromLiteral(keybindText), Color.Green, Player.whoAmI);
+                SorceryFightUI.UpdateTechniqueUI.Invoke();
             }
         }
         public void PreventRCTAnimDeath()

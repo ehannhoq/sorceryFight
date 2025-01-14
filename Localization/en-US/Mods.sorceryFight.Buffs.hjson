@@ -46,3 +46,15 @@ MaximumAmplifiedAuraBuff: {
 		'''
 	LockedDescription: Defeat the stone-faced ritualistic idol of the Lihzahrd tribe.
 }
+
+DomainAmplificationBuff: {
+	DisplayName: Domain Amplification
+	Description: placeholder
+	LockedDescription: placeholder
+}
+
+HollowWickerBasketBuff: {
+	DisplayName: Hollow Wicker Basket
+	Description: placeholder
+	LockedDescription: placeholder
+}

@@ -39,6 +39,10 @@ public class SorceryFightUI : UIState
 
         if (player.yourPotentialSwitch)
         {
+            Elements.Clear();
+            player.innateTechnique = null;
+            initialized = false;
+
             InnateTechniqueSelector innateTechniqueSelector = new InnateTechniqueSelector();
             Append(innateTechniqueSelector);
             Recalculate();
