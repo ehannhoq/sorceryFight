@@ -9,9 +9,12 @@ namespace sorceryFight.SFPlayer
     public partial class SorceryFightPlayer : ModPlayer
     {
         public bool infinity;
+        public bool domainAmp;
+        public bool hollowWickerBasket;
         public override bool ImmuneTo(PlayerDeathReason damageSource, int cooldownCounter, bool dodgeable)
         {
-            if (Player == Main.LocalPlayer && infinity)
+            bool immune = infinity || hollowWickerBasket;
+            if (Player == Main.LocalPlayer && immune)
             {
                 return true;
             }
@@ -57,6 +60,26 @@ namespace sorceryFight.SFPlayer
             {
                 passiveTechnique.isActive = false;
             }
+        }
+
+        public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
+        {
+            if (domainAmp)
+            {
+                modifiers.FinalDamage *= 0.5f;
+            }
+
+            base.ModifyHitByNPC(npc, ref modifiers);
+        }
+
+        public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
+        {
+            if (domainAmp)
+            {
+                modifiers.FinalDamage *= 0.5f;
+            }
+
+            base.ModifyHitByProjectile(proj, ref modifiers);
         }
     }
 }

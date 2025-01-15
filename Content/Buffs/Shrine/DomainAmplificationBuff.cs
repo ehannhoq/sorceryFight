@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Xna.Framework;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;
@@ -16,7 +17,8 @@ namespace sorceryFight.Content.Buffs.Shrine
         {
             get
             {
-                return $"CE Consumption: {CostPerSecond} CE/s\n";
+                return $"CE Consumption: {CostPerSecond} CE/s\n"
+                        + $"Damage Reduction: 50%";
             }
         }
         public override bool isActive { get; set; } = false;
@@ -25,16 +27,20 @@ namespace sorceryFight.Content.Buffs.Shrine
         public override void Apply(Player player)
         {
             player.AddBuff(ModContent.BuffType<DomainAmplificationBuff>(), 2);
+            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
 
             if (player.HasBuff<HollowWickerBasketBuff>())
             {
-                player.GetModPlayer<SorceryFightPlayer>().innateTechnique.PassiveTechniques[1].isActive = false;
+                sfPlayer.innateTechnique.PassiveTechniques[1].isActive = false;
             }
+
+            sfPlayer.domainAmp = true;
         }
 
         public override void Remove(Player player)
         {
-
+            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            sfPlayer.domainAmp = false;
         }
 
         public override bool Unlocked(SorceryFightPlayer sf)
@@ -44,6 +50,34 @@ namespace sorceryFight.Content.Buffs.Shrine
 
         public override void Update(Player player, ref int buffIndex)
         {
+            CostPerSecond = 10f;
+
+            float minimumDistance = 25f;
+
+            foreach (Projectile proj in Main.ActiveProjectiles)
+            {
+                if (!proj.hostile) continue;
+
+                float distance = Vector2.DistanceSquared(proj.Center, player.Center);
+                if (distance <= minimumDistance * minimumDistance)
+                {
+                    CostPerSecond += proj.damage;
+                }
+            }
+
+            foreach (NPC npc in Main.ActiveNPCs)
+            {
+                if (npc.friendly || npc.type == NPCID.TargetDummy || npc.IsDomain()) continue;
+
+                float distance = Vector2.DistanceSquared(npc.Center, player.Center);
+                if (distance <= minimumDistance * minimumDistance)
+                {
+                    CostPerSecond += npc.damage;
+                }
+            }
+
+            CostPerSecond *= 0.5f;
+
             base.Update(player, ref buffIndex);
         }
     }
