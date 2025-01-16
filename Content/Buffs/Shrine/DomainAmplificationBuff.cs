@@ -121,9 +121,7 @@ namespace sorceryFight.Content.Buffs.Shrine
 
             CostPerSecond = 10f;
             CostPerSecond += accumulativeDamage * multiplier;
-
-            Main.NewText(CostPerSecond);
-
+            
             base.Update(player, ref buffIndex);
         }
     }
