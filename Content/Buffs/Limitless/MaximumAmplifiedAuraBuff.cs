@@ -13,15 +13,17 @@ namespace sorceryFight.Content.Buffs.Limitless
     {
         public float SpeedMultiplier { get; set; } = 100f;
         public float DamageMultiplier { get; set; } = 50f;
-        
+
         public override LocalizedText DisplayName { get; } = SFUtils.GetLocalization("Mods.sorceryFight.Buffs.MaximumAmplifiedAuraBuff.DisplayName");
-        public override string Stats 
+        public override string Stats
         {
             get
             {
                 return $"CE Consumption: {CostPerSecond} CE/s\n"
                         + $"+{SpeedMultiplier}% speed boost.\n"
-                        + $"+{DamageMultiplier}% damage boost.\n";
+                        + $"+{DamageMultiplier}% damage boost.\n"
+                        + "You cannot use Cursed Techniques while this is active,\n"
+                        + "unless you have a unique body structure.\n";
             }
         }
         public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.MaximumAmplifiedAuraBuff.Description");
@@ -50,7 +52,7 @@ namespace sorceryFight.Content.Buffs.Limitless
                 auraIndices[player.whoAmI] = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<MaximumAmplifiedAuraProjectile>(), 0, 0, player.whoAmI);
             }
 
-
+            player.GetModPlayer<SorceryFightPlayer>().disableCurseTechniques = true;
         }
 
         public override void Remove(Player player)
@@ -59,7 +61,7 @@ namespace sorceryFight.Content.Buffs.Limitless
                 auraIndices = new Dictionary<int, int>();
 
             if (auraIndices.ContainsKey(player.whoAmI))
-            { 
+            {
                 Main.projectile[auraIndices[player.whoAmI]].Kill();
                 auraIndices.Remove(player.whoAmI);
             }
@@ -75,11 +77,11 @@ namespace sorceryFight.Content.Buffs.Limitless
         }
 
         public override void Update(Player player, ref int buffIndex)
-        {                
+        {
             base.Update(player, ref buffIndex);
-        
+
             CostPerSecond = 50f; // Base
-            
+
             SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
             float newCPS = sf.maxCursedEnergy / 50 + CostPerSecond;
 

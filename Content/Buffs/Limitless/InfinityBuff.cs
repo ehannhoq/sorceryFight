@@ -21,7 +21,7 @@ namespace sorceryFight.Content.Buffs.Limitless
                         + "Each object blocked by Infinity\n"
                         + "increases CE consumption dependent\n"
                         + "on the object's damamge.\n"
-                        + "Infinity takes 4x more CE during boss fights.\n";
+                        + "Infinity takes 3x more CE during boss fights.\n";
                         
             }
         }
@@ -46,7 +46,6 @@ namespace sorceryFight.Content.Buffs.Limitless
         {
             SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
             sf.infinity = false;
-            sf.disableRegenFromBuffs = false; // Most likely temporary, up until there's another buff that requires disabling regen.
         }
 
         public override void Update(Player player, ref int buffIndex)
@@ -115,7 +114,7 @@ namespace sorceryFight.Content.Buffs.Limitless
             int multiplier = 1;
             if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
             {
-                multiplier = 4;
+                multiplier = 3;
             }
 
             CostPerSecond += accumulativeDamage *= multiplier;

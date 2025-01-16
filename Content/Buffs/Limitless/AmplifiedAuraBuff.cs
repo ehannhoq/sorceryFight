@@ -21,7 +21,9 @@ namespace sorceryFight.Content.Buffs.Limitless
             {
                 return $"CE Consumption: {CostPerSecond} CE/s\n"
                         + $"+{SpeedMultiplier}% speed boost.\n"
-                        + $"+{DamageMultiplier}% damage boost.\n";
+                        + $"+{DamageMultiplier}% damage boost.\n"
+                        + "You cannot use Cursed Techniques while this is active,\n"
+                        + "unless you have a unique body structure.\n";
             }
         }
         public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.AmplifiedAuraBuff.Description");
@@ -56,7 +58,7 @@ namespace sorceryFight.Content.Buffs.Limitless
                 auraIndices[player.whoAmI] = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<AmplifiedAuraProjectile>(), 0, 0, player.whoAmI);
             }
 
-            
+            player.GetModPlayer<SorceryFightPlayer>().disableCurseTechniques = true;
         }
 
         public override void Remove(Player player)
