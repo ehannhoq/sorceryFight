@@ -26,6 +26,7 @@ namespace sorceryFight.SFPlayer
         {
             if (innateTechnique == null) return;
 
+
             if (cursedEnergy < 1)
             {
                 cursedEnergy = 1;

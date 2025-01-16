@@ -21,6 +21,7 @@ namespace sorceryFight.SFPlayer
         public bool disableRegenFromProjectiles;
         public bool disableRegenFromBuffs;
         public bool disableRegenFromDE;
+        public bool disableCurseTechniques;
         #endregion
 
         #region Global Cursed Technique Stuff
@@ -74,10 +75,10 @@ namespace sorceryFight.SFPlayer
         {
             PreAccessoryUpdate();
         }
-        
+
         public override void PostUpdate()
         {
-            if (innateTechnique == null) return;    
+            if (innateTechnique == null) return;
 
             innateTechnique.PostUpdate(this);
             PostAnimUpdate();
@@ -95,7 +96,7 @@ namespace sorceryFight.SFPlayer
             }
 
             bool disabledRegen = disableRegenFromBuffs || disableRegenFromProjectiles || disableRegenFromDE;
-            
+
             if (cursedEnergy < maxCursedEnergy && !disabledRegen)
             {
                 cursedEnergy += SorceryFight.RateSecondsToTicks(cursedEnergyRegenPerSecond);
@@ -116,13 +117,14 @@ namespace sorceryFight.SFPlayer
                 cursedEnergy = 0;
             }
 
-
+            disableRegenFromBuffs = false;
+            disableCurseTechniques = false;
         }
 
         public override void UpdateDead()
         {
             ResetBuffs();
-            
+
             if (rctAnimation)
             {
                 PreventRCTAnimDeath();
@@ -130,7 +132,7 @@ namespace sorceryFight.SFPlayer
         }
         private void Keybinds()
         {
-           if (SFKeybinds.UseTechnique.JustPressed)
+            if (SFKeybinds.UseTechnique.JustPressed && !disableCurseTechniques)
                 ShootTechnique();
 
 
@@ -157,14 +159,14 @@ namespace sorceryFight.SFPlayer
             if (Player.HasBuff<BurntTechnique>())
             {
                 int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
-				Main.combatText[index].lifeTime = 180;
+                Main.combatText[index].lifeTime = 180;
                 return;
             }
 
             if (cursedEnergy < selectedTechnique.CalculateTrueCost(this))
             {
                 int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Not enough Cursed Energy!");
-				Main.combatText[index].lifeTime = 180;
+                Main.combatText[index].lifeTime = 180;
                 return;
             }
 
@@ -217,7 +219,7 @@ namespace sorceryFight.SFPlayer
             }
 
             if (!expandedDomain)
-            { 
+            {
                 innateTechnique.ExpandDomain(this);
                 expandedDomain = true;
             }

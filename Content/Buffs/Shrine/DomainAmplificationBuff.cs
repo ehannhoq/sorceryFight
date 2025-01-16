@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using sorceryFight.SFPlayer;
 using Terraria;
@@ -17,12 +18,18 @@ namespace sorceryFight.Content.Buffs.Shrine
         {
             get
             {
-                return $"CE Consumption: {CostPerSecond} CE/s\n"
-                        + $"Damage Reduction: 50%";
+                return "Base CE Consumption: 10 CE/s\n"
+                        + "50% of incoming damage is\n"
+                        + "neutralized using Cursed Energy.\n"
+                        + "You cannot use Cursed Techniques while this is active.\n"
+                        + "unless you have a unique body structure.\n"
+                        + "Domain Amplification takes 1.5x more CE during boss fights.\n";
             }
         }
         public override bool isActive { get; set; } = false;
         public override float CostPerSecond { get; set; } = 10f;
+
+        public Dictionary<int, int> auraIndices;
 
         public override void Apply(Player player)
         {
@@ -35,12 +42,35 @@ namespace sorceryFight.Content.Buffs.Shrine
             }
 
             sfPlayer.domainAmp = true;
+
+
+            if (auraIndices == null)
+                auraIndices = new Dictionary<int, int>();
+
+            if (Main.myPlayer == player.whoAmI && !auraIndices.ContainsKey(player.whoAmI))
+            {
+                Vector2 playerPos = player.MountedCenter;
+                var entitySource = player.GetSource_FromThis();
+
+                auraIndices[player.whoAmI] = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<DomainAmplificationProjectile>(), 0, 0, player.whoAmI);
+            }
+
+            sfPlayer.disableCurseTechniques = true;
         }
 
         public override void Remove(Player player)
         {
             SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
             sfPlayer.domainAmp = false;
+
+            if (auraIndices == null)
+                auraIndices = new Dictionary<int, int>();
+
+            if (auraIndices.ContainsKey(player.whoAmI))
+            {
+                Main.projectile[auraIndices[player.whoAmI]].Kill();
+                auraIndices.Remove(player.whoAmI);
+            }
         }
 
         public override bool Unlocked(SorceryFightPlayer sf)
@@ -50,9 +80,10 @@ namespace sorceryFight.Content.Buffs.Shrine
 
         public override void Update(Player player, ref int buffIndex)
         {
-            CostPerSecond = 10f;
+            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
 
             float minimumDistance = 25f;
+            float accumulativeDamage = 0f;
 
             foreach (Projectile proj in Main.ActiveProjectiles)
             {
@@ -61,7 +92,7 @@ namespace sorceryFight.Content.Buffs.Shrine
                 float distance = Vector2.DistanceSquared(proj.Center, player.Center);
                 if (distance <= minimumDistance * minimumDistance)
                 {
-                    CostPerSecond += proj.damage;
+                    accumulativeDamage += proj.damage;
                 }
             }
 
@@ -72,11 +103,26 @@ namespace sorceryFight.Content.Buffs.Shrine
                 float distance = Vector2.DistanceSquared(npc.Center, player.Center);
                 if (distance <= minimumDistance * minimumDistance)
                 {
-                    CostPerSecond += npc.damage;
+                    accumulativeDamage += npc.damage;
                 }
             }
 
-            CostPerSecond *= 0.5f;
+            accumulativeDamage *= 0.5f;
+            if (accumulativeDamage > 0f)
+            {
+                sfPlayer.disableRegenFromBuffs = true;
+            }
+
+            float multiplier = 1;
+            if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
+            {
+                multiplier = 1.5f;
+            }
+
+            CostPerSecond = 10f;
+            CostPerSecond += accumulativeDamage * multiplier;
+
+            Main.NewText(CostPerSecond);
 
             base.Update(player, ref buffIndex);
         }

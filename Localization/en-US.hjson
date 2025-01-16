@@ -21,6 +21,8 @@ Mods: {
 			AmplifiedAuraProjectile.DisplayName: Amplified Aura Projectile
 			MaximumAmplifiedAuraProjectile.DisplayName: Maximum Amplified Aura Projectile
 			ReverseCursedTechniqueAuraProjectile.DisplayName: Reverse Cursed Technique Aura Projectile
+			DomainAmplificationProjectile.DisplayName: Domain Amplification Projectile
+			HollowWickerBasketProjectile.DisplayName: Hollow Wicker Basket Projectile
 		}
 	}
 }
