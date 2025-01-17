@@ -70,10 +70,8 @@ public static class SFUtils
         return NetworkText.FromKey(key);
     }
 
-
-
     /// <summary>
-    /// Draws a line between two points using a sprite batch. TAKEN FROM CALAMITY MOD.
+    /// Draws a line between two points using a sprite batch. TAKEN FROM CALAMITY MOD, MODIFIED BY EHANN
     /// </summary>
     /// <param name="spriteBatch">The sprite batch to draw with.</param>
     /// <param name="start">The starting point of the line.</param>
@@ -91,4 +89,25 @@ public static class SFUtils
 
         spriteBatch.Draw(line, start, null, color, rotation, line.Size() * Vector2.UnitY * 0.5f, scale, SpriteEffects.None, 0f);
     }
+
+    
+    /// <summary>
+    /// Returns true if a random number generator rolls a 0 given a denominator.
+    /// </summary>
+    /// <param name="denominator">The denominator for the random number generator</param>
+    /// <returns>True if a 0 is rolled, false otherwise</returns>
+    public static bool Roll(int denominator)
+    {
+        int roll = Main.rand.Next(0, denominator);
+
+        if (roll == 0) return true;
+        return false;
+    }
+}
+
+public static class SFConstants
+{
+    public const int SixEyesDenominator = 10;
+    public const int UniqueBodyStructureDenominator = 15;
+
 }

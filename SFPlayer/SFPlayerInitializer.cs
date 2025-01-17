@@ -43,8 +43,13 @@ namespace sorceryFight.SFPlayer
             expandedDomain = false;
             domainIndex = -1;
 
+            sixEyes = false;
+            uniqueBodyStructure = false;
+
             unlockedRCT = false;
             rctAuraIndex = -1;
+
+            
 
             celestialAmulet = false;
             percentBurntTechnqiueReduction = 0f;
@@ -77,6 +82,8 @@ namespace sorceryFight.SFPlayer
 
             var generalBooleans = new List<string>();
             generalBooleans.AddWithCondition("unlockedRCT", unlockedRCT);
+            generalBooleans.AddWithCondition("sixEyes", sixEyes);
+            generalBooleans.AddWithCondition("uniqueBodyStructure", uniqueBodyStructure);
             tag["generalBooleans"] = generalBooleans;
 
         }
@@ -105,8 +112,9 @@ namespace sorceryFight.SFPlayer
             cursedRuneOfKos = cursedEnergyRegenModifiers.Contains("cursedRuneOfKos");
 
             var generalBooleans = tag.GetList<string>("generalBooleans");
-
             unlockedRCT = generalBooleans.Contains("unlockedRCT");
+            sixEyes = generalBooleans.Contains("sixEyes");
+            uniqueBodyStructure = generalBooleans.Contains("uniqueBodyStructures");
 
             maxCursedEnergy = calculateBaseMaxCE();
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();

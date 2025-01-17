@@ -33,7 +33,7 @@ namespace sorceryFight.SFPlayer
 
             if (rctTimer % 90 == 0)
             {
-                SoundEngine.PlaySound(SorceryFightSounds.CommonHeartBeat, Player.Center);
+                SoundEngine.PlaySound(SorceryFightSounds.CommonHeartBeat with { Volume = 2f }, Player.Center);
             }
 
             int numParticles = rctTimer / 90;

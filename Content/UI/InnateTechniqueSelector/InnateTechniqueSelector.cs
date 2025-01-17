@@ -75,15 +75,10 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
 
         public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
+
             if (animate && Elements.Count != 0)
                 Elements.Clear();
-
-            base.Update(gameTime);
-        }
-
-        protected override void DrawSelf(SpriteBatch spriteBatch)
-        {
-            base.DrawSelf(spriteBatch);
 
             if (animate)
             {
@@ -93,9 +88,23 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
 
                 if (timeCounter > 305)
                 {
-                    var player = Main.LocalPlayer;
-                    player.GetModPlayer<SorceryFightPlayer>().innateTechnique = selectedTechnique;
-                    ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.{selectedTechnique.Name}"), Color.Aqua, player.whoAmI);
+                    Player player = Main.LocalPlayer;
+                    SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+                    sfPlayer.innateTechnique = selectedTechnique;
+                    ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.{selectedTechnique.Name}"), Color.Khaki, player.whoAmI);
+
+                    if (SFUtils.Roll(SFConstants.SixEyesDenominator) && !sfPlayer.sixEyes)
+                    {
+                        sfPlayer.sixEyes = true;
+                        ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.SixEyes"), Color.Khaki, player.whoAmI);
+                    }
+
+                    if (SFUtils.Roll(SFConstants.UniqueBodyStructureDenominator) && !sfPlayer.uniqueBodyStructure)
+                    {
+                        sfPlayer.uniqueBodyStructure = true;
+                        ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.UniqueBodyStructure"), Color.Khaki, player.whoAmI);
+                    }
+
                     RemoveSelf();
                     animate = false;
                     return;

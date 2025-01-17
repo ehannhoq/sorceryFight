@@ -25,7 +25,13 @@ namespace sorceryFight.Content.Buffs
         public override void Update(Player player, ref int buffIndex)
         {
             SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
-            sf.cursedEnergyUsagePerSecond += CostPerSecond;
+
+            float finalCostPerSecond = CostPerSecond;
+
+            if (sf.uniqueBodyStructure)
+                finalCostPerSecond *= 0.2f;
+
+            sf.cursedEnergyUsagePerSecond += finalCostPerSecond;
         }
     }
 }

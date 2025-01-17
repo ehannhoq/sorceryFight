@@ -64,6 +64,11 @@ namespace sorceryFight.SFPlayer
                 return HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
             }
         }
+
+        #region Player Attributes
+        public bool sixEyes;
+        public bool uniqueBodyStructure;
+        #endregion
         public bool expandedDomain;
         public int domainIndex;
         #endregion
@@ -130,10 +135,13 @@ namespace sorceryFight.SFPlayer
                 PreventRCTAnimDeath();
             }
         }
-        private void Keybinds()
+        void Keybinds()
         {
-            if (SFKeybinds.UseTechnique.JustPressed && !disableCurseTechniques)
-                ShootTechnique();
+            if (SFKeybinds.UseTechnique.JustPressed)
+            {
+                if (!disableCurseTechniques || uniqueBodyStructure)
+                    ShootTechnique();
+            }
 
 
             if (SFKeybinds.UseRCT.Current)
@@ -173,7 +181,7 @@ namespace sorceryFight.SFPlayer
             selectedTechnique.UseTechnique(this);
         }
 
-        public void UseRCT()
+        void UseRCT()
         {
             if (!unlockedRCT)
             {
@@ -202,7 +210,7 @@ namespace sorceryFight.SFPlayer
                 Player.Heal(1);
             }
         }
-        public void DomainExpansion()
+        void DomainExpansion()
         {
             if (!UnlockedDomain)
             {

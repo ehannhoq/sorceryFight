@@ -28,9 +28,17 @@ namespace sorceryFight.Content.Items.Consumables
         public override bool? UseItem(Player player)
         {
             if (player.whoAmI == Main.myPlayer)
-                player.GetModPlayer<SorceryFightPlayer>().yourPotentialSwitch = true;
+            {
+                SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+                if (sfPlayer.innateTechnique == null)
+                {
+                    sfPlayer.yourPotentialSwitch = true;
+                    return true;
+                }
+                return false;
+            }
 
-            return true;
+            return null;
         }
 
         public override void AddRecipes()

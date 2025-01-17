@@ -32,7 +32,12 @@ namespace sorceryFight.Content.CursedTechniques
 
         public virtual float CalculateTrueCost(SorceryFightPlayer sf)
         {
-            return Cost - (Cost * (sf.bossesDefeated.Count / 100f));
+            float finalCost =  Cost - (Cost * (sf.bossesDefeated.Count / 100f));
+            
+            if (sf.sixEyes)
+                finalCost *= 0.2f;
+
+            return finalCost;
         }
         public override void SetDefaults()
         {

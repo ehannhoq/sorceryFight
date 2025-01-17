@@ -16,7 +16,7 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
         public override void OnClick()
         {
             var player = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
-            player.innateTechnique = technique;
+            player.innateTechnique = null;
             InnateTechniqueSelector parent = (InnateTechniqueSelector)Parent;
             parent.OnClick(technique);
         }
