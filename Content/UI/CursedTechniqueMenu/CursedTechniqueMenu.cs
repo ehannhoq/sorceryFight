@@ -42,8 +42,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             moveButtonTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/CursedTechniqueMenuBGMoveButton", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Texture2D masteryIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/BossKillsIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Texture2D rctIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/RCTIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-
+            Texture2D domainIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{sfPlayer.innateTechnique.Name}/DomainIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
             float left = 100f - 6f - closeButtonTexture.Height;
             float top = Main.screenHeight - borderTexture.Height - 100f;
@@ -79,7 +78,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             Append(masteryIcon);
 
             List<Vector2> conditionalIconPositions = new List<Vector2>();
-            int conditionalIconsCount = 1; // temp
+            int conditionalIconsCount = 2;
             int conditionalIconSize = 40;
             for (int i = 0; i < conditionalIconsCount; i++)
             {
@@ -96,6 +95,16 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 rctIcon.Left.Set(conditionalIconPositions[0].X, 0f);
                 rctIcon.Top.Set(conditionalIconPositions[0].Y, 0f);
                 Append(rctIcon);
+                conditionalIconPositions.RemoveAt(0);
+            }
+
+            if (sfPlayer.UnlockedDomain)
+            {
+                string domainIconHoverText = $"{sfPlayer.innateTechnique.DomainExpansion.DisplayName.Value}\n{sfPlayer.innateTechnique.DomainExpansion.Description}";
+                SpecialUIElement domainIcon = new SpecialUIElement(domainIconTexture, domainIconHoverText);
+                domainIcon.Left.Set(conditionalIconPositions[0].X, 0f);
+                domainIcon.Top.Set(conditionalIconPositions[0].Y, 0f);
+                Append(domainIcon);
                 conditionalIconPositions.RemoveAt(0);
             }
 

@@ -17,8 +17,6 @@ namespace sorceryFight.Content.DomainExpansions
     {
         public override LocalizedText DisplayName { get; }
         public abstract string Description { get; }
-        public abstract string PreDoGLockedDescription { get; }
-        public abstract string PostDoGLockedDescription { get; }
         public abstract Player Owner { get; set; }
         public abstract int CostPerSecond { get; }
         public abstract void NPCDomainEffect(NPC npc);
