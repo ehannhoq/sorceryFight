@@ -93,18 +93,9 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
                     sfPlayer.innateTechnique = selectedTechnique;
                     ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.{selectedTechnique.Name}"), Color.Khaki, player.whoAmI);
 
-                    if (SFUtils.Roll(SFConstants.SixEyesDenominator) && !sfPlayer.sixEyes)
-                    {
-                        sfPlayer.sixEyes = true;
-                        ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.SixEyes"), Color.Khaki, player.whoAmI);
-                    }
-
-                    if (SFUtils.Roll(SFConstants.UniqueBodyStructureDenominator) && !sfPlayer.uniqueBodyStructure)
-                    {
-                        sfPlayer.uniqueBodyStructure = true;
-                        ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.UniqueBodyStructure"), Color.Khaki, player.whoAmI);
-                    }
-
+                    if (!sfPlayer.usedYourPotentialBefore)
+                        sfPlayer.RollForPlayerAttributes();
+                    
                     RemoveSelf();
                     animate = false;
                     return;

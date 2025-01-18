@@ -35,7 +35,7 @@ namespace sorceryFight.Content.CursedTechniques
             float finalCost =  Cost - (Cost * (sf.bossesDefeated.Count / 100f));
             
             if (sf.sixEyes)
-                finalCost *= 0.2f;
+                finalCost *= 0.7f;
 
             return finalCost;
         }

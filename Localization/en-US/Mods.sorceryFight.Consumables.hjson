@@ -7,6 +7,17 @@ YourPotential: {
 		'''
 }
 
+GeneticReroll: {
+	DisplayName: Dice of Genetic Reroll
+	Tooltip:
+		'''
+		Has a chance for granting you special player attributes.
+		Six Eyes: 10%
+		Unique Body Structure: 15%.
+		Can grant more than one attribute.
+		'''
+}
+
 CursedBulb: {
 	DisplayName: Cursed Bulb
 	Tooltip:

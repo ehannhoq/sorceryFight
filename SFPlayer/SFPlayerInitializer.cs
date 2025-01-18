@@ -39,6 +39,7 @@ namespace sorceryFight.SFPlayer
             cursedEnergyRegenFromOtherSources = 0f;
 
             yourPotentialSwitch = false;
+            usedYourPotentialBefore = false;
 
             expandedDomain = false;
             domainIndex = -1;
@@ -48,8 +49,6 @@ namespace sorceryFight.SFPlayer
 
             unlockedRCT = false;
             rctAuraIndex = -1;
-
-            
 
             celestialAmulet = false;
             percentBurntTechnqiueReduction = 0f;
@@ -81,6 +80,7 @@ namespace sorceryFight.SFPlayer
             tag["cursedEnergyRegenModifiers"] = cursedEnergyRegenModifiers;
 
             var generalBooleans = new List<string>();
+            generalBooleans.AddWithCondition("usedYourPotentialBefore", usedYourPotentialBefore);
             generalBooleans.AddWithCondition("unlockedRCT", unlockedRCT);
             generalBooleans.AddWithCondition("sixEyes", sixEyes);
             generalBooleans.AddWithCondition("uniqueBodyStructure", uniqueBodyStructure);
@@ -112,6 +112,7 @@ namespace sorceryFight.SFPlayer
             cursedRuneOfKos = cursedEnergyRegenModifiers.Contains("cursedRuneOfKos");
 
             var generalBooleans = tag.GetList<string>("generalBooleans");
+            usedYourPotentialBefore = generalBooleans.Contains("usedYourPotentialBefore");
             unlockedRCT = generalBooleans.Contains("unlockedRCT");
             sixEyes = generalBooleans.Contains("sixEyes");
             uniqueBodyStructure = generalBooleans.Contains("uniqueBodyStructures");

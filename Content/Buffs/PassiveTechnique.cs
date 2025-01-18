@@ -29,7 +29,7 @@ namespace sorceryFight.Content.Buffs
             float finalCostPerSecond = CostPerSecond;
 
             if (sf.uniqueBodyStructure)
-                finalCostPerSecond *= 0.2f;
+                finalCostPerSecond *= 0.8f;
 
             sf.cursedEnergyUsagePerSecond += finalCostPerSecond;
         }

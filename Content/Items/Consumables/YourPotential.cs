@@ -30,15 +30,10 @@ namespace sorceryFight.Content.Items.Consumables
             if (player.whoAmI == Main.myPlayer)
             {
                 SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
-                if (sfPlayer.innateTechnique == null)
-                {
-                    sfPlayer.yourPotentialSwitch = true;
-                    return true;
-                }
-                return false;
+                sfPlayer.yourPotentialSwitch = true;
             }
 
-            return null;
+            return true;
         }
 
         public override void AddRecipes()

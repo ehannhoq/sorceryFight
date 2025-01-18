@@ -8,6 +8,8 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.DataStructures;
 using CalamityMod.NPCs.DevourerofGods;
+using sorceryFight.Content.Buffs.PlayerAttributes;
+using Terraria.Chat;
 
 namespace sorceryFight.SFPlayer
 {
@@ -54,6 +56,7 @@ namespace sorceryFight.SFPlayer
 
         #region One-off Variables
         public bool yourPotentialSwitch;
+        public bool usedYourPotentialBefore;
         #endregion
 
         #region Domain Expansion Variables
@@ -87,6 +90,7 @@ namespace sorceryFight.SFPlayer
 
             innateTechnique.PostUpdate(this);
             PostAnimUpdate();
+            PlayerAttributeIcons();
             Keybinds();
 
             cursedEnergyRegenPerSecond = 0f;
@@ -235,6 +239,38 @@ namespace sorceryFight.SFPlayer
             {
                 innateTechnique.CloseDomain(this);
             }
+        }
+
+        public void RollForPlayerAttributes(bool isReroll = false)
+        {
+            bool successfulRoll = false;
+            if (SFUtils.Roll(SFConstants.SixEyesDenominator) && !sixEyes)
+            {
+                sixEyes = true;
+                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.SixEyes"), Color.Khaki, Player.whoAmI);
+                successfulRoll = true;
+            }
+
+            if (SFUtils.Roll(SFConstants.UniqueBodyStructureDenominator) && !uniqueBodyStructure)
+            {
+                uniqueBodyStructure = true;
+                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.UniqueBodyStructure"), Color.Khaki, Player.whoAmI);
+                successfulRoll = true;
+            }
+
+            if (isReroll && !successfulRoll)
+            {
+                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.FailedReroll"), Color.Khaki, Player.whoAmI);
+            }
+        }
+
+        void PlayerAttributeIcons()
+        {
+            if (sixEyes)
+                Player.AddBuff(ModContent.BuffType<SixEyesBuff>(), 2);
+
+            if (uniqueBodyStructure)
+                Player.AddBuff(ModContent.BuffType<UniqueBodyStructureBuff>(), 2);
         }
     }
 }

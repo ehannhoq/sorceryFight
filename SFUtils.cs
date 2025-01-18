@@ -90,12 +90,8 @@ public static class SFUtils
         spriteBatch.Draw(line, start, null, color, rotation, line.Size() * Vector2.UnitY * 0.5f, scale, SpriteEffects.None, 0f);
     }
 
-    
-    /// <summary>
-    /// Returns true if a random number generator rolls a 0 given a denominator.
-    /// </summary>
-    /// <param name="denominator">The denominator for the random number generator</param>
-    /// <returns>True if a 0 is rolled, false otherwise</returns>
+    /// <param name="denominator">The chance denominator for the roll</param>
+    /// <returns>True if a a 1 in denominator is rolled, false otherwise</returns>
     public static bool Roll(int denominator)
     {
         int roll = Main.rand.Next(0, denominator);
