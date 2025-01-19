@@ -16,10 +16,10 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override float Cost => 150f;
         public override Color textColor => new Color(120, 21, 8);
         public override bool DisplayNameInGame => true;
-        public override int Damage => 1;
-        public override int MasteryDamageMultiplier => 1;
-        public override float Speed => 0f;
-        public override float LifeTime => 2f;
+        public override int Damage => 30;
+        public override int MasteryDamageMultiplier => 60;
+        public override float Speed => 50f;
+        public override float LifeTime => 120f;
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<Dismantle>();
@@ -27,6 +27,14 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override bool Unlocked(SorceryFightPlayer sf)
         {
             return sf.HasDefeatedBoss(NPCID.EyeofCthulhu);
+        }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Projectile.width = 0;
+            Projectile.height = 0;
+            Projectile.friendly = true;
         }
     }
 }

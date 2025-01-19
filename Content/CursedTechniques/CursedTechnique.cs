@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using Microsoft.Build.Tasks;
 using System;
+using System.IO;
 
 namespace sorceryFight.Content.CursedTechniques
 {
@@ -77,6 +78,26 @@ namespace sorceryFight.Content.CursedTechniques
                 }
                 Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), CalculateTrueDamage(sf), 0, player.whoAmI);
             }
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(Projectile.ai[0]);
+            writer.Write(Projectile.ai[1]);
+            writer.Write(Projectile.ai[2]);
+            writer.Write(Projectile.velocity.X);
+            writer.Write(Projectile.velocity.Y);
+            writer.Write(Projectile.rotation);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            Projectile.ai[0] = reader.ReadSingle();
+            Projectile.ai[1] = reader.ReadSingle();
+            Projectile.ai[2] = reader.ReadSingle();
+            Projectile.velocity.X = reader.ReadSingle();
+            Projectile.velocity.Y = reader.ReadSingle();
+            Projectile.rotation = reader.ReadSingle();
         }
     }
 }
