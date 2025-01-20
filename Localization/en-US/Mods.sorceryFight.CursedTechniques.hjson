@@ -74,8 +74,13 @@ Dismantle: {
 
 Cleave: {
 	DisplayName: Cleave
-	Description: placeholder
-	LockedDescription: placeholder
+	Description:
+		'''
+		Cleave is a slashing technique that adjusts
+		its power based off of the target's current
+		health.
+		'''
+	LockedDescription: Defeat the one who guards the Dungeon.
 }
 
 InstantDismantle: {
