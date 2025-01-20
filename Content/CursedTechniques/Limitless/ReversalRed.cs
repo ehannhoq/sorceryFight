@@ -129,7 +129,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 if (!spawnedFromPurple)
                 {
                     SoundEngine.PlaySound(SorceryFightSounds.CommonFire, Projectile.Center);
-                    Projectile.damage = CalculateTrueDamage(player.GetModPlayer<SorceryFightPlayer>());
+                    Projectile.damage = (int)CalculateTrueDamage(player.GetModPlayer<SorceryFightPlayer>());
                     Projectile.tileCollide = true;
                     player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
 

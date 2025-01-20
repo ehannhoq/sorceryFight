@@ -176,7 +176,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 animating = false;
                 animScale = 1f;
-                Projectile.damage = CalculateTrueDamage(player.GetModPlayer<SorceryFightPlayer>());
+                Projectile.damage = (int)CalculateTrueDamage(player.GetModPlayer<SorceryFightPlayer>());
                 Projectile.Hitbox = hitbox;
                 Projectile.timeLeft = (int)LifeTime;
                 Main.projectile[(int)Projectile.ai[1]].Kill();

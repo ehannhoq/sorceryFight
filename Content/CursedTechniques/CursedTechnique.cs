@@ -26,7 +26,7 @@ namespace sorceryFight.Content.CursedTechniques
             return $"Damage: {CalculateTrueDamage(sf)}\n"
                 + $"Cost: {CalculateTrueCost(sf)} CE\n";
         }
-        public virtual int CalculateTrueDamage(SorceryFightPlayer sf)
+        public virtual float CalculateTrueDamage(SorceryFightPlayer sf)
         {
             return Damage + (sf.bossesDefeated.Count * MasteryDamageMultiplier);
         }
@@ -76,7 +76,7 @@ namespace sorceryFight.Content.CursedTechniques
                     int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
                     Main.combatText[index1].lifeTime = 180;
                 }
-                Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), CalculateTrueDamage(sf), 0, player.whoAmI);
+                Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
             }
         }
 
