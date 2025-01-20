@@ -124,9 +124,9 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             float offset = 80f * Projectile.scale;
 
             Projectile.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
+            Projectile.direction = (Math.Cos(velocityAngle) > 0).ToDirectionInt();
             Projectile.rotation = velocityAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
             Projectile.Center = playerRotatedPoint + velocityAngle.ToRotationVector2() * offset;
-            Projectile.direction = (Math.Cos(velocityAngle) > 0).ToDirectionInt();
             player.ChangeDir(Projectile.direction);
 
             if (Projectile.ai[0] == 1)
