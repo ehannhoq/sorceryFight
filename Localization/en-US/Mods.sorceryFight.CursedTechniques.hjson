@@ -68,8 +68,16 @@ HollowPurple200Percent: {
 
 Dismantle: {
 	DisplayName: Dismantle
-	Description: placeholder
-	LockedDescription: placeholder
+	Description: 
+		'''
+		The default shashing technique of Shrine,
+		it fires a slash towards the user's cursor.
+		'''
+	LockedDescription:
+		'''
+		Defeat the piece of Cthulhu that was
+		ripped out from him centuries ago.
+		'''
 }
 
 Cleave: {
