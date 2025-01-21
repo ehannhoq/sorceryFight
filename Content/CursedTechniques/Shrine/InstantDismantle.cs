@@ -52,7 +52,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
                 Vector2 mousePos = Main.MouseWorld;
                 var entitySource = player.GetSource_FromThis();
-                int index = Projectile.NewProjectile(entitySource, mousePos, Vector2.Zero, GetProjectileType(), CalculateTrueDamage(sf), 0f, player.whoAmI);
+                int index = Projectile.NewProjectile(entitySource, mousePos, Vector2.Zero, GetProjectileType(), (int)CalculateTrueDamage(sf), 0f, player.whoAmI);
                 Main.projectile[index].ai[1] = Main.rand.Next(0, 3);
                 Main.projectile[index].ai[2] = Main.rand.NextFloat(0, 6);
 
