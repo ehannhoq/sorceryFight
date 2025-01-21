@@ -19,7 +19,7 @@ namespace sorceryFight.Content.DomainExpansions
         public static Dictionary<int, Player> Owners { get; set; }
         public override LocalizedText DisplayName { get; }
         public abstract string Description { get; }
-        public abstract int CostPerSecond { get; }
+        public abstract int CostPerSecond { get; set; }
         public abstract void NPCDomainEffect(NPC npc);
 
         public virtual Texture2D DomainTexture { get; set; }
