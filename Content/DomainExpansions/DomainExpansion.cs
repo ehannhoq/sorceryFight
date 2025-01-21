@@ -10,14 +10,15 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
+using System.Collections.Generic;
 
 namespace sorceryFight.Content.DomainExpansions
 {
     public abstract class DomainExpansion : ModNPC
     {
+        public static Dictionary<int, Player> Owners { get; set; }
         public override LocalizedText DisplayName { get; }
         public abstract string Description { get; }
-        public abstract Player Owner { get; set; }
         public abstract int CostPerSecond { get; }
         public abstract void NPCDomainEffect(NPC npc);
 
@@ -29,6 +30,8 @@ namespace sorceryFight.Content.DomainExpansions
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 1;
+            Owners = new Dictionary<int, Player>();
+
         }
 
         public override void SetDefaults()
@@ -47,10 +50,10 @@ namespace sorceryFight.Content.DomainExpansions
         }
         public override void AI()
         {
-            Owner??= Main.player[(int)NPC.ai[1]];
-            SorceryFightPlayer sfPlayer = Owner.GetModPlayer<SorceryFightPlayer>();
+            Owners[NPC.whoAmI] = Main.player[(int)NPC.ai[1]];
 
 
+            SorceryFightPlayer sfPlayer = Owners[NPC.whoAmI].GetModPlayer<SorceryFightPlayer>();
             if (!NPC.active && BossRushEvent.BossRushActive)
             {
                 NPC.active = true;
@@ -59,7 +62,7 @@ namespace sorceryFight.Content.DomainExpansions
             sfPlayer.disableRegenFromDE = true;
             sfPlayer.cursedEnergy -= SorceryFight.RateSecondsToTicks(CostPerSecond);
 
-            if (Owner.dead || sfPlayer.cursedEnergy < 2)
+            if (Owners[NPC.whoAmI].dead || sfPlayer.cursedEnergy < 2)
             {
 
                 Remove(sfPlayer);
@@ -86,8 +89,8 @@ namespace sorceryFight.Content.DomainExpansions
             sfPlayer.disableRegenFromDE = false;
             sfPlayer.domainIndex = -1;
             sfPlayer.expandedDomain = false;
-            Owner.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(210));
-            Owner = null;
+            Owners[NPC.whoAmI].AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(210));
+            Owners[NPC.whoAmI] = null;
             NPC.active = false;
         }
 

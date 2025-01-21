@@ -15,7 +15,6 @@ namespace sorceryFight.Content.DomainExpansions
     {
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.DomainExpansions.UnlimitedVoid.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.UnlimitedVoid.Description");
-        public override Player Owner { get; set; }
         public override int CostPerSecond => 100;
         public static int FRAME_COUNT = 1;
         public static int TICKS_PER_FRAME = 1;
@@ -42,7 +41,7 @@ namespace sorceryFight.Content.DomainExpansions
 
             if (NPC.ai[0] < 30)
             {
-                NPC.Center = Owner.Center;
+                NPC.Center = Owners[NPC.whoAmI].Center;
 
                 float progress = Math.Clamp(NPC.ai[0] / maxAIValue, 0.01f, 1f);
                 BackgroundScale = GoalScale * 4 * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
