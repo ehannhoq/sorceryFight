@@ -93,10 +93,7 @@ Cleave: {
 
 InstantDismantle: {
 	DisplayName: Instantanious Dismantle
-	Description:
-		'''
-		Slashes near instantly at the user's cursor.
-		'''
+	Description: Slashes near instantly at the user's cursor.
 	LockedDescription: Defeat the mechanical recreation of Cthulu's skeleton.
 }
 
@@ -116,7 +113,13 @@ DivineFlame: {
 }
 
 WorldCuttingSlash: {
-	DisplayName: World Cutting Slash
-	Description: placeholder
-	LockedDescription: placeholder
+	DisplayName: The Slash that Cuts the World
+	Description:
+		'''
+		Instead at aiming a Dismantle at a target,
+		the user instead targets the entire world.
+		This powerful slash cuts through everything
+		and anything.
+		'''
+	LockedDescription: Defeat the Devourer of Gods.
 }
