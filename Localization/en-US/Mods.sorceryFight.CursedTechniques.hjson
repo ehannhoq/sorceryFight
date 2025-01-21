@@ -68,7 +68,7 @@ HollowPurple200Percent: {
 
 Dismantle: {
 	DisplayName: Dismantle
-	Description: 
+	Description:
 		'''
 		The default shashing technique of Shrine,
 		it fires a slash towards the user's cursor.
@@ -99,8 +99,17 @@ InstantDismantle: {
 
 DivineFlame: {
 	DisplayName: Divine Flame
-	Description: placeholder
-	LockedDescription: placeholder
+	Description:
+		'''
+		Flames hotter than hell take shape into an
+		arrow, in which launches and deals a massive
+		amount of damage despite its slow speed.
+		'''
+	LockedDescription:
+		'''
+		Defeat the Goddess who slew a dragon and
+		gorged Herself in its auric soul of Flame.
+		'''
 }
 
 WorldCuttingSlash: {
