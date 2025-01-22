@@ -63,8 +63,8 @@ namespace sorceryFight.Content.Buffs.Limitless
    
                 if (proj.hostile)
                 {
-                    float distance = Vector2.Distance(proj.Center, player.Center);
-                    if (distance <= infinityDistance)
+                    float distance = Vector2.DistanceSquared(proj.Center, player.Center);
+                    if (distance <= infinityDistance.Squared())
                     {
                         accumulativeDamage += proj.damage;
                         npcInInfinity ++;
@@ -81,8 +81,8 @@ namespace sorceryFight.Content.Buffs.Limitless
                 
                 if (!npc.friendly && npc.type != NPCID.TargetDummy && npc.active && !npc.IsDomain())
                 {
-                    float distance = Vector2.Distance(npc.Center, player.Center);
-                    if (distance <= infinityDistance)
+                    float distance = Vector2.DistanceSquared(npc.Center, player.Center);
+                    if (distance <= infinityDistance.Squared())
                     {
                         accumulativeDamage += npc.damage;
 
