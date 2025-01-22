@@ -15,7 +15,6 @@ public static class SFUtils
 {
     /// <summary>
     /// THANK YOU CALAMITY MOD SOURCE CODE FOR THIS !!
-    /// 
     /// Adds to a list on a given condition.
     /// </summary>
     /// <typeparam name="T"></typeparam>
@@ -98,6 +97,28 @@ public static class SFUtils
 
         if (roll == 0) return true;
         return false;
+    }
+    
+    /// <summary>
+    /// Appends an item to the start of a list. The list is overwritten, this method does not return a new list.
+    /// </summary>
+    /// <typeparam name="T">The type of the list</typeparam>
+    /// <param name="list">The list to append to</param>
+    /// <param name="item">The item to append</param>
+    public static void Append<T>(this List<T> list, T item)
+    {
+        List<T> newList = [item, .. list];
+        list = newList;
+    }
+
+    /// <summary>
+    /// Returns the square of the input value.
+    /// </summary>
+    /// <param name="value">The value to square.</param>
+    /// <returns>The square of the input value.</returns>
+    public static float Squared(this float value)
+    {
+        return value * value;
     }
 }
 

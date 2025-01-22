@@ -69,8 +69,8 @@ namespace sorceryFight.Content.DomainExpansions
             {
                 if (!proj.friendly)
                 {
-                    float distance = Vector2.Distance(proj.Center, NPC.Center);
-                    if (distance < 1000f)
+                    float distance = Vector2.DistanceSquared(proj.Center, NPC.Center);
+                    if (distance < SureHitDistance.Squared())
                     {
                         proj.Kill();
                     }

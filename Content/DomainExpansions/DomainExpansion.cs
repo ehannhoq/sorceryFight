@@ -20,6 +20,7 @@ namespace sorceryFight.Content.DomainExpansions
         public override LocalizedText DisplayName { get; }
         public abstract string Description { get; }
         public abstract int CostPerSecond { get; set; }
+        public virtual float SureHitDistance { get; set; } = 1000f;
         public abstract void NPCDomainEffect(NPC npc);
 
         public virtual Texture2D DomainTexture { get; set; }
@@ -64,7 +65,6 @@ namespace sorceryFight.Content.DomainExpansions
 
             if (Owners[NPC.whoAmI].dead || sfPlayer.cursedEnergy < 2)
             {
-
                 Remove(sfPlayer);
             }
 
@@ -73,8 +73,8 @@ namespace sorceryFight.Content.DomainExpansions
             {
                 if (npc.active && !npc.friendly && npc.type != NPCID.TargetDummy && npc.type != ModContent.NPCType<SuperDummyNPC>() && !npc.IsDomain())
                 {
-                    float distance = Vector2.Distance(npc.Center, NPC.Center);
-                    if (distance < 1000f)
+                    float distance = Vector2.DistanceSquared(npc.Center, NPC.Center);
+                    if (distance < SureHitDistance.Squared())
                     {
                         NPCDomainEffect(npc);
                     }
@@ -96,17 +96,18 @@ namespace sorceryFight.Content.DomainExpansions
 
         public override void DrawBehind(int index)
         {
-            List<int> newCache = new List<int>(200)
-            {
-                index
-            };
+            Main.instance.DrawCacheNPCsMoonMoon.Append(index);
+            // List<int> newCache = new List<int>(200)
+            // {
+            //     index
+            // };
 
-            foreach (int i in Main.instance.DrawCacheNPCsMoonMoon)
-            {
-                newCache.Add(i);
-            }
+            // foreach (int i in Main.instance.DrawCacheNPCsMoonMoon)
+            // {
+            //     newCache.Add(i);
+            // }
 
-            Main.instance.DrawCacheNPCsMoonMoon = newCache;
+            // Main.instance.DrawCacheNPCsMoonMoon = newCache;
         }
 
         public override void SendExtraAI(BinaryWriter writer)
