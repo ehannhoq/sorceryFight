@@ -23,7 +23,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override int MasteryDamageMultiplier => 130;
         public override float Speed => 0f;
         public override float LifeTime => 2f;
-
+        public ref float spawnedByDE => ref Projectile.ai[0];
         public ref float randomSprite => ref Projectile.ai[1];
         public ref float randomRotation => ref Projectile.ai[2];
 
@@ -66,15 +66,15 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Projectile.height = 176;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
+            Projectile.timeLeft = (int)LifeTime;
         }
 
         public override void AI()
         {
-            Projectile.ai[0] ++;
-
-            if (Projectile.ai[0] >= LifeTime)
+            if (spawnedByDE == 1)
             {
-                Projectile.Kill();
+                Projectile.damage = (int)CalculateTrueDamage(Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>());
+                spawnedByDE = 0;
             }
         }
 
