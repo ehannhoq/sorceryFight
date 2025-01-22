@@ -124,21 +124,6 @@ namespace sorceryFight.Content.DomainExpansions
             return false;
         }
 
-        public override void DrawBehind(int index)
-        {
-            List<int> newCache = new List<int>(200)
-            {
-                index
-            };
-
-            foreach (int i in Main.instance.DrawCacheNPCsMoonMoon)
-            {
-                newCache.Add(i);
-            }
-
-            Main.instance.DrawCacheNPCsMoonMoon = newCache;
-        }
-
         private bool AffectedByFrozenAI(NPC npc)
         {
             if (npc.type == NPCID.MoonLordHand)

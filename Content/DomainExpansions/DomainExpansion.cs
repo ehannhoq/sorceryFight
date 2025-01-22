@@ -94,6 +94,21 @@ namespace sorceryFight.Content.DomainExpansions
             NPC.active = false;
         }
 
+        public override void DrawBehind(int index)
+        {
+            List<int> newCache = new List<int>(200)
+            {
+                index
+            };
+
+            foreach (int i in Main.instance.DrawCacheNPCsMoonMoon)
+            {
+                newCache.Add(i);
+            }
+
+            Main.instance.DrawCacheNPCsMoonMoon = newCache;
+        }
+
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(NPC.ai[0]);
