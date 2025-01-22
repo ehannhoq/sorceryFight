@@ -26,6 +26,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public ref float spawnedByDE => ref Projectile.ai[0];
         public ref float randomSprite => ref Projectile.ai[1];
         public ref float randomRotation => ref Projectile.ai[2];
+        bool hasHit;
 
         public override int GetProjectileType()
         {
@@ -67,15 +68,31 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.timeLeft = (int)LifeTime;
+            hasHit = false;
         }
 
         public override void AI()
         {
             if (spawnedByDE == 1)
             {
-                Projectile.damage = (int)CalculateTrueDamage(Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>());
-                spawnedByDE = 0;
+                Projectile.damage = 100;
             }
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (!hasHit && spawnedByDE == 1)
+            {
+                float targetHealth = target.life;
+                float additionalDamage = targetHealth * 0.001f;
+                modifiers.FinalDamage.Flat += additionalDamage;
+                hasHit = true;
+            }
+            
+            else 
+                Projectile.damage = 0;
+
+            base.ModifyHitNPC(target, ref modifiers);
         }
 
         public override bool PreDraw(ref Color lightColor)

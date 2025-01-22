@@ -1,11 +1,16 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Buffs.Limitless;
 using sorceryFight.Content.Buffs.Shrine;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.CursedTechniques.Shrine;
 using sorceryFight.Content.DomainExpansions;
+using sorceryFight.SFPlayer;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ModLoader;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -28,6 +33,48 @@ namespace sorceryFight.Content.InnateTechniques
             new WorldCuttingSlash()
         };
 
-        public override DomainExpansion DomainExpansion { get; } = new UnlimitedVoid();
+        public override DomainExpansion DomainExpansion { get; } = new MalevolentShrine();
+
+        public override void PostUpdate(SorceryFightPlayer sf)
+        {
+            if (DomainExpansionTimer == -1)
+            {
+                return;
+            }
+
+            DomainExpansionTimer ++;
+
+            if (DomainExpansionTimer == 1)
+            {
+                int index = CombatText.NewText(sf.Player.getRect(), Color.White, "Domain Expansion:");
+                Main.combatText[index].lifeTime = 90;
+            }
+
+            if (DomainExpansionTimer == 101)
+            {
+                int index = CombatText.NewText(sf.Player.getRect(), Color.White, "Malevolent Shrine");
+                Main.combatText[index].lifeTime = 90;
+            }
+
+            if (DomainExpansionTimer == 181)
+            {
+                // SoundEngine.PlaySound(SorceryFightSounds.UnlimitedVoid, sf.Player.Center);
+            }
+            
+            if (DomainExpansionTimer == 211)
+            {
+                Terraria.DataStructures.IEntitySource entitySource = sf.Player.GetSource_FromThis();
+                Vector2 position = sf.Player.Center;
+
+                if (Main.myPlayer == sf.Player.whoAmI)
+                    sf.domainIndex = NPC.NewNPC(entitySource, (int)position.X, (int)position.Y, ModContent.NPCType<MalevolentShrine>(), 0, default, sf.Player.whoAmI);
+                DomainExpansionTimer = -1;
+            }
+        }
+
+        public override void ExpandDomain(SorceryFightPlayer sf)
+        {
+            DomainExpansionTimer = 0;
+        }
     }
 }

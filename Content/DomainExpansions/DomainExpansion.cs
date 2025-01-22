@@ -90,7 +90,7 @@ namespace sorceryFight.Content.DomainExpansions
             sfPlayer.domainIndex = -1;
             sfPlayer.expandedDomain = false;
             Owners[NPC.whoAmI].AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(210));
-            Owners[NPC.whoAmI] = null;
+            Owners.Remove(NPC.whoAmI);
             NPC.active = false;
         }
 

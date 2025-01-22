@@ -18,20 +18,13 @@ namespace sorceryFight.Content.DomainExpansions
     {
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.DomainExpansions.MalevolentShrine.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.MalevolentShrine.Description");
-        public override int CostPerSecond { get; set; } = 50;
+        public override int CostPerSecond { get; set; } = 100;
         public static int FRAME_COUNT = 1;
         public static int TICKS_PER_FRAME = 1;
-        public static Dictionary<int, float[]> frozenValues;
         public override void SetDefaults()
         {
-            DomainTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/UnlimitedVoid", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            BackgroundTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/DomainExpansionBackground", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            frozenValues = new Dictionary<int, float[]>();
-
-            Scale = 0.1f;
-            BackgroundScale = 0.1f;
-            GoalScale = 2f;
-
+            DomainTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/MalevolentShrine", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Scale = 1f;
             base.SetDefaults();
         }
 
@@ -46,16 +39,15 @@ namespace sorceryFight.Content.DomainExpansions
 
             sfPlayer.disableRegenFromDE = true;
             float sqrDistanceFromDE = Vector2.DistanceSquared(NPC.Center, Owners[NPC.whoAmI].Center);
-            sfPlayer.cursedEnergy -= SorceryFight.RateSecondsToTicks(CostPerSecond + (sqrDistanceFromDE / 10000f));
+            sfPlayer.cursedEnergy -= SorceryFight.RateSecondsToTicks(CostPerSecond + (sqrDistanceFromDE / 13000f));
 
-            if (Owners[NPC.whoAmI].dead || sfPlayer.cursedEnergy < 2)
+            if (sfPlayer.Player.dead || sfPlayer.cursedEnergy < 2)
             {
                 Remove(sfPlayer);
             }
-            NPC.ai[0] ++;
 
 
-            float minDistanceFromPlayer = 600f;
+            float minDistanceFromPlayer = 700f;
             foreach (NPC npc in Main.npc)
             {
                 if (npc.active && !npc.friendly && npc.type != NPCID.TargetDummy && npc.type != ModContent.NPCType<SuperDummyNPC>() && !npc.IsDomain())
