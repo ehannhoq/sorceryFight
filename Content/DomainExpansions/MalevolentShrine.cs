@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -18,7 +15,7 @@ namespace sorceryFight.Content.DomainExpansions
     {
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.DomainExpansions.MalevolentShrine.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.MalevolentShrine.Description");
-        public override int CostPerSecond { get; set; } = 100;
+        public override int CostPerSecond { get; set; } = 75;
         public static int FRAME_COUNT = 1;
         public static int TICKS_PER_FRAME = 1;
         public override void SetDefaults()
@@ -39,7 +36,8 @@ namespace sorceryFight.Content.DomainExpansions
 
             sfPlayer.disableRegenFromDE = true;
             float sqrDistanceFromDE = Vector2.DistanceSquared(NPC.Center, Owners[NPC.whoAmI].Center);
-            sfPlayer.cursedEnergy -= SorceryFight.RateSecondsToTicks(CostPerSecond + (sqrDistanceFromDE / 13000f));
+            float totalCPS = CostPerSecond > (sqrDistanceFromDE / 15000f) ? CostPerSecond : (sqrDistanceFromDE / 15000f);
+            sfPlayer.cursedEnergy -= SorceryFight.RateSecondsToTicks(totalCPS);
 
             if (sfPlayer.Player.dead || sfPlayer.cursedEnergy < 2)
             {
@@ -53,7 +51,7 @@ namespace sorceryFight.Content.DomainExpansions
                 if (npc.active && !npc.friendly && npc.type != NPCID.TargetDummy && npc.type != ModContent.NPCType<SuperDummyNPC>() && !npc.IsDomain())
                 {
                     float sqrDistance = Vector2.DistanceSquared(npc.Center, Owners[NPC.whoAmI].Center);
-                    if (sqrDistance < minDistanceFromPlayer * minDistanceFromPlayer)
+                    if (sqrDistance < minDistanceFromPlayer.Squared())
                     {
                         NPCDomainEffect(npc);
                     }
