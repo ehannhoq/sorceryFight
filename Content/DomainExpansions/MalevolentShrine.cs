@@ -15,7 +15,7 @@ namespace sorceryFight.Content.DomainExpansions
     {
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.DomainExpansions.MalevolentShrine.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.MalevolentShrine.Description");
-        public override int CostPerSecond { get; set; } = 200;
+        public override int CostPerSecond { get; set; } = 150;
         public static int FRAME_COUNT = 1;
         public static int TICKS_PER_FRAME = 1;
         public override void SetDefaults()
@@ -27,7 +27,7 @@ namespace sorceryFight.Content.DomainExpansions
 
         public override void AI()
         {
-            Owners[NPC.whoAmI] = Main.player[(int)NPC.ai[1]];
+            Owners[NPC.whoAmI] = Main.player[(int)NPC.ai[1]];            
             SorceryFightPlayer sfPlayer = Owners[NPC.whoAmI].GetModPlayer<SorceryFightPlayer>();
             if (!NPC.active && BossRushEvent.BossRushActive)
             {
@@ -42,6 +42,7 @@ namespace sorceryFight.Content.DomainExpansions
             if (sfPlayer.Player.dead || sfPlayer.cursedEnergy < 2)
             {
                 Remove(sfPlayer);
+                return;
             }
 
 
