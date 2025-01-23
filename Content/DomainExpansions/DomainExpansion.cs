@@ -96,18 +96,17 @@ namespace sorceryFight.Content.DomainExpansions
 
         public override void DrawBehind(int index)
         {
-            Main.instance.DrawCacheNPCsMoonMoon.Append(index);
-            // List<int> newCache = new List<int>(200)
-            // {
-            //     index
-            // };
+            List<int> newCache = new List<int>(200)
+            {
+                index
+            };
 
-            // foreach (int i in Main.instance.DrawCacheNPCsMoonMoon)
-            // {
-            //     newCache.Add(i);
-            // }
+            foreach (int i in Main.instance.DrawCacheNPCsMoonMoon)
+            {
+                newCache.Add(i);
+            }
 
-            // Main.instance.DrawCacheNPCsMoonMoon = newCache;
+            Main.instance.DrawCacheNPCsMoonMoon = newCache;
         }
 
         public override void SendExtraAI(BinaryWriter writer)

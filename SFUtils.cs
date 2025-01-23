@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Buffs.Limitless;
+using sorceryFight.Content.Buffs.Shrine;
 using sorceryFight.Content.DomainExpansions;
 using Terraria;
 using Terraria.ID;
@@ -49,6 +50,12 @@ public static class SFUtils
             return false;
 
         if (proj.type == ModContent.ProjectileType<ReverseCursedTechniqueAuraProjectile>())
+            return false;
+
+        if (proj.type == ModContent.ProjectileType<DomainAmplificationProjectile>())
+            return false;
+        
+        if (proj.type == ModContent.ProjectileType<HollowWickerBasketProjectile>())
             return false;
 
         return true;
@@ -99,18 +106,6 @@ public static class SFUtils
         return false;
     }
     
-    /// <summary>
-    /// Appends an item to the start of a list. The list is overwritten, this method does not return a new list.
-    /// </summary>
-    /// <typeparam name="T">The type of the list</typeparam>
-    /// <param name="list">The list to append to</param>
-    /// <param name="item">The item to append</param>
-    public static void Append<T>(this List<T> list, T item)
-    {
-        List<T> newList = [item, .. list];
-        list = newList;
-    }
-
     /// <summary>
     /// Returns the square of the input value.
     /// </summary>

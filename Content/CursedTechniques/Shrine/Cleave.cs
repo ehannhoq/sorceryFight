@@ -27,7 +27,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override int MasteryDamageMultiplier => 0;
         public override float Speed => 0f;
         public override float LifeTime => 16f;
-        float basePercent = 0.05f;
+        float basePercent = 0.01f;
         bool hasHit;
         public override int GetProjectileType()
         {
@@ -46,7 +46,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override float CalculateTrueDamage(SorceryFightPlayer sf)
         {
-            return basePercent + (sf.bossesDefeated.Count / 800f);
+            return basePercent + (sf.bossesDefeated.Count / 1000f);
         }
 
         public override void UseTechnique(SorceryFightPlayer sf)
@@ -84,8 +84,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             if (!hasHit)
             {
                 float targetHealth = target.life;
-                float additionalDamage = targetHealth * 0.1f;
-                modifiers.FinalDamage += additionalDamage;
+                float additionalDamage = targetHealth * CalculateTrueDamage(Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>());
+                modifiers.FinalDamage.Flat += additionalDamage;
                 hasHit = true;
             }
             

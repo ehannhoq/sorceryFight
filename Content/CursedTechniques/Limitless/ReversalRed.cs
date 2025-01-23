@@ -52,9 +52,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 40;
-            Projectile.height = 40;
-            Projectile.tileCollide = true;
+            Projectile.width = 100;
+            Projectile.height = 100;
+            Projectile.tileCollide = false;
             animating = false;
             animScale = 0f;
             hitbox = Projectile.Hitbox;
@@ -99,11 +99,11 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     Projectile.Center = player.Center;
                 else
                 {
-                    float goalScale = 1.3f;
+                    float goalScale = 2f;
 
                     if (animScale < goalScale)
                     {
-                        animScale = (Projectile.ai[0] / beginAnim) + 0.3f;
+                        animScale = (Projectile.ai[0] / beginAnim) * goalScale;
                     }
                     else
                         animScale = goalScale;
@@ -124,13 +124,12 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 animating = false;
                 Projectile.velocity = Vector2.Zero;
-                animScale = 1.3f;
+                animScale = 2f;
 
                 if (!spawnedFromPurple)
                 {
                     SoundEngine.PlaySound(SorceryFightSounds.CommonFire, Projectile.Center);
                     Projectile.damage = (int)CalculateTrueDamage(player.GetModPlayer<SorceryFightPlayer>());
-                    Projectile.tileCollide = true;
                     player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
 
                     if (Main.myPlayer == Projectile.owner)

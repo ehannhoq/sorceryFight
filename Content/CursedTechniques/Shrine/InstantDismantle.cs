@@ -54,6 +54,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 Vector2 mousePos = Main.MouseWorld;
                 var entitySource = player.GetSource_FromThis();
                 int index = Projectile.NewProjectile(entitySource, mousePos, Vector2.Zero, GetProjectileType(), (int)CalculateTrueDamage(sf), 0f, player.whoAmI);
+                Main.projectile[index].ai[0] = 0;
                 Main.projectile[index].ai[1] = Main.rand.Next(0, 3);
                 Main.projectile[index].ai[2] = Main.rand.NextFloat(0, 6);
 
@@ -81,15 +82,17 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (!hasHit && spawnedByDE == 1)
+            if (!hasHit)
             {
-                float targetHealth = target.life;
-                float additionalDamage = targetHealth * 0.001f;
-                modifiers.FinalDamage.Flat += additionalDamage;
+                if (spawnedByDE == 1)
+                {
+                    float targetHealth = target.life;
+                    float additionalDamage = targetHealth * 0.001f;
+                    modifiers.FinalDamage.Flat += additionalDamage;
+                }
                 hasHit = true;
             }
-            
-            else 
+            else
                 Projectile.damage = 0;
 
             base.ModifyHitNPC(target, ref modifiers);

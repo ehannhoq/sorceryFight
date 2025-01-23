@@ -27,7 +27,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override int Damage => 30;
         public override int MasteryDamageMultiplier => 55;
 
-        public override float Speed => 15f;
+        public override float Speed => 20f;
         public override float LifeTime => 300f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
@@ -60,11 +60,11 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 30;
-            Projectile.height = 30;
+            Projectile.width = 150;
+            Projectile.height = 150;
             Projectile.tileCollide = true;
             animating = false;
-            animScale = 0.75f;
+            animScale = 1.25f;
         }
         public override void AI()
         {
@@ -127,11 +127,11 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
                 }
 
-                float goalScale = 0.75f;
+                float goalScale = 1.25f;
 
-                if (spawnedFromPurple) // Hook for if the projectile was spawned by a Hollow Purple
+                if (spawnedFromPurple)
                 {
-                    goalScale = 1.25f;
+                    goalScale = 3f;
                     Projectile.tileCollide = false;
                 }
 

@@ -25,8 +25,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override bool DisplayNameInGame { get; } = true;
         public override int Damage => 300;
         public override int MasteryDamageMultiplier => 104;
-        public override float Speed { get; } = 20f;
-        public override float LifeTime { get; } = 120f;
+        public override float Speed { get; } = 25f;
+        public override float LifeTime { get; } = 240f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
             return sf.HasDefeatedBoss(NPCID.SkeletronPrime);
@@ -53,8 +53,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 60;
-            Projectile.height = 60;
+            Projectile.width = 75;
+            Projectile.height = 75;
             Projectile.tileCollide = true;
             Projectile.penetrate = 10;
             animating = false;
@@ -66,6 +66,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             
             if (justSpawned)
             {
+                Projectile.Center += new Vector2(0, -20f);
                 for (int i = 0; i < Main.projectile.Length; i ++)
                 {
                     if (i == Projectile.whoAmI)
@@ -151,10 +152,11 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
                 }
 
-                if (animScale < 1f)
-                    animScale = Projectile.ai[0] / beginAnimTime;
+                float goalScale = 1.25f;
+                if (animScale < goalScale)
+                    animScale = (Projectile.ai[0] / beginAnimTime) * goalScale;
                 else
-                    animScale = 1f;
+                    animScale = goalScale;
 
                 for (int i = 0; i < 2; i++)
                 {

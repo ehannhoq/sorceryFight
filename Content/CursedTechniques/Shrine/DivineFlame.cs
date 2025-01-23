@@ -25,12 +25,12 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override float Cost => 150f;
         public override Color textColor => new Color(242, 144, 82);
         public override bool DisplayNameInGame => false;
-        public override int Damage => 20000;
+        public override int Damage => 21000;
         public override int MasteryDamageMultiplier => 444;
-        public override float Speed => 40f;
+        public override float Speed => 30f;
         public override float LifeTime => 300f;
 
-        ref float ai0 => ref Projectile.ai[0];
+        ref float animTimer => ref Projectile.ai[0];
         Rectangle hitbox;
         int texturePhase; // 0 -> Fire strands. 1 -> Fire arrow
 
@@ -66,8 +66,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         }
         public override void AI()
         {
-            ai0++;
-            float animTime = 120f;
+            animTimer++;
+            float animTime = 180f;
             Player player = Main.player[Projectile.owner];
 
             if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
@@ -80,7 +80,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 }
             }
 
-            if (ai0 < animTime)
+            if (animTimer < animTime)
             {
                 if (!animating)
                 {
@@ -95,13 +95,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 Projectile.Center = player.Center;
                 Projectile.timeLeft = 30;
 
-                if (ai0 == 1)
-                {
-                    int index = CombatText.NewText(player.getRect(), textColor, "Divine Flame");
-                    Main.combatText[index].lifeTime = 180;
-                }
-
-                if (ai0 < 27)
+                if (animTimer < 30)
                 {
                     Vector2 pos = Projectile.Center;
                     Vector2 velocity = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
@@ -109,9 +103,11 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                     GeneralParticleHandler.SpawnParticle(particle);
                 }
 
-                if (ai0 == 27)
+                if (animTimer == 30)
                 {
                     texturePhase = 1;
+                    int index = CombatText.NewText(player.getRect(), textColor, "Divine Flame");
+                    Main.combatText[index].lifeTime = 60;
                     for (int i = 0; i < 3; i++)
                     {
                         Vector2 pos = Projectile.Center;
@@ -121,13 +117,13 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                     }
                 }
 
-                if (ai0 == 90)
+                if (animTimer == 120)
                 {
                     int index = CombatText.NewText(player.getRect(), textColor, "Open.");
                     Main.combatText[index].lifeTime = 180;
                 }
 
-                if (ai0 > 27)
+                if (animTimer > 30)
                 {
                     if (Main.myPlayer == Projectile.owner)
                         Projectile.rotation = Projectile.Center.DirectionTo(Main.MouseWorld).ToRotation();

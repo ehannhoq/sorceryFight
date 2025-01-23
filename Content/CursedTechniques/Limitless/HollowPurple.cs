@@ -25,7 +25,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override bool DisplayNameInGame { get; } = true;
         public override int Damage => 20000;
         public override int MasteryDamageMultiplier => 444;
-        public override float Speed { get; } = 40f;
+        public override float Speed { get; } = 45f;
         public override float LifeTime { get; } = 500f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
@@ -49,10 +49,10 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 50;
-            Projectile.height = 50;
+            Projectile.width = 150;
+            Projectile.height = 150;
             animating = false;
-            animScale = 1f;
+            animScale = 2f;
             hitbox = Projectile.Hitbox;
 
             blueOffset = new Vector2(-60f, -20f);
@@ -175,7 +175,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             if (animating)
             {
                 animating = false;
-                animScale = 1f;
+                animScale = 2f;
                 Projectile.damage = (int)CalculateTrueDamage(player.GetModPlayer<SorceryFightPlayer>());
                 Projectile.Hitbox = hitbox;
                 Projectile.timeLeft = (int)LifeTime;
