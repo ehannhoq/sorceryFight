@@ -7,6 +7,7 @@ using CalamityMod.NPCs.Providence;
 using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Buffs;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;
@@ -121,6 +122,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 if (Main.myPlayer == Projectile.owner)
                 {
                     Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
+                    player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(5));
+
                 }
 
                 float velocityRotation = Projectile.velocity.ToRotation();

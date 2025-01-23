@@ -15,7 +15,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
     public class AmplificationBlue : CursedTechnique
     {
 
-        public static readonly int FRAME_COUNT = 8; 
+        public static readonly int FRAME_COUNT = 8;
         public static readonly int TICKS_PER_FRAME = 5;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.AmplificationBlue.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.AmplificationBlue.Description");
@@ -33,7 +33,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {
             return sf.HasDefeatedBoss(NPCID.SkeletronHead);
         }
-        
+
 
 
 
@@ -54,14 +54,14 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<AmplificationBlue>();
-        } 
-        
+        }
+
 
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 150;
-            Projectile.height = 150;
+            Projectile.width = 65;
+            Projectile.height = 65;
             Projectile.tileCollide = true;
             animating = false;
             animScale = 1.25f;
@@ -88,12 +88,50 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 }
             }
 
+            if (Projectile.ai[0] < beginAnimTime)
+            {
+                if (!animating)
+                {
+                    Projectile.Center += new Vector2(0, -30);
+                    animating = true;
+                    SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
+                }
+
+                float goalScale = 1.25f;
+
+                if (spawnedFromPurple)
+                {
+                    Projectile.tileCollide = false;
+                    goalScale = 3f;
+                }
+
+
+                if (animScale < goalScale)
+                    animScale = Projectile.ai[0] / beginAnimTime;
+                else
+                    animScale = goalScale;
+
+
+                Vector2 particleOffset = Projectile.Center + new Vector2(Main.rand.NextFloat(-40f, 40f), Main.rand.NextFloat(-40f, 40f));
+                Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
+                LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 10, 1, textColor);
+                GeneralParticleHandler.SpawnParticle(particle);
+
+                return;
+            }
+
+            if (animating)
+            {
+                Projectile.tileCollide = true;
+                animating = false;
+            }
+
             foreach (Projectile proj in Main.ActiveProjectiles)
             {
                 if (!proj.hostile && proj != Main.projectile[Projectile.whoAmI] && proj.MoveableByBlue())
                 {
                     float distance = Vector2.Distance(proj.Center, Projectile.Center);
-                    
+
                     if (distance <= AttractionRadius)
                     {
                         Vector2 direction = proj.Center.DirectionTo(Projectile.Center);
@@ -119,42 +157,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 }
             }
 
-            if (Projectile.ai[0] < beginAnimTime)
-            {
-                if (!animating)
-                {
-                    animating = true;
-                    SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
-                }
-
-                float goalScale = 1.25f;
-
-                if (spawnedFromPurple)
-                {
-                    goalScale = 3f;
-                    Projectile.tileCollide = false;
-                }
-
-
-                if (animScale < goalScale)
-                    animScale = Projectile.ai[0] / beginAnimTime;
-                else
-                    animScale = goalScale;
-
-                
-                Vector2 particleOffset = Projectile.Center + new Vector2(Main.rand.NextFloat(-40f, 40f), Main.rand.NextFloat(-40f, 40f));
-                Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 10, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
-
-                return;
-            }
-
-            if (animating)
-            {
-                Projectile.tileCollide = true;
-                animating = false;
-            }
         }
 
         public override bool PreDraw(ref Color lightColor)
