@@ -92,6 +92,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 if (ai0 % 90 == 1)
                 {
                     int index = CombatText.NewText(player.getRect(), textColor, incantations[(int)ai1]);
+                    SoundEngine.PlaySound(SorceryFightSounds.CommonHeartBeat, player.Center);
                     Main.combatText[index].lifeTime = 60;
                     ai1++;
 
