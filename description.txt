@@ -2,27 +2,25 @@ Sorcery Fight is heavily inspired by anime/manga Jujutsu Kaisen. It adds five Cu
 
 NOTE: This mod requires Calamity Mod and its dependencies in order to install.
 
+Due to popular demand, a wiki for the mod is in the works! Thank you for downloading and playing Sorcery Fight!
+
 Changelog:
 https://docs.google.com/document/d/1avF8o3fXDvVdUV7az7U6Lp_6NkAF-goxyddqzmgr-Js/edit?usp=sharing
 
 Future Plans:
-- Shrine Innate Technique (Sukuna)
 - Ten Shadows Technique (Megumi Fushiguro)
 - Zenin clan NPC, serving as the spawner for:
 - Mahoraga boss fight
-- Wheel of Adaptation buff
 - Cursed Energy potions (mirroring Healing and Mana potions)
 - Accessories that modify max CE and CE regeneration
-- Update Cursed Technique selection wheel.
-- Add Cursed Energy weapons from the anime/manga as well as some original weapons.
-- Binding Vows (somehow)
+- Binding Vows
 
 Known Bugs:
-- Maximum Output Blue, Red, Hollow Purple, 200% Hollow Purple are visually bugged in multiplayer.
+- Beams (ie. Retinazer Beam, Moon Lord head beam) don't drain CE when blocked by Infinity.
+- The Lunar Amulet doesn't apply the buff consistently.
 
 If you found a bug and it is not listed above, please report it here:
 https://github.com/ehannhoq/sorceryFight/issues
 or leave a comment, though it will be less likely to be seen.
 
-The creator of this mod does not own the rights to the content that is from Jujutsu Kaisen. All rights belong to the owner. No Copyright Infringement intended.[quote=tModLoader sorceryFight]
-Developed By ehann[/quote]
+The creator of this mod does not own the rights to the content that is from Jujutsu Kaisen. All rights belong to the owner. No Copyright Infringement intended.

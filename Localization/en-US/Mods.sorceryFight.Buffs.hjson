@@ -65,7 +65,7 @@ MaximumAmplifiedAuraBuff: {
 
 DomainAmplificationBuff: {
 	DisplayName: Domain Amplification
-	Description: 
+	Description:
 		'''
 		A simple technique that casts
 		a barrier around the user, 
