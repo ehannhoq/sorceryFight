@@ -65,12 +65,22 @@ MaximumAmplifiedAuraBuff: {
 
 DomainAmplificationBuff: {
 	DisplayName: Domain Amplification
-	Description: placeholder
-	LockedDescription: placeholder
+	Description: 
+		'''
+		A simple technique that casts
+		a barrier around the user, 
+		nullifying partial damage taken.
+		'''
+	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
 }
 
 HollowWickerBasketBuff: {
 	DisplayName: Hollow Wicker Basket
-	Description: placeholder
-	LockedDescription: placeholder
+	Description:
+		'''
+		An ancient technique. It shrouds
+		the user in a basket of Cursed
+		Energy, nullifying any damage taken.
+		'''
+	LockedDescription: Defeat the stone-faced ritualistic idol of the Lihzahrd tribe.
 }

@@ -7,13 +7,15 @@ UnlimitedVoid: {
 		their brain with information, rendering
 		them unable to move or think.
 		'''
-	PreDoGLockedDescription: ???
-	PostDoGLockedDescription:
+}
+
+MalevolentShrine: {
+	DisplayName: Malevolent Shrine
+	Description:
 		'''
-		Domain Expansions are a jujutsu user's
-		ultimate technique; their magnum opus.
-		One requires complete mastery to be
-		able to successfuly expand their
-		domain.
+		A Domain Expansion with no barrier; anything
+		near the caster will be constantly striken
+		down by Dismantles and Cleaves. There is
+		no range on this domain.
 		'''
 }
