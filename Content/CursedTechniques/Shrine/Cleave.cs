@@ -131,7 +131,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
             if (Projectile.ai[0] == 1)
             {
-                //SoundEngine.PlaySound();
+                SoundEngine.PlaySound(SorceryFightSounds.CleaveSwing with { Volume = 3f }, player.Center);
             }
 
         }

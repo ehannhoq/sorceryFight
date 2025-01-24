@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.SFPlayer;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -51,6 +52,11 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             if (Projectile.ai[0] >= LifeTime)
             {
                 Projectile.Kill();
+            }
+
+            if (Projectile.ai[0] == 1)
+            {
+                SoundEngine.PlaySound(SorceryFightSounds.DismantleSlice, Projectile.Center);
             }
 
             float velocityRotation = Projectile.velocity.ToRotation();

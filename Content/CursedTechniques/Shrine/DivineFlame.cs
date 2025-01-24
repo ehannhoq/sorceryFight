@@ -89,8 +89,11 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                     Projectile.Hitbox = new Rectangle(0, 0, 0, 0);
                     Projectile.damage = 0;
                     texturePhase = 0;
+
                 }
 
+                if (animTimer == 1)
+                    SoundEngine.PlaySound(SorceryFightSounds.DivineFlameChargeUp with { Volume = 2f }, player.Center);
 
                 Projectile.Center = player.Center;
                 Projectile.timeLeft = 30;
@@ -147,7 +150,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 Projectile.timeLeft = (int)LifeTime;
                 Projectile.Center = player.Center;
 
-                // SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleSnap, Projectile.Center);
+                SoundEngine.PlaySound(SorceryFightSounds.DivineFlameShoot, Projectile.Center);
                 player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
                 if (Main.myPlayer == Projectile.owner)
                 {

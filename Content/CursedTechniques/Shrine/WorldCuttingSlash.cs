@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
 using sorceryFight.SFPlayer;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -83,7 +84,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                     Projectile.damage = 0;
                     Projectile.Hitbox = new Rectangle(0, 0, 0, 0);
                     player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = true;
-                    // SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleSnap, Projectile.Center);
                 }
 
                 Projectile.Center = player.Center;
@@ -102,6 +102,11 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                         GeneralParticleHandler.SpawnParticle(particle);
                     }
                 }
+                
+                if (ai0 == animTime - 40)
+                {
+                    SoundEngine.PlaySound(SorceryFightSounds.CommonWoosh, Projectile.Center);
+                }
 
                 return;
             }
@@ -117,15 +122,13 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 Projectile.Center = player.Center;
                 int index = CombatText.NewText(player.getRect(), textColor, "Dismantle");
                 Main.combatText[index].lifeTime = 180;
-
-                // SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleSnap, Projectile.Center);
+                SoundEngine.PlaySound(SorceryFightSounds.WorldCuttingSlash, Projectile.Center);
                 if (Main.myPlayer == Projectile.owner)
                 {
                     Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
                     player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(5));
 
                 }
-
                 float velocityRotation = Projectile.velocity.ToRotation();
                 Projectile.direction = (Math.Cos(velocityRotation) > 0).ToDirectionInt();
                 Projectile.rotation = Projectile.velocity.ToRotation();

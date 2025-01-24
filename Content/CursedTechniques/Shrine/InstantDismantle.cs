@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.SFPlayer;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -78,6 +79,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             {
                 Projectile.damage = 100;
             }
+
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
