@@ -107,7 +107,6 @@ namespace sorceryFight.Content.Buffs.Shrine
                 }
             }
 
-            accumulativeDamage *= 0.5f;
             if (accumulativeDamage > 0f)
             {
                 sfPlayer.disableRegenFromBuffs = true;
