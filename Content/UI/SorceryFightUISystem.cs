@@ -35,9 +35,12 @@ namespace sorceryFight.Content.UI
 
         public override void OnWorldLoad()
         {
-            sfUI = new SorceryFightUI();
-            sfUI.Activate();
-            sfInterface.SetState(sfUI);
+            if (!Main.dedServ)
+            {
+                sfUI = new SorceryFightUI();
+                sfUI.Activate();
+                sfInterface.SetState(sfUI);
+            }
         }
 
         public override void OnWorldUnload()

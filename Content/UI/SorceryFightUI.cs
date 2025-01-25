@@ -85,14 +85,13 @@ public class SorceryFightUI : UIState
 
     public void LoadCEBar()
     {
+        if (Main.dedServ) return;
+        
         string borderBarPath = "sorceryFight/Content/UI/CursedEnergyBar/CursedEnergyBarBorder";
         string fillBarPath = "sorceryFight/Content/UI/CursedEnergyBar/CursedEnergyBarFill";
 
-        ModContent.Request<Texture2D>(borderBarPath).Wait();
-        ModContent.Request<Texture2D>(fillBarPath).Wait();
-
-        var borderTexture = ModContent.Request<Texture2D>(borderBarPath).Value;
-        var barTexture = ModContent.Request<Texture2D>(fillBarPath).Value;
+        var borderTexture = ModContent.Request<Texture2D>(borderBarPath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+        var barTexture = ModContent.Request<Texture2D>(fillBarPath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
         ceBar = new CursedEnergyBar(borderTexture, barTexture);
     }
