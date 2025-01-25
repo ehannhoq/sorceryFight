@@ -127,11 +127,12 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             }
 
             Recalculate();
+            SetPosition();
         }
 
         void SetPosition()
         {
-            Left.Set(Main.screenWidth - 110f, 0f);
+            Left.Set(110f, 0f);
             Top.Set(Main.screenHeight - (unlockedTechniques * 60) - 50f, 0f);
         }
 
