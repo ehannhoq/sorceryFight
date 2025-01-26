@@ -115,7 +115,7 @@ namespace sorceryFight.SFPlayer
             usedYourPotentialBefore = generalBooleans.Contains("usedYourPotentialBefore");
             unlockedRCT = generalBooleans.Contains("unlockedRCT");
             sixEyes = generalBooleans.Contains("sixEyes");
-            uniqueBodyStructure = generalBooleans.Contains("uniqueBodyStructures");
+            uniqueBodyStructure = generalBooleans.Contains("uniqueBodyStructure");
 
             maxCursedEnergy = calculateBaseMaxCE();
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();

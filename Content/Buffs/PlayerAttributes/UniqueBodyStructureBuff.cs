@@ -19,8 +19,7 @@ namespace sorceryFight.Content.Buffs.PlayerAttributes
 
         public override bool RightClick(int buffIndex)
         {
-            Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>().uniqueBodyStructure = false;
-            return true;
+            return false;
         }
     }
 }
