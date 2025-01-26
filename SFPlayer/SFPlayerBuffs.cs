@@ -30,8 +30,7 @@ namespace sorceryFight.SFPlayer
             if (cursedEnergy < 1)
             {
                 cursedEnergy = 1;
-                int duration = SorceryFight.BuffSecondsToTicks(defaultBurntTechniqueDuration - (defaultBurntTechniqueDuration * percentBurntTechnqiueReduction));
-                Player.AddBuff(ModContent.BuffType<BurntTechnique>(), duration);
+                AddBurntTechniqueDebuff(DefaultBurntTechniqueDuration);
             }
 
 
@@ -51,8 +50,6 @@ namespace sorceryFight.SFPlayer
                     passiveTechnique.Remove(Player);
                 }
             }
-
-            percentBurntTechnqiueReduction = 0f;
         }
 
         public void ResetBuffs()
@@ -81,6 +78,20 @@ namespace sorceryFight.SFPlayer
             }
 
             base.ModifyHitByProjectile(proj, ref modifiers);
+        }
+
+        public void AddBurntTechniqueDebuff(float duration)
+        {
+            float percentReduction = 0f;
+
+            if (celestialAmulet)
+            {
+                percentReduction += 0.2f;
+            }
+
+            duration -= duration * percentReduction;
+            Main.NewText(duration);
+            Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(duration));
         }
     }
 }

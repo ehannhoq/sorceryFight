@@ -7,20 +7,7 @@ namespace sorceryFight.SFPlayer
     public partial class SorceryFightPlayer : ModPlayer
     {
         public bool celestialAmulet;
-
-        public float percentBurntTechnqiueReduction;
-
-        public void PreAccessoryUpdate()
-        {
-            if (celestialAmulet)
-            {
-                percentBurntTechnqiueReduction += 0.2f;
-            }
-
-            ResetAccessories();
-        }
-
-        private void ResetAccessories()
+        private void PostAccessoryUpdate()
         {
             celestialAmulet = false;
         }

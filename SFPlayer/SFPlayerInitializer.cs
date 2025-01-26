@@ -51,7 +51,6 @@ namespace sorceryFight.SFPlayer
             rctAuraIndex = -1;
 
             celestialAmulet = false;
-            percentBurntTechnqiueReduction = 0f;
         }
         public override void SaveData(TagCompound tag)
         {

@@ -16,8 +16,8 @@ namespace sorceryFight.SFPlayer
     public partial class SorceryFightPlayer : ModPlayer
     {
         #region Global Variables
-        internal static readonly float defaultBurntTechniqueDuration = 30;
-        internal static readonly float defaultBurntTechniqueDurationFromDE = 120;
+        public static readonly float DefaultBurntTechniqueDuration = 30;
+        public static readonly float DefaultBurntTechniqueDurationFromDE = 120;
 
         public bool hasUIOpen;
         public bool disableRegenFromProjectiles;
@@ -79,11 +79,6 @@ namespace sorceryFight.SFPlayer
         public bool unlockedRCT;
         public int rctAuraIndex;
 
-        public override void PreUpdate()
-        {
-            PreAccessoryUpdate();
-        }
-
         public override void PostUpdate()
         {
             if (innateTechnique == null) return;
@@ -128,6 +123,8 @@ namespace sorceryFight.SFPlayer
 
             disableRegenFromBuffs = false;
             disableCurseTechniques = false;
+
+            PostAccessoryUpdate();
         }
 
         public override void UpdateDead()
