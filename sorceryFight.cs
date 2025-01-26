@@ -1,12 +1,15 @@
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.DomainExpansions;
+using sorceryFight.SFPlayer;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace sorceryFight
@@ -19,7 +22,7 @@ namespace sorceryFight
 		/// </summary>
 		/// <param name="seconds"></param>
 		/// <returns>The number of ticks in a second.</returns>
-        public static int BuffSecondsToTicks(float seconds)
+		public static int BuffSecondsToTicks(float seconds)
 		{
 			return (int)(seconds * 60);
 		}
@@ -33,5 +36,23 @@ namespace sorceryFight
 		{
 			return ticks / 60;
 		}
+
+		public override void HandlePacket(BinaryReader reader, int whoAmI)
+		{
+			byte messageType = reader.ReadByte();
+			switch (messageType)
+			{
+				case 1:
+					int targetPlayer = reader.ReadInt32();
+					int bossType = reader.ReadInt32();
+
+					if (Main.netMode == NetmodeID.MultiplayerClient && Main.myPlayer == targetPlayer)
+					{
+						Main.player[targetPlayer].GetModPlayer<SorceryFightPlayer>().AddDefeatedBoss(bossType);
+					}
+					break;
+			}
+		}
+
 	}
 }

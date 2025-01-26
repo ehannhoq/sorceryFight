@@ -10,14 +10,27 @@ namespace sorceryFight.SFPlayer
     {
         public static int totalNumberOfBosses;
         public List<int> bossesDefeated;
-
-        public void AddDefeatedBoss(NPC boss)
+        public void AddDefeatedBoss(int bossType)
         {
-            if (!bossesDefeated.Contains(boss.type))
+            if (bossesDefeated.Contains(bossType)) return;
+
+            bossesDefeated.Add(bossType);
+            SorceryFightUI.UpdateTechniqueUI?.Invoke();
+            
+            if (Main.netMode == NetmodeID.Server)
             {
-                bossesDefeated.Add(boss.type);
-                SorceryFightUI.UpdateTechniqueUI.Invoke();
+                SendBossDefeatedToClients(bossType);
             }
+        }
+
+
+        public void SendBossDefeatedToClients(int bossType)
+        {
+            ModPacket packet = Mod.GetPacket();
+            packet.Write((byte)1);
+            packet.Write(Player.whoAmI);
+            packet.Write(bossType);
+            packet.Send();
         }
 
         public bool HasDefeatedBoss(int id)
@@ -29,7 +42,7 @@ namespace sorceryFight.SFPlayer
         {
             return 100 * bossesDefeated.Count;
         }
-        
+
         public float MasteryCECost()
         {
             return bossesDefeated.Count;

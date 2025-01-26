@@ -23,7 +23,7 @@ namespace sorceryFight
                 if (!npc.playerInteraction[player.whoAmI]) continue;
 
                 SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
-                sfPlayer.AddDefeatedBoss(npc);
+                sfPlayer.AddDefeatedBoss(npc.type);
             }
         }
     }
