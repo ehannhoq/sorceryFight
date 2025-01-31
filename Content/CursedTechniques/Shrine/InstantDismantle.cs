@@ -36,7 +36,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.EyeofCthulhu);
+            return sf.HasDefeatedBoss(NPCID.SkeletronPrime);
         }
 
         public override void UseTechnique(SorceryFightPlayer sf)
