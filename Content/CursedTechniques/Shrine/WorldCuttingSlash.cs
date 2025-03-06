@@ -55,6 +55,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 "Repulsion.",
                 "Paired Falling Stars."
             };
+
+            if (Main.dedServ) return;
             texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Shrine/WorldCuttingSlash", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
 

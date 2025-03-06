@@ -194,7 +194,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
 
-            if (texture == null)
+            if (texture == null && !Main.dedServ)
                 texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/HollowPurple").Value;
 
 

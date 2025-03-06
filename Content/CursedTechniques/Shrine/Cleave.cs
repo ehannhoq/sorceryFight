@@ -67,8 +67,10 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override void SetStaticDefaults()
         {
-            texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Shrine/Cleave", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Main.projFrames[Projectile.type] = FRAME_COUNT;
+
+            if (Main.dedServ) return;
+            texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Shrine/Cleave", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
         public override void SetDefaults()
         {

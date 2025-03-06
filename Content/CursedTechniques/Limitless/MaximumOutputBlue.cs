@@ -191,7 +191,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public override bool PreDraw(ref Color lightColor)
         {
-            if (texture == null)
+            if (texture == null && !Main.dedServ)
                 texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/MaximumOutputBlue").Value;
 
 

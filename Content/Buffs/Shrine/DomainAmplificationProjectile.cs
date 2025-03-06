@@ -17,6 +17,8 @@ namespace sorceryFight.Content.Buffs.Shrine
             Projectile.damage = 0;
             Projectile.tileCollide = false;
             Projectile.Hitbox = new Rectangle(0, 0, 0, 0);
+            
+            if (Main.dedServ) return;
             texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Buffs/Shrine/DomainAmplificationProjectile", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             underTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/Buffs/Shrine/DomainAmplificationProjectile_Underlay", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value; 
         }

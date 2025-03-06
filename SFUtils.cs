@@ -86,6 +86,7 @@ public static class SFUtils
     /// <param name="width">The width of the line.</param>
     public static void DrawLineUI(this SpriteBatch spriteBatch, Vector2 start, Vector2 end, Color color, float width)
     {
+        if (Main.dedServ) return;
         if (start == end)
             return;
 

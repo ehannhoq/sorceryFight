@@ -104,7 +104,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
 
-            if (texture == null)
+            if (texture == null && !Main.dedServ)
                 texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Shrine/InstantDismantle").Value;
 
             int frameHeight = texture.Height / 3;

@@ -45,6 +45,8 @@ namespace sorceryFight.Content.UI.TechniqueSelector
         Vector2 offset;
         public CursedTechniqueSelector()
         {
+            if (Main.dedServ) return;
+
             icons = new List<TechniqueSelectorButton>();
             sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
             isDragging = false;

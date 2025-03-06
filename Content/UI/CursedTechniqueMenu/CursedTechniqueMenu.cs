@@ -34,6 +34,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
         public CursedTechniqueMenu(SorceryFightPlayer sfPlayer)
         {
+            if (Main.dedServ) return;
+
             isDragging = false;
 
             Texture2D treeBGTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{sfPlayer.innateTechnique.Name}/Background", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;

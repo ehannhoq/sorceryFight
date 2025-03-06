@@ -22,6 +22,8 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
 
         public InnateTechniqueSelector()
         {
+            if (Main.dedServ) return;
+
             iconPositions = new List<Vector2>();
             timeCounter = 0;
             animate = false;

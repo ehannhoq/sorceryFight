@@ -34,6 +34,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override void SetStaticDefaults()
         {
+            if (Main.dedServ) return;
             texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Shrine/Dismantle", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
 

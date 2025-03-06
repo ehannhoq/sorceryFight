@@ -20,9 +20,11 @@ namespace sorceryFight.Content.DomainExpansions
         public static int TICKS_PER_FRAME = 1;
         public override void SetDefaults()
         {
-            DomainTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/MalevolentShrine", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Scale = 1f;
             base.SetDefaults();
+            
+            if (Main.dedServ) return;
+            DomainTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/MalevolentShrine", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
 
         public override void AI()

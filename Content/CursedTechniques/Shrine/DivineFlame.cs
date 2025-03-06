@@ -46,6 +46,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override void SetStaticDefaults()
         {
+            if (Main.dedServ) return;
             textures = new List<Texture2D>()
             {
                 ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Shrine/DivineFlameStrands", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value,

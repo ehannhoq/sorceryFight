@@ -23,6 +23,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
         List<TechniqueIcon> techniqueIcons;
         public CursedTechniqueTree(Texture2D closeButtonTexture, Texture2D backgroundTexture)
         {
+            if (Main.dedServ) return;
+
             SorceryFightPlayer player = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
             techniqueIcons = new List<TechniqueIcon>();
 

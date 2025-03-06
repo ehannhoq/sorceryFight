@@ -16,6 +16,8 @@ namespace sorceryFight.Content.Buffs
             Projectile.damage = 0;
             Projectile.tileCollide = false;
             Projectile.Hitbox = new Rectangle(0, 0, 0, 0);
+            
+            if (Main.dedServ) return;
             texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Buffs/ReverseCursedTechniqueAuraProjectile", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
 

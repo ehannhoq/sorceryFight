@@ -21,8 +21,6 @@ namespace sorceryFight.Content.DomainExpansions
         public static Dictionary<int, float[]> frozenValues;
         public override void SetDefaults()
         {
-            DomainTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/UnlimitedVoid", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            BackgroundTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/DomainExpansionBackground", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             frozenValues = new Dictionary<int, float[]>();
 
             Scale = 0.1f;
@@ -30,6 +28,10 @@ namespace sorceryFight.Content.DomainExpansions
             GoalScale = 2f;
 
             base.SetDefaults();
+            
+            if (Main.dedServ) return;
+            DomainTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/UnlimitedVoid", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            BackgroundTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/DomainExpansionBackground", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
 
         public override void AI()

@@ -14,6 +14,7 @@ namespace sorceryFight.Content.Buffs.Limitless
             Projectile.damage = 0;
             Projectile.tileCollide = false;
             Projectile.Hitbox = new Rectangle(0, 0, 0, 0);
+            if (Main.dedServ) return;
             texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Buffs/Limitless/MaximumAmplifiedAuraProjectile", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
 
