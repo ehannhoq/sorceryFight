@@ -1,4 +1,4 @@
 displayName = Sorcery Fight (A Jujutsu Kaisen Mod)
 author = ehann and the dev team
-version = 0.2.7
+version = 1.2.8
 modReferences = CalamityMod
