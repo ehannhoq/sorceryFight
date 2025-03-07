@@ -64,7 +64,7 @@ namespace sorceryFight.SFPlayer
         {
             get
             {
-                return HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
+                return bossesDefeated.Contains(ModContent.NPCType<DevourerofGodsHead>());
             }
         }
 

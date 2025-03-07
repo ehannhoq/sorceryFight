@@ -1,24 +1,19 @@
-Sorcery Fight is heavily inspired by anime/manga Jujutsu Kaisen. It adds 10 Cursed Technqiues, 5 Passive Techniques, and 2 Domain Expansions.
+Sorcery Fight is heavily inspired by anime/manga Jujutsu Kaisen.
+
+The mod adds:
+Two innate techniques, Limitless and Shrine
+each with a total of 10 cursed techniques, 5 passive techniques, and 2 domain expansions.
 
 NOTE: This mod requires Calamity Mod and its dependencies in order to install.
 
-Due to popular demand, a wiki for the mod is in the works! Thank you for downloading and playing Sorcery Fight!
-
 Changelog:
 https://docs.google.com/document/d/1avF8o3fXDvVdUV7az7U6Lp_6NkAF-goxyddqzmgr-Js/edit?usp=sharing
+Discord:
+https://discord.gg/HcBQXhwZcw
 
-Future Plans:
-- Ten Shadows Technique (Megumi Fushiguro)
-- Private Pure Love Train (Kinji Hakari)
-- Heavenly Restriction (Toji Zenin/Maki Zenin)
-- Star Rage (Yuki Tsukumo)
-- Zenin clan NPC, serving as the spawner for:
-- Mahoraga boss fight
-- Cursed Energy potions (mirroring Healing and Mana potions)
-- Accessories that modify max CE and CE regeneration
-- Binding Vows
-
-If you found a bug, please report it here:
+If you found a bug, please report it on the discord:
+https://discord.gg/HcBQXhwZcw
+or on github:
 https://github.com/ehannhoq/sorceryFight/issues
 or leave a comment, though it will be less likely to be seen.
 

@@ -12,7 +12,7 @@ namespace sorceryFight
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
             if (!npc.boss) return;
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GeneticReroll>(), 10, 1, 1));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GeneticReroll>(), 4, 1, 1));
         }
         public override void OnKill(NPC npc)
         {

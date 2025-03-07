@@ -97,7 +97,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 rctIcon.Left.Set(conditionalIconPositions[0].X, 0f);
                 rctIcon.Top.Set(conditionalIconPositions[0].Y, 0f);
                 Append(rctIcon);
-                conditionalIconPositions.RemoveAt(0);
+                if (conditionalIconPositions.Count > 1)
+                    conditionalIconPositions.RemoveAt(0);
             }
 
             if (sfPlayer.UnlockedDomain)
@@ -107,7 +108,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 domainIcon.Left.Set(conditionalIconPositions[0].X, 0f);
                 domainIcon.Top.Set(conditionalIconPositions[0].Y, 0f);
                 Append(domainIcon);
-                conditionalIconPositions.RemoveAt(0);
+                if (conditionalIconPositions.Count > 1)
+                    conditionalIconPositions.RemoveAt(0);
             }
 
             Recalculate();

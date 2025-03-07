@@ -34,7 +34,7 @@ namespace sorceryFight
                 { ItemID.SkeletronBossBag, ModContent.ItemType<CursedSkull>() },
                 { ItemID.SkeletronPrimeBossBag, ModContent.ItemType<CursedMechanicalSoul>() },
                 { ItemID.MoonLordBossBag, ModContent.ItemType<CursedPhantasmalEye>() },
-                { ModContent.ItemType<ProvidenceBag>(), ModContent.ItemType<CursedSkull>() },
+                { ModContent.ItemType<ProvidenceBag>(), ModContent.ItemType<CursedProfanedShards>() },
 
                 // CE Regen Modifiers
                 { ItemID.EyeOfCthulhuBossBag, ModContent.ItemType<CursedEye>() },

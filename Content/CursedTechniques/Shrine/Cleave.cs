@@ -20,7 +20,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.Cleave.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Cleave.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Cleave.LockedDescription");
-        public override float Cost => 175f;
+        public override float Cost => 125f;
         public override Color textColor => new Color(120, 21, 8);
         public override bool DisplayNameInGame => false;
         public override int Damage => 1;

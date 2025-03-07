@@ -19,7 +19,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.ReversalRed.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.ReversalRed.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.ReversalRed.LockedDescription");
-        public override float Cost { get; } = 350f;
+        public override float Cost { get; } = 250f;
         public override Color textColor { get; } = new Color(224, 74, 74);
 
        
