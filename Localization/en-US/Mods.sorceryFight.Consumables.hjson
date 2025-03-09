@@ -116,3 +116,15 @@ CursedRock: {
 		Increases your Cursed Energy regeneration by 20 CE/s.
 		'''
 }
+
+SukunasFinger: {
+	DisplayName: Ryomen Sukuna's Finger
+	Tooltip:
+		'''
+		A highly cursed object; that of belongs to none other than
+		Ryomen Sukuna, the strongest sorcerer-turned-cursed spirit
+		in history.
+		Consuming this finger may not be the best idea, unless
+		you have the capabilities or a vessel...
+		'''
+}
