@@ -26,7 +26,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override int Damage => 300;
         public override int MasteryDamageMultiplier => 104;
         public override float Speed { get; } = 25f;
-        public override float LifeTime { get; } = 240f;
+        public override float LifeTime { get; } = 120f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
             return sf.HasDefeatedBoss(NPCID.SkeletronPrime);
