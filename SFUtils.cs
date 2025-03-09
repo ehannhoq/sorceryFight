@@ -122,5 +122,6 @@ public static class SFConstants
 {
     public const int SixEyesDenominator = 10;
     public const int UniqueBodyStructureDenominator = 15;
+    public const int SukunasVesselDenominator = 2;
 
 }

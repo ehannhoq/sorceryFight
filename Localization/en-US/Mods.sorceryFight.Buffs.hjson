@@ -12,6 +12,11 @@ PlayerAttributes: {
 			Allows the user to use Cursed Techniques while having Passive Techniques active.
 			'''
 	}
+
+	SukunasVessel: {
+		DisplayName: Vessel
+		Description: You've become a vessel for a powerful and ancient soul.
+	}
 }
 
 BurntTechnique: {

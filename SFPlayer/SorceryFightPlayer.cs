@@ -67,15 +67,21 @@ namespace sorceryFight.SFPlayer
                 return bossesDefeated.Contains(ModContent.NPCType<DevourerofGodsHead>());
             }
         }
+        public bool expandedDomain;
+        public int domainIndex;
+        #endregion
 
         #region Player Attributes
         public bool sixEyes;
         public bool uniqueBodyStructure;
         #endregion
-        public bool expandedDomain;
-        public int domainIndex;
-        #endregion
 
+        #region Shrine/Vessel Specific Variables
+        public bool sukunasVessel;
+        public int sukunasFingerConsumed;
+        #endregion
+        
+        
         public bool unlockedRCT;
         public int rctAuraIndex;
 
@@ -255,6 +261,13 @@ namespace sorceryFight.SFPlayer
                 successfulRoll = true;
             }
 
+            if (SFUtils.Roll(SFConstants.SukunasVesselDenominator) && !sukunasVessel && innateTechnique.Name == "Shrine")
+            {
+                sukunasVessel = true;
+                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.SukunasVessel"), Color.Khaki, Player.whoAmI);
+                successfulRoll = true;
+            }
+
             if (isReroll && !successfulRoll)
             {
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.FailedReroll"), Color.Khaki, Player.whoAmI);
@@ -268,6 +281,9 @@ namespace sorceryFight.SFPlayer
 
             if (uniqueBodyStructure)
                 Player.AddBuff(ModContent.BuffType<UniqueBodyStructureBuff>(), 2);
+
+            if (sukunasVessel)
+                Player.AddBuff(ModContent.BuffType<SukunasVesselBuff>(), 2);
         }
     }
 }

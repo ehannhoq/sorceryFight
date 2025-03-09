@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.Buffs;
 using Terraria;
-using Terraria.ModLoader;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.SFPlayer;
 
@@ -11,7 +9,14 @@ namespace sorceryFight.Content.InnateTechniques
 {
     public abstract class InnateTechnique()
     {
+        /// <summary>
+        /// The internal name of the innate technique
+        /// </summary>
         public abstract string Name { get; }
+        
+        /// <summary>
+        /// The display name of the innate technique
+        /// </summary>
         public abstract string DisplayName { get; }
         public abstract List<PassiveTechnique> PassiveTechniques { get; }
         public abstract List<CursedTechnique> CursedTechniques { get; }
@@ -30,7 +35,7 @@ namespace sorceryFight.Content.InnateTechniques
 
             return null;
         }
-
+    
         public static List<InnateTechnique> InnateTechniques
         {
             get
