@@ -38,11 +38,11 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             Texture2D centerIconBackgroundTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{player.innateTechnique.Name}_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Texture2D centerIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{player.innateTechnique.Name}_Icon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-            SpecialUIElement centerIconBG = new SpecialUIElement(centerIconBackgroundTexture, default, -1f, 0.05f, 0.75f);
+            SpecialUIElement centerIconBG = new SpecialUIElement(centerIconBackgroundTexture, default, -1f, 0.05f, 1.5f);
             centerIconBG.Left.Set(center.X - centerIconBackgroundTexture.Width / 2, 0f);
             centerIconBG.Top.Set(center.Y - centerIconBackgroundTexture.Height / 2, 0f);
 
-            SpecialUIElement centerIcon = new SpecialUIElement(centerIconTexture, player.innateTechnique.DisplayName, default, default, 0.75f);
+            SpecialUIElement centerIcon = new SpecialUIElement(centerIconTexture, player.innateTechnique.DisplayName, default, default, 1.0f);
             centerIcon.Left.Set(center.X - centerIconTexture.Width / 2, 0f);
             centerIcon.Top.Set(center.Y - centerIconTexture.Height / 2, 0f);
 
@@ -65,6 +65,9 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                     break;
                 case "Shrine":
                     DrawShrine(center, player);
+                    break;
+                case "Vessel":
+                    DrawVessel(center, player);
                     break;
             }
 
@@ -267,7 +270,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             hollowWickerBasketIcon.Left.Set(hollowWickerBasketPos.X, 0f);
             hollowWickerBasketIcon.Top.Set(hollowWickerBasketPos.Y, 0f);
 
-            Vector2 instantDismantlePos = new Vector2(dismantlePos.X + iconSize / 2, dismantlePos.Y + iconSize / 2); 
+            Vector2 instantDismantlePos = new Vector2(dismantlePos.X + iconSize / 2, dismantlePos.Y + iconSize / 2);
             instantDismantlePos = instantDismantlePos.DirectionFrom(center);
             instantDismantlePos = instantDismantlePos.RotatedBy(0.2f);
             instantDismantlePos.Normalize();
@@ -291,7 +294,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             instantDismantleIcon.parents.Add(dismantleIcon);
             divineFlameIcon.parents.AddRange([dismantleIcon, cleaveIcon]);
             worldCuttingSlashIcon.parents.Add(instantDismantleIcon);
-            
+
 
             foreach (TechniqueIcon icon in ctIcons)
             {
@@ -306,6 +309,65 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             }
         }
 
+        void DrawVessel(Vector2 center, SorceryFightPlayer player)
+        {
+            List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
+            List<PassiveTechnique> passiveTechniques = player.innateTechnique.PassiveTechniques;
+
+            float iconSize = 30;
+            int originIconCount = 7;
+            float distance = 120f;
+            Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
+
+            List<TechniqueIcon> ctIcons = new List<TechniqueIcon>();
+            List<TechniqueIcon> ptIcons = new List<TechniqueIcon>();
+
+            for (int i = 0; i < cursedTechniques.Count; i++)
+            {
+                CursedTechnique ct = cursedTechniques[i];
+                string texturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Vessel/c{i}";
+                Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+                bool unlocked = ct.Unlocked(player);
+                string hoverText = unlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+
+                TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
+                ctIcons.Add(icon);
+            }
+
+            for (int i = 0; i < passiveTechniques.Count; i++)
+            {
+                PassiveTechnique pt = passiveTechniques[i];
+                string texturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Vessel/p{i}";
+                Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+                bool unlocked = pt.Unlocked(player);
+                string hoverText = unlocked ? $"{pt.DisplayName}\n{pt.Stats}\n{pt.Description}" : $"{pt.LockedDescription}";
+
+                TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
+                ptIcons.Add(icon);
+            }
+
+
+            for (int i = 0; i < originPositions.Length; i++)
+            {
+                if (i < ctIcons.Count)
+                {
+                    ctIcons[i].Left.Set(originPositions[i].X, 0f);
+                    ctIcons[i].Top.Set(originPositions[i].Y, 0f);
+                    Append(ctIcons[i]);
+                    techniqueIcons.Add(ctIcons[i]);
+                }
+                else
+                {
+                    int j = i - ctIcons.Count;
+                    ptIcons[j].Left.Set(originPositions[i].X, 0f);
+                    ptIcons[j].Top.Set(originPositions[i].Y, 0f);
+                    Append(ptIcons[j]);
+                    techniqueIcons.Add(ptIcons[j]);
+                }
+            }
+        }
 
         Vector2[] OriginPositionHelper(float iconSize, int n, float distanceFromCenter, float rotationOffset = 0f)
         {

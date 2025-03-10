@@ -77,7 +77,6 @@ namespace sorceryFight.SFPlayer
         #endregion
 
         #region Shrine/Vessel Specific Variables
-        public bool sukunasVessel;
         public int sukunasFingerConsumed;
         #endregion
         
@@ -261,9 +260,9 @@ namespace sorceryFight.SFPlayer
                 successfulRoll = true;
             }
 
-            if (SFUtils.Roll(SFConstants.SukunasVesselDenominator) && !sukunasVessel && innateTechnique.Name == "Shrine")
+            if (SFUtils.Roll(SFConstants.SukunasVesselDenominator) && innateTechnique.Name == "Shrine")
             {
-                sukunasVessel = true;
+                innateTechnique = new VesselTechnique();
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.SukunasVessel"), Color.Khaki, Player.whoAmI);
                 successfulRoll = true;
             }
@@ -282,7 +281,7 @@ namespace sorceryFight.SFPlayer
             if (uniqueBodyStructure)
                 Player.AddBuff(ModContent.BuffType<UniqueBodyStructureBuff>(), 2);
 
-            if (sukunasVessel)
+            if (innateTechnique.Name == "Vessel")
                 Player.AddBuff(ModContent.BuffType<SukunasVesselBuff>(), 2);
         }
     }

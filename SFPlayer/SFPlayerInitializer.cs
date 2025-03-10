@@ -46,7 +46,6 @@ namespace sorceryFight.SFPlayer
 
             sixEyes = false;
             uniqueBodyStructure = false;
-            sukunasVessel = false;
 
             unlockedRCT = false;
             rctAuraIndex = -1;
@@ -84,7 +83,6 @@ namespace sorceryFight.SFPlayer
             generalBooleans.AddWithCondition("unlockedRCT", unlockedRCT);
             generalBooleans.AddWithCondition("sixEyes", sixEyes);
             generalBooleans.AddWithCondition("uniqueBodyStructure", uniqueBodyStructure);
-            generalBooleans.AddWithCondition("sukunasVessel", sukunasVessel);
             tag["generalBooleans"] = generalBooleans;
 
         }
@@ -117,7 +115,6 @@ namespace sorceryFight.SFPlayer
             unlockedRCT = generalBooleans.Contains("unlockedRCT");
             sixEyes = generalBooleans.Contains("sixEyes");
             uniqueBodyStructure = generalBooleans.Contains("uniqueBodyStructure");
-            sukunasVessel = generalBooleans.Contains("sukunasVessel");
 
             maxCursedEnergy = calculateBaseMaxCE();
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
