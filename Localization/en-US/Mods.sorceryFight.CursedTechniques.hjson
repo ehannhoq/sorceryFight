@@ -123,3 +123,24 @@ WorldCuttingSlash: {
 		'''
 	LockedDescription: Defeat the Devourer of Gods.
 }
+
+SoulDismantle: {
+	DisplayName: Dismantle
+	Description:
+		'''
+		A devastating slash that targets the soul,
+		ignoring any and all defense.
+		'''
+	LockedDescription: Consume atleast 2 of Ryomen Sukuna's Fingers.
+}
+
+ChainDismantle: {
+	DisplayName: Chain Dismantle
+	Description:
+		'''
+		A slash attack that chains onto any other
+		enemies within a radiusupon first successful 
+		hit. Also ignores defense.
+		'''
+	LockedDescription: Consome atleast 5 of Ryomen Sukuna's Fingers.
+}
