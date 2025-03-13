@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs;
-using sorceryFight.Content.Buffs.Limitless;
 using sorceryFight.Content.Buffs.Shrine;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.CursedTechniques.Shrine;
+using sorceryFight.Content.CursedTechniques.Vessel;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.SFPlayer;
 using Terraria;
@@ -26,8 +25,8 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
-            new Dismantle(),
-            new Cleave(),
+            new SoulDismantle(),
+            new ChainDismantle(),
             new InstantDismantle(),
             new DivineFlame(),
             new WorldCuttingSlash()
