@@ -159,6 +159,9 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
             Vector2 projOrigin = sourceRectangle.Size() * 0.5f;
 
+            float velocityAngle = Projectile.velocity.ToRotation();
+            Projectile.rotation = velocityAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
+
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, -32).RotatedBy(Projectile.rotation), sourceRectangle, Color.White, Projectile.rotation + Projectile.ai[1], projOrigin, 1.5f, SpriteEffects.None, 0f);
             return false;
         }
