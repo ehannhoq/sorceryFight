@@ -29,8 +29,8 @@ public static class SFUtils
     }
 
     public static bool IsDomain(this NPC npc)
-    {   
-        return npc.type == ModContent.NPCType<UnlimitedVoid>() || npc.type == ModContent.NPCType<MalevolentShrine>();   
+    {
+        return npc.type == ModContent.NPCType<UnlimitedVoid>() || npc.type == ModContent.NPCType<MalevolentShrine>();
     }
 
     public static bool MoveableByBlue(this NPC npc)
@@ -54,7 +54,7 @@ public static class SFUtils
 
         if (proj.type == ModContent.ProjectileType<DomainAmplificationProjectile>())
             return false;
-        
+
         if (proj.type == ModContent.ProjectileType<HollowWickerBasketProjectile>())
             return false;
 
@@ -106,7 +106,7 @@ public static class SFUtils
         if (roll == 0) return true;
         return false;
     }
-    
+
     /// <summary>
     /// Returns the square of the input value.
     /// </summary>
@@ -116,6 +116,32 @@ public static class SFUtils
     {
         return value * value;
     }
+
+    /// <summary>
+    /// Determines the sign of a floating-point value.
+    /// </summary>
+    /// <param name="value">The floating-point value to evaluate.</param>
+    /// <returns>1 if the value is positive, -1 if negative, or 0 if zero.</returns>
+
+    public static float ToSign(this float value)
+    {
+        return value > 0 ? 1 : (value < 0 ? -1 : 0);
+    }
+
+    /// <summary>
+    /// Linearly interpolates between two angles by a given amount, taking
+    /// into account the wraparound of angles from 0 to 2 * pi.
+    /// </summary>
+    /// <param name="currentAngle">The current angle.</param>
+    /// <param name="targetAngle">The target angle to interpolate to.</param>
+    /// <param name="amount">The amount to interpolate by, from 0 to 1.</param>
+    /// <returns>The interpolated angle.</returns>
+    public static float LerpAngle(float currentAngle, float targetAngle, float amount)
+    {
+        float difference = MathHelper.WrapAngle(targetAngle - currentAngle);
+        return currentAngle + difference * amount;
+    }
+
 }
 
 public static class SFConstants

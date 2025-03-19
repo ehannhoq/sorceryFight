@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Buffs.Shrine;
 using sorceryFight.Content.CursedTechniques;
+using sorceryFight.Content.CursedTechniques.BloodManipulation;
 using sorceryFight.Content.CursedTechniques.Shrine;
 using sorceryFight.Content.CursedTechniques.Vessel;
 using sorceryFight.Content.DomainExpansions;
@@ -27,7 +28,7 @@ namespace sorceryFight.Content.InnateTechniques
         {
             new SoulDismantle(),
             new ChainDismantle(),
-            new InstantDismantle(),
+            new PiercingBlood(),
             new DivineFlame(),
             new WorldCuttingSlash()
         };
