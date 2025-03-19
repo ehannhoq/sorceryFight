@@ -58,7 +58,7 @@ namespace sorceryFight.Content.CursedTechniques
             Projectile.Kill();
         }
 
-        public virtual void UseTechnique(SorceryFightPlayer sf)
+        public virtual int UseTechnique(SorceryFightPlayer sf)
         {
             Player player = sf.Player;
             
@@ -76,8 +76,9 @@ namespace sorceryFight.Content.CursedTechniques
                     int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
                     Main.combatText[index1].lifeTime = 180;
                 }
-                Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
+                return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
             }
+            return -1;
         }
 
         public override void SendExtraAI(BinaryWriter writer)

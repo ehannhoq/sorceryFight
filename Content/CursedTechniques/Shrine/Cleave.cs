@@ -49,7 +49,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             return basePercent + (sf.bossesDefeated.Count / 1000f);
         }
 
-        public override void UseTechnique(SorceryFightPlayer sf)
+        public override int UseTechnique(SorceryFightPlayer sf)
         {
             Player player = sf.Player;
             
@@ -61,8 +61,9 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 var entitySource = player.GetSource_FromThis();
                 sf.cursedEnergy -= CalculateTrueCost(sf);
 
-                Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), 1, 0, player.whoAmI);
+                return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), 1, 0, player.whoAmI);
             }
+            return -1;
         }
 
         public override void SetStaticDefaults()

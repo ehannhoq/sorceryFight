@@ -42,7 +42,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             return sf.HasDefeatedBoss(NPCID.SkeletronHead);
         }
 
-        public override void UseTechnique(SorceryFightPlayer sf)
+        public override int UseTechnique(SorceryFightPlayer sf)
         {
             Player player = sf.Player;
 
@@ -56,7 +56,9 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
 
                 int index = Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), 1, 0, player.whoAmI);
                 Main.projectile[index].ai[2] = 0f;
+                return index;
             }
+            return -1;
         }
 
         public override void SetStaticDefaults()

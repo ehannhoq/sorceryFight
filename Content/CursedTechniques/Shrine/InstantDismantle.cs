@@ -39,7 +39,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             return sf.HasDefeatedBoss(NPCID.SkeletronPrime);
         }
 
-        public override void UseTechnique(SorceryFightPlayer sf)
+        public override int UseTechnique(SorceryFightPlayer sf)
         {
             Player player = sf.Player;
             sf.cursedEnergy -= Cost;
@@ -58,8 +58,9 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 Main.projectile[index].ai[0] = 0;
                 Main.projectile[index].ai[1] = Main.rand.Next(0, 3);
                 Main.projectile[index].ai[2] = Main.rand.NextFloat(0, 6);
-
+                return index;
             }
+            return -1;
         }
 
         public override void SetDefaults()
