@@ -37,36 +37,7 @@ namespace sorceryFight.Content.DomainExpansions
         public override void AI()
         {
             base.AI();
-            
-            float logBase = 10f;
-            float maxAIValue = 30f;
-
-            if (NPC.ai[0] < 30)
-            {
-                NPC.Center = Owners[NPC.whoAmI].Center;
-
-                float progress = Math.Clamp(NPC.ai[0] / maxAIValue, 0.01f, 1f);
-                BackgroundScale = GoalScale * 4 * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
-            }
-
-            if (NPC.ai[0] > 30 && NPC.ai[0] < 200)
-            {
-                float progress = Math.Clamp((NPC.ai[0] - 30) / (maxAIValue + 170), 0.01f, 1f);
-                Scale = GoalScale * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
-            }
-
-            if (NPC.ai[0] < 200)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    Vector2 offsetPos = NPC.Center + new Vector2(Main.rand.NextFloat(-2000f, 2000f), Main.rand.NextFloat(-2000f, 2000f));
-                    Vector2 velocity = NPC.Center.DirectionTo(offsetPos) * 40f;
-
-                    LineParticle particle = new LineParticle(NPC.Center, velocity, false, 180, 1, Color.LightSteelBlue);
-                    GeneralParticleHandler.SpawnParticle(particle);
-                }
-            }
-
+        
             foreach (Projectile proj in Main.ActiveProjectiles)
             {
                 if (!proj.friendly)
