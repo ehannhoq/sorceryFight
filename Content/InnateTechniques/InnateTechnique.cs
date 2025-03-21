@@ -13,7 +13,7 @@ namespace sorceryFight.Content.InnateTechniques
         /// The internal name of the innate technique
         /// </summary>
         public abstract string Name { get; }
-        
+
         /// <summary>
         /// The display name of the innate technique
         /// </summary>
@@ -37,7 +37,7 @@ namespace sorceryFight.Content.InnateTechniques
 
             return null;
         }
-    
+
         public static List<InnateTechnique> InnateTechniques
         {
             get
@@ -51,9 +51,13 @@ namespace sorceryFight.Content.InnateTechniques
             }
         }
 
-        public virtual void PostUpdate(SorceryFightPlayer sf) {}
+        public virtual void PostUpdate(SorceryFightPlayer sf) { }
 
-        public virtual void ExpandDomain(SorceryFightPlayer sf) { }
+        public virtual void ExpandDomain(SorceryFightPlayer sf)
+        {
+            DomainExpansionTimer = 0;
+        }
+        
         public virtual void CloseDomain(SorceryFightPlayer sf)
         {
             Main.npc[sf.domainIndex].active = false;

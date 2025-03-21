@@ -71,10 +71,5 @@ namespace sorceryFight.Content.InnateTechniques
                 DomainExpansionTimer = -1;
             }
         }
-
-        public override void ExpandDomain(SorceryFightPlayer sf)
-        {
-            DomainExpansionTimer = 0;
-        }
     }
 }
