@@ -49,6 +49,8 @@ namespace sorceryFight.Content.DomainExpansions
             NPC.hide = true;
             NPC.behindTiles = false;
             NPC.boss = true;
+
+            BackgroundTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/DomainExpansionBackground", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
         public override void AI()
         {
@@ -99,18 +101,6 @@ namespace sorceryFight.Content.DomainExpansions
             {
                 float progress = Math.Clamp((NPC.ai[0] - 30) / (maxAIValue + 170), 0.01f, 1f);
                 Scale = GoalScale * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
-            }
-
-            if (NPC.ai[0] < 200)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    Vector2 offsetPos = NPC.Center + new Vector2(Main.rand.NextFloat(-2000f, 2000f), Main.rand.NextFloat(-2000f, 2000f));
-                    Vector2 velocity = NPC.Center.DirectionTo(offsetPos) * 40f;
-
-                    LineParticle particle = new LineParticle(NPC.Center, velocity, false, 180, 1, Color.LightSteelBlue);
-                    GeneralParticleHandler.SpawnParticle(particle);
-                }
             }
         }
 

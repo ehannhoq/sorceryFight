@@ -27,6 +27,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public override float Speed => 0f;
         public override float LifeTime => 22f;
         List<int> hasHit;
+        ref float spawnedFromDE => ref Projectile.ai[2];
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<SoulDismantle>();
@@ -104,21 +105,23 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                 }
             }
 
+            if (spawnedFromDE == 0)
+            {
+                Player player = Main.player[Projectile.owner];
+                Vector2 playerRotatedPoint = player.RotatedRelativePoint(player.MountedCenter, true);
+                float velocityAngle = Projectile.velocity.ToRotation();
+                float offset = 130f * Projectile.scale;
 
-            Player player = Main.player[Projectile.owner];
-            Vector2 playerRotatedPoint = player.RotatedRelativePoint(player.MountedCenter, true);
-            float velocityAngle = Projectile.velocity.ToRotation();
-            float offset = 130f * Projectile.scale;
-
-            Projectile.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
-            Projectile.Center = playerRotatedPoint + velocityAngle.ToRotationVector2() * offset;
-            Projectile.rotation = velocityAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
+                Projectile.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
+                Projectile.Center = playerRotatedPoint + velocityAngle.ToRotationVector2() * offset;
+                Projectile.rotation = velocityAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
+                if (Projectile.ai[0] == 1)
+                    SoundEngine.PlaySound(SorceryFightSounds.CleaveSwing with { Volume = 5f }, player.Center);
+            }
 
             if (Projectile.ai[0] == 1)
-            {
-                SoundEngine.PlaySound(SorceryFightSounds.CleaveSwing with { Volume = 5f }, player.Center);
                 Projectile.ai[1] = Main.rand.NextFloat(0, MathHelper.TwoPi);
-            }
+            
         }
 
         public override bool PreDraw(ref Color lightColor)

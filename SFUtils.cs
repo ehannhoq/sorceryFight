@@ -30,7 +30,7 @@ public static class SFUtils
 
     public static bool IsDomain(this NPC npc)
     {
-        return npc.type == ModContent.NPCType<UnlimitedVoid>() || npc.type == ModContent.NPCType<MalevolentShrine>();
+        return npc.type == ModContent.NPCType<UnlimitedVoid>() || npc.type == ModContent.NPCType<MalevolentShrine>() || npc.type == ModContent.NPCType<Home>();
     }
 
     public static bool MoveableByBlue(this NPC npc)

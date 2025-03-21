@@ -33,7 +33,7 @@ namespace sorceryFight.Content.InnateTechniques
             new WorldCuttingSlash()
         };
 
-        public override DomainExpansion DomainExpansion { get; } = new MalevolentShrine();
+        public override DomainExpansion DomainExpansion { get; } = new Home();
 
         public override void PostUpdate(SorceryFightPlayer sf)
         {
@@ -67,7 +67,7 @@ namespace sorceryFight.Content.InnateTechniques
                 Vector2 position = sf.Player.Center;
 
                 if (Main.myPlayer == sf.Player.whoAmI)
-                    sf.domainIndex = NPC.NewNPC(entitySource, (int)position.X, (int)position.Y, ModContent.NPCType<MalevolentShrine>(), 0, default, sf.Player.whoAmI);
+                    sf.domainIndex = NPC.NewNPC(entitySource, (int)position.X, (int)position.Y, ModContent.NPCType<Home>(), 0, default, sf.Player.whoAmI);
                 DomainExpansionTimer = -1;
             }
         }

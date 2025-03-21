@@ -31,12 +31,23 @@ namespace sorceryFight.Content.DomainExpansions
             
             if (Main.dedServ) return;
             DomainTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/UnlimitedVoid", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            BackgroundTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/DomainExpansionBackground", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
 
         public override void AI()
         {
             base.AI();
+
+            if (NPC.ai[0] < 200)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 offsetPos = NPC.Center + new Vector2(Main.rand.NextFloat(-2000f, 2000f), Main.rand.NextFloat(-2000f, 2000f));
+                    Vector2 velocity = NPC.Center.DirectionTo(offsetPos) * 40f;
+
+                    LineParticle particle = new LineParticle(NPC.Center, velocity, false, 180, 1, Color.LightSteelBlue);
+                    GeneralParticleHandler.SpawnParticle(particle);
+                }
+            }
         
             foreach (Projectile proj in Main.ActiveProjectiles)
             {
@@ -81,21 +92,7 @@ namespace sorceryFight.Content.DomainExpansions
             base.Remove(sfPlayer);
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            int frameHeight = DomainTexture.Height / FRAME_COUNT;
-            int frameY = NPC.frame.Y * frameHeight;
 
-            Vector2 origin = new Vector2(DomainTexture.Width / 2, frameHeight / 2);
-            Vector2 bgOrigin = new Vector2(BackgroundTexture.Width / 2, BackgroundTexture.Height / 2);
-
-            Rectangle sourceRectangle = new Rectangle(0, frameY, DomainTexture.Width, frameHeight);
-
-            spriteBatch.Draw(BackgroundTexture, NPC.Center - Main.screenPosition, default, Color.White, NPC.rotation, bgOrigin, BackgroundScale, SpriteEffects.None, 0f);
-            spriteBatch.Draw(DomainTexture, NPC.Center - Main.screenPosition, sourceRectangle, Color.White, NPC.rotation, origin, Scale, SpriteEffects.None, 0f);
-
-            return false;
-        }
 
         private bool AffectedByFrozenAI(NPC npc)
         {
