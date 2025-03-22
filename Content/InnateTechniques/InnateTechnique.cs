@@ -33,6 +33,8 @@ namespace sorceryFight.Content.InnateTechniques
                     return new ShrineTechnique();
                 case "Vessel":
                     return new VesselTechnique();
+                case "PrivatePureLoveTrain":
+                    return new PrivatePureLoveTrainTechnique();
             }
 
             return null;
@@ -45,8 +47,9 @@ namespace sorceryFight.Content.InnateTechniques
                 return new List<InnateTechnique>
                 {
                     new LimitlessTechnique(),
-                    new ShrineTechnique()
+                    new ShrineTechnique(),
                     // Vessel Technique is technically a 'secret' technique.
+                    new PrivatePureLoveTrainTechnique()
                 };
             }
         }
