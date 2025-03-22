@@ -312,15 +312,13 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
         void DrawVessel(Vector2 center, SorceryFightPlayer player)
         {
             List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
-            List<PassiveTechnique> passiveTechniques = player.innateTechnique.PassiveTechniques;
 
             float iconSize = 30;
-            int originIconCount = 7;
+            int originIconCount = 3;
             float distance = 120f;
             Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
 
             List<TechniqueIcon> ctIcons = new List<TechniqueIcon>();
-            List<TechniqueIcon> ptIcons = new List<TechniqueIcon>();
 
             for (int i = 0; i < cursedTechniques.Count; i++)
             {
@@ -335,37 +333,13 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 ctIcons.Add(icon);
             }
 
-            for (int i = 0; i < passiveTechniques.Count; i++)
-            {
-                PassiveTechnique pt = passiveTechniques[i];
-                string texturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Vessel/p{i}";
-                Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-                bool unlocked = pt.Unlocked(player);
-                string hoverText = unlocked ? $"{pt.DisplayName}\n{pt.Stats}\n{pt.Description}" : $"{pt.LockedDescription}";
-
-                TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
-                ptIcons.Add(icon);
-            }
-
 
             for (int i = 0; i < originPositions.Length; i++)
             {
-                if (i < ctIcons.Count)
-                {
-                    ctIcons[i].Left.Set(originPositions[i].X, 0f);
-                    ctIcons[i].Top.Set(originPositions[i].Y, 0f);
-                    Append(ctIcons[i]);
-                    techniqueIcons.Add(ctIcons[i]);
-                }
-                else
-                {
-                    int j = i - ctIcons.Count;
-                    ptIcons[j].Left.Set(originPositions[i].X, 0f);
-                    ptIcons[j].Top.Set(originPositions[i].Y, 0f);
-                    Append(ptIcons[j]);
-                    techniqueIcons.Add(ptIcons[j]);
-                }
+                ctIcons[i].Left.Set(originPositions[i].X, 0f);
+                ctIcons[i].Top.Set(originPositions[i].Y, 0f);
+                Append(ctIcons[i]);
+                techniqueIcons.Add(ctIcons[i]);
             }
         }
 

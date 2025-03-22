@@ -20,17 +20,13 @@ namespace sorceryFight.Content.InnateTechniques
         public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.Shrine.DisplayName");
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
-            new DomainAmplificationBuff(),
-            new HollowWickerBasketBuff()
         };
 
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
             new SoulDismantle(),
             new ChainDismantle(),
-            new PiercingBlood(),
-            new DivineFlame(),
-            new WorldCuttingSlash()
+            new PiercingBlood()
         };
 
         public override DomainExpansion DomainExpansion { get; } = new Home();
