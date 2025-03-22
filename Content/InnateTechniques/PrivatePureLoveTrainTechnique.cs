@@ -3,11 +3,11 @@ using Microsoft.Xna.Framework;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.Buffs;
-using sorceryFight.Content.Buffs.Limitless;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.Audio;
 using sorceryFight.SFPlayer;
+using sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -21,7 +21,7 @@ namespace sorceryFight.Content.InnateTechniques
         };
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
-            
+            new PachinkoBalls()
         };
 
         public override DomainExpansion DomainExpansion { get; } = new UnlimitedVoid();

@@ -155,3 +155,9 @@ PiercingBlood: {
 		'''
 	LockedDescription: Consume atleast 19 of Ryomen Sukuna's Fingers.
 }
+
+PachinkoBalls: {
+	DisplayName: Pachinko Ball
+	Description: placeholder
+	LockedDescription: Defeat the one who guards the Dungeon.
+}

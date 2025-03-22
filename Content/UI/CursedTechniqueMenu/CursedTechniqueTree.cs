@@ -69,6 +69,9 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 case "Vessel":
                     DrawVessel(center, player);
                     break;
+                case "PrivatePureLoveTrain":
+                    DrawPPLT(center, player);
+                    break;
             }
 
         }
@@ -309,7 +312,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             }
         }
 
-        void DrawVessel(Vector2 center, SorceryFightPlayer player)
+        void DrawVessel(Vector2 _, SorceryFightPlayer player)
         {
             List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
 
@@ -318,7 +321,6 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             float distance = 120f;
             Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
 
-            List<TechniqueIcon> ctIcons = new List<TechniqueIcon>();
 
             for (int i = 0; i < cursedTechniques.Count; i++)
             {
@@ -330,16 +332,38 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 string hoverText = unlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
 
                 TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
-                ctIcons.Add(icon);
+                icon.Left.Set(originPositions[i].X, 0f);
+                icon.Top.Set(originPositions[i].Y, 0f);
+
+                techniqueIcons.Add(icon);
+                Append(icon);
             }
+        }
+
+        void DrawPPLT(Vector2 center, SorceryFightPlayer player)
+        {
+            List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
+
+            float iconSize = 30;
+            int originIconCount = 1;
+            float distance = 180f;
+            Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
 
 
-            for (int i = 0; i < originPositions.Length; i++)
+            for (int i = 0; i < cursedTechniques.Count; i++)
             {
-                ctIcons[i].Left.Set(originPositions[i].X, 0f);
-                ctIcons[i].Top.Set(originPositions[i].Y, 0f);
-                Append(ctIcons[i]);
-                techniqueIcons.Add(ctIcons[i]);
+                CursedTechnique ct = cursedTechniques[i];
+                string texturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/PrivatePureLoveTrain/c{i}";
+                Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+                bool unlocked = ct.Unlocked(player);
+                string hoverText = unlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+
+                TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
+                icon.Left.Set(originPositions[i].X, 0f);
+                icon.Top.Set(originPositions[i].Y, 0f);
+                Append(icon);
+                techniqueIcons.Add(icon);
             }
         }
 
