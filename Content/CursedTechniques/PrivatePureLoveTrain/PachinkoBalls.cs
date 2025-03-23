@@ -48,8 +48,8 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 65;
-            Projectile.height = 65;
+            Projectile.width = 32;
+            Projectile.height = 32;
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.timeLeft = (int)LifeTime;
@@ -91,7 +91,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 {
                     NPC npc = Main.npc[i];
 
-                    if (!npc.active || npc.friendly || npc.IsDomain() || npc.whoAmI == target.whoAmI || enemyRicochets[Projectile.whoAmI].Contains(npc.whoAmI)) continue;
+                    if (!npc.active || npc.friendly || npc.IsDomain() || npc.whoAmI == target.whoAmI || enemyRicochets[Projectile.whoAmI][1..^0].Contains(npc.whoAmI)) continue;
 
                     float distance = Vector2.Distance(npc.Center, Projectile.Center);
                     if (distance > 250f) continue;
@@ -120,7 +120,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, rarity[Projectile.whoAmI], Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 4f, SpriteEffects.None, 0f);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, rarity[Projectile.whoAmI], Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 2f, SpriteEffects.None, 0f);
             return false;
         }
     }
