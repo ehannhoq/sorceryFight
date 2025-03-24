@@ -161,3 +161,9 @@ PachinkoBalls: {
 	Description: placeholder
 	LockedDescription: Defeat the one who guards the Dungeon.
 }
+
+HakarisDoor: {
+	DisplayName: Hakari's Door
+	Description: placeholder
+	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
+}

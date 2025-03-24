@@ -21,7 +21,8 @@ namespace sorceryFight.Content.InnateTechniques
         };
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
-            new PachinkoBalls()
+            new PachinkoBalls(),
+            new HakarisDoor()
         };
 
         public override DomainExpansion DomainExpansion { get; } = new UnlimitedVoid();
