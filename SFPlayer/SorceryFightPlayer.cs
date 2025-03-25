@@ -140,6 +140,9 @@ namespace sorceryFight.SFPlayer
             {
                 PreventRCTAnimDeath();
             }
+
+            disableRegenFromDE = false;
+            disableRegenFromProjectiles = false;
         }
         void Keybinds()
         {
