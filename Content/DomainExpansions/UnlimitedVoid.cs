@@ -8,6 +8,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
+using Terraria.GameContent;
 
 namespace sorceryFight.Content.DomainExpansions
 {
@@ -15,7 +16,7 @@ namespace sorceryFight.Content.DomainExpansions
     {
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.DomainExpansions.UnlimitedVoid.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.UnlimitedVoid.Description");
-        public override int CostPerSecond { get; set; } =  100;
+        public override int CostPerSecond { get; set; } = 100;
         public static int FRAME_COUNT = 1;
         public static int TICKS_PER_FRAME = 1;
         public static Dictionary<int, float[]> frozenValues;
@@ -23,12 +24,12 @@ namespace sorceryFight.Content.DomainExpansions
         {
             frozenValues = new Dictionary<int, float[]>();
 
-            Scale = 0.1f;
-            BackgroundScale = 0.1f;
+            Scale = 0f;
+            BackgroundScale = 0f;
             GoalScale = 2f;
 
             base.SetDefaults();
-            
+
             if (Main.dedServ) return;
             DomainTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/UnlimitedVoid", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
@@ -39,16 +40,36 @@ namespace sorceryFight.Content.DomainExpansions
 
             if (NPC.ai[0] < 200)
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 5; i++)
                 {
                     Vector2 offsetPos = NPC.Center + new Vector2(Main.rand.NextFloat(-2000f, 2000f), Main.rand.NextFloat(-2000f, 2000f));
-                    Vector2 velocity = NPC.Center.DirectionTo(offsetPos) * 40f;
+                    Vector2 velocity = NPC.Center.DirectionTo(offsetPos) * 80f;
 
-                    LineParticle particle = new LineParticle(NPC.Center, velocity, false, 180, 1, Color.LightSteelBlue);
+                    List<Color> colors = [
+                        new Color(91, 91, 245), // blue
+                        new Color(201, 110, 235), // magenta
+                        new Color(79, 121, 219), // cyan
+                        new Color(124, 42, 232), // purple
+                    ];
+
+                    int roll = Main.rand.Next(colors.Count);
+                    Color color = colors[roll];
+
+                    LineParticle particle = new LineParticle(NPC.Center, velocity, false, 180, 3, color);
                     GeneralParticleHandler.SpawnParticle(particle);
                 }
+
+                if (NPC.ai[0] > 100)
+                {
+                    NPC.ai[2] = 1 * (NPC.ai[0] - 100) / 100f;
+                }
             }
-        
+
+            if (NPC.ai[0] > 200)
+            {
+                Scale = GoalScale;
+            }
+
             foreach (Projectile proj in Main.ActiveProjectiles)
             {
                 if (!proj.friendly)
@@ -65,7 +86,7 @@ namespace sorceryFight.Content.DomainExpansions
         public override void NPCDomainEffect(NPC npc)
         {
             int npcID = npc.whoAmI;
-            
+
             if (!frozenValues.ContainsKey(npcID))
             {
                 frozenValues[npcID] = new float[6];
@@ -102,6 +123,43 @@ namespace sorceryFight.Content.DomainExpansions
                 return false;
 
             return true;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            int frameHeight = DomainTexture.Height;
+            int frameY = NPC.frame.Y * DomainTexture.Height;
+
+            Vector2 origin = new Vector2(DomainTexture.Width / 2, frameHeight / 2);
+            Vector2 bgOrigin = new Vector2(BackgroundTexture.Width / 2, BackgroundTexture.Height / 2);
+            Rectangle sourceRectangle = new Rectangle(0, frameY, DomainTexture.Width, frameHeight);
+
+            spriteBatch.Draw(BackgroundTexture, NPC.Center - Main.screenPosition, default, Color.White, NPC.rotation, bgOrigin, BackgroundScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(DomainTexture, NPC.Center - Main.screenPosition, sourceRectangle, Color.White, NPC.rotation, origin, Scale, SpriteEffects.None, 0f);
+
+            if (NPC.ai[0] > 100 && NPC.ai[0] < 200)
+                DrawWhiteScreenForPlayers(spriteBatch);
+
+            return false;
+        }
+
+        void DrawWhiteScreenForPlayers(SpriteBatch spriteBatch)
+        {
+            foreach (Player player in Main.player)
+            {
+                if (player.active && Vector2.DistanceSquared(player.Center, NPC.Center) <= SureHitDistance.Squared())
+                {
+                    if (player.whoAmI == Main.myPlayer)
+                    {
+                        
+                        Texture2D whiteTexture = TextureAssets.MagicPixel.Value;
+                        Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
+                        Color fadeColor = Color.White * MathHelper.Clamp(NPC.ai[2], 0f, 1f);
+
+                        spriteBatch.Draw(whiteTexture, screenRectangle, fadeColor);
+                    }
+                }
+            }
         }
     }
 }

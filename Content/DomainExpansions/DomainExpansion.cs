@@ -21,7 +21,7 @@ namespace sorceryFight.Content.DomainExpansions
         public override LocalizedText DisplayName { get; }
         public abstract string Description { get; }
         public abstract int CostPerSecond { get; set; }
-        public virtual float SureHitDistance { get; set; } = 1000f;
+        public virtual float SureHitDistance { get; set; } = 1100f;
         public abstract void NPCDomainEffect(NPC npc);
 
         public virtual Texture2D DomainTexture { get; set; }
@@ -94,13 +94,7 @@ namespace sorceryFight.Content.DomainExpansions
                 NPC.Center = Owners[NPC.whoAmI].Center;
 
                 float progress = Math.Clamp(NPC.ai[0] / maxAIValue, 0.01f, 1f);
-                BackgroundScale = GoalScale * 4 * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
-            }
-
-            if (NPC.ai[0] > 30 && NPC.ai[0] < 200)
-            {
-                float progress = Math.Clamp((NPC.ai[0] - 30) / (maxAIValue + 170), 0.01f, 1f);
-                Scale = GoalScale * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
+                BackgroundScale = GoalScale  * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
             }
         }
 
