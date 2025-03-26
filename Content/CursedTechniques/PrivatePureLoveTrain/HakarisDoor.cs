@@ -19,8 +19,8 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HakarisDoor.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HakarisDoor.LockedDescription");
         public override float Cost => 100f;
-        public override Color textColor => Color.White;
-        public override bool DisplayNameInGame => false;
+        public override Color textColor => new Color(108, 158, 240);
+        public override bool DisplayNameInGame => true;
         public override int Damage => 50;
         public override int MasteryDamageMultiplier => 30;
         public override float Speed => 0f;
