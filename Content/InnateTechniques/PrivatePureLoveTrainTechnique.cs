@@ -25,7 +25,7 @@ namespace sorceryFight.Content.InnateTechniques
             new HakarisDoor()
         };
 
-        public override DomainExpansion DomainExpansion { get; } = new UnlimitedVoid();
+        public override DomainExpansion DomainExpansion { get; } = new IdleDeathGamble();
         
         public override void PostUpdate(SorceryFightPlayer sf)
         {
@@ -59,7 +59,7 @@ namespace sorceryFight.Content.InnateTechniques
                 Vector2 position = sf.Player.Center;
 
                 if (Main.myPlayer == sf.Player.whoAmI)
-                    sf.domainIndex = NPC.NewNPC(entitySource, (int)position.X, (int)position.Y, ModContent.NPCType<UnlimitedVoid>(), 0, default, sf.Player.whoAmI);
+                    sf.domainIndex = NPC.NewNPC(entitySource, (int)position.X, (int)position.Y, ModContent.NPCType<IdleDeathGamble>(), 0, default, sf.Player.whoAmI);
                 DomainExpansionTimer = -1;
             }
 

@@ -94,7 +94,7 @@ namespace sorceryFight.Content.DomainExpansions
                 NPC.Center = Owners[NPC.whoAmI].Center;
 
                 float progress = Math.Clamp(NPC.ai[0] / maxAIValue, 0.01f, 1f);
-                BackgroundScale = GoalScale  * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
+                BackgroundScale = GoalScale * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
             }
         }
 
@@ -103,7 +103,7 @@ namespace sorceryFight.Content.DomainExpansions
             sfPlayer.disableRegenFromDE = false;
             sfPlayer.domainIndex = -1;
             sfPlayer.expandedDomain = false;
-            Owners[NPC.whoAmI].AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(210));
+            Owners[NPC.whoAmI].AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(SorceryFightPlayer.DefaultBurntTechniqueDurationFromDE));
             Owners.Remove(NPC.whoAmI);
             NPC.active = false;
         }
