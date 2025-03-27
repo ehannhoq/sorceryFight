@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.Content.CursedTechniques.Vessel;
+using System;
 
 namespace sorceryFight.Content.DomainExpansions
 {
@@ -15,13 +16,27 @@ namespace sorceryFight.Content.DomainExpansions
         public override void SetDefaults()
         {
             Scale = 0.0f;
-            BackgroundScale = 0.1f;
+            BackgroundScale = 0.0f;
             GoalScale = 2f;
 
             base.SetDefaults();
 
             if (Main.dedServ) return;
             DomainTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/Home", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+        }
+
+        public override void AI()
+        {
+            base.AI();
+            
+            float logBase = 10f;
+            float maxAIValue = 30f;
+
+            if (NPC.ai[0] > 30 && NPC.ai[0] < 200)
+            {
+                float progress = Math.Clamp((NPC.ai[0] - 30) / (maxAIValue + 170), 0.01f, 1f);
+                Scale = GoalScale * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
+            }
         }
 
         public override void NPCDomainEffect(NPC npc)
