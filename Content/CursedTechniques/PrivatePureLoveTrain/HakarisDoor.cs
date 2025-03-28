@@ -88,9 +88,9 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 Projectile.ai[2] = Projectile.height;
 
                 int roll = Main.rand.Next(0, 100);
-                if (roll < 50)
+                if (roll < 89)
                     rarity = Color.Green;
-                else if (roll < 75)
+                else if (roll < 98)
                 {
                     rarity = Color.Yellow;
                     Projectile.damage = (int)(CalculateTrueDamage(Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>()) * 1.5);

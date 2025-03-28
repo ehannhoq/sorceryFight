@@ -64,9 +64,9 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 enemyRicochets[Projectile.whoAmI] = new List<int> { 0 };
                 
                 int roll = Main.rand.Next(0, 100);
-                if (roll < 50)
+                if (roll < 89)
                     rarity[Projectile.whoAmI] = Color.Green;
-                else if (roll < 75)
+                else if (roll < 98)
                 {
                     rarity[Projectile.whoAmI] = Color.Yellow;
                     Projectile.damage = (int)(CalculateTrueDamage(Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>()) * 1.5);
