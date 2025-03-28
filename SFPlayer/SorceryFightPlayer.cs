@@ -63,6 +63,7 @@ namespace sorceryFight.SFPlayer
         public bool usedYourPotentialBefore;
         public bool usedCursedFists;
         private HashSet<int> npcsHitWithCursedFists;
+        public int idleDeathGambleBuffStrength;
         #endregion
 
         #region Domain Expansion Variables

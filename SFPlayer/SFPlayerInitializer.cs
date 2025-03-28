@@ -42,6 +42,7 @@ namespace sorceryFight.SFPlayer
             usedYourPotentialBefore = false;
             usedCursedFists = false;
             npcsHitWithCursedFists = new HashSet<int>();
+            idleDeathGambleBuffStrength = 0;
 
             expandedDomain = false;
             domainIndex = -1;

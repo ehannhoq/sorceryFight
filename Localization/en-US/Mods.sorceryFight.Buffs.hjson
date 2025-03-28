@@ -94,3 +94,13 @@ IdleDeathGambleJackpotBuff: {
 	DisplayName: Jackpot
 	Description: You've hit the jackpot. You now have near infinite Cursed Energy.
 }
+
+IdleDeathGambleBuff: {
+	DisplayName: Nice Try!
+	Description:
+		'''
+		You didn't get a jackpot this time, 
+		instead you get a small buff based 
+		on the highest number you rolled!
+		'''
+}

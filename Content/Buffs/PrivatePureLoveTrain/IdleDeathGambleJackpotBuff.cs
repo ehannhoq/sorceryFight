@@ -13,10 +13,6 @@ namespace sorceryFight.Content.Buffs.PrivatePureLoveTrain
     {
         private Dictionary<int, int> auraIndices = new Dictionary<int, int>();
 
-        public override void SetStaticDefaults()
-        {
-        }
-
         public override void Update(Player player, ref int buffIndex)
         {
             base.Update(player, ref buffIndex);
@@ -36,7 +32,7 @@ namespace sorceryFight.Content.Buffs.PrivatePureLoveTrain
             }
 
             SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
-            sfPlayer.cursedEnergy += SorceryFight.RateSecondsToTicks(500);
+            sfPlayer.cursedEnergy += SorceryFight.RateSecondsToTicks(750);
             ApplyAura(player);
 
             if (player.buffTime[buffIndex] <= 1)

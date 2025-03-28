@@ -8,6 +8,7 @@ using sorceryFight.SFPlayer;
 using CalamityMod.Events;
 using Terraria.ID;
 using sorceryFight.Content.Buffs.PrivatePureLoveTrain;
+using System;
 
 namespace sorceryFight.Content.DomainExpansions
 {
@@ -87,9 +88,9 @@ namespace sorceryFight.Content.DomainExpansions
                 if (!rolled)
                 {
                     rollSpeed = 0;
-                    rollOneValue = 9;
-                    rollTwoValue = 9;
-                    rollThreeValue = 9;
+                    rollOneValue = 3;
+                    rollTwoValue = 2;
+                    rollThreeValue = 7;
                     // rollOneValue = Main.rand.Next(8) + 1;
                     // rollTwoValue = Main.rand.Next(8) + 1;
                     // rollThreeValue = Main.rand.Next(8) + 1;
@@ -197,6 +198,10 @@ namespace sorceryFight.Content.DomainExpansions
                         return;
                     }
 
+                    int highest = Math.Max(rollOneValue, rollTwoValue);
+                    highest = Math.Max(highest, rollThreeValue);
+                    Owners[NPC.whoAmI].GetModPlayer<SorceryFightPlayer>().idleDeathGambleBuffStrength = highest;
+                    player.AddBuff(ModContent.BuffType<IdleDeathGambleBuff>(), SorceryFight.BuffSecondsToTicks(6.25f * highest + 3.75f));
                     Remove(Owners[NPC.whoAmI].GetModPlayer<SorceryFightPlayer>());
                 }
             }
