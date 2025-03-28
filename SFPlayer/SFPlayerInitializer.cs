@@ -40,6 +40,8 @@ namespace sorceryFight.SFPlayer
 
             yourPotentialSwitch = false;
             usedYourPotentialBefore = false;
+            usedCursedFists = false;
+            npcsHitWithCursedFists = new HashSet<int>();
 
             expandedDomain = false;
             domainIndex = -1;

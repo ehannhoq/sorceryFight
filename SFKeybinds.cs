@@ -8,9 +8,9 @@ namespace sorceryFight
         public static ModKeybind UseTechnique { get; private set; }
         public static ModKeybind CycleSelectedTechniqueUp { get; private set; }
         public static ModKeybind CycleSelectedTechniqueDown { get; private set; }
-
         public static ModKeybind DomainExpansion { get; private set;}
         public static ModKeybind UseRCT { get; private set; }
+        public static ModKeybind CursedFist { get; private set; }
         public override void Load()
         {
             OpenTechniqueUI = KeybindLoader.RegisterKeybind(Mod, "CursedTechniqueMenu", "T");
@@ -19,6 +19,7 @@ namespace sorceryFight
             CycleSelectedTechniqueDown = KeybindLoader.RegisterKeybind(Mod, "UseCursedTechniqueBackward", "Z");
             DomainExpansion = KeybindLoader.RegisterKeybind(Mod, "DomainExpansion", "G");
             UseRCT = KeybindLoader.RegisterKeybind(Mod, "UseRCT", "X");
+            CursedFist = KeybindLoader.RegisterKeybind(Mod, "CursedFist", "C");
         }
 
         public override void Unload()
@@ -29,6 +30,7 @@ namespace sorceryFight
             CycleSelectedTechniqueDown = null;
             DomainExpansion = null;
             UseRCT = null;
+            CursedFist = null;
         }
     }
 }
