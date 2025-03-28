@@ -16,7 +16,7 @@ namespace sorceryFight
             OpenTechniqueUI = KeybindLoader.RegisterKeybind(Mod, "CursedTechniqueMenu", "T");
             UseTechnique = KeybindLoader.RegisterKeybind(Mod, "UseCursedTechnique", "F");
             CycleSelectedTechniqueUp = KeybindLoader.RegisterKeybind(Mod, "CycleSelectedTechniqueForward", "Q");
-            CycleSelectedTechniqueDown = KeybindLoader.RegisterKeybind(Mod, "UseCursedTechniqueBackward", "Z");
+            CycleSelectedTechniqueDown = KeybindLoader.RegisterKeybind(Mod, "CycleSelectedTechniqueBackward", "Z");
             DomainExpansion = KeybindLoader.RegisterKeybind(Mod, "DomainExpansion", "G");
             UseRCT = KeybindLoader.RegisterKeybind(Mod, "UseRCT", "X");
             CursedFist = KeybindLoader.RegisterKeybind(Mod, "CursedFist", "C");
