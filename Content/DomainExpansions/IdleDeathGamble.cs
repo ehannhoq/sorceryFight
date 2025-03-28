@@ -7,6 +7,7 @@ using sorceryFight.Content.CursedTechniques.Vessel;
 using sorceryFight.SFPlayer;
 using CalamityMod.Events;
 using Terraria.ID;
+using sorceryFight.Content.Buffs.PrivatePureLoveTrain;
 
 namespace sorceryFight.Content.DomainExpansions
 {
@@ -86,9 +87,12 @@ namespace sorceryFight.Content.DomainExpansions
                 if (!rolled)
                 {
                     rollSpeed = 0;
-                    rollOneValue = Main.rand.Next(8) + 1;
-                    rollTwoValue = Main.rand.Next(8) + 1;
-                    rollThreeValue = Main.rand.Next(8) + 1;
+                    rollOneValue = 9;
+                    rollTwoValue = 9;
+                    rollThreeValue = 9;
+                    // rollOneValue = Main.rand.Next(8) + 1;
+                    // rollTwoValue = Main.rand.Next(8) + 1;
+                    // rollThreeValue = Main.rand.Next(8) + 1;
 
                     rollOneTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IdleDeathGambleAssets/{rollOneValue}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                     rollTwoTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IdleDeathGambleAssets/{rollTwoValue}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
@@ -181,7 +185,7 @@ namespace sorceryFight.Content.DomainExpansions
                 {
                     if (rollOneValue == rollTwoValue && rollOneValue == rollThreeValue)
                     {
-                        player.AddBuff(BuffID.WellFed3, SorceryFight.BuffSecondsToTicks(5));
+                        player.AddBuff(ModContent.BuffType<IdleDeathGambleJackpotBuff>(), SorceryFight.BuffSecondsToTicks(6.25f * rollOneValue + 3.75f));
                         Remove(Owners[NPC.whoAmI].GetModPlayer<SorceryFightPlayer>());
                         return;
                     }

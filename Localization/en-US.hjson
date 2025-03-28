@@ -23,6 +23,7 @@ Mods: {
 			ReverseCursedTechniqueAuraProjectile.DisplayName: Reverse Cursed Technique Aura Projectile
 			DomainAmplificationProjectile.DisplayName: Domain Amplification Projectile
 			HollowWickerBasketProjectile.DisplayName: Hollow Wicker Basket Projectile
+			IdleDeathGambleJackpotProjectile.DisplayName: Idle Death Gamble Jackpot Projectile
 		}
 	}
 }
