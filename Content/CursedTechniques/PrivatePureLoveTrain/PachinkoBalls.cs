@@ -50,7 +50,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             base.SetDefaults();
             Projectile.width = 32;
             Projectile.height = 32;
-            Projectile.tileCollide = false;
+            Projectile.tileCollide = true;
             Projectile.penetrate = -1;
             Projectile.timeLeft = (int)LifeTime;
         }
