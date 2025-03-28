@@ -14,7 +14,7 @@ namespace sorceryFight.Content.Buffs
 
         public override bool RightClick(int buffIndex)
         {
-            return true;
+            return Main.LocalPlayer.name.Equals("The Honored One");
         }
     }
 }
