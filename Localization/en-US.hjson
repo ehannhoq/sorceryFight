@@ -25,5 +25,16 @@ Mods: {
 			HollowWickerBasketProjectile.DisplayName: Hollow Wicker Basket Projectile
 			IdleDeathGambleJackpotProjectile.DisplayName: Idle Death Gamble Jackpot Projectile
 		}
+
+		Configs: {
+			ClientConfig: {
+				DisplayName: Client Config
+
+				BlackFlashScreenEffects: {
+					Label: Black Flash Screen Effects
+					Tooltip: "Toggle the screen flashing when landing a Black Flash."
+				}
+			}
+		}
 	}
 }

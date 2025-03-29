@@ -40,11 +40,14 @@ namespace sorceryFight.Content.UI.BlackFlash
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Texture2D whitePixel = TextureAssets.MagicPixel.Value;
-            Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
-            Color bgColor = frame == 0 ? Color.White : Color.Black;
+            if (ModContent.GetInstance<ClientConfig>().BlackFlashScreenEffects)
+            {
+                Texture2D whitePixel = TextureAssets.MagicPixel.Value;
+                Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
+                Color bgColor = frame == 0 ? Color.White : Color.Black;
 
-            spriteBatch.Draw(whitePixel, screenRectangle, bgColor);
+                spriteBatch.Draw(whitePixel, screenRectangle, bgColor);
+            }
 
             int frameHeight = texture.Height / FRAMES;
             int frameY = frame * frameHeight;
