@@ -90,7 +90,6 @@ public class SorceryFightUI : UIState
     public void BlackFlashImpactFrames(Vector2 npcPos)
     {
         Vector2 screenPos = npcPos - Main.screenPosition;
-        screenPos /= Main.UIScale;
         BFImpactElement bfIE = new BFImpactElement(screenPos);
         Append(bfIE);
     }

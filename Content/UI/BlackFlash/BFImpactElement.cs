@@ -54,7 +54,7 @@ namespace sorceryFight.Content.UI.BlackFlash
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
             Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
 
-            spriteBatch.Draw(texture, screenPos, sourceRectangle, Color.White, 0f, origin, 0.75f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, screenPos / Main.UIScale, sourceRectangle, Color.White, 0f, origin, 1f, SpriteEffects.None, 0f);
         }
     }
 }

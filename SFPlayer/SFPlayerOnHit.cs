@@ -7,6 +7,7 @@ namespace sorceryFight.SFPlayer
 {
     public partial class SorceryFightPlayer : ModPlayer
     {
+
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (blackFlashTimeLeft >= 60 && blackFlashTime <= 120) // 20 frame interval (1/3 second)

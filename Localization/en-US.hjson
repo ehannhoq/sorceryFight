@@ -32,7 +32,7 @@ Mods: {
 
 				BlackFlashScreenEffects: {
 					Label: Black Flash Screen Effects
-					Tooltip: "Toggle the screen flashing when landing a Black Flash."
+					Tooltip: Toggle the screen flashing when landing a Black Flash.
 				}
 			}
 		}
