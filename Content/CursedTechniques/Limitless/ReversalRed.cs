@@ -13,8 +13,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 {
     public class ReversalRed : CursedTechnique
     {
-        public static readonly int FRAME_COUNT = 7; 
-        public static readonly int TICKS_PER_FRAME = 5;
+        public static readonly int FRAME_COUNT = 9; 
+        public static readonly int TICKS_PER_FRAME = 3;
 
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.ReversalRed.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.ReversalRed.Description");
@@ -99,7 +99,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     Projectile.Center = player.Center;
                 else
                 {
-                    float goalScale = 2f;
+                    float goalScale = 1.75f;
 
                     if (animScale < goalScale)
                     {
@@ -124,7 +124,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 animating = false;
                 Projectile.velocity = Vector2.Zero;
-                animScale = 2f;
+                animScale = 1.75f;
 
                 if (!spawnedFromPurple)
                 {
