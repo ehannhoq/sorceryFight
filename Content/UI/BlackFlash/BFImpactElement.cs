@@ -18,7 +18,7 @@ namespace sorceryFight.Content.UI.BlackFlash
         public BFImpactElement(Vector2 screenPos) : base()
         {
             this.screenPos = screenPos;
-            texture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/BlackFlash/Impact_Frames", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            texture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/BlackFlash/ImpactFrames", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
 
         public override void Update(GameTime gameTime)
