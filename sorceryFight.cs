@@ -21,6 +21,13 @@ namespace sorceryFight
             "The Honored One",
 			"ehann",
 			"gooloohoodoo",
+			"gooloohoodoo1",
+			"gooloohoodoo2",
+			"gooloohoodoo3",
+			"gooloohoodoo4",
+			"gooloohoodoo5",
+			"gooloohoodoo6",
+			"gooloohoodoo7",
 			"Perseus",
 			"TheRealCriky"
         ];
