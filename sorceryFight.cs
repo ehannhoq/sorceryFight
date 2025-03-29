@@ -14,9 +14,17 @@ using Terraria.ModLoader;
 
 namespace sorceryFight
 {
-	// Please read https://github.com/tModLoader/tModLoader/wiki/Basic-tModLoader-Modding-Guide#mod-skeleton-contents for more information about the various files in a mod.
 	public class SorceryFight : Mod
 	{
+		public static List<string> DevModeNames =
+        [
+            "The Honored One",
+			"ehann",
+			"gooloohoodoo",
+			"Perseus",
+			"TheRealCriky"
+        ];
+
 		/// <summary>
 		/// Converts seconds into buff time.
 		/// </summary>
@@ -35,23 +43,6 @@ namespace sorceryFight
 		public static float RateSecondsToTicks(float ticks)
 		{
 			return ticks / 60;
-		}
-
-		public override void HandlePacket(BinaryReader reader, int whoAmI)
-		{
-			byte messageType = reader.ReadByte();
-			switch (messageType)
-			{
-				case 1:
-					int targetPlayer = reader.ReadInt32();
-					int bossType = reader.ReadInt32();
-
-					if (Main.netMode == NetmodeID.MultiplayerClient && Main.myPlayer == targetPlayer)
-					{
-						Main.player[targetPlayer].GetModPlayer<SorceryFightPlayer>().AddDefeatedBoss(bossType);
-					}
-					break;
-			}
 		}
 
 	}
