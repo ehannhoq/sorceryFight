@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using sorceryFight.Content.UI.TechniqueSelector;
 using System;
+using sorceryFight.Content.UI.BlackFlash;
 
 public class SorceryFightUI : UIState
 {
@@ -80,7 +81,17 @@ public class SorceryFightUI : UIState
             }
         }
 
+        if (player.sfUI == null)
+        {
+            player.sfUI = this;
+        }
+    }
 
+    public void BlackFlashImpactFrames(Vector2 npcPos)
+    {
+        Vector2 screenPos = npcPos - Main.screenPosition;
+        BFImpactElement bfIE = new BFImpactElement(screenPos);
+        Append(bfIE);
     }
 
     public void LoadCEBar()

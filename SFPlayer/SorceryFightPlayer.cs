@@ -14,6 +14,7 @@ using Terraria.ID;
 using CalamityMod;
 using CalamityMod.CalPlayer.Dashes;
 using System;
+using Terraria.UI;
 
 namespace sorceryFight.SFPlayer
 {
@@ -64,6 +65,7 @@ namespace sorceryFight.SFPlayer
         public bool usedCursedFists;
         private HashSet<int> npcsHitWithCursedFists;
         public int idleDeathGambleBuffStrength;
+        public SorceryFightUI sfUI;
         #endregion
 
         #region Domain Expansion Variables
@@ -87,9 +89,18 @@ namespace sorceryFight.SFPlayer
         public int sukunasFingerConsumed;
         #endregion
 
-
+        #region RCT
         public bool unlockedRCT;
         public int rctAuraIndex;
+        #endregion
+
+        #region Black Flash
+        public int blackFlashTime;
+        public int blackFlashTimeLeft;
+        public bool blackFlashHit; // for UI only
+        public int blackFlashCounter;
+
+        #endregion
 
         public override void PostUpdate()
         {
@@ -133,8 +144,15 @@ namespace sorceryFight.SFPlayer
                 cursedEnergy = 0;
             }
 
+            if (blackFlashTimeLeft > 0)
+            {
+                if (blackFlashTimeLeft-- < 0)
+                    blackFlashTimeLeft = 0;
+            }
+
             disableRegenFromBuffs = false;
             disableCurseTechniques = false;
+            blackFlashTime = 120;
 
             PostAccessoryUpdate();
         }
@@ -171,6 +189,18 @@ namespace sorceryFight.SFPlayer
 
             if (SFKeybinds.DomainExpansion.JustReleased)
                 DomainExpansion();
+
+            if (SFKeybinds.AttemptBlackFlash.JustPressed)
+            {
+                if (Player.HasBuff<BurntTechnique>())
+                {
+                    int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
+                    Main.combatText[index].lifeTime = 60;
+                    return;
+                }
+
+                blackFlashTimeLeft = blackFlashTime;
+            }
 
             if (SFKeybinds.CursedFist.JustPressed)
             {
@@ -357,11 +387,6 @@ namespace sorceryFight.SFPlayer
 
             if (innateTechnique.Name == "Vessel")
                 Player.AddBuff(ModContent.BuffType<SukunasVesselBuff>(), 2);
-        }
-
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            base.OnHitNPC(target, hit, damageDone);
         }
     }
 }

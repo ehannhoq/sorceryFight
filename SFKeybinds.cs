@@ -11,6 +11,8 @@ namespace sorceryFight
         public static ModKeybind DomainExpansion { get; private set;}
         public static ModKeybind UseRCT { get; private set; }
         public static ModKeybind CursedFist { get; private set; }
+        public static ModKeybind AttemptBlackFlash { get; private set;}
+
         public override void Load()
         {
             OpenTechniqueUI = KeybindLoader.RegisterKeybind(Mod, "CursedTechniqueMenu", "T");
@@ -20,6 +22,7 @@ namespace sorceryFight
             DomainExpansion = KeybindLoader.RegisterKeybind(Mod, "DomainExpansion", "G");
             UseRCT = KeybindLoader.RegisterKeybind(Mod, "UseRCT", "X");
             CursedFist = KeybindLoader.RegisterKeybind(Mod, "CursedFist", "C");
+            AttemptBlackFlash = KeybindLoader.RegisterKeybind(Mod, "AttemptBlackFlash", "Mouse3");
         }
 
         public override void Unload()
@@ -31,6 +34,7 @@ namespace sorceryFight
             DomainExpansion = null;
             UseRCT = null;
             CursedFist = null;
+            AttemptBlackFlash = null;
         }
     }
 }

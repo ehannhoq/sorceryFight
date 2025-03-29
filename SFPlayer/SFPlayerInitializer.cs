@@ -54,6 +54,11 @@ namespace sorceryFight.SFPlayer
             rctAuraIndex = -1;
 
             celestialAmulet = false;
+
+            blackFlashTime = 120;
+            blackFlashTimeLeft = 0;
+            blackFlashHit = false;
+            blackFlashCounter = 0;
         }
         public override void SaveData(TagCompound tag)
         {
