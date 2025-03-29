@@ -186,7 +186,7 @@ namespace sorceryFight.Content.DomainExpansions
                 {
                     if (rollOneValue == rollTwoValue && rollOneValue == rollThreeValue)
                     {
-                        player.AddBuff(ModContent.BuffType<IdleDeathGambleJackpotBuff>(), SorceryFight.BuffSecondsToTicks(6.25f * rollOneValue + 3.75f));
+                        player.AddBuff(ModContent.BuffType<IdleDeathGambleJackpotBuff>(), SFUtils.BuffSecondsToTicks(6.25f * rollOneValue + 3.75f));
                         Remove(Owners[NPC.whoAmI].GetModPlayer<SorceryFightPlayer>());
                         return;
                     }
@@ -201,7 +201,7 @@ namespace sorceryFight.Content.DomainExpansions
                     int highest = Math.Max(rollOneValue, rollTwoValue);
                     highest = Math.Max(highest, rollThreeValue);
                     Owners[NPC.whoAmI].GetModPlayer<SorceryFightPlayer>().idleDeathGambleBuffStrength = highest;
-                    player.AddBuff(ModContent.BuffType<IdleDeathGambleBuff>(), SorceryFight.BuffSecondsToTicks(6.25f * highest + 3.75f));
+                    player.AddBuff(ModContent.BuffType<IdleDeathGambleBuff>(), SFUtils.BuffSecondsToTicks(6.25f * highest + 3.75f));
                     Remove(Owners[NPC.whoAmI].GetModPlayer<SorceryFightPlayer>());
                 }
             }

@@ -32,7 +32,7 @@ namespace sorceryFight.Content.Buffs.PrivatePureLoveTrain
             }
 
             SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
-            sfPlayer.cursedEnergy += SorceryFight.RateSecondsToTicks(750);
+            sfPlayer.cursedEnergy += SFUtils.RateSecondsToTicks(750);
             ApplyAura(player);
 
             if (player.buffTime[buffIndex] <= 1)

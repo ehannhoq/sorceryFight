@@ -90,7 +90,7 @@ namespace sorceryFight.SFPlayer
             }
 
             duration -= duration * percentReduction;
-            Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(duration));
+            Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SFUtils.BuffSecondsToTicks(duration));
         }
     }
 }

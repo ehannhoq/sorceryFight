@@ -206,7 +206,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 if (Main.myPlayer == Projectile.owner)
                 {
                     Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
-                    player.AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(5));
+                    player.AddBuff(ModContent.BuffType<BurntTechnique>(), SFUtils.BuffSecondsToTicks(5));
                 }
             }
         }

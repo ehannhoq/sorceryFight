@@ -39,7 +39,7 @@ namespace sorceryFight.Content.DomainExpansions
             sfPlayer.disableRegenFromDE = true;
             float sqrDistanceFromDE = Vector2.DistanceSquared(NPC.Center, Owners[NPC.whoAmI].Center);
             float totalCPS = CostPerSecond > (sqrDistanceFromDE / 15000f) ? CostPerSecond : (sqrDistanceFromDE / 15000f);
-            sfPlayer.cursedEnergy -= SorceryFight.RateSecondsToTicks(totalCPS);
+            sfPlayer.cursedEnergy -= SFUtils.RateSecondsToTicks(totalCPS);
 
             if (sfPlayer.Player.dead || sfPlayer.cursedEnergy < 2)
             {

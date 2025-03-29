@@ -119,14 +119,14 @@ namespace sorceryFight.SFPlayer
 
             if (cursedEnergy > 0)
             {
-                cursedEnergy -= SorceryFight.RateSecondsToTicks(cursedEnergyUsagePerSecond);
+                cursedEnergy -= SFUtils.RateSecondsToTicks(cursedEnergyUsagePerSecond);
             }
 
             bool disabledRegen = disableRegenFromBuffs || disableRegenFromProjectiles || disableRegenFromDE;
 
             if (cursedEnergy < maxCursedEnergy && !disabledRegen)
             {
-                cursedEnergy += SorceryFight.RateSecondsToTicks(cursedEnergyRegenPerSecond);
+                cursedEnergy += SFUtils.RateSecondsToTicks(cursedEnergyRegenPerSecond);
             }
 
             cursedEnergyUsagePerSecond = 0f;

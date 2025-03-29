@@ -64,7 +64,7 @@ namespace sorceryFight.Content.DomainExpansions
             }
 
             sfPlayer.disableRegenFromDE = true;
-            sfPlayer.cursedEnergy -= SorceryFight.RateSecondsToTicks(CostPerSecond);
+            sfPlayer.cursedEnergy -= SFUtils.RateSecondsToTicks(CostPerSecond);
 
             if (Owners[NPC.whoAmI].dead || sfPlayer.cursedEnergy < 2)
             {
@@ -103,7 +103,7 @@ namespace sorceryFight.Content.DomainExpansions
             sfPlayer.disableRegenFromDE = false;
             sfPlayer.domainIndex = -1;
             sfPlayer.expandedDomain = false;
-            Owners[NPC.whoAmI].AddBuff(ModContent.BuffType<BurntTechnique>(), SorceryFight.BuffSecondsToTicks(SorceryFightPlayer.DefaultBurntTechniqueDurationFromDE));
+            Owners[NPC.whoAmI].AddBuff(ModContent.BuffType<BurntTechnique>(), SFUtils.BuffSecondsToTicks(SorceryFightPlayer.DefaultBurntTechniqueDurationFromDE));
             Owners.Remove(NPC.whoAmI);
             NPC.active = false;
         }
