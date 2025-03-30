@@ -18,6 +18,7 @@ public class SorceryFightUI : UIState
     public CursedEnergyBar ceBar;
     public CursedTechniqueMenu ctMenu;
     public PassiveTechniqueSelector ptMenu;
+    public FlowStateBar flowStateBar;
     private List<UIElement> elementsToRemove;
     bool initialized;
 
@@ -26,6 +27,7 @@ public class SorceryFightUI : UIState
         LoadCEBar();
         elementsToRemove = new List<UIElement>();
         initialized = false;
+        flowStateBar = null;
     }
 
     public override void Update(GameTime gameTime)
@@ -60,7 +62,7 @@ public class SorceryFightUI : UIState
 
             PassiveTechniqueSelector ptSelector = new PassiveTechniqueSelector();
             Append(ptSelector);
-            
+
             Append(ceBar);
         }
 
@@ -85,19 +87,40 @@ public class SorceryFightUI : UIState
         {
             player.sfUI = this;
         }
+
+        if (Elements.Contains(flowStateBar))
+        {
+            flowStateBar.Left.Set(ceBar.Left.Pixels - 10, 0f);
+            flowStateBar.Top.Set(ceBar.Top.Pixels + 45, 0f);
+        }
     }
 
-    public void BlackFlashImpactFrames(Vector2 npcPos)
+    public void InitiateBlackFlashUI(Vector2 npcPos, bool showFlowState)
     {
-        Vector2 screenPos = npcPos - Main.screenPosition;
-        BFImpactElement bfIE = new BFImpactElement(screenPos);
-        Append(bfIE);
+        if (ModContent.GetInstance<ClientConfig>().BlackFlashScreenEffects)
+        {
+            Vector2 screenPos = npcPos - Main.screenPosition;
+            BFImpactElement bfIE = new BFImpactElement(screenPos);
+            Append(bfIE);
+        }
+
+        if (showFlowState && !Elements.Contains(flowStateBar))
+        {
+            flowStateBar = new FlowStateBar();
+            Append(flowStateBar);
+        }
+    }
+
+    public void ClearBlackFlashUI()
+    {
+        if (Elements.Contains(flowStateBar))
+            Elements.Remove(flowStateBar);
     }
 
     public void LoadCEBar()
     {
         if (Main.dedServ) return;
-        
+
         string borderBarPath = "sorceryFight/Content/UI/CursedEnergyBar/CursedEnergyBarBorder";
         string fillBarPath = "sorceryFight/Content/UI/CursedEnergyBar/CursedEnergyBarFill";
 

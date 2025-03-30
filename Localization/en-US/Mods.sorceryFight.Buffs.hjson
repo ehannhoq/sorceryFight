@@ -104,3 +104,14 @@ IdleDeathGambleBuff: {
 		on the highest number you rolled!
 		'''
 }
+
+FlowState: {
+	DisplayName: Flow State
+	Description:
+		'''
+		You've entered a flow state.
+		Fill up your Black Flash meter
+		to deal a massive increase in 
+		damage on your last hit.
+		'''
+}

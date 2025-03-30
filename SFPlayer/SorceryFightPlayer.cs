@@ -191,16 +191,7 @@ namespace sorceryFight.SFPlayer
                 DomainExpansion();
 
             if (SFKeybinds.AttemptBlackFlash.JustPressed)
-            {
-                if (Player.HasBuff<BurntTechnique>())
-                {
-                    int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
-                    Main.combatText[index].lifeTime = 60;
-                    return;
-                }
-
                 blackFlashTimeLeft = blackFlashTime;
-            }
 
             if (SFKeybinds.CursedFist.JustPressed)
             {
@@ -387,6 +378,9 @@ namespace sorceryFight.SFPlayer
 
             if (innateTechnique.Name == "Vessel")
                 Player.AddBuff(ModContent.BuffType<SukunasVesselBuff>(), 2);
+
+            if (blackFlashCounter > 0)
+                Player.AddBuff(ModContent.BuffType<FlowState>(), 2);
         }
     }
 }
