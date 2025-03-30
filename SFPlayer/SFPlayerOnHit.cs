@@ -1,5 +1,7 @@
 using System;
 using CalamityMod;
+using CalamityMod.Buffs.StatDebuffs;
+using CalamityMod.Items.Accessories;
 using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs;
@@ -46,7 +48,9 @@ namespace sorceryFight.SFPlayer
         {
             if (hit.DamageType != DamageClass.Magic && hit.DamageType != DamageClass.Melee &&
                 hit.DamageType != DamageClass.Ranged && hit.DamageType != DamageClass.Summon &&
-                hit.DamageType != RogueDamageClass.Throwing) return;
+                hit.DamageType.CountsAsClass(new CalamityMod.RogueDamageClass()) && hit.DamageType.CountsAsClass(new CalamityMod.TrueMeleeDamageClass()))
+                return;
+            
 
             blackFlashTimeLeft = 0;
 
