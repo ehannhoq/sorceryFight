@@ -148,6 +148,11 @@ namespace sorceryFight.SFPlayer
             {
                 if (blackFlashTimeLeft-- < 0)
                     blackFlashTimeLeft = 0;
+                
+                if (blackFlashTimeLeft == 1)
+                {
+                    ResetBlackFlashState();
+                }
             }
 
             disableRegenFromBuffs = false;

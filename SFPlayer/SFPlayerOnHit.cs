@@ -16,14 +16,21 @@ namespace sorceryFight.SFPlayer
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            bool guaranteedBlackFlash = blackFlashCounter >= MAX_BLACK_FLASH_HITS - 1;
-            bool validBlackFlashWindow = blackFlashTimeLeft >= 60 && blackFlashTime <= 120;
-
-            if (guaranteedBlackFlash || validBlackFlashWindow)
+            if (blackFlashTimeLeft != -1)
             {
-                BlackFlash(target, hit, damageDone, guaranteedBlackFlash);
+                bool guaranteedBlackFlash = blackFlashCounter >= MAX_BLACK_FLASH_HITS - 1;
+                bool validBlackFlashWindow = blackFlashTimeLeft >= 60 && blackFlashTime <= 120;
 
-                if (blackFlashCounter >= MAX_BLACK_FLASH_HITS)
+                if (guaranteedBlackFlash || validBlackFlashWindow)
+                {
+                    BlackFlash(target, hit, damageDone, guaranteedBlackFlash);
+
+                    if (blackFlashCounter >= MAX_BLACK_FLASH_HITS)
+                    {
+                        ResetBlackFlashState();
+                    }
+                }
+                else if (blackFlashTimeLeft < 60 || blackFlashTime > 120)
                 {
                     ResetBlackFlashState();
                 }
@@ -50,9 +57,9 @@ namespace sorceryFight.SFPlayer
                 hit.DamageType != DamageClass.Ranged && hit.DamageType != DamageClass.Summon &&
                 hit.DamageType.CountsAsClass(new CalamityMod.RogueDamageClass()) && hit.DamageType.CountsAsClass(new CalamityMod.TrueMeleeDamageClass()))
                 return;
-            
 
-            blackFlashTimeLeft = 0;
+
+            blackFlashTimeLeft = -1; 
 
             Vector2 direction = Player.Center.DirectionTo(target.Center) * 30f;
 
