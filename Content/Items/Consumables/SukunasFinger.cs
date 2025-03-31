@@ -29,8 +29,16 @@ namespace sorceryFight.Content.Items.Consumables
                 
                 if (!sf.innateTechnique.Name.Equals("Shrine") && !sf.innateTechnique.Name.Equals("Vessel")) return false;
 
-                if (sf.sukunasFingerConsumed++ < 20) return true;
-                else return false;
+                if (sf.sukunasFingerConsumed < 20)
+                {
+                    sf.sukunasFingerConsumed ++;
+                    return true;
+                }
+                else
+                {
+                    sf.sukunasFingerConsumed = 20;
+                    return false;
+                }
             }
             return false;
         }
