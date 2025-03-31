@@ -99,6 +99,8 @@ namespace sorceryFight.SFPlayer
         public int blackFlashTimeLeft;
         public bool blackFlashHit; // for UI only
         public int blackFlashCounter;
+        public int lowerWindowTime;
+        public int upperWindowTime;
 
         #endregion
 
@@ -144,11 +146,13 @@ namespace sorceryFight.SFPlayer
                 cursedEnergy = 0;
             }
 
-            if (blackFlashTimeLeft > 0)
+            if (blackFlashTimeLeft != 0)
             {
-                if (blackFlashTimeLeft-- < 0)
-                    blackFlashTimeLeft = 0;
-                
+                if (blackFlashTimeLeft > 0) 
+                    blackFlashTimeLeft--;
+                else if (blackFlashTimeLeft < 0)
+                    blackFlashTimeLeft++;
+
                 if (blackFlashTimeLeft == 1)
                 {
                     ResetBlackFlashState();
@@ -157,7 +161,7 @@ namespace sorceryFight.SFPlayer
 
             disableRegenFromBuffs = false;
             disableCurseTechniques = false;
-            blackFlashTime = 120;
+            blackFlashTime = 30;
 
             PostAccessoryUpdate();
         }
@@ -195,8 +199,14 @@ namespace sorceryFight.SFPlayer
             if (SFKeybinds.DomainExpansion.JustReleased)
                 DomainExpansion();
 
-            if (SFKeybinds.AttemptBlackFlash.JustPressed)
+            if (SFKeybinds.AttemptBlackFlash.JustPressed && blackFlashTimeLeft == 0)
+            {
                 blackFlashTimeLeft = blackFlashTime;
+                int variation = Main.rand.Next(-3, 4);
+                lowerWindowTime = innateTechnique.Name == "Vessel" ? 14 - blackFlashCounter / 2 + variation: 15 - blackFlashCounter / 2 + variation;
+                upperWindowTime = innateTechnique.Name == "Vessel" ? 16 + blackFlashCounter / 2 + variation: 16 + blackFlashCounter / 2 + variation;
+                sfUI.BlackFlashWindow(lowerWindowTime, upperWindowTime);
+            }
 
             if (SFKeybinds.CursedFist.JustPressed)
             {

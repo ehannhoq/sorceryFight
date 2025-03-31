@@ -11,6 +11,7 @@ using Terraria.UI;
 using sorceryFight.Content.UI.TechniqueSelector;
 using System;
 using sorceryFight.Content.UI.BlackFlash;
+using sorceryFight.Content.UI;
 
 public class SorceryFightUI : UIState
 {
@@ -115,6 +116,21 @@ public class SorceryFightUI : UIState
     {
         if (Elements.Contains(flowStateBar))
             Elements.Remove(flowStateBar);
+
+        for (int i = 0; i < Elements.Count; i++)
+        {
+            if (Elements[i].GetType() == typeof(BlackFlashWindow))
+            {
+                RemoveElement(Elements[i]);
+                break;
+            }
+        }
+    }
+
+    public void BlackFlashWindow(int lowerBound, int upperBound)
+    {
+        BlackFlashWindow blackFlashWindow = new BlackFlashWindow(lowerBound, upperBound);
+        Append(blackFlashWindow);
     }
 
     public void LoadCEBar()

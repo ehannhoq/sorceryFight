@@ -16,21 +16,21 @@ namespace sorceryFight.SFPlayer
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (blackFlashTimeLeft != -1)
+            if (blackFlashTimeLeft >= 0)
             {
                 bool guaranteedBlackFlash = blackFlashCounter >= MAX_BLACK_FLASH_HITS - 1;
-                bool validBlackFlashWindow = blackFlashTimeLeft >= 60 && blackFlashTime <= 120;
+                bool validBlackFlashWindow = blackFlashTimeLeft >= lowerWindowTime && blackFlashTimeLeft <= upperWindowTime;
 
                 if (guaranteedBlackFlash || validBlackFlashWindow)
                 {
-                    BlackFlash(target, hit, damageDone, guaranteedBlackFlash);
+                    BlackFlash(target, hit, damageDone);
 
                     if (blackFlashCounter >= MAX_BLACK_FLASH_HITS)
                     {
                         ResetBlackFlashState();
                     }
                 }
-                else if (blackFlashTimeLeft < 60 || blackFlashTime > 120)
+                else if (blackFlashTimeLeft < lowerWindowTime || blackFlashTimeLeft > upperWindowTime)
                 {
                     ResetBlackFlashState();
                 }
@@ -51,7 +51,7 @@ namespace sorceryFight.SFPlayer
             ResetBlackFlashState();
         }
 
-        private void BlackFlash(NPC target, NPC.HitInfo hit, int damageDone, bool guaranteed)
+        private void BlackFlash(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (hit.DamageType != DamageClass.Magic && hit.DamageType != DamageClass.Melee &&
                 hit.DamageType != DamageClass.Ranged && hit.DamageType != DamageClass.Summon &&
@@ -59,7 +59,7 @@ namespace sorceryFight.SFPlayer
                 return;
 
 
-            blackFlashTimeLeft = -1; 
+            blackFlashTimeLeft = -60; // 1 second cooldown between black flashes
 
             Vector2 direction = Player.Center.DirectionTo(target.Center) * 30f;
 
