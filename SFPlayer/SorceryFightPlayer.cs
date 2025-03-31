@@ -97,7 +97,6 @@ namespace sorceryFight.SFPlayer
         #region Black Flash
         public int blackFlashTime;
         public int blackFlashTimeLeft;
-        public bool blackFlashHit; // for UI only
         public int blackFlashCounter;
         public int lowerWindowTime;
         public int upperWindowTime;

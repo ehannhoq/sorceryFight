@@ -50,14 +50,17 @@ namespace sorceryFight.SFPlayer
             sixEyes = false;
             uniqueBodyStructure = false;
 
+            sukunasFingerConsumed = 0;
+
             unlockedRCT = false;
             rctAuraIndex = -1;
 
             celestialAmulet = false;
 
-            blackFlashTime = 120;
-            blackFlashTimeLeft = 0;
-            blackFlashHit = false;
+            blackFlashTime = 30;
+            lowerWindowTime = 15;
+            upperWindowTime = 16;
+            blackFlashTimeLeft = -60;
             blackFlashCounter = 0;
         }
         public override void SaveData(TagCompound tag)
@@ -93,6 +96,9 @@ namespace sorceryFight.SFPlayer
             generalBooleans.AddWithCondition("uniqueBodyStructure", uniqueBodyStructure);
             tag["generalBooleans"] = generalBooleans;
 
+            if (innateTechnique.Name.Equals("Shrine") || innateTechnique.Name.Equals("Vessel"))
+                tag["sukunasFingerConsumed"] = sukunasFingerConsumed;
+
         }
 
         public override void LoadData(TagCompound tag)
@@ -126,6 +132,9 @@ namespace sorceryFight.SFPlayer
 
             maxCursedEnergy = calculateBaseMaxCE();
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
+
+            if (innateTechnique.Name.Equals("Shrine") || innateTechnique.Name.Equals("Vessel"))
+                sukunasFingerConsumed = tag.ContainsKey("sukunasFingerConsumed") ? tag.GetInt("sukunasFingerConsumed") : 0;
         }
 
         public float calculateBaseMaxCE()
