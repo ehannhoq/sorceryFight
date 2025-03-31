@@ -39,7 +39,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         }
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
+            return sf.sukunasFingerConsumed >= 17;
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)

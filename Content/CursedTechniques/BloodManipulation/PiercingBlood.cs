@@ -38,7 +38,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
+            return sf.sukunasFingerConsumed >= 19;
         }
 
         public override void SetStaticDefaults()
