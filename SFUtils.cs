@@ -117,14 +117,15 @@ public static class SFUtils
         spriteBatch.Draw(line, start, null, color, rotation, line.Size() * Vector2.UnitY * 0.5f, scale, SpriteEffects.None, 0f);
     }
 
-    /// <param name="denominator">The chance denominator for the roll</param>
-    /// <returns>True if a a 1 in denominator is rolled, false otherwise</returns>
-    public static bool Roll(int denominator)
-    {
-        int roll = Main.rand.Next(0, denominator);
 
-        if (roll == 0) return true;
-        return false;
+    /// <summary>
+    /// Returns true if a random number between 0 and 99 is less than <paramref name="percentChance"/>, false otherwise.
+    /// </summary>
+    /// <param name="percentChance">The percentage chance of returning true.</param>
+    public static bool Roll(int percentChance)
+    {
+        int roll = Main.rand.Next(0, 100);
+        return roll < percentChance;
     }
 
     /// <summary>
@@ -166,8 +167,8 @@ public static class SFUtils
 
 public static class SFConstants
 {
-    public const int SixEyesDenominator = 10;
-    public const int UniqueBodyStructureDenominator = 15;
-    public const int SukunasVesselDenominator = 2;
+    public const int SixEyesPercent = 10;
+    public const int UniqueBodyStructurePercent = 15;
+    public const int SukunasVesselPercent = 50;
 
 }

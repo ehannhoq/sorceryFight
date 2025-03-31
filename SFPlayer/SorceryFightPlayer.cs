@@ -356,21 +356,21 @@ namespace sorceryFight.SFPlayer
         public void RollForPlayerAttributes(bool isReroll = false)
         {
             bool successfulRoll = false;
-            if (SFUtils.Roll(SFConstants.SixEyesDenominator) && !sixEyes)
+            if (SFUtils.Roll(SFConstants.SixEyesPercent) && !sixEyes)
             {
                 sixEyes = true;
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.SixEyes"), Color.Khaki, Player.whoAmI);
                 successfulRoll = true;
             }
 
-            if (SFUtils.Roll(SFConstants.UniqueBodyStructureDenominator) && !uniqueBodyStructure)
+            if (SFUtils.Roll(SFConstants.UniqueBodyStructurePercent) && !uniqueBodyStructure)
             {
                 uniqueBodyStructure = true;
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.UniqueBodyStructure"), Color.Khaki, Player.whoAmI);
                 successfulRoll = true;
             }
 
-            if (SFUtils.Roll(SFConstants.SukunasVesselDenominator) && innateTechnique.Name == "Shrine")
+            if (SFUtils.Roll(SFConstants.SukunasVesselPercent) && innateTechnique.Name == "Shrine")
             {
                 innateTechnique = new VesselTechnique();
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.SukunasVessel"), Color.Khaki, Player.whoAmI);
