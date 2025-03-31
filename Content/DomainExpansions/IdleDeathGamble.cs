@@ -88,12 +88,9 @@ namespace sorceryFight.Content.DomainExpansions
                 if (!rolled)
                 {
                     rollSpeed = 0;
-                    rollOneValue = 3;
-                    rollTwoValue = 2;
-                    rollThreeValue = 7;
-                    // rollOneValue = Main.rand.Next(8) + 1;
-                    // rollTwoValue = Main.rand.Next(8) + 1;
-                    // rollThreeValue = Main.rand.Next(8) + 1;
+                    rollOneValue = Main.rand.Next(8) + 1;
+                    rollTwoValue = Main.rand.Next(8) + 1;
+                    rollThreeValue = Main.rand.Next(8) + 1;
 
                     rollOneTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IdleDeathGambleAssets/{rollOneValue}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                     rollTwoTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IdleDeathGambleAssets/{rollTwoValue}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;

@@ -21,5 +21,20 @@ MalevolentShrine: {
 
 Home: {
 	DisplayName: Hometown
-	Description: placeholder
+	Description:
+		'''
+		A cousin of Malevolent Shrine; except confined
+		within its barrier, and striking enemies at their
+		soul, ignoring defense.
+		'''
+}
+
+IdleDeathGamble: {
+	DisplayName: Idle Death Gamble
+	Description:
+		'''
+		A Domain Expansion of luck; inspired by the
+		classic pachinko machine. Try to match three
+		symbols and get the jackpot!
+		'''
 }
