@@ -33,6 +33,11 @@ RCTIcon: {
 		'''
 }
 
+SukunasFingerIcon: {
+	Info: You've eaten Sukuna's Finger? How are you... alive?
+	Consumed: fingers consumed.
+}
+
 CursedEnergyBar: {
 	CE: Cursed Energy:
 	RegenRate: Regeneration Rate:

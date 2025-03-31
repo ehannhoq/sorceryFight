@@ -27,7 +27,7 @@ namespace sorceryFight.Content.Items.Consumables
             {
                 SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
                 
-                if (!sf.innateTechnique.Name.Equals("Shrine")) return false;
+                if (!sf.innateTechnique.Name.Equals("Shrine") && !sf.innateTechnique.Name.Equals("Vessel")) return false;
 
                 if (sf.sukunasFingerConsumed++ < 20) return true;
                 else return false;
