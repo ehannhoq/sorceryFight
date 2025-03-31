@@ -14,8 +14,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
     {
         public static Texture2D texture;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.PiercingBlood.DisplayName");
-        public override string Description => "placeholder";
-        public override string LockedDescription => "placeholder";
+        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PiercingBlood.Description");
+        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PiercingBlood.LockedDescription");
         public override float Cost => 10f;
         public override Color textColor => new Color(132, 4, 4);
         public override bool DisplayNameInGame => true;

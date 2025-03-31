@@ -335,12 +335,12 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 icon.Left.Set(originPositions[i].X, 0f);
                 icon.Top.Set(originPositions[i].Y, 0f);
 
-                techniqueIcons.Add(icon);
                 Append(icon);
+                techniqueIcons.Add(icon);
             }
         }
 
-        void DrawPPLT(Vector2 center, SorceryFightPlayer player)
+        void DrawPPLT(Vector2 _, SorceryFightPlayer player)
         {
             List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
 
