@@ -16,7 +16,6 @@ namespace sorceryFight.SFPlayer
             bool immune = infinity || hollowWickerBasket;
             if (Player == Main.LocalPlayer && immune)
             {
-                Player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>().adrenaline = 0;
                 return true;
             }
 
@@ -34,6 +33,8 @@ namespace sorceryFight.SFPlayer
                 AddBurntTechniqueDebuff(DefaultBurntTechniqueDuration);
             }
 
+            if (infinity || hollowWickerBasket)
+                Player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>().adrenaline = 0;
 
             foreach (PassiveTechnique passiveTechnique in innateTechnique.PassiveTechniques)
             {
