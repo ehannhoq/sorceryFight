@@ -101,10 +101,13 @@ namespace sorceryFight.Content.CursedTechniques
             Projectile.rotation = reader.ReadSingle();
         }
 
-        public override bool PreKill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
-            Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
-            return base.PreKill(timeLeft);
+            if (Projectile.owner == Main.myPlayer)
+            {
+                Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
+            }
+            base.OnKill(timeLeft);
         }
     }
 }
