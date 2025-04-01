@@ -32,6 +32,8 @@ namespace sorceryFight.Content.Items.Consumables
                 if (sf.sukunasFingerConsumed < 20)
                 {
                     sf.sukunasFingerConsumed ++;
+                    if (sf.innateTechnique.Name.Equals("Vessel"))
+                        SorceryFightUI.UpdateTechniqueUI.Invoke();
                     return true;
                 }
                 else
