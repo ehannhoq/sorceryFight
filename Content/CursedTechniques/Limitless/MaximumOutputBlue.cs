@@ -23,8 +23,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override float Cost { get; } = 150f;
         public override Color textColor { get; } = new Color(108, 158, 240);
         public override bool DisplayNameInGame { get; } = true;
-        public override int Damage => 200;
-        public override int MasteryDamageMultiplier => 104;
+        public override int Damage => 70;
+        public override int MasteryDamageMultiplier => 20;
         public override float Speed { get; } = 20f;
         public override float LifeTime { get; } = 120f;
         public override bool Unlocked(SorceryFightPlayer sf)
