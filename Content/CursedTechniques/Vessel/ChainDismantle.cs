@@ -23,11 +23,11 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.ChainDismantle.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.ChainDismantle.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.ChainDismantle.LockedDescription");
-        public override float Cost => 30f;
+        public override float Cost => 350f;
         public override Color textColor => new Color(120, 21, 8);
         public override bool DisplayNameInGame => false;
-        public override int Damage => 500;
-        public override int MasteryDamageMultiplier => 120;
+        public override int Damage => 60;
+        public override int MasteryDamageMultiplier => 50;
         public override float Speed => 0f;
         public override float LifeTime => 18f;
 

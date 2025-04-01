@@ -16,13 +16,13 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.PiercingBlood.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PiercingBlood.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PiercingBlood.LockedDescription");
-        public override float Cost => 10f;
+        public override float Cost => 750f;
         public override Color textColor => new Color(132, 4, 4);
         public override bool DisplayNameInGame => true;
         public override int Damage => 100;
-        public override int MasteryDamageMultiplier => 50;
+        public override int MasteryDamageMultiplier => 18;
         public override float Speed => 0f;
-        public override float LifeTime => 300f;
+        public override float LifeTime => 100f;
 
         private const float MAX_LENGTH = 1600f;
         private const float STEP_SIZE = 4f;
@@ -82,7 +82,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                         proj.Kill();
                     }
                 }
-                justSpawned = 1f;   
+                justSpawned = 1f;
+                Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = true;
             }
 
             if (beamHeight < 1.0f && Projectile.timeLeft > 10)
@@ -91,6 +92,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             if (Projectile.timeLeft <= 10)
             {
                 beamHeight -= 0.1f;
+                Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
             }
 
             if (Main.myPlayer == Projectile.owner)
