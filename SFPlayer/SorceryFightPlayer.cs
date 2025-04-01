@@ -69,13 +69,6 @@ namespace sorceryFight.SFPlayer
         #endregion
 
         #region Domain Expansion Variables
-        public bool UnlockedDomain
-        {
-            get
-            {
-                return bossesDefeated.Contains(ModContent.NPCType<DevourerofGodsHead>());
-            }
-        }
         public bool expandedDomain;
         public int domainIndex;
         #endregion
@@ -282,7 +275,7 @@ namespace sorceryFight.SFPlayer
         }
         void DomainExpansion()
         {
-            if (!UnlockedDomain)
+            if (!innateTechnique.DomainExpansion.Unlocked(this))
             {
                 int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You haven't unlocked this yet!");
                 Main.combatText[index].lifeTime = 60;

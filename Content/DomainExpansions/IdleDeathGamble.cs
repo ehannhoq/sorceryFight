@@ -18,6 +18,11 @@ namespace sorceryFight.Content.DomainExpansions
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.IdleDeathGamble.Description");
         public override int CostPerSecond { get; set; } = 10;
 
+        public override bool Unlocked(SorceryFightPlayer sf)
+        {
+            return sf.unlockedRCT;
+        }
+
         int rollTimer;
         int rollOneValue, rollTwoValue, rollThreeValue;
         bool rolled;

@@ -5,6 +5,8 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.Content.CursedTechniques.Vessel;
 using System;
+using sorceryFight.SFPlayer;
+using CalamityMod.NPCs.DevourerofGods;
 
 namespace sorceryFight.Content.DomainExpansions
 {
@@ -13,6 +15,10 @@ namespace sorceryFight.Content.DomainExpansions
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.DomainExpansions.Home.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.Home.Description");
         public override int CostPerSecond { get; set; } = 75;
+        public override bool Unlocked(SorceryFightPlayer sf)
+        {
+            return base.Unlocked(sf) && sf.sukunasFingerConsumed >= 20;
+        }
         public override void SetDefaults()
         {
             Scale = 0.0f;

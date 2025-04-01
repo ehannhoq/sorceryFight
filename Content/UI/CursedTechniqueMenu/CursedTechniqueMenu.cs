@@ -114,7 +114,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 conditionalIconPosUsed++;
             }
 
-            if (sfPlayer.UnlockedDomain)
+            if (sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer))
             {
                 string domainIconHoverText = $"{sfPlayer.innateTechnique.DomainExpansion.DisplayName.Value}\n{sfPlayer.innateTechnique.DomainExpansion.Description}";
                 SpecialUIElement domainIcon = new SpecialUIElement(domainIconTexture, domainIconHoverText);

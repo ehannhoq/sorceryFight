@@ -12,6 +12,7 @@ using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using System.Collections.Generic;
 using CalamityMod.Particles;
+using CalamityMod.NPCs.DevourerofGods;
 
 namespace sorceryFight.Content.DomainExpansions
 {
@@ -21,6 +22,10 @@ namespace sorceryFight.Content.DomainExpansions
         public override LocalizedText DisplayName { get; }
         public abstract string Description { get; }
         public abstract int CostPerSecond { get; set; }
+        public virtual bool Unlocked(SorceryFightPlayer sf)
+        {
+            return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()); 
+        }
         public virtual float SureHitDistance { get; set; } = 1100f;
         public abstract void NPCDomainEffect(NPC npc);
 
