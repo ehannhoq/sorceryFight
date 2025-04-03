@@ -131,6 +131,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             Elements.Clear();
             icons.Clear();
             unlockedTechniques = 0;
+            selectedTechniqueIndex = -1;
 
             for (int i = 0; i < sfPlayer.innateTechnique.CursedTechniques.Count; i++)
             {

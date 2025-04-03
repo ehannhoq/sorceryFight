@@ -46,6 +46,8 @@ namespace sorceryFight.Content.Buffs.Vessel
                 if (sfPlayer.domainIndex != -1)
                     sfPlayer.innateTechnique.CloseDomain(sfPlayer);
 
+                sfPlayer.selectedTechnique = null;
+
                 sfPlayer.innateTechnique = new VesselTechnique();
                 if (rctTracker.TryGetValue(player.whoAmI, out bool hasRCT))
                 {
