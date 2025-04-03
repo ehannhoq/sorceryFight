@@ -8,6 +8,7 @@ using sorceryFight.SFPlayer;
 using CalamityMod.Events;
 using CalamityMod.NPCs.NormalNPCs;
 using sorceryFight.Content.CursedTechniques.Shrine;
+using sorceryFight.Content.Buffs.Vessel;
 
 namespace sorceryFight.Content.DomainExpansions
 {
@@ -16,6 +17,10 @@ namespace sorceryFight.Content.DomainExpansions
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.DomainExpansions.MalevolentShrine.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.MalevolentShrine.Description");
         public override int CostPerSecond { get; set; } = 150;
+        public override bool Unlocked(SorceryFightPlayer sf)
+        {
+            return base.Unlocked(sf) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
+        }
         public static int FRAME_COUNT = 1;
         public static int TICKS_PER_FRAME = 1;
         public override void SetDefaults()

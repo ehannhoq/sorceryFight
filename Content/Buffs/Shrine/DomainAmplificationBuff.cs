@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using sorceryFight.Content.Buffs.Vessel;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;
@@ -75,7 +76,7 @@ namespace sorceryFight.Content.Buffs.Shrine
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.WallofFlesh);
+            return sf.HasDefeatedBoss(NPCID.WallofFlesh) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
         }
 
         public override void Update(Player player, ref int buffIndex)

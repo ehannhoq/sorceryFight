@@ -6,6 +6,7 @@ using sorceryFight.SFPlayer;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
+using sorceryFight.Content.Buffs.Vessel;
 
 namespace sorceryFight.Content.Buffs.Shrine
 {
@@ -32,7 +33,7 @@ namespace sorceryFight.Content.Buffs.Shrine
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.Golem);
+            return sf.HasDefeatedBoss(NPCID.Golem) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
         }
 
         public override void Apply(Player player)

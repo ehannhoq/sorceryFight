@@ -8,6 +8,7 @@ using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
+using sorceryFight.Content.Buffs.Vessel;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
@@ -44,7 +45,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         }
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
+            return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
         }
 
         public override float CalculateTrueDamage(SorceryFightPlayer sf)

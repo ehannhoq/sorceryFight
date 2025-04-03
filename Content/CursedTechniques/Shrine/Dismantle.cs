@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Buffs.Vessel;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
@@ -29,7 +30,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         }
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.EyeofCthulhu);
+            return sf.HasDefeatedBoss(NPCID.EyeofCthulhu) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
         }
 
         public override float CalculateTrueDamage(SorceryFightPlayer sf)

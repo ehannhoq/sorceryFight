@@ -2,6 +2,7 @@ using System;
 using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Buffs.Vessel;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
@@ -36,7 +37,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.SkeletronPrime);
+            return sf.HasDefeatedBoss(NPCID.SkeletronPrime) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)

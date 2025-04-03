@@ -15,6 +15,7 @@ using CalamityMod;
 using CalamityMod.CalPlayer.Dashes;
 using System;
 using Terraria.UI;
+using sorceryFight.Content.Buffs.Vessel;
 
 namespace sorceryFight.SFPlayer
 {
@@ -118,39 +119,16 @@ namespace sorceryFight.SFPlayer
             cursedEnergyRegenPerSecond = 0f;
             maxCursedEnergy = 0f;
 
-            cursedEnergyRegenPerSecond = calculateBaseCERegenRate() + cursedEnergyRegenFromOtherSources;
-            maxCursedEnergy = calculateBaseMaxCE() + maxCursedEnergyFromOtherSources;
-
-            if (cursedEnergy > 0)
-            {
-                cursedEnergy -= SFUtils.RateSecondsToTicks(cursedEnergyUsagePerSecond);
-            }
-
-            bool disabledRegen = disableRegenFromBuffs || disableRegenFromProjectiles || disableRegenFromDE;
-
-            if (cursedEnergy < maxCursedEnergy && !disabledRegen)
-            {
-                cursedEnergy += SFUtils.RateSecondsToTicks(cursedEnergyRegenPerSecond);
-            }
+            cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
+            maxCursedEnergy = calculateBaseMaxCE();
 
             cursedEnergyUsagePerSecond = 0f;
             cursedEnergyRegenFromOtherSources = 0f;
             maxCursedEnergyFromOtherSources = 0f;
 
-
-            if (cursedEnergy > maxCursedEnergy)
-            {
-                cursedEnergy = maxCursedEnergy;
-            }
-
-            if (cursedEnergy < 0)
-            {
-                cursedEnergy = 0;
-            }
-
             if (blackFlashTimeLeft != 0)
             {
-                if (blackFlashTimeLeft > 0) 
+                if (blackFlashTimeLeft > 0)
                     blackFlashTimeLeft--;
                 else if (blackFlashTimeLeft < 0)
                     blackFlashTimeLeft++;
@@ -168,6 +146,31 @@ namespace sorceryFight.SFPlayer
             PreAccessoryUpdate();
         }
 
+        public override void PostUpdate()
+        {
+            if (cursedEnergy > 0)
+            {
+                cursedEnergy -= SFUtils.RateSecondsToTicks(cursedEnergyUsagePerSecond);
+            }
+
+            bool disabledRegen = disableRegenFromBuffs || disableRegenFromProjectiles || disableRegenFromDE;
+
+            if (cursedEnergy < maxCursedEnergy && !disabledRegen)
+            {
+                cursedEnergy += SFUtils.RateSecondsToTicks(cursedEnergyRegenPerSecond + cursedEnergyRegenFromOtherSources);
+            }
+
+            if (cursedEnergy > maxCursedEnergy + maxCursedEnergyFromOtherSources)
+            {
+                cursedEnergy = maxCursedEnergy + maxCursedEnergyFromOtherSources;
+            }
+
+            if (cursedEnergy < 0)
+            {
+                cursedEnergy = 0;
+            }
+        }
+
         public override void UpdateDead()
         {
             ResetBuffs();
@@ -175,6 +178,12 @@ namespace sorceryFight.SFPlayer
             if (rctAnimation)
             {
                 PreventRCTAnimDeath();
+            }
+
+            if (!rctAnimation && innateTechnique.Name.Equals("Vessel"))
+            {
+                if (SFUtils.Roll(10))
+                    Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(20));
             }
 
             disableRegenFromDE = false;
@@ -205,8 +214,8 @@ namespace sorceryFight.SFPlayer
             {
                 blackFlashTimeLeft = blackFlashTime;
                 int variation = Main.rand.Next(-3, 4);
-                lowerWindowTime = innateTechnique.Name == "Vessel" ? 14 - blackFlashCounter / 2 + variation: 15 - blackFlashCounter / 2 + variation;
-                upperWindowTime = innateTechnique.Name == "Vessel" ? 16 + blackFlashCounter / 2 + variation: 16 + blackFlashCounter / 2 + variation;
+                lowerWindowTime = innateTechnique.Name == "Vessel" ? 14 - blackFlashCounter / 2 + variation : 15 - blackFlashCounter / 2 + variation;
+                upperWindowTime = innateTechnique.Name == "Vessel" ? 16 + blackFlashCounter / 2 + variation : 16 + blackFlashCounter / 2 + variation;
                 sfUI.BlackFlashWindow(lowerWindowTime, upperWindowTime);
             }
 
