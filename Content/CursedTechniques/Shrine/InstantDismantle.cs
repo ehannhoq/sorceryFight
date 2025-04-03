@@ -68,10 +68,9 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         {
             return base.CalculateTrueDamage(sf) * (1 + (0.01f * sf.sukunasFingerConsumed));
         }
-
         public override float CalculateTrueCost(SorceryFightPlayer sf)
         {
-            return base.CalculateTrueCost(sf) * (0.99f * sf.sukunasFingerConsumed);
+            return base.CalculateTrueCost(sf) * (1 - (0.01f * sf.sukunasFingerConsumed));
         }
 
         public override void SetDefaults()
