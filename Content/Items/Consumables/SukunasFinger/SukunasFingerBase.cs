@@ -7,10 +7,13 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Items.Consumables
 {
-    public class SukunasFinger : ModItem
+    public abstract class SukunasFingerBase : ModItem
     {
+        public abstract int Id { get; }
+        public override string Texture => "sorceryFight/Content/Items/Consumables/SukunasFinger/SukunasFinger";
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.SukunasFinger.DisplayName");
         public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.SukunasFinger.Tooltip");
+
         public override void SetDefaults()
         {
             Item.consumable = true;
@@ -29,17 +32,12 @@ namespace sorceryFight.Content.Items.Consumables
                 
                 if (!sf.innateTechnique.Name.Equals("Shrine") && !sf.innateTechnique.Name.Equals("Vessel")) return false;
 
-                if (sf.sukunasFingerConsumed < 20)
+                if (sf.sukunasFingerConsumed < Id)
                 {
                     sf.sukunasFingerConsumed ++;
                     if (sf.innateTechnique.Name.Equals("Vessel"))
                         SorceryFightUI.UpdateTechniqueUI.Invoke();
                     return true;
-                }
-                else
-                {
-                    sf.sukunasFingerConsumed = 20;
-                    return false;
                 }
             }
             return false;

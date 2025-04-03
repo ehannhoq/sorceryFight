@@ -2,16 +2,25 @@ using System;
 using System.Collections.Generic;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.SummonItems;
+using CalamityMod.Items.TreasureBags;
 using CalamityMod.NPCs;
+using CalamityMod.NPCs.AstrumAureus;
+using CalamityMod.NPCs.AstrumDeus;
 using CalamityMod.NPCs.Bumblebirb;
+using CalamityMod.NPCs.CalClone;
+using CalamityMod.NPCs.CeaselessVoid;
+using CalamityMod.NPCs.DevourerofGods;
+using CalamityMod.NPCs.HiveMind;
+using CalamityMod.NPCs.Leviathan;
+using CalamityMod.NPCs.Perforator;
 using CalamityMod.NPCs.Polterghast;
 using CalamityMod.NPCs.Providence;
+using CalamityMod.NPCs.Ravager;
 using CalamityMod.NPCs.Signus;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.Buffs.Limitless;
+using CalamityMod.NPCs.StormWeaver;
 using sorceryFight.Content.Items.Accessories;
 using sorceryFight.Content.Items.Consumables;
+using sorceryFight.Content.Items.Consumables.SukunasFinger;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -24,6 +33,7 @@ namespace sorceryFight
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
             CursedModifiers(npc, npcLoot);
+            SukunasFingers(npc, npcLoot);
 
             // Vanilla NPC's.
             switch (npc.type)
@@ -65,5 +75,58 @@ namespace sorceryFight
                 npcLoot.Add(ItemDropRule.Common(itemID, 1, 1, 1));
             }
         }
+
+        private void SukunasFingers(NPC npc, NPCLoot npcLoot)
+        {
+            Dictionary<int, int> npcLootMap = new()
+            {
+                { NPCID.EyeofCthulhu, ModContent.ItemType<SukunasFingerI>() },
+
+                { ModContent.NPCType<HiveMind>(), ModContent.ItemType<SukunasFingerII>() },
+                { ModContent.NPCType<PerforatorHive>(), ModContent.ItemType<SukunasFingerII>() },
+
+                { NPCID.SkeletronHead, ModContent.ItemType<SukunasFingerIII>() },
+
+                { NPCID.WallofFlesh, ModContent.ItemType<SukunasFingerIV>() },
+
+                { NPCID.SkeletronPrime, ModContent.ItemType<SukunasFingerV>() },
+
+                { ModContent.NPCType<CalamitasClone>(), ModContent.ItemType<SukunasFingerVI>() },
+
+                { NPCID.Plantera, ModContent.ItemType<SukunasFingerVII>() },
+
+                { ModContent.NPCType<Anahita>(), ModContent.ItemType<SukunasFingerVIII>() },
+
+                { NPCID.Golem, ModContent.ItemType<SukunasFingerIX>() },
+
+                { ModContent.NPCType<RavagerBody>(), ModContent.ItemType<SukunasFingerX>() },
+
+                { NPCID.CultistBoss, ModContent.ItemType<SukunasFingerXI>() },
+
+                { ModContent.NPCType<AstrumDeusHead>(), ModContent.ItemType<SukunasFingerXII>() },
+
+                { NPCID.MoonLordCore, ModContent.ItemType<SukunasFingerXIII>() },
+
+                { ModContent.NPCType<Bumblefuck>(), ModContent.ItemType<SukunasFingerXIV>() },
+                
+                { ModContent.NPCType<Providence>(), ModContent.ItemType<SukunasFingerXV>() },
+
+                { ModContent.NPCType<CeaselessVoid>(), ModContent.ItemType<SukunasFingerXVI>() },
+
+                { ModContent.NPCType<StormWeaverHead>(), ModContent.ItemType<SukunasFingerXVII>() },
+
+                { ModContent.NPCType<Signus>(), ModContent.ItemType<SukunasFingerXVIII>() },
+
+                { ModContent.NPCType<Polterghast>(), ModContent.ItemType<SukunasFingerXIX>() },
+
+                { ModContent.NPCType<DevourerofGodsHead>(), ModContent.ItemType<SukunasFingerXX>() }
+            };
+
+            if (npcLootMap.TryGetValue(npc.type, out int itemID))
+            {
+                npcLoot.Add(ItemDropRule.Common(itemID, 1, 1, 1));
+            }
+        }
+
     }
 }

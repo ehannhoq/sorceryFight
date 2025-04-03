@@ -118,7 +118,7 @@ CursedRock: {
 }
 
 SukunasFinger: {
-	DisplayName: Ryomen Sukuna's Finger
+	DisplayName: Ryomen Sukuna's Finger [{0}]
 	Tooltip:
 		'''
 		A highly cursed object; that of belongs to none other than
