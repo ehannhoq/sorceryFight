@@ -22,7 +22,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override int Damage => 100;
         public override int MasteryDamageMultiplier => 18;
         public override float Speed => 0f;
-        public override float LifeTime => 100f;
+        public override float LifeTime => 240f;
 
         private const float MAX_LENGTH = 1600f;
         private const float STEP_SIZE = 4f;
