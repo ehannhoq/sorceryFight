@@ -56,6 +56,7 @@ namespace sorceryFight.SFPlayer
 
         public void ResetBuffs()
         {
+            if (innateTechnique == null) return;
             foreach (PassiveTechnique passiveTechnique in innateTechnique.PassiveTechniques)
             {
                 passiveTechnique.isActive = false;

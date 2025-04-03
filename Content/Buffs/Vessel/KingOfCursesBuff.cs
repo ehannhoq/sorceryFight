@@ -11,20 +11,14 @@ namespace sorceryFight.Content.Buffs.Vessel
     public class KingOfCursesBuff : ModBuff
     {
         private static Dictionary<int, bool> rctTracker = new Dictionary<int, bool>();
+        public override void SetStaticDefaults()
+        {
+            Main.persistentBuff[Type] = true;
+        }
 
         public override void Update(Player player, ref int buffIndex)
         {
             SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
-
-            if (player.buffTime[buffIndex] < 1)
-            {
-                sfPlayer.innateTechnique = new VesselTechnique();
-                sfPlayer.maxCursedEnergy = sfPlayer.calculateBaseCERegenRate();
-                SorceryFightUI.UpdateTechniqueUI.Invoke();
-
-                sfPlayer.unlockedRCT = rctTracker.ContainsKey(player.whoAmI) ? rctTracker[player.whoAmI] : false;
-                rctTracker.Remove(player.whoAmI);
-            }
 
             if (sfPlayer.innateTechnique.Name.Equals("Vessel"))
             {
@@ -39,8 +33,33 @@ namespace sorceryFight.Content.Buffs.Vessel
             }
 
             sfPlayer.maxCursedEnergyFromOtherSources += 1500;
-            sfPlayer.cursedEnergyRegenFromOtherSources += 50;
+            sfPlayer.cursedEnergyRegenFromOtherSources += 100;
             sfPlayer.unlockedRCT = true;
+
+            if (player.buffTime[buffIndex] < 1)
+            {
+                foreach (PassiveTechnique pt in sfPlayer.innateTechnique.PassiveTechniques)
+                {
+                    pt.isActive = false;
+                }
+
+                if (sfPlayer.domainIndex != -1)
+                    sfPlayer.innateTechnique.CloseDomain(sfPlayer);
+
+                sfPlayer.innateTechnique = new VesselTechnique();
+                if (rctTracker.TryGetValue(player.whoAmI, out bool hasRCT))
+                {
+                    sfPlayer.unlockedRCT = hasRCT;
+                    rctTracker.Remove(player.whoAmI);
+                }
+
+                SorceryFightUI.UpdateTechniqueUI.Invoke();
+            }
+        }
+
+        public override bool RightClick(int buffIndex)
+        {
+            return false;
         }
     }
 }

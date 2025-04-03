@@ -20,11 +20,9 @@ namespace sorceryFight.Content.UI.TechniqueSelector
         internal class TechniqueSelectorButton : SFButton
         {
             int id;
-            SorceryFightPlayer sfPlayer;
             public TechniqueSelectorButton(Texture2D texture, string hoverText, int id) : base(texture, hoverText)
             {
                 this.id = id;
-                sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
                 Width.Set(texture.Width, 0f);
                 Height.Set(texture.Height, 0f);
             }
@@ -54,21 +52,12 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             selectorTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/TechniqueSelector/Selector", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             selectorIcon = new UIImage(selectorTexture);
 
-            for (int i = 0; i < sfPlayer.innateTechnique.CursedTechniques.Count; i++)
-            {
-                Texture2D ctTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueSelector/{sfPlayer.innateTechnique.Name}/c{i}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                string ctHoverText = $"{sfPlayer.innateTechnique.CursedTechniques[i].DisplayName.Value}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip")}";
-                TechniqueSelectorButton ctIcon = new TechniqueSelectorButton(ctTexture, ctHoverText, i);
-                icons.Add(ctIcon);
-                Append(ctIcon);
-            }
-
-            Append(selectorIcon);
 
             selectedTechniqueIndex = 0;
             ReloadUI();
             SetPosition();
 
+            Append(selectorIcon);
             SorceryFightUI.UpdateTechniqueUI += ReloadUI;
         }
 
@@ -140,17 +129,22 @@ namespace sorceryFight.Content.UI.TechniqueSelector
         void ReloadUI()
         {
             Elements.Clear();
+            icons.Clear();
             unlockedTechniques = 0;
 
             for (int i = 0; i < sfPlayer.innateTechnique.CursedTechniques.Count; i++)
             {
-
+                Texture2D ctTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueSelector/{sfPlayer.innateTechnique.Name}/c{i}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                string ctHoverText = $"{sfPlayer.innateTechnique.CursedTechniques[i].DisplayName.Value}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip")}";
+                TechniqueSelectorButton ctIcon = new TechniqueSelectorButton(ctTexture, ctHoverText, i);
+                icons.Add(ctIcon);
+                
                 if (sfPlayer.innateTechnique.CursedTechniques[i].Unlocked(sfPlayer))
                 {
                     unlockedTechniques++;
-                    icons[i].Left.Set(i * icons[i].texture.Width, 0f);
-                    icons[i].Top.Set(0f, 0f);
-                    Append(icons[i]);
+                    ctIcon.Left.Set(i * ctIcon.texture.Width, 0f);
+                    ctIcon.Top.Set(0f, 0f);
+                    Append(ctIcon);
                 }
             }
 

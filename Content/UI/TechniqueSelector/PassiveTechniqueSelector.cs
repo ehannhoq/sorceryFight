@@ -64,15 +64,6 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
             isDragging = false;
 
-            for (int i = 0; i < sfPlayer.innateTechnique.PassiveTechniques.Count; i++)
-            {
-                Texture2D ptTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueSelector/{sfPlayer.innateTechnique.Name}/p{i}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                string ptHoverText = $"{sfPlayer.innateTechnique.PassiveTechniques[i].DisplayName.Value}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip")}";
-                TechniqueSelectorButton ptIcon = new TechniqueSelectorButton(ptTexture, ptHoverText, i);
-                icons.Add(ptIcon);
-                Append(ptIcon);
-            }
-
             ReloadUI();
             SetPosition();
             SorceryFightUI.UpdateTechniqueUI += ReloadUI;
@@ -114,17 +105,22 @@ namespace sorceryFight.Content.UI.TechniqueSelector
         void ReloadUI()
         {
             Elements.Clear();
+            icons.Clear();
             unlockedTechniques = 0;
 
             for (int i = 0; i < sfPlayer.innateTechnique.PassiveTechniques.Count; i++)
             {
+                Texture2D ptTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueSelector/{sfPlayer.innateTechnique.Name}/p{i}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                string ptHoverText = $"{sfPlayer.innateTechnique.PassiveTechniques[i].DisplayName.Value}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip")}";
+                TechniqueSelectorButton ptIcon = new TechniqueSelectorButton(ptTexture, ptHoverText, i);
+                icons.Add(ptIcon);
 
                 if (sfPlayer.innateTechnique.PassiveTechniques[i].Unlocked(sfPlayer))
                 {
                     unlockedTechniques++;
-                    icons[i].Left.Set(0f, 0f);
-                    icons[i].Top.Set(i * icons[i].texture.Height, 0f);
-                    Append(icons[i]);
+                    ptIcon.Left.Set(0f, 0f);
+                    ptIcon.Top.Set(i * ptIcon.texture.Height, 0f);
+                    Append(ptIcon);
                 }
             }
 

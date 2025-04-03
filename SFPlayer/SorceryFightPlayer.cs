@@ -99,11 +99,13 @@ namespace sorceryFight.SFPlayer
 
         public override void UpdateEquips()
         {
+            if (innateTechnique == null) return;
             innateTechnique.UpdateEquips(this);
         }
 
         public override void UpdateLifeRegen()
         {
+            if (innateTechnique == null) return;
             innateTechnique.UpdateLifeRegen(this);
         }
 
@@ -148,6 +150,9 @@ namespace sorceryFight.SFPlayer
 
         public override void PostUpdate()
         {
+            cursedEnergyRegenPerSecond += cursedEnergyRegenFromOtherSources;
+            maxCursedEnergy += maxCursedEnergyFromOtherSources;
+
             if (cursedEnergy > 0)
             {
                 cursedEnergy -= SFUtils.RateSecondsToTicks(cursedEnergyUsagePerSecond);
@@ -157,12 +162,12 @@ namespace sorceryFight.SFPlayer
 
             if (cursedEnergy < maxCursedEnergy && !disabledRegen)
             {
-                cursedEnergy += SFUtils.RateSecondsToTicks(cursedEnergyRegenPerSecond + cursedEnergyRegenFromOtherSources);
+                cursedEnergy += SFUtils.RateSecondsToTicks(cursedEnergyRegenPerSecond);
             }
 
-            if (cursedEnergy > maxCursedEnergy + maxCursedEnergyFromOtherSources)
+            if (cursedEnergy > maxCursedEnergy)
             {
-                cursedEnergy = maxCursedEnergy + maxCursedEnergyFromOtherSources;
+                cursedEnergy = maxCursedEnergy;
             }
 
             if (cursedEnergy < 0)
@@ -174,16 +179,21 @@ namespace sorceryFight.SFPlayer
         public override void UpdateDead()
         {
             ResetBuffs();
+            deathPosition = Player.position;
 
             if (rctAnimation)
             {
-                PreventRCTAnimDeath();
+                PreventDeath();
             }
 
             if (!rctAnimation && innateTechnique.Name.Equals("Vessel"))
             {
-                if (SFUtils.Roll(10))
+                if (SFUtils.Roll(100))
+                {
+                    PreventDeath();
                     Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(20));
+                }
+
             }
 
             disableRegenFromDE = false;

@@ -115,3 +115,8 @@ FlowState: {
 		damage on your last hit.
 		'''
 }
+
+KingOfCursesBuff: {
+	DisplayName: King Of Curses Mode
+	Description: Give me your body, kid.
+}

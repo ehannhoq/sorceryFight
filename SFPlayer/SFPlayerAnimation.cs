@@ -12,7 +12,7 @@ namespace sorceryFight.SFPlayer
     {
         public bool rctAnimation = false;
         public int rctTimer = 0;
-        public Vector2 rctFrozenPosition = Vector2.Zero;
+        public Vector2 deathPosition = Vector2.Zero;
 
         public void PreAnimUpdate()
         {
@@ -25,11 +25,11 @@ namespace sorceryFight.SFPlayer
                 Player.statLife ++;
             }
 
-            if (rctFrozenPosition == Vector2.Zero)
+            if (deathPosition == Vector2.Zero)
             {
-                rctFrozenPosition = Player.position;
+                deathPosition = Player.position;
             }
-            Player.position = rctFrozenPosition;
+            Player.position = deathPosition;
 
             if (rctTimer % 90 == 0)
             {
@@ -50,7 +50,7 @@ namespace sorceryFight.SFPlayer
             {
                 rctAnimation = false;
                 rctTimer = 0;
-                rctFrozenPosition = Vector2.Zero;
+                deathPosition = Vector2.Zero;
                 unlockedRCT = true;
 
                 for (int i = 0; i < 100; i ++)
@@ -67,7 +67,7 @@ namespace sorceryFight.SFPlayer
                 SorceryFightUI.UpdateTechniqueUI.Invoke();
             }
         }
-        public void PreventRCTAnimDeath()
+        public void PreventDeath()
         {
             Player.dead = false;
             Player.statLife = 1;
