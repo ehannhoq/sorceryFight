@@ -14,7 +14,7 @@ namespace sorceryFight.SFPlayer
         public int rctTimer = 0;
         public Vector2 rctFrozenPosition = Vector2.Zero;
 
-        public void PostAnimUpdate()
+        public void PreAnimUpdate()
         {
             if (!rctAnimation) return;
 

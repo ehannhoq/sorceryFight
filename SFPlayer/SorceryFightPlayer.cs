@@ -96,12 +96,22 @@ namespace sorceryFight.SFPlayer
 
         #endregion
 
-        public override void PostUpdate()
+        public override void UpdateEquips()
+        {
+            innateTechnique.UpdateEquips(this);
+        }
+
+        public override void UpdateLifeRegen()
+        {
+            innateTechnique.UpdateLifeRegen(this);
+        }
+
+        public override void PreUpdate()
         {
             if (innateTechnique == null) return;
 
-            innateTechnique.PostUpdate(this);
-            PostAnimUpdate();
+            innateTechnique.PreUpdate(this);
+            PreAnimUpdate();
             PlayerAttributeIcons();
             Keybinds();
 
@@ -155,7 +165,7 @@ namespace sorceryFight.SFPlayer
             disableCurseTechniques = false;
             blackFlashTime = 30;
 
-            PostAccessoryUpdate();
+            PreAccessoryUpdate();
         }
 
         public override void UpdateDead()

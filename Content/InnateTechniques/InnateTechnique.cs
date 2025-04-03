@@ -54,13 +54,22 @@ namespace sorceryFight.Content.InnateTechniques
             }
         }
 
-        public virtual void PostUpdate(SorceryFightPlayer sf) { }
+        /// <summary>
+        /// Used for technique-specific modifications to class damage, defense, speed, etc.
+        /// </summary>
+        public virtual void UpdateEquips(SorceryFightPlayer sf) { }
+        
+        /// <summary>
+        /// Used for technique-specific modifications heath regeneration.
+        /// </summary>
+        public virtual void UpdateLifeRegen(SorceryFightPlayer sf) { }
+        public virtual void PreUpdate(SorceryFightPlayer sf) { }
 
         public virtual void ExpandDomain(SorceryFightPlayer sf)
         {
             DomainExpansionTimer = 0;
         }
-        
+
         public virtual void CloseDomain(SorceryFightPlayer sf)
         {
             Main.npc[sf.domainIndex].active = false;

@@ -46,7 +46,12 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override float CalculateTrueDamage(SorceryFightPlayer sf)
         {
-            return basePercent + (sf.bossesDefeated.Count / 550f);
+            return basePercent + (sf.bossesDefeated.Count / 550f) + (0.01f * (sf.sukunasFingerConsumed / 20f));
+        }
+
+        public override float CalculateTrueCost(SorceryFightPlayer sf)
+        {
+            return base.CalculateTrueCost(sf) * (0.99f * sf.sukunasFingerConsumed);
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)

@@ -7,7 +7,7 @@ namespace sorceryFight.SFPlayer
     public partial class SorceryFightPlayer : ModPlayer
     {
         public bool celestialAmulet;
-        private void PostAccessoryUpdate()
+        private void PreAccessoryUpdate()
         {
             celestialAmulet = false;
         }

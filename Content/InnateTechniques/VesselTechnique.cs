@@ -1,10 +1,9 @@
 using System.Collections.Generic;
+using CalamityMod;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs;
-using sorceryFight.Content.Buffs.Shrine;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.CursedTechniques.BloodManipulation;
-using sorceryFight.Content.CursedTechniques.Shrine;
 using sorceryFight.Content.CursedTechniques.Vessel;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.SFPlayer;
@@ -31,7 +30,24 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override DomainExpansion DomainExpansion { get; } = new Home();
 
-        public override void PostUpdate(SorceryFightPlayer sf)
+        public override void UpdateEquips(SorceryFightPlayer sf)
+        {
+            sf.Player.GetDamage(DamageClass.Melee) *= 1 + (0.05f * sf.sukunasFingerConsumed);
+            sf.Player.GetDamage(DamageClass.Ranged) *= 1 + (0.05f * sf.sukunasFingerConsumed);
+            sf.Player.GetDamage(DamageClass.Magic) *= 1 + (0.05f * sf.sukunasFingerConsumed);
+            sf.Player.GetDamage(DamageClass.Summon) *= 1 + (0.05f * sf.sukunasFingerConsumed);
+            sf.Player.GetDamage(RogueDamageClass.Throwing) *= 1 + (0.05f * sf.sukunasFingerConsumed);
+
+            sf.Player.statDefense *= 1 + (0.03f * sf.sukunasFingerConsumed);
+        }
+
+        public override void UpdateLifeRegen(SorceryFightPlayer sf) 
+        {
+            sf.Player.lifeRegen += 2 * sf.sukunasFingerConsumed;
+        }
+
+
+        public override void PreUpdate(SorceryFightPlayer sf)
         {
             if (DomainExpansionTimer == -1)
             {

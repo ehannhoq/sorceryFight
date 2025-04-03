@@ -35,7 +35,7 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override DomainExpansion DomainExpansion { get; } = new UnlimitedVoid();
         
-        public override void PostUpdate(SorceryFightPlayer sf)
+        public override void PreUpdate(SorceryFightPlayer sf)
         {
             if (DomainExpansionTimer == -1)
             {

@@ -47,6 +47,16 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
         }
 
+        public override float CalculateTrueDamage(SorceryFightPlayer sf)
+        {
+            return base.CalculateTrueDamage(sf) * (1 + (0.01f * sf.sukunasFingerConsumed));
+        }
+
+        public override float CalculateTrueCost(SorceryFightPlayer sf)
+        {
+            return base.CalculateTrueCost(sf) * (0.99f * sf.sukunasFingerConsumed);
+        }
+
         public override void SetStaticDefaults()
         {
             incantations = new List<string>()

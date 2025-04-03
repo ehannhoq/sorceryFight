@@ -32,6 +32,16 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             return sf.HasDefeatedBoss(NPCID.EyeofCthulhu);
         }
 
+        public override float CalculateTrueDamage(SorceryFightPlayer sf)
+        {
+            return base.CalculateTrueDamage(sf) * (1 + (0.01f * sf.sukunasFingerConsumed));
+        }
+
+        public override float CalculateTrueCost(SorceryFightPlayer sf)
+        {
+            return base.CalculateTrueCost(sf) * (0.99f * sf.sukunasFingerConsumed);
+        }
+
         public override void SetStaticDefaults()
         {
             if (Main.dedServ) return;
@@ -66,7 +76,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         }
 
         public override bool PreDraw(ref Color lightColor)
-        { 
+        {
             SpriteEffects spriteEffects = Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, spriteEffects, 0f);
             return false;
