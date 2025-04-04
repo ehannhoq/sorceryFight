@@ -43,7 +43,7 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
 
             UIText title = new UIText("Choose your Innate Technique.", 1.5f, false);
             title.Left.Set(screenCenter.X - 180f, 0f);
-            title.Top.Set(screenCenter.Y - 100, 0f);
+            title.Top.Set(screenCenter.Y - 250f, 0f);
             Append(title);
 
             DrawTechniques();
