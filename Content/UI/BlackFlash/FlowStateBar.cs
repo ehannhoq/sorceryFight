@@ -56,10 +56,10 @@ namespace sorceryFight.Content.UI.BlackFlash
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
-                spriteBatch.Draw(emptyTexture, new Vector2(dimensions.X, dimensions.Y) + new Vector2(0, i * (frameHeight + 5)), sourceRectangle, Color.White, 0f, origin, 0.75f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(emptyTexture, new Vector2(dimensions.X, dimensions.Y) + new Vector2(0, i * (frameHeight + 5)), sourceRectangle, Color.White, 0f, origin, 0.75f * Main.UIScale, SpriteEffects.None, 0f);
                 if (i < sfPlayer.blackFlashCounter - 1)
                 {
-                    spriteBatch.Draw(fullTexture, new Vector2(dimensions.X, dimensions.Y) + new Vector2(0, i * (frameHeight + 5)), sourceRectangle, Color.White, 0f, origin, 0.75f, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(fullTexture, new Vector2(dimensions.X, dimensions.Y) + new Vector2(0, i * (frameHeight + 5)), sourceRectangle, Color.White, 0f, origin, 0.75f * Main.UIScale, SpriteEffects.None, 0f);
                 }
                 spriteBatch.End();
                 spriteBatch.Begin();

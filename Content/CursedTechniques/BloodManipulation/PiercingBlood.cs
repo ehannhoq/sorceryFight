@@ -15,7 +15,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
     {
         private const int CONVERGENCE_FRAMES = 5;
         private const int COLLISION_FRAMES = 5;
-        private const int TICKS_PER_FRAME = 2;
+        private const int TICKS_PER_FRAME = 5;
         private int convergenceFrame = 0;
         private int collisionFrame = 0;
         private int frameTime = 0;
@@ -54,7 +54,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             if (Main.dedServ) return;
             texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/PiercingBlood", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             convergenceTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/Convergence", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            collisionTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/PiercingBloodCollision").Value;
+            collisionTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/PiercingBloodCollision", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
         }
 
@@ -79,7 +79,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public override void AI()
         {
-            if (frameTime++ < TICKS_PER_FRAME)
+            if (frameTime++ > TICKS_PER_FRAME)
             {
                 frameTime = 0;
                 if (convergenceFrame++ >= CONVERGENCE_FRAMES - 1)
@@ -113,12 +113,12 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 SoundEngine.PlaySound(SorceryFightSounds.PiercingBlood, Projectile.Center);
             }
 
-            if (beamHeight < 1.0f && Projectile.timeLeft > 10)
-                beamHeight += 0.1f;
+            if (beamHeight < 2.0f && Projectile.timeLeft > 10)
+                beamHeight += 0.2f;
 
             if (Projectile.timeLeft <= 10)
             {
-                beamHeight -= 0.1f;
+                beamHeight -= 0.2f;
                 Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
             }
 
@@ -149,30 +149,38 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public override bool PreDraw(ref Color lightColor)
         {
-            float beamLength = Projectile.localAI[0];
+            float beamLength = Projectile.localAI[0] - 50f;
+            beamLength = MathHelper.Clamp(beamLength, 0f, MAX_LENGTH);
 
-            int convFrameHeight = convergenceTexture.Height / CONVERGENCE_FRAMES;
-            int convFrameY = convergenceFrame * convFrameHeight;
 
-            Vector2 convergenceOrigin = new Vector2(convergenceTexture.Width / 2, convFrameHeight / 2);
-            Vector2 beamStart = Projectile.Center + Projectile.rotation.ToRotationVector2() * (convergenceTexture.Width / 2) - Main.screenPosition;
-            Rectangle convergenceSourceRectangle = new Rectangle(0, convFrameY, convergenceTexture.Width, convFrameHeight);
-
-            Main.EntitySpriteDraw(convergenceTexture, beamStart, convergenceSourceRectangle, Color.White, Projectile.rotation, convergenceOrigin, 1f, SpriteEffects.None, 0f);
-
+            Vector2 beamStart = Projectile.Center + Projectile.rotation.ToRotationVector2() * 2 * (convergenceTexture.Width / 2) - Main.screenPosition;
             Vector2 beamOrigin = new Vector2(0, texture.Height / 2);
             Vector2 beamScale = new Vector2((beamLength - convergenceTexture.Width / 2) / texture.Width, BASE_BEAM_HEIGHT * beamHeight);
 
             Main.EntitySpriteDraw(texture, beamStart, null, Color.White, Projectile.rotation, beamOrigin, beamScale, SpriteEffects.None, 0f);
 
+
+            int convFrameHeight = convergenceTexture.Height / CONVERGENCE_FRAMES;
+            int convFrameY = convergenceFrame * convFrameHeight;
+
+            Vector2 convergenceOrigin = new Vector2(convergenceTexture.Width / 2, convFrameHeight / 2);
+            Rectangle convergenceSourceRectangle = new Rectangle(0, convFrameY, convergenceTexture.Width, convFrameHeight);
+
+            Main.EntitySpriteDraw(convergenceTexture, beamStart, convergenceSourceRectangle, Color.White, Projectile.rotation, convergenceOrigin, 2f, SpriteEffects.None, 0f);
+
             int collisionFrameHeight = collisionTexture.Height / COLLISION_FRAMES;
             int collisionFrameY = collisionFrame * collisionFrameHeight;
 
-            Vector2 beamEnd = Projectile.Center + Projectile.rotation.ToRotationVector2() * beamLength - Main.screenPosition;
-            Vector2 collisionOrigin = new Vector2(collisionTexture.Width / 2, collisionFrameHeight / 2);
-            Rectangle collisionSourceRectangle = new Rectangle(0, collisionFrameY, collisionTexture.Width, collisionFrameHeight);
+            if (beamLength > 20f)
+            {
+                Vector2 beamEnd = beamStart + Projectile.rotation.ToRotationVector2() * beamLength;
 
-            Main.EntitySpriteDraw(collisionTexture, beamEnd, collisionSourceRectangle, Color.White, Projectile.rotation, collisionOrigin, 1f, SpriteEffects.None, 0f);
+                Vector2 collisionOrigin = new Vector2(collisionTexture.Width / 2, collisionFrameHeight / 2);
+                Rectangle collisionSourceRectangle = new Rectangle(0, collisionFrameY, collisionTexture.Width, collisionFrameHeight);
+
+                Main.EntitySpriteDraw(collisionTexture, beamEnd, collisionSourceRectangle, Color.White, Projectile.rotation, collisionOrigin, new Vector2(1f, beamScale.Y), SpriteEffects.None, 0f);
+            }
+
 
             return false;
         }

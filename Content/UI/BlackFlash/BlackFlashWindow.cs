@@ -40,7 +40,7 @@ namespace sorceryFight.Content.UI
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             Vector2 borderPos = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2) - new Vector2(borderTexture.Width / 2, borderTexture.Height + 50);
-            spriteBatch.Draw(borderTexture, borderPos / Main.UIScale, Color.White);
+            spriteBatch.Draw(borderTexture, borderPos, Color.White);
 
             Texture2D whitePixel = TextureAssets.MagicPixel.Value;
 
@@ -54,8 +54,8 @@ namespace sorceryFight.Content.UI
 
             spriteBatch.Draw(whitePixel, windowSrcRect, Color.Red);
 
-            Vector2 pointerPos = new Vector2(borderPos.X + 3 + ((bgBarSrcRect.Width * 2) * ((float)timer / bgBarSrcRect.Width)), borderPos.Y + (borderTexture.Height / 2) - (pointer.Height / 2));
-            spriteBatch.Draw(pointer, pointerPos / Main.UIScale, Color.White);
+            Vector2 pointerPos = new Vector2(borderPos.X + 3 + (bgBarSrcRect.Width * 2 * ((float)timer / bgBarSrcRect.Width)), borderPos.Y + (borderTexture.Height / 2) - (pointer.Height / 2));
+            spriteBatch.Draw(pointer, pointerPos, Color.White);
         }
     }
 }
