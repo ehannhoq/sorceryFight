@@ -194,7 +194,7 @@ namespace sorceryFight.SFPlayer
 
             if (!rctAnimation && innateTechnique.Name.Equals("Vessel") && sukunasFingerConsumed >= 1)
             {
-                int chance = SorceryFight.DevModeNames.Contains(Player.name) ? 100 : 10;
+                int chance = SorceryFight.DevModeNames.Contains(Player.name) ? 100 : 5;
                 if (SFUtils.Roll(chance))
                 {
                     PreventDeath();
