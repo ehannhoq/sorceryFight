@@ -191,8 +191,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                         Append(domainIcon);
 
                     }
-                    isInitialized = true;
                 }
+                isInitialized = true;
             }
         }
     }
