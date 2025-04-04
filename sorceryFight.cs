@@ -17,8 +17,8 @@ namespace sorceryFight
 	public class SorceryFight : Mod
 	{
 		public static List<string> DevModeNames =
-        [
-            "The Honored One",
+		[
+			"The Honored One",
 			"ehann",
 			"gooloohoodoo",
 			"gooloohoodoo1",
@@ -30,6 +30,23 @@ namespace sorceryFight
 			"gooloohoodoo7",
 			"Perseus",
 			"TheRealCriky"
-        ];
+		];
+
+		public override void HandlePacket(BinaryReader reader, int whoAmI)
+		{
+			byte messageType = reader.ReadByte();
+			switch (messageType)
+			{
+				case 1:
+					int targetPlayer = reader.ReadInt32();
+					int bossType = reader.ReadInt32();
+
+					if (Main.netMode == NetmodeID.MultiplayerClient && Main.myPlayer == targetPlayer)
+					{
+						Main.player[targetPlayer].GetModPlayer<SorceryFightPlayer>().AddDefeatedBoss(bossType);
+					}
+					break;
+			}
+		}
 	}
 }
