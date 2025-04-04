@@ -63,7 +63,7 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
                 background.Left.Set(iconPositions[i].X - (backgroundTexture.Width / 2), 0f);
                 background.Top.Set(iconPositions[i].Y - (backgroundTexture.Height / 2), 0f);
 
-                TechnqiueButton button = new TechnqiueButton(iconTexture, t.Name, t);
+                TechnqiueButton button = new TechnqiueButton(iconTexture, t.DisplayName, t);
                 button.Left.Set(iconPositions[i].X - (iconTexture.Width / 2), 0f);
                 button.Top.Set(iconPositions[i].Y - (iconTexture.Height / 2), 0f);
 
