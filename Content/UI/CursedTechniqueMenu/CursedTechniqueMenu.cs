@@ -82,7 +82,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             Append(masteryIcon);
 
             List<Vector2> conditionalIconPositions = new List<Vector2>();
-            int conditionalIconsCount = 3;
+            int conditionalIconsCount = 10;
             int conditionalIconSize = 40;
             for (int i = 0; i < conditionalIconsCount; i++)
             {
