@@ -1,6 +1,7 @@
 using sorceryFight.Rarities;
 using sorceryFight.SFPlayer;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -35,6 +36,7 @@ namespace sorceryFight.Content.Items.Consumables
                 if (sf.sukunasFingerConsumed < Id)
                 {
                     sf.sukunasFingerConsumed ++;
+                    SoundEngine.PlaySound(SoundID.Item2, player.Center);
                     if (sf.innateTechnique.Name.Equals("Vessel"))
                         SorceryFightUI.UpdateTechniqueUI.Invoke();
                     return true;
