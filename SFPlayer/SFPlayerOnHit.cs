@@ -6,6 +6,7 @@ using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ModLoader;
 
 namespace sorceryFight.SFPlayer
@@ -58,6 +59,7 @@ namespace sorceryFight.SFPlayer
                 hit.DamageType.CountsAsClass(new CalamityMod.RogueDamageClass()) && hit.DamageType.CountsAsClass(new CalamityMod.TrueMeleeDamageClass()))
                 return;
 
+            SoundEngine.PlaySound(SorceryFightSounds.BlackFlashImpact, Player.Center);
 
             blackFlashTimeLeft = -60; // 1 second cooldown between black flashes
 
