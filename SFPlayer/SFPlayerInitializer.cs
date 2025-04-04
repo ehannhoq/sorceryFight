@@ -96,7 +96,7 @@ namespace sorceryFight.SFPlayer
             generalBooleans.AddWithCondition("uniqueBodyStructure", uniqueBodyStructure);
             tag["generalBooleans"] = generalBooleans;
 
-            if (innateTechnique.Name.Equals("Shrine") || innateTechnique.Name.Equals("Vessel"))
+            if (innateTechnique != null && innateTechnique.Name.Equals("Shrine") || innateTechnique.Name.Equals("Vessel"))
                 tag["sukunasFingerConsumed"] = sukunasFingerConsumed;
 
         }
