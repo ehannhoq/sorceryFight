@@ -133,7 +133,7 @@ namespace sorceryFight.SFPlayer
             maxCursedEnergy = calculateBaseMaxCE();
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
 
-            if (innateTechnique.Name.Equals("Shrine") || innateTechnique.Name.Equals("Vessel"))
+            if (innateTechnique != null && innateTechnique.Name.Equals("Shrine") || innateTechnique.Name.Equals("Vessel"))
                 sukunasFingerConsumed = tag.ContainsKey("sukunasFingerConsumed") ? tag.GetInt("sukunasFingerConsumed") : 0;
         }
 
