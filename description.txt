@@ -1,8 +1,8 @@
 Sorcery Fight is heavily inspired by anime/manga Jujutsu Kaisen.
 
 The mod adds:
-Two innate techniques, Limitless and Shrine
-each with a total of 10 cursed techniques, 5 passive techniques, and 2 domain expansions.
+Three innate techniques, Limitless, Shrine, Private Pure Love Train, and Vessel.
+each with a total of 15 cursed techniques, 5 passive techniques, and 4 domain expansions.
 
 NOTE: This mod requires Calamity Mod and its dependencies in order to install.
 
