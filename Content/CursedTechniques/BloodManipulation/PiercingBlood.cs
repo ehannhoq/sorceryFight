@@ -13,7 +13,15 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
     public class PiercingBlood : CursedTechnique
     {
+        private const int CONVERGENCE_FRAMES = 5;
+        private const int COLLISION_FRAMES = 5;
+        private const int TICKS_PER_FRAME = 2;
+        private int convergenceFrame = 0;
+        private int collisionFrame = 0;
+        private int frameTime = 0;
         public static Texture2D texture;
+        public static Texture2D convergenceTexture;
+        public static Texture2D collisionTexture;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.PiercingBlood.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PiercingBlood.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PiercingBlood.LockedDescription");
@@ -31,7 +39,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         ref float justSpawned => ref Projectile.ai[0];
         ref float beamHeight => ref Projectile.ai[1];
 
-
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<PiercingBlood>();
@@ -46,6 +53,9 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         {
             if (Main.dedServ) return;
             texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/PiercingBlood", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            convergenceTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/Convergence", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            collisionTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/PiercingBloodCollision").Value;
+
         }
 
         public override void SetDefaults()
@@ -69,6 +79,21 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public override void AI()
         {
+            if (frameTime++ < TICKS_PER_FRAME)
+            {
+                frameTime = 0;
+                if (convergenceFrame++ >= CONVERGENCE_FRAMES - 1)
+                {
+                    convergenceFrame = CONVERGENCE_FRAMES - 1;
+                }
+                if (collisionFrame++ >= COLLISION_FRAMES - 1)
+                {
+                    collisionFrame = 0;
+                }
+            }
+
+            if (convergenceFrame != CONVERGENCE_FRAMES - 1) return;
+
             if (justSpawned == 0f)
             {
                 for (int i = 0; i < Main.projectile.Length; i++)
@@ -100,7 +125,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             if (Main.myPlayer == Projectile.owner)
             {
                 Player player = Main.player[Projectile.owner];
-
                 Projectile.Center = player.Center;
 
                 float targetRotation = (Main.MouseWorld - player.Center).ToRotation();
@@ -121,24 +145,38 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 }
                 Projectile.localAI[0] = beamLength;
             }
-
-            Vector2 particleVelocityOffset = new Vector2(Main.rand.NextFloat(-0.2f, 0.2f), Main.rand.NextFloat(-0.2f, 0.2f));
-            Vector2 particlePositionOffset = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
-            Vector2 particleVelocity = (Projectile.rotation.ToRotationVector2() + particleVelocityOffset).SafeNormalize(Vector2.UnitX) * 10f;
-            LineParticle particle = new LineParticle(Projectile.Center + particlePositionOffset, particleVelocity, false, 30, 1.25f, textColor);
-            GeneralParticleHandler.SpawnParticle(particle);
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
             float beamLength = Projectile.localAI[0];
-            Vector2 start = Projectile.Center - Main.screenPosition;
-            Vector2 scale = new Vector2(beamLength / texture.Width, BASE_BEAM_HEIGHT * beamHeight);
-            Vector2 origin = new Vector2(0, texture.Height / 2);
 
-            Main.EntitySpriteDraw(texture, start, null, Color.White, Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
+            int convFrameHeight = convergenceTexture.Height / CONVERGENCE_FRAMES;
+            int convFrameY = convergenceFrame * convFrameHeight;
+
+            Vector2 convergenceOrigin = new Vector2(convergenceTexture.Width / 2, convFrameHeight / 2);
+            Vector2 beamStart = Projectile.Center + Projectile.rotation.ToRotationVector2() * (convergenceTexture.Width / 2) - Main.screenPosition;
+            Rectangle convergenceSourceRectangle = new Rectangle(0, convFrameY, convergenceTexture.Width, convFrameHeight);
+
+            Main.EntitySpriteDraw(convergenceTexture, beamStart, convergenceSourceRectangle, Color.White, Projectile.rotation, convergenceOrigin, 1f, SpriteEffects.None, 0f);
+
+            Vector2 beamOrigin = new Vector2(0, texture.Height / 2);
+            Vector2 beamScale = new Vector2((beamLength - convergenceTexture.Width / 2) / texture.Width, BASE_BEAM_HEIGHT * beamHeight);
+
+            Main.EntitySpriteDraw(texture, beamStart, null, Color.White, Projectile.rotation, beamOrigin, beamScale, SpriteEffects.None, 0f);
+
+            int collisionFrameHeight = collisionTexture.Height / COLLISION_FRAMES;
+            int collisionFrameY = collisionFrame * collisionFrameHeight;
+
+            Vector2 beamEnd = Projectile.Center + Projectile.rotation.ToRotationVector2() * beamLength - Main.screenPosition;
+            Vector2 collisionOrigin = new Vector2(collisionTexture.Width / 2, collisionFrameHeight / 2);
+            Rectangle collisionSourceRectangle = new Rectangle(0, collisionFrameY, collisionTexture.Width, collisionFrameHeight);
+
+            Main.EntitySpriteDraw(collisionTexture, beamEnd, collisionSourceRectangle, Color.White, Projectile.rotation, collisionOrigin, 1f, SpriteEffects.None, 0f);
+
             return false;
         }
+
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
