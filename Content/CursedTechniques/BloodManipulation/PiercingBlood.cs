@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.SFPlayer;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -84,6 +85,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 }
                 justSpawned = 1f;
                 Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = true;
+                SoundEngine.PlaySound(SorceryFightSounds.PiercingBlood, Projectile.Center);
             }
 
             if (beamHeight < 1.0f && Projectile.timeLeft > 10)

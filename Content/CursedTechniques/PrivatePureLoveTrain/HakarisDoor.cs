@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.SFPlayer;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -100,6 +101,8 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                     rarity = Color.Red;
                     Projectile.damage = (int)(CalculateTrueDamage(Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>()) * 2);
                 }
+
+                SoundEngine.PlaySound(SorceryFightSounds.TrainDoorsClosing, Projectile.Center);
             }
 
             if (Projectile.frame > FRAME_COUNT - 4)

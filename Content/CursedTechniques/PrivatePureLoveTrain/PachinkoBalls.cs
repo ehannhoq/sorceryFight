@@ -107,6 +107,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 {
                     NPC targetNPC = Main.npc[closestNPCIndex];
                     Projectile.velocity = Projectile.Center.DirectionTo(targetNPC.Center) * Speed;
+                    SoundEngine.PlaySound(SorceryFightSounds.PachinkoBallCollision, Projectile.Center);
 
                     enemyRicochets[Projectile.whoAmI][0]++;
                     enemyRicochets[Projectile.whoAmI].Add(target.whoAmI);

@@ -9,6 +9,7 @@ using CalamityMod.Events;
 using Terraria.ID;
 using sorceryFight.Content.Buffs.PrivatePureLoveTrain;
 using System;
+using Terraria.Audio;
 
 namespace sorceryFight.Content.DomainExpansions
 {
@@ -71,6 +72,7 @@ namespace sorceryFight.Content.DomainExpansions
                 if (pachinkoMachinePosition == Vector2.Zero)
                 {
                     pachinkoMachinePosition = Owners[NPC.whoAmI].Center - Main.screenPosition + new Vector2((Main.screenWidth / 2) + (pachinkoMachineTexture.Width / 2), (Main.screenHeight / 2) - pachinkoMachineTexture.Height - player.height);
+                    SoundEngine.PlaySound(SorceryFightSounds.IDGWoosh, NPC.Center);
                 }
 
 
@@ -83,6 +85,7 @@ namespace sorceryFight.Content.DomainExpansions
                 {
                     pachinkoMachinePosition.X = Main.screenWidth;
                     pachinkoMachineLoops++;
+                    SoundEngine.PlaySound(SorceryFightSounds.IDGWooshLoop with { Volume = 0.5f }, NPC.Center);
                 }
 
                 if (pachinkoMachineLoops == 0) return;
@@ -101,6 +104,8 @@ namespace sorceryFight.Content.DomainExpansions
                     rollTwoTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IdleDeathGambleAssets/{rollTwoValue}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                     rollThreeTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IdleDeathGambleAssets/{rollThreeValue}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
+                    SoundEngine.PlaySound(SorceryFightSounds.IDGSlots with { Volume = 2f }, NPC.Center);
+
                     if (pachinkoMachineLoops <= 1)
                     {
                         rollOnePosition = Owners[NPC.whoAmI].Center - Main.screenPosition + new Vector2(-rollOneTexture.Width - 150f, -(Main.screenHeight / 2) - (rollOneTexture.Height / 2));
@@ -117,13 +122,13 @@ namespace sorceryFight.Content.DomainExpansions
                     rolled = true;
                 }
 
-                if (rollTimer < 240)
+                if (rollTimer < 330)
                 {
-                    if (rollTimer < 180)
+                    if (rollTimer < 230)
                         rollOnePosition.Y += 200f * (0.1f * rollSpeed);
-                    if (rollTimer < 210)
+                    if (rollTimer < 280)
                         rollTwoPosition.Y += 200f * (0.1f * rollSpeed);
-                    if (rollTimer < 240)
+                    if (rollTimer < 330)
                         rollThreePosition.Y += 200f * (0.1f * rollSpeed);;
 
                     if (rollOnePosition.Y > Main.screenHeight + rollOneTexture.Height / 2)
@@ -135,11 +140,11 @@ namespace sorceryFight.Content.DomainExpansions
                 }
 
 
-                if (rollTimer >= 180)
+                if (rollTimer >= 230)
                 {
                     Vector2 target = Owners[NPC.whoAmI].Center - Main.screenPosition - new Vector2(rollOneTexture.Width + 150, 0);
 
-                    if (rollTimer == 180)
+                    if (rollTimer == 230)
                         rollOnePosition.Y = target.Y + 200;
                     else
                     {
@@ -147,15 +152,15 @@ namespace sorceryFight.Content.DomainExpansions
 
                         rollOnePosition.Y -= difference / 2f;
 
-                        if (rollTimer >= 240)
+                        if (rollTimer >= 280)
                             rollOnePosition = target;
                     }
                 }
 
-                if (rollTimer >= 210)
+                if (rollTimer >= 280)
                 {
                     Vector2 target = Owners[NPC.whoAmI].Center - Main.screenPosition;
-                    if (rollTimer == 210)
+                    if (rollTimer == 280)
                         rollTwoPosition.Y = target.Y + 200;
                     else
                     {
@@ -163,15 +168,15 @@ namespace sorceryFight.Content.DomainExpansions
 
                         rollTwoPosition.Y -= difference / 2f;
 
-                        if (rollTimer >= 270)
+                        if (rollTimer >= 330)
                             rollTwoPosition = target;
                     }
                 }
 
-                if (rollTimer >= 240)
+                if (rollTimer >= 330)
                 {
                     Vector2 target = Owners[NPC.whoAmI].Center - Main.screenPosition + new Vector2(rollThreeTexture.Width + 150, 0);
-                    if (rollTimer == 240)
+                    if (rollTimer == 330)
                         rollThreePosition.Y = target.Y + 200;
                     else
                     {
@@ -179,12 +184,12 @@ namespace sorceryFight.Content.DomainExpansions
 
                         rollThreePosition.Y -= difference / 2f;
 
-                        if (rollTimer >= 300)
+                        if (rollTimer >= 390)
                             rollThreePosition = target;
                     }
                 }
 
-                if (rollTimer >= 390)
+                if (rollTimer >= 430)
                 {
                     if (rollOneValue == rollTwoValue && rollOneValue == rollThreeValue)
                     {

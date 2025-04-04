@@ -48,9 +48,9 @@ namespace sorceryFight.Content.InnateTechniques
                 Main.combatText[index].lifeTime = 90;
             }
 
-            if (DomainExpansionTimer == 181)
+            if (DomainExpansionTimer == 91)
             {
-                SoundEngine.PlaySound(SorceryFightSounds.UnlimitedVoid, sf.Player.Center);
+                SoundEngine.PlaySound(SorceryFightSounds.IdleDeathGambleOpening with { Volume = 0.75f }, sf.Player.Center);
             }
             
             if (DomainExpansionTimer == 211)

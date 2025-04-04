@@ -25,10 +25,18 @@ namespace sorceryFight
         
         public static SoundStyle WorldCuttingSlash;
         
+        public static SoundStyle SoulDismantle;
+        public static SoundStyle PiercingBlood;
 
+        public static SoundStyle PachinkoBallCollision;
+        public static SoundStyle TrainDoorsClosing;
 
         public static SoundStyle UnlimitedVoid;
         public static SoundStyle MalevolentShrine;
+        public static SoundStyle IdleDeathGambleOpening;
+        public static SoundStyle IDGSlots;
+        public static SoundStyle IDGWoosh;
+        public static SoundStyle IDGWooshLoop;
 
         public override void Load()
         {
@@ -46,8 +54,19 @@ namespace sorceryFight
             DivineFlameShoot = new("sorceryFight/Content/Sounds/Projectiles/DivineFlameShoot") { Volume = 1f };
             WorldCuttingSlash = new("sorceryFight/Content/Sounds/Projectiles/WorldCuttingSlash") { Volume = 1f };
 
+            SoulDismantle = new("sorceryFight/Content/Sounds/Projectiles/SoulDismantleSnip") { Volume = 1f };
+            PiercingBlood = new("sorceryFight/Content/Sounds/Projectiles/PiercingBlood") { Volume = 1f };
+
+            PachinkoBallCollision = new("sorceryFight/Content/Sounds/Projectiles/PachinkoBallCollision") { Volume = 1f };
+            TrainDoorsClosing = new("sorceryFight/Content/Sounds/Projectiles/TrainDoorsClosing") { Volume = 1f };
+
             MalevolentShrine = new("sorceryFight/Content/Sounds/DomainExpansions/MalevolentShrine") { Volume = 1f };
             UnlimitedVoid = new("sorceryFight/Content/Sounds/DomainExpansions/UnlimitedVoid") { Volume = 1f };
+            
+            IdleDeathGambleOpening = new("sorceryFight/Content/Sounds/DomainExpansions/IdleDeathGambleOpening") { Volume = 1f };
+            IDGWooshLoop = new("sorceryFight/Content/Sounds/DomainExpansions/IDGWooshLoop") { Volume = 1f };
+            IDGWoosh = new("sorceryFight/Content/Sounds/DomainExpansions/IDGWoosh") { Volume = 1f };
+            IDGSlots = new("sorceryFight/Content/Sounds/DomainExpansions/IDGSlots") { Volume = 1f };
         }
     }
 }

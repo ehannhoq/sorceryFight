@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.SFPlayer;
@@ -75,7 +76,6 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         {
             if (!hasHit.Contains(Projectile.whoAmI))
             {
-                SoundEngine.PlaySound(SorceryFightSounds.CleaveSwing with { Volume = 5f }, Projectile.Center);
                 modifiers.FinalDamage.Flat = CalculateTrueDamage(Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>());
                 hasHit.Add(Projectile.whoAmI);
             }
@@ -115,12 +115,14 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                 Projectile.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
                 Projectile.Center = playerRotatedPoint + velocityAngle.ToRotationVector2() * offset;
                 Projectile.rotation = velocityAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
-                if (Projectile.ai[0] == 1)
-                    SoundEngine.PlaySound(SorceryFightSounds.CleaveSwing with { Volume = 5f }, player.Center);
             }
 
             if (Projectile.ai[0] == 1)
+            {
                 Projectile.ai[1] = Main.rand.NextFloat(0, MathHelper.TwoPi);
+                SoundEngine.PlaySound(SorceryFightSounds.CleaveSwing with { Volume = 5f }, Projectile.Center);
+                SoundEngine.PlaySound(SorceryFightSounds.SoulDismantle, Projectile.Center);
+            }
             
         }
 

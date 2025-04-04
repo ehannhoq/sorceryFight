@@ -83,7 +83,6 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             if (!hasHit.Contains(Projectile.whoAmI))
             {
                 modifiers.FinalDamage.Flat = CalculateTrueDamage(Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>());
-                SoundEngine.PlaySound(SorceryFightSounds.CleaveSwing with { Volume = 5f }, Projectile.Center);
                 hasHit.Add(Projectile.whoAmI);
 
                 if (isBarrage == 0)
@@ -150,6 +149,8 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             if (Projectile.ai[0] == 1)
             {
                 Projectile.ai[1] = Main.rand.NextFloat(0, MathHelper.TwoPi);
+                SoundEngine.PlaySound(SorceryFightSounds.CleaveSwing with { Volume = 5f }, player.Center);
+                SoundEngine.PlaySound(SorceryFightSounds.SoulDismantle, Projectile.Center);
             }
         }
 
