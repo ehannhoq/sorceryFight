@@ -10,11 +10,22 @@ namespace sorceryFight.SFPlayer
 {
     public partial class SorceryFightPlayer : ModPlayer
     {
-        public bool rctAnimation = false;
-        public int rctTimer = 0;
+        public bool preventDeath = false;
         public Vector2 deathPosition = Vector2.Zero;
 
-        public void PreAnimUpdate()
+        public bool rctAnimation = false;
+        public int rctTimer = 0;
+
+        public void PreventDeath()
+        {
+            preventDeath = true;
+            Player.dead = false;
+            Player.statLife = 1;
+            Player.immuneTime = 120;
+            Player.respawnTimer = 0;
+        }
+
+        public void RCTAnimation()
         {
             if (!rctAnimation) return;
 
@@ -67,12 +78,7 @@ namespace sorceryFight.SFPlayer
                 SorceryFightUI.UpdateTechniqueUI.Invoke();
             }
         }
-        public void PreventDeath()
-        {
-            Player.dead = false;
-            Player.statLife = 1;
-            Player.immuneTime = 120;
-            Player.respawnTimer = 0;
-        }
+
+
     }
 }

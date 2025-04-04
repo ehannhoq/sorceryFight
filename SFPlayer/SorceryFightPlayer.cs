@@ -113,8 +113,14 @@ namespace sorceryFight.SFPlayer
         {
             if (innateTechnique == null) return;
 
+            if (preventDeath && deathPosition != Vector2.Zero && Player.position != deathPosition)
+            {
+                Player.position = deathPosition;
+                preventDeath = false;
+            }
+
             innateTechnique.PreUpdate(this);
-            PreAnimUpdate();
+            RCTAnimation();
             PlayerAttributeIcons();
             Keybinds();
 
@@ -186,14 +192,14 @@ namespace sorceryFight.SFPlayer
                 PreventDeath();
             }
 
-            if (!rctAnimation && innateTechnique.Name.Equals("Vessel"))
+            if (!rctAnimation && innateTechnique.Name.Equals("Vessel") && sukunasFingerConsumed >= 1)
             {
-                if (SFUtils.Roll(100))
+                int chance = SorceryFight.DevModeNames.Contains(Player.name) ? 100 : 10;
+                if (SFUtils.Roll(chance))
                 {
                     PreventDeath();
                     Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(20));
                 }
-
             }
 
             disableRegenFromDE = false;

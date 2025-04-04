@@ -57,7 +57,6 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             ReloadUI();
             SetPosition();
 
-            Append(selectorIcon);
             SorceryFightUI.UpdateTechniqueUI += ReloadUI;
         }
 
@@ -163,7 +162,8 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             else
             {
                 selectedTechniqueIndex = -1;
-                Elements.Remove(selectorIcon);
+                if (Elements.Contains(selectorIcon))
+                    Elements.Remove(selectorIcon);
             }
 
             Recalculate();
