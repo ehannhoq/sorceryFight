@@ -114,10 +114,11 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
         {
             if (sfPlayer == null) return;
             if (sfPlayer.innateTechnique == null) return;
-            
+
 
             if (!isInitialized)
             {
+                Main.NewText("test");
                 Texture2D masteryIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/BossKillsIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 Texture2D rctIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/RCTIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 Texture2D domainIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{sfPlayer.innateTechnique.Name}/DomainIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
@@ -142,38 +143,56 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
                 int index = 0;
 
-                Texture2D sukunasFingerTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/SukunasFingerIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                string sukunasFingerHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Info")}\n{sfPlayer.sukunasFingerConsumed} {SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Consumed")}";
-                SpecialUIElement sukunasFingerIcon = new SpecialUIElement(sukunasFingerTexture, sukunasFingerHoverText);
-                sukunasFingerIcon.Left.Set(conditionalIconPositions[index].X, 0f);
-                sukunasFingerIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
-                Append(sukunasFingerIcon);
+                if (sfPlayer.sukunasFingerConsumed != null)
+                {
+                    Texture2D sukunasFingerTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/SukunasFingerIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    string sukunasFingerHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Info")}\n{sfPlayer.sukunasFingerConsumed} {SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Consumed")}";
+                    SpecialUIElement sukunasFingerIcon = new SpecialUIElement(sukunasFingerTexture, sukunasFingerHoverText);
+                    if (index < conditionalIconPositions.Count)
+                    {
+                        sukunasFingerIcon.Left.Set(conditionalIconPositions[index].X, 0f);
+                        sukunasFingerIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
+                        Append(sukunasFingerIcon);
+                        index++;
+                    }
+                }
 
-                index++;
 
-                string rctIconHoverText = sfPlayer.unlockedRCT ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.Info")}" +
-                                        $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.ContinuousRCT.Info")}" +
-                                        $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.ContinuousRCT.Keybind")} {SFKeybinds.UseRCT.GetAssignedKeys()[sfPlayer.Player.whoAmI]}"
-                                        :
-                                        "Locked!";
-                Texture2D finalRCTexture = sfPlayer.unlockedRCT ? rctIconTexture : lockedTexture;
-                SpecialUIElement rctIcon = new SpecialUIElement(finalRCTexture, rctIconHoverText);
-                rctIcon.Left.Set(conditionalIconPositions[index].X, 0f);
-                rctIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
-                Append(rctIcon);
-
-                index++;
-
-                string domainIconHoverText = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? $"{sfPlayer.innateTechnique.DomainExpansion.DisplayName.Value}\n{sfPlayer.innateTechnique.DomainExpansion.Description}"
+                if (sfPlayer.unlockedRCT != null)
+                {
+                    string rctIconHoverText = sfPlayer.unlockedRCT ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.Info")}" +
+                                            $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.ContinuousRCT.Info")}" +
+                                            $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.ContinuousRCT.Keybind")} {SFKeybinds.UseRCT.GetAssignedKeys()[sfPlayer.Player.whoAmI]}"
                                             :
                                             "Locked!";
-                Texture2D finalDomainTexture = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? domainIconTexture : lockedTexture;
-                SpecialUIElement domainIcon = new SpecialUIElement(finalDomainTexture, domainIconHoverText);
-                domainIcon.Left.Set(conditionalIconPositions[index].X, 0f);
-                domainIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
-                Append(domainIcon);
+                    Texture2D finalRCTexture = sfPlayer.unlockedRCT ? rctIconTexture : lockedTexture;
+                    SpecialUIElement rctIcon = new SpecialUIElement(finalRCTexture, rctIconHoverText);
+                    if (index < conditionalIconPositions.Count)
+                    {
+                        rctIcon.Left.Set(conditionalIconPositions[index].X, 0f);
+                        rctIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
+                        Append(rctIcon);
+                        index++;
+                    }
+                }
 
-                isInitialized = true;
+                if (sfPlayer.innateTechnique.DomainExpansion != null)
+                {
+                    string domainIconHoverText = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? $"{sfPlayer.innateTechnique.DomainExpansion.DisplayName.Value}\n{sfPlayer.innateTechnique.DomainExpansion.Description}"
+                                                :
+                                                "Locked!";
+                    Texture2D finalDomainTexture = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? domainIconTexture : lockedTexture;
+                    SpecialUIElement domainIcon = new SpecialUIElement(finalDomainTexture, domainIconHoverText);
+
+                    if (index < conditionalIconPositions.Count)
+                    {
+                        domainIcon.Left.Set(conditionalIconPositions[index].X, 0f);
+                        domainIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
+                        Append(domainIcon);
+
+                    }
+                    isInitialized = true;
+                }
             }
         }
     }
