@@ -12,8 +12,7 @@ namespace sorceryFight.Content.DomainExpansions
 {
     public class Home : DomainExpansion
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.DomainExpansions.Home.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.Home.Description");
+        public override string InternalName => "Home";
         public override int CostPerSecond { get; set; } = 75;
         public override bool Unlocked(SorceryFightPlayer sf)
         {

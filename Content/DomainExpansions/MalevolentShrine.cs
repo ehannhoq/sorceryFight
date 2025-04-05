@@ -14,8 +14,7 @@ namespace sorceryFight.Content.DomainExpansions
 {
     public class MalevolentShrine : DomainExpansion
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.DomainExpansions.MalevolentShrine.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.MalevolentShrine.Description");
+        public override string InternalName => "MalevolentShrine";
         public override int CostPerSecond { get; set; } = 150;
         public override bool Unlocked(SorceryFightPlayer sf)
         {

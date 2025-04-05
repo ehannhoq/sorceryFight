@@ -6,6 +6,7 @@ UnlimitedVoid: {
 		their brain with information, rendering
 		them unable to move or think.
 		'''
+	LockedDescription: Defeat the Devourer of Gods.
 }
 
 MalevolentShrine: {
@@ -17,6 +18,7 @@ MalevolentShrine: {
 		down by Dismantles and Cleaves. There is
 		no range on this domain.
 		'''
+	LockedDescription: Defeat the Devourer of Gods.
 }
 
 Home: {
@@ -27,6 +29,11 @@ Home: {
 		within its barrier, and striking enemies at their
 		soul, ignoring defense.
 		'''
+	LockedDescription:
+		'''
+		Defeat the Devourer of Gods, as well as consume
+		20 of Ryomen Sukuna's fingers.
+		'''
 }
 
 IdleDeathGamble: {
@@ -36,5 +43,10 @@ IdleDeathGamble: {
 		A Domain Expansion of luck; inspired by the
 		classic pachinko machine. Try to match three
 		symbols and get the jackpot!
+		'''
+	LockedDescription:
+		'''
+		Be at the brink of death at the hands of the
+		lunar god.
 		'''
 }

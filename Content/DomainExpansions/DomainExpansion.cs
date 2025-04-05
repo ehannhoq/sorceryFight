@@ -19,8 +19,29 @@ namespace sorceryFight.Content.DomainExpansions
     public abstract class DomainExpansion : ModNPC
     {
         public static Dictionary<int, Player> Owners { get; set; }
-        public override LocalizedText DisplayName { get; }
-        public abstract string Description { get; }
+        public abstract string InternalName { get; }
+        public override LocalizedText DisplayName 
+        { 
+            get
+            {
+                return SFUtils.GetLocalization($"Mods.sorceryFight.DomainExpansions.{InternalName}.DisplayName");
+            } 
+        }
+        public virtual string Description 
+        { 
+            get
+            {
+                return SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.Description");
+            } 
+        }
+        public virtual string LockedDescription
+        {
+            get
+            {
+                return SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.LockedDescription");
+            }
+        }
+        
         public abstract int CostPerSecond { get; set; }
         public virtual bool Unlocked(SorceryFightPlayer sf)
         {

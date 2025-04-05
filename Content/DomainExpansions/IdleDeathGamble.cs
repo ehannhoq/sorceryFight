@@ -15,8 +15,7 @@ namespace sorceryFight.Content.DomainExpansions
 {
     public class IdleDeathGamble : DomainExpansion
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.DomainExpansions.IdleDeathGamble.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.DomainExpansions.IdleDeathGamble.Description");
+        public override string InternalName => "IdleDeathGamble";
         public override int CostPerSecond { get; set; } = 10;
 
         public override bool Unlocked(SorceryFightPlayer sf)
