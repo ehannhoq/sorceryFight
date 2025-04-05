@@ -15,22 +15,8 @@ RCTIcon: {
 		multiplying negative Cursed Energy together. This positive energy
 		allows one to heal any wound of the user, fatal or not.
 		'''
-
-	ContinuousRCT: {
-		Info: Heal rate: 1 HP / 5 CE
-		Keybind: Press and hold:
-	}
-
-	BurstRCT: {
-		Info: placeholder
-		KeyBind: Press:
-	}
-
-	SpontaniousRCT.Info:
-		'''
-		Spontanious RCT heals a lot of health instantly, but requires the 
-		up most focus.
-		'''
+	LockedInfo: Be at the brink of death at the hands of the lunar god.
+	ContinuousRCT.Info: Heal rate: 1 HP / 5 CE
 }
 
 SukunasFingerIcon: {

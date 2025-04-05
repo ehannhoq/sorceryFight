@@ -73,10 +73,68 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             ctTree.Top.Set(0f, 0f);
             Append(ctTree);
 
+            AddIcons();
 
             Recalculate();
         }
 
+        private void AddIcons()
+        {
+            Texture2D masteryIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/BossKillsIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D rctIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/RCTIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D domainIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{sfPlayer.innateTechnique.Name}/DomainIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D lockedTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/SpecialLockedIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+            string masteryIconHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.Info")}" +
+                             $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.BossesDefeated")} {sfPlayer.bossesDefeated.Count}" +
+                             $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.CostReduction")} {sfPlayer.bossesDefeated.Count}%";
+            SpecialUIElement masteryIcon = new SpecialUIElement(masteryIconTexture, masteryIconHoverText);
+            masteryIcon.Left.Set(borderTexture.Width - masteryIconTexture.Width - 28f, 0f);
+            masteryIcon.Top.Set(closeButtonTexture.Height + 34f, 0f);
+            Append(masteryIcon);
+
+
+            List<Vector2> conditionalIconPositions = new List<Vector2>();
+            int conditionalIconsCount = 5;
+            int conditionalIconSize = 40;
+            for (int i = 0; i < conditionalIconsCount; i++)
+            {
+                Vector2 pos = new Vector2(borderTexture.Width - conditionalIconSize - 28f, closeButtonTexture.Height + 34f + (i + 1) * (conditionalIconSize + 6f));
+                conditionalIconPositions.Add(pos);
+            }
+
+            int index = 0;
+
+            if (sfPlayer.sukunasFingerConsumed >= 1)
+            {
+                Texture2D sukunasFingerTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/SukunasFingerIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                string sukunasFingerHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Info")}\n{sfPlayer.sukunasFingerConsumed} {SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Consumed")}";
+                SpecialUIElement sukunasFingerIcon = new SpecialUIElement(sukunasFingerTexture, sukunasFingerHoverText);
+                sukunasFingerIcon.Left.Set(conditionalIconPositions[index].X, 0f);
+                sukunasFingerIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
+                Append(sukunasFingerIcon);
+                index++;
+            }
+
+            string rctIconHoverText = sfPlayer.unlockedRCT ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.Info")}" + $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.ContinuousRCT.Info")}"
+             : $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.LockedInfo")}";
+            Texture2D finalRCTTexture = sfPlayer.unlockedRCT ? ref rctIconTexture : ref lockedTexture;
+            SpecialUIElement rctIcon = new SpecialUIElement(finalRCTTexture, rctIconHoverText);
+            rctIcon.Left.Set(conditionalIconPositions[index].X, 0f);
+            rctIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
+            Append(rctIcon);
+            index++;
+
+            string domainIconHoverText = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? $"{sfPlayer.innateTechnique.DomainExpansion.DisplayName.Value}\n{sfPlayer.innateTechnique.DomainExpansion.Description}"
+             : $"{sfPlayer.innateTechnique.DomainExpansion.LockedDescription}";
+            Texture2D finalDomainTexture = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? ref domainIconTexture : ref lockedTexture;
+            SpecialUIElement domainIcon = new SpecialUIElement(finalDomainTexture, domainIconHoverText);
+            domainIcon.Left.Set(conditionalIconPositions[index].X, 0f);
+            domainIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
+            Append(domainIcon);
+            index++;
+
+        }
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -106,94 +164,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                     Recalculate();
                 }
             }
-
-            DrawIcons();
         }
 
-        private void DrawIcons()
-        {
-            if (sfPlayer == null) return;
-            if (sfPlayer.innateTechnique == null) return;
 
-
-            if (!isInitialized)
-            {
-                Main.NewText("test");
-                Texture2D masteryIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/BossKillsIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                Texture2D rctIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/RCTIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                Texture2D domainIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{sfPlayer.innateTechnique.Name}/DomainIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                Texture2D lockedTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/SpecialLockedIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-                string masteryIconHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.Info")}" +
-                                 $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.BossesDefeated")} {sfPlayer.bossesDefeated.Count}" +
-                                 $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.CostReduction")} {sfPlayer.bossesDefeated.Count}%";
-                SpecialUIElement masteryIcon = new SpecialUIElement(masteryIconTexture, masteryIconHoverText);
-                masteryIcon.Left.Set(borderTexture.Width - masteryIconTexture.Width - 28f, 0f);
-                masteryIcon.Top.Set(closeButtonTexture.Height + 34f, 0f);
-                Append(masteryIcon);
-
-                List<Vector2> conditionalIconPositions = new List<Vector2>();
-                int conditionalIconsCount = 5;
-                int conditionalIconSize = 40;
-                for (int i = 0; i < conditionalIconsCount; i++)
-                {
-                    Vector2 pos = new Vector2(borderTexture.Width - conditionalIconSize - 28f, closeButtonTexture.Height + 34f + (i + 1) * (conditionalIconSize + 6f));
-                    conditionalIconPositions.Add(pos);
-                }
-
-                int index = 0;
-
-                if (sfPlayer.sukunasFingerConsumed != null)
-                {
-                    Texture2D sukunasFingerTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/SukunasFingerIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                    string sukunasFingerHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Info")}\n{sfPlayer.sukunasFingerConsumed} {SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Consumed")}";
-                    SpecialUIElement sukunasFingerIcon = new SpecialUIElement(sukunasFingerTexture, sukunasFingerHoverText);
-                    if (index < conditionalIconPositions.Count)
-                    {
-                        sukunasFingerIcon.Left.Set(conditionalIconPositions[index].X, 0f);
-                        sukunasFingerIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
-                        Append(sukunasFingerIcon);
-                        index++;
-                    }
-                }
-
-
-                if (sfPlayer.unlockedRCT != null)
-                {
-                    string rctIconHoverText = sfPlayer.unlockedRCT ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.Info")}" +
-                                            $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.ContinuousRCT.Info")}" +
-                                            $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.ContinuousRCT.Keybind")} {SFKeybinds.UseRCT.GetAssignedKeys()[sfPlayer.Player.whoAmI]}"
-                                            :
-                                            "Locked!";
-                    Texture2D finalRCTexture = sfPlayer.unlockedRCT ? rctIconTexture : lockedTexture;
-                    SpecialUIElement rctIcon = new SpecialUIElement(finalRCTexture, rctIconHoverText);
-                    if (index < conditionalIconPositions.Count)
-                    {
-                        rctIcon.Left.Set(conditionalIconPositions[index].X, 0f);
-                        rctIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
-                        Append(rctIcon);
-                        index++;
-                    }
-                }
-
-                if (sfPlayer.innateTechnique.DomainExpansion != null)
-                {
-                    string domainIconHoverText = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? $"{sfPlayer.innateTechnique.DomainExpansion.DisplayName.Value}\n{sfPlayer.innateTechnique.DomainExpansion.Description}"
-                                                :
-                                                "Locked!";
-                    Texture2D finalDomainTexture = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? domainIconTexture : lockedTexture;
-                    SpecialUIElement domainIcon = new SpecialUIElement(finalDomainTexture, domainIconHoverText);
-
-                    if (index < conditionalIconPositions.Count)
-                    {
-                        domainIcon.Left.Set(conditionalIconPositions[index].X, 0f);
-                        domainIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
-                        Append(domainIcon);
-
-                    }
-                }
-                isInitialized = true;
-            }
-        }
     }
 }
