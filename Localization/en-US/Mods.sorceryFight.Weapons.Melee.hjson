@@ -1,14 +1,8 @@
-ExampleSword: {
-	DisplayName: Example Sword
-	Tooltip: TEST
-}
-
-CursedKatana: {
-	DisplayName: Cursed Katana
+CrikySword: {
+	DisplayName: Subatomic Particle Splitter
 	Tooltip:
 		'''
-		A katana thats been
-		inbued with cursed
-		energy.
+		A blade that splits through the subatomic particles that make up atoms.
+		[c/6D2673:Dedicated to TheRealCriky]
 		'''
 }
