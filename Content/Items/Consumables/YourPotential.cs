@@ -31,6 +31,7 @@ namespace sorceryFight.Content.Items.Consumables
             {
                 SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
                 sfPlayer.yourPotentialSwitch = true;
+                sfPlayer.usedYourPotentialBefore = true;
             }
 
             return true;
