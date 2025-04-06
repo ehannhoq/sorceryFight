@@ -16,7 +16,7 @@ namespace sorceryFight.Content.InnateTechniques
     public class VesselTechnique : InnateTechnique
     {
         public override string Name => "Vessel";
-        public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.Shrine.DisplayName");
+        public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.Vessel.DisplayName");
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
         };

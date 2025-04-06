@@ -13,6 +13,11 @@ InnateTechniques: {
 		DisplayName: Private Pure Love Train
 		Description: placeholder
 	}
+
+	Vessel: {
+		DisplayName: Vessel
+		Description: placeholder
+	}
 }
 
 UnlockedRCT: {
@@ -24,11 +29,11 @@ InnateTechniqueUnlocker: {
 	Limitless: The essense of Infinity begins to flow through your veins.
 	Shrine: The depths of hell opens up to welcome its potential king.
 	PrivatePureLoveTrain: You suddenly feel a lot more lucky than before.
+	Vessel: A foreign, ancient soul seems to have been sealed within your body. A soul of pure evil.
 
 	PlayerAttributes: {
 		SixEyes: Your eyes begin to glow radiantly, being able to see the flow of even the faintest of Cursed Energy in the air.
 		UniqueBodyStructure: Your body aches and churns, as it begins to reconstruct itself.
-		SukunasVessel: A foreign, ancient soul seems to have been sealed within your body. A soul of pure evil.
 		FailedReroll: Your genetics doesn't seem to have changed. (FAILED REROLL)
 	}
 }

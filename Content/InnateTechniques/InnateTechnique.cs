@@ -48,7 +48,7 @@ namespace sorceryFight.Content.InnateTechniques
                 {
                     new LimitlessTechnique(),
                     new ShrineTechnique(),
-                    // Vessel Technique is technically a 'secret' technique.
+                    new VesselTechnique(),
                     new PrivatePureLoveTrainTechnique()
                 };
             }

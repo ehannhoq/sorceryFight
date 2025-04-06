@@ -174,6 +174,4 @@ public static class SFConstants
 {
     public const int SixEyesPercent = 10;
     public const int UniqueBodyStructurePercent = 15;
-    public const int SukunasVesselPercent = 50;
-
 }

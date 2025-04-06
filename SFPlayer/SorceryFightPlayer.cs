@@ -397,13 +397,6 @@ namespace sorceryFight.SFPlayer
                 successfulRoll = true;
             }
 
-            if (SFUtils.Roll(SFConstants.SukunasVesselPercent) && innateTechnique.Name == "Shrine")
-            {
-                innateTechnique = new VesselTechnique();
-                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.SukunasVessel"), Color.Khaki, Player.whoAmI);
-                successfulRoll = true;
-            }
-
             if (isReroll && !successfulRoll)
             {
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.FailedReroll"), Color.Khaki, Player.whoAmI);
