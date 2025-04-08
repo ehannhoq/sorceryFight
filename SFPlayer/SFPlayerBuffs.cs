@@ -13,10 +13,11 @@ namespace sorceryFight.SFPlayer
         public bool hollowWickerBasket;
         public override bool ImmuneTo(PlayerDeathReason damageSource, int cooldownCounter, bool dodgeable)
         {
-            bool immune = infinity || hollowWickerBasket;
-            if (Player == Main.LocalPlayer && immune)
+            if (Player == Main.LocalPlayer)
             {
-                return true;
+                bool immune = infinity || hollowWickerBasket;
+                if (immune)
+                    return true;
             }
 
             return base.ImmuneTo(damageSource, cooldownCounter, dodgeable);
@@ -94,6 +95,13 @@ namespace sorceryFight.SFPlayer
 
             duration -= duration * percentReduction;
             Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SFUtils.BuffSecondsToTicks(duration));
+        }
+
+        public void DisablePTBooleans()
+        {
+            infinity = false;
+            hollowWickerBasket = false;
+            domainAmp = false;
         }
     }
 }
