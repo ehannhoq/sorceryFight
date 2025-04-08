@@ -6,3 +6,12 @@ CrikySword: {
 		[c/6D2673:Dedicated to TheRealCriky]
 		'''
 }
+
+InvertedSpear: {
+	DisplayName: Inverted Spear of Heaven
+	Tooltip:
+		'''
+		[Right Click] to throw the spear using the Chain of a Thousand Miles,
+		extending out to your cursor before returning.
+		'''
+}

@@ -27,6 +27,7 @@ Mods: {
 			HollowWickerBasketProjectile.DisplayName: Hollow Wicker Basket Projectile
 			IdleDeathGambleJackpotProjectile.DisplayName: Idle Death Gamble Jackpot Projectile
 			CrikySwordSlash.DisplayName: Criky Sword Slash
+			InvertedSpearSlash.DisplayName: Inverted Spear Slash
 		}
 
 		Configs: {
