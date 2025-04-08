@@ -19,7 +19,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
     {
         internal class TechniqueSelectorButton : SFButton
         {
-            int id;
+            internal int id;
             public TechniqueSelectorButton(Texture2D texture, string hoverText, int id) : base(texture, hoverText)
             {
                 this.id = id;
@@ -30,14 +30,14 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             public override void OnClick()
             {
                 CursedTechniqueSelector p = (CursedTechniqueSelector)Parent;
-                p.selectedTechniqueIndex = id;
+                p.selectorIndex = p.GetIconIndex(id);
             }
         }
         SorceryFightPlayer sfPlayer;
         List<TechniqueSelectorButton> icons;
         UIImage selectorIcon;
         Texture2D selectorTexture;
-        internal int selectedTechniqueIndex;
+        internal int selectorIndex;
         int unlockedTechniques;
         bool isDragging;
         Vector2 offset;
@@ -53,7 +53,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             selectorIcon = new UIImage(selectorTexture);
 
 
-            selectedTechniqueIndex = 0;
+            selectorIndex = 0;
             ReloadUI();
             SetPosition();
 
@@ -64,37 +64,36 @@ namespace sorceryFight.Content.UI.TechniqueSelector
         {
             base.Update(gameTime);
 
-            if (selectedTechniqueIndex == -1) return;
+            if (selectorIndex == -1) return;
 
             if (Elements.Contains(selectorIcon))
             {
-                selectorIcon.Left.Set((selectedTechniqueIndex * 60f) - 6f, 0f);
+                selectorIcon.Left.Set((selectorIndex * 60f) - 6f, 0f);
                 selectorIcon.Top.Set(-6f, 0f);
             }
 
             if (SFKeybinds.CycleSelectedTechniqueUp.JustPressed)
             {
-                selectedTechniqueIndex++;
-                if (selectedTechniqueIndex >= unlockedTechniques)
+                selectorIndex++;
+                if (selectorIndex >= unlockedTechniques)
                 {
-                    selectedTechniqueIndex = 0;
+                    selectorIndex = 0;
                 }
                 SoundEngine.PlaySound(SoundID.Mech with { Volume = 1f });
             }
 
             if (SFKeybinds.CycleSelectedTechniqueDown.JustPressed)
             {
-                selectedTechniqueIndex--;
-                if (selectedTechniqueIndex < 0)
+                selectorIndex--;
+                if (selectorIndex < 0)
                 {
-                    selectedTechniqueIndex = unlockedTechniques - 1;
+                    selectorIndex = unlockedTechniques - 1;
                 }
                 SoundEngine.PlaySound(SoundID.Mech with { Volume = 1f });
             }
 
-            if (selectedTechniqueIndex != -1)
-                sfPlayer.selectedTechnique = sfPlayer.innateTechnique.CursedTechniques[selectedTechniqueIndex];
-
+            if (selectorIndex != -1)
+                sfPlayer.selectedTechnique = sfPlayer.innateTechnique.CursedTechniques[icons[selectorIndex].id];
 
             if (Main.playerInventory && HoveringOverUI() && Main.mouseLeft && !isDragging)
             {
@@ -130,29 +129,29 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             Elements.Clear();
             icons.Clear();
             unlockedTechniques = 0;
-            selectedTechniqueIndex = -1;
+            selectorIndex = -1;
 
             for (int i = 0; i < sfPlayer.innateTechnique.CursedTechniques.Count; i++)
             {
                 Texture2D ctTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueSelector/{sfPlayer.innateTechnique.Name}/c{i}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 string ctHoverText = $"{sfPlayer.innateTechnique.CursedTechniques[i].DisplayName.Value}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip")}";
                 TechniqueSelectorButton ctIcon = new TechniqueSelectorButton(ctTexture, ctHoverText, i);
-                icons.Add(ctIcon);
-                
+
                 if (sfPlayer.innateTechnique.CursedTechniques[i].Unlocked(sfPlayer))
                 {
-                    unlockedTechniques++;
-                    ctIcon.Left.Set(i * ctIcon.texture.Width, 0f);
+                    ctIcon.Left.Set(unlockedTechniques * ctIcon.texture.Width, 0f);
                     ctIcon.Top.Set(0f, 0f);
                     Append(ctIcon);
+                    unlockedTechniques++;
+                    icons.Add(ctIcon);
                 }
             }
 
             if (unlockedTechniques > 0)
             {
 
-                if (selectedTechniqueIndex == -1)
-                    selectedTechniqueIndex = 0;
+                if (selectorIndex == -1)
+                    selectorIndex = 0;
 
                 if (!Elements.Contains(selectorIcon))
                 {
@@ -161,7 +160,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             }
             else
             {
-                selectedTechniqueIndex = -1;
+                selectorIndex = -1;
                 if (Elements.Contains(selectorIcon))
                     Elements.Remove(selectorIcon);
             }
@@ -183,6 +182,15 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 if (SorceryFightUI.MouseHovering(icon, icon.texture)) return true;
             }
             return false;
+        }
+
+        int GetIconIndex(int iconID)
+        {
+            for (int i = 0; i < icons.Count; i++)
+            {
+                if (icons[i].id == iconID) return i;
+            }
+            return -1;
         }
     }
 }

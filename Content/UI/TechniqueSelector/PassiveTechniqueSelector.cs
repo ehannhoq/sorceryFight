@@ -117,9 +117,9 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
                 if (sfPlayer.innateTechnique.PassiveTechniques[i].Unlocked(sfPlayer))
                 {
-                    unlockedTechniques++;
                     ptIcon.Left.Set(0f, 0f);
-                    ptIcon.Top.Set(i * ptIcon.texture.Height, 0f);
+                    ptIcon.Top.Set(unlockedTechniques * ptIcon.texture.Height, 0f);
+                    unlockedTechniques++;
                     Append(ptIcon);
                 }
             }
