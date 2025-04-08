@@ -11,7 +11,7 @@ InvertedSpear: {
 	DisplayName: Inverted Spear of Heaven
 	Tooltip:
 		'''
-		[Right Click] to throw the spear using the Chain of a Thousand Miles,
-		extending out to your cursor before returning.
+		[c/E0DA5A:Right click to throw the spear using the Chain of a Thousand]
+		[c/E0DA5A:Miles, extending out to your cursor before returning.]
 		'''
 }
