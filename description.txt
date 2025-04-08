@@ -1,7 +1,7 @@
 Sorcery Fight is heavily inspired by anime/manga Jujutsu Kaisen.
 
 The mod adds:
-Three innate techniques, Limitless, Shrine, Private Pure Love Train, and Vessel.
+Four innate techniques, Limitless, Shrine, Private Pure Love Train, and Vessel.
 each with a total of 15 cursed techniques, 5 passive techniques, and 4 domain expansions.
 
 NOTE: This mod requires Calamity Mod and its dependencies in order to install.
@@ -16,5 +16,13 @@ https://discord.gg/HcBQXhwZcw
 or on github:
 https://github.com/ehannhoq/sorceryFight/issues
 or leave a comment, though it will be less likely to be seen.
+
+Development Team:
+ehann, Developer
+rend, Developer
+AverageTiredGuy, Sprite Artist
+gooloohoodoo, Sprite Artist
+Perseus, Sprite Artist
+TheRealCriky, Sprite Artist
 
 The creator of this mod does not own the rights to the content that is from Jujutsu Kaisen. All rights belong to the owner. No Copyright Infringement intended.
