@@ -10,7 +10,6 @@ namespace sorceryFight.SFPlayer
     {
         public override void Initialize()
         {
-            hasUIOpen = false;
             disableRegenFromProjectiles = false;
             disableRegenFromBuffs = false;
             disableRegenFromDE = false;

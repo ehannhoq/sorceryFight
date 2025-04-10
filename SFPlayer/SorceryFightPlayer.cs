@@ -25,7 +25,6 @@ namespace sorceryFight.SFPlayer
         public static readonly float DefaultBurntTechniqueDuration = 30;
         public static readonly float DefaultBurntTechniqueDurationFromDE = 120;
 
-        public bool hasUIOpen;
         public bool disableRegenFromProjectiles;
         public bool disableRegenFromBuffs;
         public bool disableRegenFromDE;

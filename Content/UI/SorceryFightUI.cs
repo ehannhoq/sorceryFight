@@ -74,13 +74,11 @@ public class SorceryFightUI : UIState
             if (!Elements.Contains(ctMenu))
             {
                 ctMenu = new CursedTechniqueMenu(player);
-                player.hasUIOpen = true;
                 Append(ctMenu);
             }
             else
             {
                 Elements.Remove(ctMenu);
-                player.hasUIOpen = false;
             }
         }
 
