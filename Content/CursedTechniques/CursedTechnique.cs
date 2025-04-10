@@ -5,6 +5,7 @@ using sorceryFight.SFPlayer;
 using Microsoft.Build.Tasks;
 using System;
 using System.IO;
+using CalamityMod;
 
 namespace sorceryFight.Content.CursedTechniques
 {
@@ -27,8 +28,10 @@ namespace sorceryFight.Content.CursedTechniques
                 + $"Cost: {CalculateTrueCost(sf)} CE\n";
         }
         public virtual float CalculateTrueDamage(SorceryFightPlayer sf)
-        {
-            return Damage + (sf.bossesDefeated.Count * MasteryDamageMultiplier);
+        { 
+            int baseDamage = Damage + (sf.bossesDefeated.Count * MasteryDamageMultiplier);
+            int finalDamage = (int)sf.Player.GetTotalDamage(CursedTechniqueDamageClass.Instance).ApplyTo(baseDamage);
+            return finalDamage;
         }
 
         public virtual float CalculateTrueCost(SorceryFightPlayer sf)
@@ -46,6 +49,7 @@ namespace sorceryFight.Content.CursedTechniques
             Projectile.height = 40;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
+            Projectile.DamageType = CursedTechniqueDamageClass.Instance;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -76,6 +80,7 @@ namespace sorceryFight.Content.CursedTechniques
                     int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
                     Main.combatText[index1].lifeTime = 180;
                 }
+
                 return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
             }
             return -1;
