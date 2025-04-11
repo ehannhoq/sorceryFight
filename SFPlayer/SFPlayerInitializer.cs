@@ -126,6 +126,7 @@ namespace sorceryFight.SFPlayer
             cursedRuneOfKos = cursedEnergyRegenModifiers.Contains("cursedRuneOfKos");
 
             var generalBooleans = tag.GetList<string>("generalBooleans");
+            recievedYourPotential = generalBooleans.Contains("recievedYourPotential");
             usedYourPotentialBefore = generalBooleans.Contains("usedYourPotentialBefore");
             unlockedRCT = generalBooleans.Contains("unlockedRCT");
             sixEyes = generalBooleans.Contains("sixEyes");
