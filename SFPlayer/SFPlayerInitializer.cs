@@ -37,6 +37,7 @@ namespace sorceryFight.SFPlayer
             cursedRuneOfKos = false;
             cursedEnergyRegenFromOtherSources = 0f;
 
+            recievedYourPotential = false;
             yourPotentialSwitch = false;
             usedYourPotentialBefore = false;
             usedCursedFists = false;
@@ -89,6 +90,7 @@ namespace sorceryFight.SFPlayer
             tag["cursedEnergyRegenModifiers"] = cursedEnergyRegenModifiers;
 
             var generalBooleans = new List<string>();
+            generalBooleans.AddWithCondition("recievedYourPotential", recievedYourPotential);
             generalBooleans.AddWithCondition("usedYourPotentialBefore", usedYourPotentialBefore);
             generalBooleans.AddWithCondition("unlockedRCT", unlockedRCT);
             generalBooleans.AddWithCondition("sixEyes", sixEyes);

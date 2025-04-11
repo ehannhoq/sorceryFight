@@ -16,6 +16,7 @@ using CalamityMod.CalPlayer.Dashes;
 using System;
 using Terraria.UI;
 using sorceryFight.Content.Buffs.Vessel;
+using sorceryFight.Content.Items.Consumables;
 
 namespace sorceryFight.SFPlayer
 {
@@ -60,6 +61,7 @@ namespace sorceryFight.SFPlayer
         #endregion
 
         #region One-off Variables
+        public bool recievedYourPotential;
         public bool yourPotentialSwitch;
         public bool usedYourPotentialBefore;
         public bool usedCursedFists;
@@ -204,6 +206,16 @@ namespace sorceryFight.SFPlayer
             disableRegenFromDE = false;
             disableRegenFromProjectiles = false;
         }
+
+        public override void OnEnterWorld()
+        {
+            if (Main.myPlayer == Player.whoAmI && !recievedYourPotential)
+            {
+                Player.QuickSpawnItem(Player.GetSource_Misc("YourPotential"), ModContent.ItemType<YourPotential>());
+                recievedYourPotential = true;
+            }
+        }
+
         void Keybinds()
         {
             if (SFKeybinds.UseTechnique.JustPressed)
