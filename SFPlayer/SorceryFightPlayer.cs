@@ -24,7 +24,7 @@ namespace sorceryFight.SFPlayer
     {
         #region Global Variables
         public static readonly float DefaultBurntTechniqueDuration = 30;
-        public static readonly float DefaultBurntTechniqueDurationFromDE = 120;
+        public static readonly float DefaultBrainDamageDuration = 120;
 
         public bool disableRegenFromProjectiles;
         public bool disableRegenFromBuffs;
@@ -328,9 +328,9 @@ namespace sorceryFight.SFPlayer
                 return;
             }
 
-            if (Player.HasBuff<BurntTechnique>())
+            if (Player.HasBuff<BrainDamage>())
             {
-                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
+                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You can't use this right now!");
                 Main.combatText[index].lifeTime = 60;
                 return;
             }

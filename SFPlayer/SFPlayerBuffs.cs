@@ -31,7 +31,7 @@ namespace sorceryFight.SFPlayer
             if (cursedEnergy < 1)
             {
                 cursedEnergy = 1;
-                AddBurntTechniqueDebuff(DefaultBurntTechniqueDuration);
+                AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
             }
 
             if (infinity || hollowWickerBasket)
@@ -84,7 +84,7 @@ namespace sorceryFight.SFPlayer
             base.ModifyHitByProjectile(proj, ref modifiers);
         }
 
-        public void AddBurntTechniqueDebuff(float duration)
+        public void AddDeductableDebuff(int debuffType, float duration)
         {
             float percentReduction = 0f;
 
@@ -94,7 +94,7 @@ namespace sorceryFight.SFPlayer
             }
 
             duration -= duration * percentReduction;
-            Player.AddBuff(ModContent.BuffType<BurntTechnique>(), SFUtils.BuffSecondsToTicks(duration));
+            Player.AddBuff(debuffType, SFUtils.BuffSecondsToTicks(duration));
         }
 
         public void DisablePTBooleans()

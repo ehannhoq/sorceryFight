@@ -4,6 +4,7 @@ using sorceryFight.Content.Buffs;
 using Terraria;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.SFPlayer;
+using Terraria.ModLoader;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -73,7 +74,7 @@ namespace sorceryFight.Content.InnateTechniques
         public virtual void CloseDomain(SorceryFightPlayer sf)
         {
             Main.npc[sf.domainIndex].active = false;
-            sf.AddBurntTechniqueDebuff(SorceryFightPlayer.DefaultBurntTechniqueDurationFromDE);
+            sf.AddDeductableDebuff(ModContent.BuffType<BrainDamage>(), SorceryFightPlayer.DefaultBrainDamageDuration);
             sf.expandedDomain = false;
             sf.disableRegenFromDE = false;
             sf.domainIndex = -1;

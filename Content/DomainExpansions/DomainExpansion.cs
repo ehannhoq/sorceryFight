@@ -129,7 +129,7 @@ namespace sorceryFight.Content.DomainExpansions
             sfPlayer.disableRegenFromDE = false;
             sfPlayer.domainIndex = -1;
             sfPlayer.expandedDomain = false;
-            Owners[NPC.whoAmI].AddBuff(ModContent.BuffType<BurntTechnique>(), SFUtils.BuffSecondsToTicks(SorceryFightPlayer.DefaultBurntTechniqueDurationFromDE));
+            Owners[NPC.whoAmI].GetModPlayer<SorceryFightPlayer>().AddDeductableDebuff(ModContent.BuffType<BrainDamage>(), SorceryFightPlayer.DefaultBrainDamageDuration);
             Owners.Remove(NPC.whoAmI);
             NPC.active = false;
         }

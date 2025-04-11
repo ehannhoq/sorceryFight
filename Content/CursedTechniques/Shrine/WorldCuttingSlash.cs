@@ -140,7 +140,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 if (Main.myPlayer == Projectile.owner)
                 {
                     Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
-                    player.AddBuff(ModContent.BuffType<BurntTechnique>(), SFUtils.BuffSecondsToTicks(5));
+                    player.GetModPlayer<SorceryFightPlayer>().AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), 5);
 
                 }
                 float velocityRotation = Projectile.velocity.ToRotation();

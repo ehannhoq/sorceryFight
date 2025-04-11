@@ -120,3 +120,8 @@ KingOfCursesBuff: {
 	DisplayName: King Of Curses Mode
 	Description: Give me your body, kid.
 }
+
+BrainDamage: {
+	DisplayName: Brain Damage
+	Description: You are not able to expand your domain!
+}
