@@ -8,8 +8,8 @@ namespace sorceryFight.Content.Buffs
 {
     public class ReverseCursedTechniqueAuraProjectile : ModProjectile
     {
-        public int FrameCount { get; set; } = 5;
-        public int TicksPerFrame { get; set; } = 3;
+        public int FrameCount { get; set; } = 6;
+        public int TicksPerFrame { get; set; } = 4;
         public Texture2D texture;
         public override void SetDefaults()
         {
@@ -48,7 +48,7 @@ namespace sorceryFight.Content.Buffs
             Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
 
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - new Vector2(0f, 45f), sourceRectangle, Color.White, Projectile.rotation, origin, 1.5f, SpriteEffects.None, 0f);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - new Vector2(0f, 20f), sourceRectangle, Color.White, Projectile.rotation, origin, 2f, SpriteEffects.None, 0f);
 
             return false;
         }
