@@ -7,9 +7,12 @@ namespace sorceryFight.SFPlayer
     public partial class SorceryFightPlayer : ModPlayer
     {
         public bool celestialAmulet;
-        private void PreAccessoryUpdate()
+        public bool pictureLocket;
+
+        public override void ResetEffects()
         {
             celestialAmulet = false;
+            pictureLocket = false;
         }
     }
 }

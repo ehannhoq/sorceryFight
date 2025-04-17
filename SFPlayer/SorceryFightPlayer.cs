@@ -151,8 +151,6 @@ namespace sorceryFight.SFPlayer
             disableRegenFromBuffs = false;
             disableCurseTechniques = false;
             blackFlashTime = 30;
-
-            PreAccessoryUpdate();
         }
 
         public override void PostUpdate()
@@ -240,7 +238,9 @@ namespace sorceryFight.SFPlayer
             if (SFKeybinds.AttemptBlackFlash.JustPressed && blackFlashTimeLeft == 0)
             {
                 blackFlashTimeLeft = blackFlashTime;
-                int variation = Main.rand.Next(-3, 4);
+
+                int variation = pictureLocket? Main.rand.Next(-3, 2) : Main.rand.Next(-5, 4);
+
                 lowerWindowTime = innateTechnique.Name == "Vessel" ? 14 - blackFlashCounter / 2 + variation : 15 - blackFlashCounter / 2 + variation;
                 upperWindowTime = innateTechnique.Name == "Vessel" ? 16 + blackFlashCounter / 2 + variation : 16 + blackFlashCounter / 2 + variation;
                 sfUI.BlackFlashWindow(lowerWindowTime, upperWindowTime);

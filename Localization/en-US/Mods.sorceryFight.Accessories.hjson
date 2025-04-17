@@ -7,3 +7,12 @@ CelestialAmulet: {
 		Increases Cursed Technique damage by {1}%.
 		'''
 }
+
+PictureLocket: {
+	DisplayName: Picture Locket
+	Tooltip:
+		'''
+		Makes the Black Flash success window closer to the center.
+		"Takada-Chaaaaaan!!!~"
+		'''
+}

@@ -56,6 +56,7 @@ namespace sorceryFight.SFPlayer
             rctAuraIndex = -1;
 
             celestialAmulet = false;
+            pictureLocket = false;
 
             blackFlashTime = 30;
             lowerWindowTime = 15;
