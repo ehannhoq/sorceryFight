@@ -42,12 +42,16 @@ namespace sorceryFight.SFPlayer
 
         public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
         {
+            if (innateTechnique == null) return;
+
             base.OnHitByNPC(npc, hurtInfo);
             ResetBlackFlashState();
         }
 
         public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
         {
+            if (innateTechnique == null) return;
+
             base.OnHitByProjectile(proj, hurtInfo);
             ResetBlackFlashState();
         }

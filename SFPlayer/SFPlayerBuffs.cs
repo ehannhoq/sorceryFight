@@ -13,6 +13,8 @@ namespace sorceryFight.SFPlayer
         public bool hollowWickerBasket;
         public override bool ImmuneTo(PlayerDeathReason damageSource, int cooldownCounter, bool dodgeable)
         {
+            if (innateTechnique == null) return base.ImmuneTo(damageSource, cooldownCounter, dodgeable);
+
             if (Player == Main.LocalPlayer)
             {
                 bool immune = infinity || hollowWickerBasket;
@@ -66,6 +68,8 @@ namespace sorceryFight.SFPlayer
 
         public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
         {
+            if (innateTechnique == null) return;
+
             if (domainAmp)
             {
                 modifiers.FinalDamage *= 0.5f;
@@ -76,6 +80,8 @@ namespace sorceryFight.SFPlayer
 
         public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
         {
+            if (innateTechnique == null) return;
+
             if (domainAmp)
             {
                 modifiers.FinalDamage *= 0.5f;
