@@ -239,7 +239,7 @@ namespace sorceryFight.SFPlayer
             {
                 blackFlashTimeLeft = blackFlashTime;
 
-                int variation = pictureLocket? Main.rand.Next(-3, 2) : Main.rand.Next(-5, 4);
+                int variation = pictureLocket ? Main.rand.Next(-3, 2) : Main.rand.Next(-5, 4);
 
                 lowerWindowTime = innateTechnique.Name == "Vessel" ? 14 - blackFlashCounter / 2 + variation : 15 - blackFlashCounter / 2 + variation;
                 upperWindowTime = innateTechnique.Name == "Vessel" ? 16 + blackFlashCounter / 2 + variation : 16 + blackFlashCounter / 2 + variation;
@@ -332,6 +332,13 @@ namespace sorceryFight.SFPlayer
             {
                 int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You can't use this right now!");
                 Main.combatText[index].lifeTime = 60;
+                return;
+            }
+
+            if (Player.HasBuff<BurntTechnique>())
+            {
+                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
+                Main.combatText[index].lifeTime = 180;
                 return;
             }
 
