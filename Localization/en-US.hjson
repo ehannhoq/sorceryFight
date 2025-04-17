@@ -41,6 +41,6 @@ Mods: {
 			}
 		}
 
-		DamageClasses.CursedTechniqueDamageClass.DisplayName: cursed technique damage
+		DamageClasses.CursedTechniqueDamageClass.DisplayName: cursed damage
 	}
 }
