@@ -1,5 +1,6 @@
 using System;
 using CalamityMod;
+using CalamityMod.Items.Materials;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.CursedTechniques.Shrine;
@@ -35,7 +36,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.height = 90;
             Item.maxStack = 1;
             Item.useTime = 1;
-            Item.damage = 1850;
+            Item.damage = 2500;
             Item.knockBack = 5;
             Item.useAnimation = 1;
             Item.noUseGraphic = true;
@@ -81,6 +82,14 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             if (player.ownedProjectileCounts[Item.shoot] > 0)
                 return false;
             return true;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<ShadowspecBar>(), 5);
+            recipe.AddIngredient(ItemID.Katana);
+            recipe.Register();
         }
     }
 }
