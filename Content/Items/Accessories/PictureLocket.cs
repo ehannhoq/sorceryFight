@@ -4,6 +4,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using System.Collections.Generic;
+using Terraria.ID;
 
 namespace sorceryFight.Content.Items.Accessories
 {
@@ -27,6 +28,15 @@ namespace sorceryFight.Content.Items.Accessories
 
             SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
             sfPlayer.pictureLocket = true;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.Chain, 10);
+            recipe.AddIngredient(ModContent.ItemType<CalamityMod.Items.Placeables.Furniture.DevPaintings.ThankYouPainting>());
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
         }
     }
 }
