@@ -23,7 +23,7 @@ namespace sorceryFight
         public static SoundStyle CleaveSwing;
         public static SoundStyle DivineFlameChargeUp;
         public static SoundStyle DivineFlameShoot;
-        
+        public static SoundStyle DivineFlameExplosion;
         public static SoundStyle WorldCuttingSlash;
         
         public static SoundStyle SoulDismantle;
@@ -54,6 +54,7 @@ namespace sorceryFight
             CleaveSwing = new("sorceryFight/Content/Sounds/Projectiles/CleaveSwing") { Volume = 1f };
             DivineFlameChargeUp = new("sorceryFight/Content/Sounds/Projectiles/DivineFlameChargeUp") { Volume = 1f };
             DivineFlameShoot = new("sorceryFight/Content/Sounds/Projectiles/DivineFlameShoot") { Volume = 1f };
+            DivineFlameExplosion = new("sorceryFight/Content/Sounds/Projectiles/DivineFlameExplosion") { Volume = 1f };
             WorldCuttingSlash = new("sorceryFight/Content/Sounds/Projectiles/WorldCuttingSlash") { Volume = 1f };
 
             SoulDismantle = new("sorceryFight/Content/Sounds/Projectiles/SoulDismantleSnip") { Volume = 1f };

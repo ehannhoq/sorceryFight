@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.Providence;
 using CalamityMod.Particles;
 using Microsoft.Build.Evaluation;
@@ -33,7 +34,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         ref float animTimer => ref Projectile.ai[0];
         Rectangle hitbox;
-        int texturePhase; // 0 -> Fire strands. 1 -> Fire arrow
+        int texturePhase; // 0 -> Fire strands. 1 -> Fire arrow, 2 -> Explosion
 
         bool animating;
         public override int GetProjectileType()
@@ -79,7 +80,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override void AI()
         {
             animTimer++;
-            float animTime = 180f;
+            float animTime = 150f;
             Player player = Main.player[Projectile.owner];
 
             if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
@@ -195,10 +196,49 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             {
                 Vector2 origin = new Vector2(textures[texturePhase].Width / 2, textures[texturePhase].Height / 2);
                 Main.spriteBatch.Draw(textures[texturePhase], Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, origin, 1f, SpriteEffects.None, 0f);
-
             }
 
             return false;
         }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            SorceryFightPlayer sfPlayer = Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>();
+
+            if (sfPlayer.domainIndex != -1 && sfPlayer.innateTechnique.Name.Equals("Shrine"))
+            {
+                modifiers.FinalDamage.Flat += modifiers.FinalDamage.Flat;
+            }
+
+            base.ModifyHitNPC(target, ref modifiers);
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            SoundEngine.PlaySound(SorceryFightSounds.DivineFlameExplosion, Projectile.Center);
+
+            for (int i = 0; i < 20; i++)
+            {
+                Vector2 vel = new Vector2(Main.rand.NextFloat(-50f, 50f), Main.rand.NextFloat(-50f, 50f));
+                LineParticle particle = new LineParticle(Projectile.Center, vel, false, 120, 5f, textColor);
+                GeneralParticleHandler.SpawnParticle(particle);
+
+                Vector2 vel2 = new Vector2(Main.rand.NextFloat(-25f, 25f), Main.rand.NextFloat(-25f, 25f));
+                LineParticle particle2 = new LineParticle(Projectile.Center, vel2, false, 120, 1f, new Color(textColor.R + 10, textColor.G + 10, textColor.B + 10));
+                GeneralParticleHandler.SpawnParticle(particle2);
+            }
+
+            foreach (NPC npc in Main.ActiveNPCs)
+            {
+                if (npc.friendly || npc.IsDomain() || npc.type == NPCID.TargetDummy || npc.type == ModContent.NPCType<SuperDummyNPC>()) continue;
+
+                float distance = Vector2.Distance(npc.Center, Projectile.Center);
+                if (distance < 500f)
+                {
+                    npc.AddBuff(BuffID.OnFire, SFUtils.BuffSecondsToTicks(10f));
+                }
+            }
+            Projectile.Kill();
+        }   
     }
 }
