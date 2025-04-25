@@ -56,7 +56,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             int frameY = (int)(Main.GameUpdateCount / TICKS_PER_FRAME % FRAMES) * frameHeight;
             Rectangle srcRect = new Rectangle(0, frameY, texture.Width, frameHeight);
 
-            spriteBatch.Draw(texture, position, srcRect, Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, position, srcRect, Color.White, 0f, origin, scale * 1.5f, SpriteEffects.None, 0f);
             return false;
         }
 
