@@ -191,12 +191,13 @@ namespace sorceryFight.SFPlayer
                 PreventDeath();
             }
 
-            if (!rctAnimation && innateTechnique.Name.Equals("Vessel") && sukunasFingerConsumed >= 1)
+            if (!rctAnimation && sukunasFingerConsumed >= 1)
             {
                 int chance = SorceryFight.DevModeNames.Contains(Player.name) ? 100 : 5;
                 if (SFUtils.Roll(chance))
                 {
-                    PreventDeath();
+                    if (!Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>()))
+                        PreventDeath();
                     Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(15 + (sukunasFingerConsumed * 2.25f)));
                 }
             }

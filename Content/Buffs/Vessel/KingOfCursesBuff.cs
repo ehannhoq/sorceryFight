@@ -63,5 +63,11 @@ namespace sorceryFight.Content.Buffs.Vessel
         {
             return false;
         }
+
+        public override bool ReApply(Player player, int time, int buffIndex)
+        {
+            player.buffTime[buffIndex] = 1;
+            return true;
+        }
     }
 }
