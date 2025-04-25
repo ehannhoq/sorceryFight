@@ -79,6 +79,18 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public override void AI()
         {
+            if (Main.myPlayer == Projectile.owner)
+            {
+                Player player = Main.player[Projectile.owner];
+                Projectile.Center = player.Center;
+
+                float targetRotation = (Main.MouseWorld - player.Center).ToRotation();
+                Projectile.rotation = SFUtils.LerpAngle(Projectile.rotation, targetRotation, 0.2f);
+                Projectile.direction = Projectile.rotation.ToRotationVector2().X > 0 ? 1 : -1;
+                player.ChangeDir(Projectile.direction);
+            }
+
+
             if (frameTime++ > TICKS_PER_FRAME)
             {
                 frameTime = 0;
@@ -124,14 +136,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
             if (Main.myPlayer == Projectile.owner)
             {
-                Player player = Main.player[Projectile.owner];
-                Projectile.Center = player.Center;
-
-                float targetRotation = (Main.MouseWorld - player.Center).ToRotation();
-                Projectile.rotation = SFUtils.LerpAngle(Projectile.rotation, targetRotation, 0.2f);
-                Projectile.direction = Projectile.rotation.ToRotationVector2().X > 0 ? 1 : -1;
-                player.ChangeDir(Projectile.direction);
-
                 float beamLength = 0f;
                 Vector2 direction = Projectile.rotation.ToRotationVector2();
                 for (float i = 0f; i < MAX_LENGTH; i += STEP_SIZE)
