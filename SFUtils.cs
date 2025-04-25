@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CalamityMod.NPCs.DevourerofGods;
 using Microsoft.Xna.Framework;
@@ -166,6 +167,20 @@ public static class SFUtils
     {
         float difference = MathHelper.WrapAngle(targetAngle - currentAngle);
         return currentAngle + difference * amount;
+    }
+
+    /// <summary>
+    /// Clamps each element of the given array to the given minimum and maximum values.
+    /// </summary>
+    /// <param name="ints">The array to clamp.</param>
+    /// <param name="min">The minimum value to clamp to.</param>
+    /// <param name="max">The maximum value to clamp to.</param>
+    public static void Clamp(this int[] ints, int min, int max)
+    {
+        for (int i = 0; i < ints.Length; i++)
+        {
+            ints[i] = Math.Clamp(ints[i], min, max);
+        }
     }
 
 }

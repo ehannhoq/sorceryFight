@@ -24,7 +24,7 @@ namespace sorceryFight.Content.DomainExpansions
         }
 
         int rollTimer;
-        int rollOneValue, rollTwoValue, rollThreeValue;
+        int[] rolls = new int[3];
         bool rolled;
         Vector2 rollOnePosition;
         Vector2 rollTwoPosition;
@@ -44,9 +44,7 @@ namespace sorceryFight.Content.DomainExpansions
             GoalScale = 2f;
             rollTimer = 0;
             rolled = false;
-            rollOneValue = 0;
-            rollTwoValue = 0;
-            rollThreeValue = 0;
+            rolls = [3, 3, 3];
 
             base.SetDefaults();
 
@@ -89,19 +87,17 @@ namespace sorceryFight.Content.DomainExpansions
 
                 if (pachinkoMachineLoops == 0) return;
 
-                rollSpeed ++;
+                rollSpeed++;
                 if (rollSpeed > 10) rollSpeed = 10;
 
                 if (!rolled)
                 {
                     rollSpeed = 0;
-                    rollOneValue = Main.rand.Next(8) + 1;
-                    rollTwoValue = Main.rand.Next(8) + 1;
-                    rollThreeValue = Main.rand.Next(8) + 1;
+                    Roll(player);
 
-                    rollOneTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IdleDeathGambleAssets/{rollOneValue}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                    rollTwoTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IdleDeathGambleAssets/{rollTwoValue}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                    rollThreeTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IdleDeathGambleAssets/{rollThreeValue}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    rollOneTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IdleDeathGambleAssets/{rolls[0]}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    rollTwoTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IdleDeathGambleAssets/{rolls[1]}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    rollThreeTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IdleDeathGambleAssets/{rolls[2]}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
                     SoundEngine.PlaySound(SorceryFightSounds.IDGSlots with { Volume = 2f }, NPC.Center);
 
@@ -128,7 +124,7 @@ namespace sorceryFight.Content.DomainExpansions
                     if (rollTimer < 280)
                         rollTwoPosition.Y += 200f * (0.1f * rollSpeed);
                     if (rollTimer < 330)
-                        rollThreePosition.Y += 200f * (0.1f * rollSpeed);;
+                        rollThreePosition.Y += 200f * (0.1f * rollSpeed); ;
 
                     if (rollOnePosition.Y > Main.screenHeight + rollOneTexture.Height / 2)
                         rollOnePosition.Y = 0 - rollOneTexture.Height / 2;
@@ -190,22 +186,22 @@ namespace sorceryFight.Content.DomainExpansions
 
                 if (rollTimer >= 430)
                 {
-                    if (rollOneValue == rollTwoValue && rollOneValue == rollThreeValue)
+                    if (rolls[0] == rolls[1] && rolls[0] == rolls[2])
                     {
-                        player.AddBuff(ModContent.BuffType<IdleDeathGambleJackpotBuff>(), SFUtils.BuffSecondsToTicks(6.25f * rollOneValue + 3.75f));
+                        player.AddBuff(ModContent.BuffType<IdleDeathGambleJackpotBuff>(), SFUtils.BuffSecondsToTicks(6.25f * rolls[0] + 3.75f));
                         Remove(Owners[NPC.whoAmI].GetModPlayer<SorceryFightPlayer>());
                         return;
                     }
 
-                    if (rollOneValue == rollTwoValue || rollOneValue == rollThreeValue || rollTwoValue == rollThreeValue)
+                    if (rolls[0] == rolls[1] || rolls[0] == rolls[2] || rolls[1] == rolls[2])
                     {
                         rollTimer = 0;
                         rolled = false;
                         return;
                     }
 
-                    int highest = Math.Max(rollOneValue, rollTwoValue);
-                    highest = Math.Max(highest, rollThreeValue);
+                    int highest = Math.Max(rolls[0], rolls[1]);
+                    highest = Math.Max(highest, rolls[2]);
                     Owners[NPC.whoAmI].GetModPlayer<SorceryFightPlayer>().idleDeathGambleBuffStrength = highest;
                     player.AddBuff(ModContent.BuffType<IdleDeathGambleBuff>(), SFUtils.BuffSecondsToTicks(6.25f * highest + 3.75f));
                     Remove(Owners[NPC.whoAmI].GetModPlayer<SorceryFightPlayer>());
@@ -259,6 +255,39 @@ namespace sorceryFight.Content.DomainExpansions
             spriteBatch.Draw(rollOneTexture, rollOnePosition, default, Color.White, NPC.rotation, rollOneOrigin, 1f, SpriteEffects.None, 0f);
             spriteBatch.Draw(rollTwoTexture, rollTwoPosition, default, Color.White, NPC.rotation, rollTwoOrigin, 1f, SpriteEffects.None, 0f);
             spriteBatch.Draw(rollThreeTexture, rollThreePosition, default, Color.White, NPC.rotation, rollThreeOrigin, 1f, SpriteEffects.None, 0f);
+        }
+
+        void Roll(Player player)
+        {
+            int bossesKilled = player.GetModPlayer<SorceryFightPlayer>().bossesDefeated.Count;
+
+            float mean = 5 + (0.07f * bossesKilled);
+            float std = 3;
+
+            rolls[0] = (int)(GaussianCurve(mean, std));
+
+            for (int i = 1; i < 3; i++)
+            {
+                if (SFUtils.Roll((int)(bossesKilled * 1.25)))
+                {
+                    rolls[i] = rolls[i - 1];
+                    continue;
+                }
+
+                rolls[i] = (int)(GaussianCurve(mean, std));
+            }
+
+            rolls.Clamp(1, 9);
+        }
+
+        float GaussianCurve(float mean, float std)
+        {
+            float u, v;
+            u = 1.0f - Main.rand.NextFloat();
+            v = 1.0f - Main.rand.NextFloat();
+
+            float randStdNormal = MathF.Sqrt(-2.0f * MathF.Log(u)) * MathF.Sin(2.0f * MathF.PI * v);
+            return mean + std * randStdNormal;
         }
     }
 }
