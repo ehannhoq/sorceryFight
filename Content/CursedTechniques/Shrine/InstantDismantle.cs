@@ -18,11 +18,11 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.InstantDismantle.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.InstantDismantle.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.InstantDismantle.LockedDescription");
-        public override float Cost => 100f;
+        public override float Cost => 80f;
         public override Color textColor => new Color(184, 130, 101);
         public override bool DisplayNameInGame => false;
         public override int Damage => 1000;
-        public override int MasteryDamageMultiplier => 250;
+        public override int MasteryDamageMultiplier => 300;
         public override float Speed => 0f;
         public override float LifeTime => 2f;
         public ref float spawnedByDE => ref Projectile.ai[0];

@@ -41,24 +41,30 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override string GetStats(SorceryFightPlayer sf)
         {
-            return $"Damage: {CalculateTrueDamage(sf) * 100}% of target's health\n"
-                + $"Cost: {CalculateTrueCost(sf)} CE\n";
+            return $"Damage: {Math.Round(CalculateTrueDamage(sf) * 100, 2)}% of target's health\n"
+                + $"Cost: {Math.Round(CalculateCostPercentage(sf) * 100, 2)}% of max CE.\n";
         }
 
         public override float CalculateTrueDamage(SorceryFightPlayer sf)
         {
-            return basePercent + (sf.bossesDefeated.Count / 550f) + (0.01f * (sf.sukunasFingerConsumed / 20f));
+            return basePercent + (sf.bossesDefeated.Count / 785f) + (0.01f * (sf.sukunasFingerConsumed / 20f));
+        }
+
+        private float CalculateCostPercentage(SorceryFightPlayer sf)
+        {
+            float sukunasFingersDecrease = 1 - (0.01f * sf.sukunasFingerConsumed);
+            return CalculateTrueDamage(sf) * 7f * sukunasFingersDecrease;
         }
 
         public override float CalculateTrueCost(SorceryFightPlayer sf)
         {
-            return base.CalculateTrueCost(sf) * (1 - (0.01f * sf.sukunasFingerConsumed));
+            return sf.maxCursedEnergy * CalculateCostPercentage(sf);
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)
         {
             Player player = sf.Player;
-            
+
             if (player.whoAmI == Main.myPlayer)
             {
                 Vector2 playerPos = player.MountedCenter;
@@ -97,8 +103,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 modifiers.FinalDamage.Flat += additionalDamage;
                 hasHit = true;
             }
-            
-            else 
+
+            else
                 Projectile.damage = 0;
 
             base.ModifyHitNPC(target, ref modifiers);
