@@ -197,7 +197,7 @@ namespace sorceryFight.SFPlayer
                 if (SFUtils.Roll(chance))
                 {
                     PreventDeath();
-                    Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(20));
+                    Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(15 + (sukunasFingerConsumed * 2.25f)));
                 }
             }
 
