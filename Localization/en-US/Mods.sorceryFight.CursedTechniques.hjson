@@ -158,12 +158,20 @@ PiercingBlood: {
 
 PachinkoBalls: {
 	DisplayName: Pachinko Ball
-	Description: placeholder
+	Description:
+		'''
+		Shoot a pachinko ball that ricochets off of
+		up to five enemies.
+		'''
 	LockedDescription: Defeat the one who guards the Dungeon.
 }
 
 HakarisDoor: {
-	DisplayName: Hakari's Door
-	Description: placeholder
+	DisplayName: Train Doors
+	Description: 
+		'''
+		Summon a pair of train doors that shut on 
+		enemies, crushing them.
+		'''
 	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
 }
