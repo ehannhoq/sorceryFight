@@ -57,6 +57,7 @@ namespace sorceryFight.SFPlayer
 
             celestialAmulet = false;
             pictureLocket = false;
+            cursedOfuda = false;
 
             blackFlashTime = 30;
             lowerWindowTime = 15;

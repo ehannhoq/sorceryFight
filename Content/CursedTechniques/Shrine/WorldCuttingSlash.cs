@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Buffs.Vessel;
+using sorceryFight.Content.Items.Accessories;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
@@ -34,7 +35,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override int MasteryDamageMultiplier => 550;
         public override float Speed => 60f;
         public override float LifeTime => 300f;
-        ref float ai0 => ref Projectile.ai[0];
+        ref float castTime => ref Projectile.ai[0];
         ref float ai1 => ref Projectile.ai[1];
         ref float ai2 => ref Projectile.ai[2];
         Rectangle hitbox;
@@ -85,11 +86,12 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override void AI()
         {
-            ai0++;
+            castTime++;
             Player player = Main.player[Projectile.owner];
-            float animTime = incantations.Count * 90f;
+            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            float totalCastTime = sfPlayer.cursedOfuda ? incantations.Count * 90f * CursedOfuda.cursedTechniqueCastTimeDecrease : incantations.Count * 90f;
 
-            if (ai0 < animTime)
+            if (castTime < totalCastTime)
             {
                 if (!animating)
                 {
@@ -102,7 +104,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 Projectile.Center = player.Center;
                 Projectile.timeLeft = 30;
 
-                if (ai0 % 90 == 1)
+                if (castTime % (totalCastTime / incantations.Count) == 1)
                 {
                     int index = CombatText.NewText(player.getRect(), textColor, incantations[(int)ai1]);
                     SoundEngine.PlaySound(SorceryFightSounds.CommonHeartBeat, player.Center);
@@ -117,7 +119,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                     }
                 }
                 
-                if (ai0 == animTime - 40)
+                if (castTime == totalCastTime - 40)
                 {
                     SoundEngine.PlaySound(SorceryFightSounds.CommonWoosh, Projectile.Center);
                 }

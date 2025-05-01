@@ -11,9 +11,9 @@ namespace sorceryFight.Content.Items.Accessories
     {
         public static readonly int ChanceDenominator = 10;
 
-        private const float cursedTechniqueDamageIncrease = 10f;
+        private const float cursedTechniqueDamageIncrease = 0.10f;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Accessories.CelestialAmulet.DisplayName");
-        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Accessories.CelestialAmulet.Tooltip").WithFormatArgs(20, cursedTechniqueDamageIncrease);
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Accessories.CelestialAmulet.Tooltip").WithFormatArgs(20, (int)(cursedTechniqueDamageIncrease * 100));
 
         public override void SetDefaults()
         {
@@ -31,7 +31,7 @@ namespace sorceryFight.Content.Items.Accessories
             SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
             sfPlayer.celestialAmulet = true;
 
-            player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1f + (cursedTechniqueDamageIncrease / 100f);
+            player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1f + cursedTechniqueDamageIncrease;
         }
     }
 }

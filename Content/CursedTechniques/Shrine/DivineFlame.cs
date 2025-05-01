@@ -7,6 +7,7 @@ using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs.Vessel;
+using sorceryFight.Content.Items.Accessories;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
@@ -32,11 +33,11 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override float Speed => 30f;
         public override float LifeTime => 300f;
 
-        ref float animTimer => ref Projectile.ai[0];
+        ref float castTimer => ref Projectile.ai[0];
         Rectangle hitbox;
         int texturePhase; // 0 -> Fire strands. 1 -> Fire arrow, 2 -> Explosion
 
-        bool animating;
+        bool casting;
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<DivineFlame>();
@@ -73,15 +74,17 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
-            animating = false;
+            casting = false;
             hitbox = Projectile.Hitbox;
             texturePhase = 0;
         }
         public override void AI()
         {
-            animTimer++;
-            float animTime = 150f;
+            castTimer++;
             Player player = Main.player[Projectile.owner];
+            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            float totalCastTime = sfPlayer.cursedOfuda ? 150f * CursedOfuda.cursedTechniqueCastTimeDecrease : 150f;
+            float transitionTime = sfPlayer.cursedOfuda ? 30f * CursedOfuda.cursedTechniqueCastTimeDecrease : 30f;
 
             if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
             {
@@ -93,11 +96,11 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 }
             }
 
-            if (animTimer < animTime)
+            if (castTimer < totalCastTime)
             {
-                if (!animating)
+                if (!casting)
                 {
-                    animating = true;
+                    casting = true;
                     player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = true;
                     Projectile.Hitbox = new Rectangle(0, 0, 0, 0);
                     Projectile.damage = 0;
@@ -105,13 +108,13 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
                 }
 
-                if (animTimer == 1)
+                if (castTimer == 1)
                     SoundEngine.PlaySound(SorceryFightSounds.DivineFlameChargeUp with { Volume = 2f }, player.Center);
 
                 Projectile.Center = player.Center;
                 Projectile.timeLeft = 30;
 
-                if (animTimer < 30)
+                if (castTimer < transitionTime)
                 {
                     Vector2 pos = Projectile.Center;
                     Vector2 velocity = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
@@ -119,7 +122,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                     GeneralParticleHandler.SpawnParticle(particle);
                 }
 
-                if (animTimer == 30)
+                if (castTimer == transitionTime)
                 {
                     texturePhase = 1;
                     int index = CombatText.NewText(player.getRect(), textColor, "Divine Flame");
@@ -133,13 +136,13 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                     }
                 }
 
-                if (animTimer == 120)
+                if (castTimer == totalCastTime - 10)
                 {
                     int index = CombatText.NewText(player.getRect(), textColor, "Open.");
                     Main.combatText[index].lifeTime = 180;
                 }
 
-                if (animTimer > 30)
+                if (castTimer > transitionTime)
                 {
                     if (Main.myPlayer == Projectile.owner)
                         Projectile.rotation = Projectile.Center.DirectionTo(Main.MouseWorld).ToRotation();
@@ -153,10 +156,10 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 return;
             }
 
-            if (animating)
+            if (casting)
             {
-                animating = false;
-                Projectile.damage = (int)CalculateTrueDamage(player.GetModPlayer<SorceryFightPlayer>());
+                casting = false;
+                Projectile.damage = (int)CalculateTrueDamage(sfPlayer);
                 Projectile.width = 227;
                 Projectile.height = 49;
                 Projectile.Hitbox = hitbox;
@@ -164,7 +167,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 Projectile.Center = player.Center;
 
                 SoundEngine.PlaySound(SorceryFightSounds.DivineFlameShoot, Projectile.Center);
-                player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
+                sfPlayer.disableRegenFromProjectiles = false;
                 if (Main.myPlayer == Projectile.owner)
                 {
                     Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;

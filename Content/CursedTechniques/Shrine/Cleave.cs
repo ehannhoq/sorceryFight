@@ -3,6 +3,7 @@ using CalamityMod.Projectiles.Magic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs.Vessel;
+using sorceryFight.Content.Items.Accessories;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
@@ -41,8 +42,10 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override string GetStats(SorceryFightPlayer sf)
         {
+            float cost = CalculateTrueCost(sf);
+            float percent = cost / sf.maxCursedEnergy;
             return $"Damage: {Math.Round(CalculateTrueDamage(sf) * 100, 2)}% of target's health\n"
-                + $"Cost: {Math.Round(CalculateCostPercentage(sf) * 100, 2)}% of max CE.\n";
+                + $"Cost: {Math.Round(percent * 100, 2)}% of max CE.\n";
         }
 
         public override float CalculateTrueDamage(SorceryFightPlayer sf)
@@ -58,7 +61,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override float CalculateTrueCost(SorceryFightPlayer sf)
         {
-            return sf.maxCursedEnergy * CalculateCostPercentage(sf);
+            float cost = sf.maxCursedEnergy * CalculateCostPercentage(sf);
+            return sf.cursedOfuda ? cost * CursedOfuda.cursedTechniqueCostDecrease : cost;
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)

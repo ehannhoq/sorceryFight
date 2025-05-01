@@ -2,9 +2,9 @@ CelestialAmulet: {
 	DisplayName: Lunar Amulet
 	Tooltip:
 		'''
-		"Forged with the ambient cursed energy of the Moon."
 		Reduces Burnt Technique duration by {0}%.
 		Increases Cursed Technique damage by {1}%.
+		[c/A4ECED:"Forged with the ambient cursed energy of the Moon."]
 		'''
 }
 
@@ -13,6 +13,50 @@ PictureLocket: {
 	Tooltip:
 		'''
 		Makes the Black Flash success window closer to the center.
-		"Takada-Chaaaaaan!!!~"
+		[c/EBF567:"Takada-Chaaaaaan!!!~"]
+		'''
+}
+
+CursedOfuda: {
+	DisplayName: Cursed Ofuda
+	Tooltip:
+		'''
+		Reduces cursed technique cost by {0}%.
+		Reduces cursed technique cast time by {1}%.
+		[c/A2F794:"A talisman of efficiency!"]
+		'''
+}
+
+CurseOfHavok: {
+	DisplayName: Curse of Havok
+	Tooltip:
+		'''
+		Increases Shrine cursed technique damage by {0}%.
+		Increases every other cursed technique damage by {1}%.
+		Shrine cursed techniques inflict Brimstone Flames.
+		[c/B52518:"The essense of the King of Curses burns within you..."]
+		'''
+}
+
+BlessingOfTheHonoredOne: {
+	DisplayName: The Honored One's Blessing
+	Tooltip:
+		'''
+		Increases Limitless cursed technique damage by {0}%.
+		Increases every other cursed technique damage by {1}%.
+		Limitless cursed techniques inflict Astral Infection.
+		[c/9FC6ED:"A blessing from the Strongest of today."]
+		'''
+}
+
+CursedBlindfold: {
+	DisplayName: Pitch-Black Blindfold
+	Tooltip:
+		'''
+		Increases Limitless cursed technique damage by {0}%.
+		Increases every other cursed technique damage by {1}%.
+		Increase max cursed energy by {2}.
+		Increases cursed energy regen by {3}/s.
+		[c/30475e:"Cover those baby-blues!"]
 		'''
 }

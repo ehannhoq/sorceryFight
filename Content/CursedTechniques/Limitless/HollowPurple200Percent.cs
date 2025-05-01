@@ -10,6 +10,8 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using CalamityMod.NPCs.DevourerofGods;
+using System;
+using sorceryFight.Content.Items.Accessories;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {
@@ -75,10 +77,15 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {
             Projectile.ai[0] += 1;
             Player player = Main.player[Projectile.owner];
+            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
 
-            float beginAnimTime = 600f;
+            float totalCastTime = sfPlayer.cursedOfuda ? 360f * CursedOfuda.cursedTechniqueCastTimeDecrease : 360f;
+            float textTime = sfPlayer.cursedOfuda ? 90f * CursedOfuda.cursedTechniqueCastTimeDecrease : 90f;
+            float blueCastTime = sfPlayer.cursedOfuda ? 90f * CursedOfuda.cursedTechniqueCastTimeDecrease : 90f;
+            float redCastTime = sfPlayer.cursedOfuda ? 180f * CursedOfuda.cursedTechniqueCastTimeDecrease : 180f;
+            float collisionStartTime = sfPlayer.cursedOfuda ? 320f * CursedOfuda.cursedTechniqueCastTimeDecrease : 320f;
 
-            if (Projectile.ai[0] > LifeTime + beginAnimTime)
+            if (Projectile.ai[0] > LifeTime + totalCastTime)
             {
                 Projectile.Kill();
             }
@@ -93,7 +100,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 }
             }
 
-            if (Projectile.ai[0] < beginAnimTime)
+            if (Projectile.ai[0] < totalCastTime)
             {
                 if (!animating)
                 {
@@ -106,10 +113,10 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Projectile.Hitbox = new Rectangle(0, 0, 0, 0);
                 Projectile.Center = player.Center + new Vector2(0f, -30f);
 
-                if (Projectile.ai[0] % 90 == 1)
+                if (Projectile.ai[0] % textTime == 1)
                 {
                     int index = CombatText.NewText(player.getRect(), textColor, incantations[incantationsIndex]);
-                    Main.combatText[index].lifeTime = 60;
+                    Main.combatText[index].lifeTime = sfPlayer.cursedOfuda ? (int)(60 * CursedOfuda.cursedTechniqueCastTimeDecrease) : 60;
 
                     if (incantationsIndex < incantations.Count)
                         incantationsIndex++;
@@ -119,7 +126,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Vector2 bluePosition = player.Center + blueOffset;
                 Vector2 redPosition = player.Center + redOffset;
 
-                if (Projectile.ai[0] == 90)
+                if (Projectile.ai[0] == blueCastTime)
                 {
                     if (Main.myPlayer == Projectile.owner)
                     {
@@ -130,7 +137,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 }
 
 
-                if (Projectile.ai[0] == 180)
+                if (Projectile.ai[0] == redCastTime)
                 {
                     if (Main.myPlayer == Projectile.owner)
                     {
@@ -143,7 +150,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Projectile blue = Main.projectile[(int)Projectile.ai[1]];
                 Projectile red = Main.projectile[(int)Projectile.ai[2]];
 
-                if (Projectile.ai[0] >= 90 && blue.type == ModContent.ProjectileType<AmplificationBlue>())
+                if (Projectile.ai[0] >= blueCastTime && blue.type == ModContent.ProjectileType<AmplificationBlue>())
                 { 
                     blue.Center = bluePosition;
 
@@ -153,7 +160,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     GeneralParticleHandler.SpawnParticle(particle);
                 }
 
-                if (Projectile.ai[0] >= 180 && red.type == ModContent.ProjectileType<ReversalRed>())
+                if (Projectile.ai[0] >= redCastTime && red.type == ModContent.ProjectileType<ReversalRed>())
                 {
                     red.Center = redPosition;
 
@@ -162,13 +169,16 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     LineParticle particle = new LineParticle(particleOffsetPosition, particleVelocity, false, 30, 0.5f, new Color(224, 74, 74));
                     GeneralParticleHandler.SpawnParticle(particle);
                 }
-                if (Projectile.ai[0] == 280)
+                if (Projectile.ai[0] == collisionStartTime - 50)
                     SoundEngine.PlaySound(SorceryFightSounds.CommonWoosh, Projectile.Center);
 
-                if (Projectile.ai[0] >= 320)
+                if (Projectile.ai[0] >= collisionStartTime)
                 {
-                    blueOffset.X += 2f;
-                    redOffset.X -= 2f;
+
+                    float timeLeft = totalCastTime - Projectile.ai[0];
+
+                    this.blueOffset.X += Math.Abs(this.blueOffset.X) / timeLeft;
+                    this.redOffset.X -= Math.Abs(this.redOffset.X) / timeLeft;
 
                     if (blueOffset.X >= redOffset.X)
                     {
@@ -181,7 +191,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                             GeneralParticleHandler.SpawnParticle(particle);
                         }
 
-                        Projectile.ai[0] = beginAnimTime;
+                        Projectile.ai[0] = totalCastTime;
                     }
                 }
 

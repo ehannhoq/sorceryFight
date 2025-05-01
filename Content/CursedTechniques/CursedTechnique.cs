@@ -6,6 +6,7 @@ using Microsoft.Build.Tasks;
 using System;
 using System.IO;
 using CalamityMod;
+using sorceryFight.Content.Items.Accessories;
 
 namespace sorceryFight.Content.CursedTechniques
 {
@@ -24,8 +25,8 @@ namespace sorceryFight.Content.CursedTechniques
         public abstract int GetProjectileType();
         public virtual string GetStats(SorceryFightPlayer sf)
         {
-            return $"Damage: {CalculateTrueDamage(sf)}\n"
-                + $"Cost: {CalculateTrueCost(sf)} CE\n";
+            return $"Damage: {Math.Round(CalculateTrueDamage(sf), 2)}\n"
+                + $"Cost: {Math.Round(CalculateTrueCost(sf), 2)} CE\n";
         }
         public virtual float CalculateTrueDamage(SorceryFightPlayer sf)
         { 
@@ -40,6 +41,9 @@ namespace sorceryFight.Content.CursedTechniques
             
             if (sf.sixEyes)
                 finalCost *= 0.7f;
+            
+            if (sf.cursedOfuda)
+                finalCost *= CursedOfuda.cursedTechniqueCostDecrease;
 
             return finalCost;
         }

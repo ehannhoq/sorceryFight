@@ -1,24 +1,5 @@
 Mods: {
 	sorceryFight: {
-		Items: {
-			ExampleSword: {
-				DisplayName: Example Sword
-				Tooltip: ""
-			}
-
-			CursedKatana: {
-				DisplayName: Cursed Katana
-				Tooltip: ""
-			}
-
-			CelestialAmulet: {
-				DisplayName: Celestial Amulet
-				Tooltip: ""
-			}
-
-			CrikySword.Tooltip: ""
-		}
-
 		Projectiles: {
 			AmplifiedAuraProjectile.DisplayName: Amplified Aura Projectile
 			MaximumAmplifiedAuraProjectile.DisplayName: Maximum Amplified Aura Projectile
