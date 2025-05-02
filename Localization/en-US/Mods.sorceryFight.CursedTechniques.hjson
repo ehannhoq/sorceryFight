@@ -168,7 +168,7 @@ PachinkoBalls: {
 
 HakarisDoor: {
 	DisplayName: Train Doors
-	Description: 
+	Description:
 		'''
 		Summon a pair of train doors that shut on 
 		enemies, crushing them.

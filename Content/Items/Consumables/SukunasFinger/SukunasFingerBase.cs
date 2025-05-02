@@ -1,3 +1,4 @@
+using sorceryFight.Content.Rarities;
 using sorceryFight.Rarities;
 using sorceryFight.SFPlayer;
 using Terraria;
@@ -22,7 +23,7 @@ namespace sorceryFight.Content.Items.Consumables
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.HoldUp;
-            Item.rare = ModContent.RarityType<SorceryFightRed>();
+            Item.rare = ModContent.RarityType<SorceryFightConsumable>();
         }
 
         public override bool? UseItem(Player player)

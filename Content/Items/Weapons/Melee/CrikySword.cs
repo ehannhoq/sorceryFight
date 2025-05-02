@@ -40,7 +40,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.knockBack = 5;
             Item.useAnimation = 1;
             Item.noUseGraphic = true;
-            Item.rare = ModContent.RarityType<SorceryFightRed>();
+            Item.rare = ModContent.RarityType<SorceryFightWeapon>();
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.shoot = ModContent.ProjectileType<CrikySwordSlash>();
             Item.DamageType = CursedTechniqueDamageClass.Instance;

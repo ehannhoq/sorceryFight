@@ -20,7 +20,7 @@ namespace sorceryFight.Content.Items.Consumables
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.HoldUp;
-            Item.rare = ModContent.RarityType<SorceryFightRed>();
+            Item.rare = ModContent.RarityType<SorceryFightWeapon>();
         }
 
         public override bool? UseItem(Player player)

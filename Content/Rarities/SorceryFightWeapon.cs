@@ -3,8 +3,8 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Rarities
 {
-    public class SorceryFightBlue : ModRarity
+    public class SorceryFightWeapon : ModRarity
     {
-        public override Color RarityColor => new Color(140, 52, 73);
+        public override Color RarityColor => new Color(128, 65, 29);
     }
 }
