@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
+using Terraria.ID;
 
 namespace sorceryFight.Content.Items.Accessories
 {
@@ -71,6 +72,17 @@ namespace sorceryFight.Content.Items.Accessories
 
             spriteBatch.Draw(texture, Item.Center - Main.screenPosition, srcRect, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);
             return false;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<CalamityMod.Items.Materials.CoreofEleum>(), 3);
+            recipe.AddIngredient(ItemID.SoulofMight, 5);
+            recipe.AddIngredient(ItemID.SoulofLight, 3);
+            recipe.AddIngredient(ItemID.Ectoplasm, 2);
+            recipe.AddTile(TileID.LunarCraftingStation);
+            recipe.Register();
         }
     }
 }

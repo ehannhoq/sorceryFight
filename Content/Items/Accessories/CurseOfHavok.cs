@@ -6,6 +6,8 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
+using Terraria.ID;
+using sorceryFight.Content.Items.Materials;
 
 namespace sorceryFight.Content.Items.Accessories
 {
@@ -71,6 +73,20 @@ namespace sorceryFight.Content.Items.Accessories
 
             spriteBatch.Draw(texture, Item.Center - Main.screenPosition, srcRect, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);
             return false;
+        }
+
+                
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<CalamityMod.Items.Materials.CoreofHavoc>(), 3);
+            recipe.AddIngredient(ItemID.SoulofNight, 3);
+            recipe.AddIngredient(ModContent.ItemType<InfusedCursedFragment>(), 5);
+            recipe.AddIngredient(ModContent.ItemType<SukunasSkull>(), 1);
+            // recipe.AddIngredient(ModContent.ItemType<CursedDust>(), 2);
+            recipe.AddTile(TileID.LunarCraftingStation);
+            recipe.Register();
         }
     }
 }

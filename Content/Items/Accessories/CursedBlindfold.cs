@@ -6,6 +6,8 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
+using Terraria.ID;
+using sorceryFight.Content.Items.Materials;
 
 namespace sorceryFight.Content.Items.Accessories
 {
@@ -13,9 +15,9 @@ namespace sorceryFight.Content.Items.Accessories
     {
         public static float limitlessDamageIncrease = 0.06f;
         public static float cursedTechniqueDamageIncrease = 0.03f;
-        public static int maxCursedEnergyIncrease = 200;
-        public static int cursedEnergyRegenIncrease = 2;
-        
+        public static int maxCursedEnergyIncrease = 350;
+        public static int cursedEnergyRegenIncrease = 10;
+
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Accessories.CursedBlindfold.DisplayName");
         public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Accessories.CursedBlindfold.Tooltip").WithFormatArgs((int)(limitlessDamageIncrease * 100), (int)(cursedTechniqueDamageIncrease * 100), maxCursedEnergyIncrease, cursedEnergyRegenIncrease);
 
@@ -47,6 +49,17 @@ namespace sorceryFight.Content.Items.Accessories
         public override bool CanEquipAccessory(Player player, int slot, bool modded)
         {
             return player.GetModPlayer<SorceryFightPlayer>().sixEyes;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.Blindfold, 1);
+            recipe.AddIngredient(ItemID.SoulofSight, 5);
+            recipe.AddIngredient(ItemID.BlackLens, 2);
+            recipe.AddIngredient(ModContent.ItemType<CursedFragment>(), 10);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
         }
     }
 }
