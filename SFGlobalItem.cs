@@ -3,6 +3,7 @@ using CalamityMod.Items.TreasureBags;
 using sorceryFight.Content.Items.Accessories;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.Items.Consumables.SukunasFinger;
+using sorceryFight.Content.Items.Materials;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -22,6 +23,9 @@ namespace sorceryFight
             {
                 case ItemID.MoonLordBossBag:
                     itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CelestialAmulet>(), CelestialAmulet.ChanceDenominator, 1, 1));
+                    break;
+                case ItemID.WallOfFleshBossBag:
+                    itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SukunasSkull>(), 10, 1, 1));
                     break;
             }
         }
