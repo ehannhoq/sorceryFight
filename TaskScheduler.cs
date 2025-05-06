@@ -34,7 +34,7 @@ namespace sorceryFight
             tasks.Add(new ContinuousTask(action, duration));
         }
 
-        public override void PostUpdateEverything()
+        public override void PreUpdatePlayers()
         {
             for (int i = 0; i < tasks.Count; i++)
             {
