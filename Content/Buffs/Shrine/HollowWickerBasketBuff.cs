@@ -30,6 +30,7 @@ namespace sorceryFight.Content.Buffs.Shrine
         public override bool isActive { get; set; } = false;
         public override float CostPerSecond { get; set; } = 50f;
         public Dictionary<int, int> auraIndices;
+        public bool waiting = false;
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
@@ -109,10 +110,21 @@ namespace sorceryFight.Content.Buffs.Shrine
                 }
             }
 
-            if (accumulativeDamage > 0f)
+            if (accumulativeDamage > 0f && !waiting)
             {
-                sfPlayer.disableRegenFromBuffs = true;
-            }
+
+                TaskScheduler.Instance.AddContinuousTask(() => {
+                    sfPlayer.disableRegenFromBuffs = true;
+                },
+                300);
+
+                TaskScheduler.Instance.AddDelayedTask(() => {
+                    waiting = false;
+                },
+                301);
+
+                waiting = true;
+            }            
 
             int multiplier = 1;
             if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
@@ -121,7 +133,7 @@ namespace sorceryFight.Content.Buffs.Shrine
             }
 
             CostPerSecond = 50f;
-            CostPerSecond += accumulativeDamage * 1.5f * multiplier;
+            CostPerSecond += accumulativeDamage * 3f * multiplier;
 
             base.Update(player, ref buffIndex);
         }

@@ -147,10 +147,6 @@ namespace sorceryFight.SFPlayer
                     ResetBlackFlashState();
                 }
             }
-
-            disableRegenFromBuffs = false;
-            disableCurseTechniques = false;
-            blackFlashTime = 30;
         }
 
         public override void PostUpdate()
@@ -179,6 +175,10 @@ namespace sorceryFight.SFPlayer
             {
                 cursedEnergy = 0;
             }
+
+            disableRegenFromBuffs = false;
+            disableCurseTechniques = false;
+            blackFlashTime = 30;
         }
 
         public override void UpdateDead()
