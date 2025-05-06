@@ -247,17 +247,17 @@ namespace sorceryFight.SFPlayer
                 sfUI.BlackFlashWindow(lowerWindowTime, upperWindowTime);
             }
 
-            if (SFKeybinds.CursedFist.JustPressed)
-            {
-                if (Player.HasBuff<BurntTechnique>())
-                {
-                    int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
-                    Main.combatText[index].lifeTime = 60;
-                    return;
-                }
+            // if (SFKeybinds.CursedFist.JustPressed)
+            // {
+            //     if (Player.HasBuff<BurntTechnique>())
+            //     {
+            //         int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
+            //         Main.combatText[index].lifeTime = 60;
+            //         return;
+            //     }
 
-                CursedFist();
-            }
+            //     CursedFist();
+            // }
 
             if (usedCursedFists)
             {

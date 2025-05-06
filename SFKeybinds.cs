@@ -10,7 +10,7 @@ namespace sorceryFight
         public static ModKeybind CycleSelectedTechniqueDown { get; private set; }
         public static ModKeybind DomainExpansion { get; private set;}
         public static ModKeybind UseRCT { get; private set; }
-        public static ModKeybind CursedFist { get; private set; }
+        // public static ModKeybind CursedFist { get; private set; }
         public static ModKeybind AttemptBlackFlash { get; private set;}
 
         public override void Load()
@@ -21,7 +21,7 @@ namespace sorceryFight
             CycleSelectedTechniqueDown = KeybindLoader.RegisterKeybind(Mod, "CycleSelectedTechniqueBackward", "Z");
             DomainExpansion = KeybindLoader.RegisterKeybind(Mod, "DomainExpansion", "G");
             UseRCT = KeybindLoader.RegisterKeybind(Mod, "UseRCT", "X");
-            CursedFist = KeybindLoader.RegisterKeybind(Mod, "CursedFist", "C");
+            // CursedFist = KeybindLoader.RegisterKeybind(Mod, "CursedFist", "C");
             AttemptBlackFlash = KeybindLoader.RegisterKeybind(Mod, "AttemptBlackFlash", "Mouse3");
         }
 
@@ -33,7 +33,7 @@ namespace sorceryFight
             CycleSelectedTechniqueDown = null;
             DomainExpansion = null;
             UseRCT = null;
-            CursedFist = null;
+            // CursedFist = null;
             AttemptBlackFlash = null;
         }
     }
