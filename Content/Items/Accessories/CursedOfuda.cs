@@ -1,6 +1,9 @@
+using CalamityMod.Items.Materials;
+using sorceryFight.Content.Items.Materials;
 using sorceryFight.Rarities;
 using sorceryFight.SFPlayer;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -29,6 +32,16 @@ namespace sorceryFight.Content.Items.Accessories
 
             SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
             sfPlayer.cursedOfuda = true;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<InfusedCursedFragment>(), 10);
+            recipe.AddIngredient(ModContent.ItemType<DivineGeode>(), 7);
+            recipe.AddIngredient(ModContent.ItemType<CoreofCalamity>(), 12);
+            recipe.AddIngredient(ModContent.ItemType<UnholyCore>(), 2);
+            recipe.Register();
         }
     }
 }
