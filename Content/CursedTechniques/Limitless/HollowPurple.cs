@@ -76,9 +76,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             float redCastTime = sfPlayer.cursedOfuda ? 30f * CursedOfuda.cursedTechniqueCastTimeDecrease : 30f;
             float collisionStartTime = sfPlayer.cursedOfuda ? 100f * CursedOfuda.cursedTechniqueCastTimeDecrease : 100f;
 
-            if (Projectile.ai[0] < totalCastTime)
-                Main.NewText($"{Projectile.ai[0]} / {totalCastTime}");
-
             if (Projectile.ai[0] > LifeTime + totalCastTime)
             {
                 Projectile.Kill();
@@ -94,7 +91,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 }
             }
 
-            if (Projectile.ai[0] < totalCastTime)
+            if (Projectile.ai[0] < (int)totalCastTime)
             {
                 if (!animating)
                 {
@@ -122,7 +119,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 }
 
 
-                if (Projectile.ai[0] == redCastTime)
+                if (Projectile.ai[0] == (int)redCastTime)
                 {
                     if (Main.myPlayer == Projectile.owner)
                     {
@@ -145,7 +142,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     GeneralParticleHandler.SpawnParticle(particle);
                 }
 
-                if (Projectile.ai[0] >= redCastTime && red.type == ModContent.ProjectileType<ReversalRed>())
+                if (Projectile.ai[0] >= (int)redCastTime && red.type == ModContent.ProjectileType<ReversalRed>())
                 {
                     red.Center = redPosition;
 
@@ -155,12 +152,12 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     GeneralParticleHandler.SpawnParticle(particle);
                 }
 
-                if (Projectile.ai[0] == collisionStartTime - 25)
+                if (Projectile.ai[0] == (int)collisionStartTime - 25)
                     SoundEngine.PlaySound(SorceryFightSounds.CommonWoosh, Projectile.Center);
 
-                if (Projectile.ai[0] > collisionStartTime)
+                if (Projectile.ai[0] > (int)collisionStartTime)
                 {
-                    float timeLeft = totalCastTime - Projectile.ai[0];
+                    float timeLeft = (int)totalCastTime - Projectile.ai[0];
 
                     this.blueOffset.X += Math.Abs(this.blueOffset.X) / timeLeft;
                     this.redOffset.X -= Math.Abs(this.redOffset.X) / timeLeft;
@@ -175,7 +172,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                             AltSparkParticle particle = new AltSparkParticle(Projectile.Center, offsetParticleVelocity, false, 45, 1.5f, Color.White);
                             GeneralParticleHandler.SpawnParticle(particle);
                         }
-                        Projectile.ai[0] = totalCastTime;
+                        Projectile.ai[0] = (int)totalCastTime;
                     }
                 }
 

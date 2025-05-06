@@ -104,7 +104,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 Projectile.Center = player.Center;
                 Projectile.timeLeft = 30;
 
-                if (castTime % (totalCastTime / incantations.Count) == 1)
+
+                if (castTime % (int)(totalCastTime / incantations.Count) == 1 & ai1 < incantations.Count)
                 {
                     int index = CombatText.NewText(player.getRect(), textColor, incantations[(int)ai1]);
                     SoundEngine.PlaySound(SorceryFightSounds.CommonHeartBeat, player.Center);

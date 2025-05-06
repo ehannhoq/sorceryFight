@@ -114,7 +114,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 Projectile.Center = player.Center;
                 Projectile.timeLeft = 30;
 
-                if (castTimer < transitionTime)
+                if (castTimer < (int)transitionTime)
                 {
                     Vector2 pos = Projectile.Center;
                     Vector2 velocity = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
@@ -122,7 +122,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                     GeneralParticleHandler.SpawnParticle(particle);
                 }
 
-                if (castTimer == transitionTime)
+                if (castTimer == (int)transitionTime)
                 {
                     texturePhase = 1;
                     int index = CombatText.NewText(player.getRect(), textColor, "Divine Flame");
@@ -136,13 +136,13 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                     }
                 }
 
-                if (castTimer == totalCastTime - 10)
+                if (castTimer == (int)totalCastTime - 10)
                 {
                     int index = CombatText.NewText(player.getRect(), textColor, "Open.");
                     Main.combatText[index].lifeTime = 180;
                 }
 
-                if (castTimer > transitionTime)
+                if (castTimer > (int)transitionTime)
                 {
                     if (Main.myPlayer == Projectile.owner)
                         Projectile.rotation = Projectile.Center.DirectionTo(Main.MouseWorld).ToRotation();
