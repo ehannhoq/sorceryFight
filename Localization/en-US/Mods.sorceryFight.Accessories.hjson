@@ -33,7 +33,6 @@ CurseOfHavok: {
 		'''
 		Increases Shrine cursed technique damage by {0}%.
 		Increases every other cursed technique damage by {1}%.
-		Shrine cursed techniques inflict Brimstone Flames.
 		[c/B52518:"The essense of the King of Curses burns within you..."]
 		'''
 }
@@ -44,7 +43,6 @@ BlessingOfTheHonoredOne: {
 		'''
 		Increases Limitless cursed technique damage by {0}%.
 		Increases every other cursed technique damage by {1}%.
-		Limitless cursed techniques inflict Astral Infection.
 		[c/9FC6ED:"A blessing from the Strongest of today."]
 		'''
 }
