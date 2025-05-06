@@ -236,9 +236,11 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 if (npc.friendly || npc.IsDomain() || npc.type == NPCID.TargetDummy || npc.type == ModContent.NPCType<SuperDummyNPC>()) continue;
 
                 float distance = Vector2.Distance(npc.Center, Projectile.Center);
-                if (distance < 500f)
+                if (distance < 750f)
                 {
                     npc.AddBuff(BuffID.OnFire, SFUtils.BuffSecondsToTicks(10f));
+                    if (npc.whoAmI != target.whoAmI)
+                        Main.player[Projectile.owner].ApplyDamageToNPC(npc, Damage / 3, 0f, Projectile.direction, false, CursedTechniqueDamageClass.Instance, false);
                 }
             }
             Projectile.Kill();
