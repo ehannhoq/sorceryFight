@@ -193,7 +193,7 @@ namespace sorceryFight.SFPlayer
 
             if (!rctAnimation && sukunasFingerConsumed >= 1)
             {
-                int chance = SorceryFight.DevModeNames.Contains(Player.name) ? 100 : 5;
+                int chance = SorceryFight.DevModeNames.Contains(Player.name) ? 100 : 5 + (int)(sukunasFingerConsumed * 0.5);
                 if (SFUtils.Roll(chance))
                 {
                     if (!Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>()))
