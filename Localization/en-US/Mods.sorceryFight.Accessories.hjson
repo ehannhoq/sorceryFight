@@ -60,3 +60,8 @@ CursedBlindfold: {
 		[c/30475e:"Cover those baby-blues!"]
 		'''
 }
+
+JujutsuEmblem: {
+	DisplayName: Jujutsu Emblem
+	Tooltip: Increases cursed technique damage by {0}%.
+}

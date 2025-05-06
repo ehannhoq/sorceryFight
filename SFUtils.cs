@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Reflection;
 using CalamityMod.NPCs.DevourerofGods;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -181,6 +183,33 @@ public static class SFUtils
         {
             ints[i] = Math.Clamp(ints[i], min, max);
         }
+    }
+
+        /// <summary>
+        /// Gets a value from an internal field in a Calamity type. This is used to access fields that are not publicly exposed.
+        /// 
+        /// developer's note: i love calamity but fuck you for whoever thought of the shit ass way to modify vanilla boss -e
+        /// </summary>
+        /// <typeparam name="T">The type of the value to get.</typeparam>
+        /// <param name="typeName">The name of the Calamity type to access. This should be the full name of the type, without the "CalamityMod" namespace.</param>
+        /// <param name="fieldName">The name of the field to access.</param>
+        /// <param name="instance">The instance of the type to access the field from. If null, accesses a static field.</param>
+        /// <returns>The value of the field.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if the type or field could not be found.</exception>
+    public static T GetInternalFieldFromCalamity<T>(string typeName, string fieldName, object instance = null)
+    {
+        var t = Type.GetType(typeName + ", CalamityMod");
+        if (t == null)
+            throw new InvalidOperationException($"Could not find Calamity type {typeName}.");
+
+        var f = t.GetField(fieldName,
+                    BindingFlags.NonPublic | BindingFlags.Public |
+                    BindingFlags.Static | BindingFlags.Instance);
+
+        if (f == null)
+            throw new InvalidOperationException($"Could not find field {fieldName} on {typeName}.");
+
+        return (T)f.GetValue(instance); 
     }
 
 }

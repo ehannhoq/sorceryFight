@@ -9,10 +9,10 @@ SukunasSkull: {
 
 CursedFragment: {
 	DisplayName: Cursed Fragment
-	Tooltip: Material
+	Tooltip: ""
 }
 
 InfusedCursedFragment: {
 	DisplayName: Infused Cursed Fragment
-	Tooltip: Material
+	Tooltip: ""
 }

@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using CalamityMod;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.SummonItems;
 using CalamityMod.Items.TreasureBags;
@@ -26,6 +29,7 @@ using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static CalamityMod.DropHelper;
 
 namespace sorceryFight
 {
@@ -40,12 +44,45 @@ namespace sorceryFight
             switch (npc.type)
             {
                 case NPCID.MoonLordCore:
-                    if (!Main.expertMode)
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CelestialAmulet>(), CelestialAmulet.ChanceDenominator, 1, 1));
+                    npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<CelestialAmulet>(), CelestialAmulet.ChanceDenominator, 0));
                     break;
                 case NPCID.WallofFlesh:
-                    if (!Main.expertMode)
-                        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SukunasSkull>(), 10, 1, 1));
+
+                    List<IItemDropRule> rules = npcLoot.Get(true);
+
+                    rules.RemoveAll(rule =>
+                    {
+                        if (rule is AllOptionsAtOnceWithPityDropRule itemRule)
+                        {
+                            foreach (var weightedItemStack in itemRule.stacks.ToArray())
+                            {
+                                int itemID = SFUtils.GetInternalFieldFromCalamity<int>(
+                                    "CalamityMod.WeightedItemStack",
+                                    "itemID",
+                                    weightedItemStack
+                                );
+
+                                if (itemID == ItemID.WarriorEmblem)
+                                {
+                                    return true;
+                                }
+                            }
+                        }
+                        return false;
+                    });
+
+                    int[] emblems = new int[]
+                    {
+                        ItemID.WarriorEmblem,
+                        ItemID.RangerEmblem,
+                        ItemID.SorcererEmblem,
+                        ItemID.SummonerEmblem,
+                        ModContent.ItemType<RogueEmblem>(),
+                        ModContent.ItemType<JujutsuEmblem>()
+                    };
+
+                    npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, emblems));
+
                     break;
             }
 
@@ -91,11 +128,6 @@ namespace sorceryFight
 
         private void CursedModifiers(NPC npc, NPCLoot npcLoot)
         {
-            if (Main.expertMode)
-            {
-                return;
-            }
-
             Dictionary<int, int> npcLootMap = new()
             {
                 // Max CE Modifiers
@@ -111,12 +143,12 @@ namespace sorceryFight
                 { NPCID.Golem, ModContent.ItemType<CursedRock>() },
                 { ModContent.NPCType<Bumblefuck>(), ModContent.ItemType<CursedEffulgentFeather>() },
                 { ModContent.NPCType<Signus>(), ModContent.ItemType<CursedRuneOfKos>() },
-    
+
             };
 
             if (npcLootMap.TryGetValue(npc.type, out int itemID))
             {
-                npcLoot.Add(ItemDropRule.Common(itemID, 1, 1, 1));
+                npcLoot.Add(ItemDropRule.NormalvsExpert(itemID, 1, 0));
             }
         }
 
@@ -152,7 +184,7 @@ namespace sorceryFight
                 { NPCID.MoonLordCore, ModContent.ItemType<SukunasFingerXIII>() },
 
                 { ModContent.NPCType<Bumblefuck>(), ModContent.ItemType<SukunasFingerXIV>() },
-                
+
                 { ModContent.NPCType<Providence>(), ModContent.ItemType<SukunasFingerXV>() },
 
                 { ModContent.NPCType<CeaselessVoid>(), ModContent.ItemType<SukunasFingerXVI>() },
@@ -168,7 +200,7 @@ namespace sorceryFight
 
             if (npcLootMap.TryGetValue(npc.type, out int itemID))
             {
-                npcLoot.Add(ItemDropRule.Common(itemID, 1, 1, 1));
+                npcLoot.Add(ItemDropRule.NormalvsExpert(itemID, 1, 0));
             }
         }
 
