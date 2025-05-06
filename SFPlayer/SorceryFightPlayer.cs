@@ -131,9 +131,6 @@ namespace sorceryFight.SFPlayer
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
             maxCursedEnergy = calculateBaseMaxCE();
 
-            cursedEnergyUsagePerSecond = 0f;
-            cursedEnergyRegenFromOtherSources = 0f;
-            maxCursedEnergyFromOtherSources = 0f;
 
             if (blackFlashTimeLeft != 0)
             {
@@ -175,7 +172,11 @@ namespace sorceryFight.SFPlayer
             {
                 cursedEnergy = 0;
             }
+            
 
+            cursedEnergyUsagePerSecond = 0f;
+            cursedEnergyRegenFromOtherSources = 0f;
+            maxCursedEnergyFromOtherSources = 0f;
             disableRegenFromBuffs = false;
             disableCurseTechniques = false;
             blackFlashTime = 30;

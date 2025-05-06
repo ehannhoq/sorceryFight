@@ -1,168 +1,75 @@
-using System;
-using System.IO;
-using CalamityMod.Events;
-using CalamityMod.NPCs.NormalNPCs;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.Buffs;
 using Terraria;
-using Terraria.ID;
-using Terraria.Localization;
-using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
-using System.Collections.Generic;
-using CalamityMod.Particles;
-using CalamityMod.NPCs.DevourerofGods;
+using Microsoft.Xna.Framework;
+using sorceryFight.Content.Buffs;
+using Terraria.ID;
+using CalamityMod.NPCs.NormalNPCs;
+using Terraria.ModLoader;
+
 
 namespace sorceryFight.Content.DomainExpansions
 {
-    public abstract class DomainExpansion : ModNPC
+    public enum DomainPhase
     {
-        public static Dictionary<int, Player> Owners { get; set; }
+        WaitingToExpand,
+        Expanding,
+        Expanded
+    }
+
+    public abstract class DomainExpansion
+    {
         public abstract string InternalName { get; }
-        public override LocalizedText DisplayName 
-        { 
-            get
-            {
-                return SFUtils.GetLocalization($"Mods.sorceryFight.DomainExpansions.{InternalName}.DisplayName");
-            } 
-        }
-        public virtual string Description 
-        { 
-            get
-            {
-                return SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.Description");
-            } 
-        }
-        public virtual string LockedDescription
+        public string DisplayName => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.DisplayName");
+        public string Discription => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.Discription");
+        public string LockedDiscription => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.LockedDiscription");
+
+        public abstract Texture2D DomainTexture { get; }
+        public abstract float SureHitRange { get; }
+        public abstract float Cost { get; }
+        public abstract bool Unlocked(SorceryFightPlayer sf);
+        public abstract void SureHitEffect(NPC npc);
+
+        public Vector2 center;
+        public DomainPhase phase;
+        public float[] ai = new float[5];
+        public ref float increment => ref ai[0];
+
+        public virtual void Update()
         {
-            get
-            {
-                return SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.LockedDescription");
-            }
-        }
-        
-        public abstract int CostPerSecond { get; set; }
-        public virtual bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()); 
-        }
-        public virtual float SureHitDistance { get; set; } = 1100f;
-        public abstract void NPCDomainEffect(NPC npc);
-
-        public virtual Texture2D DomainTexture { get; set; }
-        public virtual Texture2D BackgroundTexture { get; set; }
-        public virtual float Scale { get; set; }
-        public virtual float BackgroundScale { get; set; }
-        public virtual float GoalScale { get; set; }
-        public override void SetStaticDefaults()
-        {
-            Main.npcFrameCount[NPC.type] = 1;
-            Owners = new Dictionary<int, Player>();
-
-        }
-
-        public override void SetDefaults()
-        {
-            NPC.damage = 0;
-            NPC.width = 1;
-            NPC.height = NPC.width;
-            NPC.lifeMax = 1;
-            NPC.noGravity = true;
-            NPC.noTileCollide = true;
-            NPC.dontTakeDamage = true;
-            NPC.scale = 0.1f;
-            NPC.hide = true;
-            NPC.behindTiles = false;
-            NPC.boss = true;
-
-            BackgroundTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/DomainExpansionBackground", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-        }
-        public override void AI()
-        {
-            Owners[NPC.whoAmI] = Main.player[(int)NPC.ai[1]];
-
-
-            SorceryFightPlayer sfPlayer = Owners[NPC.whoAmI].GetModPlayer<SorceryFightPlayer>();
-            if (!NPC.active && BossRushEvent.BossRushActive)
-            {
-                NPC.active = true;
-            }
-
-            sfPlayer.disableRegenFromDE = true;
-            sfPlayer.cursedEnergy -= SFUtils.RateSecondsToTicks(CostPerSecond);
-
-            if (Owners[NPC.whoAmI].dead || sfPlayer.cursedEnergy < 2)
-            {
-                Remove(sfPlayer);
-            }
-
-
             foreach (NPC npc in Main.npc)
             {
-                if (npc.active && !npc.friendly && npc.type != NPCID.TargetDummy && npc.type != ModContent.NPCType<SuperDummyNPC>() && !npc.IsDomain())
+                if (npc.active && npc.type != NPCID.TargetDummy && npc.type != ModContent.NPCType<SuperDummyNPC>())
                 {
-                    float distance = Vector2.DistanceSquared(npc.Center, NPC.Center);
-                    if (distance < SureHitDistance.Squared())
+                    float distance = Vector2.DistanceSquared(npc.Center, this.center);
+                    if (distance < SureHitRange.Squared())
                     {
-                        NPCDomainEffect(npc);
+                        SureHitEffect(npc);
                     }
                 }
             }
-
-            NPC.ai[0]++;
-
-            float logBase = 10f;
-            float maxAIValue = 30f;
-
-            if (NPC.ai[0] < 30)
-            {
-                NPC.Center = Owners[NPC.whoAmI].Center;
-
-                float progress = Math.Clamp(NPC.ai[0] / maxAIValue, 0.01f, 1f);
-                BackgroundScale = GoalScale * (float)(Math.Log(progress * (logBase - 1) + 1) / Math.Log(logBase));
-            }
         }
 
-        public virtual void Remove(SorceryFightPlayer sfPlayer)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
-            sfPlayer.disableRegenFromDE = false;
-            sfPlayer.domainIndex = -1;
-            sfPlayer.expandedDomain = false;
-            Owners[NPC.whoAmI].GetModPlayer<SorceryFightPlayer>().AddDeductableDebuff(ModContent.BuffType<BrainDamage>(), SorceryFightPlayer.DefaultBrainDamageDuration);
-            Owners.Remove(NPC.whoAmI);
-            NPC.active = false;
+
         }
 
-        public override void DrawBehind(int index)
+        public virtual void ExpandDomain(SorceryFightPlayer sf)
         {
-            List<int> newCache = new List<int>(200)
-            {
-                index
-            };
-
-            foreach (int i in Main.instance.DrawCacheNPCsMoonMoon)
-            {
-                newCache.Add(i);
-            }
-
-            Main.instance.DrawCacheNPCsMoonMoon = newCache;
+            DomainExpansionController.ActiveDomains[sf.Player.whoAmI] = this;
+            center = sf.Player.Center;
+            sf.disableRegenFromDE = true;
+            phase = DomainPhase.WaitingToExpand;
         }
 
-        public override void SendExtraAI(BinaryWriter writer)
+        public virtual void CloseDomain(SorceryFightPlayer sf)
         {
-            writer.Write(NPC.ai[0]);
-            writer.Write(NPC.ai[1]);
-            writer.Write(Scale);
-            writer.Write(BackgroundScale);
-        }
-
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            NPC.ai[0] = reader.ReadSingle();
-            NPC.ai[1] = reader.ReadSingle();
-            Scale = reader.ReadSingle();
-            BackgroundScale = reader.ReadSingle();
+            Main.npc[sf.domainIndex].active = false;
+            sf.AddDeductableDebuff(ModContent.BuffType<BrainDamage>(), SorceryFightPlayer.DefaultBrainDamageDuration);
+            sf.expandedDomain = false;
+            sf.disableRegenFromDE = false;
+            sf.domainIndex = -1;
         }
     }
 }

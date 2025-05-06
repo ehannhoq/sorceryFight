@@ -52,11 +52,6 @@ public static class SFUtils
         return ticks / 60;
     }
 
-    public static bool IsDomain(this NPC npc)
-    {
-        return npc.type == ModContent.NPCType<UnlimitedVoid>() || npc.type == ModContent.NPCType<MalevolentShrine>() || npc.type == ModContent.NPCType<Home>();
-    }
-
     public static bool MoveableByBlue(this NPC npc)
     {
         if (npc.type == NPCID.DD2LanePortal)
