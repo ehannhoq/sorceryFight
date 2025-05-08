@@ -99,7 +99,7 @@ namespace sorceryFight.Content.Buffs.Shrine
 
             foreach (NPC npc in Main.ActiveNPCs)
             {
-                if (npc.friendly || npc.type == NPCID.TargetDummy || npc.IsDomain()) continue;
+                if (npc.friendly || npc.type == NPCID.TargetDummy) continue;
 
                 float distance = Vector2.DistanceSquared(npc.Center, player.Center);
                 if (distance <= minimumDistance * minimumDistance)

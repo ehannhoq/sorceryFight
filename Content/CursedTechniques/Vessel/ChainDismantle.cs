@@ -89,7 +89,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                 {
                     foreach (NPC npc in Main.ActiveNPCs)
                     {
-                        if (npc.friendly || npc.type == NPCID.TargetDummy || npc.type == ModContent.NPCType<SuperDummyNPC>() || npc.IsDomain() || npc.whoAmI == target.whoAmI) continue;
+                        if (npc.friendly || npc.type == NPCID.TargetDummy || npc.type == ModContent.NPCType<SuperDummyNPC>() || npc.whoAmI == target.whoAmI) continue;
                         float dist = Vector2.Distance(npc.Center, target.Center);
                         if (dist < 250f)
                         {

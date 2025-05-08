@@ -1,11 +1,27 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
 using MonoMod.Cil;
+using sorceryFight.SFPlayer;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.DomainExpansions
 {
+    public enum DomainNetMessage : byte
+    {
+        ExpandDomain,
+        CloseDomain
+    }
+
     public class DomainExpansionController : ModSystem
     {
         public static Dictionary<int, DomainExpansion> ActiveDomains = new Dictionary<int, DomainExpansion>();
@@ -22,47 +38,55 @@ namespace sorceryFight.Content.DomainExpansions
 
         public override void Load()
         {
-            IL_Main.DrawNPCs += DrawDomainsBeforeNPCs;
+            IL_Main.DoDraw_DrawNPCsBehindTiles += DrawDomainLayer;
         }
 
         public override void Unload()
         {
-            IL_Main.DrawNPCs -= DrawDomainsBeforeNPCs;
+            IL_Main.DoDraw_DrawNPCsBehindTiles -= DrawDomainLayer;
         }
 
-        private void DrawDomainsBeforeNPCs(ILContext il)
+        public override void OnWorldUnload()
         {
-            ILCursor cursor = new ILCursor(il);
+            ActiveDomains.Clear();
+        }
+
+        private void DrawDomainLayer(ILContext il)
+        {
+            var cursor = new ILCursor(il);
+
+            cursor.Goto(0);
 
             cursor.EmitDelegate(() =>
             {
-                DrawActiveDomains(Main.spriteBatch);
+
+                Main.spriteBatch.Begin(
+                    SpriteSortMode.Immediate,
+                    BlendState.NonPremultiplied,
+                    SamplerState.LinearClamp,
+                    DepthStencilState.None,
+                    RasterizerState.CullNone,
+                    null,
+                    Main.GameViewMatrix.ZoomMatrix
+                );
+
+                foreach (var domain in ActiveDomains.Values)
+                    domain.Draw(Main.spriteBatch);
+
+                Main.spriteBatch.End();
             });
         }
 
-        public static void DrawActiveDomains(SpriteBatch spriteBatch)
+        public static void ActivateDomain(SorceryFightPlayer sfPlayer)
         {
-            if (ActiveDomains.Count == 0) return;
+            if (ActiveDomains.ContainsKey(sfPlayer.Player.whoAmI)) return;
 
-            Main.spriteBatch.End();
+            DomainExpansion de = sfPlayer.innateTechnique.DomainExpansion;
+            de.center = sfPlayer.Player.Center;
+            de.owner = sfPlayer.Player.whoAmI;
 
-            Main.spriteBatch.Begin(
-                SpriteSortMode.Immediate,
-                BlendState.AlphaBlend,
-                SamplerState.LinearClamp,
-                DepthStencilState.None,
-                RasterizerState.CullNone,
-                null,
-                Main.GameViewMatrix.ZoomMatrix
-            );
-
-            foreach (var domain in ActiveDomains.Values)
-            {
-                domain.Draw(spriteBatch);
-            }
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+            SoundEngine.PlaySound(de.CastSound, sfPlayer.Player.Center);
+            ActiveDomains[de.owner] = de;
         }
     }
 }

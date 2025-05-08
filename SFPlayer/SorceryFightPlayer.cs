@@ -17,6 +17,7 @@ using System;
 using Terraria.UI;
 using sorceryFight.Content.Buffs.Vessel;
 using sorceryFight.Content.Items.Consumables;
+using sorceryFight.Content.DomainExpansions;
 
 namespace sorceryFight.SFPlayer
 {
@@ -70,11 +71,6 @@ namespace sorceryFight.SFPlayer
         public SorceryFightUI sfUI;
         #endregion
 
-        #region Domain Expansion Variables
-        public bool expandedDomain;
-        public int domainIndex;
-        #endregion
-
         #region Player Attributes
         public bool sixEyes;
         public bool uniqueBodyStructure;
@@ -112,7 +108,7 @@ namespace sorceryFight.SFPlayer
 
         public override void PreUpdate()
         {
-            if (innateTechnique == null) return;
+            if (innateTechnique == null || Main.dedServ) return;
 
             if (preventDeath && deathPosition != Vector2.Zero && Player.position != deathPosition)
             {
@@ -172,7 +168,7 @@ namespace sorceryFight.SFPlayer
             {
                 cursedEnergy = 0;
             }
-            
+
 
             cursedEnergyUsagePerSecond = 0f;
             cursedEnergyRegenFromOtherSources = 0f;
@@ -323,36 +319,50 @@ namespace sorceryFight.SFPlayer
         }
         void DomainExpansion()
         {
-            if (!innateTechnique.DomainExpansion.Unlocked(this))
+            if (Player.whoAmI == Main.myPlayer)
             {
-                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You haven't unlocked this yet!");
-                Main.combatText[index].lifeTime = 60;
-                return;
+                if (!innateTechnique.DomainExpansion.Unlocked(this))
+                {
+                    int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You haven't unlocked this yet!");
+                    Main.combatText[index].lifeTime = 60;
+                    return;
+                }
+
+                if (Player.HasBuff<BrainDamage>())
+                {
+                    int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You can't use this right now!");
+                    Main.combatText[index].lifeTime = 60;
+                    return;
+                }
+
+                if (Player.HasBuff<BurntTechnique>())
+                {
+                    int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
+                    Main.combatText[index].lifeTime = 180;
+                    return;
+                }
+
+
+                if (DomainExpansionController.ActiveDomains.TryGetValue(Player.whoAmI, out var domainExpansion))
+                {
+                    domainExpansion.CloseDomain(this, true);
+                }
+                else
+                    DomainExpansionController.ActivateDomain(this);
+
+
+                if (Main.netMode != NetmodeID.SinglePlayer)
+                {
+                    ModPacket packet = Mod.GetPacket();
+                    packet.Write((byte)MessageType.SyncDomain);
+
+                    packet.Write(Player.whoAmI);
+                    packet.Write((byte)InnateTechniqueFactory.GetInnateTechniqueType(innateTechnique));
+                    packet.Write((byte)(!DomainExpansionController.ActiveDomains.ContainsKey(Player.whoAmI) ? DomainNetMessage.ExpandDomain : DomainNetMessage.CloseDomain));
+                    packet.Send();
+                }
             }
 
-            if (Player.HasBuff<BrainDamage>())
-            {
-                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You can't use this right now!");
-                Main.combatText[index].lifeTime = 60;
-                return;
-            }
-
-            if (Player.HasBuff<BurntTechnique>())
-            {
-                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
-                Main.combatText[index].lifeTime = 180;
-                return;
-            }
-
-            if (!expandedDomain)
-            {
-                innateTechnique.ExpandDomain(this);
-                expandedDomain = true;
-            }
-            else if (domainIndex != -1)
-            {
-                innateTechnique.CloseDomain(this);
-            }
         }
 
         void CursedFist()

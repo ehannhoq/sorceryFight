@@ -44,9 +44,6 @@ namespace sorceryFight.SFPlayer
             npcsHitWithCursedFists = new HashSet<int>();
             idleDeathGambleBuffStrength = 0;
 
-            expandedDomain = false;
-            domainIndex = -1;
-
             sixEyes = false;
             uniqueBodyStructure = false;
 

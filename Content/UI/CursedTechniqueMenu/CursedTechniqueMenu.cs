@@ -125,7 +125,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             Append(rctIcon);
             index++;
 
-            string domainIconHoverText = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? $"{sfPlayer.innateTechnique.DomainExpansion.DisplayName.Value}\n{sfPlayer.innateTechnique.DomainExpansion.Description}"
+            string domainIconHoverText = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? $"{sfPlayer.innateTechnique.DomainExpansion.DisplayName}\n{sfPlayer.innateTechnique.DomainExpansion.Description}"
              : $"{sfPlayer.innateTechnique.DomainExpansion.LockedDescription}";
             Texture2D finalDomainTexture = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? ref domainIconTexture : ref lockedTexture;
             SpecialUIElement domainIcon = new SpecialUIElement(finalDomainTexture, domainIconHoverText);

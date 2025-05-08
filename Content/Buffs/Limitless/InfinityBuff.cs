@@ -79,7 +79,7 @@ namespace sorceryFight.Content.Buffs.Limitless
             foreach (NPC npc in Main.npc)
             {
                 
-                if (!npc.friendly && npc.type != NPCID.TargetDummy && npc.active && !npc.IsDomain())
+                if (!npc.friendly && npc.type != NPCID.TargetDummy && npc.active)
                 {
                     float distance = Vector2.Distance(npc.Center, player.Center);
                     if (distance <= infinityDistance)

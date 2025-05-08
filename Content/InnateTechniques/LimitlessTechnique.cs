@@ -33,50 +33,6 @@ namespace sorceryFight.Content.InnateTechniques
             new HollowPurple200Percent()
         };
 
-        public override DomainExpansion DomainExpansion { get; } = new UnlimitedVoid();
-        
-        public override void PreUpdate(SorceryFightPlayer sf)
-        {
-            if (DomainExpansionTimer == -1)
-            {
-                return;
-            }
-
-            DomainExpansionTimer ++;
-
-            if (DomainExpansionTimer == 1)
-            {
-                int index = CombatText.NewText(sf.Player.getRect(), Color.White, "Domain Expansion:");
-                Main.combatText[index].lifeTime = 90;
-            }
-
-            if (DomainExpansionTimer == 101)
-            {
-                int index = CombatText.NewText(sf.Player.getRect(), Color.White, "Unlimited Void");
-                Main.combatText[index].lifeTime = 90;
-            }
-
-            if (DomainExpansionTimer == 181)
-            {
-                SoundEngine.PlaySound(SorceryFightSounds.UnlimitedVoid, sf.Player.Center);
-            }
-            
-            if (DomainExpansionTimer == 211)
-            {
-                Terraria.DataStructures.IEntitySource entitySource = sf.Player.GetSource_FromThis();
-                Vector2 position = sf.Player.Center;
-
-                if (Main.myPlayer == sf.Player.whoAmI)
-                    sf.domainIndex = NPC.NewNPC(entitySource, (int)position.X, (int)position.Y, ModContent.NPCType<UnlimitedVoid>(), 0, default, sf.Player.whoAmI);
-                DomainExpansionTimer = -1;
-            }
-
-        }
-
-        public override void CloseDomain(SorceryFightPlayer sf)
-        {
-            UnlimitedVoid.frozenValues.Clear();
-            base.CloseDomain(sf);
-        }
+        public override DomainExpansion DomainExpansion => new UnlimitedVoid();
     }
 }

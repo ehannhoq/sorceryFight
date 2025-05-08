@@ -5,9 +5,50 @@ using Terraria;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.SFPlayer;
 using Terraria.ModLoader;
+using System.IO;
+using System;
 
 namespace sorceryFight.Content.InnateTechniques
 {
+    public enum InnateTechniqueType : byte
+    {
+        None,
+        Limitless,
+        Shrine,
+        Vessel,
+        PPLT
+    }
+    public static class InnateTechniqueFactory
+    {
+        public static InnateTechnique Create(InnateTechniqueType type)
+        {
+            return type switch
+            {
+                InnateTechniqueType.Limitless => new LimitlessTechnique(),
+                // InnateTechniqueType.Shrine => new ShrineTechnique(),
+                // InnateTechniqueType.Vessel => new VesselTechnique(),
+                // InnateTechniqueType.PPLT => new PrivatePureLoveTrainTechnique(),
+                _ => null
+            };
+        }
+
+        public static InnateTechniqueType GetInnateTechniqueType(InnateTechnique technique)
+        {
+            if (typeof(LimitlessTechnique) == technique.GetType())
+                return InnateTechniqueType.Limitless;
+
+            // if (typeof(ShrineTechnique) == technique.GetType())
+            //     return InnateTechniqueType.Shrine;
+
+            // if (typeof(VesselTechnique) == technique.GetType())
+            //     return InnateTechniqueType.Shrine;
+
+            // if (typeof(PrivatePureLoveTrainTechnique) == technique.GetType())
+            //     return InnateTechniqueType.PPLT;
+
+            return InnateTechniqueType.None;
+        }
+    }
     public abstract class InnateTechnique()
     {
         /// <summary>
@@ -22,20 +63,19 @@ namespace sorceryFight.Content.InnateTechniques
         public abstract List<PassiveTechnique> PassiveTechniques { get; }
         public abstract List<CursedTechnique> CursedTechniques { get; }
         public abstract DomainExpansion DomainExpansion { get; }
-        public virtual int DomainExpansionTimer { get; set; } = -1;
-
+        
         public static InnateTechnique GetInnateTechnique(string name)
         {
             switch (name)
             {
                 case "Limitless":
                     return new LimitlessTechnique();
-                case "Shrine":
-                    return new ShrineTechnique();
-                case "Vessel":
-                    return new VesselTechnique();
-                case "PrivatePureLoveTrain":
-                    return new PrivatePureLoveTrainTechnique();
+                // case "Shrine":
+                //     return new ShrineTechnique();
+                // case "Vessel":
+                //     return new VesselTechnique();
+                // case "PrivatePureLoveTrain":
+                //     return new PrivatePureLoveTrainTechnique();
             }
 
             return null;
@@ -48,9 +88,9 @@ namespace sorceryFight.Content.InnateTechniques
                 return new List<InnateTechnique>
                 {
                     new LimitlessTechnique(),
-                    new ShrineTechnique(),
-                    new VesselTechnique(),
-                    new PrivatePureLoveTrainTechnique()
+                    // new ShrineTechnique(),
+                    // new VesselTechnique(),
+                    // new PrivatePureLoveTrainTechnique()
                 };
             }
         }
@@ -65,19 +105,5 @@ namespace sorceryFight.Content.InnateTechniques
         /// </summary>
         public virtual void UpdateLifeRegen(SorceryFightPlayer sf) { }
         public virtual void PreUpdate(SorceryFightPlayer sf) { }
-
-        public virtual void ExpandDomain(SorceryFightPlayer sf)
-        {
-            DomainExpansionTimer = 0;
-        }
-
-        public virtual void CloseDomain(SorceryFightPlayer sf)
-        {
-            Main.npc[sf.domainIndex].active = false;
-            sf.AddDeductableDebuff(ModContent.BuffType<BrainDamage>(), SorceryFightPlayer.DefaultBrainDamageDuration);
-            sf.expandedDomain = false;
-            sf.disableRegenFromDE = false;
-            sf.domainIndex = -1;
-        }
     }
 }

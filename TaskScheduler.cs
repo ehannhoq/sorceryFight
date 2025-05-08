@@ -20,7 +20,6 @@ namespace sorceryFight
 
         public void AddDelayedTask(Action action, int delay)
         {
-
             tasks.Add(new DelayedTask(action, delay));
         }
 

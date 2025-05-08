@@ -27,7 +27,7 @@ namespace sorceryFight.SFPlayer
         public void SendBossDefeatedToClients(int bossType)
         {
             ModPacket packet = Mod.GetPacket();
-            packet.Write((byte)1);
+            packet.Write((byte)MessageType.DefeatedBoss);
             packet.Write(Player.whoAmI);
             packet.Write(bossType);
             packet.Send();

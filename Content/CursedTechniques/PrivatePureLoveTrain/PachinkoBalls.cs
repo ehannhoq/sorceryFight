@@ -91,7 +91,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 {
                     NPC npc = Main.npc[i];
 
-                    if (!npc.active || npc.friendly || npc.IsDomain() || npc.whoAmI == target.whoAmI || enemyRicochets[Projectile.whoAmI][1..^0].Contains(npc.whoAmI)) continue;
+                    if (!npc.active || npc.friendly || npc.whoAmI == target.whoAmI || enemyRicochets[Projectile.whoAmI][1..^0].Contains(npc.whoAmI)) continue;
 
                     float distance = Vector2.Distance(npc.Center, Projectile.Center);
                     if (distance > 250f) continue;

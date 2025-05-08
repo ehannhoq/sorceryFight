@@ -208,10 +208,10 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         {
             SorceryFightPlayer sfPlayer = Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>();
 
-            if (sfPlayer.domainIndex != -1 && sfPlayer.innateTechnique.Name.Equals("Shrine"))
-            {
-                modifiers.FinalDamage.Flat += modifiers.FinalDamage.Flat;
-            }
+            // if (sfPlayer.domainIndex != -1 && sfPlayer.innateTechnique.Name.Equals("Shrine"))
+            // {
+            //     modifiers.FinalDamage.Flat += modifiers.FinalDamage.Flat;
+            // }
 
             base.ModifyHitNPC(target, ref modifiers);
         }
@@ -233,7 +233,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
             foreach (NPC npc in Main.ActiveNPCs)
             {
-                if (npc.friendly || npc.IsDomain() || npc.type == NPCID.TargetDummy || npc.type == ModContent.NPCType<SuperDummyNPC>()) continue;
+                if (npc.friendly || npc.type == NPCID.TargetDummy || npc.type == ModContent.NPCType<SuperDummyNPC>()) continue;
 
                 float distance = Vector2.Distance(npc.Center, Projectile.Center);
                 if (distance < 750f)

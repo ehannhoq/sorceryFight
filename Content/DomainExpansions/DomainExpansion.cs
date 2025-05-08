@@ -6,34 +6,31 @@ using sorceryFight.Content.Buffs;
 using Terraria.ID;
 using CalamityMod.NPCs.NormalNPCs;
 using Terraria.ModLoader;
+using System;
+using Terraria.Audio;
+using sorceryFight.Content.InnateTechniques;
 
 
 namespace sorceryFight.Content.DomainExpansions
 {
-    public enum DomainPhase
-    {
-        WaitingToExpand,
-        Expanding,
-        Expanded
-    }
-
     public abstract class DomainExpansion
     {
+
         public abstract string InternalName { get; }
         public string DisplayName => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.DisplayName");
-        public string Discription => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.Discription");
-        public string LockedDiscription => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.LockedDiscription");
-
+        public string Description => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.Discription");
+        public string LockedDescription => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.LockedDiscription");
+        public abstract SoundStyle CastSound { get; }
         public abstract Texture2D DomainTexture { get; }
         public abstract float SureHitRange { get; }
         public abstract float Cost { get; }
         public abstract bool Unlocked(SorceryFightPlayer sf);
         public abstract void SureHitEffect(NPC npc);
+        public abstract void Draw(SpriteBatch spriteBatch);
 
+        public int owner;
         public Vector2 center;
-        public DomainPhase phase;
         public float[] ai = new float[5];
-        public ref float increment => ref ai[0];
 
         public virtual void Update()
         {
@@ -48,28 +45,55 @@ namespace sorceryFight.Content.DomainExpansions
                     }
                 }
             }
+
+            if (Main.myPlayer == owner)
+            {
+                SorceryFightPlayer sfPlayer = Main.player[owner].GetModPlayer<SorceryFightPlayer>();
+                sfPlayer.disableRegenFromDE = true;
+                sfPlayer.cursedEnergy -= SFUtils.RateSecondsToTicks(Cost);
+
+                if (sfPlayer.Player.dead || sfPlayer.cursedEnergy < 10)
+                {
+                    CloseDomain(sfPlayer);
+                }
+            }
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public virtual void DrawInnerDomain(Action action)
         {
-
+            foreach (Player player in Main.player)
+            {
+                if (player.active && Vector2.DistanceSquared(player.Center, this.center) <= SureHitRange.Squared())
+                {
+                    if (player.whoAmI == Main.myPlayer)
+                    {
+                        action.Invoke();
+                    }
+                }
+            }
         }
 
-        public virtual void ExpandDomain(SorceryFightPlayer sf)
+        public virtual void CloseDomain(SorceryFightPlayer sf, bool supressSyncPacket = false)
         {
-            DomainExpansionController.ActiveDomains[sf.Player.whoAmI] = this;
-            center = sf.Player.Center;
-            sf.disableRegenFromDE = true;
-            phase = DomainPhase.WaitingToExpand;
-        }
+            if (Main.myPlayer == sf.Player.whoAmI)
+            {
+                sf.AddDeductableDebuff(ModContent.BuffType<BrainDamage>(), SorceryFightPlayer.DefaultBrainDamageDuration);
+                sf.disableRegenFromDE = false;
 
-        public virtual void CloseDomain(SorceryFightPlayer sf)
-        {
-            Main.npc[sf.domainIndex].active = false;
-            sf.AddDeductableDebuff(ModContent.BuffType<BrainDamage>(), SorceryFightPlayer.DefaultBrainDamageDuration);
-            sf.expandedDomain = false;
-            sf.disableRegenFromDE = false;
-            sf.domainIndex = -1;
+                if (Main.netMode != NetmodeID.SinglePlayer && !supressSyncPacket)
+                {
+                    ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
+                    packet.Write((byte)MessageType.SyncDomain);
+
+                    packet.Write(sf.Player.whoAmI);
+                    packet.Write((byte)InnateTechniqueFactory.GetInnateTechniqueType(sf.innateTechnique));
+                    packet.Write((byte)DomainNetMessage.ExpandDomain);
+                    packet.Send();
+                }
+            }
+
+            DomainExpansionController.ActiveDomains.Remove(sf.Player.whoAmI);
+            ai = new float[5];
         }
     }
 }

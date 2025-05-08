@@ -22,7 +22,7 @@ namespace sorceryFight.Content.Buffs.Vessel
 
             if (sfPlayer.innateTechnique.Name.Equals("Vessel"))
             {
-                sfPlayer.innateTechnique = new ShrineTechnique();
+                // sfPlayer.innateTechnique = new ShrineTechnique();
                 rctTracker[player.whoAmI] = sfPlayer.unlockedRCT;
                 SorceryFightUI.UpdateTechniqueUI.Invoke();
             }
@@ -43,12 +43,9 @@ namespace sorceryFight.Content.Buffs.Vessel
                     pt.isActive = false;
                 }
 
-                if (sfPlayer.domainIndex != -1)
-                    sfPlayer.innateTechnique.CloseDomain(sfPlayer);
-
                 sfPlayer.selectedTechnique = null;
 
-                sfPlayer.innateTechnique = new VesselTechnique();
+                // sfPlayer.innateTechnique = new VesselTechnique();
                 if (rctTracker.TryGetValue(player.whoAmI, out bool hasRCT))
                 {
                     sfPlayer.unlockedRCT = hasRCT;
