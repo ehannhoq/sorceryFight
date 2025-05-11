@@ -22,7 +22,7 @@ namespace sorceryFight.Content.Buffs.Vessel
 
             if (sfPlayer.innateTechnique.Name.Equals("Vessel"))
             {
-                // sfPlayer.innateTechnique = new ShrineTechnique();
+                sfPlayer.innateTechnique = new ShrineTechnique();
                 rctTracker[player.whoAmI] = sfPlayer.unlockedRCT;
                 SorceryFightUI.UpdateTechniqueUI.Invoke();
             }
