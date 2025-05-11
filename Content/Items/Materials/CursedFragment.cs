@@ -17,7 +17,6 @@ namespace sorceryFight.Content.Items.Materials
         public override void SetDefaults()
         {
             Item.material = true;
-            Item.maxStack = 1;
             Item.rare = ModContent.RarityType<SorceryFightMaterial>();
             Item.width = 50;
             Item.height = 50;

@@ -35,6 +35,7 @@ namespace sorceryFight
         public static SoundStyle UnlimitedVoid;
         public static SoundStyle MalevolentShrine;
         public static SoundStyle IdleDeathGambleOpening;
+        public static SoundStyle Home;
         public static SoundStyle IDGSlots;
         public static SoundStyle IDGWoosh;
         public static SoundStyle IDGWooshLoop;
@@ -63,8 +64,9 @@ namespace sorceryFight
             PachinkoBallCollision = new("sorceryFight/Content/Sounds/Projectiles/PachinkoBallCollision") { Volume = 1f };
             TrainDoorsClosing = new("sorceryFight/Content/Sounds/Projectiles/TrainDoorsClosing") { Volume = 1f };
 
-            MalevolentShrine = new("sorceryFight/Content/Sounds/DomainExpansions/MalevolentShrine") { Volume = 1f };
             UnlimitedVoid = new("sorceryFight/Content/Sounds/DomainExpansions/UnlimitedVoid") { Volume = 1f };
+            MalevolentShrine = new("sorceryFight/Content/Sounds/DomainExpansions/MalevolentShrine") { Volume = 1f };
+            Home = new("sorceryFight/Content/Sounds/DomainExpansions/Home") { Volume = 1f };
             
             IdleDeathGambleOpening = new("sorceryFight/Content/Sounds/DomainExpansions/IdleDeathGambleOpening") { Volume = 1f };
             IDGWooshLoop = new("sorceryFight/Content/Sounds/DomainExpansions/IDGWooshLoop") { Volume = 1f };

@@ -38,12 +38,12 @@ namespace sorceryFight.Content.DomainExpansions
 
         public override void Load()
         {
-            IL_Main.DoDraw_DrawNPCsBehindTiles += DrawDomainLayer;
+            IL_Main.DoDraw_DrawNPCsOverTiles += DrawDomainLayer;
         }
 
         public override void Unload()
         {
-            IL_Main.DoDraw_DrawNPCsBehindTiles -= DrawDomainLayer;
+            IL_Main.DoDraw_DrawNPCsOverTiles -= DrawDomainLayer;
         }
 
         public override void OnWorldUnload()
@@ -53,6 +53,7 @@ namespace sorceryFight.Content.DomainExpansions
 
         private void DrawDomainLayer(ILContext il)
         {
+            if (Main.dedServ) return;
             var cursor = new ILCursor(il);
 
             cursor.Goto(0);

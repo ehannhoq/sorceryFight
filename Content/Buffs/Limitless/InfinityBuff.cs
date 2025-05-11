@@ -8,12 +8,12 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Buffs.Limitless
 {
-    
+
     public class InfinityBuff : PassiveTechnique
     {
         private Dictionary<int, Vector2> velocityData = new Dictionary<int, Vector2>();
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.Infinity.DisplayName");
-        public override string Stats 
+        public override string Stats
         {
             get
             {
@@ -22,7 +22,7 @@ namespace sorceryFight.Content.Buffs.Limitless
                         + "increases CE consumption dependent\n"
                         + "on the object's damamge.\n"
                         + "Infinity takes 3x more CE during boss fights.\n";
-                        
+
             }
         }
         public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.Infinity.Description");
@@ -30,15 +30,16 @@ namespace sorceryFight.Content.Buffs.Limitless
 
         public override bool isActive { get; set; } = false;
         public override float CostPerSecond { get; set; } = 1f;
+        public bool waiting = false;
         public override bool Unlocked(SorceryFightPlayer sf)
-        { 
+        {
             return sf.HasDefeatedBoss(NPCID.EyeofCthulhu);
         }
 
         public override void Apply(Player player)
         {
             player.AddBuff(ModContent.BuffType<InfinityBuff>(), 2);
-      
+
             player.GetModPlayer<SorceryFightPlayer>().infinity = true;
         }
 
@@ -60,14 +61,14 @@ namespace sorceryFight.Content.Buffs.Limitless
             int npcInInfinity = 0;
             foreach (Projectile proj in Main.ActiveProjectiles)
             {
-   
+
                 if (proj.hostile)
                 {
                     float distance = Vector2.Distance(proj.Center, player.Center);
                     if (distance <= infinityDistance)
                     {
                         accumulativeDamage += proj.damage;
-                        npcInInfinity ++;
+                        npcInInfinity++;
 
                         proj.velocity *= 0.5f;
                         Vector2 vector = player.Center.DirectionTo(proj.Center);
@@ -75,10 +76,10 @@ namespace sorceryFight.Content.Buffs.Limitless
                     }
                 }
             }
-            
+
             foreach (NPC npc in Main.npc)
             {
-                
+
                 if (!npc.friendly && npc.type != NPCID.TargetDummy && npc.active)
                 {
                     float distance = Vector2.Distance(npc.Center, player.Center);
@@ -99,16 +100,28 @@ namespace sorceryFight.Content.Buffs.Limitless
                     else if (velocityData.ContainsKey(npc.whoAmI))
                     {
                         npc.velocity = velocityData[npc.whoAmI];
-                        velocityData.Remove(npc.whoAmI); 
+                        velocityData.Remove(npc.whoAmI);
                     }
 
                 }
             }
 
-
-            if (accumulativeDamage > 0)
+            if (accumulativeDamage > 0f && !waiting)
             {
-                sf.disableRegenFromBuffs = true;
+
+                TaskScheduler.Instance.AddContinuousTask(() =>
+                {
+                    sf.disableRegenFromBuffs = true;
+                },
+                300);
+
+                TaskScheduler.Instance.AddDelayedTask(() =>
+                {
+                    waiting = false;
+                },
+                301);
+
+                waiting = true;
             }
 
             int multiplier = 1;

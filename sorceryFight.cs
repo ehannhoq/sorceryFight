@@ -107,12 +107,12 @@ namespace sorceryFight
 				switch (msg)
 				{
 					case DomainNetMessage.ExpandDomain:
-						Logger.Info($"Removing domain from {caster} on client {Main.myPlayer}");
+						Logger.Info($"Removing {sfPlayer.innateTechnique.DomainExpansion.DisplayName} from {caster} on client {Main.myPlayer}");
 						DomainExpansionController.ActiveDomains[caster].CloseDomain(sfPlayer, true);
 						break;
 
 					case DomainNetMessage.CloseDomain:
-						Logger.Info($"Activating domain for {caster} on client {Main.myPlayer}");
+						Logger.Info($"Activating {sfPlayer.innateTechnique.DomainExpansion.DisplayName} for {caster} on client {Main.myPlayer}");
 						DomainExpansionController.ActivateDomain(sfPlayer);
 						break;
 				}

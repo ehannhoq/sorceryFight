@@ -18,20 +18,20 @@ namespace sorceryFight.Content.DomainExpansions
 
         public abstract string InternalName { get; }
         public string DisplayName => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.DisplayName");
-        public string Description => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.Discription");
+        public string Description => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.Description");
         public string LockedDescription => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.LockedDiscription");
         public abstract SoundStyle CastSound { get; }
         public abstract Texture2D DomainTexture { get; }
         public abstract float SureHitRange { get; }
         public abstract float Cost { get; }
+        public abstract bool ClosedDomain { get; }
         public abstract bool Unlocked(SorceryFightPlayer sf);
         public abstract void SureHitEffect(NPC npc);
         public abstract void Draw(SpriteBatch spriteBatch);
+        public virtual bool targetsNPCs { get; } = false;
 
         public int owner;
         public Vector2 center;
-        public float[] ai = new float[5];
-
         public virtual void Update()
         {
             foreach (NPC npc in Main.npc)
@@ -48,7 +48,8 @@ namespace sorceryFight.Content.DomainExpansions
 
             if (Main.myPlayer == owner)
             {
-                SorceryFightPlayer sfPlayer = Main.player[owner].GetModPlayer<SorceryFightPlayer>();
+                Main.LocalPlayer.wingTime = Main.LocalPlayer.wingTimeMax;
+                SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
                 sfPlayer.disableRegenFromDE = true;
                 sfPlayer.cursedEnergy -= SFUtils.RateSecondsToTicks(Cost);
 
@@ -57,19 +58,80 @@ namespace sorceryFight.Content.DomainExpansions
                     CloseDomain(sfPlayer);
                 }
             }
+
+            DomainBarrier();
+        }
+
+        public virtual void SetDefaults() {}
+
+        public virtual void DomainBarrier()
+        {
+            foreach (NPC npc in Main.ActiveNPCs)
+            {
+                float npcDistance = Vector2.DistanceSquared(npc.Center, center);
+                if (npcDistance < SureHitRange.Squared() && npcDistance > SureHitRange.Squared() - 10000)
+                {
+                    Vector2 toNPC = npc.Center - center;
+                    Vector2 velocity = npc.velocity;
+
+                    if (velocity.Length() > 0f)
+                    {
+                        Vector2 dirToPlayer = Vector2.Normalize(toNPC);
+                        Vector2 velDir = Vector2.Normalize(velocity);
+
+                        if (Vector2.Dot(velDir, dirToPlayer) > 0f)
+                        {
+                            npc.velocity = Vector2.Zero;
+                        }
+                    }
+                }
+            }
+
+            if (Main.dedServ) return;
+
+            Player player = Main.player[Main.myPlayer];
+
+            Vector2 toPlayer = player.Center - center;
+            float distanceSquared = toPlayer.LengthSquared();
+
+            bool outsideDomain = distanceSquared > SureHitRange.Squared() + 25000;
+
+            if (outsideDomain && Main.myPlayer == owner)
+            {
+                SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+                CloseDomain(sfPlayer);
+                return;
+            }
+
+            if (distanceSquared < SureHitRange.Squared() + 50000 &&
+                distanceSquared > SureHitRange.Squared() - 50000)
+            {
+                Vector2 radialDir = Vector2.Normalize(toPlayer);
+                Vector2 vel = player.velocity;
+
+                float radialSpeed = Vector2.Dot(vel, radialDir);
+                float speed = vel.Length();
+
+                bool movingOut = distanceSquared < SureHitRange.Squared() && radialSpeed > -40f;
+                bool movingIn = distanceSquared > SureHitRange.Squared() && radialSpeed < 40f;
+
+                if (movingIn || movingOut)
+                {
+                    radialDir = -radialDir;
+
+                }
+
+                player.velocity = radialDir * speed;
+
+
+            }
         }
 
         public virtual void DrawInnerDomain(Action action)
         {
-            foreach (Player player in Main.player)
+            if (Vector2.DistanceSquared(Main.LocalPlayer.Center, this.center) <= SureHitRange.Squared())
             {
-                if (player.active && Vector2.DistanceSquared(player.Center, this.center) <= SureHitRange.Squared())
-                {
-                    if (player.whoAmI == Main.myPlayer)
-                    {
-                        action.Invoke();
-                    }
-                }
+                action.Invoke();
             }
         }
 
@@ -93,7 +155,6 @@ namespace sorceryFight.Content.DomainExpansions
             }
 
             DomainExpansionController.ActiveDomains.Remove(sf.Player.whoAmI);
-            ai = new float[5];
         }
     }
 }

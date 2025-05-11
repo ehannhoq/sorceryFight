@@ -22,12 +22,14 @@ namespace sorceryFight.Content.DomainExpansions
 
         public override Texture2D DomainTexture => ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/UnlimitedVoid", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-        public override float SureHitRange => 1000f;
+        public override float SureHitRange => 1150f;
 
         public override float Cost => 100f;
 
-        private ref float tick => ref ai[0];
-        private ref float whiteFade => ref ai[1];
+        public override bool ClosedDomain => true;
+
+        float tick = 0f;
+        float whiteFade = 0f;
 
         public override void SureHitEffect(NPC npc)
         {
@@ -54,8 +56,6 @@ namespace sorceryFight.Content.DomainExpansions
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (Main.dedServ) return;
-
             if (tick > 1 && tick < 140)
             {
                 DrawInnerDomain(() =>
@@ -69,7 +69,7 @@ namespace sorceryFight.Content.DomainExpansions
                 return;
             }
 
-            if (tick > 140 && tick < 390)
+            if (tick > 140)
             {
                 DrawInnerDomain(() =>
                 {
@@ -90,11 +90,13 @@ namespace sorceryFight.Content.DomainExpansions
                         spriteBatch.Draw(whiteTexture, screenRectangle, fadeColor);
                     });
                 }
-                return;
             }
 
-            Rectangle src = new Rectangle(0, 0, DomainTexture.Width, DomainTexture.Height);
-            spriteBatch.Draw(DomainTexture, center - Main.screenPosition, src, Color.White, 0f, src.Size() * 0.5f, 2f, SpriteEffects.None, 0f);
+            if (tick > 389)
+            {
+                Rectangle src = new Rectangle(0, 0, DomainTexture.Width, DomainTexture.Height);
+                spriteBatch.Draw(DomainTexture, center - Main.screenPosition, src, Color.White, 0f, src.Size() * 0.5f, 2f, SpriteEffects.None, 0f);
+            }
         }
 
         public override void Update()
@@ -136,10 +138,25 @@ namespace sorceryFight.Content.DomainExpansions
                 Player player = Main.player[owner];
                 player.Center = center;
             }
+
+            foreach (Projectile proj in Main.ActiveProjectiles)
+            {
+                if (!proj.friendly)
+                {
+                    float distance = Vector2.DistanceSquared(proj.Center, center);
+                    if (distance < SureHitRange.Squared())
+                    {
+                        proj.Kill();
+                    }
+                }
+            }
         }
 
         public override void CloseDomain(SorceryFightPlayer sf, bool supressSyncPacket = false)
         {
+            tick = 0;
+            whiteFade = 0;
+            
             frozenNPCs.Clear();
             base.CloseDomain(sf, supressSyncPacket);
         }
@@ -149,6 +166,9 @@ namespace sorceryFight.Content.DomainExpansions
             if (npc.type == NPCID.MoonLordHand)
                 return false;
             if (npc.type == NPCID.MoonLordHead)
+                return false;
+
+            if (npc.type == NPCID.MoonLordCore)
                 return false;
 
             return true;

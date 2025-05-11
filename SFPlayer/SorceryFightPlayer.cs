@@ -69,6 +69,7 @@ namespace sorceryFight.SFPlayer
         private HashSet<int> npcsHitWithCursedFists;
         public int idleDeathGambleBuffStrength;
         public SorceryFightUI sfUI;
+        public bool inDomainAnimation;
         #endregion
 
         #region Player Attributes
@@ -190,12 +191,18 @@ namespace sorceryFight.SFPlayer
 
             if (!rctAnimation && sukunasFingerConsumed >= 1)
             {
-                int chance = SorceryFight.DevModeNames.Contains(Player.name) ? 100 : 5 + (int)(sukunasFingerConsumed * 0.5);
-                if (SFUtils.Roll(chance))
-                {
-                    if (!Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>()))
-                        PreventDeath();
+
+                if (Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>()) && innateTechnique.Name == "Shrine")
                     Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(15 + (sukunasFingerConsumed * 2.25f)));
+
+                else if (innateTechnique.Name == "Vessel")
+                {
+                    int chance = SorceryFight.DevModeNames.Contains(Player.name) ? 100 : 5 + (int)(sukunasFingerConsumed * 0.5);
+                    if (SFUtils.Roll(chance))
+                    {
+                        PreventDeath();
+                        Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(15 + (sukunasFingerConsumed * 2.25f)));
+                    }
                 }
             }
 
@@ -214,6 +221,8 @@ namespace sorceryFight.SFPlayer
 
         void Keybinds()
         {
+            if (Player.dead) return;
+            
             if (SFKeybinds.UseTechnique.JustPressed)
             {
                 if (!disableCurseTechniques || uniqueBodyStructure)
@@ -342,27 +351,47 @@ namespace sorceryFight.SFPlayer
                     return;
                 }
 
-
-                if (DomainExpansionController.ActiveDomains.TryGetValue(Player.whoAmI, out var domainExpansion))
+                Action sendSyncPacket = new Action(() =>
                 {
-                    domainExpansion.CloseDomain(this, true);
-                }
-                else
-                    DomainExpansionController.ActivateDomain(this);
+                    if (Main.netMode != NetmodeID.SinglePlayer)
+                    {
+                        ModPacket packet = Mod.GetPacket();
+                        packet.Write((byte)MessageType.SyncDomain);
+
+                        packet.Write(Player.whoAmI);
+                        packet.Write((byte)InnateTechniqueFactory.GetInnateTechniqueType(innateTechnique));
+                        packet.Write((byte)(!DomainExpansionController.ActiveDomains.ContainsKey(Player.whoAmI) ? DomainNetMessage.ExpandDomain : DomainNetMessage.CloseDomain));
+                        packet.Send();
+                    }
+                });
 
 
-                if (Main.netMode != NetmodeID.SinglePlayer)
+                if (!inDomainAnimation && !DomainExpansionController.ActiveDomains.ContainsKey(Player.whoAmI))
                 {
-                    ModPacket packet = Mod.GetPacket();
-                    packet.Write((byte)MessageType.SyncDomain);
+                    inDomainAnimation = true;
 
-                    packet.Write(Player.whoAmI);
-                    packet.Write((byte)InnateTechniqueFactory.GetInnateTechniqueType(innateTechnique));
-                    packet.Write((byte)(!DomainExpansionController.ActiveDomains.ContainsKey(Player.whoAmI) ? DomainNetMessage.ExpandDomain : DomainNetMessage.CloseDomain));
-                    packet.Send();
+                    int index = CombatText.NewText(Player.getRect(), Color.White, "Domain Expansion:");
+                    Main.combatText[index].lifeTime = 90;
+
+                    TaskScheduler.Instance.AddDelayedTask(() =>
+                    {
+                        int index = CombatText.NewText(Player.getRect(), Color.White, innateTechnique.DomainExpansion.DisplayName);
+                        Main.combatText[index].lifeTime = 90;
+                    }, 100);
+
+                    TaskScheduler.Instance.AddDelayedTask(() =>
+                    {
+                        DomainExpansionController.ActivateDomain(this);
+                        inDomainAnimation = false;
+                        sendSyncPacket.Invoke();
+                    }, 200);
                 }
+                else if (DomainExpansionController.ActiveDomains.ContainsKey(Player.whoAmI))
+                {
+                    DomainExpansionController.ActiveDomains[Player.whoAmI].CloseDomain(this, true);
+                    sendSyncPacket.Invoke();
+                }                
             }
-
         }
 
         void CursedFist()

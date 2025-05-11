@@ -45,7 +45,7 @@ namespace sorceryFight.Content.Buffs.Vessel
 
                 sfPlayer.selectedTechnique = null;
 
-                // sfPlayer.innateTechnique = new VesselTechnique();
+                sfPlayer.innateTechnique = new VesselTechnique();
                 if (rctTracker.TryGetValue(player.whoAmI, out bool hasRCT))
                 {
                     sfPlayer.unlockedRCT = hasRCT;
@@ -63,7 +63,7 @@ namespace sorceryFight.Content.Buffs.Vessel
 
         public override bool ReApply(Player player, int time, int buffIndex)
         {
-            player.buffTime[buffIndex] = 1;
+            player.buffTime[buffIndex] = 2;
             return true;
         }
     }

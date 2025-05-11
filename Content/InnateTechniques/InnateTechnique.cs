@@ -25,9 +25,9 @@ namespace sorceryFight.Content.InnateTechniques
             return type switch
             {
                 InnateTechniqueType.Limitless => new LimitlessTechnique(),
-                // InnateTechniqueType.Shrine => new ShrineTechnique(),
-                // InnateTechniqueType.Vessel => new VesselTechnique(),
-                // InnateTechniqueType.PPLT => new PrivatePureLoveTrainTechnique(),
+                InnateTechniqueType.Shrine => new ShrineTechnique(),
+                InnateTechniqueType.Vessel => new VesselTechnique(),
+                InnateTechniqueType.PPLT => new PrivatePureLoveTrainTechnique(),
                 _ => null
             };
         }
@@ -37,14 +37,14 @@ namespace sorceryFight.Content.InnateTechniques
             if (typeof(LimitlessTechnique) == technique.GetType())
                 return InnateTechniqueType.Limitless;
 
-            // if (typeof(ShrineTechnique) == technique.GetType())
-            //     return InnateTechniqueType.Shrine;
+            if (typeof(ShrineTechnique) == technique.GetType())
+                return InnateTechniqueType.Shrine;
 
-            // if (typeof(VesselTechnique) == technique.GetType())
-            //     return InnateTechniqueType.Shrine;
+            if (typeof(VesselTechnique) == technique.GetType())
+                return InnateTechniqueType.Vessel;
 
-            // if (typeof(PrivatePureLoveTrainTechnique) == technique.GetType())
-            //     return InnateTechniqueType.PPLT;
+            if (typeof(PrivatePureLoveTrainTechnique) == technique.GetType())
+                return InnateTechniqueType.PPLT;
 
             return InnateTechniqueType.None;
         }
@@ -70,12 +70,12 @@ namespace sorceryFight.Content.InnateTechniques
             {
                 case "Limitless":
                     return new LimitlessTechnique();
-                // case "Shrine":
-                //     return new ShrineTechnique();
-                // case "Vessel":
-                //     return new VesselTechnique();
-                // case "PrivatePureLoveTrain":
-                //     return new PrivatePureLoveTrainTechnique();
+                case "Shrine":
+                    return new ShrineTechnique();
+                case "Vessel":
+                    return new VesselTechnique();
+                case "PrivatePureLoveTrain":
+                    return new PrivatePureLoveTrainTechnique();
             }
 
             return null;
@@ -88,9 +88,9 @@ namespace sorceryFight.Content.InnateTechniques
                 return new List<InnateTechnique>
                 {
                     new LimitlessTechnique(),
-                    // new ShrineTechnique(),
-                    // new VesselTechnique(),
-                    // new PrivatePureLoveTrainTechnique()
+                    new ShrineTechnique(),
+                    new VesselTechnique(),
+                    new PrivatePureLoveTrainTechnique()
                 };
             }
         }
