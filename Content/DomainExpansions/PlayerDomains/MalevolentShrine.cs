@@ -10,15 +10,13 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.DomainExpansions
+namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 {
-    public class MalevolentShrine : DomainExpansion
+    public class MalevolentShrine : PlayerDomainExpansion
     {
         public override string InternalName => "MalevolentShrine";
 
         public override SoundStyle CastSound => SorceryFightSounds.MalevolentShrine;
-
-        public override Texture2D DomainTexture => ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/MalevolentShrine", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
         public override float SureHitRange => 1000f;
 
@@ -47,36 +45,6 @@ namespace sorceryFight.Content.DomainExpansions
         public override bool Unlocked(SorceryFightPlayer sf)
         {
             return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
-        }
-
-        public override void Update()
-        {
-            foreach (NPC npc in Main.npc)
-            {
-                if (npc.active && npc.type != NPCID.TargetDummy && npc.type != ModContent.NPCType<SuperDummyNPC>())
-                {
-                    float distance = Vector2.DistanceSquared(npc.Center, Main.player[owner].Center);
-                    if (distance < SureHitRange.Squared())
-                    {
-                        SureHitEffect(npc);
-                    }
-                }
-            }
-
-            if (Main.myPlayer == owner)
-            {
-                SorceryFightPlayer sfPlayer = Main.player[owner].GetModPlayer<SorceryFightPlayer>();
-                sfPlayer.disableRegenFromDE = true;
-
-                float sqrDistanceFromDE = Vector2.DistanceSquared(Main.player[owner].Center, center);
-                float totalCPS = Cost > (sqrDistanceFromDE / 15000f) ? Cost : (sqrDistanceFromDE / 15000f);
-                sfPlayer.cursedEnergy -= SFUtils.RateSecondsToTicks(totalCPS);
-
-                if (sfPlayer.Player.dead || sfPlayer.cursedEnergy < 10)
-                {
-                    CloseDomain(sfPlayer);
-                }
-            }
         }
     }
 }

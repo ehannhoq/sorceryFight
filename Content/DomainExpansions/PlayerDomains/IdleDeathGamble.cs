@@ -8,16 +8,14 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.DomainExpansions
+namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 {
-    public class IdleDeathGamble : DomainExpansion
+    public class IdleDeathGamble : PlayerDomainExpansion
     {
         public override string InternalName => "IdleDeathGamble";
 
         public override SoundStyle CastSound => SorceryFightSounds.IdleDeathGambleOpening;
-
-        public override Texture2D DomainTexture => ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/IdleDeathGamble", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
+        
         public override float SureHitRange => 1150f;
 
         public override float Cost => 75f;
@@ -193,7 +191,7 @@ namespace sorceryFight.Content.DomainExpansions
                 if (rolls[0] == rolls[1] && rolls[0] == rolls[2])
                 {
                     Main.LocalPlayer.AddBuff(ModContent.BuffType<IdleDeathGambleJackpotBuff>(), SFUtils.BuffSecondsToTicks(6.25f * rolls[0] + 3.75f));
-                    CloseDomain(Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>());
+                    DomainExpansionController.CloseDomain(owner);
                     return;
                 }
 
@@ -208,11 +206,11 @@ namespace sorceryFight.Content.DomainExpansions
                 highest = Math.Max(highest, rolls[2]);
                 Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>().idleDeathGambleBuffStrength = highest;
                 Main.LocalPlayer.AddBuff(ModContent.BuffType<IdleDeathGambleBuff>(), SFUtils.BuffSecondsToTicks(6.25f * highest + 3.75f));
-                CloseDomain(Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>());
+                DomainExpansionController.CloseDomain(owner);
             }
         }
 
-        public override void CloseDomain(SorceryFightPlayer sf, bool supressSyncPacket = false)
+        public override void CloseDomain()
         {
             tick = 0f;
             whiteFade = 0f;
@@ -224,8 +222,6 @@ namespace sorceryFight.Content.DomainExpansions
             rollSpeed = 0f;
             pachinkoMachineLoops = 0;
             pachinkoRollSpeed = 0f;
-
-            base.CloseDomain(sf, supressSyncPacket);
         }
 
 

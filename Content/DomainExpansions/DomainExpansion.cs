@@ -15,31 +15,24 @@ namespace sorceryFight.Content.DomainExpansions
 {
     public abstract class DomainExpansion
     {
-
+        /// <summary>
+        /// The internal name of the domain, used to retrieve DisplayName, Description, and LockedDescription, and DomainTexture.
+        /// </summary>
         public abstract string InternalName { get; }
         public string DisplayName => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.DisplayName");
-        public string Description => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.Description");
-        public string LockedDescription => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.LockedDiscription");
+
+
 
         /// <summary>
         /// The sound played when the domain is first casted (after the "Domain Expansion: _________" text plays).
         /// </summary>
         public abstract SoundStyle CastSound { get; }
 
-        /// <summary>
-        /// The texture of the domain.
-        /// </summary>
-        public abstract Texture2D DomainTexture { get; }
 
         /// <summary>
         /// The sure hit range of the domain. Also used to draw DrawInnerDomain(Spritebatch spriteBatch) for players inside the range.
         /// </summary>
         public abstract float SureHitRange { get; }
-    
-        /// <summary>
-        /// The CE cost per second of the domain.
-        /// </summary>
-        public abstract float Cost { get; }
 
         /// <summary>
         /// Whether or not the domain is closed. Used to determine if players and NPCs can leave/enter the sure hit radius.
@@ -47,28 +40,10 @@ namespace sorceryFight.Content.DomainExpansions
         public abstract bool ClosedDomain { get; }
 
         /// <summary>
-        /// The unlock condition of the domain.
-        /// </summary>
-        /// <param name="sf"></param>
-        /// <returns>Whether or not the domain is unlocked</returns>
-        public abstract bool Unlocked(SorceryFightPlayer sf);
-
-        /// <summary>
-        /// Used to apply effects to NPCs in the sure hit radius.
-        /// </summary>
-        /// <param name="npc"></param>
-        public abstract void SureHitEffect(NPC npc);
-
-        /// <summary>
         /// Main draw method for the domain.
         /// </summary>
         /// <param name="spriteBatch"></param>
         public abstract void Draw(SpriteBatch spriteBatch);
-
-        /// <summary>
-        /// Whether or not the domain targets NPCs. ***DO NOT IN USE AS OF 1.3.6***
-        /// </summary>
-        public virtual bool targetsNPCs { get; } = false;
 
         /// <summary>
         /// The player.whoAmI of the caster of the domain.
@@ -81,35 +56,10 @@ namespace sorceryFight.Content.DomainExpansions
         public Vector2 center;
 
         /// <summary>
-        /// Runs any logic that needs to be constantly updated. Call base.Update() to auto-calculate SureHitEffect(NPC npc), drain the owner's CE, and disallow entering/leaving the domain.
+        /// Runs any logic that needs to be constantly updated. Call base.Update() to auto disallow entering/leaving the domain.
         /// </summary>
         public virtual void Update()
         {
-            foreach (NPC npc in Main.npc)
-            {
-                if (npc.active && npc.type != NPCID.TargetDummy && npc.type != ModContent.NPCType<SuperDummyNPC>())
-                {
-                    float distance = Vector2.DistanceSquared(npc.Center, this.center);
-                    if (distance < SureHitRange.Squared())
-                    {
-                        SureHitEffect(npc);
-                    }
-                }
-            }
-
-            if (Main.myPlayer == owner)
-            {
-                Main.LocalPlayer.wingTime = Main.LocalPlayer.wingTimeMax;
-                SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
-                sfPlayer.disableRegenFromDE = true;
-                sfPlayer.cursedEnergy -= SFUtils.RateSecondsToTicks(Cost);
-
-                if (sfPlayer.Player.dead || sfPlayer.cursedEnergy < 10)
-                {
-                    CloseDomain(sfPlayer);
-                }
-            }
-
             if (ClosedDomain)
                 DomainBarrier();
         }
@@ -147,13 +97,15 @@ namespace sorceryFight.Content.DomainExpansions
             Vector2 toPlayer = player.Center - center;
             float distanceSquared = toPlayer.LengthSquared();
 
-            bool outsideDomain = distanceSquared > SureHitRange.Squared() + 25000;
-
-            if (outsideDomain && Main.myPlayer == owner)
+            if (this is PlayerDomainExpansion)
             {
-                SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
-                CloseDomain(sfPlayer);
-                return;
+                bool outsideDomain = distanceSquared > SureHitRange.Squared() + 25000;
+
+                if (outsideDomain && Main.myPlayer == owner)
+                {
+                    DomainExpansionController.CloseDomain(owner);
+                    return;
+                }
             }
 
             if (distanceSquared < SureHitRange.Squared() + 50000 &&
@@ -175,8 +127,6 @@ namespace sorceryFight.Content.DomainExpansions
                 }
 
                 player.velocity = radialDir * speed;
-
-
             }
         }
 
@@ -192,32 +142,9 @@ namespace sorceryFight.Content.DomainExpansions
             }
         }
 
-        
         /// <summary>
-        /// Closes the domain. If in multiplayer, sends a packet to the server and all other clients to close the domain on their end.
+        /// Override if domain has instance variables or other data that needs to be reset.
         /// </summary>
-        /// <param name="sf"></param>
-        /// <param name="supressSyncPacket"></param>
-        public virtual void CloseDomain(SorceryFightPlayer sf, bool supressSyncPacket = false)
-        {
-            if (Main.myPlayer == sf.Player.whoAmI)
-            {
-                sf.AddDeductableDebuff(ModContent.BuffType<BrainDamage>(), SorceryFightPlayer.DefaultBrainDamageDuration);
-                sf.disableRegenFromDE = false;
-
-                if (Main.netMode != NetmodeID.SinglePlayer && !supressSyncPacket)
-                {
-                    ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
-                    packet.Write((byte)MessageType.SyncDomain);
-
-                    packet.Write(sf.Player.whoAmI);
-                    packet.Write((byte)InnateTechniqueFactory.GetInnateTechniqueType(sf.innateTechnique));
-                    packet.Write((byte)DomainNetMessage.ExpandDomain);
-                    packet.Send();
-                }
-            }
-
-            DomainExpansionController.ActiveDomains.Remove(sf.Player.whoAmI);
-        }
+        public virtual void CloseDomain() { }
     }
 }

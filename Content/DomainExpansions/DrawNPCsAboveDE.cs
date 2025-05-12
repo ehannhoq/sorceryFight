@@ -18,9 +18,8 @@ namespace sorceryFight.Content.DomainExpansions
         {
             if (DomainExpansionController.ActiveDomains.Count > 0)
             {
-                foreach (var kv in DomainExpansionController.ActiveDomains)
+                foreach (DomainExpansion de in DomainExpansionController.ActiveDomains)
                 {
-                    var de = kv.Value;
                     if (!de.ClosedDomain) continue;
                     if (Vector2.DistanceSquared(de.center, npc.Center) < de.SureHitRange.Squared())
                     {

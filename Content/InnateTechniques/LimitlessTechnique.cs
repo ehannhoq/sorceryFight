@@ -5,10 +5,7 @@ using sorceryFight.Content.CursedTechniques.Limitless;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Buffs.Limitless;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.Audio;
-using sorceryFight.SFPlayer;
+using sorceryFight.Content.DomainExpansions.PlayerDomains;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -33,6 +30,6 @@ namespace sorceryFight.Content.InnateTechniques
             new HollowPurple200Percent()
         };
 
-        public override DomainExpansion DomainExpansion => new UnlimitedVoid();
+        public override PlayerDomainExpansion DomainExpansion => new UnlimitedVoid();
     }
 }

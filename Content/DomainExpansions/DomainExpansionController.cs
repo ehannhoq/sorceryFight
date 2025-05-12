@@ -1,39 +1,69 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
 using MonoMod.Cil;
+using sorceryFight.Content.Buffs;
+using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.DomainExpansions
 {
-    public enum DomainNetMessage : byte
-    {
-        ExpandDomain,
-        CloseDomain
-    }
-
     public class DomainExpansionController : ModSystem
     {
-        public static Dictionary<int, DomainExpansion> ActiveDomains = new Dictionary<int, DomainExpansion>();
+        public enum DomainNetMessage : byte
+        {
+            ExpandDomain,
+            CloseDomain
+        }
+
+
+        public static class DomainExpansionFactory
+        {
+            public enum DomainExpansionType : byte
+            {
+                None,
+                UnlimitedVoid,
+                MalevolentShrine,
+                IdleDeathGamble,
+                Home
+            }
+            public static DomainExpansion Create(DomainExpansionType type)
+            {
+                return type switch
+                {
+                    DomainExpansionType.UnlimitedVoid => new UnlimitedVoid(),
+                    DomainExpansionType.MalevolentShrine => new MalevolentShrine(),
+                    DomainExpansionType.IdleDeathGamble => new IdleDeathGamble(),
+                    DomainExpansionType.Home => new Home(),
+                    _ => null
+                };
+            }
+
+            public static DomainExpansionType GetDomainExpansionType(DomainExpansion de)
+            {
+                if (de is UnlimitedVoid) return DomainExpansionType.UnlimitedVoid;
+                if (de is MalevolentShrine) return DomainExpansionType.MalevolentShrine;
+                if (de is IdleDeathGamble) return DomainExpansionType.IdleDeathGamble;
+                if (de is Home) return DomainExpansionType.Home;
+
+                return DomainExpansionType.None;
+            }
+        }
+
+
+
+
+        public static List<DomainExpansion> ActiveDomains = new List<DomainExpansion>();
 
         public override void PostUpdateNPCs()
         {
-            foreach (var item in ActiveDomains)
-            {
-                var value = item.Value;
-
-                value.Update();
-            }
+            foreach (DomainExpansion de in ActiveDomains)
+                if (ActiveDomains.Any(domain => domain.owner == de.owner)) // Safegaurd, as closing domains can throw an exception.
+                    de.Update();
         }
 
         public override void Load()
@@ -71,23 +101,90 @@ namespace sorceryFight.Content.DomainExpansions
                     Main.GameViewMatrix.ZoomMatrix
                 );
 
-                foreach (var domain in ActiveDomains.Values)
-                    domain.Draw(Main.spriteBatch);
+                foreach (DomainExpansion de in ActiveDomains)
+                    if (ActiveDomains.Any(domain => domain.owner == de.owner)) // Safegaurd, as closing domains can throw an exception.
+                        de.Draw(Main.spriteBatch);
 
                 Main.spriteBatch.End();
             });
         }
 
-        public static void ActivateDomain(SorceryFightPlayer sfPlayer)
+        /// <summary>
+        /// Expands the given domain expanasion.
+        /// If expanding a player domain in multiplayer, it is called by the caster's client and then synced to the server and other clients.
+        /// NPC domains are already synced to all clients in multiplayer.
+        /// </summary>
+        /// <param name="whoAmI">The caster's whoAmI</param>
+        /// <param name="de">The caster's Domain Expansion.</param>
+        public static void ExpandDomain(int whoAmI, DomainExpansion de)
         {
-            if (ActiveDomains.ContainsKey(sfPlayer.Player.whoAmI)) return;
+            if (de is PlayerDomainExpansion)
+            {
+                if (ActiveDomains.Any(domain => domain.owner == whoAmI)) return;
 
-            DomainExpansion de = sfPlayer.innateTechnique.DomainExpansion;
-            de.center = sfPlayer.Player.Center;
-            de.owner = sfPlayer.Player.whoAmI;
+                Player caster = Main.player[whoAmI];
+                de.center = caster.Center;
+                de.owner = whoAmI;
 
-            SoundEngine.PlaySound(de.CastSound, sfPlayer.Player.Center);
-            ActiveDomains[de.owner] = de;
+                SoundEngine.PlaySound(de.CastSound, caster.Center);
+                ActiveDomains.Add(de);
+
+                if (Main.netMode == NetmodeID.MultiplayerClient && Main.myPlayer == whoAmI) // Only send packet if the client who casted the domain called this method.
+                {
+                    ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
+                    packet.Write((byte)MessageType.SyncDomain);
+                    packet.Write(whoAmI);
+                    packet.Write((byte)DomainExpansionFactory.GetDomainExpansionType(de));
+                    packet.Write((byte)DomainNetMessage.ExpandDomain);
+                    packet.Send();
+                }
+            }
+            else if (de is NPCDomainExpansion)
+            {
+                if (ActiveDomains.Any(domain => domain.owner == whoAmI)) return;
+
+                NPC caster = Main.npc[whoAmI];
+                de.center = caster.Center;
+                de.owner = whoAmI;
+
+                SoundEngine.PlaySound(de.CastSound, caster.Center);
+                ActiveDomains.Add(de);
+            }
+        }
+
+
+        /// <summary>
+        /// Closes the given domain expanasion.
+        /// If closing a player domain in multiplayer, it is called by the caster's client and then synced to the server and other clients.
+        /// NPC domains are already synced to all clients in multiplayer.
+        /// </summary>
+        /// <param name="whoAmI">The caster's whoAmI</param>
+        /// <param name="de">The caster's Domain Expansion.</param>
+        public static void CloseDomain(int whoAmI)
+        {
+            DomainExpansion de = ActiveDomains.First(domain => domain.owner == whoAmI);
+            de.CloseDomain();
+            ActiveDomains.Remove(de);
+
+            if (de is PlayerDomainExpansion)
+            {
+                if (Main.myPlayer == whoAmI)
+                {
+                    SorceryFightPlayer sf = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+                    sf.AddDeductableDebuff(ModContent.BuffType<BrainDamage>(), SorceryFightPlayer.DefaultBrainDamageDuration);
+                    sf.disableRegenFromDE = false;
+
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                    {
+                        ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
+                        packet.Write((byte)MessageType.SyncDomain);
+                        packet.Write(whoAmI);
+                        packet.Write((byte)DomainExpansionFactory.GetDomainExpansionType(de));
+                        packet.Write((byte)DomainNetMessage.CloseDomain);
+                        packet.Send();
+                    }
+                }
+            }
         }
     }
 }

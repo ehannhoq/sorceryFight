@@ -1,17 +1,12 @@
-using Microsoft.Xna.Framework;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.InnateTechniques;
 using sorceryFight.SFPlayer;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static sorceryFight.Content.DomainExpansions.DomainExpansionController;
 
 namespace sorceryFight
 {
@@ -49,7 +44,6 @@ namespace sorceryFight
 
 				case 1:
 					HandleDomainSyncingPacket(reader);
-
 					break;
 			}
 		}
@@ -67,56 +61,53 @@ namespace sorceryFight
 
 		private void HandleDomainSyncingPacket(BinaryReader reader)
 		{
+			int whoAmI = reader.ReadInt32();
 
-			int caster = reader.ReadInt32();
-			SorceryFightPlayer sfPlayer = Main.player[caster].GetModPlayer<SorceryFightPlayer>();
+			DomainNetMessage msg;
 
-			InnateTechniqueType innateTechniqueType = (InnateTechniqueType)reader.ReadByte();
-			sfPlayer.innateTechnique = InnateTechniqueFactory.Create(innateTechniqueType);
+			DomainExpansionFactory.DomainExpansionType playerDomainType = (DomainExpansionFactory.DomainExpansionType)reader.ReadByte();
+			DomainExpansion playerDomain = DomainExpansionFactory.Create(playerDomainType);
 
-			DomainNetMessage msg = (DomainNetMessage)reader.ReadByte();
-
-
+			msg = (DomainNetMessage)reader.ReadByte();
 			if (Main.netMode == NetmodeID.Server)
 			{
 				switch (msg)
 				{
 					case DomainNetMessage.ExpandDomain:
-						Logger.Info($"Removing domain from {caster} on client {Main.myPlayer}");
-						DomainExpansionController.ActiveDomains[caster].CloseDomain(sfPlayer, true);
+						Logger.Info($"Activating domain for player {whoAmI} on client {Main.myPlayer}");
+						ExpandDomain(whoAmI, playerDomain);
 						break;
 
 					case DomainNetMessage.CloseDomain:
-						Logger.Info($"Activating domain for {caster} on client {Main.myPlayer}");
-						DomainExpansionController.ActivateDomain(sfPlayer);
+						Logger.Info($"Removing domain from player {whoAmI} on client {Main.myPlayer}");
+						CloseDomain(whoAmI);
 						break;
 				}
 
-				ModPacket packet = GetPacket();
+				ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
 				packet.Write((byte)MessageType.SyncDomain);
-
-				packet.Write(caster);
-				packet.Write((byte)innateTechniqueType);
+				packet.Write(whoAmI);
+				packet.Write((byte)DomainExpansionFactory.GetDomainExpansionType(playerDomain));
 				packet.Write((byte)msg);
-				packet.Send(-1, caster);
+				packet.Send(-1, whoAmI);
 			}
-
 
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 			{
 				switch (msg)
 				{
 					case DomainNetMessage.ExpandDomain:
-						Logger.Info($"Removing {sfPlayer.innateTechnique.DomainExpansion.DisplayName} from {caster} on client {Main.myPlayer}");
-						DomainExpansionController.ActiveDomains[caster].CloseDomain(sfPlayer, true);
+						Logger.Info($"Activating domain for player {whoAmI} on client {Main.myPlayer}");
+						ExpandDomain(whoAmI, playerDomain);
 						break;
 
 					case DomainNetMessage.CloseDomain:
-						Logger.Info($"Activating {sfPlayer.innateTechnique.DomainExpansion.DisplayName} for {caster} on client {Main.myPlayer}");
-						DomainExpansionController.ActivateDomain(sfPlayer);
+						Logger.Info($"Removing domain from player {whoAmI} on client {Main.myPlayer}");
+						CloseDomain(whoAmI);
 						break;
 				}
 			}
+
 		}
 	}
 }

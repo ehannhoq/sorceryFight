@@ -11,16 +11,14 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.DomainExpansions
+namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 {
-    public class UnlimitedVoid : DomainExpansion
+    public class UnlimitedVoid : PlayerDomainExpansion
     {
         public static Dictionary<int, float[]> frozenNPCs = new Dictionary<int, float[]>();
         public override string InternalName => "UnlimitedVoid";
 
         public override SoundStyle CastSound => SorceryFightSounds.UnlimitedVoid;
-
-        public override Texture2D DomainTexture => ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/UnlimitedVoid", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
         public override float SureHitRange => 1150f;
 
@@ -152,13 +150,12 @@ namespace sorceryFight.Content.DomainExpansions
             }
         }
 
-        public override void CloseDomain(SorceryFightPlayer sf, bool supressSyncPacket = false)
+        public override void CloseDomain()
         {
             tick = 0;
             whiteFade = 0;
             
             frozenNPCs.Clear();
-            base.CloseDomain(sf, supressSyncPacket);
         }
 
         private bool AffectedByFrozenAI(NPC npc)

@@ -1,13 +1,9 @@
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.Buffs;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.Audio;
-using sorceryFight.SFPlayer;
 using sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain;
+using sorceryFight.Content.DomainExpansions.PlayerDomains;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -25,6 +21,6 @@ namespace sorceryFight.Content.InnateTechniques
             new HakarisDoor()
         };
 
-        public override DomainExpansion DomainExpansion { get; } = new IdleDeathGamble();
+        public override PlayerDomainExpansion DomainExpansion { get; } = new IdleDeathGamble();
     }
 }

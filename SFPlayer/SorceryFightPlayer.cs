@@ -18,6 +18,7 @@ using Terraria.UI;
 using sorceryFight.Content.Buffs.Vessel;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.DomainExpansions;
+using System.Linq;
 
 namespace sorceryFight.SFPlayer
 {
@@ -222,7 +223,7 @@ namespace sorceryFight.SFPlayer
         void Keybinds()
         {
             if (Player.dead) return;
-            
+
             if (SFKeybinds.UseTechnique.JustPressed)
             {
                 if (!disableCurseTechniques || uniqueBodyStructure)
@@ -351,22 +352,9 @@ namespace sorceryFight.SFPlayer
                     return;
                 }
 
-                Action sendSyncPacket = new Action(() =>
-                {
-                    if (Main.netMode != NetmodeID.SinglePlayer)
-                    {
-                        ModPacket packet = Mod.GetPacket();
-                        packet.Write((byte)MessageType.SyncDomain);
+                bool hasDomainActive = DomainExpansionController.ActiveDomains.Any(de => de.owner == Player.whoAmI);
 
-                        packet.Write(Player.whoAmI);
-                        packet.Write((byte)InnateTechniqueFactory.GetInnateTechniqueType(innateTechnique));
-                        packet.Write((byte)(!DomainExpansionController.ActiveDomains.ContainsKey(Player.whoAmI) ? DomainNetMessage.ExpandDomain : DomainNetMessage.CloseDomain));
-                        packet.Send();
-                    }
-                });
-
-
-                if (!inDomainAnimation && !DomainExpansionController.ActiveDomains.ContainsKey(Player.whoAmI))
+                if (!inDomainAnimation && !hasDomainActive)
                 {
                     inDomainAnimation = true;
 
@@ -381,16 +369,14 @@ namespace sorceryFight.SFPlayer
 
                     TaskScheduler.Instance.AddDelayedTask(() =>
                     {
-                        DomainExpansionController.ActivateDomain(this);
+                        DomainExpansionController.ExpandDomain(Player.whoAmI, innateTechnique.DomainExpansion);
                         inDomainAnimation = false;
-                        sendSyncPacket.Invoke();
                     }, 200);
                 }
-                else if (DomainExpansionController.ActiveDomains.ContainsKey(Player.whoAmI))
+                else if (hasDomainActive)
                 {
-                    DomainExpansionController.ActiveDomains[Player.whoAmI].CloseDomain(this, true);
-                    sendSyncPacket.Invoke();
-                }                
+                    DomainExpansionController.CloseDomain(Player.whoAmI);
+                }
             }
         }
 

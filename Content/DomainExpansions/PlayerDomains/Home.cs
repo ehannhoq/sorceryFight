@@ -9,15 +9,13 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.DomainExpansions
+namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 {
-    public class Home : DomainExpansion
+    public class Home : PlayerDomainExpansion
     {
         public override string InternalName => "Home";
 
         public override SoundStyle CastSound => SorceryFightSounds.Home;
-
-        public override Texture2D DomainTexture => ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/Home", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
         public override float SureHitRange => 1150f;
 
@@ -61,11 +59,10 @@ namespace sorceryFight.Content.DomainExpansions
         }
 
 
-        public override void CloseDomain(SorceryFightPlayer sf, bool supressSyncPacket = false)
+        public override void CloseDomain()
         {
             tick = 0f;
             bgFade = 0f;
-            base.CloseDomain(sf, supressSyncPacket);
         }
 
         public override bool Unlocked(SorceryFightPlayer sf)

@@ -1,16 +1,11 @@
-using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs;
-using sorceryFight.Content.Buffs.Limitless;
 using sorceryFight.Content.Buffs.Shrine;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.CursedTechniques.Shrine;
 using sorceryFight.Content.DomainExpansions;
+using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.SFPlayer;
-using Terraria;
-using Terraria.Audio;
-using Terraria.ModLoader;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -33,7 +28,7 @@ namespace sorceryFight.Content.InnateTechniques
             new WorldCuttingSlash()
         };
 
-        public override DomainExpansion DomainExpansion { get; } = new MalevolentShrine();
+        public override PlayerDomainExpansion DomainExpansion { get; } = new MalevolentShrine();
 
         public override void UpdateEquips(SorceryFightPlayer sf)
         {

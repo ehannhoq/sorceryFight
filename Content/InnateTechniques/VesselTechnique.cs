@@ -1,14 +1,12 @@
 using System.Collections.Generic;
 using CalamityMod;
-using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.CursedTechniques.BloodManipulation;
 using sorceryFight.Content.CursedTechniques.Vessel;
 using sorceryFight.Content.DomainExpansions;
+using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.SFPlayer;
-using Terraria;
-using Terraria.Audio;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.InnateTechniques
@@ -28,7 +26,7 @@ namespace sorceryFight.Content.InnateTechniques
             new PiercingBlood()
         };
 
-        public override DomainExpansion DomainExpansion { get; } = new Home();
+        public override PlayerDomainExpansion DomainExpansion { get; } = new Home();
 
         public override void UpdateEquips(SorceryFightPlayer sf)
         {
