@@ -46,7 +46,7 @@ namespace sorceryFight.Content.DomainExpansions
         public abstract void Draw(SpriteBatch spriteBatch);
 
         /// <summary>
-        /// The player.whoAmI of the caster of the domain.
+        /// The whoAmI of the caster of the domain.
         /// </summary>
         public int owner;
 
