@@ -1,4 +1,5 @@
 using System.Linq;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,21 +17,67 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
             };
         }
     }
+    /// <summary>
+    /// Controls NPC domains. Runs on ALL clients and the server.
+    /// </summary>
     public class NPCDomainController : GlobalNPC
     {
+        public static bool npcIsCastingDomain;
+        public static Vector2 npcCastingPosition;
+        public static bool castingDomain;
+
+
         public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.GetDomain() != null && lateInstantiation;
 
         public override bool PreAI(NPC npc)
         {
             base.PreAI(npc);
 
-            if (DomainExpansionController.ActiveDomains.Any(domain => domain is NPCDomainExpansion && domain.owner == npc.whoAmI)) return true;
+            if (npc.type == NPCID.CultistBoss) return LunaticCultistDomainController(npc);
 
-            if (npc.life <= npc.lifeMax * 0.25)
+            return true;
+        }
+
+        private bool LunaticCultistDomainController(NPC npc)
+        {
+            if (npc.active && npc.life >= npc.lifeMax * 0.01f && npc.life < npc.lifeMax * 0.10f && !DomainExpansionController.ActiveDomains.Any(domain => domain.owner == npc.whoAmI))
             {
-                DomainExpansionController.ExpandDomain(npc.whoAmI, npc.GetDomain());
-            }
+                npcIsCastingDomain = true;
+                if (npcCastingPosition == Vector2.Zero)
+                    npcCastingPosition = npc.Center;
 
+
+                npc.Center = npcCastingPosition;
+
+                if (!castingDomain)
+                {
+                    castingDomain = true;
+                    int index;
+                    index = CombatText.NewText(npc.getRect(), Color.White, "Domain Expansion:");
+                    Main.combatText[index].lifeTime = 90;
+
+                    TaskScheduler.Instance.AddDelayedTask(() =>
+                    {
+                        index = CombatText.NewText(npc.getRect(), Color.White, "Phantasmic Labyrinth");
+                        Main.combatText[index].lifeTime = 90;
+                    }, 100);
+
+                    TaskScheduler.Instance.AddDelayedTask(() =>
+                    {
+                        DomainExpansionController.ExpandDomain(npc.whoAmI, npc.GetDomain());
+                    }, 200);
+
+                    TaskScheduler.Instance.AddDelayedTask(() =>
+                    {
+                        castingDomain = false;
+                        npcIsCastingDomain = false;
+                        npcCastingPosition = Vector2.Zero;
+                    }, 400);
+                }
+
+                if (castingDomain) return false;
+
+            }
 
             return true;
         }

@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using sorceryFight.Content.Buffs;
+using sorceryFight.Content.DomainExpansions.NPCDomains;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -56,7 +59,8 @@ namespace sorceryFight.Content.DomainExpansions
 
 
 
-
+        public static Vector2 previousScreenPosition;
+        public static Vector2 targetLerpPosition;
         public static List<DomainExpansion> ActiveDomains = new List<DomainExpansion>();
 
         public override void PostUpdateNPCs()
@@ -184,6 +188,36 @@ namespace sorceryFight.Content.DomainExpansions
                         packet.Send();
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Used to change the client's camera position when an NPC is casting a domain, or during a domain clash.
+        /// </summary>
+        public override void ModifyScreenPosition()
+        {
+            if (NPCDomainController.npcIsCastingDomain)
+            {
+                if (previousScreenPosition == Vector2.Zero)
+                    previousScreenPosition = Main.screenPosition;
+
+                if (targetLerpPosition == Vector2.Zero)
+                    targetLerpPosition = Main.screenPosition;
+
+
+                targetLerpPosition = Vector2.Lerp(
+                    targetLerpPosition,
+                    NPCDomainController.npcCastingPosition - new Vector2(Main.screenWidth / 2, Main.screenHeight / 2),
+                    0.1f
+                );
+
+                Main.screenPosition = targetLerpPosition;
+            }
+            else if (previousScreenPosition != Vector2.Zero)
+            {
+                Main.screenPosition = previousScreenPosition;
+                previousScreenPosition = Vector2.Zero;
+                targetLerpPosition = Vector2.Zero;
             }
         }
     }
