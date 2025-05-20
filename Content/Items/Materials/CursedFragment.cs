@@ -20,6 +20,7 @@ namespace sorceryFight.Content.Items.Materials
             Item.rare = ModContent.RarityType<SorceryFightMaterial>();
             Item.width = 50;
             Item.height = 50;
+            Item.maxStack = 999;
         }
     }
 }
