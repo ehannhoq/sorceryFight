@@ -43,6 +43,8 @@ namespace sorceryFight.Content.DomainExpansions
         /// <param name="npc"></param>
         public abstract void SureHitEffect(NPC npc);
 
+        public bool cursedEnergyTax = false;
+
         /// <summary>
         /// Runs any logic that needs to be constantly updated. Call base.Update() to auto disallow entering/leaving the domain, 
         /// auto-applying sure hit effects, applying buffs/reducing CE cost for the caster, and auto-closing the domain at
@@ -72,7 +74,21 @@ namespace sorceryFight.Content.DomainExpansions
                 Main.LocalPlayer.wingTime = Main.LocalPlayer.wingTimeMax;
                 SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
                 sfPlayer.disableRegenFromDE = true;
-                sfPlayer.cursedEnergy -= SFUtils.RateSecondsToTicks(Cost);
+
+                if (clashingWith == -1)
+                    sfPlayer.cursedEnergy -= SFUtils.RateSecondsToTicks(Cost);
+
+                else
+                {
+                    if (!cursedEnergyTax)
+                    {
+                        cursedEnergyTax = true;
+                        TaskScheduler.Instance.AddContinuousTask(() =>
+                        {
+                            sfPlayer.cursedEnergy -= SFUtils.RateSecondsToTicks(75);
+                        }, 180);
+                    }
+                }
 
                 if (sfPlayer.Player.dead || sfPlayer.cursedEnergy < 10)
                 {
