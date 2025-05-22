@@ -29,18 +29,18 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
 
         public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.GetDomain() != null && lateInstantiation;
 
-        // public override bool PreAI(NPC npc)
-        // {
-        //     base.PreAI(npc);
+        public override bool PreAI(NPC npc)
+        {
+            base.PreAI(npc);
 
-        //     if (npc.type == NPCID.CultistBoss) return LunaticCultistDomainController(npc);
+            if (npc.type == NPCID.CultistBoss) return LunaticCultistDomainController(npc);
 
-        //     return true;
-        // }
+            return true;
+        }
 
         private bool LunaticCultistDomainController(NPC npc)
         {
-            if (npc.active && npc.life >= npc.lifeMax * 0.01f && npc.life < npc.lifeMax * 0.10f && !DomainExpansionController.ActiveDomains.Any(domain => domain.owner == npc.whoAmI))
+            if (npc.active && npc.life >= npc.lifeMax * 0.01f && npc.life < npc.lifeMax * 0.10f && !DomainExpansionController.ActiveDomains.Any(domain => domain is NPCDomainExpansion && domain.owner == npc.whoAmI))
             {
                 npcIsCastingDomain = true;
                 if (npcCastingPosition == Vector2.Zero)

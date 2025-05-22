@@ -352,7 +352,7 @@ namespace sorceryFight.SFPlayer
                     return;
                 }
 
-                bool hasDomainActive = DomainExpansionController.ActiveDomains.Any(de => de.owner == Player.whoAmI);
+                bool hasDomainActive = DomainExpansionController.DomainExpansions.Any(de => de is PlayerDomainExpansion && de.owner == Player.whoAmI);
 
                 if (!inDomainAnimation && !hasDomainActive)
                 {
@@ -375,7 +375,8 @@ namespace sorceryFight.SFPlayer
                 }
                 else if (hasDomainActive)
                 {
-                    DomainExpansionController.CloseDomain(Player.whoAmI);
+                    int domainIndex = DomainExpansionController.ActiveDomains.FindIndex(domain => domain is PlayerDomainExpansion && domain.owner == Player.whoAmI);
+                    DomainExpansionController.CloseDomain(domainIndex);
                 }
             }
         }

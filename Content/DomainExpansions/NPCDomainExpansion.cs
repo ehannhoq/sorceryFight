@@ -33,20 +33,23 @@ namespace sorceryFight.Content.DomainExpansions
         {
             base.Update();
 
-            foreach (Player player in Main.player)
+            if (clashingWith == -1)
             {
-                if (player.active && !player.dead)
+                foreach (Player player in Main.player)
                 {
-                    float distance = Vector2.DistanceSquared(player.Center, this.center);
-                    if (distance < SureHitRange.Squared())
+                    if (player.active && !player.dead)
                     {
-                        SureHitEffect(player);
+                        float distance = Vector2.DistanceSquared(player.Center, this.center);
+                        if (distance < SureHitRange.Squared())
+                        {
+                            SureHitEffect(player);
+                        }
                     }
                 }
             }
 
             if (!Main.npc[owner].active || Main.npc[owner].life <= Main.npc[owner].lifeMax * 0.01f)
-                DomainExpansionController.CloseDomain(owner);
+                DomainExpansionController.CloseDomain(id);
         }
     }
 }

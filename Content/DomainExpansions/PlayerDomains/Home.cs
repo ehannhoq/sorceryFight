@@ -28,6 +28,8 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Draw(BaseTexture, center - Main.screenPosition, new Rectangle(0, 0, BaseTexture.Width, BaseTexture.Height), Color.White, 0f, new Rectangle(0, 0, BaseTexture.Width, BaseTexture.Height).Size() * 0.5f, 2f, SpriteEffects.None, 0f);
+
             DrawInnerDomain(() =>
             {
                 Texture2D whiteTexture = TextureAssets.MagicPixel.Value;

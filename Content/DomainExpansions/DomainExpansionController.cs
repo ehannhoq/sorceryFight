@@ -20,7 +20,8 @@ namespace sorceryFight.Content.DomainExpansions
         public enum DomainNetMessage : byte
         {
             ExpandDomain,
-            CloseDomain
+            CloseDomain,
+            ClashingDomains
         }
 
 
@@ -57,32 +58,37 @@ namespace sorceryFight.Content.DomainExpansions
             }
         }
 
-
-
         public static Vector2 previousScreenPosition;
         public static Vector2 targetLerpPosition;
-        public static List<DomainExpansion> ActiveDomains = new List<DomainExpansion>();
+        public static DomainExpansion[] DomainExpansions;
+        public static List<DomainExpansion> ActiveDomains => [.. DomainExpansions.Where(de => de != null)];
 
         public override void PostUpdateNPCs()
         {
             foreach (DomainExpansion de in ActiveDomains)
-                if (ActiveDomains.Any(domain => domain.owner == de.owner)) // Safegaurd, as closing domains can throw an exception.
-                    de.Update();
+            {
+                de.Update();
+            }
         }
 
         public override void Load()
         {
+            DomainExpansions = new DomainExpansion[16];
             IL_Main.DoDraw_DrawNPCsOverTiles += DrawDomainLayer;
         }
 
         public override void Unload()
         {
+            DomainExpansions = null;
             IL_Main.DoDraw_DrawNPCsOverTiles -= DrawDomainLayer;
         }
 
         public override void OnWorldUnload()
         {
-            ActiveDomains.Clear();
+            for (int i = 0; i < DomainExpansions.Length; i++)
+            {
+                DomainExpansions[i] = null;
+            }
         }
 
         private void DrawDomainLayer(ILContext il)
@@ -106,8 +112,13 @@ namespace sorceryFight.Content.DomainExpansions
                 );
 
                 foreach (DomainExpansion de in ActiveDomains)
-                    if (ActiveDomains.Any(domain => domain.owner == de.owner)) // Safegaurd, as closing domains can throw an exception.
+                {
+
+                    if (de.clashingWith == -1)
                         de.Draw(Main.spriteBatch);
+                    else
+                        de.DrawClashing(Main.spriteBatch);
+                }
 
                 Main.spriteBatch.End();
             });
@@ -124,36 +135,32 @@ namespace sorceryFight.Content.DomainExpansions
         {
             if (de is PlayerDomainExpansion)
             {
-                if (ActiveDomains.Any(domain => domain.owner == whoAmI)) return;
-
                 Player caster = Main.player[whoAmI];
                 de.center = caster.Center;
-                de.owner = whoAmI;
 
-                SoundEngine.PlaySound(de.CastSound, caster.Center);
-                ActiveDomains.Add(de);
-
-                if (Main.netMode == NetmodeID.MultiplayerClient && Main.myPlayer == whoAmI) // Only send packet if the client who casted the domain called this method.
+                if (Main.netMode == NetmodeID.MultiplayerClient && Main.myPlayer == whoAmI)
                 {
                     ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
                     packet.Write((byte)MessageType.SyncDomain);
                     packet.Write(whoAmI);
-                    packet.Write((byte)DomainExpansionFactory.GetDomainExpansionType(de));
                     packet.Write((byte)DomainNetMessage.ExpandDomain);
+                    packet.Write((byte)DomainExpansionFactory.GetDomainExpansionType(de));
+                    packet.Write(-1);
+                    packet.Write(-1);
                     packet.Send();
                 }
             }
             else if (de is NPCDomainExpansion)
             {
-                if (ActiveDomains.Any(domain => domain.owner == whoAmI)) return;
-
                 NPC caster = Main.npc[whoAmI];
                 de.center = caster.Center;
-                de.owner = whoAmI;
-
-                SoundEngine.PlaySound(de.CastSound, caster.Center);
-                ActiveDomains.Add(de);
             }
+
+            de.owner = whoAmI;
+            SoundEngine.PlaySound(de.CastSound, de.center);
+            SetClashingDomains(de);
+            int id = DomainExpansions.Append(de);
+            DomainExpansions[id].id = id;
         }
 
 
@@ -162,17 +169,20 @@ namespace sorceryFight.Content.DomainExpansions
         /// If closing a player domain in multiplayer, it is called by the caster's client and then synced to the server and other clients.
         /// NPC domains are already synced to all clients in multiplayer.
         /// </summary>
-        /// <param name="whoAmI">The caster's whoAmI</param>
-        /// <param name="de">The caster's Domain Expansion.</param>
-        public static void CloseDomain(int whoAmI)
+        /// <param name="id">The id of the domain.</param>
+        public static void CloseDomain(int id)
         {
-            DomainExpansion de = ActiveDomains.First(domain => domain.owner == whoAmI);
+            DomainExpansion de = DomainExpansions[id];
             de.CloseDomain();
-            ActiveDomains.Remove(de);
+            DomainExpansions[id] = null;
+
+            if (de.clashingWith != -1)
+                DomainExpansions[de.clashingWith].clashingWith = -1;
+
 
             if (de is PlayerDomainExpansion)
             {
-                if (Main.myPlayer == whoAmI)
+                if (Main.myPlayer == de.owner)
                 {
                     SorceryFightPlayer sf = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
                     sf.AddDeductableDebuff(ModContent.BuffType<BrainDamage>(), SorceryFightPlayer.DefaultBrainDamageDuration);
@@ -182,12 +192,55 @@ namespace sorceryFight.Content.DomainExpansions
                     {
                         ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
                         packet.Write((byte)MessageType.SyncDomain);
-                        packet.Write(whoAmI);
-                        packet.Write((byte)DomainExpansionFactory.GetDomainExpansionType(de));
+                        packet.Write(de.owner);
                         packet.Write((byte)DomainNetMessage.CloseDomain);
+                        packet.Write((byte)1);
+                        packet.Write(id);
+                        packet.Write(-1);
                         packet.Send();
                     }
                 }
+            }
+        }
+
+
+        public static void SetClashingDomains(DomainExpansion origin)
+        {
+            List<int> clashingDomains = new List<int>();
+            foreach (DomainExpansion de in ActiveDomains)
+            {
+                float distance = Vector2.Distance(origin.center, de.center);
+
+                if (distance < origin.SureHitRange || distance < de.SureHitRange)
+                {
+                    de.clashingWith = origin.id;
+                    if (clashingDomains.Count < 1)
+                    {
+                        origin.clashingWith = de.id;
+                    }
+                    clashingDomains.Add(de.id);
+                }
+            }
+
+            if (clashingDomains.Count > 1)
+            {
+                TaskScheduler.Instance.AddDelayedTask(() =>
+                {
+                    foreach (int id in clashingDomains) CloseDomain(id);
+                }, 300);
+            }
+
+
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
+                packet.Write((byte)MessageType.SyncDomain);
+                packet.Write(origin.owner);
+                packet.Write((byte)DomainNetMessage.ClashingDomains);
+                packet.Write((byte)1);
+                packet.Write(origin.id);
+                packet.Write(origin.clashingWith);
+                packet.Send();
             }
         }
 

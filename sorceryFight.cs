@@ -62,52 +62,44 @@ namespace sorceryFight
 		private void HandleDomainSyncingPacket(BinaryReader reader)
 		{
 			int whoAmI = reader.ReadInt32();
+			DomainNetMessage msg = (DomainNetMessage)reader.ReadByte();
 
-			DomainNetMessage msg;
+			DomainExpansionFactory.DomainExpansionType domainType = (DomainExpansionFactory.DomainExpansionType)reader.ReadByte();
+			DomainExpansion de = DomainExpansionFactory.Create(domainType);
 
-			DomainExpansionFactory.DomainExpansionType playerDomainType = (DomainExpansionFactory.DomainExpansionType)reader.ReadByte();
-			DomainExpansion playerDomain = DomainExpansionFactory.Create(playerDomainType);
+			int id = reader.ReadInt32();
+			int clashingWith = reader.ReadInt32();
 
-			msg = (DomainNetMessage)reader.ReadByte();
+			switch (msg)
+			{
+				case DomainNetMessage.ExpandDomain:
+					ExpandDomain(whoAmI, de);
+					break;
+
+				case DomainNetMessage.CloseDomain:
+					CloseDomain(id);
+					break;
+
+				case DomainNetMessage.ClashingDomains:
+					DomainExpansions[id].clashingWith = clashingWith;
+					DomainExpansions[clashingWith].clashingWith = id;
+					break;
+
+
+			}
+
 			if (Main.netMode == NetmodeID.Server)
 			{
-				switch (msg)
-				{
-					case DomainNetMessage.ExpandDomain:
-						Logger.Info($"Activating domain for player {whoAmI} on client {Main.myPlayer}");
-						ExpandDomain(whoAmI, playerDomain);
-						break;
+				ModPacket packet = GetPacket();
 
-					case DomainNetMessage.CloseDomain:
-						Logger.Info($"Removing domain from player {whoAmI} on client {Main.myPlayer}");
-						CloseDomain(whoAmI);
-						break;
-				}
-
-				ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
 				packet.Write((byte)MessageType.SyncDomain);
 				packet.Write(whoAmI);
-				packet.Write((byte)DomainExpansionFactory.GetDomainExpansionType(playerDomain));
 				packet.Write((byte)msg);
-				packet.Send(-1, whoAmI);
+				packet.Write((byte)domainType);
+				packet.Write(id);
+				packet.Write(clashingWith);
+				packet.Send();
 			}
-
-			if (Main.netMode == NetmodeID.MultiplayerClient)
-			{
-				switch (msg)
-				{
-					case DomainNetMessage.ExpandDomain:
-						Logger.Info($"Activating domain for player {whoAmI} on client {Main.myPlayer}");
-						ExpandDomain(whoAmI, playerDomain);
-						break;
-
-					case DomainNetMessage.CloseDomain:
-						Logger.Info($"Removing domain from player {whoAmI} on client {Main.myPlayer}");
-						CloseDomain(whoAmI);
-						break;
-				}
-			}
-
 		}
 	}
 }

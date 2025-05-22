@@ -9,25 +9,26 @@ using Terraria.ModLoader;
 using System;
 using Terraria.Audio;
 using sorceryFight.Content.InnateTechniques;
+using Terraria.GameContent;
+using CalamityMod.Particles;
 
 
 namespace sorceryFight.Content.DomainExpansions
 {
     public abstract class DomainExpansion
     {
+        public static Texture2D BaseTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/DomainExpansionBase", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
         /// <summary>
         /// The internal name of the domain, used to retrieve DisplayName, Description, and LockedDescription, and DomainTexture.
         /// </summary>
         public abstract string InternalName { get; }
         public string DisplayName => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.DisplayName");
 
-
-
         /// <summary>
         /// The sound played when the domain is first casted (after the "Domain Expansion: _________" text plays).
         /// </summary>
         public abstract SoundStyle CastSound { get; }
-
 
         /// <summary>
         /// The sure hit range of the domain. Also used to draw DrawInnerDomain(Spritebatch spriteBatch) for players inside the range.
@@ -46,6 +47,11 @@ namespace sorceryFight.Content.DomainExpansions
         public abstract void Draw(SpriteBatch spriteBatch);
 
         /// <summary>
+        /// The index of this domain in ActiveDomains
+        /// </summary>
+        public int id;
+
+        /// <summary>
         /// The whoAmI of the caster of the domain.
         /// </summary>
         public int owner;
@@ -54,6 +60,11 @@ namespace sorceryFight.Content.DomainExpansions
         /// The center of the domain.
         /// </summary>
         public Vector2 center;
+
+        /// <summary>
+        /// The ID of the domain that this domain is clashing with.
+        /// </summary>
+        public int clashingWith = -1;
 
         /// <summary>
         /// Runs any logic that needs to be constantly updated. Call base.Update() to auto disallow entering/leaving the domain.
@@ -103,7 +114,7 @@ namespace sorceryFight.Content.DomainExpansions
 
                 if (outsideDomain && Main.myPlayer == owner)
                 {
-                    DomainExpansionController.CloseDomain(owner);
+                    DomainExpansionController.CloseDomain(id);
                     return;
                 }
             }
@@ -140,6 +151,19 @@ namespace sorceryFight.Content.DomainExpansions
             {
                 action.Invoke();
             }
+        }
+
+        public virtual void DrawClashing(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(BaseTexture, center - Main.screenPosition, new Rectangle(0, 0, BaseTexture.Width, BaseTexture.Height), Color.White, 0f, new Rectangle(0, 0, BaseTexture.Width, BaseTexture.Height).Size() * 0.5f, 2f, SpriteEffects.None, 0f);
+
+            DrawInnerDomain(() =>
+            {
+                Texture2D whiteTexture = TextureAssets.MagicPixel.Value;
+                Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
+
+                spriteBatch.Draw(whiteTexture, screenRectangle, Color.Black);
+            });
         }
 
         /// <summary>

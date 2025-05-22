@@ -52,14 +52,17 @@ namespace sorceryFight.Content.DomainExpansions
         {
             base.Update();
 
-            foreach (NPC npc in Main.npc)
+            if (clashingWith == -1)
             {
-                if (npc.active && npc.type != NPCID.TargetDummy && npc.type != ModContent.NPCType<SuperDummyNPC>())
+                foreach (NPC npc in Main.npc)
                 {
-                    float distance = Vector2.DistanceSquared(npc.Center, this.center);
-                    if (distance < SureHitRange.Squared())
+                    if (npc.active && npc.type != NPCID.TargetDummy && npc.type != ModContent.NPCType<SuperDummyNPC>())
                     {
-                        SureHitEffect(npc);
+                        float distance = Vector2.DistanceSquared(npc.Center, this.center);
+                        if (distance < SureHitRange.Squared())
+                        {
+                            SureHitEffect(npc);
+                        }
                     }
                 }
             }
@@ -73,7 +76,7 @@ namespace sorceryFight.Content.DomainExpansions
 
                 if (sfPlayer.Player.dead || sfPlayer.cursedEnergy < 10)
                 {
-                    DomainExpansionController.CloseDomain(owner);
+                    DomainExpansionController.CloseDomain(id);
                 }
             }
         }
