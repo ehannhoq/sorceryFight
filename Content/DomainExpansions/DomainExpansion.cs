@@ -10,7 +10,8 @@ using System;
 using Terraria.Audio;
 using sorceryFight.Content.InnateTechniques;
 using Terraria.GameContent;
-using CalamityMod.Particles;
+using sorceryFight.Content.Particles;
+using sorceryFight.Content.Particles.UIParticles;
 
 
 namespace sorceryFight.Content.DomainExpansions
@@ -159,10 +160,27 @@ namespace sorceryFight.Content.DomainExpansions
 
             DrawInnerDomain(() =>
             {
-                Texture2D whiteTexture = TextureAssets.MagicPixel.Value;
-                Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
+                if (id > clashingWith)
+                {
+                    Texture2D whiteTexture = TextureAssets.MagicPixel.Value;
+                    Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
 
-                spriteBatch.Draw(whiteTexture, screenRectangle, Color.Black);
+                    spriteBatch.Draw(whiteTexture, screenRectangle, Color.Black);
+
+                    for (int i = 0; i < 5; i++)
+                    {
+                        for (int j = 0; j < 2; j++) 
+                        {
+                            Vector2 pos = new Vector2(j == 0 ? 0 : Main.screenWidth, Main.rand.NextFloat(0, Main.screenHeight));
+
+                            float speed = 100f + Main.rand.NextFloat(-15, 15f);
+                            Vector2 vel = new Vector2(j == 0 ? speed : -speed, 0f);
+
+                            LinearParticle particle = new LinearParticle(pos, vel, Color.White, true, 0.92f, 0.6f, 60);
+                            ParticleController.SpawnParticle(particle);
+                        }
+                    }
+                }
             });
         }
 

@@ -3,6 +3,8 @@ using CalamityMod;
 using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Particles;
+using sorceryFight.Content.Particles.UIParticles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -56,7 +58,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
 
             if (Main.myPlayer == Projectile.owner)
             {
-                
+
                 if (!player.controlUseItem)
                 {
                     Projectile.Kill();
@@ -88,24 +90,23 @@ namespace sorceryFight.Content.Items.Weapons.Melee
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                Vector2 veloVariation = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
-                int colVariation = Main.rand.Next(-38, 100);
-                float scale = Main.rand.NextFloat(1f, 1.25f);
-                float scalar = Main.rand.NextFloat(15f, 30f);
-                SparkParticle particle = new SparkParticle(target.Center, (Projectile.velocity * scalar) + veloVariation, false, 30, scale, new Color(109 + colVariation, 38 + colVariation, 115 + colVariation));
-                GeneralParticleHandler.SpawnParticle(particle);
-            }
+            // for (int i = 0; i < 3; i++)
+            // {
+            //     Vector2 veloVariation = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
+            //     int colVariation = Main.rand.Next(-38, 100);
+            //     float scale = Main.rand.NextFloat(1f, 1.25f);
+            //     float scalar = Main.rand.NextFloat(15f, 30f);
+            //     SparkParticle particle = new SparkParticle(target.Center, (Projectile.velocity * scalar) + veloVariation, false, 30, scale, new Color(109 + colVariation, 38 + colVariation, 115 + colVariation));
+            //     GeneralParticleHandler.SpawnParticle(particle);
+            // }
 
             for (int i = 0; i < 2; i++)
             {
                 Vector2 veloVariation = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
                 int colVariation = Main.rand.Next(-38, 100);
-                float scale = Main.rand.NextFloat(1f, 1.25f);
-                float scalar = Main.rand.NextFloat(15f, 30f);
-                LineParticle particle = new LineParticle(target.Center, (Projectile.velocity * scalar) + veloVariation, false, 30, scale, new Color(109 + colVariation, 38 + colVariation, 115 + colVariation));
-                GeneralParticleHandler.SpawnParticle(particle);
+                float scale = Main.rand.NextFloat(0.9f, 1.2f);
+                LinearParticle particle = new LinearParticle(target.Center, (Projectile.velocity * 30) + veloVariation, new Color(109 + colVariation, 38 + colVariation, 115 + colVariation), default, 0.9f, scale, 45);
+                ParticleController.SpawnParticle(particle);
             }
 
             for (int i = 0; i < 2; i++)
