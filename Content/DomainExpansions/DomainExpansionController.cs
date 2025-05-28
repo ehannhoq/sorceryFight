@@ -113,11 +113,18 @@ namespace sorceryFight.Content.DomainExpansions
 
                 foreach (DomainExpansion de in ActiveDomains)
                 {
-
-                    if (de.clashingWith == -1)
+                    if (de.clashingWith == -1 || !de.ClosedDomain)
+                    {
                         de.Draw(Main.spriteBatch);
+                    }
+                    else if (!DomainExpansions[de.clashingWith].ClosedDomain)
+                    {
+                        de.Draw(Main.spriteBatch);
+                    }
                     else
+                    {
                         de.DrawClashing(Main.spriteBatch);
+                    }
                 }
 
                 Main.spriteBatch.End();
@@ -159,7 +166,13 @@ namespace sorceryFight.Content.DomainExpansions
             de.owner = whoAmI;
             SoundEngine.PlaySound(de.CastSound, de.center);
             SetClashingDomains(de);
-            int id = DomainExpansions.Append(de);
+
+            int id;
+            if (de.ClosedDomain)
+                id = DomainExpansions.Append(de);
+            else
+                id = DomainExpansions.Prepend(de);
+
             DomainExpansions[id].id = id;
         }
 

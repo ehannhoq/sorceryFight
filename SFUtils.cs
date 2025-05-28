@@ -219,7 +219,21 @@ public static class SFUtils
             }
         }
 
-        throw new Exception("Array is full.");
+        return -1;
+    }
+
+    public static int Prepend<T>(this T[] array, T obj)
+    {
+        for (int i = array.Length - 1; i >= 0; i--)
+        {
+            if (array[i] == null)
+            {
+                array[i] = obj;
+                return i;
+            }
+        }
+
+        return -1;
     }
 }
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Terraria;
@@ -8,12 +9,12 @@ namespace sorceryFight.Content.Particles.UIParticles
 {
     public class ParticleController : ModSystem
     {
-        private static List<Particle> particles;
+        private static Particle[] particles;
 
 
         public override void Load()
         {
-            particles = new List<Particle>();
+            particles = new Particle[5000];
             IL_Main.DoDraw_DrawNPCsOverTiles += DrawUIParticleLayer;
         }
 
@@ -23,12 +24,20 @@ namespace sorceryFight.Content.Particles.UIParticles
             IL_Main.DoDraw_DrawNPCsOverTiles -= DrawUIParticleLayer;
         }
 
+        public override void OnWorldUnload()
+        {
+            for (int i = 0; i < particles.Length; i++)
+            {
+                particles[i] = null;
+            }
+        }
+
         private void DrawUIParticleLayer(ILContext il)
         {
             if (Main.dedServ) return;
             var cursor = new ILCursor(il);
 
-            cursor.Goto(1);
+            cursor.Goto(-1);
 
             cursor.EmitDelegate(() =>
             {
@@ -42,11 +51,11 @@ namespace sorceryFight.Content.Particles.UIParticles
                     Main.GameViewMatrix.ZoomMatrix
                 );
 
-                foreach (var particle in new List<Particle>(particles))
+                for (int i = 0; i < particles.Length; i++)
                 {
-                    if (particle == null) continue;
+                    if (particles[i] == null) continue;
 
-                    particle.Draw(Main.spriteBatch);
+                    particles[i].Draw(Main.spriteBatch);
                 }
 
                 Main.spriteBatch.End();
@@ -55,32 +64,23 @@ namespace sorceryFight.Content.Particles.UIParticles
 
         public override void PostUpdateNPCs()
         {
-            foreach (var particle in new List<Particle>(particles))
+            for (int i = 0; i < particles.Length; i++)
             {
-                if (particle == null) continue;
+                if (particles[i] == null) continue;
 
-                particle.Update();
+                particles[i].Update();
 
-                if (particle.time >= particle.lifetime)
+                if (particles[i].time >= particles[i].lifetime)
                 {
-                    particles.Remove(particle);
+                    particles[i] = null;
                 }
             }
         }
 
-        public static void SpawnParticleInWorld(Particle particle)
+        public static void SpawnParticle(Particle particle)
         {
-            if (Main.dedServ) return;
-
-            particle.position -= Main.screenPosition;
-            particles.Add(particle);
-        }
-
-        public static void SpawnParticleInUI(Particle particle)
-        {
-            if (Main.dedServ) return;
-
-            particles.Add(particle);
+            if (Main.dedServ || Main.gamePaused || particles == null) return;
+                particles.Append(particle);
         }
     }
 }
