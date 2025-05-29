@@ -27,7 +27,6 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
     /// </summary>
     public class NPCDomainController : GlobalNPC
     {
-        public static bool npcIsCastingDomain;
         public static Vector2 npcCastingPosition;
         public static bool castingDomain;
 
@@ -48,12 +47,12 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
         {
             if (npc.active && npc.life >= npc.lifeMax * 0.01f && npc.life < npc.lifeMax * 0.10f && !DomainExpansionController.ActiveDomains.Any(domain => domain is NPCDomainExpansion && domain.owner == npc.whoAmI))
             {
-                npcIsCastingDomain = true;
                 if (npcCastingPosition == Vector2.Zero)
                     npcCastingPosition = npc.Center;
 
 
                 npc.Center = npcCastingPosition;
+                CameraController.SetCameraPosition(npcCastingPosition, 150);
 
                 if (!castingDomain)
                 {
@@ -76,9 +75,8 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
                     TaskScheduler.Instance.AddDelayedTask(() =>
                     {
                         castingDomain = false;
-                        npcIsCastingDomain = false;
                         npcCastingPosition = Vector2.Zero;
-                    }, 400);
+                    }, 350);
                 }
 
                 if (castingDomain) return false;
@@ -92,12 +90,13 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
         {
             if (npc.active && npc.life >= npc.lifeMax * 0.80f && npc.life < npc.lifeMax * 0.90f && !DomainExpansionController.ActiveDomains.Any(domain => domain is NPCDomainExpansion && domain.owner == npc.whoAmI))
             {
-                npcIsCastingDomain = true;
                 if (npcCastingPosition == Vector2.Zero)
                     npcCastingPosition = npc.Center;
 
 
                 npc.Center = npcCastingPosition;
+
+                CameraController.SetCameraPosition(npcCastingPosition, 260);
 
                 if (!castingDomain)
                 {
@@ -120,9 +119,8 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
                     TaskScheduler.Instance.AddDelayedTask(() =>
                     {
                         castingDomain = false;
-                        npcIsCastingDomain = false;
                         npcCastingPosition = Vector2.Zero;
-                    }, 400);
+                    }, 260);
                 }
 
                 if (castingDomain) return false;
@@ -130,6 +128,6 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
             }
 
             return true;
-        } 
+        }
     }
 }

@@ -145,12 +145,16 @@ namespace sorceryFight.Content.DomainExpansions
         /// <summary>
         /// Draws on the players screen if they are in the sure hit radius.
         /// </summary>
-        /// <param name="action"></param>
-        public virtual void DrawInnerDomain(Action action)
+        /// <param name="innerCode"></param>
+        public virtual void DrawInnerDomain(Action innerCode, Action outerCode = null)
         {
             if (Vector2.DistanceSquared(Main.LocalPlayer.Center, this.center) <= SureHitRange.Squared())
             {
-                action.Invoke();
+                innerCode.Invoke();
+            }
+            else if (outerCode != null)
+            {
+                outerCode.Invoke();
             }
         }
 
