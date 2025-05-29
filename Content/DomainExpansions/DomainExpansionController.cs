@@ -58,18 +58,8 @@ namespace sorceryFight.Content.DomainExpansions
             }
         }
 
-        public static Vector2 previousScreenPosition;
-        public static Vector2 targetLerpPosition;
         public static DomainExpansion[] DomainExpansions;
         public static List<DomainExpansion> ActiveDomains => [.. DomainExpansions.Where(de => de != null)];
-
-        public override void PostUpdateNPCs()
-        {
-            foreach (DomainExpansion de in ActiveDomains)
-            {
-                de.Update();
-            }
-        }
 
         public override void Load()
         {
@@ -113,11 +103,13 @@ namespace sorceryFight.Content.DomainExpansions
 
                 foreach (DomainExpansion de in ActiveDomains)
                 {
+                    if (de == null) continue;
+
                     if (de.clashingWith == -1 || !de.ClosedDomain)
                     {
                         de.Draw(Main.spriteBatch);
                     }
-                    else if (!DomainExpansions[de.clashingWith].ClosedDomain)
+                    else if (DomainExpansions[de.clashingWith] != null && !DomainExpansions[de.clashingWith].ClosedDomain)
                     {
                         de.Draw(Main.spriteBatch);
                     }
@@ -129,6 +121,21 @@ namespace sorceryFight.Content.DomainExpansions
 
                 Main.spriteBatch.End();
             });
+        }
+
+
+        public override void PostUpdateNPCs()
+        {
+            foreach (DomainExpansion de in ActiveDomains)
+            {
+                de.Update();
+            }
+
+            List<DomainExpansion> clashingDomains = ActiveDomains.Where(de => de.clashingWith != -1).ToList();
+            if (clashingDomains.Count <= 0) return;
+
+
+
         }
 
         /// <summary>
@@ -186,12 +193,17 @@ namespace sorceryFight.Content.DomainExpansions
         public static void CloseDomain(int id)
         {
             DomainExpansion de = DomainExpansions[id];
+            Main.NewText(de.InternalName);
             de.CloseDomain();
+            ResetClashingDomains(de);
+
             DomainExpansions[id] = null;
 
-            if (de.clashingWith != -1)
-                DomainExpansions[de.clashingWith].clashingWith = -1;
-
+            foreach (var d in ActiveDomains)
+            {
+                if (d is PlayerDomainExpansion)
+                    Main.NewText($"{d.InternalName}, {d.id}, {Main.player[d.owner].name}, {d.clashingWith}");
+            }
 
             if (de is PlayerDomainExpansion)
             {
@@ -257,33 +269,34 @@ namespace sorceryFight.Content.DomainExpansions
             }
         }
 
-        /// <summary>
-        /// Used to change the client's camera position when an NPC is casting a domain, or during a domain clash.
-        /// </summary>
-        public override void ModifyScreenPosition()
+        public static void ResetClashingDomains(DomainExpansion origin)
         {
-            if (NPCDomainController.npcIsCastingDomain)
+            DomainExpansion clashingDe = null;
+            foreach (DomainExpansion de in ActiveDomains)
             {
-                if (previousScreenPosition == Vector2.Zero)
-                    previousScreenPosition = Main.screenPosition;
+                float distance = Vector2.Distance(origin.center, de.center);
 
-                if (targetLerpPosition == Vector2.Zero)
-                    targetLerpPosition = Main.screenPosition;
-
-
-                targetLerpPosition = Vector2.Lerp(
-                    targetLerpPosition,
-                    NPCDomainController.npcCastingPosition - new Vector2(Main.screenWidth / 2, Main.screenHeight / 2),
-                    0.1f
-                );
-
-                Main.screenPosition = targetLerpPosition;
+                if (distance < origin.SureHitRange || distance < de.SureHitRange)
+                {
+                    de.clashingWith = -1;
+                    clashingDe = de;
+                }
             }
-            else if (previousScreenPosition != Vector2.Zero)
+
+
+            if (clashingDe != null)
             {
-                Main.screenPosition = previousScreenPosition;
-                previousScreenPosition = Vector2.Zero;
-                targetLerpPosition = Vector2.Zero;
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                {
+                    ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
+                    packet.Write((byte)MessageType.SyncDomain);
+                    packet.Write(origin.owner);
+                    packet.Write((byte)DomainNetMessage.ClashingDomains);
+                    packet.Write((byte)1);
+                    packet.Write(clashingDe.id);
+                    packet.Write(clashingDe.clashingWith);
+                    packet.Send();
+                }
             }
         }
     }

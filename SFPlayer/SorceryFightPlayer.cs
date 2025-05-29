@@ -375,7 +375,7 @@ namespace sorceryFight.SFPlayer
                 }
                 else if (hasDomainActive)
                 {
-                    int domainIndex = DomainExpansionController.ActiveDomains.FindIndex(domain => domain is PlayerDomainExpansion && domain.owner == Player.whoAmI);
+                    int domainIndex = DomainExpansionController.DomainExpansions.FindIndex(domain => domain is PlayerDomainExpansion && domain.owner == Player.whoAmI);
                     DomainExpansionController.CloseDomain(domainIndex);
                 }
             }
