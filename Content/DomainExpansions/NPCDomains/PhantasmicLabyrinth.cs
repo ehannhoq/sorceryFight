@@ -27,11 +27,10 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
         float symbolScale = 0f;
         Texture2D symbolTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/NPCDomains/PhantasmicLabyrinthSymbol", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         Dictionary<int, List<int>> dragonMap = new Dictionary<int, List<int>>();
+        bool spawnSwitch = false;
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(BaseTexture, center - Main.screenPosition, new Rectangle(0, 0, BaseTexture.Width, BaseTexture.Height), Color.White, 0f, new Rectangle(0, 0, BaseTexture.Width, BaseTexture.Height).Size() * 0.5f, 2f, SpriteEffects.None, 0f);
-
             DrawInnerDomain(() =>
             {
                 Texture2D whiteTexture = TextureAssets.MagicPixel.Value;
@@ -47,7 +46,10 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
                     Rectangle symbolSrc = new Rectangle(0, 0, symbolTexture.Width, symbolTexture.Height);
                     spriteBatch.Draw(symbolTexture, center - Main.screenPosition, symbolSrc, Color.White, symbolRotation, symbolSrc.Size() * 0.5f, symbolScale * 2, SpriteEffects.None, 0f);
                 }
-            });
+            },
+
+            () => spriteBatch.Draw(BaseTexture, center - Main.screenPosition, new Rectangle(0, 0, BaseTexture.Width, BaseTexture.Height), Color.White, 0f, new Rectangle(0, 0, BaseTexture.Width, BaseTexture.Height).Size() * 0.5f, 2f, SpriteEffects.None, 0f)
+            );
 
         }
 
@@ -62,13 +64,22 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
                 if (!dragonMap.ContainsKey(player.whoAmI))
                 {
 
-                    Vector2[] offsets =
+                    Vector2[] offsets = spawnSwitch ?
                     [
                             new Vector2(-400, -400),
                             new Vector2(400, -400),
                             new Vector2(-400, 400),
                             new Vector2(400, 400),
+                    ]
+                    :
+                    [
+                            new Vector2(-600, 0),
+                            new Vector2(600, 0),
+                            new Vector2(0, 600),
+                            new Vector2(0, -600),
                     ];
+
+                    spawnSwitch = !spawnSwitch;
 
                     List<int> spawnedDragons = new List<int>();
 
@@ -159,9 +170,13 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
 
         public override void CloseDomain()
         {
+            tick = 0;
             symbolRotation = 0f;
             blackFade = 0f;
-            tick = 0f;
+            bgScale = 0f;
+            symbolScale = 0f;
+            Dictionary<int, List<int>> dragonMap = new Dictionary<int, List<int>>();
+            spawnSwitch = false;
         }
     }
 }
