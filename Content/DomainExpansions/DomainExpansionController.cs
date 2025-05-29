@@ -193,17 +193,10 @@ namespace sorceryFight.Content.DomainExpansions
         public static void CloseDomain(int id)
         {
             DomainExpansion de = DomainExpansions[id];
-            Main.NewText(de.InternalName);
             de.CloseDomain();
             ResetClashingDomains(de);
 
             DomainExpansions[id] = null;
-
-            foreach (var d in ActiveDomains)
-            {
-                if (d is PlayerDomainExpansion)
-                    Main.NewText($"{d.InternalName}, {d.id}, {Main.player[d.owner].name}, {d.clashingWith}");
-            }
 
             if (de is PlayerDomainExpansion)
             {
