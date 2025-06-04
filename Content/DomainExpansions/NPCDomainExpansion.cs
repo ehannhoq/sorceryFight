@@ -1,5 +1,7 @@
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.DomainExpansions.NPCDomains;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
@@ -18,6 +20,13 @@ namespace sorceryFight.Content.DomainExpansions
         /// The texture of the domain.
         /// </summary>
         public virtual Texture2D DomainTexture => ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/NPCDomains/{InternalName}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+        /// <summary>
+        /// The condition for expanding the domain.
+        /// </summary>
+        /// <param name="npc"></param>
+        /// <returns></returns>
+        public abstract bool ExpandCondition(NPC npc);
 
         /// <summary>
         /// The effect that happens when any player is in the sure hit radius.
@@ -49,7 +58,10 @@ namespace sorceryFight.Content.DomainExpansions
             }
 
             if (!Main.npc[owner].active || Main.npc[owner].life <= Main.npc[owner].lifeMax * 0.01f)
+            {
                 DomainExpansionController.CloseDomain(id);
+                NPCDomainController.domainCounter = 0;
+            }
         }
     }
 }

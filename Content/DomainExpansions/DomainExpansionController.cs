@@ -23,8 +23,6 @@ namespace sorceryFight.Content.DomainExpansions
             CloseDomain,
             ClashingDomains
         }
-
-
         public static class DomainExpansionFactory
         {
             public enum DomainExpansionType : byte
@@ -58,12 +56,51 @@ namespace sorceryFight.Content.DomainExpansions
             }
         }
 
+        private class PlayerDomainHPTracker : ModPlayer
+        {
+            public override void OnHurt(Player.HurtInfo info)
+            {
+                int damage = info.Damage;
+                if (DomainExpansions.TryGet(domain => domain is PlayerDomainExpansion && domain.owner == Player.whoAmI, out DomainExpansion de) && damage >= Player.statLifeMax2 * 0.25f)
+                {
+                    CloseDomain(de.id);
+                }
+            }
+        }
+
+        private class NPCDomainHPTracker : GlobalNPC
+        {
+            public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.GetDomain() != null && lateInstantiation;
+
+            public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
+            {
+                OnHit(npc, hit);
+            }
+
+            public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
+            {
+                OnHit(npc, hit);
+            }
+
+            private void OnHit(NPC npc, NPC.HitInfo hit)
+            {
+                int damage = hit.Damage;
+                if (DomainExpansions.TryGet(domain => domain is NPCDomainExpansion && domain.owner == npc.whoAmI, out DomainExpansion de) && damage >= npc.lifeMax * 0.05f)
+                {
+                    CloseDomain(de.id);
+                }
+            }
+        }
+
         public static DomainExpansion[] DomainExpansions;
         public static List<DomainExpansion> ActiveDomains => [.. DomainExpansions.Where(de => de != null)];
+        public static Dictionary<int, int> ClashingDomains;
 
         public override void Load()
         {
             DomainExpansions = new DomainExpansion[16];
+            ClashingDomains = new Dictionary<int, int>();
+
             IL_Main.DoDraw_DrawNPCsOverTiles += DrawDomainLayer;
         }
 
@@ -124,6 +161,7 @@ namespace sorceryFight.Content.DomainExpansions
         }
 
 
+
         public override void PostUpdateNPCs()
         {
             foreach (DomainExpansion de in ActiveDomains)
@@ -131,11 +169,7 @@ namespace sorceryFight.Content.DomainExpansions
                 de.Update();
             }
 
-            List<DomainExpansion> clashingDomains = ActiveDomains.Where(de => de.clashingWith != -1).ToList();
-            if (clashingDomains.Count <= 0) return;
-
-
-
+            if (ClashingDomains.Count > 0) HandleEqualClash();
         }
 
         /// <summary>
@@ -172,7 +206,6 @@ namespace sorceryFight.Content.DomainExpansions
 
             de.owner = whoAmI;
             SoundEngine.PlaySound(de.CastSound, de.center);
-            SetClashingDomains(de);
 
             int id;
             if (de.ClosedDomain)
@@ -181,6 +214,7 @@ namespace sorceryFight.Content.DomainExpansions
                 id = DomainExpansions.Prepend(de);
 
             DomainExpansions[id].id = id;
+            SetClashingDomains(de);
         }
 
 
@@ -193,7 +227,7 @@ namespace sorceryFight.Content.DomainExpansions
         public static void CloseDomain(int id)
         {
             DomainExpansion de = DomainExpansions[id];
-            de.CloseDomain();
+
             ResetClashingDomains(de);
 
             DomainExpansions[id] = null;
@@ -225,10 +259,12 @@ namespace sorceryFight.Content.DomainExpansions
         public static void SetClashingDomains(DomainExpansion origin)
         {
             List<int> clashingDomains = new List<int>();
+
             foreach (DomainExpansion de in ActiveDomains)
             {
-                float distance = Vector2.Distance(origin.center, de.center);
+                if (de.id == origin.id) continue;
 
+                float distance = Vector2.Distance(origin.center, de.center);
                 if (distance < origin.SureHitRange || distance < de.SureHitRange)
                 {
                     de.clashingWith = origin.id;
@@ -248,23 +284,14 @@ namespace sorceryFight.Content.DomainExpansions
                 }, 300);
             }
 
-
-            if (Main.netMode == NetmodeID.MultiplayerClient)
+            else if (clashingDomains.Count == 1)
             {
-                ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
-                packet.Write((byte)MessageType.SyncDomain);
-                packet.Write(origin.owner);
-                packet.Write((byte)DomainNetMessage.ClashingDomains);
-                packet.Write((byte)1);
-                packet.Write(origin.id);
-                packet.Write(origin.clashingWith);
-                packet.Send();
+                ClashingDomains[origin.id] = clashingDomains[0];
             }
         }
 
         public static void ResetClashingDomains(DomainExpansion origin)
         {
-            DomainExpansion clashingDe = null;
             foreach (DomainExpansion de in ActiveDomains)
             {
                 float distance = Vector2.Distance(origin.center, de.center);
@@ -272,23 +299,29 @@ namespace sorceryFight.Content.DomainExpansions
                 if (distance < origin.SureHitRange || distance < de.SureHitRange)
                 {
                     de.clashingWith = -1;
-                    clashingDe = de;
                 }
             }
+        }
 
-
-            if (clashingDe != null)
+        public static void HandleEqualClash()
+        {
+            foreach (var item in ClashingDomains)
             {
-                if (Main.netMode == NetmodeID.MultiplayerClient)
+                if (DomainExpansions[item.Key] == null || DomainExpansions[item.Value] == null)
                 {
-                    ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
-                    packet.Write((byte)MessageType.SyncDomain);
-                    packet.Write(origin.owner);
-                    packet.Write((byte)DomainNetMessage.ClashingDomains);
-                    packet.Write((byte)1);
-                    packet.Write(clashingDe.id);
-                    packet.Write(clashingDe.clashingWith);
-                    packet.Send();
+                    ClashingDomains.Remove(item.Key);
+                }
+
+                DomainExpansion originDE = DomainExpansions[item.Key];
+                DomainExpansion opposingDomain = DomainExpansions[item.Value];
+
+                if (originDE.Tier < opposingDomain.Tier)
+                {
+                    opposingDomain.health -= (int)SFUtils.RateSecondsToTicks(100);
+                }
+                else if (originDE.Tier > opposingDomain.Tier)
+                {
+                    originDE.health -= (int)SFUtils.RateSecondsToTicks(100);
                 }
             }
         }

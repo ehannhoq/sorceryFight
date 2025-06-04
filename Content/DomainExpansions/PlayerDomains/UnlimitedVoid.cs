@@ -20,6 +20,8 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override SoundStyle CastSound => SorceryFightSounds.UnlimitedVoid;
 
+        public override int Tier => 1;
+
         public override float SureHitRange => 1150f;
 
         public override float Cost => 100f;

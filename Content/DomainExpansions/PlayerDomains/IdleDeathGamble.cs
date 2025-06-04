@@ -15,6 +15,8 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
         public override string InternalName => "IdleDeathGamble";
 
         public override SoundStyle CastSound => SorceryFightSounds.IdleDeathGambleOpening;
+
+        public override int Tier => 2;
         
         public override float SureHitRange => 1150f;
 

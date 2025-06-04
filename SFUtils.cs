@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using CalamityMod.NPCs.DevourerofGods;
@@ -245,6 +246,22 @@ public static class SFUtils
         }
 
         return -1;
+    }
+
+    public static bool TryGet<T>(this IEnumerable<T> array, Predicate<T> predicate, [MaybeNullWhen(false)] out T obj)
+    {
+        obj = default;
+        for (int i = 0; i < array.Count(); i++)
+        {
+            if (array.ElementAt(i) == null) continue;
+
+            if (predicate(array.ElementAt(i)))
+            {
+                obj = array.ElementAt(i);
+                return true;
+            }
+        }
+        return false;
     }
 }
 

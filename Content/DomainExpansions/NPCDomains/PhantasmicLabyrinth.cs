@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -16,6 +17,8 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
 
         public override SoundStyle CastSound => SorceryFightSounds.UnlimitedVoid;
 
+        public override int Tier => 2;
+
         public override float SureHitRange => 1150f;
 
         public override bool ClosedDomain => true;
@@ -28,6 +31,13 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
         Texture2D symbolTexture = ModContent.Request<Texture2D>("sorceryFight/Content/DomainExpansions/NPCDomains/PhantasmicLabyrinthSymbol", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         Dictionary<int, List<int>> dragonMap = new Dictionary<int, List<int>>();
         bool spawnSwitch = false;
+
+        public override bool ExpandCondition(NPC npc)
+        {
+            if (npc.life > npc.lifeMax * 0.01f && npc.life <= npc.lifeMax * 0.90f) return true;
+            
+            return false;
+        }
 
         public override void Draw(SpriteBatch spriteBatch)
         {

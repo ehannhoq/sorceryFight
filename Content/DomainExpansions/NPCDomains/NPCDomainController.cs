@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using CalamityMod.NPCs.Providence;
 using CalamityMod.NPCs.SupremeCalamitas;
@@ -8,9 +9,9 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.DomainExpansions.NPCDomains
 {
-    internal static class NPCDomainUtils
+    public static class NPCDomainUtils
     {
-        internal static NPCDomainExpansion GetDomain(this NPC npc)
+        public static NPCDomainExpansion GetDomain(this NPC npc)
         {
             if (npc.type == ModContent.NPCType<SupremeCalamitas>())
                 return new AshenedPillarsOfCalamity();
@@ -21,99 +22,68 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
                 _ => null
             };
         }
+
+        public static int GetBrainRefreshCount(this NPC npc)
+        {
+            if (npc.type == ModContent.NPCType<SupremeCalamitas>())
+                return 3;
+
+            return 1;
+        }
     }
+
+
     /// <summary>
     /// Controls NPC domains. Runs on ALL clients and the server.
     /// </summary>
     public class NPCDomainController : GlobalNPC
     {
         public static Vector2 npcCastingPosition;
-        public static bool castingDomain;
-
+        public static bool castingDomain = false;
+        public static int domainCounter = 0;
 
         public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.GetDomain() != null && lateInstantiation;
+    
+        public override void SetDefaults(NPC entity)
+        {
+            castingDomain = false;
+            domainCounter = 0;
+        }
 
         public override bool PreAI(NPC npc)
         {
             base.PreAI(npc);
 
-            if (npc.type == NPCID.CultistBoss) return LunaticCultistDomainController(npc);
-            if (npc.type == ModContent.NPCType<SupremeCalamitas>()) return SupremeCalamitasDomainController(npc);
+            // Main.NewText($"{npc.FullName}: Used Domain {domainCounter} times, " + (domainCooldown ? "on cooldown" : "not on cooldown") + $" Can expand domain? {npc.GetDomain().ExpandCondition(npc)}");
 
-            return true;
-        }
-
-        private bool LunaticCultistDomainController(NPC npc)
-        {
-            if (npc.active && npc.life >= npc.lifeMax * 0.01f && npc.life < npc.lifeMax * 0.10f && !DomainExpansionController.ActiveDomains.Any(domain => domain is NPCDomainExpansion && domain.owner == npc.whoAmI))
+            if (npc.active && !DomainExpansionController.ActiveDomains.Any(domain => domain is NPCDomainExpansion && domain.owner == npc.whoAmI) && domainCounter < npc.GetBrainRefreshCount()
+            && npc.GetDomain().ExpandCondition(npc))
             {
                 if (npcCastingPosition == Vector2.Zero)
                     npcCastingPosition = npc.Center;
 
-
                 npc.Center = npcCastingPosition;
-                CameraController.SetCameraPosition(npcCastingPosition, 150);
+
 
                 if (!castingDomain)
                 {
                     castingDomain = true;
+                    CameraController.SetCameraPosition(npcCastingPosition, 260);
+
                     int index;
                     index = CombatText.NewText(npc.getRect(), Color.White, "Domain Expansion:");
                     Main.combatText[index].lifeTime = 90;
 
                     TaskScheduler.Instance.AddDelayedTask(() =>
                     {
-                        index = CombatText.NewText(npc.getRect(), Color.White, "Phantasmic Labyrinth");
+                        index = CombatText.NewText(npc.getRect(), Color.White, npc.GetDomain().DisplayName);
                         Main.combatText[index].lifeTime = 90;
                     }, 100);
 
                     TaskScheduler.Instance.AddDelayedTask(() =>
                     {
                         DomainExpansionController.ExpandDomain(npc.whoAmI, npc.GetDomain());
-                    }, 200);
-
-                    TaskScheduler.Instance.AddDelayedTask(() =>
-                    {
-                        castingDomain = false;
-                        npcCastingPosition = Vector2.Zero;
-                    }, 350);
-                }
-
-                if (castingDomain) return false;
-
-            }
-
-            return true;
-        }
-
-        private bool SupremeCalamitasDomainController(NPC npc)
-        {
-            if (npc.active && npc.life >= npc.lifeMax * 0.80f && npc.life < npc.lifeMax * 0.90f && !DomainExpansionController.ActiveDomains.Any(domain => domain is NPCDomainExpansion && domain.owner == npc.whoAmI))
-            {
-                if (npcCastingPosition == Vector2.Zero)
-                    npcCastingPosition = npc.Center;
-
-
-                npc.Center = npcCastingPosition;
-
-                CameraController.SetCameraPosition(npcCastingPosition, 260);
-
-                if (!castingDomain)
-                {
-                    castingDomain = true;
-                    int index;
-                    index = CombatText.NewText(npc.getRect(), Color.White, "Domain Expansion:");
-                    Main.combatText[index].lifeTime = 90;
-
-                    TaskScheduler.Instance.AddDelayedTask(() =>
-                    {
-                        index = CombatText.NewText(npc.getRect(), Color.White, "Ashened Pillars of Calamity");
-                        Main.combatText[index].lifeTime = 90;
-                    }, 100);
-
-                    TaskScheduler.Instance.AddDelayedTask(() =>
-                    {
-                        DomainExpansionController.ExpandDomain(npc.whoAmI, npc.GetDomain());
+                        domainCounter++;
                     }, 200);
 
                     TaskScheduler.Instance.AddDelayedTask(() =>
@@ -122,12 +92,18 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
                         npcCastingPosition = Vector2.Zero;
                     }, 260);
                 }
-
-                if (castingDomain) return false;
-
             }
 
+            if (castingDomain) return false;
+
             return true;
+        }
+
+        public override void Unload()
+        {
+            castingDomain = false;
+            domainCounter = 0;
+            npcCastingPosition = Vector2.Zero;
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using CalamityMod.Buffs.DamageOverTime;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,7 +17,9 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
 
         public override SoundStyle CastSound => SorceryFightSounds.MalevolentShrine;
 
-        public override float SureHitRange => 1100f;
+        public override int Tier => 1;
+
+        public override float SureHitRange => 2000f;
 
         public override bool ClosedDomain => false;
         const int frames = 100;
@@ -25,6 +28,18 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
         int frame = 0;
         int frameTime = 0;
         public Texture2D currentTexture;
+
+        public override bool ExpandCondition(NPC npc)
+        {
+            if (npc.life < npc.lifeMax * 0.01f) return false;
+
+            if (NPCDomainController.domainCounter == 0 && npc.life > npc.lifeMax * 0.85 && npc.life <= npc.lifeMax * 0.90) return true;
+            if (NPCDomainController.domainCounter == 1 && npc.life > npc.lifeMax * 0.45 && npc.life <= npc.lifeMax * 0.50) return true;
+            if (NPCDomainController.domainCounter == 2 && npc.life > npc.lifeMax * 0.05 && npc.life <= npc.lifeMax * 0.10) return true;
+
+
+            return false;
+        }
 
         public override void Update()
         {
@@ -41,6 +56,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
                 }
             }
         }
+        
         public override void Draw(SpriteBatch spriteBatch)
         {
             currentTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/NPCDomains/AshenedPillarsOfCalamity/{frame}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;

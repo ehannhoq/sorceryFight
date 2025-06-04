@@ -32,6 +32,11 @@ namespace sorceryFight.Content.DomainExpansions
         public abstract SoundStyle CastSound { get; }
 
         /// <summary>
+        /// The tier of the domain. Used to determine winners of domain clashes.
+        /// </summary>
+        public abstract int Tier { get; }
+
+        /// <summary>
         /// The sure hit range of the domain. Also used to draw DrawInnerDomain(Spritebatch spriteBatch) for players inside the range.
         /// </summary>
         public abstract float SureHitRange { get; }
@@ -68,10 +73,20 @@ namespace sorceryFight.Content.DomainExpansions
         public int clashingWith = -1;
 
         /// <summary>
+        /// The "health" of the domain.
+        /// </summary>
+        public int health = 1000;
+
+        /// <summary>
         /// Runs any logic that needs to be constantly updated. Call base.Update() to auto disallow entering/leaving the domain.
         /// </summary>
         public virtual void Update()
         {
+            if (health <= 0)
+            {
+                DomainExpansionController.CloseDomain(id);
+            }
+            
             if (ClosedDomain)
                 DomainBarrier();
         }
@@ -173,7 +188,7 @@ namespace sorceryFight.Content.DomainExpansions
 
                     for (int i = 0; i < 5; i++)
                     {
-                        for (int j = 0; j < 2; j++) 
+                        for (int j = 0; j < 2; j++)
                         {
                             Vector2 pos = new Vector2(j == 0 ? 0 : Main.screenWidth, Main.rand.NextFloat(0, Main.screenHeight));
 
