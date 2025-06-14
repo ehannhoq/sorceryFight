@@ -15,3 +15,18 @@ InvertedSpear: {
 		[c/E0DA5A:Miles, extending out to your cursor before returning.]
 		'''
 }
+
+ObliviousSword: {
+	DisplayName: The Resonant
+	Tooltip:
+		'''
+		[c/EBE3B2:An ancient blade of unknown origins. Said to scale its own strength to its wielder's strength]
+		Bosses slain: [BOSSES]
+		Increased damage: [DAMAGE]
+		Increased crit chance: [CRIT]%
+		[c/808080:'The welder of this sword fought the flames of Jungle terror to prevail.]
+		[c/808080:The gods granted him this sword to mark his achievement. It is said that]
+		[c/808080:this sword will bring Oblivion to those who are Oblivious to its power.']
+		[c/6D2673:Dedicated to ObliviousOblivion]
+		'''
+}

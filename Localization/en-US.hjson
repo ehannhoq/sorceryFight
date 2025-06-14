@@ -9,6 +9,8 @@ Mods: {
 			IdleDeathGambleJackpotProjectile.DisplayName: Idle Death Gamble Jackpot Projectile
 			CrikySwordSlash.DisplayName: Criky Sword Slash
 			InvertedSpearSlash.DisplayName: Inverted Spear Slash
+			ObliviousSwordSlash.DisplayName: Oblivious Sword Slash
+			ObliviousSwordProjectile.DisplayName: Oblivious Sword Projectile
 		}
 
 		Configs: {
@@ -23,5 +25,17 @@ Mods: {
 		}
 
 		DamageClasses.CursedTechniqueDamageClass.DisplayName: cursed damage
+
+		Items: {
+			OSTDebug: {
+				DisplayName: O S T Debug
+				Tooltip: ""
+			}
+
+			StructureWand: {
+				DisplayName: Structure Wand
+				Tooltip: ""
+			}
+		}
 	}
 }
