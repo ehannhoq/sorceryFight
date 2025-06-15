@@ -25,7 +25,7 @@ namespace sorceryFight
         public static SoundStyle DivineFlameShoot;
         public static SoundStyle DivineFlameExplosion;
         public static SoundStyle WorldCuttingSlash;
-        
+
         public static SoundStyle SoulDismantle;
         public static SoundStyle PiercingBlood;
 
@@ -39,6 +39,11 @@ namespace sorceryFight
         public static SoundStyle IDGSlots;
         public static SoundStyle IDGWoosh;
         public static SoundStyle IDGWooshLoop;
+
+        public static SoundStyle OblivionSwordSlash;
+        public static SoundStyle OblivionSwordBigSlash;
+        public static SoundStyle OblivionSwordImpact;
+        public static SoundStyle OblivionSwordBigImpact;
 
         public override void Load()
         {
@@ -67,11 +72,16 @@ namespace sorceryFight
             UnlimitedVoid = new("sorceryFight/Content/Sounds/DomainExpansions/UnlimitedVoid") { Volume = 1f };
             MalevolentShrine = new("sorceryFight/Content/Sounds/DomainExpansions/MalevolentShrine") { Volume = 1f };
             Home = new("sorceryFight/Content/Sounds/DomainExpansions/Home") { Volume = 1f };
-            
+
             IdleDeathGambleOpening = new("sorceryFight/Content/Sounds/DomainExpansions/IdleDeathGambleOpening") { Volume = 1f };
             IDGWooshLoop = new("sorceryFight/Content/Sounds/DomainExpansions/IDGWooshLoop") { Volume = 1f };
             IDGWoosh = new("sorceryFight/Content/Sounds/DomainExpansions/IDGWoosh") { Volume = 1f };
             IDGSlots = new("sorceryFight/Content/Sounds/DomainExpansions/IDGSlots") { Volume = 1f };
+
+            OblivionSwordSlash = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordSlash") { Volume = 1f };
+            OblivionSwordBigSlash = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordBigSlash") { Volume = 1f };
+            OblivionSwordImpact = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordImpact") { Volume = 1f };
+            OblivionSwordBigImpact = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordBigImpact") { Volume = 1f };
         }
     }
 }
