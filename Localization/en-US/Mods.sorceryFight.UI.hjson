@@ -19,6 +19,18 @@ RCTIcon: {
 	ContinuousRCT.Info: Heal rate: 1 HP / 5 CE
 }
 
+SimpleDomainIcon: {
+	Info:
+		'''
+		New Shadow Style: Simple Domain is an anti-domain technique that
+		expands a small domain around the caster, negating the effects of
+		a domain expansion on them.
+		Simple Domains aren't strong; collapsing very easily inside a domain,
+		depending on the strength of the domain.
+		'''
+	LockedInfo: Defeat the crazed cultist leader at the entrance of the dungeon.
+}
+
 SukunasFingerIcon: {
 	Info: You've eaten Sukuna's Finger? How are you... alive?
 	Consumed: fingers consumed.

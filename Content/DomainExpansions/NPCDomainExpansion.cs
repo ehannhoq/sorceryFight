@@ -2,6 +2,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
+using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
@@ -46,7 +47,7 @@ namespace sorceryFight.Content.DomainExpansions
             {
                 foreach (Player player in Main.player)
                 {
-                    if (player.active && !player.dead)
+                    if (player.active && !player.dead && !player.GetModPlayer<SorceryFightPlayer>().immuneToDomains)
                     {
                         float distance = Vector2.DistanceSquared(player.Center, this.center);
                         if (distance < SureHitRange.Squared())

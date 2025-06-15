@@ -204,8 +204,13 @@ namespace sorceryFight.Content.DomainExpansions
         }
 
         /// <summary>
+        /// Override to instantiate one time variables, or override variables.
+        /// </summary>
+        public virtual void OnExpand() { }
+
+        /// <summary>
         /// Override if domain has instance variables or other data that needs to be reset.
         /// </summary>
-        public virtual void CloseDomain() { }
+        public virtual void OnClose() { }
     }
 }

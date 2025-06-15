@@ -178,7 +178,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
             }
         }
 
-        public override void CloseDomain()
+        public override void OnClose()
         {
             tick = 0;
             symbolRotation = 0f;

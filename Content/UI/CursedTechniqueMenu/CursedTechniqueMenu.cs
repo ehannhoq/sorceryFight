@@ -8,6 +8,7 @@ using Terraria.UI;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
+using Terraria.ID;
 
 namespace sorceryFight.Content.UI.CursedTechniqueMenu
 {
@@ -82,6 +83,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
         {
             Texture2D masteryIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/BossKillsIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Texture2D rctIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/RCTIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D simpleDomainIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/SimpleDomainIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Texture2D domainIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{sfPlayer.innateTechnique.Name}/DomainIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Texture2D lockedTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/SpecialLockedIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
@@ -123,6 +125,15 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             rctIcon.Left.Set(conditionalIconPositions[index].X, 0f);
             rctIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
             Append(rctIcon);
+            index++;
+
+            string simpleDomainIconHoverText = sfPlayer.HasDefeatedBoss(NPCID.CultistBoss) ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SimpleDomainIcon.Info")}"
+            : $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SimpleDomainIcon.LockedInfo")}";
+            Texture2D finalSimpleDomainTexture = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? ref simpleDomainIconTexture : ref lockedTexture;
+            SpecialUIElement simpleDomainIcon = new SpecialUIElement(finalSimpleDomainTexture, simpleDomainIconHoverText);
+            simpleDomainIcon.Left.Set(conditionalIconPositions[index].X, 0f);
+            simpleDomainIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
+            Append(simpleDomainIcon);
             index++;
 
             string domainIconHoverText = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? $"{sfPlayer.innateTechnique.DomainExpansion.DisplayName}\n{sfPlayer.innateTechnique.DomainExpansion.Description}"

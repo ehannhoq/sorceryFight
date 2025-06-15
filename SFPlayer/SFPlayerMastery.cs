@@ -8,6 +8,7 @@ namespace sorceryFight.SFPlayer
 {
     public partial class SorceryFightPlayer : ModPlayer
     {
+        public static Action OnNewBossDefeated;
         public static int totalNumberOfBosses;
         public List<int> bossesDefeated;
         public void AddDefeatedBoss(int bossType)
@@ -16,7 +17,8 @@ namespace sorceryFight.SFPlayer
 
             bossesDefeated.Add(bossType);
             SorceryFightUI.UpdateTechniqueUI?.Invoke();
-            
+            OnNewBossDefeated?.Invoke();
+
             if (Main.netMode == NetmodeID.Server)
             {
                 SendBossDefeatedToClients(bossType);

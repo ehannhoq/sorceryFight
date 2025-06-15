@@ -19,6 +19,8 @@ using sorceryFight.Content.Buffs.Vessel;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.DomainExpansions;
 using System.Linq;
+using Microsoft.Xna.Framework.Design;
+using sorceryFight.Content.DomainExpansions.PlayerDomains;
 
 namespace sorceryFight.SFPlayer
 {
@@ -70,7 +72,15 @@ namespace sorceryFight.SFPlayer
         private HashSet<int> npcsHitWithCursedFists;
         public int idleDeathGambleBuffStrength;
         public SorceryFightUI sfUI;
+        #endregion
+
+        #region Domain
         public bool inDomainAnimation;
+        public int domainTimer;
+        public bool HasActiveDomain => DomainExpansionController.ActiveDomains.Any(d => d is PlayerDomainExpansion && d is not ISimpleDomain && d.owner == Player.whoAmI);
+        public bool fallingBlossomEmotion;
+        public bool inSimpleDomain;
+        public bool immuneToDomains => fallingBlossomEmotion || hollowWickerBasket || inSimpleDomain;
         #endregion
 
         #region Player Attributes
@@ -93,8 +103,8 @@ namespace sorceryFight.SFPlayer
         public int blackFlashCounter;
         public int lowerWindowTime;
         public int upperWindowTime;
-
         #endregion
+
 
         public override void UpdateEquips()
         {
@@ -102,11 +112,13 @@ namespace sorceryFight.SFPlayer
             innateTechnique.UpdateEquips(this);
         }
 
+
         public override void UpdateLifeRegen()
         {
             if (innateTechnique == null) return;
             innateTechnique.UpdateLifeRegen(this);
         }
+
 
         public override void PreUpdate()
         {
@@ -144,6 +156,7 @@ namespace sorceryFight.SFPlayer
             }
         }
 
+
         public override void PostUpdate()
         {
             cursedEnergyRegenPerSecond += cursedEnergyRegenFromOtherSources;
@@ -180,6 +193,7 @@ namespace sorceryFight.SFPlayer
             blackFlashTime = 30;
         }
 
+
         public override void UpdateDead()
         {
             ResetBuffs();
@@ -211,6 +225,7 @@ namespace sorceryFight.SFPlayer
             disableRegenFromProjectiles = false;
         }
 
+
         public override void OnEnterWorld()
         {
             if (Main.myPlayer == Player.whoAmI && !recievedYourPotential)
@@ -220,9 +235,11 @@ namespace sorceryFight.SFPlayer
             }
         }
 
+
         void Keybinds()
         {
             if (Player.dead) return;
+
 
             if (SFKeybinds.UseTechnique.JustPressed)
             {
@@ -230,8 +247,10 @@ namespace sorceryFight.SFPlayer
                     ShootTechnique();
             }
 
+
             if (SFKeybinds.UseRCT.Current)
                 UseRCT();
+
 
             if (SFKeybinds.UseRCT.JustReleased)
                 if (rctAuraIndex != -1)
@@ -240,8 +259,68 @@ namespace sorceryFight.SFPlayer
                     rctAuraIndex = -1;
                 }
 
-            if (SFKeybinds.DomainExpansion.JustReleased)
-                DomainExpansion();
+
+            if (SFKeybinds.DomainExpansion.Current)
+            {
+                domainTimer++;
+                if (HasActiveDomain)
+                {
+                    domainTimer = 1;
+                }
+
+                float zoom = 1.3f * (MathF.Log10(domainTimer + 1f) + 0.22f);
+                Vector2 zoomVec = new Vector2(zoom, zoom);
+                zoomVec = Vector2.Clamp(zoomVec, Main.BackgroundViewMatrix.Zoom, Vector2.One * 2);
+
+                CameraController.SetCameraZoom(zoomVec);
+            }
+            else if (domainTimer != 0)
+            {
+                if (domainTimer < 20)
+                {
+                    if (HasActiveDomain)
+                    {
+                        CloseDomain();
+                    }
+                    else
+                    {
+                        if (DomainExpansionController.ActiveDomains.TryGet(d => d is ISimpleDomain && d.owner == Player.whoAmI, out DomainExpansion de))
+                        {
+                            DomainExpansionController.CloseDomain(de.id);
+                        }
+
+                        else
+                        {
+                            if (Player.velocity.Y != 0)
+                            {
+
+                                DomainExpansionController.ExpandDomain(Player.whoAmI, new SimpleDomainFloating());
+                            }
+                            else
+                            {
+                            }
+
+                            int index = CombatText.NewText(Player.getRect(), Color.LightCyan, "New Shadow Style: Simple Domain");
+                            Main.combatText[index].lifeTime = 60;
+                        }
+                    }
+
+                }
+                else
+                {
+                    if (DomainExpansionController.ActiveDomains.TryGet(d => d is ISimpleDomain && d.owner == Player.whoAmI, out DomainExpansion de))
+                    {
+                        DomainExpansionController.CloseDomain(de.id);
+                    }
+
+                    ExpandDomain();
+                }
+
+                domainTimer = 0;
+                CameraController.ResetCameraZoom();
+            }
+
+
 
             if (SFKeybinds.AttemptBlackFlash.JustPressed && blackFlashTimeLeft == 0)
             {
@@ -274,6 +353,8 @@ namespace sorceryFight.SFPlayer
                     CalculateCursedFistsHitbox();
             }
         }
+
+
         public void ShootTechnique()
         {
             if (selectedTechnique == null || disableRegenFromProjectiles)
@@ -297,6 +378,7 @@ namespace sorceryFight.SFPlayer
 
             selectedTechnique.UseTechnique(this);
         }
+
 
         void UseRCT()
         {
@@ -327,7 +409,9 @@ namespace sorceryFight.SFPlayer
                 Player.Heal(1);
             }
         }
-        void DomainExpansion()
+
+
+        void ExpandDomain()
         {
             if (Player.whoAmI == Main.myPlayer)
             {
@@ -352,9 +436,7 @@ namespace sorceryFight.SFPlayer
                     return;
                 }
 
-                bool hasDomainActive = DomainExpansionController.DomainExpansions.Any(de => de is PlayerDomainExpansion && de.owner == Player.whoAmI);
-
-                if (!inDomainAnimation && !hasDomainActive)
+                if (!inDomainAnimation)
                 {
                     inDomainAnimation = true;
 
@@ -373,13 +455,18 @@ namespace sorceryFight.SFPlayer
                         inDomainAnimation = false;
                     }, 200);
                 }
-                else if (hasDomainActive)
-                {
-                    int domainIndex = DomainExpansionController.DomainExpansions.FindIndex(domain => domain is PlayerDomainExpansion && domain.owner == Player.whoAmI);
-                    DomainExpansionController.CloseDomain(domainIndex);
-                }
             }
         }
+
+
+        void CloseDomain()
+        {
+            if (DomainExpansionController.ActiveDomains.TryGet(d => d is PlayerDomainExpansion && d.owner == Player.whoAmI, out DomainExpansion de))
+            {
+                DomainExpansionController.CloseDomain(de.id);
+            }
+        }
+
 
         void CursedFist()
         {
@@ -393,6 +480,7 @@ namespace sorceryFight.SFPlayer
 
             CalculateCursedFistsHitbox();
         }
+
 
         void CalculateCursedFistsHitbox()
         {
@@ -426,6 +514,7 @@ namespace sorceryFight.SFPlayer
             }
         }
 
+
         public void RollForPlayerAttributes(bool isReroll = false)
         {
             bool successfulRoll = false;
@@ -448,6 +537,7 @@ namespace sorceryFight.SFPlayer
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.FailedReroll"), Color.Khaki, Player.whoAmI);
             }
         }
+
 
         void PlayerAttributeIcons()
         {

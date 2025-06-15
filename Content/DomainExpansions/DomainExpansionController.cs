@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -208,12 +209,14 @@ namespace sorceryFight.Content.DomainExpansions
             SoundEngine.PlaySound(de.CastSound, de.center);
 
             int id;
-            if (de.ClosedDomain)
+            if (de.ClosedDomain && de is not ISimpleDomain)
                 id = DomainExpansions.Append(de);
             else
                 id = DomainExpansions.Prepend(de);
 
             DomainExpansions[id].id = id;
+            de.OnExpand();
+
             SetClashingDomains(de);
         }
 
@@ -228,17 +231,20 @@ namespace sorceryFight.Content.DomainExpansions
         {
             DomainExpansion de = DomainExpansions[id];
 
-            ResetClashingDomains(de);
+            de.OnClose();
 
-            DomainExpansions[id] = null;
+            ResetClashingDomains(de);
 
             if (de is PlayerDomainExpansion)
             {
                 if (Main.myPlayer == de.owner)
                 {
-                    SorceryFightPlayer sf = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
-                    sf.AddDeductableDebuff(ModContent.BuffType<BrainDamage>(), SorceryFightPlayer.DefaultBrainDamageDuration);
-                    sf.disableRegenFromDE = false;
+                    if (de is not ISimpleDomain)
+                    {
+                        SorceryFightPlayer sf = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+                        sf.AddDeductableDebuff(ModContent.BuffType<BrainDamage>(), SorceryFightPlayer.DefaultBrainDamageDuration);
+                        sf.disableRegenFromDE = false;
+                    }
 
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
@@ -253,16 +259,48 @@ namespace sorceryFight.Content.DomainExpansions
                     }
                 }
             }
+            DomainExpansions[id] = null;
         }
 
 
         public static void SetClashingDomains(DomainExpansion origin)
         {
+            if (origin is ISimpleDomain)
+            {
+                foreach (DomainExpansion de in ActiveDomains)
+                {
+                    if (de.id == origin.id) continue;
+                    if (de is ISimpleDomain) continue;
+
+                    float distance = Vector2.Distance(origin.center, de.center);
+                    if (distance < origin.SureHitRange || distance < de.SureHitRange)
+                    {
+                        TaskScheduler.Instance.AddDelayedTask(() =>
+                        {
+                            if (origin != null && ActiveDomains.Contains(origin))
+                                CloseDomain(origin.id);
+
+                        }, 60 * (-Math.Abs(origin.Tier - de.Tier) + 7));
+                    }
+                }
+                return;
+            }
+
             List<int> clashingDomains = new List<int>();
 
             foreach (DomainExpansion de in ActiveDomains)
             {
                 if (de.id == origin.id) continue;
+                if (de is ISimpleDomain)
+                {
+                    TaskScheduler.Instance.AddDelayedTask(() =>
+                    {
+                        if (de != null && ActiveDomains.Contains(de))
+                            CloseDomain(de.id);
+
+                    }, 60 * (-Math.Abs(origin.Tier - de.Tier) + 7));
+                    continue;
+                }
 
                 float distance = Vector2.Distance(origin.center, de.center);
                 if (distance < origin.SureHitRange || distance < de.SureHitRange)
@@ -315,13 +353,16 @@ namespace sorceryFight.Content.DomainExpansions
                 DomainExpansion originDE = DomainExpansions[item.Key];
                 DomainExpansion opposingDomain = DomainExpansions[item.Value];
 
+
+                int tierDiff = Math.Abs(originDE.Tier - opposingDomain.Tier);
+
                 if (originDE.Tier < opposingDomain.Tier)
                 {
-                    opposingDomain.health -= (int)SFUtils.RateSecondsToTicks(100);
+                    opposingDomain.health -= (int)SFUtils.RateSecondsToTicks(100 * tierDiff);
                 }
                 else if (originDE.Tier > opposingDomain.Tier)
                 {
-                    originDE.health -= (int)SFUtils.RateSecondsToTicks(100);
+                    originDE.health -= (int)SFUtils.RateSecondsToTicks(100 * tierDiff);
                 }
                 else if (originDE.Tier == opposingDomain.Tier)
                 {

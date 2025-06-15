@@ -33,7 +33,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
         {
             if (npc.life < npc.lifeMax * 0.01f) return false;
 
-            if (NPCDomainController.domainCounter == 0 && npc.life > npc.lifeMax * 0.05 && npc.life <= npc.lifeMax * 0.10) return true;
+            if (NPCDomainController.domainCounter == 0 && npc.life > npc.lifeMax * 0.01 && npc.life <= npc.lifeMax * 0.05) return true;
 
 
             return false;
@@ -68,7 +68,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
             player.AddBuff(ModContent.BuffType<VulnerabilityHex>(), 1);
         }
 
-        public override void CloseDomain()
+        public override void OnClose()
         {
             frame = 0;
             frameTime = 0;

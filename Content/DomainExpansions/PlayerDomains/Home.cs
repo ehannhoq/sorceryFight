@@ -63,7 +63,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
         }
 
 
-        public override void CloseDomain()
+        public override void OnClose()
         {
             tick = 0f;
             bgFade = 0f;
