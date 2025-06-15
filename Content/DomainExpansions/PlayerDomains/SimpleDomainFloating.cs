@@ -48,7 +48,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
             int frameY = frameHeight * frame;
 
             Rectangle src = new Rectangle(0, frameY, currentTexture.Width, frameHeight);
-            spriteBatch.Draw(currentTexture, center - Main.screenPosition, src, Color.White, 0f, src.Size() * 0.5f, 6f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(currentTexture, center - Main.screenPosition, src, Color.White, 0f, src.Size() * 0.5f, 1f, SpriteEffects.None, 0f);
         }
 
         public override void Update()
@@ -76,12 +76,13 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
                 }
             }
 
+            SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+
             if (Main.myPlayer == owner)
             {
-                SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
                 sfPlayer.disableRegenFromDE = true;
                 sfPlayer.cursedEnergy -= SFUtils.RateSecondsToTicks(Cost);
-                
+
                 if (sfPlayer.Player.dead || sfPlayer.cursedEnergy < 10)
                 {
                     DomainExpansionController.CloseDomain(id);
@@ -90,8 +91,9 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
             // Since domains are synced across all clients, we're allowed to have each client determine logic for themselves, even if they don't own the domain.
             if (Main.dedServ) return;
-
-            Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>().inSimpleDomain = false;
+            
+            sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+            sfPlayer.inSimpleDomain = false;
 
             foreach (Player player in Main.ActivePlayers)
             {
@@ -99,7 +101,8 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
                 if (Vector2.Distance(player.Center, this.center) < SureHitRange)
                 {
-                    player.GetModPlayer<SorceryFightPlayer>().inSimpleDomain = true;
+                    sfPlayer.inSimpleDomain = true;
+                    if (!sfPlayer.disableCurseTechniques) sfPlayer.disableCurseTechniques = true;
                     Main.LocalPlayer.wingTime = Main.LocalPlayer.wingTimeMax;
                 }
             }
@@ -111,6 +114,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
             frame = 0;
             frameTime = 0;
             Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>().inSimpleDomain = false;
+            Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>().disableCurseTechniques = false;
         }
 
         public override bool Unlocked(SorceryFightPlayer sf)
