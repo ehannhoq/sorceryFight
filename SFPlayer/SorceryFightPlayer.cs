@@ -21,6 +21,7 @@ using sorceryFight.Content.DomainExpansions;
 using System.Linq;
 using Microsoft.Xna.Framework.Design;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
+using sorceryFight.Content.DomainExpansions.NPCDomains;
 
 namespace sorceryFight.SFPlayer
 {
@@ -264,9 +265,7 @@ namespace sorceryFight.SFPlayer
             {
                 domainTimer++;
                 if (HasActiveDomain)
-                {
                     domainTimer = 1;
-                }
 
                 float zoom = 1.3f * (MathF.Log10(domainTimer + 1f) + 0.22f);
                 Vector2 zoomVec = new Vector2(zoom, zoom);
@@ -279,32 +278,11 @@ namespace sorceryFight.SFPlayer
                 if (domainTimer < 20)
                 {
                     if (HasActiveDomain)
-                    {
-                        CloseDomain();
-                    }
+                        CloseDomainExpansion();
                     else
                     {
-                        if (DomainExpansionController.ActiveDomains.TryGet(d => d is ISimpleDomain && d.owner == Player.whoAmI, out DomainExpansion de))
-                        {
-                            DomainExpansionController.CloseDomain(de.id);
-                        }
-
-                        else
-                        {
-                            if (Player.velocity.Y != 0)
-                            {
-
-                                DomainExpansionController.ExpandDomain(Player.whoAmI, new SimpleDomainFloating());
-                            }
-                            else
-                            {
-                            }
-
-                            int index = CombatText.NewText(Player.getRect(), Color.LightCyan, "New Shadow Style: Simple Domain");
-                            Main.combatText[index].lifeTime = 60;
-                        }
+                        ToggleSimpleDomain();
                     }
-
                 }
                 else
                 {
@@ -313,7 +291,7 @@ namespace sorceryFight.SFPlayer
                         DomainExpansionController.CloseDomain(de.id);
                     }
 
-                    ExpandDomain();
+                    ExpandDomainExpansion();
                 }
 
                 domainTimer = 0;
@@ -411,7 +389,7 @@ namespace sorceryFight.SFPlayer
         }
 
 
-        void ExpandDomain()
+        void ExpandDomainExpansion()
         {
             if (Player.whoAmI == Main.myPlayer)
             {
@@ -434,6 +412,24 @@ namespace sorceryFight.SFPlayer
                     int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
                     Main.combatText[index].lifeTime = 180;
                     return;
+                }
+
+                CameraController.ResetCameraZoom();
+
+                foreach (NPC npc in Main.ActiveNPCs)
+                {
+                    if (npc.GetDomain() != null)
+                    {
+                        NPCDomainController.playerCastedDomain = true;
+
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                        {
+                            ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
+                            packet.Write((byte)MessageType.PlayerCastingDomain);
+                            packet.Write(Player.whoAmI);
+                            packet.Send();
+                        }
+                    }
                 }
 
                 if (!inDomainAnimation)
@@ -459,13 +455,47 @@ namespace sorceryFight.SFPlayer
         }
 
 
-        void CloseDomain()
+        void CloseDomainExpansion()
         {
             if (DomainExpansionController.ActiveDomains.TryGet(d => d is PlayerDomainExpansion && d.owner == Player.whoAmI, out DomainExpansion de))
             {
                 DomainExpansionController.CloseDomain(de.id);
             }
         }
+
+        void ToggleSimpleDomain()
+        {
+            if (DomainExpansionController.ActiveDomains.TryGet(d => d is ISimpleDomain && d.owner == Player.whoAmI, out DomainExpansion de))
+            {
+                DomainExpansionController.CloseDomain(de.id);
+                return;
+            }
+
+            if (Main.myPlayer == Player.whoAmI)
+            {
+                int index;
+                if (!new SimpleDomainFloating().Unlocked(this))
+                {
+                    index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You haven't unlocked this yet!");
+                    Main.combatText[index].lifeTime = 60;
+                    return;
+                }
+
+
+                if (Player.HasBuff<BurntTechnique>())
+                {
+                    index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
+                    Main.combatText[index].lifeTime = 180;
+                    return;
+                }
+
+                DomainExpansionController.ExpandDomain(Player.whoAmI, new SimpleDomainFloating());
+                index = CombatText.NewText(Player.getRect(), Color.LightCyan, "New Shadow Style: Simple Domain");
+                Main.combatText[index].lifeTime = 60;
+
+            }
+        }
+
 
 
         void CursedFist()
