@@ -15,7 +15,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
     {
         public override string InternalName => "PhantasmicLabyrinth";
 
-        public override SoundStyle CastSound => SorceryFightSounds.UnlimitedVoid;
+        public override SoundStyle CastSound => SorceryFightSounds.PhantasmicLabyrinth;
 
         public override int Tier => 2;
 
@@ -34,7 +34,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
 
         public override bool ExpandCondition(NPC npc)
         {
-            if (npc.life > npc.lifeMax * 0.01f && npc.life <= npc.lifeMax * 0.90f) return true;
+            if (npc.life > npc.lifeMax * 0.01f && npc.life <= npc.lifeMax * 0.05f) return true;
             
             return false;
         }

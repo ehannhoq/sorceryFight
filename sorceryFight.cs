@@ -1,4 +1,6 @@
+using Microsoft.Build.Tasks;
 using sorceryFight.Content.DomainExpansions;
+using sorceryFight.Content.DomainExpansions.NPCDomains;
 using sorceryFight.Content.InnateTechniques;
 using sorceryFight.SFPlayer;
 using System.Collections.Generic;
@@ -13,7 +15,8 @@ namespace sorceryFight
 	public enum MessageType : byte
 	{
 		DefeatedBoss,
-		SyncDomain
+		SyncDomain,
+		PlayerCastingDomain
 	}
 	public class SorceryFight : Mod
 	{
@@ -38,12 +41,16 @@ namespace sorceryFight
 			byte messageType = reader.ReadByte();
 			switch (messageType)
 			{
-				case 0:
+				case (byte)MessageType.DefeatedBoss:
 					HandleBossDefeatedPacket(reader);
 					break;
 
-				case 1:
+				case (byte)MessageType.SyncDomain:
 					HandleDomainSyncingPacket(reader);
+					break;
+
+				case (byte)MessageType.PlayerCastingDomain:
+					HandlePlayerCastingDomainPacket(reader);
 					break;
 			}
 		}
@@ -98,7 +105,21 @@ namespace sorceryFight
 				packet.Write((byte)domainType);
 				packet.Write(id);
 				packet.Write(clashingWith);
-				packet.Send();
+				packet.Send(-1, whoAmI);
+			}
+		}
+
+		private void HandlePlayerCastingDomainPacket(BinaryReader reader)
+		{
+			int sentFrom = reader.ReadInt32();
+
+			NPCDomainController.playerCastedDomain = true;
+
+			if (Main.netMode == NetmodeID.Server)
+			{
+				ModPacket packet = GetPacket();
+				packet.Write((byte)MessageType.PlayerCastingDomain);
+				packet.Send(-1, sentFrom);
 			}
 		}
 	}

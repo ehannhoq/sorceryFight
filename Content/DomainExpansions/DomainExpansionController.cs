@@ -86,7 +86,7 @@ namespace sorceryFight.Content.DomainExpansions
             private void OnHit(NPC npc, NPC.HitInfo hit)
             {
                 int damage = hit.Damage;
-                if (DomainExpansions.TryGet(domain => domain is NPCDomainExpansion && domain.owner == npc.whoAmI, out DomainExpansion de) && damage >= npc.lifeMax * 0.025f)
+                if (DomainExpansions.TryGet(domain => domain is NPCDomainExpansion && domain.owner == npc.whoAmI, out DomainExpansion de) && damage >= npc.lifeMax * 0.05f)
                 {
                     CloseDomain(de.id);
                 }
@@ -348,6 +348,7 @@ namespace sorceryFight.Content.DomainExpansions
                 if (DomainExpansions[item.Key] == null || DomainExpansions[item.Value] == null)
                 {
                     ClashingDomains.Remove(item.Key);
+                    continue;
                 }
 
                 DomainExpansion originDE = DomainExpansions[item.Key];
@@ -373,6 +374,12 @@ namespace sorceryFight.Content.DomainExpansions
                     else if (!originDE.ClosedDomain && opposingDomain.ClosedDomain)
                     {
                         opposingDomain.health -= (int)SFUtils.RateSecondsToTicks(75);
+                    }
+
+                    else if (!originDE.ClosedDomain && !opposingDomain.ClosedDomain)
+                    {
+                        originDE.health -= (int)SFUtils.RateSecondsToTicks(50);
+                        opposingDomain.health -= (int)SFUtils.RateSecondsToTicks(50);
                     }
                 }
             }

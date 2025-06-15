@@ -34,11 +34,14 @@ namespace sorceryFight
 
         public static SoundStyle UnlimitedVoid;
         public static SoundStyle MalevolentShrine;
-        public static SoundStyle IdleDeathGambleOpening;
         public static SoundStyle Home;
+        public static SoundStyle IdleDeathGambleOpening;
         public static SoundStyle IDGSlots;
         public static SoundStyle IDGWoosh;
         public static SoundStyle IDGWooshLoop;
+
+        public static SoundStyle PhantasmicLabyrinth;
+        public static SoundStyle AshenedPillarsOfCalamity;
 
         public static SoundStyle OblivionSwordSlash;
         public static SoundStyle OblivionSwordBigSlash;
@@ -77,6 +80,9 @@ namespace sorceryFight
             IDGWooshLoop = new("sorceryFight/Content/Sounds/DomainExpansions/IDGWooshLoop") { Volume = 1f };
             IDGWoosh = new("sorceryFight/Content/Sounds/DomainExpansions/IDGWoosh") { Volume = 1f };
             IDGSlots = new("sorceryFight/Content/Sounds/DomainExpansions/IDGSlots") { Volume = 1f };
+
+            PhantasmicLabyrinth = new("sorceryFight/Content/Sounds/DomainExpansions/PhantasmicLabyrinth") { Volume = 1f };
+            AshenedPillarsOfCalamity = new("sorceryFight/Content/Sounds/DomainExpansions/AshenedPillarsOfCalamity") { Volume = 1f };
 
             OblivionSwordSlash = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordSlash") { Volume = 1f };
             OblivionSwordBigSlash = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordBigSlash") { Volume = 1f };

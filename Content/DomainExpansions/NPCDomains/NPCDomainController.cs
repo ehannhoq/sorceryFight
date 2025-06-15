@@ -41,9 +41,10 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
         public static Vector2 npcCastingPosition;
         public static bool castingDomain = false;
         public static int domainCounter = 0;
+        public static bool playerCastedDomain = false;
 
         public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.GetDomain() != null && lateInstantiation;
-    
+
         public override void SetDefaults(NPC entity)
         {
             castingDomain = false;
@@ -54,16 +55,21 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
         {
             base.PreAI(npc);
 
+            if (npcCastingPosition != Vector2.Zero)
+            {
+                npc.Center = npcCastingPosition;
+            }
+
+
             // Main.NewText($"{npc.FullName}: Used Domain {domainCounter} times, " + (domainCooldown ? "on cooldown" : "not on cooldown") + $" Can expand domain? {npc.GetDomain().ExpandCondition(npc)}");
 
-            if (npc.active && !DomainExpansionController.ActiveDomains.Any(domain => domain is NPCDomainExpansion && domain.owner == npc.whoAmI) && domainCounter < npc.GetBrainRefreshCount()
-            && npc.GetDomain().ExpandCondition(npc))
+            if ((npc.active && !DomainExpansionController.ActiveDomains.Any(domain => domain is NPCDomainExpansion && domain.owner == npc.whoAmI) && domainCounter < npc.GetBrainRefreshCount()
+            && npc.GetDomain().ExpandCondition(npc)) || (playerCastedDomain && !DomainExpansionController.ActiveDomains.Any(domain => domain is NPCDomainExpansion && domain.owner == npc.whoAmI && domainCounter < npc.GetBrainRefreshCount())))
             {
+                playerCastedDomain = false;
+
                 if (npcCastingPosition == Vector2.Zero)
                     npcCastingPosition = npc.Center;
-
-                npc.Center = npcCastingPosition;
-
 
                 if (!castingDomain)
                 {
@@ -83,6 +89,8 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
                     TaskScheduler.Instance.AddDelayedTask(() =>
                     {
                         DomainExpansionController.ExpandDomain(npc.whoAmI, npc.GetDomain());
+                        playerCastedDomain = false;
+
                         domainCounter++;
                     }, 200);
 

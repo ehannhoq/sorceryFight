@@ -80,7 +80,7 @@ namespace sorceryFight
         public static void ResetCameraZoom()
         {
             if (originalCameraZoom == Vector2.Zero) return;
-            
+
             Main.BackgroundViewMatrix.Zoom = originalCameraZoom;
             originalCameraZoom = Vector2.Zero;
             targetCameraZoom = Vector2.Zero;

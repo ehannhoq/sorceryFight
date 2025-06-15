@@ -15,7 +15,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
 
         public override string InternalName => "AshenedPillarsOfCalamity";
 
-        public override SoundStyle CastSound => SorceryFightSounds.MalevolentShrine;
+        public override SoundStyle CastSound => SorceryFightSounds.AshenedPillarsOfCalamity;
 
         public override int Tier => 1;
 
