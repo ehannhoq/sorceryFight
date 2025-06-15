@@ -9,9 +9,8 @@ namespace sorceryFight.Content.Buffs.Shrine
     public class DomainAmplificationProjectile : ModProjectile
     {
         public virtual int FrameCount { get; set; } = 6;
-        public virtual int TicksPerFrame { get; set; } = 5;
+        public virtual int TicksPerFrame { get; set; } = 3;
         public Texture2D texture;
-        public Texture2D underTexture;
         public override void SetDefaults()
         {
             Projectile.damage = 0;
@@ -20,7 +19,6 @@ namespace sorceryFight.Content.Buffs.Shrine
             
             if (Main.dedServ) return;
             texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Buffs/Shrine/DomainAmplificationProjectile", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            underTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/Buffs/Shrine/DomainAmplificationProjectile_Underlay", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value; 
         }
 
         public override void AI()
@@ -52,8 +50,7 @@ namespace sorceryFight.Content.Buffs.Shrine
 
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
 
-            Main.spriteBatch.Draw(underTexture, Projectile.Center - Main.screenPosition - new Vector2(0f, 15f), sourceRectangle, Color.White * 0.75f, Projectile.rotation, origin, 0.8f, SpriteEffects.None, 0f);
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - new Vector2(0f, 15f), sourceRectangle, Color.White, Projectile.rotation, origin, 0.8f, SpriteEffects.None, 0f);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition - new Vector2(0f, 20f), sourceRectangle, Color.White, Projectile.rotation, origin, 1.5f, SpriteEffects.None, 0f);
 
             return false;
         }
