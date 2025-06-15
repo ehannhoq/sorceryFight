@@ -36,6 +36,11 @@ Mods: {
 				DisplayName: Structure Wand
 				Tooltip: ""
 			}
+
+			IgnoreTileItem: {
+				DisplayName: Ignore Tile Item
+				Tooltip: ""
+			}
 		}
 	}
 }

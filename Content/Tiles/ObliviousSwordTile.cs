@@ -60,7 +60,7 @@ namespace sorceryFight.Content.Tiles
                 return false;
 
             int currentFrame = Main.tileFrame[Type];
-            texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Tiles/ObliviousSwordTile/{currentFrame}").Value;
+            texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Tiles/ObliviousSwordTile/{currentFrame}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
             Vector2 zero = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
             zero += new Vector2(16, 16);
