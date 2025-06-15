@@ -7,25 +7,12 @@
 	<PropertyGroup>
 		
 	</PropertyGroup>
-	<ItemGroup>
-	  <AdditionalFiles Remove="Content\UI\CursedTechniqueMenu\Limitless\**" />
-	  <Compile Remove="Content\UI\CursedTechniqueMenu\Limitless\**" />
-	  <EmbeddedResource Remove="Content\UI\CursedTechniqueMenu\Limitless\**" />
-	  <None Remove="Content\UI\CursedTechniqueMenu\Limitless\**" />
-	</ItemGroup>
-	<ItemGroup>
-	  <AdditionalFiles Remove="Localization\en-US\Mods.sorceryFight.Consumables.hjson" />
-	  <AdditionalFiles Remove="Localization\en-US\Mods.sorceryFight.Weapons.Melee.hjson" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Content Include="Content\UI\CursedTechniqueMenu\Limitless\Background.png" />
-	</ItemGroup>
+
+
+	<!-- References -->
 	<ItemGroup>
 	  <Reference Include="CalamityMod">
 	    <HintPath>..\..\ModReader\CalamityMod\CalamityMod.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
-
-	<!-- References -->
-
 </Project>
