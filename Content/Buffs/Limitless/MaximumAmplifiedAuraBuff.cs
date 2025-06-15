@@ -44,6 +44,11 @@ namespace sorceryFight.Content.Buffs.Limitless
                 player.GetModPlayer<SorceryFightPlayer>().innateTechnique.PassiveTechniques[1].isActive = false;
             }
 
+            if (player.HasBuff<FallingBlossomEmotionBuff>())
+            {
+                player.GetModPlayer<SorceryFightPlayer>().innateTechnique.PassiveTechniques[3].isActive = false;
+            }
+
             if (Main.myPlayer == player.whoAmI && !auraIndices.ContainsKey(player.whoAmI))
             {
                 Vector2 playerPos = player.MountedCenter;

@@ -68,6 +68,16 @@ MaximumAmplifiedAuraBuff: {
 	LockedDescription: Defeat the stone-faced ritualistic idol of the Lihzahrd tribe.
 }
 
+FallingBlossomEmotionBuff: {
+	DisplayName: Falling Blossom Emotion
+	Description:
+		'''
+		An anti-domain technique passed down
+		among the Big Three clans.
+		'''
+	LockedDescription: Defeat the crazed cultist leader at the entrance of the dungeon.
+}
+
 DomainAmplificationBuff: {
 	DisplayName: Domain Amplification
 	Description:

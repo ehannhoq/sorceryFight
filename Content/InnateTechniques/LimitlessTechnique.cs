@@ -17,7 +17,8 @@ namespace sorceryFight.Content.InnateTechniques
         {
             new InfinityBuff(),
             new AmplifiedAuraBuff(),
-            new MaximumAmplifiedAuraBuff()
+            new MaximumAmplifiedAuraBuff(),
+            new FallingBlossomEmotionBuff()
         };
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {

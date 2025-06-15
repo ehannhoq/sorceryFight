@@ -22,7 +22,9 @@ namespace sorceryFight.Content.Buffs.Shrine
                 return "Base CE Consumption: 50 CE/s\n"
                         + "100% of incoming damage is\n"
                         + "neutralized into Cursed Energy.\n"
-                        + "You cannot use Cursed Techniques while this is active,\n"
+                        + "Grants immunity to enemy domains.\n"            
+                        + "You cannot use Cursed Techniques while,\n"
+                        + "this is active, as well as moving 10% slower,\n"
                         + "unless you have a unique body structure.\n"
                        + "Hollow Wicker Basket takes 3x more CE during boss fights.\n";
             }
@@ -61,6 +63,9 @@ namespace sorceryFight.Content.Buffs.Shrine
                 auraIndices[player.whoAmI] = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<HollowWickerBasketProjectile>(), 0, 0, player.whoAmI);
 
             }
+
+            if (!sfPlayer.uniqueBodyStructure)
+                player.moveSpeed -= 0.10f;
 
             sfPlayer.disableCurseTechniques = true;
         }
@@ -113,18 +118,20 @@ namespace sorceryFight.Content.Buffs.Shrine
             if (accumulativeDamage > 0f && !waiting)
             {
 
-                TaskScheduler.Instance.AddContinuousTask(() => {
+                TaskScheduler.Instance.AddContinuousTask(() =>
+                {
                     sfPlayer.disableRegenFromBuffs = true;
                 },
                 300);
 
-                TaskScheduler.Instance.AddDelayedTask(() => {
+                TaskScheduler.Instance.AddDelayedTask(() =>
+                {
                     waiting = false;
                 },
                 301);
 
                 waiting = true;
-            }            
+            }
 
             int multiplier = 1;
             if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
@@ -135,7 +142,7 @@ namespace sorceryFight.Content.Buffs.Shrine
             CostPerSecond = 50f;
             CostPerSecond += accumulativeDamage * 3f * multiplier;
 
-            base.Update(player, ref buffIndex);
+            base.Update(player, ref buffIndex);            
         }
     }
 }
