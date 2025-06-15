@@ -26,7 +26,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
         public static int GetBrainRefreshCount(this NPC npc)
         {
             if (npc.type == ModContent.NPCType<SupremeCalamitas>())
-                return 3;
+                return 1; // SCal will soon be able to expand more than one domain. ** AFTER BRAIN DAMAGE REWORK **
 
             return 1;
         }

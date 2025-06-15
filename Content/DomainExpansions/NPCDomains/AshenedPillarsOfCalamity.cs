@@ -33,9 +33,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
         {
             if (npc.life < npc.lifeMax * 0.01f) return false;
 
-            if (NPCDomainController.domainCounter == 0 && npc.life > npc.lifeMax * 0.85 && npc.life <= npc.lifeMax * 0.90) return true;
-            if (NPCDomainController.domainCounter == 1 && npc.life > npc.lifeMax * 0.45 && npc.life <= npc.lifeMax * 0.50) return true;
-            if (NPCDomainController.domainCounter == 2 && npc.life > npc.lifeMax * 0.05 && npc.life <= npc.lifeMax * 0.10) return true;
+            if (NPCDomainController.domainCounter == 0 && npc.life > npc.lifeMax * 0.05 && npc.life <= npc.lifeMax * 0.10) return true;
 
 
             return false;
