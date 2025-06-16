@@ -19,6 +19,7 @@ or leave a comment, though it will be less likely to be seen.
 
 Development Team:
 ehann, Developer
+prowler, Developer
 rend, Developer
 AverageTiredGuy, Sprite Artist
 gooloohoodoo, Sprite Artist
