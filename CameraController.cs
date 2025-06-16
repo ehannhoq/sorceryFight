@@ -13,11 +13,6 @@ namespace sorceryFight
         private static Vector2 originalCameraZoom;
         private static Vector2 targetCameraZoom;
 
-        public override void Load()
-        {
-            Main.GameViewMatrix.Zoom = new Vector2(1, 1);
-        }
-
         public static void SetCameraPosition(Vector2 position, int duration, float lerp = 0.5f)
         {
             Action action = () =>
