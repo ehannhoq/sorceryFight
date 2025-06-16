@@ -42,6 +42,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
         public static bool castingDomain = false;
         public static int domainCounter = 0;
         public static bool playerCastedDomain = false;
+        public static int domainTimer = 0;
 
         public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.GetDomain() != null && lateInstantiation;
 
@@ -49,17 +50,32 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
         {
             castingDomain = false;
             domainCounter = 0;
+            npcCastingPosition = Vector2.Zero;
+            domainTimer = 0;
+            playerCastedDomain = false;
+        }
+
+        public override bool CheckDead(NPC npc)
+        {
+            castingDomain = false;
+            domainCounter = 0;
+            npcCastingPosition = Vector2.Zero;
+            domainTimer = 0;
+            playerCastedDomain = false;
+
+            return base.CheckDead(npc);
         }
 
         public override bool PreAI(NPC npc)
         {
             base.PreAI(npc);
 
+            if (Main.dedServ) return base.PreAI(npc);
+
             if (npcCastingPosition != Vector2.Zero)
             {
                 npc.Center = npcCastingPosition;
             }
-
 
             // Main.NewText($"{npc.FullName}: Used Domain {domainCounter} times, " + (domainCooldown ? "on cooldown" : "not on cooldown") + $" Can expand domain? {npc.GetDomain().ExpandCondition(npc)}");
 
@@ -71,38 +87,45 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
                 if (npcCastingPosition == Vector2.Zero)
                     npcCastingPosition = npc.Center;
 
-                if (!castingDomain)
-                {
-                    castingDomain = true;
-                    CameraController.SetCameraPosition(npcCastingPosition, 260);
-
-                    int index;
-                    index = CombatText.NewText(npc.getRect(), Color.White, "Domain Expansion:");
-                    Main.combatText[index].lifeTime = 90;
-
-                    TaskScheduler.Instance.AddDelayedTask(() =>
-                    {
-                        index = CombatText.NewText(npc.getRect(), Color.White, npc.GetDomain().DisplayName);
-                        Main.combatText[index].lifeTime = 90;
-                    }, 100);
-
-                    TaskScheduler.Instance.AddDelayedTask(() =>
-                    {
-                        DomainExpansionController.ExpandDomain(npc.whoAmI, npc.GetDomain());
-                        playerCastedDomain = false;
-
-                        domainCounter++;
-                    }, 200);
-
-                    TaskScheduler.Instance.AddDelayedTask(() =>
-                    {
-                        castingDomain = false;
-                        npcCastingPosition = Vector2.Zero;
-                    }, 260);
-                }
+                castingDomain = true;
             }
 
-            if (castingDomain) return false;
+
+            if (castingDomain)
+            {
+                domainTimer++;
+
+                if (domainTimer == 1)
+                {
+                    CameraController.SetCameraPosition(npcCastingPosition, 260);
+                    int index = CombatText.NewText(npc.getRect(), Color.White, "Domain Expansion:");
+                    Main.combatText[index].lifeTime = 90;
+                }
+
+                if (domainTimer == 100)
+                {
+                    int index = CombatText.NewText(npc.getRect(), Color.White, npc.GetDomain().DisplayName);
+                    Main.combatText[index].lifeTime = 90;
+                }
+
+                if (domainTimer == 200)
+                {
+                    DomainExpansionController.ExpandDomain(npc.whoAmI, npc.GetDomain());
+                    playerCastedDomain = false;
+
+                    domainCounter++;
+                }
+
+                if (domainTimer == 260)
+                {
+                    castingDomain = false;
+                    npcCastingPosition = Vector2.Zero;
+                    domainTimer = 0;
+                }
+
+                return false;
+            }
+
 
             return true;
         }

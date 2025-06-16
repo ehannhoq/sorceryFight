@@ -34,7 +34,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
 
         public override bool ExpandCondition(NPC npc)
         {
-            if (npc.life > npc.lifeMax * 0.01f && npc.life <= npc.lifeMax * 0.05f) return true;
+            if (npc.life > npc.lifeMax * 0.01f && npc.life <= npc.lifeMax * 0.10f) return true;
             
             return false;
         }
