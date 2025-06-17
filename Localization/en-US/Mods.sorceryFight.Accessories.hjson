@@ -55,6 +55,7 @@ CursedBlindfold: {
 		Increases every other cursed technique damage by {1}%.
 		Increase max cursed energy by {2}.
 		Increases cursed energy regen by {3}/s.
+		Can only be equipped if you have [c/99d6f2:Six Eyes].
 		[c/30475e:"Cover those baby-blues!"]
 		'''
 }
