@@ -31,17 +31,18 @@ namespace sorceryFight.Content.Items.Consumables
             if (player.whoAmI == Main.myPlayer)
             {
                 SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
-                
+
                 if (!sf.innateTechnique.Name.Equals("Shrine") && !sf.innateTechnique.Name.Equals("Vessel")) return false;
 
-                if (sf.sukunasFingerConsumed < Id)
+                if (!sf.sukunasFingers[Id - 1])
                 {
-                    sf.sukunasFingerConsumed ++;
+                    sf.sukunasFingers[Id - 1] = true;
                     SoundEngine.PlaySound(SoundID.Item2, player.Center);
+
                     if (sf.innateTechnique.Name.Equals("Vessel"))
                         SorceryFightUI.UpdateTechniqueUI.Invoke();
-                    return true;
                 }
+                return true;
             }
             return false;
         }

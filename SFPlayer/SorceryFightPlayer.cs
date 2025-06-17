@@ -90,7 +90,8 @@ namespace sorceryFight.SFPlayer
         #endregion
 
         #region Shrine/Vessel Specific Variables
-        public int sukunasFingerConsumed;
+        public bool[] sukunasFingers;
+        public int sukunasFingerConsumed => sukunasFingers.Where(x => x).Count();
         #endregion
 
         #region RCT

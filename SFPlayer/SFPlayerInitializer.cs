@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using sorceryFight.Content.InnateTechniques;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -52,7 +53,7 @@ namespace sorceryFight.SFPlayer
             sixEyes = false;
             uniqueBodyStructure = false;
 
-            sukunasFingerConsumed = 0;
+            sukunasFingers = new bool[20];
 
             unlockedRCT = false;
             rctAuraIndex = -1;
@@ -102,7 +103,15 @@ namespace sorceryFight.SFPlayer
             tag["generalBooleans"] = generalBooleans;
 
             if (innateTechnique != null && (innateTechnique.Name.Equals("Shrine") || innateTechnique.Name.Equals("Vessel")))
-                tag["sukunasFingerConsumed"] = sukunasFingerConsumed;
+            {
+                var indexes = new List<int>();
+                for (int i = 0; i < 20; i++)
+                {
+                    if (sukunasFingers[i])
+                        indexes.Add(i);
+                }
+                tag["sukunasFingers"] = indexes;
+            }
 
         }
 
@@ -140,7 +149,14 @@ namespace sorceryFight.SFPlayer
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
 
             if (innateTechnique != null && (innateTechnique.Name.Equals("Shrine") || innateTechnique.Name.Equals("Vessel")))
-                sukunasFingerConsumed = tag.ContainsKey("sukunasFingerConsumed") ? tag.GetInt("sukunasFingerConsumed") : 0;
+            {
+                var indexes = tag.GetList<int>("sukunasFingers");
+                
+                for (int i = 0; i < indexes.Count; i++)
+                {
+                    sukunasFingers[indexes[i]] = true;
+                }
+            }
         }
 
         public float calculateBaseMaxCE()
