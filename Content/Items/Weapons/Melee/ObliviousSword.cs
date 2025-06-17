@@ -109,21 +109,12 @@ namespace sorceryFight.Content.Items.Weapons.Melee
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameRect, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            spriteBatch.End();
-            spriteBatch.Begin(
-                SpriteSortMode.Immediate,
-                BlendState.NonPremultiplied
-            );
-
             int frameHeight = texture.Height / FRAMES;
             int frameY = (int)(Main.GameUpdateCount / TICKS_PER_FRAME % FRAMES) * frameHeight;
             Rectangle srcRect = new Rectangle(0, frameY, texture.Width, frameHeight);
 
             spriteBatch.Draw(texture, position, srcRect, Color.White, 0f, origin, scale * 1.5f, SpriteEffects.None, 0f);
-
-            spriteBatch.End();
-            spriteBatch.Begin();
-
+            
             return false;
         }
 
