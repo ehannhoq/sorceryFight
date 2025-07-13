@@ -158,7 +158,7 @@ namespace sorceryFight.SFPlayer
             }
         }
 
-
+        private int TEMP_disabledRegenTimer = 0;
         public override void PostUpdate()
         {
             cursedEnergyRegenPerSecond += cursedEnergyRegenFromOtherSources;
@@ -193,6 +193,18 @@ namespace sorceryFight.SFPlayer
             disableRegenFromBuffs = false;
             disableCurseTechniques = false;
             blackFlashTime = 30;
+
+            if (disabledRegen)
+            {
+                TEMP_disabledRegenTimer++;
+                if (TEMP_disabledRegenTimer >= 180)
+                {
+                    disableRegenFromBuffs = false;
+                    disableRegenFromProjectiles = false;
+                    disableRegenFromDE = false;
+                    TEMP_disabledRegenTimer = 0;
+                }
+            }
         }
 
 
