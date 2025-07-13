@@ -23,6 +23,24 @@ Mods: {
 					Tooltip: Toggle the screen flashing when landing a Black Flash.
 				}
 			}
+
+			SorceryFightServerConfig: {
+				DisplayName: Sorcery Fight Server Config
+
+				LoreAccurateBlackFlash: {
+					Label: Lore Accurate Black Flash
+					Tooltip: Toggles the damage output of a successful blackflash. Lore accurate Black Flashes deal squared damage, compared to the normal 3x damage.
+				}
+			}
+
+			ServerConfig: {
+				DisplayName: Server Config
+
+				LoreAccurateBlackFlash: {
+					Label: Lore Accurate Black Flash
+					Tooltip: ""
+				}
+			}
 		}
 
 		DamageClasses.CursedTechniqueDamageClass.DisplayName: cursed damage

@@ -8,6 +8,7 @@ using sorceryFight.Content.Buffs;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
+using tModPorter;
 
 namespace sorceryFight.SFPlayer
 {
@@ -90,7 +91,8 @@ namespace sorceryFight.SFPlayer
             bool showFlowState = blackFlashCounter == 1;
             sfUI.InitiateBlackFlashUI(target.Center, showFlowState);
 
-            int additionalDamage = (int)Math.Pow(damageDone, 2) - damageDone;
+            int additionalDamage = ModContent.GetInstance<ServerConfig>().LoreAccurateBlackFlash ? (int)Math.Pow(damageDone, 2) : damageDone * 3;
+            additionalDamage -= damageDone;
 
             Player.ApplyDamageToNPC(target, additionalDamage, hit.Knockback, hit.HitDirection, false);
 
