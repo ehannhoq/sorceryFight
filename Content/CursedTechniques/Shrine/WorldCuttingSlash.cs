@@ -31,8 +31,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override float Cost => 1225f;
         public override Color textColor => new Color(245, 214, 208);
         public override bool DisplayNameInGame => false;
-        public override int Damage => 50000;
-        public override int MasteryDamageMultiplier => 550;
+        public override int Damage => 20000;
+        public override int MasteryDamageMultiplier => 500;
         public override float Speed => 60f;
         public override float LifeTime => 300f;
         ref float castTime => ref Projectile.ai[0];
@@ -82,6 +82,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Projectile.penetrate = -1;
             animating = false;
             hitbox = Projectile.Hitbox;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override void AI()

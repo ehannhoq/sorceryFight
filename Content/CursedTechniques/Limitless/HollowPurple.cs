@@ -18,15 +18,15 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public static readonly int FRAME_COUNT = 4;
         public static readonly int TICKS_PER_FRAME = 5;
 
-        
+
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.HollowPurple.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HollowPurple.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HollowPurple.LockedDescription");
         public override float Cost { get; } = 525f;
         public override Color textColor { get; } = new Color(235, 117, 233);
         public override bool DisplayNameInGame { get; } = true;
-        public override int Damage => 20000;
-        public override int MasteryDamageMultiplier => 444;
+        public override int Damage => 13000;
+        public override int MasteryDamageMultiplier => 400;
         public override float Speed { get; } = 45f;
         public override float LifeTime { get; } = 500f;
         public override bool Unlocked(SorceryFightPlayer sf)
@@ -45,9 +45,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<HollowPurple>();
-        } 
+        }
 
-        
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -56,6 +56,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             animating = false;
             animScale = 2f;
             hitbox = Projectile.Hitbox;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
 
             blueOffset = new Vector2(-60f, -20f);
             redOffset = new Vector2(60f, -20f);
@@ -102,7 +104,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 animScale = 0f;
                 Projectile.damage = 0;
                 Projectile.Hitbox = new Rectangle(0, 0, 0, 0);
-                Projectile.Center = player.Center + new Vector2(0f, -30f);                
+                Projectile.Center = player.Center + new Vector2(0f, -30f);
 
 
                 Vector2 bluePosition = player.Center + blueOffset;
@@ -111,9 +113,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 if (Projectile.ai[0] == 1)
                 {
                     if (Main.myPlayer == Projectile.owner)
-                    { 
+                    {
                         int index = Projectile.NewProjectile(Projectile.GetSource_FromThis(), bluePosition, Vector2.Zero, ModContent.ProjectileType<AmplificationBlue>(), 0, 0f, Projectile.owner, default, 1);
-                        if (index >= 0) 
+                        if (index >= 0)
                             Projectile.ai[1] = index;
                     }
                 }
@@ -124,7 +126,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     if (Main.myPlayer == Projectile.owner)
                     {
                         int index = Projectile.NewProjectile(Projectile.GetSource_FromThis(), redPosition, Vector2.Zero, ModContent.ProjectileType<ReversalRed>(), 0, 0f, Projectile.owner, default, 1);
-                        if (index >= 0) 
+                        if (index >= 0)
                             Projectile.ai[2] = index;
                     }
                 }
@@ -135,7 +137,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 if (Projectile.ai[0] >= 1 && blue.type == ModContent.ProjectileType<AmplificationBlue>())
                 {
                     blue.Center = bluePosition;
-                    
+
                     Vector2 particleOffsetPosition = bluePosition + new Vector2(Main.rand.NextFloat(-20f, 20f), Main.rand.NextFloat(-20f, 20f));
                     Vector2 particleVelocity = particleOffsetPosition.DirectionTo(player.Center + new Vector2(0f, -20f)) * 2;
                     LineParticle particle = new LineParticle(particleOffsetPosition, particleVelocity, false, 30, 0.5f, new Color(108, 158, 240));
@@ -161,7 +163,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                     this.blueOffset.X += Math.Abs(this.blueOffset.X) / timeLeft;
                     this.redOffset.X -= Math.Abs(this.redOffset.X) / timeLeft;
-                    
+
                     if (this.blueOffset.X >= this.redOffset.X)
                     {
                         for (int i = 0; i < 30; i++)
@@ -220,7 +222,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {
             base.OnHitNPC(target, hit, damageDone);
 
-            for (int i = 0; i < 20; i ++)
+            for (int i = 0; i < 20; i++)
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 7), Main.rand.NextFloat(-7, 7));
 

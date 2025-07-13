@@ -30,7 +30,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override float Speed => 0f;
         public override float LifeTime => 16f;
         float basePercent = 0.01f;
-        bool hasHit;
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<Cleave>();
@@ -96,22 +95,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Projectile.height = 250;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
-            hasHit = false;
-        }
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
-        {
-            if (!hasHit)
-            {
-                float targetHealth = target.life;
-                float additionalDamage = targetHealth * CalculateTrueDamage(Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>());
-                modifiers.FinalDamage.Flat += additionalDamage;
-                hasHit = true;
-            }
-
-            else
-                Projectile.damage = 0;
-
-            base.ModifyHitNPC(target, ref modifiers);
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override void AI()

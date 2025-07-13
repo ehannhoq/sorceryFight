@@ -23,8 +23,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override Color textColor { get; } = new Color(224, 74, 74);
 
        
-        public override int Damage => 5000;
-        public override int MasteryDamageMultiplier => 333;
+        public override int Damage => 4000;
+        public override int MasteryDamageMultiplier => 300;
         public override float Speed { get; } = 30f;
         public override float LifeTime { get; } = 300f;
         public override bool Unlocked(SorceryFightPlayer sf)
@@ -58,6 +58,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             animating = false;
             animScale = 0f;
             hitbox = Projectile.Hitbox;
+            
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override Color? GetAlpha(Color lightColor)
