@@ -239,12 +239,14 @@ namespace sorceryFight.Content.DomainExpansions
             {
                 if (Main.myPlayer == de.owner)
                 {
+                    SorceryFightPlayer sf = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+                    sf.disableRegenFromDE = false;
+
                     if (de is not ISimpleDomain)
                     {
-                        SorceryFightPlayer sf = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
                         sf.AddDeductableDebuff(ModContent.BuffType<BrainDamage>(), SorceryFightPlayer.DefaultBrainDamageDuration);
-                        sf.disableRegenFromDE = false;
                     }
+
 
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
