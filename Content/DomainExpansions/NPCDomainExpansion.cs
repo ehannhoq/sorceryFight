@@ -61,7 +61,7 @@ namespace sorceryFight.Content.DomainExpansions
             if (!Main.npc[owner].active || Main.npc[owner].life <= Main.npc[owner].lifeMax * 0.01f)
             {
                 DomainExpansionController.CloseDomain(id);
-                NPCDomainController.domainCounter = 0;
+                Main.npc[owner].GetGlobalNPC<NPCDomainController>().domainCounter = 0;
             }
         }
     }
