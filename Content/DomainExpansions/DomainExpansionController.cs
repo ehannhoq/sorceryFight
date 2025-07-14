@@ -385,9 +385,6 @@ namespace sorceryFight.Content.DomainExpansions
                         opposingDomain.health -= SFUtils.RateSecondsToTicks(50);
                     }
                 }
-
-                Main.NewText($"{originDE.DisplayName} HP: {originDE.health}");
-                Main.NewText($"{opposingDomain.DisplayName} HP: {opposingDomain.health}");
             }
         }
     }
