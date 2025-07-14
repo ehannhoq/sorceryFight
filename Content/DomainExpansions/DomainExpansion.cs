@@ -75,7 +75,7 @@ namespace sorceryFight.Content.DomainExpansions
         /// <summary>
         /// The "health" of the domain.
         /// </summary>
-        public int health = 1000;
+        public float health = 1000;
 
         /// <summary>
         /// Runs any logic that needs to be constantly updated. Call base.Update() to auto disallow entering/leaving the domain.

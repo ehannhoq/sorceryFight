@@ -72,6 +72,7 @@ namespace sorceryFight.Content.DomainExpansions
         private class NPCDomainHPTracker : GlobalNPC
         {
             public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.GetDomain() != null && lateInstantiation;
+            public override bool InstancePerEntity => true;
 
             public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
             {
@@ -361,29 +362,32 @@ namespace sorceryFight.Content.DomainExpansions
 
                 if (originDE.Tier < opposingDomain.Tier)
                 {
-                    opposingDomain.health -= (int)SFUtils.RateSecondsToTicks(100 * tierDiff);
+                    opposingDomain.health -= SFUtils.RateSecondsToTicks(100 * tierDiff);
                 }
                 else if (originDE.Tier > opposingDomain.Tier)
                 {
-                    originDE.health -= (int)SFUtils.RateSecondsToTicks(100 * tierDiff);
+                    originDE.health -= SFUtils.RateSecondsToTicks(100 * tierDiff);
                 }
                 else if (originDE.Tier == opposingDomain.Tier)
                 {
                     if (originDE.ClosedDomain && !opposingDomain.ClosedDomain)
                     {
-                        originDE.health -= (int)SFUtils.RateSecondsToTicks(75);
+                        originDE.health -= SFUtils.RateSecondsToTicks(75);
                     }
                     else if (!originDE.ClosedDomain && opposingDomain.ClosedDomain)
                     {
-                        opposingDomain.health -= (int)SFUtils.RateSecondsToTicks(75);
+                        opposingDomain.health -= SFUtils.RateSecondsToTicks(75);
                     }
 
                     else if (!originDE.ClosedDomain && !opposingDomain.ClosedDomain)
                     {
-                        originDE.health -= (int)SFUtils.RateSecondsToTicks(50);
-                        opposingDomain.health -= (int)SFUtils.RateSecondsToTicks(50);
+                        originDE.health -= SFUtils.RateSecondsToTicks(50);
+                        opposingDomain.health -= SFUtils.RateSecondsToTicks(50);
                     }
                 }
+
+                Main.NewText($"{originDE.DisplayName} HP: {originDE.health}");
+                Main.NewText($"{opposingDomain.DisplayName} HP: {opposingDomain.health}");
             }
         }
     }
