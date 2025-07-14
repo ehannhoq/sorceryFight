@@ -207,6 +207,7 @@ namespace sorceryFight.Content.DomainExpansions
             }
 
             de.owner = whoAmI;
+            de.health = 1000;
             SoundEngine.PlaySound(de.CastSound, de.center);
 
             int id;
