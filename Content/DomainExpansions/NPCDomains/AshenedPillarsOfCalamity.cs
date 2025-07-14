@@ -31,10 +31,8 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
 
         public override bool ExpandCondition(NPC npc)
         {
-            if (npc.life < npc.lifeMax * 0.01f) return false;
-
-            if (NPCDomainController.domainCounter == 0 && npc.life > npc.lifeMax * 0.01 && npc.life <= npc.lifeMax * 0.05) return true;
-
+            if (npc.GetGlobalNPC<NPCDomainController>().domainCounter == 0 && npc.life > npc.lifeMax * 0.80 && npc.life <= npc.lifeMax * 0.90) return true;
+            if (npc.GetGlobalNPC<NPCDomainController>().domainCounter == 1 && npc.life > npc.lifeMax * 0.01 && npc.life <= npc.lifeMax * 0.05) return true;
 
             return false;
         }
