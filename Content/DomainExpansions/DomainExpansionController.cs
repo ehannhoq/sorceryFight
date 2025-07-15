@@ -231,8 +231,9 @@ namespace sorceryFight.Content.DomainExpansions
         /// <param name="id">The id of the domain.</param>
         public static void CloseDomain(int id)
         {
+            if (DomainExpansions[id] == null) return;
+            
             DomainExpansion de = DomainExpansions[id];
-
             de.OnClose();
 
             ResetClashingDomains(de);
