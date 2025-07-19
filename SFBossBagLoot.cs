@@ -113,6 +113,7 @@ namespace sorceryFight
             if (item.type != ItemID.MoonLordBossBag) return;
 
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CelestialAmulet>(), CelestialAmulet.ChanceDenominator, 1, 1));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<LunarCursedFragment>(), 1, 14, 17));
         }
 
         private void WallOfFleshBag(ref Item item, ref ItemLoot itemLoot)

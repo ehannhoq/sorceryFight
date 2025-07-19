@@ -19,6 +19,7 @@ using CalamityMod.NPCs.StormWeaver;
 using sorceryFight.Content.Items.Accessories;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.Items.Consumables.SukunasFinger;
+using sorceryFight.Content.Items.Materials;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -133,7 +134,8 @@ namespace sorceryFight
         {
             if (npc.type != NPCID.MoonLordCore) return;
 
-            nonExpertRule.OnFailedConditions(ItemDropRule.Common(ModContent.ItemType<CelestialAmulet>(), CelestialAmulet.ChanceDenominator));
+            nonExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CelestialAmulet>(), CelestialAmulet.ChanceDenominator));
+            nonExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<LunarCursedFragment>(), 1, 9, 12));
         }
 
         private void WallOfFleshDrops(ref NPC npc, ref NPCLoot npcLoot, ref LeadingConditionRule nonExpertRule)
