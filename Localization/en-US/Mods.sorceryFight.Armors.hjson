@@ -1,0 +1,8 @@
+LaurelWreath: {
+	DisplayName: Hallowed Laurel Wreath
+	Tooltip:
+		'''
+		{0}% increased cursed technique damage
+		{1}% increased critical strike chance 
+		'''
+}

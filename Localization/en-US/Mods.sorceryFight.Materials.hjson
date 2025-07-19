@@ -16,3 +16,8 @@ InfusedCursedFragment: {
 	DisplayName: Infused Cursed Fragment
 	Tooltip: ""
 }
+
+LunarCursedFragment: {
+	DisplayName: Lunar Cursed Fragment
+	Tooltip: ""
+}
