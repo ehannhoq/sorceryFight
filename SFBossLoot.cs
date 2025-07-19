@@ -1,13 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using CalamityMod;
 using CalamityMod.Items.Accessories;
-using CalamityMod.Items.SummonItems;
-using CalamityMod.Items.TreasureBags;
-using CalamityMod.NPCs;
-using CalamityMod.NPCs.AstrumAureus;
 using CalamityMod.NPCs.AstrumDeus;
 using CalamityMod.NPCs.Bumblebirb;
 using CalamityMod.NPCs.CalClone;
@@ -24,7 +19,6 @@ using CalamityMod.NPCs.StormWeaver;
 using sorceryFight.Content.Items.Accessories;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.Items.Consumables.SukunasFinger;
-using sorceryFight.Content.Items.Materials;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -33,101 +27,29 @@ using static CalamityMod.DropHelper;
 
 namespace sorceryFight
 {
-    public class SFGlobalNPCLoot : GlobalNPC
+    public class SFBossLoot : GlobalNPC
     {
+        public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.boss;
+
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
-            CursedModifiers(npc, npcLoot);
-            SukunasFingers(npc, npcLoot);
-            CursedFragments(npc, npcLoot);
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GeneticReroll>(), 4, 1, 1));
 
-            switch (npc.type)
-            {
-                case NPCID.MoonLordCore:
-                    npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<CelestialAmulet>(), CelestialAmulet.ChanceDenominator, 0));
-                    break;
-                case NPCID.WallofFlesh:
+            LeadingConditionRule nonExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+            npcLoot.Add(nonExpertRule);
 
-                    List<IItemDropRule> rules = npcLoot.Get(true);
-
-                    rules.RemoveAll(rule =>
-                    {
-                        if (rule is AllOptionsAtOnceWithPityDropRule itemRule)
-                        {
-                            foreach (var weightedItemStack in itemRule.stacks.ToArray())
-                            {
-                                int itemID = SFUtils.GetInternalFieldFromCalamity<int>(
-                                    "CalamityMod.WeightedItemStack",
-                                    "itemID",
-                                    weightedItemStack
-                                );
-
-                                if (itemID == ItemID.WarriorEmblem)
-                                {
-                                    return true;
-                                }
-                            }
-                        }
-                        return false;
-                    });
-
-                    int[] emblems = new int[]
-                    {
-                        ItemID.WarriorEmblem,
-                        ItemID.RangerEmblem,
-                        ItemID.SorcererEmblem,
-                        ItemID.SummonerEmblem,
-                        ModContent.ItemType<RogueEmblem>(),
-                        ModContent.ItemType<JujutsuEmblem>()
-                    };
-
-                    npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, emblems));
-
-                    break;
-            }
-
+            CursedModifiers(ref npc, ref npcLoot, ref nonExpertRule);
+            SukunasFingers(ref npc, ref npcLoot, ref nonExpertRule);
+            MoonLordDrops(ref npc, ref npcLoot, ref nonExpertRule);
+            WallOfFleshDrops(ref npc, ref npcLoot, ref nonExpertRule);
         }
 
-        private void CursedFragments(NPC npc, NPCLoot npcLoot)
+        // Non-Expert only
+        private void CursedModifiers(ref NPC npc, ref NPCLoot npcLoot, ref LeadingConditionRule nonExpertRule)
         {
-            if (npc.friendly) return;
+            LeadingConditionRule firstTimeRule = new LeadingConditionRule(new SFConditions.FirstTimeDefeatingBoss());
+            nonExpertRule.Add(firstTimeRule);
 
-            int cursedFragment = ModContent.ItemType<CursedFragment>();
-
-            Dictionary<int, int> npcLootMap = new()
-            {
-                { NPCID.BloodCrawler, cursedFragment },
-                { NPCID.FaceMonster, cursedFragment },
-                { NPCID.Crimslime, cursedFragment },
-                { NPCID.Crimera, cursedFragment },
-                { NPCID.Herpling, cursedFragment },
-                { NPCID.BloodJelly, cursedFragment },
-                { NPCID.BloodMummy, cursedFragment },
-                { NPCID.CrimsonAxe, cursedFragment },
-                { NPCID.IchorSticker, cursedFragment },
-                { NPCID.FloatyGross, cursedFragment },
-                { NPCID.BigMimicCrimson, cursedFragment },
-                { NPCID.PigronCrimson, cursedFragment },
-                { NPCID.DesertGhoulCrimson, cursedFragment },
-
-                { NPCID.EaterofSouls, cursedFragment },
-                { NPCID.CorruptSlime, cursedFragment },
-                { NPCID. DevourerHead, cursedFragment },
-                { NPCID.Corruptor, cursedFragment },
-                { NPCID.DarkMummy, cursedFragment },
-                { NPCID.CursedHammer, cursedFragment },
-                { NPCID.Clinger, cursedFragment },
-                { NPCID.BigMimicCorruption, cursedFragment },
-            };
-
-            if (npcLootMap.TryGetValue(npc.type, out int itemID))
-            {
-                npcLoot.Add(ItemDropRule.Common(itemID, 6, 1, 3));
-            }
-        }
-
-        private void CursedModifiers(NPC npc, NPCLoot npcLoot)
-        {
             Dictionary<int, int> npcLootMap = new()
             {
                 // Max CE Modifiers
@@ -143,17 +65,20 @@ namespace sorceryFight
                 { NPCID.Golem, ModContent.ItemType<CursedRock>() },
                 { ModContent.NPCType<Bumblefuck>(), ModContent.ItemType<CursedEffulgentFeather>() },
                 { ModContent.NPCType<Signus>(), ModContent.ItemType<CursedRuneOfKos>() },
-
             };
 
             if (npcLootMap.TryGetValue(npc.type, out int itemID))
             {
-                npcLoot.Add(ItemDropRule.NormalvsExpert(itemID, 1, 0));
+                firstTimeRule.OnSuccess(ItemDropRule.Common(itemID));
             }
         }
 
-        private void SukunasFingers(NPC npc, NPCLoot npcLoot)
+        // Non-Expert only
+        private void SukunasFingers(ref NPC npc, ref NPCLoot npcLoot, ref LeadingConditionRule nonExpertRule)
         {
+            LeadingConditionRule firstTimeRule = new LeadingConditionRule(new SFConditions.FirstTimeDefeatingBoss());
+            nonExpertRule.Add(firstTimeRule);
+
             Dictionary<int, int> npcLootMap = new()
             {
                 { NPCID.EyeofCthulhu, ModContent.ItemType<SukunasFingerI>() },
@@ -200,9 +125,55 @@ namespace sorceryFight
 
             if (npcLootMap.TryGetValue(npc.type, out int itemID))
             {
-                npcLoot.Add(ItemDropRule.NormalvsExpert(itemID, 1, 0));
+                firstTimeRule.OnSuccess(ItemDropRule.Common(itemID));
             }
         }
 
+        private void MoonLordDrops(ref NPC npc, ref NPCLoot npcLoot, ref LeadingConditionRule nonExpertRule)
+        {
+            if (npc.type != NPCID.MoonLordCore) return;
+
+            nonExpertRule.OnFailedConditions(ItemDropRule.Common(ModContent.ItemType<CelestialAmulet>(), CelestialAmulet.ChanceDenominator));
+        }
+
+        private void WallOfFleshDrops(ref NPC npc, ref NPCLoot npcLoot, ref LeadingConditionRule nonExpertRule)
+        {
+            if (npc.type != NPCID.WallofFlesh) return;
+
+            List<IItemDropRule> rules = npcLoot.Get(true);
+
+            rules.RemoveAll(rule =>
+            {
+                if (rule is AllOptionsAtOnceWithPityDropRule itemRule)
+                {
+                    foreach (var weightedItemStack in itemRule.stacks.ToArray())
+                    {
+                        int itemID = SFUtils.GetInternalFieldFromCalamity<int>(
+                            "CalamityMod.WeightedItemStack",
+                            "itemID",
+                            weightedItemStack
+                        );
+
+                        if (itemID == ItemID.WarriorEmblem)
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            });
+
+            int[] emblems = new int[]
+            {
+                        ItemID.WarriorEmblem,
+                        ItemID.RangerEmblem,
+                        ItemID.SorcererEmblem,
+                        ItemID.SummonerEmblem,
+                        ModContent.ItemType<RogueEmblem>(),
+                        ModContent.ItemType<JujutsuEmblem>()
+            };
+
+            npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, emblems));
+        }
     }
 }

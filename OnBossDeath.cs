@@ -7,13 +7,8 @@ using Terraria.ModLoader;
 
 namespace sorceryFight
 {
-    public class SFGlobalBoss : GlobalNPC
+    public class OnBossDeath : GlobalNPC
     {
-        public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
-        {
-            if (!npc.boss) return;
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GeneticReroll>(), 4, 1, 1));
-        }
         public override void OnKill(NPC npc)
         {
             if (!npc.boss) return;
