@@ -197,7 +197,7 @@ namespace sorceryFight.SFPlayer
             if (disabledRegen)
             {
                 TEMP_disabledRegenTimer++;
-                if (TEMP_disabledRegenTimer >= 180)
+                if (TEMP_disabledRegenTimer >= 300)
                 {
                     disableRegenFromBuffs = false;
                     disableRegenFromProjectiles = false;
