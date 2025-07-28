@@ -1,3 +1,8 @@
 **/.DS_Store
 .vs
 obj
+
+# Exclude any fx compiler that is present.
+Content/Shaders/*
+!Content/Shaders/*.fx
+!Content/Shaders/*.xnb
