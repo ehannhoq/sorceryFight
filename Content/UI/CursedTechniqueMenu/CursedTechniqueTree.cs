@@ -82,7 +82,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             List<PassiveTechnique> passiveTechniques = player.innateTechnique.PassiveTechniques;
 
             float iconSize = 30;
-            int originIconCount = 4;
+            int originIconCount = 5;
             float distance = 80f;
             Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance, 1f / 3f);
 
@@ -122,8 +122,9 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             ref TechniqueIcon amplifiedBlueIcon = ref ctIconsSpan[0];
             ref TechniqueIcon maximumBlueIcon = ref ctIconsSpan[1];
             ref TechniqueIcon reversalRedIcon = ref ctIconsSpan[2];
-            ref TechniqueIcon hollowPurpleIcon = ref ctIconsSpan[3];
-            ref TechniqueIcon hollowPurple200Icon = ref ctIconsSpan[4];
+            ref TechniqueIcon maximumRedIcon = ref ctIconsSpan[3];
+            ref TechniqueIcon hollowPurpleIcon = ref ctIconsSpan[4];
+            ref TechniqueIcon hollowPurple200Icon = ref ctIconsSpan[5];
 
             ref TechniqueIcon infinityIcon = ref ptIconsSpan[0];
             ref TechniqueIcon amplifiedAuraIcon = ref ptIconsSpan[1];
@@ -132,9 +133,10 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
 
             ref Vector2 amplifiedBluePos = ref originPositions[0];
-            ref Vector2 reversalRedPos = ref originPositions[1];
-            ref Vector2 infinityPos = ref originPositions[2];
-            ref Vector2 amplifiedAuraPos = ref originPositions[3];
+            ref Vector2 hollowPurplePos = ref originPositions[1];
+            ref Vector2 reversalRedPos = ref originPositions[2];
+            ref Vector2 infinityPos = ref originPositions[3];
+            ref Vector2 amplifiedAuraPos = ref originPositions[4];
 
 
             infinityIcon.Left.Set(infinityPos.X, 0f);
@@ -149,6 +151,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             reversalRedIcon.Left.Set(reversalRedPos.X, 0f);
             reversalRedIcon.Top.Set(reversalRedPos.Y, 0f);
 
+            hollowPurpleIcon.Left.Set(hollowPurplePos.X, 0f);
+            hollowPurpleIcon.Top.Set(hollowPurplePos.Y, 0f);
 
             float vectorRotation = 1f / 3f;
 
@@ -160,6 +164,15 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             maximumBluePos *= distance * 2;
             maximumBlueIcon.Left.Set(maximumBluePos.X + center.X - iconSize / 2, 0f);
             maximumBlueIcon.Top.Set(maximumBluePos.Y + center.Y - iconSize / 2, 0f);
+
+            // Maximum Red
+            Vector2 maximumRedPos = new Vector2(reversalRedPos.X + iconSize / 2, reversalRedPos.Y + iconSize / 2);
+            maximumRedPos = maximumRedPos.DirectionFrom(center);
+            maximumRedPos = maximumRedPos.RotatedBy(vectorRotation);
+            maximumRedPos.Normalize();
+            maximumRedPos *= distance * 2;
+            maximumRedIcon.Left.Set(maximumRedPos.X + center.X - iconSize / 2, 0f);
+            maximumRedIcon.Top.Set(maximumRedPos.Y + center.Y - iconSize / 2, 0f);
 
             // Maximum Aura
             Vector2 maximumAuraPos = new Vector2(amplifiedAuraPos.X + iconSize / 2, amplifiedAuraPos.Y + iconSize / 2);
@@ -179,28 +192,21 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             fallingBlossomEmotionIcon.Left.Set(fallingBlossomEmotionPos.X + center.X - iconSize / 2, 0f);
             fallingBlossomEmotionIcon.Top.Set(fallingBlossomEmotionPos.Y + center.Y - iconSize / 2, 0f);
 
-            // Hollow Purple
-            Vector2 hollowPurplePos = new Vector2(reversalRedPos.X + iconSize / 2, reversalRedPos.Y + iconSize / 2);
-            hollowPurplePos = hollowPurplePos.DirectionFrom(center);
-            hollowPurplePos = hollowPurplePos.RotatedBy(vectorRotation);
-            hollowPurplePos.Normalize();
-            hollowPurplePos *= distance * 2;
-            hollowPurpleIcon.Left.Set(hollowPurplePos.X + center.X - iconSize / 2, 0f);
-            hollowPurpleIcon.Top.Set(hollowPurplePos.Y + center.Y - iconSize / 2, 0f);
 
             // 200 % Hollow Purple
-            Vector2 hollowPurple200Pos = new Vector2(reversalRedPos.X + iconSize / 2, reversalRedPos.Y + iconSize / 2);
+            Vector2 hollowPurple200Pos = new Vector2(hollowPurplePos.X + iconSize / 2, hollowPurplePos.Y + iconSize / 2);
             hollowPurple200Pos = hollowPurple200Pos.DirectionFrom(center);
-            hollowPurple200Pos = hollowPurple200Pos.RotatedBy(vectorRotation * 2);
+            hollowPurple200Pos = hollowPurple200Pos.RotatedBy(vectorRotation);
             hollowPurple200Pos.Normalize();
-            hollowPurple200Pos *= distance * 3f;
+            hollowPurple200Pos *= distance * 2f;
             hollowPurple200Icon.Left.Set(hollowPurple200Pos.X + center.X - iconSize / 2, 0f);
             hollowPurple200Icon.Top.Set(hollowPurple200Pos.Y + center.Y - iconSize / 2, 0f);
 
+
             maximumAuraIcon.parents.Add(amplifiedAuraIcon);
             maximumBlueIcon.parents.Add(amplifiedBlueIcon);
+            maximumRedIcon.parents.Add(reversalRedIcon);
             fallingBlossomEmotionIcon.parents.Add(infinityIcon);
-            hollowPurpleIcon.parents.AddRange([reversalRedIcon, maximumBlueIcon]);
             hollowPurple200Icon.parents.Add(hollowPurpleIcon);
 
             foreach (TechniqueIcon icon in ctIcons)

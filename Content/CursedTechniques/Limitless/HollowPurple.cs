@@ -10,6 +10,9 @@ using sorceryFight.SFPlayer;
 using CalamityMod.NPCs.Providence;
 using sorceryFight.Content.Items.Accessories;
 using System;
+using CalamityMod.NPCs.Signus;
+using CalamityMod.NPCs.StormWeaver;
+using CalamityMod.NPCs.CeaselessVoid;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {
@@ -31,7 +34,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override float LifeTime { get; } = 500f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<Providence>());
+            return sf.HasDefeatedBoss(ModContent.NPCType<Signus>()) && sf.HasDefeatedBoss(ModContent.NPCType<StormWeaverHead>()) && sf.HasDefeatedBoss(ModContent.NPCType<CeaselessVoid>());
         }
 
         public static Texture2D texture;
@@ -125,7 +128,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 {
                     if (Main.myPlayer == Projectile.owner)
                     {
-                        int index = Projectile.NewProjectile(Projectile.GetSource_FromThis(), redPosition, Vector2.Zero, ModContent.ProjectileType<ReversalRed>(), 0, 0f, Projectile.owner, default, 1);
+                        int index = Projectile.NewProjectile(Projectile.GetSource_FromThis(), redPosition, Vector2.Zero, ModContent.ProjectileType<MaximumOutputRed>(), 0, 0f, Projectile.owner, default, 1);
                         if (index >= 0)
                             Projectile.ai[2] = index;
                     }
@@ -144,7 +147,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     GeneralParticleHandler.SpawnParticle(particle);
                 }
 
-                if (Projectile.ai[0] >= (int)redCastTime && red.type == ModContent.ProjectileType<ReversalRed>())
+                if (Projectile.ai[0] >= (int)redCastTime && red.type == ModContent.ProjectileType<MaximumOutputRed>())
                 {
                     red.Center = redPosition;
 

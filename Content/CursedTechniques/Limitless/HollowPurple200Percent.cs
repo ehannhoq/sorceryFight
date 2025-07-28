@@ -143,7 +143,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 {
                     if (Main.myPlayer == Projectile.owner)
                     {
-                        int index = Projectile.NewProjectile(Projectile.GetSource_FromThis(), redPosition, Vector2.Zero, ModContent.ProjectileType<ReversalRed>(), 0, 0f, Projectile.owner, default, 1);
+                        int index = Projectile.NewProjectile(Projectile.GetSource_FromThis(), redPosition, Vector2.Zero, ModContent.ProjectileType<MaximumOutputRed>(), 0, 0f, Projectile.owner, default, 1);
                         if (index >= 0)
                             Projectile.ai[2] = index;
                     }
@@ -162,7 +162,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     GeneralParticleHandler.SpawnParticle(particle);
                 }
 
-                if (Projectile.ai[0] >= (int)redCastTime && red.type == ModContent.ProjectileType<ReversalRed>())
+                if (Projectile.ai[0] >= (int)redCastTime && red.type == ModContent.ProjectileType<MaximumOutputRed>())
                 {
                     red.Center = redPosition;
 

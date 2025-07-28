@@ -40,6 +40,21 @@ ReversalRed: {
 		'''
 }
 
+MaximumOutputRed: {
+	DisplayName: Maximum Output: Red
+	Description:
+		'''
+		The mastered version of Red. The projectile
+		pierces through enemies, dealing immense contact
+		damage.
+		'''
+	LockedDescription:
+		'''
+		Defeat the Goddess who slew a dragon and
+		gorged Herself in its auric soul of Flame.
+		'''
+}
+
 HollowPurple: {
 	DisplayName: Hollow Technique: Purple
 	Description:
@@ -48,11 +63,7 @@ HollowPurple: {
 		and divergence, an imaginary mass is formed.
 		The CE output far surpasses of Blue and Red.
 		'''
-	LockedDescription:
-		'''
-		Defeat the Goddess who slew a dragon and
-		gorged Herself in its auric soul of Flame.
-		'''
+	LockedDescription: Defeat the Servants of the Scourge.
 }
 
 HollowPurple200Percent: {

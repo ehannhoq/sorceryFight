@@ -26,8 +26,9 @@ namespace sorceryFight.Content.InnateTechniques
             new MaximumOutputBlue(),
 
             new ReversalRed(),
+            new MaximumOutputRed(),
+        
             new HollowPurple(),
-
             new HollowPurple200Percent()
         };
 
