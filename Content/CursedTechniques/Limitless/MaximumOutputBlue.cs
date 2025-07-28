@@ -39,6 +39,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public bool animating;
         public float animScale;
         public bool justSpawned;
+        public bool followCursor = true;
 
         public override void SetStaticDefaults()
         {
@@ -136,7 +137,16 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 }
             }
 
-            if (Main.myPlayer == Projectile.owner)
+            if (followCursor)
+            {
+                if (Main.mouseRight && Main.mouseRightRelease)
+                    followCursor = false;
+            }
+            else
+                    Projectile.velocity *= 0.9f;
+                    
+
+            if (Main.myPlayer == Projectile.owner && followCursor)
             {
                 Vector2 projDirection = Projectile.Center.DirectionTo(Main.MouseWorld);
                 Vector2 projVelocity = Vector2.Lerp(Projectile.velocity, projDirection * 30f, 0.1f);
