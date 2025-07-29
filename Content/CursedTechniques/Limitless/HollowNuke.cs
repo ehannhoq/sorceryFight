@@ -101,6 +101,11 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                                 Filters.Scene["SF:HollowNuke"].GetShader().UseProgress(opacity);
                             }, 30);
                     }, 90);
+
+                    TaskScheduler.Instance.AddDelayedTask(() =>
+                    {
+                        Filters.Scene["SF:HollowNuke"].Deactivate();
+                    }, 91);
                 }
             }
         }
