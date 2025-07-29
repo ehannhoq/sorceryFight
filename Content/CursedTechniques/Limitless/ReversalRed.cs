@@ -23,8 +23,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override Color textColor { get; } = new Color(224, 74, 74);
 
        
-        public override int Damage => 2000;
-        public override int MasteryDamageMultiplier => 120;
+        public override int Damage => 3000;
+        public override int MasteryDamageMultiplier => 80;
         public override float Speed { get; } = 32f;
         public override float LifeTime { get; } = 200f;
         public override bool Unlocked(SorceryFightPlayer sf)
@@ -58,9 +58,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             animating = false;
             animScale = 0f;
             hitbox = Projectile.Hitbox;
-            
-            Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = -1;
         }
 
         public override Color? GetAlpha(Color lightColor)
@@ -109,6 +106,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
+            Projectile.penetrate = 0;
 
             for (int i = 0; i < 10; i++)
             {
