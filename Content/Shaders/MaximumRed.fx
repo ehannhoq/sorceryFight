@@ -30,9 +30,7 @@ float4 Desaturate(float2 coords : TEXCOORD0) : COLOR0
     }
     
     float radius = uProgress;
-
-
-    float2 pos = float2(uSecondaryColor.rg);
+    float2 pos = (uTargetPosition - uScreenPosition) / uScreenResolution;
 
     float2 difference = coords - pos;
     difference.x *= uScreenResolution.x / uScreenResolution.y;

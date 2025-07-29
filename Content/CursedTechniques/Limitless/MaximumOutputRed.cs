@@ -89,9 +89,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
             if (Projectile.ai[0] < beginPhaseTime)
             {
-                if (!Main.dedServ && Projectile.owner == Main.myPlayer && !spawnedFromPurple)
+                if (!Main.dedServ && Projectile.owner == Main.myPlayer)
                 {
-                    Vector2 shaderPos = (Projectile.Center - Main.screenPosition) / new Vector2(Main.screenWidth, Main.screenHeight);
                     float percent = Projectile.ai[0] / beginPhaseTime;
                     float pixelRadius = 200f * (1f - percent);
                     float radius = pixelRadius / Main.screenWidth;
@@ -102,7 +101,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     }
                     else
                     {
-                        Filters.Scene["SF:MaximumRed"].GetShader().UseSecondaryColor(shaderPos.X, shaderPos.Y, 0f).UseProgress(radius);
+                        Filters.Scene["SF:MaximumRed"].GetShader().UseTargetPosition(Projectile.Center).UseProgress(radius);
 
                         if (percent >= 0.95f)
                             Filters.Scene["SF:MaximumRed"].GetShader().UseOpacity(0f);
