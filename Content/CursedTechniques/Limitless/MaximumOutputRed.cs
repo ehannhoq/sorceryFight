@@ -11,18 +11,22 @@ using sorceryFight.SFPlayer;
 using CalamityMod.NPCs.Providence;
 using Terraria.Graphics.Effects;
 using System.IO;
+using System;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {
     public class MaximumOutputRed : CursedTechnique
     {
         public static readonly int FRAME_COUNT = 9;
+        public static readonly int LINE_FRAME_COUNT = 8;
         public static readonly int TICKS_PER_FRAME = 3;
-        public static Texture2D texture;
-
-
+        public static Texture2D texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/MaximumOutputRed", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+        public static Texture2D lineTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/MaximumOutputRedLineFX", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public bool inAnimation;
         public ref float scale => ref Projectile.ai[2];
+        public float[] lineFX = { -1, -1, -1 };
+        public int lineFrame = 0;
+        public int lineFrameTime = 0;
 
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.MaximumOutputRed.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.MaximumOutputRed.Description");
@@ -84,17 +88,34 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 }
             }
 
-            float beginPhaseTime = 60f;
+            if (lineFrameTime++ >= TICKS_PER_FRAME)
+            {
+                lineFrameTime = 0;
 
+                if (lineFrame++ >= LINE_FRAME_COUNT - 1)
+                {
+                    lineFrame = 0;
+                }
+            }
+
+            float beginPhaseTime = 60f;
 
             if (Projectile.ai[0] < beginPhaseTime)
             {
+                if (Projectile.ai[0] == 1)
+                    lineFX[0] = 0;
+                if (Projectile.ai[0] == 21)
+                    lineFX[1] = 2 * MathF.PI / 3;
+                if (Projectile.ai[0] == 41)
+                    lineFX[2] = 4 * MathF.PI / 3;
+
+
                 if (!Main.dedServ && Projectile.owner == Main.myPlayer)
                 {
                     float percent = Projectile.ai[0] / beginPhaseTime;
                     float pixelRadius = 200f * (1f - percent);
                     float radius = pixelRadius / Main.screenWidth;
-                    
+
                     if (!Filters.Scene["SF:MaximumRed"].IsActive())
                     {
                         Filters.Scene.Activate("SF:MaximumRed").GetShader().UseColor(textColor).UseOpacity(1f);
@@ -125,13 +146,13 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                 Projectile.netUpdate = true;
 
-                for (int i = 0; i < 2; i++)
-                {
-                    Vector2 particleOffset = Projectile.Center + new Vector2(Main.rand.NextFloat(-80f, 80f), Main.rand.NextFloat(-80f, 80f));
-                    Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                    LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 10, 1, textColor);
-                    GeneralParticleHandler.SpawnParticle(particle);
-                }
+                // for (int i = 0; i < 2; i++)
+                // {
+                //     Vector2 particleOffset = Projectile.Center + new Vector2(Main.rand.NextFloat(-80f, 80f), Main.rand.NextFloat(-80f, 80f));
+                //     Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
+                //     LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 10, 1, textColor);
+                //     GeneralParticleHandler.SpawnParticle(particle);
+                // }
 
                 return;
             }
@@ -194,10 +215,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public override bool PreDraw(ref Color lightColor)
         {
-            if (texture == null && !Main.dedServ)
-                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/MaximumOutputRed").Value;
-
-
             int frameHeight = texture.Height / FRAME_COUNT;
             int frameY = Projectile.frame * frameHeight;
 
@@ -206,6 +223,20 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
+
+            if (inAnimation)
+            {
+                for (int i = 0; i < lineFX.Length; i++)
+                {
+                    if (lineFX[i] == -1) return false;
+
+                    int lineFrameHeight = lineTexture.Height / LINE_FRAME_COUNT;
+                    int lineFrameY = lineFrame * lineFrameHeight;
+                    Rectangle lineSourceRectangle = new Rectangle(0, lineFrameY, lineTexture.Width, lineFrameHeight);
+                    Main.EntitySpriteDraw(lineTexture, Projectile.Center - Main.screenPosition, lineSourceRectangle, Color.White, lineFX[i], lineSourceRectangle.Size() * 0.5f, 1f, SpriteEffects.None, 0f);
+                }
+            }
+
             return false;
         }
     }
