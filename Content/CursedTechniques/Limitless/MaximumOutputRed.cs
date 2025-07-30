@@ -165,7 +165,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                     if (!spawnedFromPurple)
                     {
-                        SoundEngine.PlaySound(SorceryFightSounds.CommonFire, Projectile.Center);
+                        SoundEngine.PlaySound(SorceryFightSounds.MaximumOutputRedFire, Projectile.Center);
                         Projectile.damage = (int)CalculateTrueDamage(player.GetModPlayer<SorceryFightPlayer>());
                     }
 
