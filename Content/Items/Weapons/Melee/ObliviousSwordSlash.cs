@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Particles;
 using sorceryFight.Content.Particles.UIParticles;
+using sorceryFight.Content.Projectiles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
