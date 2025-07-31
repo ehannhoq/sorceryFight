@@ -12,6 +12,7 @@ Mods: {
 			ObliviousSwordSlash.DisplayName: Oblivious Sword Slash
 			ObliviousSwordProjectile.DisplayName: Oblivious Sword Projectile
 			FallingBlossomEmotionProjectile.DisplayName: Falling Blossom Emotion Projectile
+			FingerBearerBall.DisplayName: Finger Bearer Ball
 		}
 
 		Configs: {

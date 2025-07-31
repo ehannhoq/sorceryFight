@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Items.Consumables.SukunasFinger;
+using sorceryFight.Content.Projectiles;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.NPCs.FingerBearer
@@ -29,9 +31,10 @@ namespace sorceryFight.Content.NPCs.FingerBearer
         private int frameCounter;
         private int maxFrames;
         private int frameTime;
+        private bool readyToAttack = false;
 
-        private float attackRange = 250f;
-        private float movementSpeed = 1.5f;
+        private float attackRange = 450f;
+        private float movementSpeed = 3f;
 
 
         public override void SetStaticDefaults()
@@ -50,26 +53,41 @@ namespace sorceryFight.Content.NPCs.FingerBearer
             NPC.damage = 120;
             NPC.netAlways = true;
             NPC.aiStyle = 0;
-            NPC.lifeMax = 1000;
+            NPC.lifeMax = 2000;
             NPC.knockBackResist = 0.5f;
             NPC.Hitbox = new Rectangle(0, 0, NPC.width, NPC.height);
         }
 
         public override void FindFrame(int frameHeight)
         {
-            if (NPC.HasValidTarget)
+            if (readyToAttack)
             {
-                if (Vector2.Distance(NPC.Center, Main.player[NPC.target].Center) < attackRange)
+                currentAnimation = AnimationState.Attack;
+            }
+            else if (NPC.HasValidTarget)
+            {
+                float distance = Vector2.Distance(NPC.Center, Main.player[NPC.target].Center);
+
+                if (distance < attackRange)
                 {
+                    if (currentAnimation != AnimationState.Attack)
+                        currentFrame = 0;
+
                     currentAnimation = AnimationState.Attack;
                 }
-                else if (Vector2.Distance(NPC.Center, Main.player[NPC.target].Center) < attackRange * 2)
+                else if (distance < attackRange * 2)
                 {
+                    if (currentAnimation != AnimationState.Walk)
+                        currentFrame = 0;
+
                     currentAnimation = AnimationState.Walk;
                 }
             }
             else
             {
+                if (currentAnimation != AnimationState.Idle)
+                    currentFrame = 0;
+
                 currentAnimation = AnimationState.Idle;
             }
 
@@ -81,20 +99,38 @@ namespace sorceryFight.Content.NPCs.FingerBearer
                     break;
                 case AnimationState.Walk:
                     maxFrames = 7;
-                    frameTime = 15;
+                    frameTime = 8;
                     break;
                 case AnimationState.Attack:
                     maxFrames = 5;
-                    frameTime = 20;
+                    frameTime = 10;
                     break;
+            }
+
+            if (currentAnimation == AnimationState.Attack && readyToAttack)
+            {
+                currentFrame = maxFrames - 1;
+                return;
             }
 
             if (++frameCounter >= frameTime)
             {
                 frameCounter = 0;
                 currentFrame++;
-                if (currentFrame >= maxFrames)
+
+                if (currentAnimation == AnimationState.Attack)
+                {
+                    if (currentFrame >= maxFrames - 1)
+                    {
+                        currentFrame = maxFrames - 1;
+                        readyToAttack = true;
+                        NPC.ai[0] = 0;
+                    }
+                }
+                else if (currentFrame >= maxFrames)
+                {
                     currentFrame = 0;
+                }
             }
         }
 
@@ -102,15 +138,51 @@ namespace sorceryFight.Content.NPCs.FingerBearer
         {
             NPC.TargetClosest();
 
-            if (NPC.HasValidTarget && currentAnimation != AnimationState.Attack)
+            if (NPC.HasValidTarget)
             {
-                Vector2 toPlayer = NPC.Center.DirectionTo(Main.player[NPC.target].Center);
-                Vector2 xVector = Vector2.UnitX * NPC.direction;
+                if (currentAnimation == AnimationState.Walk)
+                {
+                    Vector2 toPlayer = NPC.Center.DirectionTo(Main.player[NPC.target].Center);
+                    Vector2 xVector = Vector2.UnitX * NPC.direction;
 
-                float dotprod = Vector2.Dot(toPlayer, xVector); 
-                Vector2 projection = dotprod / xVector.Length().Squared() * xVector;
+                    float dotprod = Vector2.Dot(toPlayer, xVector);
+                    Vector2 projection = dotprod / xVector.LengthSquared() * xVector;
 
-                NPC.velocity.X = (projection * movementSpeed).X;
+                    NPC.velocity.X = (projection * movementSpeed).X;
+                }
+                else
+                {
+                    NPC.velocity.X = 0f;
+                }
+            }
+
+            if (readyToAttack && NPC.HasValidTarget)
+            {
+                NPC.ai[0]++;
+                int chargeUpTime = 60;
+
+                if (NPC.ai[0] == 1 && Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Projectile.NewProjectile(
+                        NPC.GetSource_FromThis(),
+                        NPC.Center - new Vector2(0, 50),
+                        Vector2.Zero,
+                        ModContent.ProjectileType<FingerBearerBall>(),
+                        20,
+                        2f,
+                        default,
+                        default,
+                        chargeUpTime,
+                        NPC.target
+                    );
+                }
+
+                if (NPC.ai[0] >= chargeUpTime)
+                {
+                    readyToAttack = false;
+                    NPC.ai[0] = 0;
+                    currentFrame = 0;
+                }
             }
         }
 
