@@ -13,8 +13,8 @@ namespace sorceryFight.Content.DomainExpansions
     public abstract class PlayerDomainExpansion : DomainExpansion
     {
         public abstract override string InternalName { get; }
-        public string Description => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.Description");
-        public string LockedDescription => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.LockedDescription");
+        public virtual string Description(SorceryFightPlayer player) => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.Description");
+        public virtual string LockedDescription => SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.LockedDescription");
         public abstract override SoundStyle CastSound { get; }
         public abstract override float SureHitRange { get; }
         public abstract override bool ClosedDomain { get; }

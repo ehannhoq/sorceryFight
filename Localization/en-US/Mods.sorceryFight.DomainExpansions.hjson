@@ -42,12 +42,19 @@ IdleDeathGamble: {
 		'''
 		A Domain Expansion of luck; inspired by the
 		classic pachinko machine. Try to match three
-		symbols and get the jackpot!
+		symbols and get the jackpot.
 		'''
-	LockedDescription:
+	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
+	TierI: "[TIER I] Boosts CE reserves and CE regeneration."
+	TierII:
 		'''
-		Be at the brink of death at the hands of the
-		lunar god.
+		[TIER II] Greatly boosts CE reserves and CE regeneration,
+		so much so that its starting to automatically perform RCT.
+		'''
+	TierIII:
+		'''
+		[TIER III] Massively boosts CE reserves and CE regeneration.
+		The automatic RCT performs much faster.
 		'''
 }
 

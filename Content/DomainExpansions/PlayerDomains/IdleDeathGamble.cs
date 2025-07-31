@@ -1,4 +1,5 @@
 using System;
+using CalamityMod.NPCs.DevourerofGods;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs.PrivatePureLoveTrain;
@@ -6,6 +7,7 @@ using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.DomainExpansions.PlayerDomains
@@ -14,10 +16,28 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
     {
         public override string InternalName => "IdleDeathGamble";
 
+        public override string Description(SorceryFightPlayer player)
+        {
+            string desc = SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.Description");
+            desc += "\n";
+            if (player.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()))
+            {
+                desc += SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.TierIII");
+            }
+            else if (player.unlockedRCT)
+            {
+                desc += SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.TierII");
+            }
+            else
+                desc += SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.TierI");
+
+            return desc;
+
+        }
         public override SoundStyle CastSound => SorceryFightSounds.IdleDeathGambleOpening;
 
         public override int Tier => 2;
-        
+
         public override float SureHitRange => 1150f;
 
         public override float Cost => 75f;
@@ -57,7 +77,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
                 {
                     Rectangle dtSrc = new Rectangle(0, 0, DomainTexture.Width, DomainTexture.Height);
                     spriteBatch.Draw(DomainTexture, dtSrc, Color.White);
-                    
+
                     Rectangle src = new Rectangle(0, 0, pachinkoMachineTexture.Width, pachinkoMachineTexture.Height);
                     for (int i = 0; i < 10; i++)
                     {
@@ -92,7 +112,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.unlockedRCT;
+            return sf.HasDefeatedBoss(NPCID.WallofFlesh);
         }
 
         public override void Update()
@@ -192,10 +212,22 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
             if (tick > 490 && Main.myPlayer == owner)
             {
+                SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
                 if (rolls[0] == rolls[1] && rolls[0] == rolls[2])
                 {
-                    Main.LocalPlayer.AddBuff(ModContent.BuffType<IdleDeathGambleJackpotBuff>(), SFUtils.BuffSecondsToTicks(6.25f * rolls[0] + 3.75f));
-                    DomainExpansionController.CloseDomain(owner);
+                    if (sfPlayer.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()))
+                    {
+                        StageIIIReward();
+                        return;
+                    }
+
+                    if (sfPlayer.unlockedRCT)
+                    {
+                        StageIIReward();
+                        return;
+                    }
+
+                    StageIReward();
                     return;
                 }
 
@@ -208,7 +240,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
                 int highest = Math.Max(rolls[0], rolls[1]);
                 highest = Math.Max(highest, rolls[2]);
-                Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>().idleDeathGambleBuffStrength = highest;
+                sfPlayer.idleDeathGambleBuffStrength = highest;
                 Main.LocalPlayer.AddBuff(ModContent.BuffType<IdleDeathGambleBuff>(), SFUtils.BuffSecondsToTicks(6.25f * highest + 3.75f));
                 DomainExpansionController.CloseDomain(owner);
             }
@@ -228,6 +260,23 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
             pachinkoRollSpeed = 0f;
         }
 
+        void StageIReward()
+        {
+            Main.LocalPlayer.AddBuff(ModContent.BuffType<IdleDeathGambleJackpotBuffI>(), SFUtils.BuffSecondsToTicks(7.25f * rolls[0] + 3.75f));
+            DomainExpansionController.CloseDomain(owner);
+        }
+
+        void StageIIReward()
+        {
+            Main.LocalPlayer.AddBuff(ModContent.BuffType<IdleDeathGambleJackpotBuffII>(), SFUtils.BuffSecondsToTicks(7.25f * rolls[0] + 3.75f));
+            DomainExpansionController.CloseDomain(owner);
+        }
+
+        void StageIIIReward()
+        {
+            Main.LocalPlayer.AddBuff(ModContent.BuffType<IdleDeathGambleJackpotBuffIII>(), SFUtils.BuffSecondsToTicks(7.25f * rolls[0] + 3.75f));
+            DomainExpansionController.CloseDomain(owner);
+        }
 
         void Roll(Player player)
         {
