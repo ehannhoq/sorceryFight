@@ -33,7 +33,7 @@ namespace sorceryFight.StructureHelper
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
-            int index = tasks.FindIndex(pass => pass.Name == "Micro Biomes");
+            int index = tasks.FindIndex(pass => pass.Name == "Remove Broken Traps");
             if (index != -1)
             {
                 tasks.Insert(index + 1, new PassLegacy("SorceryUtil_Random_Structures", GenerateStructures));
