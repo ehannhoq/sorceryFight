@@ -100,9 +100,23 @@ HollowWickerBasketBuff: {
 	LockedDescription: Defeat the stone-faced ritualistic idol of the Lihzahrd tribe.
 }
 
-IdleDeathGambleJackpotBuff: {
+IdleDeathGambleJackpotBuffI: {
 	DisplayName: Jackpot
-	Description: You've hit the jackpot. You now have near infinite Cursed Energy.
+	Description: You've hit the jackpot. You now have larger CE reserves.
+}
+
+IdleDeathGambleJackpotBuffII: {
+	DisplayName: Jackpot
+	Description:
+		'''
+		You've hit the jackpot. You now have even larger CE reserves,
+		so much so that its automatically performing RCT.
+		'''
+}
+
+IdleDeathGambleJackpotBuffIII: {
+	DisplayName: Jackpot
+	Description: You've hit the jackpot. You now have near infinite Cursed Energy and RCT.
 }
 
 IdleDeathGambleBuff: {

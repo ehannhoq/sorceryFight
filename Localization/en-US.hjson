@@ -13,6 +13,7 @@ Mods: {
 			ObliviousSwordProjectile.DisplayName: Oblivious Sword Projectile
 			FallingBlossomEmotionProjectile.DisplayName: Falling Blossom Emotion Projectile
 			FingerBearerBall.DisplayName: Finger Bearer Ball
+			IdleDeathGambleJackpotProjectileIII.DisplayName: Idle Death Gamble Jackpot Projectile I I I
 		}
 
 		Configs: {

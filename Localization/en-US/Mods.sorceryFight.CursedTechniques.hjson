@@ -186,3 +186,13 @@ HakarisDoor: {
 		'''
 	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
 }
+
+PassingThrough: {
+	DisplayName: Passing Through!
+	Description:
+		'''
+		Summon a subway cart that rams through 
+		your cursor.
+		'''
+	LockedDescription: Defeat the mechanical recreation of Cthulu's skeleton.
+}
