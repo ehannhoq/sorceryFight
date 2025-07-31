@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Buffs.PrivatePureLoveTrain
 {
-    public class IdleDeathGambleJackpotBuff : ModBuff
+    public class IdleDeathGambleJackpotBuffIII : ModBuff
     {
         private Dictionary<int, int> auraIndices = new Dictionary<int, int>();
 
@@ -50,7 +50,7 @@ namespace sorceryFight.Content.Buffs.PrivatePureLoveTrain
                 Vector2 playerPos = player.MountedCenter;
                 var entitySource = player.GetSource_FromThis();
 
-                auraIndices[player.whoAmI] = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<IdleDeathGambleJackpotProjectile>(), 0, 0, player.whoAmI);
+                auraIndices[player.whoAmI] = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<IdleDeathGambleJackpotProjectileIII>(), 0, 0, player.whoAmI);
             }
         }
 

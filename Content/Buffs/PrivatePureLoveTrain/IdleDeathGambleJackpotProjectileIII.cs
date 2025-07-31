@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Buffs.PrivatePureLoveTrain
 {
-    public class IdleDeathGambleJackpotProjectile : ModProjectile
+    public class IdleDeathGambleJackpotProjectileIII : ModProjectile
     {
         public int FrameCount { get; set; } = 9;
         public int TicksPerFrame { get; set; } = 5;
@@ -19,7 +19,7 @@ namespace sorceryFight.Content.Buffs.PrivatePureLoveTrain
             Projectile.Hitbox = new Rectangle(0, 0, 0, 0);
 
             if (Main.dedServ) return;
-            texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Buffs/PrivatePureLoveTrain/IdleDeathGambleJackpotProjectile", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Buffs/PrivatePureLoveTrain/IdleDeathGambleJackpotProjectileIII", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
 
         public override void AI()
@@ -29,7 +29,7 @@ namespace sorceryFight.Content.Buffs.PrivatePureLoveTrain
             Player player = Main.player[Projectile.owner];
             Projectile.Center = player.Center;
 
-            if (!player.buffType.ToList<int>().Contains(ModContent.BuffType<IdleDeathGambleJackpotBuff>()))
+            if (!player.buffType.ToList<int>().Contains(ModContent.BuffType<IdleDeathGambleJackpotBuffIII>()))
             {
                 Projectile.Kill();
                 return;
