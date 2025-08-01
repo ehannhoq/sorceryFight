@@ -103,7 +103,7 @@ Cleave: {
 }
 
 InstantDismantle: {
-	DisplayName: Instantanious Dismantle
+	DisplayName: Instantaneous Dismantle
 	Description: Slashes near instantly at the user's cursor.
 	LockedDescription: Defeat the mechanical recreation of Cthulu's skeleton.
 }
