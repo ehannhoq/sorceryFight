@@ -36,7 +36,7 @@ namespace sorceryFight.Content.Buffs.PrivatePureLoveTrain
             sfPlayer.maxCursedEnergyFromOtherSources += 100 * sfPlayer.bossesDefeated.Count;
             sfPlayer.cursedEnergyRegenFromOtherSources += 25 * sfPlayer.bossesDefeated.Count;
 
-            player.Heal(5);
+            player.Heal(2);
             ApplyAura(player);
 
             if (player.buffTime[buffIndex] <= 1)
