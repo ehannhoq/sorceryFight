@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CalamityMod.NPCs.NormalNPCs;
 using CalamityMod.NPCs.Providence;
 using CalamityMod.Particles;
@@ -7,10 +8,13 @@ using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs.Vessel;
+using sorceryFight.Content.DomainExpansions;
+using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.Content.Items.Accessories;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -78,6 +82,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             hitbox = Projectile.Hitbox;
             texturePhase = 0;
         }
+        
         public override void AI()
         {
             castTimer++;
@@ -113,6 +118,16 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
                 Projectile.Center = player.Center;
                 Projectile.timeLeft = 30;
+
+                if (DomainExpansionController.ActiveDomains.Any(de => de.owner == Projectile.owner && de.GetType() == typeof(MalevolentShrine)))
+                {
+                    if (!Main.dedServ && Main.myPlayer == Projectile.owner)
+                    {
+                        if (!Filters.Scene["SF:DivineFlame"].IsActive()) Filters.Scene.Activate("SF:DivineFlame").GetShader().UseOpacity(1f);
+
+                        Filters.Scene["SF:DivineFlame"].GetShader().UseProgress(castTimer / totalCastTime);
+                    }
+                }
 
                 if (castTimer < (int)transitionTime)
                 {
@@ -166,10 +181,18 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 Projectile.timeLeft = (int)LifeTime;
                 Projectile.Center = player.Center;
 
+
                 SoundEngine.PlaySound(SorceryFightSounds.DivineFlameShoot, Projectile.Center);
                 sfPlayer.disableRegenFromProjectiles = false;
                 if (Main.myPlayer == Projectile.owner)
                 {
+                    if (!Main.dedServ)
+                        if (Filters.Scene["SF:DivineFlame"].IsActive())
+                        {
+                            Filters.Scene["SF:DivineFlame"].GetShader().UseOpacity(0f);
+                            Filters.Scene["SF:DivineFlame"].Deactivate();
+                        }
+
                     Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
                 }
             }
@@ -206,13 +229,10 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            SorceryFightPlayer sfPlayer = Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>();
-
-            // if (sfPlayer.domainIndex != -1 && sfPlayer.innateTechnique.Name.Equals("Shrine"))
-            // {
-            //     modifiers.FinalDamage.Flat += modifiers.FinalDamage.Flat;
-            // }
-
+            if (DomainExpansionController.ActiveDomains.Any(de => de.owner == Projectile.owner && de.GetType() == typeof(MalevolentShrine)))
+            {
+                modifiers.FinalDamage.Flat += modifiers.FinalDamage.Flat;
+            }
             base.ModifyHitNPC(target, ref modifiers);
         }
 
@@ -244,6 +264,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 }
             }
             Projectile.Kill();
-        }   
+        }
     }
 }

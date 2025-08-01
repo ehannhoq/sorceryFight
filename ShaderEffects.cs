@@ -16,14 +16,18 @@ namespace sorceryFight
             if (!Main.dedServ)
             {
                 Asset<Effect> hollowNukeCollision = Mod.Assets.Request<Effect>("Content/Shaders/HollowNukeCollision", AssetRequestMode.ImmediateLoad);
-                Filters.Scene["SF:HollowNuke"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(hollowNukeCollision, "WhiteFade"), EffectPriority.VeryHigh);
+                Filters.Scene["SF:HollowNuke"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(hollowNukeCollision, "WhiteFade"), EffectPriority.Medium);
                 Filters.Scene["SF:HollowNuke"].Load();
 
                 Asset<Effect> maximumRedSpawn = Mod.Assets.Request<Effect>("Content/Shaders/MaximumRed", AssetRequestMode.ImmediateLoad);
-                Filters.Scene["SF:MaximumRed"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(maximumRedSpawn, "Desaturate"), EffectPriority.VeryHigh);
+                Filters.Scene["SF:MaximumRed"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(maximumRedSpawn, "Desaturate"), EffectPriority.Medium);
                 Filters.Scene["SF:MaximumRed"].Load();
+
+                Asset<Effect> divineFlameMS = Mod.Assets.Request<Effect>("Content/Shaders/DivineFlame", AssetRequestMode.ImmediateLoad);
+                Filters.Scene["SF:DivineFlame"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(divineFlameMS, "OrangeTint"), EffectPriority.Medium);
+                Filters.Scene["SF:DivineFlame"].Load();
 
             }
         }
     }
-} 
+}
