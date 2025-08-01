@@ -186,6 +186,13 @@ namespace sorceryFight.Content.NPCs.FingerBearer
             }
         }
 
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (Main.bloodMoon && !Main.dayTime && spawnInfo.Player.ZoneOverworldHeight)
+                return 0.1f;
+            return 0f;
+        }
+
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SukunasFingerIV>()));
