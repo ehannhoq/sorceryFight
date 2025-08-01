@@ -138,7 +138,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 if (Vector2.Distance(player.Center, center) > minDist) continue;
 
-                player.statLife = (int)((float)player.statLifeMax2 * 0.90f);
+                player.statLife = (int)((float)player.statLifeMax2 * 0.10f);
             }
         }
 
