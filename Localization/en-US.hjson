@@ -33,6 +33,11 @@ Mods: {
 					Label: Lore Accurate Black Flash
 					Tooltip: Toggles the damage output of a successful blackflash. Lore accurate Black Flashes deal squared damage, compared to the normal 3x damage.
 				}
+
+				HollowNukeDamagesFriendlyNPCs: {
+					Label: Hollow Nuke Damages Friendly NPCs
+					Tooltip: Toggles whether a Hollow Nuke deals damage to friendly/town NPCs.
+				}
 			}
 
 			ServerConfig: {
@@ -40,6 +45,11 @@ Mods: {
 
 				LoreAccurateBlackFlash: {
 					Label: Lore Accurate Black Flash
+					Tooltip: ""
+				}
+
+				HollowNukeDamagesFriendlyNPCs: {
+					Label: Hollow Nuke Damages Friendly N P Cs
 					Tooltip: ""
 				}
 			}

@@ -11,5 +11,8 @@ namespace sorceryFight
 
         [DefaultValue(false)]
         public bool LoreAccurateBlackFlash { get; set; }
+
+        [DefaultValue(false)]
+        public bool HollowNukeDamagesFriendlyNPCs { get; set; }
     }
 }

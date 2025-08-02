@@ -131,6 +131,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 if (Vector2.Distance(npc.Center, center) > minDist) continue;
 
+                if (!ModContent.GetInstance<ServerConfig>().HollowNukeDamagesFriendlyNPCs && npc.friendly) continue;
+
                 Main.player[owner].ApplyDamageToNPC(npc, 100000, 0f, 1, false, CursedTechniqueDamageClass.Instance, false);
             }
 
