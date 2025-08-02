@@ -363,7 +363,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
             float iconSize = 30;
             int originIconCount = 3;
-            float distance = 180f;
+            float distance = 120f;
             Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
 
 

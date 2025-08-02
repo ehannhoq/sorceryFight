@@ -19,8 +19,8 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public override float Cost => 300f;
         public override Color textColor => new Color(59, 64, 112);
         public override bool DisplayNameInGame => true;
-        public override int Damage => 150;
-        public override int MasteryDamageMultiplier => 20;
+        public override int Damage => 200;
+        public override int MasteryDamageMultiplier => 30;
         public override float Speed => 30f;
         public override float LifeTime => 180f;
 
