@@ -40,7 +40,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override float SureHitRange => 1150f;
 
-        public override float Cost => 75f;
+        public override float Cost => 15f;
 
         public override bool ClosedDomain => true;
 
