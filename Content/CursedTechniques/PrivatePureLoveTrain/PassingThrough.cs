@@ -32,7 +32,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.SkeletronPrime);
+            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)
