@@ -142,6 +142,11 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                 player.statLife = (int)((float)player.statLifeMax2 * 0.10f);
             }
+
+            if (!Main.dedServ && Filters.Scene["SF:MaximumRed"].IsActive())
+            {
+                Filters.Scene["SF:MaximumRed"].Deactivate();
+            }
         }
 
     }
