@@ -52,6 +52,9 @@ namespace sorceryFight.Content.Buffs.Vessel
                     rctTracker.Remove(player.whoAmI);
                 }
 
+                sfPlayer.hollowWickerBasket = false;
+                sfPlayer.domainAmp = false;
+
                 SorceryFightUI.UpdateTechniqueUI.Invoke();
             }
         }
