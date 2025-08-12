@@ -14,6 +14,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
     public class HollowNuke : ModSystem
     {
         private float opacity = 0f;
+        private float travelDistance = -1f;
         private Projectile maxBlue;
         private Projectile maxRed;
         private bool validHollowNuke = false;
@@ -31,7 +32,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     {
                         if (proj2.type != ModContent.ProjectileType<MaximumOutputRed>() || proj.whoAmI == proj2.whoAmI) continue;
 
-                        if (!IsValidCollision(proj, proj2, 0.9f)) continue;
+                        if (!IsValidCollision(proj, proj2, 0.99f)) continue;
 
                         maxRed = proj2;
                         validHollowNuke = true;
@@ -41,32 +42,35 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
             if (maxRed != null && maxBlue != null)
             {
-                if (!IsValidCollision(maxBlue, maxRed, 0.9f))
+                if (!IsValidCollision(maxBlue, maxRed, 0.99f))
                 {
                     maxBlue = null;
                     maxRed = null;
+
+                    if (!Main.dedServ && Filters.Scene["SF:MaximumRed"].IsActive())
+                    {
+                        Filters.Scene["SF:MaximumRed"].GetShader().UseOpacity(0f);
+                        Filters.Scene["SF:MaximumRed"].Deactivate();
+                    }
+
                     return;
                 }
 
                 float distance = Vector2.Distance(maxBlue.Center, maxRed.Center);
-                if (distance <= 50f)
+
+                if (!Main.dedServ && distance < 350f)
                 {
-                    Vector2 center = maxBlue.Center + (maxBlue.Center.DirectionTo(maxRed.Center) * (distance / 2f));
+                    if (travelDistance == -1)
+                    {
+                        travelDistance = Vector2.Distance(maxBlue.Center, maxRed.Center);
+                    }
 
-                    Collision(maxBlue.owner, center);
+                    float velocity = maxRed.velocity.Length();
+                    float incrementOpacity = velocity / travelDistance;
 
-                    maxBlue.Kill();
-                    maxBlue = null;
-
-                    maxRed.Kill();
-                    maxRed = null;
-                }
-
-                if (!Main.dedServ)
-                {
                     if (distance > 50f)
                     {
-                        opacity = 1f - (distance / 300f);
+                        opacity += incrementOpacity;
                         opacity = Math.Clamp(opacity, 0f, 1f);
 
                         if (!Filters.Scene["SF:HollowNuke"].Active)
@@ -84,6 +88,20 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                         Filters.Scene["SF:HollowNuke"].GetShader().UseProgress(opacity);
                     }
                 }
+
+                if (distance <= 50f)
+                {
+                    Vector2 center = maxBlue.Center + (maxBlue.Center.DirectionTo(maxRed.Center) * (distance / 2f));
+
+                    Collision(maxBlue.owner, center);
+
+                    maxBlue.Kill();
+                    maxBlue = null;
+
+                    maxRed.Kill();
+                    maxRed = null;
+                }
+
             }
             else if (validHollowNuke)
             {
@@ -105,6 +123,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     TaskScheduler.Instance.AddDelayedTask(() =>
                     {
                         Filters.Scene["SF:HollowNuke"].Deactivate();
+                        travelDistance = -1f;
                     }, 91);
                 }
             }
@@ -112,7 +131,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         private bool IsValidCollision(Projectile stationaryProj, Projectile movingProj, float threshold)
         {
-            Vector2 proj2Dir = movingProj.velocity.SafeNormalize(Vector2.Zero);
+            if (movingProj.velocity.Length() <= 1f) return false;
+
+            Vector2 proj2Dir = movingProj.velocity.SafeNormalize(Vector2.UnitX * movingProj.direction);
             Vector2 collisionDir = movingProj.Center.DirectionTo(stationaryProj.Center);
             float dotprd = Vector2.Dot(proj2Dir, collisionDir);
 
@@ -123,6 +144,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         private void Collision(int owner, Vector2 center)
         {
+            travelDistance = -1f;
+
             SoundEngine.PlaySound(SorceryFightSounds.CommonBoom, center);
 
             float minDist = 2000f;

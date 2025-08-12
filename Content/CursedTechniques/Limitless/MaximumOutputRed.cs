@@ -144,6 +144,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 else
                     scale = Projectile.ai[0] / beginPhaseTime;
 
+                Projectile.velocity = Vector2.Zero;
                 Projectile.netUpdate = true;
 
                 // for (int i = 0; i < 2; i++)
