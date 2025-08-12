@@ -280,11 +280,14 @@ namespace sorceryFight.SFPlayer
                 if (HasActiveDomain)
                     domainTimer = 1;
 
-                float zoom = 1.3f * (MathF.Log10(domainTimer + 1f) + 0.22f);
-                Vector2 zoomVec = new Vector2(zoom, zoom);
-                zoomVec = Vector2.Clamp(zoomVec, Main.BackgroundViewMatrix.Zoom, Vector2.One * 2);
+                if (innateTechnique.DomainExpansion.Unlocked(this))
+                {
+                    float zoom = 1.3f * (MathF.Log10(domainTimer + 1f) + 0.22f);
+                    Vector2 zoomVec = new Vector2(zoom, zoom);
+                    zoomVec = Vector2.Clamp(zoomVec, Main.BackgroundViewMatrix.Zoom, Vector2.One * 2);
 
-                CameraController.SetCameraZoom(zoomVec);
+                    CameraController.SetCameraZoom(zoomVec);
+                }
             }
             else if (domainTimer != 0)
             {
@@ -297,7 +300,7 @@ namespace sorceryFight.SFPlayer
                         ToggleSimpleDomain();
                     }
                 }
-                else
+                else if (innateTechnique.DomainExpansion.Unlocked(this))
                 {
                     if (DomainExpansionController.ActiveDomains.TryGet(d => d is ISimpleDomain && d.owner == Player.whoAmI, out DomainExpansion de))
                     {
@@ -406,24 +409,10 @@ namespace sorceryFight.SFPlayer
         {
             if (Player.whoAmI == Main.myPlayer)
             {
-                if (!innateTechnique.DomainExpansion.Unlocked(this))
-                {
-                    int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You haven't unlocked this yet!");
-                    Main.combatText[index].lifeTime = 60;
-                    return;
-                }
-
                 if (Player.HasBuff<BrainDamage>())
                 {
                     int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You can't use this right now!");
                     Main.combatText[index].lifeTime = 60;
-                    return;
-                }
-
-                if (Player.HasBuff<BurntTechnique>())
-                {
-                    int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
-                    Main.combatText[index].lifeTime = 180;
                     return;
                 }
 
