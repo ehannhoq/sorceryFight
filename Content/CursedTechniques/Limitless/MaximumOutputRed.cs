@@ -39,7 +39,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override float LifeTime { get; } = 180f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<Providence>());
+            return sf.HasDefeatedBoss(ModContent.NPCType<Providence>()) && sf.unlockedRCT;
         }
         public override bool DisplayNameInGame { get; } = true;
 
