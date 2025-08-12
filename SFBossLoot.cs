@@ -20,6 +20,7 @@ using sorceryFight.Content.Items.Accessories;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.Items.Consumables.SukunasFinger;
 using sorceryFight.Content.Items.Materials;
+using sorceryFight.Content.Items.Novelty;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -41,8 +42,11 @@ namespace sorceryFight
 
             CursedModifiers(ref npc, ref npcLoot, ref nonExpertRule);
             SukunasFingers(ref npc, ref npcLoot, ref nonExpertRule);
+
+            SkeletronPrimeDrops(ref npc, ref npcLoot, ref nonExpertRule);
             MoonLordDrops(ref npc, ref npcLoot, ref nonExpertRule);
             WallOfFleshDrops(ref npc, ref npcLoot, ref nonExpertRule);
+            
         }
 
         // Non-Expert only
@@ -128,6 +132,13 @@ namespace sorceryFight
             {
                 firstTimeRule.OnSuccess(ItemDropRule.Common(itemID));
             }
+        }
+
+        private void SkeletronPrimeDrops(ref NPC npc, ref NPCLoot npcLoot, ref LeadingConditionRule nonExpertRule)
+        {
+            if (npc.type != NPCID.SkeletronPrime) return;
+
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Lollipop>(), 1, 20, 30));
         }
 
         private void MoonLordDrops(ref NPC npc, ref NPCLoot npcLoot, ref LeadingConditionRule nonExpertRule)
