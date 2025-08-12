@@ -188,8 +188,8 @@ namespace sorceryFight.Content.NPCs.FingerBearer
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (Main.bloodMoon && !Main.dayTime && spawnInfo.Player.ZoneOverworldHeight)
-                return 0.1f;
+            if (Main.bloodMoon && !Main.dayTime && spawnInfo.Player.ZoneOverworldHeight && Main.hardMode)
+                return 0.01f;
             return 0f;
         }
 
