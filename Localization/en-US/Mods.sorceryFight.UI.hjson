@@ -1,7 +1,7 @@
 MasteryIcon: {
 	Info:
 		'''
-		Innate Technqiue Mastery
+		Innate Technique Mastery
 		The more bosses you defeat along your journey, the more powerful and efficient your Innate Technique becomes.
 		'''
 	BossesDefeated: Bosses Defeated:
