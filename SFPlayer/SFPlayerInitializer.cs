@@ -102,7 +102,7 @@ namespace sorceryFight.SFPlayer
             generalBooleans.AddWithCondition("uniqueBodyStructure", uniqueBodyStructure);
             tag["generalBooleans"] = generalBooleans;
 
-            if (innateTechnique != null && (innateTechnique.Name.Equals("Shrine") || innateTechnique.Name.Equals("Vessel")))
+            if (innateTechnique != null)
             {
                 var indexes = new List<int>();
                 for (int i = 0; i < 20; i++)
@@ -148,7 +148,7 @@ namespace sorceryFight.SFPlayer
             maxCursedEnergy = calculateBaseMaxCE();
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
 
-            if (innateTechnique != null && (innateTechnique.Name.Equals("Shrine") || innateTechnique.Name.Equals("Vessel")))
+            if (innateTechnique != null)
             {
                 var indexes = tag.GetList<int>("sukunasFingers");
                 
