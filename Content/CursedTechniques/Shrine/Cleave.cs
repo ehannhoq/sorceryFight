@@ -151,5 +151,12 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, -32).RotatedBy(Projectile.rotation), sourceRectangle, Color.White, Projectile.rotation, projOrigin, 1f, spriteEffects, 0f);
             return false;
         }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            float targetHealth = target.life;
+            float additionalDamage = targetHealth * CalculateTrueDamage(Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>());
+            modifiers.FinalDamage.Flat += additionalDamage;
+        }
     }
 }
