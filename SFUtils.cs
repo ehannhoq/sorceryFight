@@ -96,6 +96,11 @@ public static class SFUtils
         return Language.GetTextValue(key);
     }
 
+    public static List<string> GetLocalizationValues(string key)
+    {
+        return Language.GetTextValue(key).Split('\n').ToList();
+    }
+
     public static NetworkText GetNetworkText(string key)
     {
         return NetworkText.FromKey(key);

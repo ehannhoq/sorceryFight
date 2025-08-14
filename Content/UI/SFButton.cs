@@ -10,6 +10,7 @@ namespace sorceryFight.Content.UI
     {
         public Texture2D texture;
         public string hoverText;
+        public Action ClickAction;
         
         public SFButton(Texture2D texture, string hoverText)
         {
@@ -38,6 +39,6 @@ namespace sorceryFight.Content.UI
 
             spriteBatch.Draw(texture, new Vector2(dimensions.X, dimensions.Y), Color.White);
         }
-        public virtual void OnClick() {}
+        public virtual void OnClick() { ClickAction.Invoke(); }
     }
 }

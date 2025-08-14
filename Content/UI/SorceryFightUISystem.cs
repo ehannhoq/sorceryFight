@@ -2,8 +2,11 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.UI.Dialog;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -13,6 +16,7 @@ namespace sorceryFight.Content.UI
     {
         internal UserInterface sfInterface;
         internal SorceryFightUI sfUI;
+        internal DialogUI dialogUI;
 
         private GameTime _lastUpdateUiGameTime;
 
@@ -21,9 +25,12 @@ namespace sorceryFight.Content.UI
             if (!Main.dedServ)
             {
                 sfInterface = new UserInterface();
+
                 sfUI = new SorceryFightUI();
                 sfUI.Activate();
+
                 sfInterface.SetState(sfUI);
+
             }
         }
 
@@ -33,6 +40,7 @@ namespace sorceryFight.Content.UI
             {
                 sfInterface.SetState(null);
                 sfUI = null;
+                dialogUI = null;
             }
         }
 
@@ -42,6 +50,7 @@ namespace sorceryFight.Content.UI
             {
                 sfUI = new SorceryFightUI();
                 sfUI.Activate();
+
                 sfInterface.SetState(sfUI);
             }
         }
@@ -49,6 +58,7 @@ namespace sorceryFight.Content.UI
         public override void OnWorldUnload()
         {
             sfUI = null;
+            dialogUI = null;
         }
 
         public override void UpdateUI(GameTime gameTime)
@@ -78,6 +88,24 @@ namespace sorceryFight.Content.UI
                     InterfaceScaleType.UI
                 ));
             }
+        }
+
+
+        public void ActivateDialog(Dialog.Dialog dialog)
+        {
+            if (Main.dedServ) return;
+
+            SoundEngine.PlaySound(SoundID.MenuOpen, Main.LocalPlayer.Center);
+            dialogUI = new DialogUI(dialog);
+            dialogUI.Activate();
+            sfInterface.SetState(dialogUI);
+        }
+
+        public void DeactivateDialog()
+        {
+            sfUI = new SorceryFightUI();
+            sfUI.Activate();
+            sfInterface.SetState(sfUI);
         }
     }
 }
