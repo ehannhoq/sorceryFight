@@ -124,8 +124,10 @@ namespace sorceryFight.StructureHelper
                     bool isActuated = reader.ReadBoolean();
                     bool isHalfBlock = reader.ReadBoolean();
                     SlopeType slope = (SlopeType)reader.ReadByte();
+                    byte tileColor = reader.ReadByte();
 
                     ushort wallType = reader.ReadUInt16();
+                    byte wallColor = reader.ReadByte();
 
                     if (hasTile && tileType == ModContent.TileType<IgnoreTile>()) continue;
 
@@ -147,9 +149,11 @@ namespace sorceryFight.StructureHelper
                         tile.IsActuated = isActuated;
                         tile.IsHalfBlock = isHalfBlock;
                         tile.Slope = slope;
+                        tile.TileColor = tileColor;
                     }
 
                     tile.WallType = wallType;
+                    tile.WallColor = wallColor;
                 }
             }
 

@@ -30,8 +30,10 @@ namespace sorceryFight.StructureHelper
             public bool IsActuated;
             public bool IsHalfBlock;
             public SlopeType Slope;
+            public byte TileColor;
 
             public ushort WallType;
+            public byte WallColor;
         }
 
         public void Capture(Point origin)
@@ -51,8 +53,10 @@ namespace sorceryFight.StructureHelper
                         IsActuated = tile.IsActuated,
                         IsHalfBlock = tile.IsHalfBlock,
                         Slope = tile.Slope,
+                        TileColor = tile.TileColor,
 
                         WallType = tile.WallType,
+                        WallColor = tile.WallColor
                     };
                 }
             }
@@ -78,8 +82,10 @@ namespace sorceryFight.StructureHelper
                     writer.Write(tiles[x, y].IsActuated);
                     writer.Write(tiles[x, y].IsHalfBlock);
                     writer.Write((byte)tiles[x, y].Slope);
+                    writer.Write(tiles[x, y].TileColor);
 
                     writer.Write(tiles[x, y].WallType);
+                    writer.Write(tiles[x, y].WallColor);
                 }
             }
 
