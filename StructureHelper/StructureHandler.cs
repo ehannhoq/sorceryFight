@@ -169,15 +169,14 @@ namespace sorceryFight.StructureHelper
             Main.NewText($"Structure \"{structureName}\" placed at {worldPos.X}, {worldPos.Y}");
         }
 
-        public static void GenerateStructure(RandomStructure structure, Point worldPos)
+        public static void GenerateStructure(StructureTemplate template, Point worldPos)
         {
-            if (structure.Template == null)
+            if (template == null)
             {
                 ModContent.GetInstance<SorceryFight>().Logger.Error("Structure template is null!");
                 return;
             }
 
-            StructureTemplate template = structure.Template;
 
             for (int x = 0; x < template.Width; x++)
             {

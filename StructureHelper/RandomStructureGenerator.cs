@@ -26,6 +26,7 @@ namespace sorceryFight.StructureHelper
                 if (Activator.CreateInstance(type) is RandomStructure structure)
                 {
                     structure.SetDefaults();
+                    structure.Template = StructureHandler.GetStructure(type.Name);
                     loadedStructures.Add(structure);
                 }
             }
@@ -65,12 +66,12 @@ namespace sorceryFight.StructureHelper
                         continue;
 
                     structure.GenerationCount++;
-                    StructureHandler.GenerateStructure(structure, candidate);
+                    StructureHandler.GenerateStructure(structure.Template, candidate);
 
                     structure.LastGeneratedX = x;
                     structure.LastGeneratedY = y;
 
-                    Mod.Logger.Info($"Generated a structure at {x}, {y} | World Pos: {candidate.ToWorldCoordinates().X}, {candidate.ToWorldCoordinates().Y}");
+                    Mod.Logger.Info($"Generated {structure.GetType().Name} at {x}, {y} | World Pos: {candidate.ToWorldCoordinates().X}, {candidate.ToWorldCoordinates().Y}");
                 }
             }
         }

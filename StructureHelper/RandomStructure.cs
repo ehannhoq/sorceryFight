@@ -7,9 +7,9 @@ namespace sorceryFight.StructureHelper
     public abstract class RandomStructure
     {
         /// <summary>
-        /// The structure template that will be used to generate the structure. Use <see cref="StructureHandler.TryGetStructuring)"/> to get the structure template.
+        /// The structure template that will be used to generate the structure.
         /// </summary>
-        public StructureTemplate Template = null;
+        public StructureTemplate Template;
 
         /// <summary>
         /// The minimum depth of the structure.
