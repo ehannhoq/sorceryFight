@@ -1,6 +1,12 @@
 using System;
+using System.Collections.Generic;
+using CalamityMod.NPCs.DevourerofGods;
+using CalamityMod.NPCs.SupremeCalamitas;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.UI;
+using sorceryFight.Content.UI.Dialog;
+using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +16,9 @@ namespace sorceryFight.Content.Tiles
 {
     public class EnshroudedOneStatue : ModTile
     {
+        private static Dialog UnworthyDialog => new Dialog(new() { SFUtils.GetLocalizationValue("Mods.sorceryFight.Interactables.EnshroudedShrine.Unworthy") });
+        private static Dialog WorthyDialog => new Dialog(SFUtils.GetLocalizationValues("Mods.sorceryFight.Interactables.EnshroudedShrine.Worthy"));
+
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
@@ -21,13 +30,18 @@ namespace sorceryFight.Content.Tiles
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 18 };
             TileObjectData.newTile.LavaDeath = false;
-            
+
 
             TileObjectData.addTile(Type);
         }
 
         public override bool RightClick(int i, int j)
         {
+            SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+
+            Dialog finalDialog = sfPlayer.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()) && sfPlayer.HasDefeatedBoss(ModContent.NPCType<SupremeCalamitas>()) ? WorthyDialog : UnworthyDialog;
+
+            ModContent.GetInstance<SorceryFightUISystem>().ActivateDialog(finalDialog);
             return true;
         }
     }
