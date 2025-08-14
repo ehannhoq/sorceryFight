@@ -72,6 +72,11 @@ Mods: {
 				DisplayName: Ignore Tile Item
 				Tooltip: ""
 			}
+
+			EnshroudedOneStatueItem: {
+				DisplayName: Enshrouded One Statue Item
+				Tooltip: ""
+			}
 		}
 
 		NPCs.FingerBearer.DisplayName: Finger Bearer
