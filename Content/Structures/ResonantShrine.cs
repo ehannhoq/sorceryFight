@@ -7,7 +7,6 @@ namespace sorceryFight.Content.Structures
     {
         public override void SetDefaults()
         {
-            Template = StructureHandler.GetStructure("ResonantShrine");
             MinDepth = 1000;
             Chance = 100;
             GenerationLimit = 1;
