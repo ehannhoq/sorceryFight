@@ -39,5 +39,11 @@ SukunasFingerIcon: {
 CursedEnergyBar: {
 	CE: Cursed Energy:
 	RegenRate: Regeneration Rate:
-	ToolTip: This bar is draggable when your inventory is open.
+	ToolTip: 
+		'''
+		When your inventory is open:
+		- This bar is draggable
+		- Right-Click to save position
+		- Shift + Right-Click to reset position
+		'''
 }

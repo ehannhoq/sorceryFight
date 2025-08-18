@@ -9,14 +9,19 @@ using Terraria.UI;
 
 public class CursedEnergyBar : UIElement
 {
+    SorceryFightPlayer sfPlayer;
     public UIImage border;
     public ValueBar ceBar;
     bool isDragging;
+    private bool initialized;
+    bool hasRightClicked;
     Vector2 offset;
     Texture2D borderTexture;
 
     public CursedEnergyBar(Texture2D borderTexture, Texture2D barTexture)
     {
+        if (Main.dedServ) return;
+
         this.borderTexture = borderTexture;
 
         Width.Set(borderTexture.Width, 0f);
@@ -50,7 +55,12 @@ public class CursedEnergyBar : UIElement
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-
+        sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+        if (!initialized)
+        {
+            initialized = true;
+            SetPosition();
+        }
         if (Main.playerInventory && SorceryFightUI.MouseHovering(this, ceBar.barTexture) && Main.mouseLeft && !isDragging)
         {
             isDragging = true;
@@ -73,6 +83,53 @@ public class CursedEnergyBar : UIElement
             }
         }
 
+        if (Main.playerInventory && SorceryFightUI.MouseHovering(this, ceBar.barTexture) && Main.mouseRight && !isDragging)
+        {
+            Rectangle mouseRect = new Rectangle((int)Main.MouseWorld.X - 8, (int)Main.MouseWorld.Y - 8, 16, 16);
+            if (!hasRightClicked)
+            {
+                if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
+                {
+                    sfPlayer.CEBarPos = Vector2.Zero;
+                    SetPosition();
+                    CombatText.NewText(mouseRect, Color.White, "UI Position Reset!");
+                    Main.mouseRightRelease = true;
+                }
+                else
+                {
+                    sfPlayer.CEBarPos = new Vector2(this.Left.Pixels, this.Top.Pixels);
+                    CombatText.NewText(mouseRect, Color.White, "UI Position Saved!");
+                    Main.mouseRightRelease = true;
+                }
+            }
 
+        }
+
+
+        if (Main.mouseRight && SorceryFightUI.MouseHovering(this, ceBar.barTexture))
+        {
+            hasRightClicked = true;
+        }
+        else if (Main.mouseRightRelease && SorceryFightUI.MouseHovering(this, ceBar.barTexture))
+        {
+            hasRightClicked = false;
+        }
+
+
+    }
+
+    void SetPosition()
+    {
+        sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+        if (sfPlayer.CEBarPos == Vector2.Zero)
+        {
+            Left.Set(1300, 0f);
+            Top.Set(20, 0f);
+        }
+        else
+        {
+            Left.Set(sfPlayer.CEBarPos.X, 0f);
+            Top.Set(sfPlayer.CEBarPos.Y, 0f);
+        }
     }
 }
