@@ -40,6 +40,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
         internal int selectorIndex;
         int unlockedTechniques;
         bool isDragging;
+        bool hasRightClicked;
         Vector2 offset;
         public CursedTechniqueSelector()
         {
@@ -52,8 +53,8 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             selectorTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/TechniqueSelector/Selector", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             selectorIcon = new UIImage(selectorTexture);
 
-
             selectorIndex = 0;
+
             ReloadUI();
             SetPosition();
 
@@ -63,7 +64,6 @@ namespace sorceryFight.Content.UI.TechniqueSelector
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
             if (selectorIndex == -1) return;
 
             if (Elements.Contains(selectorIcon))
@@ -100,6 +100,38 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 isDragging = true;
                 offset = new Vector2(Main.mouseX, Main.mouseY) - new Vector2(Left.Pixels, Top.Pixels);
             }
+
+            if (Main.playerInventory && HoveringOverUI() && Main.mouseRight && !isDragging)
+            {
+                Rectangle mouseRect = new Rectangle((int)Main.MouseWorld.X - 8, (int)Main.MouseWorld.Y - 8, 16, 16);
+                if (!hasRightClicked)
+                {
+                    if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
+                    {
+                        sfPlayer.CTSelectorPos = Vector2.Zero;
+                        SetPosition();
+                        CombatText.NewText(mouseRect, Color.White, "UI Position Reset!");
+                        Main.mouseRightRelease = true;
+                    }
+                    else
+                    {
+                        sfPlayer.CTSelectorPos = new Vector2(this.Left.Pixels, this.Top.Pixels);
+                        CombatText.NewText(mouseRect, Color.White, "UI Position Saved!");
+                        Main.mouseRightRelease = true;
+                    }
+                }
+
+            }
+
+            if (Main.mouseRight && HoveringOverUI())
+            {
+                hasRightClicked = true;
+            }
+            else if (Main.mouseRightRelease && HoveringOverUI())
+            {
+                hasRightClicked = false;
+            }
+
 
             if (isDragging)
             {
@@ -170,8 +202,18 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
         void SetPosition()
         {
-            Left.Set(Main.screenWidth / 2 - (unlockedTechniques * 60 / 2), 0f);
-            Top.Set(Main.screenHeight - 110f, 0f);
+            if (sfPlayer.CTSelectorPos == Vector2.Zero)
+            {
+                Left.Set(Main.screenWidth / 2 - (unlockedTechniques * 60 / 2), 0f);
+                Top.Set(Main.screenHeight - 110f, 0f);
+            }
+            else
+            {
+                Left.Set(sfPlayer.CTSelectorPos.X, 0f);
+                Top.Set(sfPlayer.CTSelectorPos.Y, 0f);
+            }
+
+
         }
 
         bool HoveringOverUI()

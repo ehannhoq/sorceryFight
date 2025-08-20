@@ -76,6 +76,12 @@ namespace sorceryFight.SFPlayer
             tag["cursedEnergy"] = cursedEnergy;
 
             tag["bossesDefeated"] = bossesDefeated;
+            
+            tag["ctSelector"] = new List<float> { CTSelectorPos.X, CTSelectorPos.Y };
+
+            tag["ptSelector"] = new List<float> { PTSelectorPos.X, PTSelectorPos.Y };
+
+            tag["ceBar"] = new List<float> { CEBarPos.X, CEBarPos.Y };
 
             var maxCEModifiers = new List<string>();
             maxCEModifiers.AddWithCondition("cursedSkull", cursedSkull);
@@ -83,7 +89,6 @@ namespace sorceryFight.SFPlayer
             maxCEModifiers.AddWithCondition("cursedPhantasmalEye", cursedPhantasmalEye);
             maxCEModifiers.AddWithCondition("cursedProfanedShards", cursedProfaneShards);
             tag["maxCEModifiers"] = maxCEModifiers;
-
 
             var cursedEnergyRegenModifiers = new List<string>();
             cursedEnergyRegenModifiers.AddWithCondition("cursedEye", cursedEye);
@@ -123,6 +128,18 @@ namespace sorceryFight.SFPlayer
             cursedEnergy = tag.ContainsKey("cursedEnergy") ? tag.GetFloat("cursedEnergy") : 1f;
             var defeatedBosses = tag.ContainsKey("bossesDefeated") ? tag.GetList<int>("bossesDefeated") : new List<int>();
             bossesDefeated = defeatedBosses as List<int>;
+
+            CTSelectorPos = tag.ContainsKey("ctSelector")
+            ? new Microsoft.Xna.Framework.Vector2(tag.Get<List<float>>("ctSelector")[0], tag.Get<List<float>>("ctSelector")[1])
+            : Microsoft.Xna.Framework.Vector2.Zero;
+
+            PTSelectorPos = tag.ContainsKey("ptSelector")
+            ? new Microsoft.Xna.Framework.Vector2(tag.Get<List<float>>("ptSelector")[0], tag.Get<List<float>>("ptSelector")[1])
+            : Microsoft.Xna.Framework.Vector2.Zero;
+
+            CEBarPos = tag.ContainsKey("ceBar")
+            ? new Microsoft.Xna.Framework.Vector2(tag.Get<List<float>>("ceBar")[0], tag.Get<List<float>>("ceBar")[1])
+            : Microsoft.Xna.Framework.Vector2.Zero;
 
             var maxCEModifiers = tag.GetList<string>("maxCEModifiers");
             cursedSkull = maxCEModifiers.Contains("cursedSkull");

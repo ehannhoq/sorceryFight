@@ -55,6 +55,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
         List<TechniqueSelectorButton> icons;
         int unlockedTechniques;
         bool isDragging;
+        bool hasRightClicked;
         Vector2 offset;
         public PassiveTechniqueSelector()
         {
@@ -100,6 +101,37 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             {
                 SetPosition();
             }
+
+            if (Main.playerInventory && HoveringOverUI() && Main.mouseRight && !isDragging)
+            {
+                Rectangle mouseRect = new Rectangle((int)Main.MouseWorld.X - 8, (int)Main.MouseWorld.Y - 8, 16, 16);
+                if (!hasRightClicked)
+                {
+                    if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
+                    {
+                        sfPlayer.PTSelectorPos = Vector2.Zero;
+                        SetPosition();
+                        CombatText.NewText(mouseRect, Color.White, "UI Position Reset!");
+                        Main.mouseRightRelease = true;
+                    }
+                    else
+                    {
+                        sfPlayer.PTSelectorPos = new Vector2(this.Left.Pixels, this.Top.Pixels);
+                        CombatText.NewText(mouseRect, Color.White, "UI Position Saved!");
+                        Main.mouseRightRelease = true;
+                    }
+                }
+
+            }
+
+            if (Main.mouseRight && HoveringOverUI())
+            {
+                hasRightClicked = true;
+            }
+            else if (Main.mouseRightRelease && HoveringOverUI())
+            {
+                hasRightClicked = false;
+            }
         }
 
         void ReloadUI()
@@ -130,8 +162,17 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
         void SetPosition()
         {
-            Left.Set(110f, 0f);
-            Top.Set(Main.screenHeight - (unlockedTechniques * 60) - 50f, 0f);
+            if (sfPlayer.PTSelectorPos == Vector2.Zero)
+            {
+                Left.Set(110f, 0f);
+                Top.Set(Main.screenHeight - (unlockedTechniques * 60) - 50f, 0f);
+            }
+            else
+            {
+                Left.Set(sfPlayer.PTSelectorPos.X, 0f);
+                Top.Set(sfPlayer.PTSelectorPos.Y, 0f);
+            }
+
         }
 
         bool HoveringOverUI()
