@@ -1,11 +1,8 @@
 using System.Collections.Generic;
-using System.IO;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.UI.Dialog;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -91,17 +88,17 @@ namespace sorceryFight.Content.UI
         }
 
 
-        public void ActivateDialog(Dialog.Dialog dialog)
+        public void ActivateDialogUI(Dialog.Dialog dialog, object initiator)
         {
             if (Main.dedServ) return;
 
             SoundEngine.PlaySound(SoundID.MenuOpen, Main.LocalPlayer.Center);
-            dialogUI = new DialogUI(dialog);
+            dialogUI = new DialogUI(dialog, initiator);
             dialogUI.Activate();
             sfInterface.SetState(dialogUI);
         }
 
-        public void DeactivateDialog()
+        public void DeactivateDialogUI()
         {
             sfUI = new SorceryFightUI();
             sfUI.Activate();

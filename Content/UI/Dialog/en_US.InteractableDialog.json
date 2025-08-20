@@ -1,0 +1,33 @@
+{
+    "EnshroudedOne": {
+        "Unworthy": {
+            "Speaker": "Enshrouded One",
+            "Text": "You are not worthy, come back after proving your strength to me.",
+            "Replies": [
+                {
+                    "Text": "How will I know when I'm worthy?",
+                    "Response": "EnshroudedOne.UnworthyInquiry"
+                }
+            ],
+            "Action": null
+        },
+        "UnworthyInquiry": {
+            "Speaker": "Enshrouded One",
+            "Text": "At the words of my old adversary,\n\"stand at the brink of infinity.\"",
+            "Replies": [],
+            "Action": null
+        },
+        "Worthy": {
+            "Speaker": "Enshrouded One",
+            "Text": "So you've defeated Draedon's prized creations.\nAs well as the Supreme Witch? Impressive.\nYou've grown in such a quick time, young one.\nYou might even be on par with my strength soon, but not quite yet.\nHowever, I have a gift that might make you reach those heights sooner.\nTake these sets of clothes, and this artifact of mine.\nIt will increase your strength to unimaginable degrees, due to the cursed energy imbued with my cursed energy after...\n...\nAnyways, I'm expecting great things out of you. Got that?\nSeek out the Terminus at the bottom of the Abyss, and do what I could not.\nGood luck, young sorcerer.",
+            "Replies": [],
+            "Action": "GrantEnshroudedSet"
+        },
+        "PreBossRush": {
+            "Speaker": "Enshrouded One",
+            "Text": "Seek out the Terminus at the bottom of the Abyss.",
+            "Replies": [],
+            "Action": null
+        }
+    }
+}

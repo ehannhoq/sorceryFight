@@ -1,5 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,20 +17,23 @@ namespace sorceryFight.Content.UI.Dialog
 {
     public class DialogUI : UIState
     {
-        public Dialog dialog = null;
+        public Dialog dialog;
+        public object initiator;
         private bool showIndicator = false;
+        private bool clearOptions = false;
         public int dialogIndex;
         private SpecialUIElement background = new SpecialUIElement(ModContent.Request<Texture2D>("sorceryFight/Content/UI/Dialog/DialogBox", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
         private UIText dialogText = new UIText("", 1f, false);
         private SFButton indicator = new SFButton(ModContent.Request<Texture2D>("sorceryFight/Content/UI/Dialog/DialogNextIndicator", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value, "");
-
-        public DialogUI(Dialog dialog)
+        public DialogUI(Dialog dialog, object initiator)
         {
-            Top.Set(0, 0f);
-            Left.Set(0, 0f);
-
             this.dialog = dialog;
+            this.initiator = initiator;
+            SetupUI();
+        }
 
+        private void SetupUI()
+        {
             float left = (Main.screenWidth / Main.UIScale / 2) - (background.texture.Width / 2);
             float top = (Main.screenHeight / Main.UIScale / 2) + (background.texture.Height / 2);
 
@@ -57,11 +63,10 @@ namespace sorceryFight.Content.UI.Dialog
 
             dialogIndex = 0;
             DisplayLine(dialog.lines[dialogIndex]);
-            indicator.ClickAction += NextDialog;
+            indicator.ClickAction += NextLine;
         }
 
-
-        private void NextDialog()
+        private void NextLine()
         {
             SoundEngine.PlaySound(SoundID.MenuTick, Main.LocalPlayer.Center);
 
@@ -72,6 +77,15 @@ namespace sorceryFight.Content.UI.Dialog
                 EndDialog();
                 return;
             }
+
+            DisplayLine(dialog.lines[dialogIndex]);
+        }
+
+        private void NextDialog(string dialogKey)
+        {
+            clearOptions = true;
+            dialogIndex = 0;
+            dialog = Dialog.Create(dialogKey);
 
             DisplayLine(dialog.lines[dialogIndex]);
         }
@@ -93,7 +107,35 @@ namespace sorceryFight.Content.UI.Dialog
 
             TaskScheduler.Instance.AddDelayedTask(() =>
                 {
-                    showIndicator = true;
+                    int index = dialogIndex;
+                    int dialogCount = dialog.lines.Count;
+                    var replies = dialog.replies;
+
+                    if (index == dialogCount - 1 && replies.Count > 0)
+                    {
+                        int i = 1;
+                        foreach (var reply in replies)
+                        {
+                            DialogReplyText replyText = new DialogReplyText(reply.Key, reply.Value);
+                            replyText.onClick += () => NextDialog(replyText.dialogKey);
+
+                            float left = (Main.screenWidth / Main.UIScale / 2) - (background.texture.Width / 2) + 20;
+                            float top = (Main.screenHeight / Main.UIScale / 2) + (background.texture.Height / 2) - 10 - (20 * i);
+
+                            replyText.TextOriginX = 0f;
+                            replyText.TextOriginY = 0f;
+
+                            replyText.Left.Set(left, 0f);
+                            replyText.Top.Set(top, 0f);
+                            Append(replyText);
+
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        showIndicator = true;
+                    }
                 },
                 line.Length * 1 + 1);
         }
@@ -101,8 +143,19 @@ namespace sorceryFight.Content.UI.Dialog
 
         private void EndDialog()
         {
+            if (dialog.actionName != string.Empty)
+            {
+                var method = initiator.GetType().GetMethod(dialog.actionName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+
+                if (method != null)
+                {
+                    method.Invoke(initiator, null);
+                }
+                else throw new Exception($"Method {dialog.actionName} not found in {initiator.GetType().Name}");
+            }
+
             dialog = null;
-            ModContent.GetInstance<SorceryFightUISystem>().DeactivateDialog();
+            ModContent.GetInstance<SorceryFightUISystem>().DeactivateDialogUI();
         }
 
 
@@ -114,6 +167,12 @@ namespace sorceryFight.Content.UI.Dialog
                 Append(indicator);
             else if (!showIndicator && Elements.Contains(indicator))
                 Elements.Remove(indicator);
+
+            if (clearOptions && Elements.Any(e => e is DialogReplyText))
+            {
+                clearOptions = false;
+                Elements.RemoveAll(e => e is DialogReplyText);
+            }
         }
     }
 }
