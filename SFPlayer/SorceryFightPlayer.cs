@@ -107,7 +107,12 @@ namespace sorceryFight.SFPlayer
         public int upperWindowTime;
         #endregion
 
-
+        #region UI Positions
+        public Vector2 CTSelectorPos;
+        public Vector2 PTSelectorPos;
+        public Vector2 CEBarPos;
+        #endregion
+        
         public override void UpdateEquips()
         {
             if (innateTechnique == null) return;
