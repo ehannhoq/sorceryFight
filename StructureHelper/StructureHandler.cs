@@ -69,7 +69,8 @@ namespace sorceryFight.StructureHelper
 
             foreach (string file in files)
             {
-                Main.NewText(Path.GetFileNameWithoutExtension(file));
+                if (file.EndsWith(".tile"))
+                    Main.NewText(Path.GetFileNameWithoutExtension(file));
             }
         }
 
