@@ -4,11 +4,14 @@ using CalamityMod.NPCs.DevourerofGods;
 using CalamityMod.NPCs.SupremeCalamitas;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Items.Accessories;
+using sorceryFight.Content.Items.Armors.EnshroudedOne;
 using sorceryFight.Content.UI;
 using sorceryFight.Content.UI.Dialog;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -16,9 +19,7 @@ namespace sorceryFight.Content.Tiles
 {
     public class EnshroudedOneStatue : ModTile
     {
-        private static Dialog UnworthyDialog => new Dialog(new() { SFUtils.GetLocalizationValue("Mods.sorceryFight.Interactables.EnshroudedShrine.Unworthy") });
-        private static Dialog WorthyDialog => new Dialog(SFUtils.GetLocalizationValues("Mods.sorceryFight.Interactables.EnshroudedShrine.Worthy"));
-
+        public Dictionary<string, bool> grantedSets = new Dictionary<string, bool>();
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
@@ -31,7 +32,6 @@ namespace sorceryFight.Content.Tiles
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 18 };
             TileObjectData.newTile.LavaDeath = false;
 
-
             TileObjectData.addTile(Type);
         }
 
@@ -39,10 +39,33 @@ namespace sorceryFight.Content.Tiles
         {
             SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
 
-            Dialog finalDialog = sfPlayer.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()) && sfPlayer.HasDefeatedBoss(ModContent.NPCType<SupremeCalamitas>()) ? WorthyDialog : UnworthyDialog;
+            string dialogKey = "EnshroudedOne.Unworthy";
+            bool worthy = sfPlayer.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()) && sfPlayer.HasDefeatedBoss(ModContent.NPCType<SupremeCalamitas>());
 
-            ModContent.GetInstance<SorceryFightUISystem>().ActivateDialog(finalDialog);
+            if (worthy)
+            {
+                if (!grantedSets.ContainsKey(sfPlayer.Player.name))
+                {
+                    dialogKey = "EnshroudedOne.Worthy";
+                    grantedSets.Add(sfPlayer.Player.name, true);
+                }
+                else
+                    dialogKey = "EnshroudedOne.PreBossRush";
+            }
+
+
+            ModContent.GetInstance<SorceryFightUISystem>().ActivateDialogUI(Dialog.Create(dialogKey), this);
             return true;
+        }
+
+        public void GrantEnshroudedSet()
+        {
+            var player = Main.LocalPlayer;
+            player.QuickSpawnItem(player.GetSource_Misc("EnshroudedHair"), ModContent.ItemType<EnshroudedHair>());
+            player.QuickSpawnItem(player.GetSource_Misc("EnshroudedShirt"), ModContent.ItemType<EnshroudedShirt>());
+            player.QuickSpawnItem(player.GetSource_Misc("EnshroudedHaori"), ModContent.ItemType<EnshroudedHaori>());
+            player.QuickSpawnItem(player.GetSource_Misc("EnshroudedLeggings"), ModContent.ItemType<EnshroudedLeggings>());
+            player.QuickSpawnItem(player.GetSource_Misc("EnshroudedPants"), ModContent.ItemType<EnshroudedPants>());
         }
     }
 

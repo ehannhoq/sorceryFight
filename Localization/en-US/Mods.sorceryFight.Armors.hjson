@@ -6,3 +6,63 @@ LaurelWreath: {
 		{1}% increased critical strike chance 
 		'''
 }
+
+EnshroudedHair: {
+	DisplayName: Hair of the Enshrouded One
+	Tooltip:
+		'''
+		{0}% increased Limitless cursed technique damage
+		{1}% increased damage
+		+{2} CE/s regen
+		{3}% increased RCT output
+		[c/9299a8:“Bet you’re wondering how I keep my hair so perfect, even in fights, right? Well, just a pinch of Cursed Energy Reinforcement, keeps it all sleek and shiny.”]
+		'''
+}
+
+EnshroudedShirt: {
+	DisplayName: Shirt of the Enshrouded One
+	Tooltip:
+		'''
+		{0}% increased damage
+		{1}% increased RCT output
+		[c/9299a8:“The shirt worn by the Enshrouded One during his battle against the Supreme Witch. Despite how long it’s been since he disappeared, you can almost feel his presence around you.”]
+		'''
+}
+
+EnshroudedHaori: {
+	DisplayName: Haori of the Enshrouded One
+	Tooltip:
+		'''
+		{0}% increased Limitless cursed technique damage
+		{1}% increased other cursed technique damage
+		+{2} CE/s regen
+		{3}% increased RCT output
+		[c/9299a8:“The Haori worn by the Enshrouded One during his battle against the Supreme Witch. You can still feel the residue of his Cursed Energy flowing through its fabric.”]
+
+		'''
+}
+
+EnshroudedLeggings: {
+	DisplayName: Leggings of the Enshrouded One
+	Tooltip:
+		'''
+		{0}% increased Limitless cursed technique damage
+		{1}% increased damage
+		{2}% increased RCT output
+		{3}% increased movement speed
+		[c/9299a8:“The leggings worn by the Enshrouded One during his battle against the Supreme Witch. They say he was quicker than the eye could see. You almost feel faster just wearing these.”]
+		'''
+}
+
+EnshroudedPants: {
+	DisplayName: Pants of the Enshrouded One
+	Tooltip:
+		'''
+		{0}% increased Limitless cursed technique damage
+		{1}% increased other cursed techniqued damage
+		{2}% increased RCT output
+		{3}% increased movement speed
+		{4}% increased flight time
+		[c/9299a8:"The pants worn by the Enshrouded One during casual interactions, still holding a large amount of power due to his sheer strength."]
+		'''
+}
