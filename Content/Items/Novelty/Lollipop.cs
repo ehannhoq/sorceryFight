@@ -25,8 +25,12 @@ namespace sorceryFight.Content.Items.Novelty
 
         public override bool CanUseItem(Player player)
         {
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
-            return sfPlayer.cursedEnergy > 0;
+            if (Main.myPlayer == player.whoAmI)
+            {
+                SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+                return sfPlayer.cursedEnergy > 0;
+            }
+            return false;
         }
 
         public override bool? UseItem(Player player)

@@ -1,3 +1,4 @@
+using sorceryFight.Content.Buffs.PlayerAttributes;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace sorceryFight.Content.Buffs
             float finalCostPerSecond = CostPerSecond;
 
             if (sf.uniqueBodyStructure)
-                finalCostPerSecond *= 0.8f;
+                finalCostPerSecond *= 1 - UniqueBodyStructureBuff.passiveTechniqueCostReduction;
 
             sf.cursedEnergyUsagePerSecond += finalCostPerSecond;
         }
