@@ -130,6 +130,12 @@ SukunasFinger: {
 }
 
 HollowEyes: {
-	DisplayName: Hollow Eyes
-	Tooltip: Oddly well-perserved
+	DisplayName: The Hollow Eyes of the Enshrouded One
+	Tooltip: 
+		'''
+		Oddly well-perserved
+		[c/9299a8:“These eyes once belonged to the Strongest sorcerer in Terraria. He used his might]
+		[c/9299a8:to uproot the tyranny of the Supreme Witch. Now, his might falls to you. You can]
+		[c/9299a8:almost hear his voice whispering into your mind: 'I’m expecting great things from you. Got that?'"]
+		'''
 }
