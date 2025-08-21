@@ -1,14 +1,19 @@
 PlayerAttributes: {
 	SixEyes: {
 		DisplayName: Six Eyes
-		Description: Reduces the cost of Cursed Techniques by 30%.
+		Description: Reduces the cost of Cursed Techniques by {0}%.
+	}
+
+	HollowEyes: {
+		DisplayName: Hollow Eyes
+		Description: Reduced the cost of Cursed Techniques by {0}%.
 	}
 
 	UniqueBodyStructure: {
 		DisplayName: Unique Body Structure
 		Description:
 			'''
-			Reduces the cost of Passive Techniques by 20%.
+			Reduces the cost of Passive Techniques by {0}%.
 			Allows the user to use Cursed Techniques while having Passive Techniques active.
 			'''
 	}

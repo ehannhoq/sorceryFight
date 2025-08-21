@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using CalamityMod;
 using sorceryFight.Content.Items.Accessories;
+using sorceryFight.Content.Buffs.PlayerAttributes;
 
 namespace sorceryFight.Content.CursedTechniques
 {
@@ -39,8 +40,11 @@ namespace sorceryFight.Content.CursedTechniques
         {
             float finalCost =  Cost - (Cost * (sf.bossesDefeated.Count / 100f));
             
-            if (sf.sixEyes)
-                finalCost *= 0.7f;
+
+            if (sf.hollowEyes)
+                    finalCost *= 1 - HollowEyesBuff.cursedTechniqueCostReduciton;
+            else if (sf.sixEyes)
+                    finalCost *= 1 - SixEyesBuff.cursedTechniqueCostReduciton;
             
             if (sf.cursedOfuda)
                 finalCost *= CursedOfuda.cursedTechniqueCostDecrease;

@@ -86,6 +86,7 @@ namespace sorceryFight.SFPlayer
 
         #region Player Attributes
         public bool sixEyes;
+        public bool hollowEyes;
         public bool uniqueBodyStructure;
         #endregion
 
@@ -112,7 +113,7 @@ namespace sorceryFight.SFPlayer
         public Vector2 PTSelectorPos;
         public Vector2 CEBarPos;
         #endregion
-        
+
         public override void UpdateEquips()
         {
             if (innateTechnique == null) return;
@@ -555,7 +556,7 @@ namespace sorceryFight.SFPlayer
         public void RollForPlayerAttributes(bool isReroll = false)
         {
             bool successfulRoll = false;
-            if (SFUtils.Roll(SFConstants.SixEyesPercent) && !sixEyes)
+            if (SFUtils.Roll(SFConstants.SixEyesPercent) && !sixEyes && !hollowEyes)
             {
                 sixEyes = true;
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.SixEyes"), Color.Khaki, Player.whoAmI);
@@ -578,7 +579,9 @@ namespace sorceryFight.SFPlayer
 
         void PlayerAttributeIcons()
         {
-            if (sixEyes)
+            if (hollowEyes)
+                Player.AddBuff(ModContent.BuffType<HollowEyesBuff>(), 2);
+            else if (sixEyes)
                 Player.AddBuff(ModContent.BuffType<SixEyesBuff>(), 2);
 
             if (uniqueBodyStructure)

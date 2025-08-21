@@ -128,3 +128,8 @@ SukunasFinger: {
 		you have the capabilities or a vessel...
 		'''
 }
+
+HollowEyes: {
+	DisplayName: Hollow Eyes
+	Tooltip: Oddly well-perserved
+}

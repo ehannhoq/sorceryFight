@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using CalamityMod.NPCs.DevourerofGods;
 using CalamityMod.NPCs.SupremeCalamitas;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.Items.Accessories;
 using sorceryFight.Content.Items.Armors.EnshroudedOne;
+using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.UI;
 using sorceryFight.Content.UI.Dialog;
 using sorceryFight.SFPlayer;
@@ -66,6 +64,7 @@ namespace sorceryFight.Content.Tiles
             player.QuickSpawnItem(player.GetSource_Misc("EnshroudedHaori"), ModContent.ItemType<EnshroudedHaori>());
             player.QuickSpawnItem(player.GetSource_Misc("EnshroudedLeggings"), ModContent.ItemType<EnshroudedLeggings>());
             player.QuickSpawnItem(player.GetSource_Misc("EnshroudedPants"), ModContent.ItemType<EnshroudedPants>());
+            player.QuickSpawnItem(player.GetSource_Misc("HollowEyes"), ModContent.ItemType<HollowEyes>());
         }
     }
 
