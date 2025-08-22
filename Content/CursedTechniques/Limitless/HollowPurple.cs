@@ -197,6 +197,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleSnap, Projectile.Center);
                 player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
 
+                CameraController.CameraShake(30, 75, 10);
+                ImpactFrameController.ImpactFrame(textColor, 8);
+
                 if (Main.myPlayer == Projectile.owner)
                     Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
             }
