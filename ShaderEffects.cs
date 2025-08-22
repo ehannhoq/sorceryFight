@@ -27,6 +27,9 @@ namespace sorceryFight
                 Filters.Scene["SF:DivineFlame"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(divineFlameMS, "OrangeTint"), EffectPriority.Medium);
                 Filters.Scene["SF:DivineFlame"].Load();
 
+                Asset<Effect> impactFrame = Mod.Assets.Request<Effect>("Content/Shaders/ImpactFrame", AssetRequestMode.ImmediateLoad);
+                Filters.Scene["SF:ImpactFrame"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(impactFrame, "ImpactFrame"), EffectPriority.High);
+                Filters.Scene["SF:ImpactFrame"].Load();
             }
         }
     }
