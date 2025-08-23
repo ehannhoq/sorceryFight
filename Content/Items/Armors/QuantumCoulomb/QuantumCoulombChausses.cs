@@ -6,17 +6,17 @@ using Terraria.Initializers;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.Items.Armors.EnshroudedOne
+namespace sorceryFight.Content.Items.Armors.QuantumCoulomb
 {
     [AutoloadEquip(EquipType.Legs)]
-    public class EnshroudedLeggings : ModItem
+    public class QuantumCoulombChausses : ModItem
     {
         public static float limitlessDamage = 0.05f;
         public static float allDamage = 0.05f;
         public static float rctOutput = 1.0f;
         public static float movementSpeed = 0.15f;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Armors.EnshroudedLeggings.DisplayName");
-        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Armors.EnshroudedLeggings.Tooltip").WithFormatArgs((int)(limitlessDamage * 100), (int)(allDamage * 100), (int)(rctOutput * 100), (int)(movementSpeed * 100));
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Armors.QuantumCoulombChausses.DisplayName");
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Armors.QuantumCoulombChausses.Tooltip").WithFormatArgs((int)(limitlessDamage * 100), (int)(allDamage * 100), (int)(rctOutput * 100), (int)(movementSpeed * 100));
 
         public override void SetDefaults()
         {

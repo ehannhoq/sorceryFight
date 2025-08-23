@@ -2,20 +2,19 @@ using System;
 using System.Collections.Generic;
 using CalamityMod.NPCs.DevourerofGods;
 using CalamityMod.NPCs.SupremeCalamitas;
-using sorceryFight.Content.Items.Armors.EnshroudedOne;
+using sorceryFight.Content.Items.Armors.QuantumCoulomb;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.UI;
 using sorceryFight.Content.UI.Dialog;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace sorceryFight.Content.Tiles
 {
-    public class EnshroudedOneStatue : ModTile
+    public class LastChallengerStatue : ModTile
     {
         public Dictionary<string, bool> grantedSets = new Dictionary<string, bool>();
         public override void SetStaticDefaults()
@@ -37,18 +36,18 @@ namespace sorceryFight.Content.Tiles
         {
             SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
 
-            string dialogKey = "EnshroudedOne.Unworthy";
+            string dialogKey = "LastChallenger.Unworthy";
             bool worthy = sfPlayer.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()) && sfPlayer.HasDefeatedBoss(ModContent.NPCType<SupremeCalamitas>());
 
             if (worthy)
             {
                 if (!grantedSets.ContainsKey(sfPlayer.Player.name))
                 {
-                    dialogKey = "EnshroudedOne.Worthy";
+                    dialogKey = "LastChallenger.Worthy";
                     grantedSets.Add(sfPlayer.Player.name, true);
                 }
                 else
-                    dialogKey = "EnshroudedOne.PreBossRush";
+                    dialogKey = "LastChallenger.PreBossRush";
             }
 
 
@@ -56,26 +55,24 @@ namespace sorceryFight.Content.Tiles
             return true;
         }
 
-        public void GrantEnshroudedSet()
+        public void GrantQuantumCoulombSet()
         {
             var player = Main.LocalPlayer;
-            player.QuickSpawnItem(player.GetSource_Misc("EnshroudedHair"), ModContent.ItemType<EnshroudedHair>());
-            player.QuickSpawnItem(player.GetSource_Misc("EnshroudedShirt"), ModContent.ItemType<EnshroudedShirt>());
-            player.QuickSpawnItem(player.GetSource_Misc("EnshroudedHaori"), ModContent.ItemType<EnshroudedHaori>());
-            player.QuickSpawnItem(player.GetSource_Misc("EnshroudedLeggings"), ModContent.ItemType<EnshroudedLeggings>());
-            player.QuickSpawnItem(player.GetSource_Misc("EnshroudedPants"), ModContent.ItemType<EnshroudedPants>());
-            player.QuickSpawnItem(player.GetSource_Misc("HollowEyes"), ModContent.ItemType<HollowEyes>());
+            player.QuickSpawnItem(player.GetSource_Misc("QuantumCoulombBottle"), ModContent.ItemType<QuantumCoulombBottle>());
+            player.QuickSpawnItem(player.GetSource_Misc("QuantumCoulombBodyArmor"), ModContent.ItemType<QuantumCoulombBodyArmor>());
+            player.QuickSpawnItem(player.GetSource_Misc("QuantumCoulombChausses"), ModContent.ItemType<QuantumCoulombChausses>());
+            player.QuickSpawnItem(player.GetSource_Misc("SuspiciouslyWellPerservedEye"), ModContent.ItemType<SuspiciouslyWellPerservedEye>());
         }
     }
 
-    public class EnshroudedOneStatueItem : ModItem
+    public class LastChallengerStatueItem : ModItem
     {
-        public override string Texture => "sorceryFight/Content/Tiles/EnshroudedOneStatue";
+        public override string Texture => "sorceryFight/Content/Tiles/LastChallengerStatue";
         public override void SetDefaults()
         {
             Item.width = 16;
             Item.height = 48;
-            Item.createTile = ModContent.TileType<EnshroudedOneStatue>();
+            Item.createTile = ModContent.TileType<LastChallengerStatue>();
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useTurn = true;
             Item.autoReuse = true;

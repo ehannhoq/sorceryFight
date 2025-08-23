@@ -7,67 +7,37 @@ LaurelWreath: {
 		'''
 }
 
-EnshroudedHair: {
-	DisplayName: Hair of the Enshrouded One
+QuantumCoulombBottle: {
+	DisplayName: Quantum Coulomb Bottle
 	Tooltip:
 		'''
 		{0}% increased Limitless cursed technique damage
 		{1}% increased damage
 		+{2} CE/s regen
 		{3}% increased RCT output
-		[c/9299a8:“Bet you’re wondering how I keep my hair so perfect, even in fights, right? Well, just a]
-		[c/9299a8:pinch of Cursed Energy Reinforcement, keeps it all sleek and shiny.”]
+		[c/9299a8:“A bottle? Seriously?"]
+		[c/6D2673:Dedicated to ehann]
 		'''
 }
 
-EnshroudedShirt: {
-	DisplayName: Shirt of the Enshrouded One
+QuantumCoulombBodyArmor: {
+	DisplayName: Quantum Coulomb Body Armor
 	Tooltip:
 		'''
 		{0}% increased damage
 		{1}% increased RCT output
-		[c/9299a8:“The shirt worn by the Enshrouded One during his battle against the Supreme Witch. Despite how]
-		[c/9299a8:long it’s been since he disappeared, you can almost feel his presence around you.”]
+		[c/6D2673:Dedicated to ehann]
 		'''
 }
 
-EnshroudedHaori: {
-	DisplayName: Haori of the Enshrouded One
-	Tooltip:
-		'''
-		{0}% increased Limitless cursed technique damage
-		{1}% increased other cursed technique damage
-		+{2} CE/s regen
-		{3}% increased RCT output
-		[c/9299a8:“The Haori worn by the Enshrouded One during his battle against the Supreme Witch. You can]
-		[c?9299a8:still feel the residue of his Cursed Energy flowing through its fabric.”]
-
-		'''
-}
-
-EnshroudedLeggings: {
-	DisplayName: Leggings of the Enshrouded One
+QuantumCoulombChausses: {
+	DisplayName: Quantum Coulomb Chausses
 	Tooltip:
 		'''
 		{0}% increased Limitless cursed technique damage
 		{1}% increased damage
 		{2}% increased RCT output
 		{3}% increased movement speed
-		[c/9299a8:“The leggings worn by the Enshrouded One during his battle against the Supreme Witch.]
-		[c/9299a8:They say he was quicker than the eye could see. You almost feel faster just wearing these.”]
-		'''
-}
-
-EnshroudedPants: {
-	DisplayName: Pants of the Enshrouded One
-	Tooltip:
-		'''
-		{0}% increased Limitless cursed technique damage
-		{1}% increased other cursed techniqued damage
-		{2}% increased RCT output
-		{3}% increased movement speed
-		{4}% increased flight time
-		[c/9299a8:"The pants worn by the Enshrouded One during casual interactions, still holding a large]
-		[c/9299a8:amount of power due to his sheer strength."]
+		[c/6D2673:Dedicated to ehann]
 		'''
 }

@@ -6,18 +6,18 @@ using Terraria.Initializers;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.Items.Armors.EnshroudedOne
+namespace sorceryFight.Content.Items.Armors.QuantumCoulomb
 {
     [AutoloadEquip(EquipType.Head)]
-    public class EnshroudedHair : ModItem
+    public class QuantumCoulombBottle : ModItem
     {
         public static float limitlessDamage = 0.05f;
         public static float allDamage = 0.05f;
         public static int ceRegen = 50;
         public static float rctOutput = 0.5f;
 
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Armors.EnshroudedHair.DisplayName");
-        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Armors.EnshroudedHair.Tooltip").WithFormatArgs((int)(limitlessDamage * 100), (int)(allDamage * 100), ceRegen, (int)(rctOutput * 100));
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Armors.QuantumCoulombBottle.DisplayName");
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Armors.QuantumCoulombBottle.Tooltip").WithFormatArgs((int)(limitlessDamage * 100), (int)(allDamage * 100), ceRegen, (int)(rctOutput * 100));
 
         public override void SetDefaults()
         {

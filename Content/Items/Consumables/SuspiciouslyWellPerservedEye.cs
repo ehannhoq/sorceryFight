@@ -8,10 +8,10 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Items.Consumables
 {
-    public class HollowEyes : ModItem
+    public class SuspiciouslyWellPerservedEye : ModItem
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.HollowEyes.DisplayName");
-        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.HollowEyes.Tooltip");
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.SuspiciouslyWellPerservedEye.DisplayName");
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.SuspiciouslyWellPerservedEye.Tooltip");
 
         public override void SetDefaults()
         {

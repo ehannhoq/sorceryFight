@@ -1,31 +1,34 @@
 {
-    "EnshroudedOne": {
+    "LastChallenger": {
         "Unworthy": {
-            "Speaker": "Enshrouded One",
-            "Text": "You are not worthy, come back after proving your strength to me.",
+            "Speaker": "The Last Challenger",
+            "Text": "...",
+            "Replies": [],
+            "Action": null
+        },
+
+        "Worthy": {
+            "Speaker": "The Last Challenger",
+            "Text": "I've been watching you throughout your journey. At first I thought you were just another unfortunate soul brough into this forsakened world.\nBut you've proven to be... much more... extraordinary.\nI saw glimpses of myself in your battles, and such want to give you a special gift.\nTake these, and do what I could not.\nDefeat the Supreme Witch.\nAnd then all that stands between you and Him is your own strength.",
             "Replies": [
                 {
-                    "Text": "How will I know when I'm worthy?",
-                    "Response": "EnshroudedOne.UnworthyInquiry"
+                    "Text": "Who's 'Him?'",
+                    "Response": "LastChallenger.WhosHim"
                 }
             ],
-            "Action": null
+            "Action": "GrantQuantumCoulombSet"
         },
-        "UnworthyInquiry": {
-            "Speaker": "Enshrouded One",
-            "Text": "At the words of my old adversary,\n\"stand at the brink of infinity.\"",
+
+        "PreSupremeCalamitas": {
+            "Speaker": "The Last Challenger",
+            "Text": "Defeat the Supreme Witch, and finish what I've started.",
             "Replies": [],
             "Action": null
         },
-        "Worthy": {
-            "Speaker": "Enshrouded One",
-            "Text": "So you've defeated Draedon's prized creations.\nAs well as the Supreme Witch? Impressive.\nYou've grown in such a quick time, young one.\nYou might even be on par with my strength soon, but not quite yet.\nHowever, I have a gift that might make you reach those heights sooner.\nTake these sets of clothes, and this artifact of mine.\nIt will increase your strength to unimaginable degrees, due to the cursed energy imbued with my cursed energy after...\n...\nAnyways, I'm expecting great things out of you. Got that?\nSeek out the Terminus at the bottom of the Abyss, and do what I could not.\nGood luck, young sorcerer.",
-            "Replies": [],
-            "Action": "GrantEnshroudedSet"
-        },
-        "PreBossRush": {
-            "Speaker": "Enshrouded One",
-            "Text": "Seek out the Terminus at the bottom of the Abyss.",
+
+        "PostSupremeCalamitas": {
+            "Speaker": "The Last Challenger",
+            "Text": "You now stand where I once stood. I'm sure he's waiting for you.\nGood luck, young sorcerer.",
             "Replies": [],
             "Action": null
         }

@@ -77,6 +77,11 @@ Mods: {
 				DisplayName: Enshrouded One Statue Item
 				Tooltip: ""
 			}
+
+			LastChallengerStatueItem: {
+				DisplayName: Last Challenger Statue Item
+				Tooltip: ""
+			}
 		}
 
 		NPCs.FingerBearer.DisplayName: Finger Bearer
