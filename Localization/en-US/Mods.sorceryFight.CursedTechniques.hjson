@@ -184,7 +184,7 @@ HakarisDoor: {
 		Summon a pair of train doors that shut on 
 		enemies, crushing them.
 		'''
-	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
+	LockedDescription: Defeat the one who guards the Dungeon.
 }
 
 PassingThrough: {
