@@ -130,6 +130,9 @@ namespace sorceryFight.StructureHelper
                     ushort wallType = reader.ReadUInt16();
                     byte wallColor = reader.ReadByte();
 
+                    bool isTileFullBright = reader.ReadBoolean();
+                    bool isWallFullBright = reader.ReadBoolean();
+
                     if (hasTile && tileType == ModContent.TileType<IgnoreTile>()) continue;
 
                     int wx = worldPos.X + x;
@@ -151,10 +154,12 @@ namespace sorceryFight.StructureHelper
                         tile.IsHalfBlock = isHalfBlock;
                         tile.Slope = slope;
                         tile.TileColor = tileColor;
+                        tile.IsTileFullbright = isTileFullBright;
                     }
 
                     tile.WallType = wallType;
                     tile.WallColor = wallColor;
+                    tile.IsWallFullbright = isWallFullBright;
                 }
             }
 

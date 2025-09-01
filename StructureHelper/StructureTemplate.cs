@@ -34,6 +34,9 @@ namespace sorceryFight.StructureHelper
 
             public ushort WallType;
             public byte WallColor;
+
+            public bool isTileFullBright;
+            public bool isWallFullBright;
         }
 
         public void Capture(Point origin)
@@ -56,7 +59,10 @@ namespace sorceryFight.StructureHelper
                         TileColor = tile.TileColor,
 
                         WallType = tile.WallType,
-                        WallColor = tile.WallColor
+                        WallColor = tile.WallColor,
+
+                        isTileFullBright = tile.IsTileFullbright,
+                        isWallFullBright = tile.IsWallFullbright
                     };
                 }
             }
@@ -86,6 +92,10 @@ namespace sorceryFight.StructureHelper
 
                     writer.Write(tiles[x, y].WallType);
                     writer.Write(tiles[x, y].WallColor);
+
+                    writer.Write(tiles[x, y].isTileFullBright);
+                    writer.Write(tiles[x, y].isWallFullBright);
+
                 }
             }
 
