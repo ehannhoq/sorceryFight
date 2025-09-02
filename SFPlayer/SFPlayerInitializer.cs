@@ -14,6 +14,7 @@ namespace sorceryFight.SFPlayer
             disableRegenFromProjectiles = false;
             disableRegenFromBuffs = false;
             disableRegenFromDE = false;
+            ctCostReduction = 0f;
 
             innateTechnique = null;
             selectedTechnique = null;
@@ -71,6 +72,8 @@ namespace sorceryFight.SFPlayer
         }
         public override void SaveData(TagCompound tag)
         {
+            tag["ctCostReduction"] = ctCostReduction;
+
             if (innateTechnique != null)
                 tag["innateTechnique"] = innateTechnique.Name;
 
@@ -124,6 +127,8 @@ namespace sorceryFight.SFPlayer
 
         public override void LoadData(TagCompound tag)
         {
+            ctCostReduction = tag.ContainsKey("ctCostReduction") ? tag.GetFloat("ctCostReduction") : 0f;
+
             string innateTechniqueName = tag.ContainsKey("innateTechnique") ? tag.GetString("innateTechnique") : "";
             innateTechnique = InnateTechnique.GetInnateTechnique(innateTechniqueName);
 

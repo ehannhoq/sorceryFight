@@ -35,6 +35,7 @@ namespace sorceryFight.SFPlayer
         public bool disableRegenFromBuffs;
         public bool disableRegenFromDE;
         public bool disableCurseTechniques;
+        public float ctCostReduction;
         #endregion
 
         #region Global Cursed Technique Stuff
@@ -145,6 +146,7 @@ namespace sorceryFight.SFPlayer
 
             cursedEnergyRegenPerSecond = 0f;
             maxCursedEnergy = 0f;
+            ctCostReduction = 0f;
 
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
             maxCursedEnergy = calculateBaseMaxCE();

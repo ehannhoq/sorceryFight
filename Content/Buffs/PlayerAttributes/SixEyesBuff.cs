@@ -18,6 +18,11 @@ namespace sorceryFight.Content.Buffs.PlayerAttributes
             Main.persistentBuff[Type] = true;
         }
 
+        public override void Update(Player player, ref int buffIndex)
+        {
+            player.GetModPlayer<SorceryFightPlayer>().ctCostReduction += cursedTechniqueCostReduciton;
+        }
+
         public override bool RightClick(int buffIndex)
         {
             return false;
