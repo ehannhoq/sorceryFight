@@ -10,12 +10,7 @@
         "Worthy": {
             "Speaker": "The Last Challenger",
             "Text": "I've been watching you throughout your journey. At first I thought you were just another unfortunate soul brough into this forsakened world.\nBut you've proven to be... much more... extraordinary.\nI saw glimpses of myself in your battles, and such want to give you a special gift.\nTake these, and do what I could not.\nDefeat the Supreme Witch.\nAnd then all that stands between you and Him is your own strength.",
-            "Replies": [
-                {
-                    "Text": "Who's 'Him?'",
-                    "Response": "LastChallenger.WhosHim"
-                }
-            ],
+            "Replies": [],
             "Action": "GrantQuantumCoulombSet"
         },
 
