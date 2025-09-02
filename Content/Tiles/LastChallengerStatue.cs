@@ -46,8 +46,10 @@ namespace sorceryFight.Content.Tiles
                     dialogKey = "LastChallenger.Worthy";
                     grantedSets.Add(sfPlayer.Player.name, true);
                 }
+                else if (!sfPlayer.HasDefeatedBoss(ModContent.NPCType<SupremeCalamitas>()))
+                    dialogKey = "LastChallenger.PreSupremeCalamitas";
                 else
-                    dialogKey = "LastChallenger.PreBossRush";
+                    dialogKey = "LastChallenger.PostSupremeCalamitas";
             }
 
 
