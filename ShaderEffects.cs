@@ -30,6 +30,10 @@ namespace sorceryFight
                 Asset<Effect> impactFrame = Mod.Assets.Request<Effect>("Content/Shaders/ImpactFrame", AssetRequestMode.ImmediateLoad);
                 Filters.Scene["SF:ImpactFrame"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(impactFrame, "ImpactFrame"), EffectPriority.High);
                 Filters.Scene["SF:ImpactFrame"].Load();
+
+                Asset<Effect> blackHole = Mod.Assets.Request<Effect>("Content/Shaders/Blackhole", AssetRequestMode.ImmediateLoad);
+                Filters.Scene["SF:Blackhole"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(blackHole, "Blackhole"), EffectPriority.Medium);
+                Filters.Scene["SF:Blackhole"].Load();
             }
         }
     }
