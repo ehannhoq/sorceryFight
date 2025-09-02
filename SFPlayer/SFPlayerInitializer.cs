@@ -51,7 +51,7 @@ namespace sorceryFight.SFPlayer
             inSimpleDomain = false;
 
             sixEyes = false;
-            hollowEyes = false;
+            challengersEye = false;
             uniqueBodyStructure = false;
 
             sukunasFingers = new bool[20];
@@ -105,7 +105,7 @@ namespace sorceryFight.SFPlayer
             generalBooleans.AddWithCondition("usedYourPotentialBefore", usedYourPotentialBefore);
             generalBooleans.AddWithCondition("unlockedRCT", unlockedRCT);
             generalBooleans.AddWithCondition("sixEyes", sixEyes);
-            generalBooleans.AddWithCondition("hollowEyes", hollowEyes);
+            generalBooleans.AddWithCondition("hollowEyes", challengersEye);
             generalBooleans.AddWithCondition("uniqueBodyStructure", uniqueBodyStructure);
             tag["generalBooleans"] = generalBooleans;
 
@@ -162,7 +162,7 @@ namespace sorceryFight.SFPlayer
             usedYourPotentialBefore = generalBooleans.Contains("usedYourPotentialBefore");
             unlockedRCT = generalBooleans.Contains("unlockedRCT");
             sixEyes = generalBooleans.Contains("sixEyes");
-            hollowEyes = generalBooleans.Contains("hollowEyes");
+            challengersEye = generalBooleans.Contains("hollowEyes");
             uniqueBodyStructure = generalBooleans.Contains("uniqueBodyStructure");
 
             maxCursedEnergy = calculateBaseMaxCE();

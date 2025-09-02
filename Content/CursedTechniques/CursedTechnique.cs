@@ -41,8 +41,8 @@ namespace sorceryFight.Content.CursedTechniques
             float finalCost =  Cost - (Cost * (sf.bossesDefeated.Count / 100f));
             
 
-            if (sf.hollowEyes)
-                    finalCost *= 1 - HollowEyesBuff.cursedTechniqueCostReduciton;
+            if (sf.challengersEye)
+                    finalCost *= 1 - ChallengersEyeBuff.cursedTechniqueCostReduciton;
             else if (sf.sixEyes)
                     finalCost *= 1 - SixEyesBuff.cursedTechniqueCostReduciton;
             

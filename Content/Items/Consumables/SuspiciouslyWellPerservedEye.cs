@@ -29,7 +29,7 @@ namespace sorceryFight.Content.Items.Consumables
             if (Main.myPlayer == player.whoAmI)
             {
                 SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
-                return sfPlayer.sixEyes && !sfPlayer.hollowEyes;
+                return sfPlayer.sixEyes && !sfPlayer.challengersEye;
             }
             return false;
         }
@@ -38,7 +38,7 @@ namespace sorceryFight.Content.Items.Consumables
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                player.GetModPlayer<SorceryFightPlayer>().hollowEyes = true;
+                player.GetModPlayer<SorceryFightPlayer>().challengersEye = true;
                 SoundEngine.PlaySound(SoundID.Item4);
             }
 

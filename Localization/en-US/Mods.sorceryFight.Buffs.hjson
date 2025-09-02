@@ -4,8 +4,8 @@ PlayerAttributes: {
 		Description: Reduces the cost of Cursed Techniques by {0}%.
 	}
 
-	HollowEyes: {
-		DisplayName: Hollow Eyes
+	ChallengersEye: {
+		DisplayName: The Last Challenger's Eye
 		Description: Reduced the cost of Cursed Techniques by {0}%.
 	}
 
