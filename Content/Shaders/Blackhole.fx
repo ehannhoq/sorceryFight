@@ -25,34 +25,31 @@ float2 uZoom;
 
 float4 Blackhole(float2 coords : TEXCOORD0) : COLOR0
 {
+    float aspectRatio = uScreenResolution.x / uScreenResolution.y;
     float2 center = (uTargetPosition - uScreenPosition) / uScreenResolution;
     float radius = uProgress;
 
-    float2 difference = coords - center;
-    difference.x *= uScreenResolution.x / uScreenResolution.y;
+    float2 d = coords - center;
+    float2 dAR = float2(d.x * aspectRatio, d.y);
 
-    float distance = length(difference)
+    float dist = length(dAR);
+    if (dist <= radius) return float4(0, 0, 0, 1);
 
-    if (distance < radius)
-    {
-        return float4(0, 0, 0, 1);
-    }
+    float t = (dist - radius) / dist;
 
-    float distFromEdge = distance - radius + EPSILON;
-
-    float angle = (90 * (0.01 / distFromEdge)) * (PI / 180);
+    float angle = 0.5 * (radius / dist) * PI;
     float s = sin(angle);
     float c = cos(angle);
-    float2x2 rotationMatrix = float2x2(
-        c, -s,
-        s, c,
-    );
+    float rot = float2x2(c, -s, s, c);
 
-    float2 rotatedCoords = mul(difference, rotationMatrix);
-    float4 targetColor = tex2D(uImage0, rotatedCoords);
+    float2 v = mul(dAR, rot);
+    v.x /= aspectRatio;
+    
+    float2 uv = center + lerp(v, d, t);
+    uv = saturate(uv);
 
-    return targetColor;
-
+    return tex2D(uImage0, uv);
+    
 }
 
 technique Technique1
