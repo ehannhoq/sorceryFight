@@ -99,7 +99,10 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
                     ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.{selectedTechnique.Name}"), Color.Khaki, player.whoAmI);
 
                     if (!sfPlayer.usedYourPotentialBefore)
+                    {
                         sfPlayer.RollForPlayerAttributes();
+                        sfPlayer.RollForCursedEnergyTraits();
+                    }
                     
                     RemoveSelf();
                     animate = false;

@@ -36,7 +36,8 @@ namespace sorceryFight
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GeneticReroll>(), 4, 1, 1));
-
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CursedEnergyCoin>(), 4, 1, 1));
+         
             LeadingConditionRule nonExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
             npcLoot.Add(nonExpertRule);
 

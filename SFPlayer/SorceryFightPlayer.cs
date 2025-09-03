@@ -22,6 +22,7 @@ using System.Linq;
 using Microsoft.Xna.Framework.Design;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
+using sorceryFight.Content.Buffs.CursedEnergyTraits;
 
 namespace sorceryFight.SFPlayer
 {
@@ -91,6 +92,12 @@ namespace sorceryFight.SFPlayer
         public bool uniqueBodyStructure;
         #endregion
 
+        #region Cursed Energy Traits
+        public bool explosiveCursedEnergy;
+        public bool sharpCursedEnergy;
+        public bool overflowingEnergy;
+        #endregion
+
         #region Shrine/Vessel Specific Variables
         public bool[] sukunasFingers;
         public int sukunasFingerConsumed => sukunasFingers.Where(x => x).Count();
@@ -141,7 +148,7 @@ namespace sorceryFight.SFPlayer
 
             innateTechnique.PreUpdate(this);
             RCTAnimation();
-            PlayerAttributeIcons();
+            AttributeIcons();
             Keybinds();
 
             cursedEnergyRegenPerSecond = 0f;
@@ -578,8 +585,37 @@ namespace sorceryFight.SFPlayer
             }
         }
 
+        public void RollForCursedEnergyTraits(bool isReroll = false)
+        {
+            bool successfulRoll = false;
+            if (SFUtils.Roll(SFConstants.ExplosiveCursedEnergy) && !explosiveCursedEnergy)
+            {
+                explosiveCursedEnergy = true;
+                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.CursedEnergyTraits.ExplosiveCursedEnergy"), Color.Khaki, Player.whoAmI);
+                successfulRoll = true;
+            }
+            else if (SFUtils.Roll(SFConstants.SharpCursedEnergy) && !sharpCursedEnergy)
+            {
+                sharpCursedEnergy = true;
+                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.CursedEnergyTraits.SharpCursedEnergy"), Color.Khaki, Player.whoAmI);
+                successfulRoll = true;
+            }
+            else if (SFUtils.Roll(SFConstants.OverflowingEnergy) && !overflowingEnergy)
+            {
+                overflowingEnergy = true;
+                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.CursedEnergyTraits.OverflowingEnergy"), Color.Khaki, Player.whoAmI);
+                successfulRoll = true;
+            }
 
-        void PlayerAttributeIcons()
+            if (isReroll && !successfulRoll)
+            {
+                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.CursedEnergyTraits.FailedReroll"), Color.Khaki, Player.whoAmI);
+            }
+        }
+
+
+
+        void AttributeIcons()
         {
             if (challengersEye)
                 Player.AddBuff(ModContent.BuffType<ChallengersEyeBuff>(), 2);
@@ -591,6 +627,15 @@ namespace sorceryFight.SFPlayer
 
             if (innateTechnique.Name == "Vessel")
                 Player.AddBuff(ModContent.BuffType<SukunasVesselBuff>(), 2);
+
+            if (explosiveCursedEnergy)
+                Player.AddBuff(ModContent.BuffType<ExplosiveCursedEnergy>(), 2);
+
+            if (sharpCursedEnergy)
+                Player.AddBuff(ModContent.BuffType<SharpCursedEnergy>(), 2);
+
+            if (overflowingEnergy)
+                Player.AddBuff(ModContent.BuffType<OverflowingCursedEnergy>(), 2);
 
             if (blackFlashCounter > 0)
                 Player.AddBuff(ModContent.BuffType<FlowState>(), 2);

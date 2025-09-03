@@ -23,6 +23,18 @@ GeneticReroll: {
 		'''
 }
 
+CursedEnergyCoin: {
+	DisplayName: Cursed Coin
+	Tooltip:
+		'''
+		Has a chance for granting you a special cursed energy trait.
+		Explosive Cursed Energy: 15%
+		Sharp Cursed Energy: 15%
+		Overflowing Cursed Energy: 15%
+		You can only have one cursed energy trait at a time.
+		'''
+}
+
 CursedBulb: {
 	DisplayName: Cursed Bulb
 	Tooltip:

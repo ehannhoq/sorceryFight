@@ -55,6 +55,10 @@ namespace sorceryFight.SFPlayer
             challengersEye = false;
             uniqueBodyStructure = false;
 
+            explosiveCursedEnergy = false;
+            sharpCursedEnergy = false;
+            overflowingEnergy = false;
+
             sukunasFingers = new bool[20];
 
             unlockedRCT = false;

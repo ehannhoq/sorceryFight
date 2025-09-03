@@ -34,6 +34,13 @@ InnateTechniqueUnlocker: {
 	PlayerAttributes: {
 		SixEyes: Your eyes begin to glow radiantly, being able to see the flow of even the faintest of Cursed Energy in the air.
 		UniqueBodyStructure: Your body aches and churns, as it begins to reconstruct itself.
-		FailedReroll: Your genetics doesn't seem to have changed. (FAILED REROLL)
+		FailedReroll: Your genetics doesn't seem to have changed.
+	}
+
+	CursedEnergyTraits: {
+		ExplosiveCursedEnergy: Your cursed energy feels a lot more explosive now.
+		SharpCursedEnergy: Your cursed energy feels a lot rougher now.
+		OverflowingCursedEnergy: You feel your cursed energy overflowing.
+		FailedReroll: Your cursed energy seems to be the same as before.
 	}
 }
