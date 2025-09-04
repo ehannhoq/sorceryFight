@@ -139,9 +139,6 @@ namespace sorceryFight.StructureHelper
                     int wy = worldPos.Y + y;
 
                     Tile tile = Framing.GetTileSafely(wx, wy);
-
-
-
                     tile.ClearEverything();
 
                     if (hasTile)
@@ -195,8 +192,13 @@ namespace sorceryFight.StructureHelper
                     bool isActuated = template.tiles[x, y].IsActuated;
                     bool isHalfBlock = template.tiles[x, y].IsHalfBlock;
                     SlopeType slope = template.tiles[x, y].Slope;
+                    byte tileColor = template.tiles[x, y].TileColor;
 
                     ushort wallType = template.tiles[x, y].WallType;
+                    byte wallColor = template.tiles[x, y].WallColor;
+
+                    bool isTileFullBright = template.tiles[x, y].isTileFullBright;
+                    bool isWallFullBright = template.tiles[x, y].isWallFullBright;
 
                     if (hasTile && tileType == ModContent.TileType<IgnoreTile>()) continue;
 
@@ -212,9 +214,13 @@ namespace sorceryFight.StructureHelper
                         tile.IsActuated = isActuated;
                         tile.IsHalfBlock = isHalfBlock;
                         tile.Slope = slope;
+                        tile.TileColor = tileColor;
+                        tile.IsTileFullbright = isTileFullBright;
                     }
 
                     tile.WallType = wallType;
+                    tile.WallColor = wallColor;
+                    tile.IsWallFullbright = isWallFullBright;
                 }
             }
 
@@ -267,8 +273,13 @@ namespace sorceryFight.StructureHelper
                     bool isActuated = reader.ReadBoolean();
                     bool isHalfBlock = reader.ReadBoolean();
                     SlopeType slope = (SlopeType)reader.ReadByte();
+                    byte tileColor = reader.ReadByte();
 
                     ushort wallType = reader.ReadUInt16();
+                    byte wallColor = reader.ReadByte();
+
+                    bool isTileFullBright = reader.ReadBoolean();
+                    bool isWallFullBright = reader.ReadBoolean();
 
                     template.tiles[x, y].HasTile = hasTile;
                     template.tiles[x, y].TileType = tileType;
@@ -277,7 +288,11 @@ namespace sorceryFight.StructureHelper
                     template.tiles[x, y].IsActuated = isActuated;
                     template.tiles[x, y].IsHalfBlock = isHalfBlock;
                     template.tiles[x, y].Slope = slope;
+                    template.tiles[x, y].TileColor = tileColor;
                     template.tiles[x, y].WallType = wallType;
+                    template.tiles[x, y].WallColor = wallColor;
+                    template.tiles[x, y].isTileFullBright = isTileFullBright;
+                    template.tiles[x, y].isWallFullBright = isWallFullBright;
                 }
             }
 
