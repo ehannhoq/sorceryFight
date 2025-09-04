@@ -7,7 +7,7 @@ namespace sorceryFight.Content.Structures
         public override void OnLoad()
         {
             Structure.MinDepth = 1000;
-            Structure.Chance = 100;
+            Structure.Chance = 1f;
             Structure.GenerationLimit = 1;
         }
     }
