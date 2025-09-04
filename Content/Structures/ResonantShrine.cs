@@ -2,14 +2,13 @@ using sorceryFight.StructureHelper;
 
 namespace sorceryFight.Content.Structures
 {
-
     public class ResonantShrine : RandomStructure
     {
-        public override void SetDefaults()
+        public override void OnLoad()
         {
-            MinDepth = 1000;
-            Chance = 100;
-            GenerationLimit = 1;
+            Structure.MinDepth = 1000;
+            Structure.Chance = 100;
+            Structure.GenerationLimit = 1;
         }
     }
 }
