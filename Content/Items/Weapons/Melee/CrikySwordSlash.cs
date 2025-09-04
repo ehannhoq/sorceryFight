@@ -1,6 +1,7 @@
 using System;
 using CalamityMod;
 using CalamityMod.Particles;
+using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Particles;
@@ -58,8 +59,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
 
             if (Main.myPlayer == Projectile.owner)
             {
-
-                if (!player.controlUseItem)
+                if (player.CantUseSword(Projectile))
                 {
                     Projectile.Kill();
                 }

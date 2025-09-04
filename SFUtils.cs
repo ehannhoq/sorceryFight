@@ -268,6 +268,19 @@ public static class SFUtils
         }
         return false;
     }
+
+    /// <summary>
+    /// Copied from CalamityMod's PlayerUtils.
+    /// </summary>
+    /// <param name="player"></param>
+    /// <param name="needsToHold"></param>
+    /// <returns>Whether if the player is dead, inactive, or otherwise unable to use holdout items.</returns>
+    public static bool CantUseHoldout(this Player player, bool needsToHold = true) => player == null || !player.active || player.dead || (!player.channel && needsToHold) || player.CCed || player.noItems;
+
+    public static bool CantUseSword(this Player player, Projectile slash, bool needsToHold = true)
+    {
+        return player.CantUseHoldout(needsToHold) || player.HeldItem.shoot != slash.type;
+    }
 }
 
 public static class SFConstants

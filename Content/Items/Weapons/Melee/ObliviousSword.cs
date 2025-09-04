@@ -54,9 +54,12 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.knockBack = 5;
             Item.useAnimation = 1;
             Item.noUseGraphic = true;
+            Item.channel = true;
+            Item.autoReuse = false;
             Item.rare = ModContent.RarityType<SorceryFightLegendary>();
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.shoot = ModContent.ProjectileType<ObliviousSwordSlash>();
+            Item.shootSpeed = 24f;
             Item.DamageType = CursedTechniqueDamageClass.Instance;
             Item.noMelee = true;
             Item.ArmorPenetration = 1000;

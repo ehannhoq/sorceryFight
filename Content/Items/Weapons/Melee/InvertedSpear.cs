@@ -33,6 +33,9 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.useTime = 1;
             Item.damage = 700;
             Item.knockBack = 5;
+            Item.channel = true;
+            Item.shootSpeed = 24f;
+            Item.autoReuse = false;
             Item.useAnimation = 1;
             Item.noUseGraphic = true;
             Item.rare = ModContent.RarityType<SorceryFightWeapon>();
