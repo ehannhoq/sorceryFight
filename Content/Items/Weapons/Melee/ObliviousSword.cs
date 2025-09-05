@@ -1,16 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using CalamityMod;
-using CalamityMod.Items.Materials;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
-using sorceryFight.Content.CursedTechniques.Shrine;
+using sorceryFight.Content.Projectiles.Melee;
 using sorceryFight.Content.Rarities;
-using sorceryFight.Content.Tiles;
-using sorceryFight.Rarities;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.DataStructures;

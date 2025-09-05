@@ -2,7 +2,7 @@ using System;
 using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.CursedTechniques.Shrine;
+using sorceryFight.Content.Projectiles.Melee;
 using sorceryFight.Rarities;
 using Terraria;
 using Terraria.DataStructures;

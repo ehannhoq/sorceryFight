@@ -11,7 +11,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.Items.Weapons.Melee
+namespace sorceryFight.Content.Projectiles.Melee
 {
     public class ObliviousSwordSlash : ModProjectile
     {
@@ -101,8 +101,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
                 Main.GameViewMatrix.ZoomMatrix
             );
 
-            texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Items/Weapons/Melee/ObliviousSwordSlash/{Projectile.frame}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
+            texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Projectiles/Melee/ObliviousSwordSlash/{Projectile.frame}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Rectangle sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
             Vector2 projOrigin = sourceRectangle.Size() * 0.5f;
 

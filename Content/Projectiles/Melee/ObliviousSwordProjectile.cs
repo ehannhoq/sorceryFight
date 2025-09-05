@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.Projectiles
+namespace sorceryFight.Content.Projectiles.Melee
 {
     public class ObliviousSwordProjectile : ModProjectile
     {
@@ -81,7 +81,7 @@ namespace sorceryFight.Content.Projectiles
                 Main.GameViewMatrix.ZoomMatrix
             );
 
-            texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Projectiles/ObliviousSwordProjectile/{Projectile.frame}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Projectiles/Melee/ObliviousSwordProjectile/{Projectile.frame}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
             Rectangle sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
             Vector2 projOrigin = sourceRectangle.Size() * 0.5f;

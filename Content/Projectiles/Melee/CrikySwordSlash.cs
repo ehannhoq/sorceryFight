@@ -9,7 +9,7 @@ using sorceryFight.Content.Particles.UIParticles;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.Items.Weapons.Melee
+namespace sorceryFight.Content.Projectiles.Melee
 {
     public class CrikySwordSlash : ModProjectile
     {
@@ -21,7 +21,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         {
             Main.projFrames[Projectile.type] = FRAME_COUNT;
             if (Main.dedServ) return;
-            texture = ModContent.Request<Texture2D>("sorceryFight/Content/Items/Weapons/Melee/CrikySwordSlash", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            texture = ModContent.Request<Texture2D>("sorceryFight/Content/Projectiles/Melee/CrikySwordSlash", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
 
         public override void SetDefaults()

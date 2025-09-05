@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.Items.Weapons.Melee
+namespace sorceryFight.Content.Projectiles.Melee
 {
     public class InvertedSpearSlash : ModProjectile
     {
@@ -18,7 +18,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         {
             Main.projFrames[Projectile.type] = FRAME_COUNT;
             if (Main.dedServ) return;
-            texture = ModContent.Request<Texture2D>("sorceryFight/Content/Items/Weapons/Melee/InvertedSpearSlash", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            texture = ModContent.Request<Texture2D>("sorceryFight/Content/Projectiles/Melee/InvertedSpearSlash", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
 
         public override void SetDefaults()
