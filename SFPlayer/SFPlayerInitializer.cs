@@ -70,9 +70,10 @@ namespace sorceryFight.SFPlayer
 
             blackFlashTime = 30;
             lowerWindowTime = 15;
-            upperWindowTime = 16;
+            blackFlashWindowTime = 1;
             blackFlashTimeLeft = -60;
             blackFlashCounter = 0;
+            additionalBlackFlashDamageMultiplier = 0f;
         }
         public override void SaveData(TagCompound tag)
         {

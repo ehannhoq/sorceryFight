@@ -113,7 +113,9 @@ namespace sorceryFight.SFPlayer
         public int blackFlashTimeLeft;
         public int blackFlashCounter;
         public int lowerWindowTime;
-        public int upperWindowTime;
+        public int blackFlashWindowTime;
+        public float additionalBlackFlashDamageMultiplier;
+        public int upperWindowTime => lowerWindowTime + blackFlashWindowTime;
         #endregion
 
         #region UI Positions
@@ -128,13 +130,11 @@ namespace sorceryFight.SFPlayer
             innateTechnique.UpdateEquips(this);
         }
 
-
         public override void UpdateLifeRegen()
         {
             if (innateTechnique == null) return;
             innateTechnique.UpdateLifeRegen(this);
         }
-
 
         public override void PreUpdate()
         {
@@ -154,6 +154,8 @@ namespace sorceryFight.SFPlayer
             cursedEnergyRegenPerSecond = 0f;
             maxCursedEnergy = 0f;
             ctCostReduction = 0f;
+            additionalBlackFlashDamageMultiplier = 0f;
+            blackFlashWindowTime = 1;
 
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
             maxCursedEnergy = calculateBaseMaxCE();
@@ -338,8 +340,7 @@ namespace sorceryFight.SFPlayer
                 int variation = pictureLocket ? Main.rand.Next(-3, 2) : Main.rand.Next(-5, 4);
 
                 lowerWindowTime = innateTechnique.Name == "Vessel" ? 14 - blackFlashCounter / 2 + variation : 15 - blackFlashCounter / 2 + variation;
-                upperWindowTime = innateTechnique.Name == "Vessel" ? 16 + blackFlashCounter / 2 + variation : 16 + blackFlashCounter / 2 + variation;
-                sfUI.BlackFlashWindow(lowerWindowTime, upperWindowTime);
+                sfUI.BlackFlashWindow(lowerWindowTime, lowerWindowTime + blackFlashWindowTime);
             }
 
             // if (SFKeybinds.CursedFist.JustPressed)
