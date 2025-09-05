@@ -37,6 +37,8 @@ namespace sorceryFight.Content.InnateTechniques
             sf.Player.GetDamage(RogueDamageClass.Throwing) *= 1 + (0.05f * sf.sukunasFingerConsumed);
 
             sf.Player.statDefense *= 1 + (0.03f * sf.sukunasFingerConsumed);
+    
+            sf.blackFlashWindowTime += 1;
         }
 
         public override void UpdateLifeRegen(SorceryFightPlayer sf) 
