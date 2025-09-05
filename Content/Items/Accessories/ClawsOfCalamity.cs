@@ -1,6 +1,7 @@
 using System;
 using CalamityMod.Items.Accessories;
 using sorceryFight.Content.Items.Materials;
+using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -24,6 +25,12 @@ namespace sorceryFight.Content.Items.Accessories
             Item.accessory = true;
             Item.rare = ItemRarityID.LightRed;
             Item.defense = 4;
+        }
+
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            player.GetDamage(CursedTechniqueDamageClass.Instance) *= cursedTechniqueDamageIncrease;
+            player.GetModPlayer<SorceryFightPlayer>().additionalBlackFlashDamageMultiplier += 1;
         }
 
         public override void AddRecipes()
