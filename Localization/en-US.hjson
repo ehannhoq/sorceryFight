@@ -14,6 +14,7 @@ Mods: {
 			FallingBlossomEmotionProjectile.DisplayName: Falling Blossom Emotion Projectile
 			FingerBearerBall.DisplayName: Finger Bearer Ball
 			IdleDeathGambleJackpotProjectileIII.DisplayName: Idle Death Gamble Jackpot Projectile I I I
+			InvertedSpearCharge.DisplayName: Inverted Spear Charge
 		}
 
 		Configs: {
