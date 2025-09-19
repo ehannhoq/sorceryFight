@@ -68,6 +68,7 @@ namespace sorceryFight.SFPlayer
             pictureLocket = false;
             cursedOfuda = false;
 
+            blackFlashDamageMultiplier = 3;
             blackFlashTime = 30;
             lowerWindowTime = 15;
             blackFlashWindowTime = 1;

@@ -29,8 +29,10 @@ namespace sorceryFight.Content.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetDamage(CursedTechniqueDamageClass.Instance) *= cursedTechniqueDamageIncrease;
-            player.GetModPlayer<SorceryFightPlayer>().additionalBlackFlashDamageMultiplier += 1;
+            player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1 + cursedTechniqueDamageIncrease;
+
+            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            sfPlayer.additionalBlackFlashDamageMultiplier += sfPlayer.blackFlashDamageMultiplier * blackFlashDamage;
         }
 
         public override void AddRecipes()

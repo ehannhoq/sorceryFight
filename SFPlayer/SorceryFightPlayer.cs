@@ -109,6 +109,7 @@ namespace sorceryFight.SFPlayer
         #endregion
 
         #region Black Flash
+        public int blackFlashDamageMultiplier { get; private set; }
         public int blackFlashTime;
         public int blackFlashTimeLeft;
         public int blackFlashCounter;

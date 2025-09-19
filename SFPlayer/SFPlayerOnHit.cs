@@ -91,7 +91,7 @@ namespace sorceryFight.SFPlayer
             bool showFlowState = blackFlashCounter == 1;
             sfUI.InitiateBlackFlashUI(target.Center, showFlowState);
 
-            int additionalDamage = ModContent.GetInstance<ServerConfig>().LoreAccurateBlackFlash ? (int)Math.Pow(damageDone, 2 + additionalBlackFlashDamageMultiplier) : (int)(damageDone * (3 + additionalBlackFlashDamageMultiplier));
+            int additionalDamage = ModContent.GetInstance<ServerConfig>().LoreAccurateBlackFlash ? (int)Math.Pow(damageDone, 2 + additionalBlackFlashDamageMultiplier) : (int)(damageDone * (blackFlashDamageMultiplier + additionalBlackFlashDamageMultiplier));
             additionalDamage -= damageDone;
 
             Player.ApplyDamageToNPC(target, additionalDamage, hit.Knockback, hit.HitDirection, false);
