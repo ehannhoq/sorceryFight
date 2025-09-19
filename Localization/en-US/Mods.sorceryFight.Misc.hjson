@@ -34,6 +34,7 @@ InnateTechniqueUnlocker: {
 	PlayerAttributes: {
 		SixEyes: Your eyes begin to glow radiantly, being able to see the flow of even the faintest of Cursed Energy in the air.
 		UniqueBodyStructure: Your body aches and churns, as it begins to reconstruct itself.
+		BlessedByBlackSparks: You feel blessed by the black sparks.
 		FailedReroll: Your genetics doesn't seem to have changed.
 	}
 

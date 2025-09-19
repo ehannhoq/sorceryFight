@@ -22,6 +22,15 @@ PlayerAttributes: {
 		DisplayName: Vessel
 		Description: You've become a vessel for a powerful and ancient soul.
 	}
+
+	BlessedByBlackSparksBuff: {
+		DisplayName: Blessed by the Sparks of Black
+		Description:
+			'''
+			+{0}x increased Black Flash damage.
+			{1} increased Black Flash landing frame.
+			'''
+	}
 }
 
 CursedEnergyTraits: {

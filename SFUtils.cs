@@ -287,7 +287,8 @@ public static class SFConstants
 {
     public const int SixEyesPercent = 10;
     public const int UniqueBodyStructurePercent = 15;
-    public const int ExplosiveCursedEnergy = 15;
-    public const int SharpCursedEnergy = 15;
-    public const int OverflowingEnergy = 15;
+    public const int BlessedByBlackSparksPercent = 10;
+    public const int ExplosiveCursedEnergyPercent = 15;
+    public const int SharpCursedEnergyPercent = 15;
+    public const int OverflowingEnergyPercent = 15;
 }

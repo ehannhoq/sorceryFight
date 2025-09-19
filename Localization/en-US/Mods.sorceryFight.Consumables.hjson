@@ -19,6 +19,7 @@ GeneticReroll: {
 		Has a chance for granting you special player attributes.
 		Six Eyes: 10%
 		Unique Body Structure: 15%.
+		Blessed by the Sparks of Black: 10%.
 		Can grant more than one attribute.
 		'''
 }

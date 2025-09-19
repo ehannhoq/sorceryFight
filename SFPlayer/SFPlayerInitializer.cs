@@ -54,6 +54,7 @@ namespace sorceryFight.SFPlayer
             sixEyes = false;
             challengersEye = false;
             uniqueBodyStructure = false;
+            blessedByBlackFlash = false;
 
             explosiveCursedEnergy = false;
             sharpCursedEnergy = false;
@@ -116,6 +117,7 @@ namespace sorceryFight.SFPlayer
             generalBooleans.AddWithCondition("sixEyes", sixEyes);
             generalBooleans.AddWithCondition("hollowEyes", challengersEye);
             generalBooleans.AddWithCondition("uniqueBodyStructure", uniqueBodyStructure);
+            generalBooleans.AddWithCondition("blessedByBlackFlash", blessedByBlackFlash);
             tag["generalBooleans"] = generalBooleans;
 
             if (innateTechnique != null)
@@ -175,6 +177,7 @@ namespace sorceryFight.SFPlayer
             sixEyes = generalBooleans.Contains("sixEyes");
             challengersEye = generalBooleans.Contains("hollowEyes");
             uniqueBodyStructure = generalBooleans.Contains("uniqueBodyStructure");
+            blessedByBlackFlash = generalBooleans.Contains("blessedByBlackFlash");
 
             maxCursedEnergy = calculateBaseMaxCE();
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
