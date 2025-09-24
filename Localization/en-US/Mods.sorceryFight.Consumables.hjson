@@ -155,3 +155,50 @@ SuspiciouslyWellPerservedEye: {
 		[c/6D2673:Dedicated to ehann]
 		'''
 }
+
+CursedEnergyDrinks: {
+	Soda: {
+		DisplayName: Cursed Energy Soda
+		Description:
+			'''
+			Restores {0} cursed energy.
+			Not consumable when you have your domain expanded.
+			'''
+	}
+
+	Tall: {
+		DisplayName: Tall Cursed Energy Soda
+		Description:
+			'''
+			Restores {0} cursed energy.
+			Not consumable when you have your domain expanded.
+			'''
+	}
+
+	Mug: {
+		DisplayName: Mug of Cursed Energy
+		Description:
+			'''
+			Restores {0} cursed energy.
+			Not consumable when you have your domain expanded.
+			'''
+	}
+
+	TwoLiter: {
+		DisplayName: 2 Liter Bottle of Cursed Energy
+		Description:
+			'''
+			Restores {0} cursed energy.
+			Not consumable when you have your domain expanded.
+			'''
+	}
+
+	FiveGallon: {
+		DisplayName: 5 Gallon Jug of Cursed Energy
+		Description:
+			'''
+			Restores {0} cursed energy.
+			Not consumable when you have your domain expanded.
+			'''
+	}
+}

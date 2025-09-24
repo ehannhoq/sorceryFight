@@ -188,3 +188,8 @@ BrainDamage: {
 	DisplayName: Brain Damage
 	Description: You are not able to expand your domain!
 }
+
+CursedEnergySickness: {
+	DisplayName: Cursed Energy Sickness
+	Description: Cursed Technique damage reduced by {0}%.
+}
