@@ -11,7 +11,7 @@ QuantumCoulombBottle: {
 	DisplayName: Quantum Coulomb Bottle
 	Tooltip:
 		'''
-		{0}% increased Limitless cursed technique damage
+		{0}% increased cursed technique damage
 		{1}% increased damage
 		+{2} CE/s regen
 		{3}% increased RCT output
@@ -34,12 +34,15 @@ QuantumCoulombChausses: {
 	DisplayName: Quantum Coulomb Chausses
 	Tooltip:
 		'''
-		{0}% increased Limitless cursed technique damage
+		{0}% increased cursed technique damage
 		{1}% increased damage
 		{2}% increased RCT output
 		{3}% increased movement speed
 		[c/6D2673:Dedicated to ehann]
 		'''
+}
+
+QuantomCoulombSetBonus: {
 }
 
 JetstreamMask: {
