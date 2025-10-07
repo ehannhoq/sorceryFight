@@ -193,3 +193,18 @@ CursedEnergySickness: {
 	DisplayName: Cursed Energy Sickness
 	Description: Cursed Technique damage reduced by {0}%.
 }
+
+Bloodshed: {
+	DisplayName: Bloodshed
+	Description:
+		'''
+		{0}% increased true melee damage
+		{1}% increased movement speed
+		+{2} defense
+		'''
+}
+
+BloodshedCooldown: {
+	DisplayName: Bloodshed Cooldown
+	Description: ""
+}
