@@ -11,12 +11,12 @@ namespace sorceryFight.Content.Items.Armors.QuantumCoulomb
     [AutoloadEquip(EquipType.Legs)]
     public class QuantumCoulombChausses : ModItem
     {
-        public static float limitlessDamage = 0.05f;
+        public static float ctDamage = 0.07f;
         public static float allDamage = 0.05f;
         public static float rctOutput = 1.0f;
         public static float movementSpeed = 0.15f;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Armors.QuantumCoulombChausses.DisplayName");
-        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Armors.QuantumCoulombChausses.Tooltip").WithFormatArgs((int)(limitlessDamage * 100), (int)(allDamage * 100), (int)(rctOutput * 100), (int)(movementSpeed * 100));
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Armors.QuantumCoulombChausses.Tooltip").WithFormatArgs((int)(ctDamage * 100), (int)(allDamage * 100), (int)(rctOutput * 100), (int)(movementSpeed * 100));
 
         public override void SetDefaults()
         {
@@ -30,8 +30,7 @@ namespace sorceryFight.Content.Items.Armors.QuantumCoulomb
         {
             SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
 
-            if (sfPlayer.innateTechnique.Name == "Limitless")
-                player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1 + limitlessDamage;
+            player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1 + ctDamage;
 
             player.GetDamage(DamageClass.Generic) *= 1 + allDamage;
 
