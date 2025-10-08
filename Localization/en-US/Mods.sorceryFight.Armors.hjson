@@ -14,7 +14,7 @@ QuantumCoulombBottle: {
 		{0}% increased cursed technique damage
 		{1}% increased damage
 		+{2} CE/s regen
-		{3}% increased RCT output
+		{3}% increased RCT efficiency
 		[c/9299a8:“A bottle? Seriously?"]
 		[c/6D2673:Dedicated to ehann]
 		'''
@@ -36,13 +36,10 @@ QuantumCoulombChausses: {
 		'''
 		{0}% increased cursed technique damage
 		{1}% increased damage
-		{2}% increased RCT output
+		{2}% increased RCT efficiency
 		{3}% increased movement speed
 		[c/6D2673:Dedicated to ehann]
 		'''
-}
-
-QuantomCoulombSetBonus: {
 }
 
 JetstreamMask: {
