@@ -6,7 +6,11 @@ PlayerAttributes: {
 
 	ChallengersEye: {
 		DisplayName: The Last Challenger's Eye
-		Description: Reduces the cost of Cursed Techniques by {0}%.
+		Description:
+			'''
+			Reduces the cost of Cursed Techniques by {0}%.
+			[c/6D2673:Dedicated to ehann]
+			'''
 	}
 
 	UniqueBodyStructure: {
