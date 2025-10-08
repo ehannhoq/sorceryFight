@@ -64,6 +64,9 @@ namespace sorceryFight.SFPlayer
 
             unlockedRCT = false;
             rctAuraIndex = -1;
+            rctBaseHealPerSecond = 60;
+            additionalRCTHealPerSecond = 0;
+            rctEfficiency = 0.0f;
 
             celestialAmulet = false;
             pictureLocket = false;

@@ -107,6 +107,9 @@ namespace sorceryFight.SFPlayer
         #region RCT
         public bool unlockedRCT;
         public int rctAuraIndex;
+        public int rctBaseHealPerSecond { get; private set; }
+        public int additionalRCTHealPerSecond;
+        public float rctEfficiency;
         #endregion
 
         #region Black Flash
@@ -158,6 +161,8 @@ namespace sorceryFight.SFPlayer
             ctCostReduction = 0f;
             additionalBlackFlashDamageMultiplier = 0f;
             blackFlashWindowTime = 1;
+            rctEfficiency = 0.0f;
+            additionalRCTHealPerSecond = 0;
 
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
             maxCursedEnergy = calculateBaseMaxCE();
@@ -415,11 +420,11 @@ namespace sorceryFight.SFPlayer
                 rctAuraIndex = Projectile.NewProjectile(source, Player.Center, Vector2.Zero, ModContent.ProjectileType<ReverseCursedTechniqueAuraProjectile>(), 0, 0, Player.whoAmI);
             }
 
-            if (cursedEnergy >= 5)
-            {
-                cursedEnergy -= 5;
-                Player.Heal(1);
-            }
+            int totalHealing = (int)SFUtils.RateSecondsToTicks(rctBaseHealPerSecond + additionalRCTHealPerSecond);
+            float ceCost = (totalHealing * 5) * (1 - rctEfficiency);
+
+            Player.Heal(totalHealing);
+            cursedEnergy -= ceCost;
         }
 
 
