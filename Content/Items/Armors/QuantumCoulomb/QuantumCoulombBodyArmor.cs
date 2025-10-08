@@ -1,4 +1,5 @@
 using System;
+using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;
 using Terraria.Initializers;
@@ -25,12 +26,19 @@ namespace sorceryFight.Content.Items.Armors.QuantumCoulomb
 
         public override void UpdateEquip(Player player)
         {
+            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
             player.GetDamage(DamageClass.Generic) *= 1 + allDamage;
+            sfPlayer.additionalRCTHealPerSecond += (int)(sfPlayer.rctBaseHealPerSecond * rctOutput);
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
         {
             return head.type == ModContent.ItemType<QuantumCoulombBottle>() && body.type == Type && legs.type == ModContent.ItemType<QuantumCoulombChausses>();
+        }
+
+        public override void ArmorSetShadows(Player player)
+        {
+            player.armorEffectDrawOutlines = true;
         }
     }
 }
