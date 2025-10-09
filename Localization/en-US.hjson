@@ -15,6 +15,7 @@ Mods: {
 			FingerBearerBall.DisplayName: Finger Bearer Ball
 			IdleDeathGambleJackpotProjectileIII.DisplayName: Idle Death Gamble Jackpot Projectile I I I
 			InvertedSpearCharge.DisplayName: Inverted Spear Charge
+			CleaveMS.DisplayName: Cleave M S
 		}
 
 		Configs: {
