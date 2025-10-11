@@ -215,6 +215,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 int index = CombatText.NewText(player.getRect(), textColor, "Hollow Technique: 200% Hollow Purple.");
                 Main.combatText[index].lifeTime = 180;
 
+                CameraController.CameraShake(30, 75, 10);
+                ImpactFrameController.ImpactFrame(textColor, 8);
+
                 if (Main.myPlayer == Projectile.owner)
                 {
                     Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
