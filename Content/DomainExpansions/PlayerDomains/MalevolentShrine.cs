@@ -4,7 +4,7 @@ using CalamityMod.NPCs.NormalNPCs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.CursedTechniques.Shrine;
-using sorceryFight.Content.Projectiles.MalevolentShrine;
+using sorceryFight.Content.Projectiles.VFX;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
