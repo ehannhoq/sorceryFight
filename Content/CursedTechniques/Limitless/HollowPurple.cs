@@ -103,6 +103,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Projectile.damage = 0;
                 collisionVFX.Center = projOrigin;
                 Projectile.netUpdate = true;
+                sfPlayer.disableRegenFromProjectiles = true;
             }
             else if (Projectile.ai[0] < COLLISION_TIME + WAIT_TIME)
             {
@@ -121,6 +122,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 if (Main.myPlayer == Projectile.owner)
                     Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
 
+                sfPlayer.disableRegenFromProjectiles = false;
                 Projectile.netUpdate = true;
 
                 for (int i = 0; i < 30f; i++)
