@@ -16,6 +16,7 @@ Mods: {
 			IdleDeathGambleJackpotProjectileIII.DisplayName: Idle Death Gamble Jackpot Projectile I I I
 			InvertedSpearCharge.DisplayName: Inverted Spear Charge
 			CleaveMS.DisplayName: Cleave M S
+			HollowPurpleCollision.DisplayName: Hollow Purple Collision
 		}
 
 		Configs: {
@@ -25,6 +26,11 @@ Mods: {
 				BlackFlashScreenEffects: {
 					Label: Black Flash Screen Effects
 					Tooltip: Toggle the screen flashing when landing a Black Flash.
+				}
+
+				DisableImpactFrames: {
+					Label: Disable Impact Frames
+					Tooltip: ""
 				}
 			}
 
