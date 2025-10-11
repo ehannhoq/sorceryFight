@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Graphics.Effects;
+using Terraria.ModLoader;
 
 namespace sorceryFight
 {
@@ -11,6 +12,7 @@ namespace sorceryFight
         public static void ImpactFrame(Color impactFrameColor, int duration)
         {
             if (Main.dedServ) return;
+            if (ModContent.GetInstance<ClientConfig>().DisableImpactFrames) return;
 
             if (!Filters.Scene["SF:ImpactFrame"].IsActive())
             {

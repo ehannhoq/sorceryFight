@@ -10,5 +10,7 @@ namespace sorceryFight
 
         [DefaultValue(true)]
         public bool BlackFlashScreenEffects { get; set; }
+        [DefaultValue(false)]
+        public bool DisableImpactFrames { get; set; }
     }
 }
