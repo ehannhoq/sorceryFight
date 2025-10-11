@@ -4,11 +4,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.Projectiles.MalevolentShrine
+namespace sorceryFight.Content.Projectiles.VFX
 {
     public class CleaveMS : ModProjectile
     {
-        public static Texture2D texture => ModContent.Request<Texture2D>("sorceryFight/Content/Projectiles/MalevolentShrine/CleaveMS").Value;
+        public static Texture2D texture => ModContent.Request<Texture2D>("sorceryFight/Content/Projectiles/VFX/HollowPurpleCollision", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public static readonly int FRAMES = 8;
         public static readonly int TICKS_PER_FRAME = 1;
         public override void SetDefaults()
@@ -25,7 +25,7 @@ namespace sorceryFight.Content.Projectiles.MalevolentShrine
             if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
             {
                 Projectile.frameCounter = 0;
-                if (Projectile.frame++ >= FRAMES)
+                if (Projectile.frame++ >= FRAMES - 1)
                 {
                     Projectile.frame = 0;
                 }
