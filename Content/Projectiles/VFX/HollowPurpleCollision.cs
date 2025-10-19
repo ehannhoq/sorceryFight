@@ -10,7 +10,7 @@ namespace sorceryFight.Content.Projectiles.VFX
     {
         public static Texture2D texture => ModContent.Request<Texture2D>("sorceryFight/Content/Projectiles/VFX/HollowPurpleCollision", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public static readonly int FRAMES = 20;
-        public static readonly int TICKS_PER_FRAME = 3;
+        public static readonly int TICKS_PER_FRAME = 5;
         public override void SetDefaults()
         {
             Projectile.damage = 0;

@@ -24,7 +24,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public static readonly int FRAME_COUNT = 4;
         public static readonly int TICKS_PER_FRAME = 5;
         private static readonly float COLLISION_TIME = HollowPurpleCollision.FRAMES * HollowPurpleCollision.TICKS_PER_FRAME;
-        private static readonly float WAIT_TIME = 90f;
+        private static readonly float WAIT_TIME = 110f;
 
         public static Texture2D texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/HollowPurple", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public static Texture2D prism1 = ModContent.Request<Texture2D>("sorceryFight/Content/VFXSprites/HollowPurplePrisms1", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
@@ -39,7 +39,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override Color textColor { get; } = new Color(235, 117, 233);
         public override bool DisplayNameInGame { get; } = true;
         public override int Damage => 13000;
-        public override int MasteryDamageMultiplier => 400;
+        public override int MasteryDamageMultiplier => 450;
         public override float Speed { get; } = 45f;
         public override float LifeTime { get; } = 500f;
 
@@ -58,8 +58,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 150;
-            Projectile.height = 150;
+            Projectile.width = 75;
+            Projectile.height = 75;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
             collisionVFX = null;
@@ -96,6 +96,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 {
                     int index = Projectile.NewProjectile(player.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<HollowPurpleCollision>(), 0, 0, player.whoAmI);
                     collisionVFX = Main.projectile[index];
+                    SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleCollide, Projectile.Center);
                 }
 
                 Projectile.Center = projOrigin;
@@ -104,6 +105,10 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 collisionVFX.Center = projOrigin;
                 Projectile.netUpdate = true;
                 sfPlayer.disableRegenFromProjectiles = true;
+
+                if (Projectile.ai[0] == COLLISION_TIME - 20)
+                    SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleShine, Projectile.Center);
+
             }
             else if (Projectile.ai[0] < COLLISION_TIME + WAIT_TIME)
             {
@@ -111,6 +116,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     Projectile.Center = projOrigin;
 
                 Projectile.netUpdate = true;
+
             }
             else if (Projectile.ai[0] == COLLISION_TIME + WAIT_TIME)
             {
@@ -124,21 +130,22 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                 sfPlayer.disableRegenFromProjectiles = false;
                 Projectile.netUpdate = true;
+                SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleRelease, Projectile.Center);
 
-                for (int i = 0; i < 30f; i++)
-                {
-                    Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.UnitX);
+                // for (int i = 0; i < 30f; i++)
+                // {
+                //     Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.UnitX);
 
-                    float angleOffset = MathHelper.ToRadians(Main.rand.NextFloat(-30f, 30f));
-                    direction = direction.RotatedBy(angleOffset);
+                //     float angleOffset = MathHelper.ToRadians(Main.rand.NextFloat(-30f, 30f));
+                //     direction = direction.RotatedBy(angleOffset);
 
-                    float speed = Main.rand.NextFloat(50f, 90f);
+                //     float speed = Main.rand.NextFloat(50f, 90f);
 
-                    Vector2 velocity = direction * speed;
+                //     Vector2 velocity = direction * speed;
 
-                    LinearParticle particle = new LinearParticle(Projectile.Center, velocity, textColor, false, 0.9f, 2f);
-                    ParticleController.SpawnParticle(particle);
-                }
+                //     LinearParticle particle = new LinearParticle(Projectile.Center, velocity, textColor, false, 0.9f, 2f);
+                //     ParticleController.SpawnParticle(particle);
+                // }
             }
         }
 

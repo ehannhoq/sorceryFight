@@ -19,6 +19,9 @@ namespace sorceryFight
         public static SoundStyle AmplificationBlueChargeUp;
         public static SoundStyle ReversalRedChargeUp;
         public static SoundStyle MaximumOutputRedFire;
+        public static SoundStyle HollowPurpleCollide;
+        public static SoundStyle HollowPurpleShine;
+        public static SoundStyle HollowPurpleRelease;
         public static SoundStyle HollowPurpleSnap;
 
         public static SoundStyle DismantleSlice;
@@ -61,6 +64,9 @@ namespace sorceryFight
             AmplificationBlueChargeUp = new("sorceryFight/Content/Sounds/Projectiles/AmplificationBlueChargeUp") { Volume = 1f };
             ReversalRedChargeUp = new("sorceryFight/Content/Sounds/Projectiles/ReversalRedChargeUp") { Volume = 1f };
             MaximumOutputRedFire = new("sorceryFight/Content/Sounds/Projectiles/MaximumOutputRedFire") { Volume = 1f };
+            HollowPurpleCollide = new("sorceryFight/Content/Sounds/Projectiles/HollowPurpleCollide") { Volume = 1f };
+            HollowPurpleShine = new("sorceryFight/Content/Sounds/Projectiles/HollowPurpleShine") { Volume = 1f };
+            HollowPurpleRelease = new("sorceryFight/Content/Sounds/Projectiles/HollowPurpleRelease") { Volume = 1f };
             HollowPurpleSnap = new("sorceryFight/Content/Sounds/Projectiles/HollowPurpleSnap") { Volume = 1f };
 
             DismantleSlice = new("sorceryFight/Content/Sounds/Projectiles/DismantleSlice") { Volume = 1f };
