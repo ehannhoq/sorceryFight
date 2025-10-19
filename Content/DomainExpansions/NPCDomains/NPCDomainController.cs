@@ -111,6 +111,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
                     CameraController.SetCameraPosition(domainController.npcCastingPosition, 260);
                     int index = CombatText.NewText(npc.getRect(), Color.White, "Domain Expansion:");
                     Main.combatText[index].lifeTime = 90;
+                    npc.immortal = true;
                 }
 
                 if (domainController.domainTimer == 100)
@@ -132,6 +133,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
                     domainController.castingDomain = false;
                     domainController.npcCastingPosition = Vector2.Zero;
                     domainController.domainTimer = 0;
+                    npc.immortal = false;
                 }
 
                 return false;
