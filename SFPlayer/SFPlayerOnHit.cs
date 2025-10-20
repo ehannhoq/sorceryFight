@@ -101,7 +101,9 @@ namespace sorceryFight.SFPlayer
                 ResetBlackFlashState();
             }
 
-            cursedEnergy = maxCursedEnergy;
+            if (!HasActiveDomain)
+                cursedEnergy = maxCursedEnergy;
+                
             if (Player.HasBuff<BurntTechnique>())
             {
                 int index = -1;
