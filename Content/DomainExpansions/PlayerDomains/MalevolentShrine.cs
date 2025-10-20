@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.CursedTechniques.Shrine;
 using sorceryFight.Content.Projectiles.VFX;
 using sorceryFight.SFPlayer;
+using sorceryFight.StructureHelper;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -27,10 +28,29 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override bool ClosedDomain => false;
 
+        private static StructureTemplate msStructure => StructureHandler.GetStructure("MalevolentShrine");
+        private StructureTemplate worldSnippet;
+        private Point structureAnchor;
+
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Rectangle sourceRectangle = new Rectangle(0, 0, DomainTexture.Width, DomainTexture.Height);
-            spriteBatch.Draw(DomainTexture, center - Main.screenPosition, sourceRectangle, Color.White, 0f, sourceRectangle.Size() * 0.5f, 1f, SpriteEffects.None, 0f);
+        }
+
+        public override void OnExpand()
+        {
+            worldSnippet = new StructureTemplate(msStructure.Width, msStructure.Height);
+            structureAnchor = Main.player[owner].Center.ToTileCoordinates() - new Point(msStructure.Width / 2, msStructure.Height / 2 + 3);
+            worldSnippet.Capture(structureAnchor);
+
+            StructureHandler.GenerateStructure(msStructure, structureAnchor);
+        }
+
+        public override void OnClose()
+        {
+            StructureHandler.GenerateStructure(worldSnippet, structureAnchor);
+
+            worldSnippet = null;
+            structureAnchor = Point.Zero;
         }
 
         public override void SureHitEffect(NPC npc)
@@ -56,6 +76,11 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
                 Projectile.NewProjectile(entitySource, Main.player[owner].Center + randomOffset, Vector2.Zero, type, 1, 0f, owner, Main.rand.NextFloat(0, 6));
             }
+
+            if (Main.ingameOptionsWindow)
+                Main.ingameOptionsWindow = false;
+
+
             base.Update();
         }
 
@@ -63,5 +88,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
         {
             return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
         }
+
+
     }
 }
