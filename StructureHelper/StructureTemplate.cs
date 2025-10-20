@@ -31,6 +31,7 @@ namespace sorceryFight.StructureHelper
             public bool IsHalfBlock;
             public SlopeType Slope;
             public byte TileColor;
+            public bool TileEcho;
 
             public ushort WallType;
             public byte WallColor;
@@ -57,6 +58,7 @@ namespace sorceryFight.StructureHelper
                         IsHalfBlock = tile.IsHalfBlock,
                         Slope = tile.Slope,
                         TileColor = tile.TileColor,
+                        TileEcho = tile.IsTileInvisible,
 
                         WallType = tile.WallType,
                         WallColor = tile.WallColor,
@@ -89,6 +91,7 @@ namespace sorceryFight.StructureHelper
                     writer.Write(tiles[x, y].IsHalfBlock);
                     writer.Write((byte)tiles[x, y].Slope);
                     writer.Write(tiles[x, y].TileColor);
+                    writer.Write(tiles[x, y].TileEcho);
 
                     writer.Write(tiles[x, y].WallType);
                     writer.Write(tiles[x, y].WallColor);

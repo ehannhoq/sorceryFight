@@ -126,6 +126,7 @@ namespace sorceryFight.StructureHelper
                     bool isHalfBlock = reader.ReadBoolean();
                     SlopeType slope = (SlopeType)reader.ReadByte();
                     byte tileColor = reader.ReadByte();
+                    bool tileEcho = reader.ReadBoolean();
 
                     ushort wallType = reader.ReadUInt16();
                     byte wallColor = reader.ReadByte();
@@ -151,6 +152,7 @@ namespace sorceryFight.StructureHelper
                         tile.IsHalfBlock = isHalfBlock;
                         tile.Slope = slope;
                         tile.TileColor = tileColor;
+                        tile.IsTileInvisible = tileEcho;
                         tile.IsTileFullbright = isTileFullBright;
                     }
 
@@ -193,6 +195,7 @@ namespace sorceryFight.StructureHelper
                     bool isHalfBlock = template.tiles[x, y].IsHalfBlock;
                     SlopeType slope = template.tiles[x, y].Slope;
                     byte tileColor = template.tiles[x, y].TileColor;
+                    bool tileEcho  = template.tiles[x, y].TileEcho;
 
                     ushort wallType = template.tiles[x, y].WallType;
                     byte wallColor = template.tiles[x, y].WallColor;
@@ -215,6 +218,7 @@ namespace sorceryFight.StructureHelper
                         tile.IsHalfBlock = isHalfBlock;
                         tile.Slope = slope;
                         tile.TileColor = tileColor;
+                        tile.IsTileInvisible = tileEcho;
                         tile.IsTileFullbright = isTileFullBright;
                     }
 
@@ -274,6 +278,7 @@ namespace sorceryFight.StructureHelper
                     bool isHalfBlock = reader.ReadBoolean();
                     SlopeType slope = (SlopeType)reader.ReadByte();
                     byte tileColor = reader.ReadByte();
+                    bool tileEcho = reader.ReadBoolean();
 
                     ushort wallType = reader.ReadUInt16();
                     byte wallColor = reader.ReadByte();
@@ -289,6 +294,7 @@ namespace sorceryFight.StructureHelper
                     template.tiles[x, y].IsHalfBlock = isHalfBlock;
                     template.tiles[x, y].Slope = slope;
                     template.tiles[x, y].TileColor = tileColor;
+                    template.tiles[x, y].TileEcho = tileEcho;
                     template.tiles[x, y].WallType = wallType;
                     template.tiles[x, y].WallColor = wallColor;
                     template.tiles[x, y].isTileFullBright = isTileFullBright;
