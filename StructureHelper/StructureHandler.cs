@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CalamityMod.Items.Placeables.FurnitureProfaned;
+using CalamityMod.Tiles.FurnitureProfaned;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -100,80 +102,6 @@ namespace sorceryFight.StructureHelper
             Main.NewText($"{structureName} deleted!");
         }
 
-        public static void GenerateStructure(string structureName, Point worldPos)
-        {
-            string filepath = Path.Combine(StructurePath, structureName + ".tile");
-            if (!File.Exists(filepath))
-            {
-                Main.NewText($"Structure \"{structureName}\" does not exist at {StructurePath}");
-                return;
-            }
-
-            using BinaryReader reader = new BinaryReader(File.OpenRead(filepath));
-
-            int width = reader.ReadInt32();
-            int height = reader.ReadInt32();
-
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    bool hasTile = reader.ReadBoolean();
-                    ushort tileType = reader.ReadUInt16();
-                    short frameX = reader.ReadInt16();
-                    short frameY = reader.ReadInt16();
-                    bool isActuated = reader.ReadBoolean();
-                    bool isHalfBlock = reader.ReadBoolean();
-                    SlopeType slope = (SlopeType)reader.ReadByte();
-                    byte tileColor = reader.ReadByte();
-                    bool tileEcho = reader.ReadBoolean();
-
-                    ushort wallType = reader.ReadUInt16();
-                    byte wallColor = reader.ReadByte();
-
-                    bool isTileFullBright = reader.ReadBoolean();
-                    bool isWallFullBright = reader.ReadBoolean();
-
-                    if (hasTile && tileType == ModContent.TileType<IgnoreTile>()) continue;
-
-                    int wx = worldPos.X + x;
-                    int wy = worldPos.Y + y;
-
-                    Tile tile = Framing.GetTileSafely(wx, wy);
-                    tile.ClearEverything();
-
-                    if (hasTile)
-                    {
-                        tile.HasTile = true;
-                        tile.TileType = tileType;
-                        tile.TileFrameX = frameX;
-                        tile.TileFrameY = frameY;
-                        tile.IsActuated = isActuated;
-                        tile.IsHalfBlock = isHalfBlock;
-                        tile.Slope = slope;
-                        tile.TileColor = tileColor;
-                        tile.IsTileInvisible = tileEcho;
-                        tile.IsTileFullbright = isTileFullBright;
-                    }
-
-                    tile.WallType = wallType;
-                    tile.WallColor = wallColor;
-                    tile.IsWallFullbright = isWallFullBright;
-                }
-            }
-
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    WorldGen.SquareTileFrame(worldPos.X + x, worldPos.Y + y);
-                    WorldGen.SquareWallFrame(worldPos.X + x, worldPos.Y + y);
-                }
-            }
-
-            Main.NewText($"Structure \"{structureName}\" placed at {worldPos.X}, {worldPos.Y}");
-        }
-
         public static void GenerateStructure(StructureTemplate template, Point worldPos)
         {
             if (template == null)
@@ -189,13 +117,14 @@ namespace sorceryFight.StructureHelper
                 {
                     bool hasTile = template.tiles[x, y].HasTile;
                     ushort tileType = template.tiles[x, y].TileType;
+                    string tileClass = template.tiles[x, y].TileClass;
                     short frameX = template.tiles[x, y].FrameX;
                     short frameY = template.tiles[x, y].FrameY;
                     bool isActuated = template.tiles[x, y].IsActuated;
                     bool isHalfBlock = template.tiles[x, y].IsHalfBlock;
                     SlopeType slope = template.tiles[x, y].Slope;
                     byte tileColor = template.tiles[x, y].TileColor;
-                    bool tileEcho  = template.tiles[x, y].TileEcho;
+                    bool tileEcho = template.tiles[x, y].TileEcho;
 
                     ushort wallType = template.tiles[x, y].WallType;
                     byte wallColor = template.tiles[x, y].WallColor;
@@ -203,7 +132,7 @@ namespace sorceryFight.StructureHelper
                     bool isTileFullBright = template.tiles[x, y].isTileFullBright;
                     bool isWallFullBright = template.tiles[x, y].isWallFullBright;
 
-                    if (hasTile && tileType == ModContent.TileType<IgnoreTile>()) continue;
+                    if (hasTile && tileClass == "sorceryFight.StructureHelper.IgnoreTile") continue;
 
                     Tile tile = Framing.GetTileSafely(worldPos.X + x, worldPos.Y + y);
                     tile.ClearEverything();
@@ -211,7 +140,22 @@ namespace sorceryFight.StructureHelper
                     if (hasTile)
                     {
                         tile.HasTile = true;
-                        tile.TileType = tileType;
+
+                        if (tileClass != "-1")
+                        {
+                            var moddedTileType = SFUtils.FindTypeAcrossMods(tileClass);
+
+                            var method = typeof(ModContent).GetMethod("TileType", Type.EmptyTypes);
+                            var generic = method.MakeGenericMethod(moddedTileType);
+                            int moddedTileID = (int)generic.Invoke(null, null);
+
+
+
+                            tile.TileType = (ushort)moddedTileID;
+                        }
+                        else
+                            tile.TileType = tileType;
+
                         tile.TileFrameX = frameX;
                         tile.TileFrameY = frameY;
                         tile.IsActuated = isActuated;
@@ -272,6 +216,7 @@ namespace sorceryFight.StructureHelper
                 {
                     bool hasTile = reader.ReadBoolean();
                     ushort tileType = reader.ReadUInt16();
+                    string tileClass = reader.ReadString();
                     short frameX = reader.ReadInt16();
                     short frameY = reader.ReadInt16();
                     bool isActuated = reader.ReadBoolean();
@@ -288,6 +233,7 @@ namespace sorceryFight.StructureHelper
 
                     template.tiles[x, y].HasTile = hasTile;
                     template.tiles[x, y].TileType = tileType;
+                    template.tiles[x, y].TileClass = tileClass;
                     template.tiles[x, y].FrameX = frameX;
                     template.tiles[x, y].FrameY = frameY;
                     template.tiles[x, y].IsActuated = isActuated;

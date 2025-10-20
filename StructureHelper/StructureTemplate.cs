@@ -26,6 +26,7 @@ namespace sorceryFight.StructureHelper
         {
             public bool HasTile;
             public ushort TileType;
+            public string TileClass;
             public short FrameX, FrameY;
             public bool IsActuated;
             public bool IsHalfBlock;
@@ -66,6 +67,13 @@ namespace sorceryFight.StructureHelper
                         isTileFullBright = tile.IsTileFullbright,
                         isWallFullBright = tile.IsWallFullbright
                     };
+                    
+                     if (tiles[x, y].HasTile)
+                    {
+                        var modTile = ModContent.GetModTile(tiles[x, y].TileType);
+
+                        tiles[x, y].TileClass = modTile != null ? modTile.GetType().ToString() : "-1";
+                    }
                 }
             }
         }
@@ -85,6 +93,12 @@ namespace sorceryFight.StructureHelper
                 {
                     writer.Write(tiles[x, y].HasTile);
                     writer.Write(tiles[x, y].TileType);
+
+                    if (tiles[x, y].TileClass != null)
+                        writer.Write(tiles[x, y].TileClass);
+                    else
+                        writer.Write("-1");
+
                     writer.Write(tiles[x, y].FrameX);
                     writer.Write(tiles[x, y].FrameY);
                     writer.Write(tiles[x, y].IsActuated);
@@ -103,6 +117,6 @@ namespace sorceryFight.StructureHelper
             }
 
             Main.NewText("Structure saved to " + Path.Combine(StructureHandler.StructurePath, name + ".tile"));
-        }        
+        }
     }
 }

@@ -281,6 +281,23 @@ public static class SFUtils
     {
         return player.CantUseHoldout(needsToHold) || player.HeldItem.shoot != slash.type;
     }
+
+
+    public static Type FindTypeAcrossMods(string fullName)
+    {
+        Type type = Type.GetType(fullName);
+        if (type != null)
+            return type;
+
+        foreach (var mod in ModLoader.Mods)
+        {
+            var modType = mod.Code.GetType(fullName);
+            if (modType != null)
+                return modType;
+        }
+
+        return null;
+    }
 }
 
 public static class SFConstants
