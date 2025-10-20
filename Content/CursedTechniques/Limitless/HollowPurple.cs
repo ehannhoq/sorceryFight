@@ -132,20 +132,20 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Projectile.netUpdate = true;
                 SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleRelease, Projectile.Center);
 
-                // for (int i = 0; i < 30f; i++)
-                // {
-                //     Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.UnitX);
+                for (int i = 0; i < 30f; i++)
+                {
+                    Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.UnitX);
 
-                //     float angleOffset = MathHelper.ToRadians(Main.rand.NextFloat(-30f, 30f));
-                //     direction = direction.RotatedBy(angleOffset);
+                    float angleOffset = MathHelper.ToRadians(Main.rand.NextFloat(-30f, 30f));
+                    direction = direction.RotatedBy(angleOffset);
 
-                //     float speed = Main.rand.NextFloat(50f, 90f);
+                    float speed = Main.rand.NextFloat(50f, 90f);
 
-                //     Vector2 velocity = direction * speed;
+                    Vector2 velocity = direction * speed;
 
-                //     LinearParticle particle = new LinearParticle(Projectile.Center, velocity, textColor, false, 0.9f, 2f);
-                //     ParticleController.SpawnParticle(particle);
-                // }
+                    LinearParticle particle = new LinearParticle(Projectile.Center, velocity, textColor, false, 0.9f, 2f);
+                    ParticleController.SpawnParticle(particle);
+                }
             }
         }
 
