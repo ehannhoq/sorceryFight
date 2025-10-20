@@ -8,7 +8,7 @@ namespace sorceryFight.Content.Projectiles.VFX
 {
     public class CleaveMS : ModProjectile
     {
-        public static Texture2D texture => ModContent.Request<Texture2D>("sorceryFight/Content/Projectiles/VFX/HollowPurpleCollision", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+        public static Texture2D texture => ModContent.Request<Texture2D>("sorceryFight/Content/Projectiles/VFX/CleaveMS", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public static readonly int FRAMES = 8;
         public static readonly int TICKS_PER_FRAME = 1;
         public override void SetDefaults()
