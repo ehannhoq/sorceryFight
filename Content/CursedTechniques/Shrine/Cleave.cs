@@ -73,7 +73,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 var entitySource = player.GetSource_FromThis();
                 sf.cursedEnergy -= CalculateTrueCost(sf);
 
-                return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), 1, 0, player.whoAmI);
+                return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
             }
             return -1;
         }
