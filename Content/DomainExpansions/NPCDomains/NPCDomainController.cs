@@ -141,28 +141,28 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
             base.PostDraw(npc, spriteBatch, screenPos, drawColor);
             NPCDomainController domainController = npc.GetGlobalNPC<NPCDomainController>();
 
-            string npcName;
-            if (npc.type == ModContent.NPCType<SupremeCalamitas>())
+            Dictionary<int, string> bossNameMap = new()
             {
-                npcName = "SupremeCalamitas";
-            }
-            else
-            {
-                npcName = "LunaticCultist";
-            }
+                { NPCID.CultistBoss, "LunaticCultist" },
+                { ModContent.NPCType<SupremeCalamitas>(), "SupremeCalamitas" },
+            };
 
-            if (domainController.castingDomain)
+            if (bossNameMap.TryGetValue(npc.type, out string npcName))
             {
-                if (domainController.domainTimer < 200)
+                if (domainController.castingDomain)
                 {
+                    if (domainController.domainTimer < 200)
+                    {
 
-                    Texture2D frame = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IntroCutscenes/{npcName}/{domainController.domainTimer}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                    Rectangle src = new Rectangle(0, 0, frame.Width, frame.Height);
+                        Texture2D frame = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IntroCutscenes/{npcName}/{domainController.domainTimer}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                        Rectangle src = new Rectangle(0, 0, frame.Width, frame.Height);
 
-                    spriteBatch.Draw(frame, npc.Center - Main.screenPosition, src, Color.White, 0f, src.Size() * 0.5f, 1f, SpriteEffects.None, 0f);
+                        spriteBatch.Draw(frame, npc.Center - Main.screenPosition, src, Color.White, 0f, src.Size() * 0.5f, 1f, SpriteEffects.None, 0f);
+                    }
+
                 }
-
             }
+
         }
 
         public override void Unload()
