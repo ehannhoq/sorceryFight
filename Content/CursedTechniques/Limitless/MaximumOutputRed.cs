@@ -147,14 +147,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Projectile.velocity = Vector2.Zero;
                 Projectile.netUpdate = true;
 
-                // for (int i = 0; i < 2; i++)
-                // {
-                //     Vector2 particleOffset = Projectile.Center + new Vector2(Main.rand.NextFloat(-80f, 80f), Main.rand.NextFloat(-80f, 80f));
-                //     Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                //     LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 10, 1, textColor);
-                //     GeneralParticleHandler.SpawnParticle(particle);
-                // }
-
                 return;
             }
             else
