@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Items.Consumables
 {
-    public class CursedEnergyTwoLiter : ModItem
+    public class CursedEnergyTwoLiter : ModItem, ICursedEnergyPotion
     {
         public static readonly int CursedEnergy = 175;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.CursedEnergyDrinks.TwoLiter.DisplayName");
@@ -56,5 +56,7 @@ namespace sorceryFight.Content.Items.Consumables
 
             return true;
         }
+
+        public float GetCursedEnergy() => CursedEnergy;
     }
 }
