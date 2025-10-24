@@ -377,6 +377,10 @@ namespace sorceryFight.SFPlayer
                 else
                     CalculateCursedFistsHitbox();
             }
+
+            if (SFKeybinds.ConsumeCursedEnergyPotion.JustPressed)
+                if (cursedEnergy < maxCursedEnergy)
+                    BeerHatRecoverCE();
         }
 
 
