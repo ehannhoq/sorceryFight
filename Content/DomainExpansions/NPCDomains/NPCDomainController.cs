@@ -157,7 +157,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
                         Texture2D frame = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IntroCutscenes/{npcName}/{domainController.domainTimer}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                         Rectangle src = new Rectangle(0, 0, frame.Width, frame.Height);
 
-                        spriteBatch.Draw(frame, npc.Center - Main.screenPosition, src, Color.White, 0f, src.Size() * 0.5f, 1f, SpriteEffects.None, 0f);
+                        spriteBatch.Draw(frame, npc.Center - Main.screenPosition, src, Color.White, 0f, src.Size() * 0.5f, 0.75f, SpriteEffects.None, 0f);
                     }
 
                 }
