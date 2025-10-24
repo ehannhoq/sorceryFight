@@ -23,6 +23,8 @@ using Microsoft.Xna.Framework.Design;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
 using sorceryFight.Content.Buffs.CursedEnergyTraits;
+using CalamityMod.Projectiles.Ranged;
+using sorceryFight.Content.Items.Accessories;
 
 namespace sorceryFight.SFPlayer
 {
@@ -208,6 +210,12 @@ namespace sorceryFight.SFPlayer
             if (cursedEnergy < 0)
             {
                 cursedEnergy = 0;
+
+                if (beerHat)
+                {
+                    if (!BeerHatRecoverCE())
+                        AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
+                } else AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
             }
 
 
@@ -388,9 +396,19 @@ namespace sorceryFight.SFPlayer
 
             if (cursedEnergy < selectedTechnique.CalculateTrueCost(this))
             {
-                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Not enough Cursed Energy!");
-                Main.combatText[index].lifeTime = 180;
-                return;
+                if (beerHat)
+                {
+                    BeerHatRecoverCE(minRecover: selectedTechnique.CalculateTrueCost(this));
+                }
+
+                bool successfullyRecoveredCe = cursedEnergy >= selectedTechnique.CalculateTrueCost(this);
+
+                if (!successfullyRecoveredCe)
+                {
+                    int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Not enough Cursed Energy!");
+                    Main.combatText[index].lifeTime = 180;
+                    return;
+                }
             }
 
             selectedTechnique.UseTechnique(this);

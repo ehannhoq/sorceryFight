@@ -71,6 +71,7 @@ namespace sorceryFight.SFPlayer
             celestialAmulet = false;
             pictureLocket = false;
             cursedOfuda = false;
+            beerHat = false;
 
             blackFlashDamageMultiplier = 3;
             blackFlashTime = 30;
