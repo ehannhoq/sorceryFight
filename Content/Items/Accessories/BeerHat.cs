@@ -6,6 +6,7 @@ using sorceryFight.SFPlayer;
 using System.Collections.Generic;
 using System.Linq;
 using sorceryFight.Content.Items.Consumables;
+using Terraria.ID;
 
 namespace sorceryFight.Content.Items.Accessories
 {
@@ -30,6 +31,16 @@ namespace sorceryFight.Content.Items.Accessories
 
             SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
             sfPlayer.beerHat = true;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.Bottle, 2);
+            recipe.AddIngredient(ItemID.Silk, 5);
+            recipe.AddIngredient(ItemID.SoulofMight, 1);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
         }
     }
 }
