@@ -24,7 +24,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public static readonly int FRAME_COUNT = 4;
         public static readonly int TICKS_PER_FRAME = 5;
         private static readonly float COLLISION_TIME = HollowPurpleCollision.FRAMES * HollowPurpleCollision.TICKS_PER_FRAME;
-        private static readonly float WAIT_TIME = 110f;
+        private static readonly float WAIT_TIME = 90f;
 
         public static Texture2D texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/HollowPurple", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public static Texture2D prism1 = ModContent.Request<Texture2D>("sorceryFight/Content/VFXSprites/HollowPurplePrisms1", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
@@ -90,6 +90,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
             Vector2 projOrigin = player.MountedCenter + player.MountedCenter.DirectionTo(Main.MouseWorld) * 50f;
 
+            float trueWaitTime = sfPlayer.cursedOfuda ? MathF.Floor(CursedOfuda.cursedTechniqueCastTimeDecrease * WAIT_TIME) : WAIT_TIME;
+
             if (Projectile.ai[0] < COLLISION_TIME)
             {
                 if (collisionVFX == null)
@@ -110,7 +112,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleShine, Projectile.Center);
 
             }
-            else if (Projectile.ai[0] < COLLISION_TIME + WAIT_TIME)
+            else if (Projectile.ai[0] < COLLISION_TIME + trueWaitTime)
             {
                 if (Main.myPlayer == Projectile.owner)
                     Projectile.Center = projOrigin;
@@ -118,7 +120,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Projectile.netUpdate = true;
 
             }
-            else if (Projectile.ai[0] == COLLISION_TIME + WAIT_TIME)
+            else if (Projectile.ai[0] == COLLISION_TIME + trueWaitTime)
             {
                 Projectile.damage = (int)CalculateTrueDamage(player.GetModPlayer<SorceryFightPlayer>());
 
@@ -156,9 +158,13 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public override void PostDraw(Color lightColor)
         {
+            Player player = Main.player[Projectile.owner];
+            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            float trueWaitTime = sfPlayer.cursedOfuda ? CursedOfuda.cursedTechniqueCastTimeDecrease * WAIT_TIME : WAIT_TIME;
+
             if (Projectile.ai[0] > COLLISION_TIME)
             {
-                if (Projectile.ai[0] < COLLISION_TIME + WAIT_TIME)
+                if (Projectile.ai[0] < COLLISION_TIME + trueWaitTime)
                 {
                     Main.spriteBatch.End();
                     Main.spriteBatch.Begin(
@@ -178,7 +184,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                     for (int i = 0; i < 3; i++)
                     {
-                        float progress = (Projectile.ai[0] - COLLISION_TIME) / WAIT_TIME;
+                        float progress = (Projectile.ai[0] - COLLISION_TIME) / trueWaitTime;
                         progress -= i * 0.3f;
                         progress = Math.Clamp(progress, 0f, 1f);
 
@@ -220,7 +226,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 float progress = (Projectile.ai[0] - (COLLISION_TIME - flashDuration / 2f)) / flashDuration;
                 progress = Math.Clamp(progress, 0f, 1f);
 
-                if (Projectile.ai[0] >= COLLISION_TIME + (flashDuration / 2) && Projectile.ai[0] < COLLISION_TIME + WAIT_TIME)
+                if (Projectile.ai[0] >= COLLISION_TIME + (flashDuration / 2) && Projectile.ai[0] < COLLISION_TIME + trueWaitTime)
                     progress = 0.1f;
 
                 float opacity = MathF.Sin(progress * MathF.PI);
@@ -233,7 +239,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Main.spriteBatch.Begin();
             }
 
-            if (Projectile.ai[0] >= COLLISION_TIME + WAIT_TIME)
+            if (Projectile.ai[0] >= COLLISION_TIME + trueWaitTime)
             {
                 int frameHeight = texture.Height / FRAME_COUNT;
                 int frameY = Projectile.frame * frameHeight;
