@@ -91,7 +91,5 @@ Mods: {
 				Tooltip: ""
 			}
 		}
-
-		NPCs.FingerBearer.DisplayName: Finger Bearer
 	}
 }
