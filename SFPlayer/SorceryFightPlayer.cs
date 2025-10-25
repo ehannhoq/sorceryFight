@@ -484,19 +484,19 @@ namespace sorceryFight.SFPlayer
                     inDomainAnimation = true;
 
                     int index = CombatText.NewText(Player.getRect(), Color.White, "Domain Expansion:");
-                    Main.combatText[index].lifeTime = 90;
+                    Main.combatText[index].lifeTime = 60;
 
                     TaskScheduler.Instance.AddDelayedTask(() =>
                     {
                         int index = CombatText.NewText(Player.getRect(), Color.White, innateTechnique.DomainExpansion.DisplayName);
-                        Main.combatText[index].lifeTime = 90;
-                    }, 100);
+                        Main.combatText[index].lifeTime = 60;
+                    }, 60);
 
                     TaskScheduler.Instance.AddDelayedTask(() =>
                     {
                         DomainExpansionController.ExpandDomain(Player.whoAmI, innateTechnique.DomainExpansion);
                         inDomainAnimation = false;
-                    }, 200);
+                    }, 120);
                 }
             }
         }

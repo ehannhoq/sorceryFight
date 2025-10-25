@@ -113,7 +113,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
                     npc.immortal = true;
                 }
 
-                if (domainController.domainTimer == 200)
+                if (domainController.domainTimer == 120)
                 {
                     DomainExpansionController.ExpandDomain(npc.whoAmI, npc.GetDomain());
                     playerCastedDomain = false;
@@ -121,7 +121,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
                     domainController.domainCounter++;
                 }
 
-                if (domainController.domainTimer == 260)
+                if (domainController.domainTimer == 180)
                 {
                     domainController.castingDomain = false;
                     domainController.npcCastingPosition = Vector2.Zero;
@@ -151,7 +151,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
             {
                 if (domainController.castingDomain)
                 {
-                    if (domainController.domainTimer < 200)
+                    if (domainController.domainTimer < 120)
                     {
 
                         Texture2D frame = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IntroCutscenes/{npcName}/{domainController.domainTimer}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
