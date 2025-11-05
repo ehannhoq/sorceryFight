@@ -41,7 +41,7 @@ InnateTechniqueUnlocker: {
 	CursedEnergyTraits: {
 		ExplosiveCursedEnergy: Your cursed energy feels a lot more explosive now.
 		SharpCursedEnergy: Your cursed energy feels a lot rougher now.
-		OverflowingCursedEnergy: You feel your cursed energy overflowing.
+		OverflowingEnergy: You feel your cursed energy overflowing.
 		FailedReroll: Your cursed energy seems to be the same as before.
 	}
 }
