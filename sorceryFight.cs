@@ -20,7 +20,7 @@ namespace sorceryFight
 	}
 	public class SorceryFight : Mod
 	{
-		public static List<string> DevModeNames =
+		private static List<string> DevModeNames =
 		[
 			"The Honored One",
 			"ehann",
@@ -35,6 +35,11 @@ namespace sorceryFight
 			"Perseus",
 			"TheRealCriky"
 		];
+
+		public static bool IsDevMode()
+		{
+			return DevModeNames.Contains(Main.LocalPlayer.name);
+		}
 
 		public override void HandlePacket(BinaryReader reader, int _)
 		{
