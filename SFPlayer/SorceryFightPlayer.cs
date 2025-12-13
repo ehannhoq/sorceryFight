@@ -258,7 +258,7 @@ namespace sorceryFight.SFPlayer
 
                 else if (innateTechnique.Name == "Vessel")
                 {
-                    int chance = SorceryFight.DevModeNames.Contains(Player.name) ? 100 : 5 + (int)(sukunasFingerConsumed * 0.5);
+                    int chance = SorceryFight.IsDevMode() ? 100 : 5 + (int)(sukunasFingerConsumed * 0.5);
                     if (SFUtils.Roll(chance))
                     {
                         PreventDeath();
@@ -591,7 +591,6 @@ namespace sorceryFight.SFPlayer
             }
         }
 
-
         public void RollForPlayerAttributes(bool isReroll = false)
         {
             bool successfulRoll = false;
@@ -628,18 +627,30 @@ namespace sorceryFight.SFPlayer
             if (SFUtils.Roll(SFConstants.ExplosiveCursedEnergyPercent) && !explosiveCursedEnergy)
             {
                 explosiveCursedEnergy = true;
+
+                sharpCursedEnergy = false;
+                overflowingEnergy = false;
+
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.CursedEnergyTraits.ExplosiveCursedEnergy"), Color.Khaki, Player.whoAmI);
                 successfulRoll = true;
             }
             else if (SFUtils.Roll(SFConstants.SharpCursedEnergyPercent) && !sharpCursedEnergy)
             {
                 sharpCursedEnergy = true;
+
+                explosiveCursedEnergy = false;
+                overflowingEnergy = false;
+
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.CursedEnergyTraits.SharpCursedEnergy"), Color.Khaki, Player.whoAmI);
                 successfulRoll = true;
             }
             else if (SFUtils.Roll(SFConstants.OverflowingEnergyPercent) && !overflowingEnergy)
             {
                 overflowingEnergy = true;
+
+                explosiveCursedEnergy = false;
+                sharpCursedEnergy = false;
+
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.CursedEnergyTraits.OverflowingEnergy"), Color.Khaki, Player.whoAmI);
                 successfulRoll = true;
             }
