@@ -21,7 +21,7 @@ namespace sorceryFight.Content.Buffs
         }
         public override bool RightClick(int buffIndex)
         {
-            return SorceryFight.DevModeNames.Contains(Main.LocalPlayer.name);
+            return SorceryFight.IsDevMode();
         }
 
         public override void ModifyBuffText(ref string buffName, ref string tip, ref int rare)

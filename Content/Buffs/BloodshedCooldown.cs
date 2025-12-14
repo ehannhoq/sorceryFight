@@ -15,7 +15,7 @@ namespace sorceryFight.Content.Buffs
 
         public override bool RightClick(int buffIndex)
         {
-            return SorceryFight.DevModeNames.Contains(Main.LocalPlayer.name);
+            return SorceryFight.IsDevMode();
         }
     }
 }
