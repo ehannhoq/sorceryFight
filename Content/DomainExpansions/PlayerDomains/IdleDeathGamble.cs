@@ -280,7 +280,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         void Roll(Player player)
         {
-            int bossesKilled = player.GetModPlayer<SorceryFightPlayer>().bossesDefeated.Count;
+            int bossesKilled = player.GetModPlayer<SorceryFightPlayer>().numberBossesDefeated;
 
             float mean = 5 + (0.07f * bossesKilled);
             float std = 3;

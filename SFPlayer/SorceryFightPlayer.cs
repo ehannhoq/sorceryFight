@@ -1,30 +1,23 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.CursedTechniques;
-using sorceryFight.Content.InnateTechniques;
 using sorceryFight.Content.Buffs;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 using Terraria.DataStructures;
-using CalamityMod.NPCs.DevourerofGods;
 using sorceryFight.Content.Buffs.PlayerAttributes;
 using Terraria.Chat;
 using Terraria.ID;
-using CalamityMod;
 using CalamityMod.CalPlayer.Dashes;
 using System;
-using Terraria.UI;
 using sorceryFight.Content.Buffs.Vessel;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.DomainExpansions;
 using System.Linq;
-using Microsoft.Xna.Framework.Design;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
 using sorceryFight.Content.Buffs.CursedEnergyTraits;
-using CalamityMod.Projectiles.Ranged;
-using sorceryFight.Content.Items.Accessories;
+
 
 namespace sorceryFight.SFPlayer
 {
@@ -103,7 +96,7 @@ namespace sorceryFight.SFPlayer
 
         #region Shrine/Vessel Specific Variables
         public bool[] sukunasFingers;
-        public int sukunasFingerConsumed => sukunasFingers.Where(x => x).Count();
+        public int sukunasFingerConsumed => sukunasFingers.Count(x => x);
         #endregion
 
         #region RCT

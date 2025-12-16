@@ -54,7 +54,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override float CalculateTrueCost(SorceryFightPlayer sf)
         {
-            float finalCost = Cost - (Cost * (sf.bossesDefeated.Count / 100f));
+            float finalCost = Cost - (Cost * (sf.numberBossesDefeated / 100f));
             finalCost += sf.maxCursedEnergy * 0.05f;
             finalCost *= 1 - sf.ctCostReduction;
             finalCost *= 1 - (0.01f * sf.sukunasFingerConsumed);
