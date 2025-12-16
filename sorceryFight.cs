@@ -48,7 +48,8 @@ namespace sorceryFight
 
 			foreach (ModNPC npc in ModContent.GetContent<ModNPC>())
 			{
-				if (ContentSamples.NpcsByNetId[npc.Type].boss)
+				var sample = ContentSamples.NpcsByNetId[npc.Type];
+				if (sample.boss && !sample.dontCountMe)
 				{
 					totalBosses++;
 				}
