@@ -1,7 +1,5 @@
-using Microsoft.Build.Tasks;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
-using sorceryFight.Content.InnateTechniques;
 using sorceryFight.SFPlayer;
 using System.Collections.Generic;
 using System.IO;
@@ -36,9 +34,30 @@ namespace sorceryFight
 			"TheRealCriky"
 		];
 
+		private static readonly int vanillaBossesCount = 32;
+		public static int totalBosses;
+
 		public static bool IsDevMode()
 		{
 			return DevModeNames.Contains(Main.LocalPlayer.name);
+		}
+
+		public override void PostSetupContent()
+		{
+			totalBosses = vanillaBossesCount;
+
+			foreach (ModNPC npc in ModContent.GetContent<ModNPC>())
+			{
+				if (ContentSamples.NpcsByNetId[npc.Type].boss)
+				{
+					totalBosses++;
+				}
+			}
+		}
+
+		public override void Unload()
+		{
+			totalBosses = 0;
 		}
 
 		public override void HandlePacket(BinaryReader reader, int _)
