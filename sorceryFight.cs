@@ -3,6 +3,7 @@ using sorceryFight.Content.DomainExpansions.NPCDomains;
 using sorceryFight.SFPlayer;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,6 +19,24 @@ namespace sorceryFight
 	}
 	public class SorceryFight : Mod
 	{
+		/// <summary>
+		/// Whether or not the player's name is a developer name (grants developer powers).
+		/// </summary>
+		/// <returns></returns>
+		public static bool IsDevMode() => DevModeNames.Contains(Main.LocalPlayer.name);
+
+		/// <summary>
+		/// The total number of bosses loaded across all mods.
+		/// </summary>
+		public static int totalBosses;
+
+		/// <summary>
+		/// A reflection method allowing to retrieve ModContent.ProjectileTypes dynamically at runtime.
+		/// </summary>
+		public static MethodInfo ModContentProjectileType;
+
+
+
 		private static List<string> DevModeNames =
 		[
 			"The Honored One",
@@ -34,15 +53,18 @@ namespace sorceryFight
 			"TheRealCriky"
 		];
 
-		private static readonly int vanillaBossesCount = 32;
-		public static int totalBosses;
 
-		public static bool IsDevMode()
-		{
-			return DevModeNames.Contains(Main.LocalPlayer.name);
-		}
+		private static readonly int vanillaBossesCount = 32;
+
 
 		public override void PostSetupContent()
+		{
+			ModContentProjectileType = typeof(ModContent).GetMethod("ProjectileType");
+			CountBosses();
+		}
+
+
+		private void CountBosses()
 		{
 			totalBosses = vanillaBossesCount;
 
@@ -56,10 +78,13 @@ namespace sorceryFight
 			}
 		}
 
+
 		public override void Unload()
 		{
 			totalBosses = 0;
+			ModContentProjectileType = null;
 		}
+
 
 		public override void HandlePacket(BinaryReader reader, int _)
 		{
@@ -80,6 +105,7 @@ namespace sorceryFight
 			}
 		}
 
+
 		private void HandleBossDefeatedPacket(BinaryReader reader)
 		{
 			int targetPlayer = reader.ReadInt32();
@@ -90,6 +116,7 @@ namespace sorceryFight
 				Main.player[targetPlayer].GetModPlayer<SorceryFightPlayer>().AddDefeatedBoss(bossType);
 			}
 		}
+
 
 		private void HandleDomainSyncingPacket(BinaryReader reader)
 		{
@@ -133,6 +160,7 @@ namespace sorceryFight
 				packet.Send(-1, whoAmI);
 			}
 		}
+
 
 		private void HandlePlayerCastingDomainPacket(BinaryReader reader)
 		{
