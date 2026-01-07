@@ -17,6 +17,7 @@ Mods: {
 			InvertedSpearCharge.DisplayName: Inverted Spear Charge
 			CleaveMS.DisplayName: Cleave M S
 			HollowPurpleCollision.DisplayName: Hollow Purple Collision
+			InvertedSpearProjectile.DisplayName: Inverted Spear Projectile
 		}
 
 		Configs: {
