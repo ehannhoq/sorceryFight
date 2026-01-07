@@ -298,6 +298,33 @@ public static class SFUtils
 
         return null;
     }
+
+
+    /// <summary>
+    /// Helper method that calculates and positions the projectile if the projectile is serving as a slash for a weapon.
+    /// </summary>
+    /// <param name="proj"></param>
+    public static void PositionProjectileForSlash(this Projectile proj, float offset)
+    {
+        Player player = Main.player[proj.owner];
+        Vector2 playerRotatedPoint = player.RotatedRelativePoint(player.MountedCenter, true);
+        float velocityAngle = proj.velocity.ToRotation();
+
+        proj.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
+        proj.direction = (Math.Cos(velocityAngle) > 0).ToDirectionInt();
+        proj.rotation = velocityAngle + (proj.direction == -1).ToInt() * MathHelper.Pi;
+        proj.Center = playerRotatedPoint + velocityAngle.ToRotationVector2() * offset;
+        player.ChangeDir(proj.direction);
+
+        if (Main.myPlayer == proj.owner)
+        {
+
+            if (player.CantUseSword(proj))
+            {
+                proj.Kill();
+            }
+        }
+    }
 }
 
 public static class SFConstants
