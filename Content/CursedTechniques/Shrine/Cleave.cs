@@ -22,14 +22,14 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.Cleave.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Cleave.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Cleave.LockedDescription");
-        public override float Cost => 60f;
+        public override float Cost => 75f;
         public override Color textColor => new Color(120, 21, 8);
         public override bool DisplayNameInGame => false;
-        public override int Damage => 1;
-        public override int MasteryDamageMultiplier => 0;
+        public override int Damage => 50;
+        public override int MasteryDamageMultiplier => 25;
         public override float Speed => 0f;
         public override float LifeTime => 16f;
-        float basePercent = 0.01f;
+        float baseDamagePercent = 0.05f;
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<Cleave>();
@@ -43,25 +43,22 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         {
             float cost = CalculateTrueCost(sf);
             float percent = cost / sf.maxCursedEnergy;
-            return $"Damage: {Math.Round(CalculateTrueDamage(sf) * 100, 2)}% of target's health\n"
-                + $"Cost: {Math.Round(percent * 100, 2)}% of max CE.\n";
+            return $"Damage: {Math.Round(CalculateTrueDamage(sf), 2)} + {Math.Round(baseDamagePercent * 100, 2)}% of target's health\n"
+                + $"Cost: {Math.Round(CalculateTrueCost(sf), 2)} CE\n";
         }
 
         public override float CalculateTrueDamage(SorceryFightPlayer sf)
         {
-            return basePercent + (sf.bossesDefeated.Count / 785f) + (0.01f * (sf.sukunasFingerConsumed / 20f));
-        }
-
-        private float CalculateCostPercentage(SorceryFightPlayer sf)
-        {
-            float sukunasFingersDecrease = 1 - (0.01f * sf.sukunasFingerConsumed);
-            return CalculateTrueDamage(sf) * 7f * sukunasFingersDecrease;
+            return base.CalculateTrueDamage(sf) + (0.01f * (sf.sukunasFingerConsumed / 20f));
         }
 
         public override float CalculateTrueCost(SorceryFightPlayer sf)
         {
-            float cost = sf.maxCursedEnergy * CalculateCostPercentage(sf);
-            return sf.cursedOfuda ? cost * CursedOfuda.cursedTechniqueCostDecrease : cost;
+            float finalCost = Cost - (Cost * (sf.numberBossesDefeated / 100f));
+            finalCost += sf.maxCursedEnergy * 0.05f;
+            finalCost *= 1 - sf.ctCostReduction;
+            finalCost *= 1 - (0.01f * sf.sukunasFingerConsumed);
+            return finalCost;
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)
@@ -76,7 +73,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 var entitySource = player.GetSource_FromThis();
                 sf.cursedEnergy -= CalculateTrueCost(sf);
 
-                return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), 1, 0, player.whoAmI);
+                return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
             }
             return -1;
         }
@@ -91,8 +88,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 250;
-            Projectile.height = 250;
+            Projectile.width = 188;
+            Projectile.height = 188;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
@@ -125,7 +122,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Player player = Main.player[Projectile.owner];
             Vector2 playerRotatedPoint = player.RotatedRelativePoint(player.MountedCenter, true);
             float velocityAngle = Projectile.velocity.ToRotation();
-            float offset = 80f * Projectile.scale;
+            float offset = 60f * Projectile.scale;
 
             Projectile.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
             Projectile.direction = (Math.Cos(velocityAngle) > 0).ToDirectionInt();
@@ -148,15 +145,13 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
             Vector2 projOrigin = sourceRectangle.Size() * 0.5f;
             SpriteEffects spriteEffects = Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, -32).RotatedBy(Projectile.rotation), sourceRectangle, Color.White, Projectile.rotation, projOrigin, 1f, spriteEffects, 0f);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, -32).RotatedBy(Projectile.rotation), sourceRectangle, Color.White, Projectile.rotation, projOrigin, 0.75f, spriteEffects, 0f);
             return false;
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            float targetHealth = target.life;
-            float additionalDamage = targetHealth * CalculateTrueDamage(Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>());
-            modifiers.FinalDamage.Flat += additionalDamage;
+            modifiers.FinalDamage.Flat += target.life * baseDamagePercent;
         }
     }
 }

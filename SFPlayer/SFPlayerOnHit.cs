@@ -91,7 +91,7 @@ namespace sorceryFight.SFPlayer
             bool showFlowState = blackFlashCounter == 1;
             sfUI.InitiateBlackFlashUI(target.Center, showFlowState);
 
-            int additionalDamage = ModContent.GetInstance<ServerConfig>().LoreAccurateBlackFlash ? (int)Math.Pow(damageDone, 2) : damageDone * 3;
+            int additionalDamage = ModContent.GetInstance<ServerConfig>().LoreAccurateBlackFlash ? (int)Math.Pow(damageDone, 2 + additionalBlackFlashDamageMultiplier) : (int)(damageDone * (blackFlashDamageMultiplier + additionalBlackFlashDamageMultiplier));
             additionalDamage -= damageDone;
 
             Player.ApplyDamageToNPC(target, additionalDamage, hit.Knockback, hit.HitDirection, false);
@@ -101,7 +101,9 @@ namespace sorceryFight.SFPlayer
                 ResetBlackFlashState();
             }
 
-            cursedEnergy = maxCursedEnergy;
+            if (!HasActiveDomain)
+                cursedEnergy = maxCursedEnergy;
+                
             if (Player.HasBuff<BurntTechnique>())
             {
                 int index = -1;

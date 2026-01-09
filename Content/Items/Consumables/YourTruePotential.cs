@@ -56,6 +56,8 @@ namespace sorceryFight.Content.Items.Consumables
         public override bool? UseItem(Player player)
         {
             SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            sfPlayer.unlockedRCT = true;
+            
             sfPlayer.AddDefeatedBoss(NPCID.KingSlime);
             sfPlayer.AddDefeatedBoss(NPCID.EyeofCthulhu);
             sfPlayer.AddDefeatedBoss(NPCID.EaterofWorldsHead);

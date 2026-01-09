@@ -1,8 +1,10 @@
 using System;
+using System.Linq;
 using CalamityMod;
+using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.CursedTechniques.Shrine;
+using sorceryFight.Content.Projectiles.Melee;
 using sorceryFight.Rarities;
 using Terraria;
 using Terraria.DataStructures;
@@ -15,7 +17,6 @@ namespace sorceryFight.Content.Items.Weapons.Melee
     public class InvertedSpear : ModItem
     {
         private static Texture2D texture;
-
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Weapons.Melee.InvertedSpear.DisplayName");
         public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Weapons.Melee.InvertedSpear.Tooltip");
 
@@ -71,6 +72,27 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             if (player.ownedProjectileCounts[Item.shoot] > 0)
                 return false;
             return true;
+        }
+
+        public override bool AltFunctionUse(Player player) => true;
+
+        public override bool? UseItem(Player player)
+        {
+            if (player.altFunctionUse == 2)
+            {
+                if (Item.shoot == ModContent.ProjectileType<InvertedSpearSlash>())
+                {
+                    Item.shoot = ModContent.ProjectileType<InvertedSpearCharge>();
+                }
+
+                else if (Item.shoot == ModContent.ProjectileType<InvertedSpearCharge>())
+                {
+                    Item.shoot = ModContent.ProjectileType<InvertedSpearSlash>();
+                }
+
+                return true;
+            }
+            return null;
         }
     }
 }

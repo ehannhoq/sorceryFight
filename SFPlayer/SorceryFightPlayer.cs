@@ -1,28 +1,23 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.CursedTechniques;
-using sorceryFight.Content.InnateTechniques;
 using sorceryFight.Content.Buffs;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 using Terraria.DataStructures;
-using CalamityMod.NPCs.DevourerofGods;
 using sorceryFight.Content.Buffs.PlayerAttributes;
 using Terraria.Chat;
 using Terraria.ID;
-using CalamityMod;
 using CalamityMod.CalPlayer.Dashes;
 using System;
-using Terraria.UI;
 using sorceryFight.Content.Buffs.Vessel;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.DomainExpansions;
 using System.Linq;
-using Microsoft.Xna.Framework.Design;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
 using sorceryFight.Content.Buffs.CursedEnergyTraits;
+
 
 namespace sorceryFight.SFPlayer
 {
@@ -90,6 +85,7 @@ namespace sorceryFight.SFPlayer
         public bool sixEyes;
         public bool challengersEye;
         public bool uniqueBodyStructure;
+        public bool blessedByBlackFlash;
         #endregion
 
         #region Cursed Energy Traits
@@ -100,20 +96,26 @@ namespace sorceryFight.SFPlayer
 
         #region Shrine/Vessel Specific Variables
         public bool[] sukunasFingers;
-        public int sukunasFingerConsumed => sukunasFingers.Where(x => x).Count();
+        public int sukunasFingerConsumed => sukunasFingers.Count(x => x);
         #endregion
 
         #region RCT
         public bool unlockedRCT;
         public int rctAuraIndex;
+        public int rctBaseHealPerSecond { get; private set; }
+        public int additionalRCTHealPerSecond;
+        public float rctEfficiency;
         #endregion
 
         #region Black Flash
+        public int blackFlashDamageMultiplier { get; private set; }
         public int blackFlashTime;
         public int blackFlashTimeLeft;
         public int blackFlashCounter;
         public int lowerWindowTime;
-        public int upperWindowTime;
+        public int blackFlashWindowTime;
+        public float additionalBlackFlashDamageMultiplier;
+        public int upperWindowTime => lowerWindowTime + blackFlashWindowTime;
         #endregion
 
         #region UI Positions
@@ -128,13 +130,11 @@ namespace sorceryFight.SFPlayer
             innateTechnique.UpdateEquips(this);
         }
 
-
         public override void UpdateLifeRegen()
         {
             if (innateTechnique == null) return;
             innateTechnique.UpdateLifeRegen(this);
         }
-
 
         public override void PreUpdate()
         {
@@ -154,6 +154,10 @@ namespace sorceryFight.SFPlayer
             cursedEnergyRegenPerSecond = 0f;
             maxCursedEnergy = 0f;
             ctCostReduction = 0f;
+            additionalBlackFlashDamageMultiplier = 0f;
+            blackFlashWindowTime = 1;
+            rctEfficiency = 0.0f;
+            additionalRCTHealPerSecond = 0;
 
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
             maxCursedEnergy = calculateBaseMaxCE();
@@ -199,6 +203,12 @@ namespace sorceryFight.SFPlayer
             if (cursedEnergy < 0)
             {
                 cursedEnergy = 0;
+
+                if (beerHat)
+                {
+                    if (!BeerHatRecoverCE())
+                        AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
+                } else AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
             }
 
 
@@ -241,7 +251,7 @@ namespace sorceryFight.SFPlayer
 
                 else if (innateTechnique.Name == "Vessel")
                 {
-                    int chance = SorceryFight.DevModeNames.Contains(Player.name) ? 100 : 5 + (int)(sukunasFingerConsumed * 0.5);
+                    int chance = SorceryFight.IsDevMode() ? 100 : 5 + (int)(sukunasFingerConsumed * 0.5);
                     if (SFUtils.Roll(chance))
                     {
                         PreventDeath();
@@ -338,8 +348,7 @@ namespace sorceryFight.SFPlayer
                 int variation = pictureLocket ? Main.rand.Next(-3, 2) : Main.rand.Next(-5, 4);
 
                 lowerWindowTime = innateTechnique.Name == "Vessel" ? 14 - blackFlashCounter / 2 + variation : 15 - blackFlashCounter / 2 + variation;
-                upperWindowTime = innateTechnique.Name == "Vessel" ? 16 + blackFlashCounter / 2 + variation : 16 + blackFlashCounter / 2 + variation;
-                sfUI.BlackFlashWindow(lowerWindowTime, upperWindowTime);
+                sfUI.BlackFlashWindow(lowerWindowTime, lowerWindowTime + blackFlashWindowTime);
             }
 
             // if (SFKeybinds.CursedFist.JustPressed)
@@ -361,6 +370,10 @@ namespace sorceryFight.SFPlayer
                 else
                     CalculateCursedFistsHitbox();
             }
+
+            if (SFKeybinds.ConsumeCursedEnergyPotion.JustPressed)
+                if (cursedEnergy < maxCursedEnergy)
+                    BeerHatRecoverCE();
         }
 
 
@@ -380,9 +393,19 @@ namespace sorceryFight.SFPlayer
 
             if (cursedEnergy < selectedTechnique.CalculateTrueCost(this))
             {
-                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Not enough Cursed Energy!");
-                Main.combatText[index].lifeTime = 180;
-                return;
+                if (beerHat)
+                {
+                    BeerHatRecoverCE(minRecover: selectedTechnique.CalculateTrueCost(this));
+                }
+
+                bool successfullyRecoveredCe = cursedEnergy >= selectedTechnique.CalculateTrueCost(this);
+
+                if (!successfullyRecoveredCe)
+                {
+                    int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Not enough Cursed Energy!");
+                    Main.combatText[index].lifeTime = 180;
+                    return;
+                }
             }
 
             selectedTechnique.UseTechnique(this);
@@ -412,11 +435,11 @@ namespace sorceryFight.SFPlayer
                 rctAuraIndex = Projectile.NewProjectile(source, Player.Center, Vector2.Zero, ModContent.ProjectileType<ReverseCursedTechniqueAuraProjectile>(), 0, 0, Player.whoAmI);
             }
 
-            if (cursedEnergy >= 5)
-            {
-                cursedEnergy -= 5;
-                Player.Heal(1);
-            }
+            int totalHealing = (int)SFUtils.RateSecondsToTicks(rctBaseHealPerSecond + additionalRCTHealPerSecond);
+            float ceCost = (totalHealing * 5) * (1 - rctEfficiency);
+
+            Player.Heal(totalHealing);
+            cursedEnergy -= ceCost;
         }
 
 
@@ -454,19 +477,19 @@ namespace sorceryFight.SFPlayer
                     inDomainAnimation = true;
 
                     int index = CombatText.NewText(Player.getRect(), Color.White, "Domain Expansion:");
-                    Main.combatText[index].lifeTime = 90;
+                    Main.combatText[index].lifeTime = 60;
 
                     TaskScheduler.Instance.AddDelayedTask(() =>
                     {
                         int index = CombatText.NewText(Player.getRect(), Color.White, innateTechnique.DomainExpansion.DisplayName);
-                        Main.combatText[index].lifeTime = 90;
-                    }, 100);
+                        Main.combatText[index].lifeTime = 60;
+                    }, 60);
 
                     TaskScheduler.Instance.AddDelayedTask(() =>
                     {
                         DomainExpansionController.ExpandDomain(Player.whoAmI, innateTechnique.DomainExpansion);
                         inDomainAnimation = false;
-                    }, 200);
+                    }, 120);
                 }
             }
         }
@@ -561,7 +584,6 @@ namespace sorceryFight.SFPlayer
             }
         }
 
-
         public void RollForPlayerAttributes(bool isReroll = false)
         {
             bool successfulRoll = false;
@@ -579,6 +601,13 @@ namespace sorceryFight.SFPlayer
                 successfulRoll = true;
             }
 
+            if (SFUtils.Roll(SFConstants.BlessedByBlackSparksPercent) && !blessedByBlackFlash)
+            {
+                blessedByBlackFlash = true;
+                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.BlessedByBlackSparks"), Color.Khaki, Player.whoAmI);
+                successfulRoll = true;
+            }
+
             if (isReroll && !successfulRoll)
             {
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.FailedReroll"), Color.Khaki, Player.whoAmI);
@@ -588,21 +617,33 @@ namespace sorceryFight.SFPlayer
         public void RollForCursedEnergyTraits(bool isReroll = false)
         {
             bool successfulRoll = false;
-            if (SFUtils.Roll(SFConstants.ExplosiveCursedEnergy) && !explosiveCursedEnergy)
+            if (SFUtils.Roll(SFConstants.ExplosiveCursedEnergyPercent) && !explosiveCursedEnergy)
             {
                 explosiveCursedEnergy = true;
+
+                sharpCursedEnergy = false;
+                overflowingEnergy = false;
+
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.CursedEnergyTraits.ExplosiveCursedEnergy"), Color.Khaki, Player.whoAmI);
                 successfulRoll = true;
             }
-            else if (SFUtils.Roll(SFConstants.SharpCursedEnergy) && !sharpCursedEnergy)
+            else if (SFUtils.Roll(SFConstants.SharpCursedEnergyPercent) && !sharpCursedEnergy)
             {
                 sharpCursedEnergy = true;
+
+                explosiveCursedEnergy = false;
+                overflowingEnergy = false;
+
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.CursedEnergyTraits.SharpCursedEnergy"), Color.Khaki, Player.whoAmI);
                 successfulRoll = true;
             }
-            else if (SFUtils.Roll(SFConstants.OverflowingEnergy) && !overflowingEnergy)
+            else if (SFUtils.Roll(SFConstants.OverflowingEnergyPercent) && !overflowingEnergy)
             {
                 overflowingEnergy = true;
+
+                explosiveCursedEnergy = false;
+                sharpCursedEnergy = false;
+
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.CursedEnergyTraits.OverflowingEnergy"), Color.Khaki, Player.whoAmI);
                 successfulRoll = true;
             }
@@ -624,6 +665,9 @@ namespace sorceryFight.SFPlayer
 
             if (uniqueBodyStructure)
                 Player.AddBuff(ModContent.BuffType<UniqueBodyStructureBuff>(), 2);
+
+            if (blessedByBlackFlash)
+                Player.AddBuff(ModContent.BuffType<BlessedByBlackSparksBuff>(), 2);
 
             if (innateTechnique.Name == "Vessel")
                 Player.AddBuff(ModContent.BuffType<SukunasVesselBuff>(), 2);

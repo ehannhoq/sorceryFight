@@ -9,8 +9,8 @@ namespace sorceryFight.SFPlayer
     public partial class SorceryFightPlayer : ModPlayer
     {
         public static Action OnNewBossDefeated;
-        public static int totalNumberOfBosses;
         public List<int> bossesDefeated;
+        public int numberBossesDefeated => bossesDefeated.Count;
         public void AddDefeatedBoss(int bossType)
         {
             if (bossesDefeated.Contains(bossType)) return;
@@ -42,12 +42,12 @@ namespace sorceryFight.SFPlayer
 
         public float MasteryDamage()
         {
-            return 100 * bossesDefeated.Count;
+            return 100 * numberBossesDefeated;
         }
 
         public float MasteryCECost()
         {
-            return bossesDefeated.Count;
+            return numberBossesDefeated;
         }
     }
 }

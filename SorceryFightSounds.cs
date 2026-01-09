@@ -19,6 +19,9 @@ namespace sorceryFight
         public static SoundStyle AmplificationBlueChargeUp;
         public static SoundStyle ReversalRedChargeUp;
         public static SoundStyle MaximumOutputRedFire;
+        public static SoundStyle HollowPurpleCollide;
+        public static SoundStyle HollowPurpleShine;
+        public static SoundStyle HollowPurpleRelease;
         public static SoundStyle HollowPurpleSnap;
 
         public static SoundStyle DismantleSlice;
@@ -51,10 +54,15 @@ namespace sorceryFight
         public static SoundStyle OblivionSwordImpact;
         public static SoundStyle OblivionSwordBigImpact;
 
+        public static SoundStyle InvertedSpearOfHeavenSpin;
+        public static SoundStyle InvertedSpearOfHeavenCollide;
+        public static SoundStyle InvertedSpearOfHeavenSlash;
+        public static SoundStyle InvertedSpearOfHeavenImpact;
+
         public override void Load()
         {
-            CommonFire = new("sorceryFight/Content/Sounds/CommonFire") { Volume = 1f };
-            CommonWoosh = new("sorceryFight/Content/Sounds/CommonWoosh") { Volume = 1f };
+            CommonFire = new("sorceryFight/Content/Sounds/CommonFire") { Volume = 1f, PitchVariance = 0.75f };
+            CommonWoosh = new("sorceryFight/Content/Sounds/CommonWoosh") { Volume = 1f, PitchVariance = 0.75f };
             CommonHeartBeat = new("sorceryFight/Content/Sounds/CommonHeartBeat") { Volume = 1f };
             CommonBoom = new("sorceryFight/Content/Sounds/CommonBoom") { Volume = 1f };
             BlackFlashImpact = new("sorceryFight/Content/Sounds/BlackFlashImpact") { Volume = 1f };
@@ -62,6 +70,9 @@ namespace sorceryFight
             AmplificationBlueChargeUp = new("sorceryFight/Content/Sounds/Projectiles/AmplificationBlueChargeUp") { Volume = 1f };
             ReversalRedChargeUp = new("sorceryFight/Content/Sounds/Projectiles/ReversalRedChargeUp") { Volume = 1f };
             MaximumOutputRedFire = new("sorceryFight/Content/Sounds/Projectiles/MaximumOutputRedFire") { Volume = 1f };
+            HollowPurpleCollide = new("sorceryFight/Content/Sounds/Projectiles/HollowPurpleCollide") { Volume = 1f };
+            HollowPurpleShine = new("sorceryFight/Content/Sounds/Projectiles/HollowPurpleShine") { Volume = 1f };
+            HollowPurpleRelease = new("sorceryFight/Content/Sounds/Projectiles/HollowPurpleRelease") { Volume = 1f };
             HollowPurpleSnap = new("sorceryFight/Content/Sounds/Projectiles/HollowPurpleSnap") { Volume = 1f };
 
             DismantleSlice = new("sorceryFight/Content/Sounds/Projectiles/DismantleSlice") { Volume = 1f };
@@ -90,10 +101,15 @@ namespace sorceryFight
             PhantasmicLabyrinth = new("sorceryFight/Content/Sounds/DomainExpansions/PhantasmicLabyrinth") { Volume = 1f };
             AshenedPillarsOfCalamity = new("sorceryFight/Content/Sounds/DomainExpansions/AshenedPillarsOfCalamity") { Volume = 1f };
 
-            OblivionSwordSlash = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordSlash") { Volume = 1f };
-            OblivionSwordBigSlash = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordBigSlash") { Volume = 1f };
-            OblivionSwordImpact = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordImpact") { Volume = 1f };
-            OblivionSwordBigImpact = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordBigImpact") { Volume = 1f };
+            OblivionSwordSlash = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordSlash") { Volume = 1f, PitchVariance = 0.75f };
+            OblivionSwordBigSlash = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordBigSlash") { Volume = 1f, PitchVariance = 0.75f };
+            OblivionSwordImpact = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordImpact") { Volume = 1f, PitchVariance = 0.75f };
+            OblivionSwordBigImpact = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordBigImpact") { Volume = 1f, PitchVariance = 0.75f };
+
+            InvertedSpearOfHeavenSpin = new("sorceryFight/Content/Sounds/Items/InvertedSpearOfHeaven/InvertedSpearOfHeavenSpin") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 0.25f };
+            InvertedSpearOfHeavenCollide = new("sorceryFight/Content/Sounds/Items/InvertedSpearOfHeaven/InvertedSpearOfHeavenCollide") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 0.5f };
+            InvertedSpearOfHeavenSlash = new("sorceryFight/Content/Sounds/Items/InvertedSpearOfHeaven/InvertedSpearOfHeavenSlash") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 1f };
+            InvertedSpearOfHeavenImpact = new("sorceryFight/Content/Sounds/Items/InvertedSpearOfHeaven/InvertedSpearOfHeavenImpact") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 1f };
         }
     }
 }

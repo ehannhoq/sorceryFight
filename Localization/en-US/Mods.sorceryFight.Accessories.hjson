@@ -72,3 +72,8 @@ ClawsOfCalamity: {
 		{1}% increased black flash damage
 		'''
 }
+
+BeerHat: {
+	DisplayName: Drinking Helmet
+	Tooltip: Enables auto-consumption of Cursed Energy potions
+}

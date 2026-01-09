@@ -54,6 +54,7 @@ namespace sorceryFight.SFPlayer
             sixEyes = false;
             challengersEye = false;
             uniqueBodyStructure = false;
+            blessedByBlackFlash = false;
 
             explosiveCursedEnergy = false;
             sharpCursedEnergy = false;
@@ -63,16 +64,22 @@ namespace sorceryFight.SFPlayer
 
             unlockedRCT = false;
             rctAuraIndex = -1;
+            rctBaseHealPerSecond = 60;
+            additionalRCTHealPerSecond = 0;
+            rctEfficiency = 0.0f;
 
             celestialAmulet = false;
             pictureLocket = false;
             cursedOfuda = false;
+            beerHat = false;
 
+            blackFlashDamageMultiplier = 3;
             blackFlashTime = 30;
             lowerWindowTime = 15;
-            upperWindowTime = 16;
+            blackFlashWindowTime = 1;
             blackFlashTimeLeft = -60;
             blackFlashCounter = 0;
+            additionalBlackFlashDamageMultiplier = 0f;
         }
         public override void SaveData(TagCompound tag)
         {
@@ -114,6 +121,10 @@ namespace sorceryFight.SFPlayer
             generalBooleans.AddWithCondition("sixEyes", sixEyes);
             generalBooleans.AddWithCondition("hollowEyes", challengersEye);
             generalBooleans.AddWithCondition("uniqueBodyStructure", uniqueBodyStructure);
+            generalBooleans.AddWithCondition("blessedByBlackFlash", blessedByBlackFlash);
+            generalBooleans.AddWithCondition("explosiveCursedEnergy", explosiveCursedEnergy);
+            generalBooleans.AddWithCondition("sharpCursedEnergy", sharpCursedEnergy);
+            generalBooleans.AddWithCondition("overflowingEnergy", overflowingEnergy);
             tag["generalBooleans"] = generalBooleans;
 
             if (innateTechnique != null)
@@ -173,6 +184,10 @@ namespace sorceryFight.SFPlayer
             sixEyes = generalBooleans.Contains("sixEyes");
             challengersEye = generalBooleans.Contains("hollowEyes");
             uniqueBodyStructure = generalBooleans.Contains("uniqueBodyStructure");
+            blessedByBlackFlash = generalBooleans.Contains("blessedByBlackFlash");
+            explosiveCursedEnergy = generalBooleans.Contains("explosiveCursedEnergy");
+            sharpCursedEnergy = generalBooleans.Contains("sharpCursedEnergy");
+            overflowingEnergy = generalBooleans.Contains("overflowingEnergy");
 
             maxCursedEnergy = calculateBaseMaxCE();
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();

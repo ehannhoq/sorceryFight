@@ -11,10 +11,10 @@ QuantumCoulombBottle: {
 	DisplayName: Quantum Coulomb Bottle
 	Tooltip:
 		'''
-		{0}% increased Limitless cursed technique damage
+		{0}% increased cursed technique damage
 		{1}% increased damage
 		+{2} CE/s regen
-		{3}% increased RCT output
+		{3}% increased RCT efficiency
 		[c/9299a8:“A bottle? Seriously?"]
 		[c/6D2673:Dedicated to ehann]
 		'''
@@ -34,10 +34,56 @@ QuantumCoulombChausses: {
 	DisplayName: Quantum Coulomb Chausses
 	Tooltip:
 		'''
-		{0}% increased Limitless cursed technique damage
+		{0}% increased cursed technique damage
 		{1}% increased damage
-		{2}% increased RCT output
+		{2}% increased RCT efficiency
 		{3}% increased movement speed
 		[c/6D2673:Dedicated to ehann]
 		'''
 }
+
+JetstreamMask: {
+	DisplayName: Jetstream Mask
+	Tooltip:
+		'''
+		{0}% increased melee damage
+		{1}% increased melee crit chance
+		[c/571a16:"I've even forgotten my name!"]
+		[c/6D2673:Dedicated to KaiTheExaminer]
+		'''
+}
+
+JetstreamChestplate: {
+	DisplayName: Jetstream Chestplate
+	Tooltip:
+		'''
+		+{0} max max health
+		{1}% increased melee damage
+		{2}% increased melee speed
+		[c/571a16:"The truth goes unspoken..."]
+		[c/6D2673:Dedicated to KaiTheExaminer]
+
+		'''
+}
+
+JetstreamLeggings: {
+	DisplayName: Jetstream Leggings
+	Tooltip:
+		'''
+		{0}% increased melee damage
+		{1}% increased movement speed
+		[c/571a16:"Memories broken..."]
+		[c/6D2673:Dedicated to KaiTheExaminer]
+		'''
+}
+
+JetstreamSetBonus:
+	'''
+	{0}% increased melee damage
+	{1}% increased true melee damage
+	{2}% increased Murasama damage
+	{3}% increased Mursama speed
+	True melee strikes heals you for {4} health
+	After {5} true melee strikes, you gain the Bloodshed buff. {6} second cooldown
+	Enemies have a {7}% chance to drop a heart on hit
+	'''

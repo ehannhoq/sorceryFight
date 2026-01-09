@@ -27,14 +27,7 @@ namespace sorceryFight.Content.Items.Consumables
         {
             if (player.whoAmI == Main.myPlayer)
             {
-                SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
-                
-                if (sf.explosiveCursedEnergy || sf.sharpCursedEnergy || sf.overflowingEnergy)
-                {
-                    SoundEngine.PlaySound(SoundID.MenuClose);
-                    return false;
-                }
-                
+                SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();                
                 sf.RollForCursedEnergyTraits(true);
             }
             return true;

@@ -19,6 +19,7 @@ GeneticReroll: {
 		Has a chance for granting you special player attributes.
 		Six Eyes: 10%
 		Unique Body Structure: 15%.
+		Blessed by the Sparks of Black: 10%.
 		Can grant more than one attribute.
 		'''
 }
@@ -153,4 +154,51 @@ SuspiciouslyWellPerservedEye: {
 		Doesn't seem to be of this universe.
 		[c/6D2673:Dedicated to ehann]
 		'''
+}
+
+CursedEnergyDrinks: {
+	Soda: {
+		DisplayName: Cursed Energy Soda
+		Description:
+			'''
+			Restores {0} cursed energy.
+			Not consumable when you have your domain expanded.
+			'''
+	}
+
+	Tall: {
+		DisplayName: Tall Cursed Energy Soda
+		Description:
+			'''
+			Restores {0} cursed energy.
+			Not consumable when you have your domain expanded.
+			'''
+	}
+
+	Mug: {
+		DisplayName: Mug of Cursed Energy
+		Description:
+			'''
+			Restores {0} cursed energy.
+			Not consumable when you have your domain expanded.
+			'''
+	}
+
+	TwoLiter: {
+		DisplayName: 2 Liter Bottle of Cursed Energy
+		Description:
+			'''
+			Restores {0} cursed energy.
+			Not consumable when you have your domain expanded.
+			'''
+	}
+
+	FiveGallon: {
+		DisplayName: 5 Gallon Jug of Cursed Energy
+		Description:
+			'''
+			Restores {0} cursed energy.
+			Not consumable when you have your domain expanded.
+			'''
+	}
 }

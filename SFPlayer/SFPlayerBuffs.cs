@@ -29,19 +29,12 @@ namespace sorceryFight.SFPlayer
         {
             if (innateTechnique == null) return;
 
-
-            if (cursedEnergy < 1)
-            {
-                cursedEnergy = 1;
-                AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
-            }
-
             if (infinity || hollowWickerBasket)
                 Player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>().adrenaline = 0;
 
             foreach (PassiveTechnique passiveTechnique in innateTechnique.PassiveTechniques)
             {
-                if (cursedEnergy <= 1 || Player.HasBuff<BurntTechnique>())
+                if (Player.HasBuff<BurntTechnique>())
                 {
                     passiveTechnique.isActive = false;
                 }

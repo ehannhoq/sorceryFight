@@ -11,7 +11,8 @@ namespace sorceryFight
         public static ModKeybind DomainExpansion { get; private set;}
         public static ModKeybind UseRCT { get; private set; }
         // public static ModKeybind CursedFist { get; private set; }
-        public static ModKeybind AttemptBlackFlash { get; private set;}
+        public static ModKeybind AttemptBlackFlash { get; private set; }
+        public static ModKeybind ConsumeCursedEnergyPotion { get; private set; }
 
         public override void Load()
         {
@@ -23,6 +24,7 @@ namespace sorceryFight
             UseRCT = KeybindLoader.RegisterKeybind(Mod, "UseRCT", "X");
             // CursedFist = KeybindLoader.RegisterKeybind(Mod, "CursedFist", "C");
             AttemptBlackFlash = KeybindLoader.RegisterKeybind(Mod, "AttemptBlackFlash", "Mouse3");
+            ConsumeCursedEnergyPotion = KeybindLoader.RegisterKeybind(Mod, "ConsumeCursedEnergyPotion", "J");
         }
 
         public override void Unload()
@@ -35,6 +37,7 @@ namespace sorceryFight
             UseRCT = null;
             // CursedFist = null;
             AttemptBlackFlash = null;
+            ConsumeCursedEnergyPotion = null;
         }
     }
 }

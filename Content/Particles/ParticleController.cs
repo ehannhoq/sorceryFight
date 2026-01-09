@@ -64,6 +64,8 @@ namespace sorceryFight.Content.Particles.UIParticles
 
         public override void PostUpdateNPCs()
         {
+            if (Main.GameUpdateCount % 3 == 1) return;
+
             for (int i = 0; i < particles.Length; i++)
             {
                 if (particles[i] == null) continue;

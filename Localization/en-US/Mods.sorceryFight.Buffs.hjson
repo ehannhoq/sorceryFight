@@ -6,7 +6,11 @@ PlayerAttributes: {
 
 	ChallengersEye: {
 		DisplayName: The Last Challenger's Eye
-		Description: Reduces the cost of Cursed Techniques by {0}%.
+		Description:
+			'''
+			Reduces the cost of Cursed Techniques by {0}%.
+			[c/6D2673:Dedicated to ehann]
+			'''
 	}
 
 	UniqueBodyStructure: {
@@ -21,6 +25,15 @@ PlayerAttributes: {
 	SukunasVessel: {
 		DisplayName: Vessel
 		Description: You've become a vessel for a powerful and ancient soul.
+	}
+
+	BlessedByBlackSparksBuff: {
+		DisplayName: Blessed by the Sparks of Black
+		Description:
+			'''
+			+{0}x increased Black Flash damage.
+			{1} increased Black Flash landing frame.
+			'''
 	}
 }
 
@@ -178,4 +191,24 @@ KingOfCursesBuff: {
 BrainDamage: {
 	DisplayName: Brain Damage
 	Description: You are not able to expand your domain!
+}
+
+CursedEnergySickness: {
+	DisplayName: Cursed Energy Sickness
+	Description: Cursed Technique damage reduced by {0}%.
+}
+
+Bloodshed: {
+	DisplayName: Bloodshed
+	Description:
+		'''
+		{0}% increased true melee damage
+		{1}% increased movement speed
+		+{2} defense
+		'''
+}
+
+BloodshedCooldown: {
+	DisplayName: Bloodshed Cooldown
+	Description: ""
 }

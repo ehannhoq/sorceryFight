@@ -2,11 +2,52 @@
     "LastChallenger": {
         "Unworthy": {
             "Speaker": "The Last Challenger",
-            "Text": "...",
+            "Text": "You are not worthy yet, young sorcerer.",
+            "Replies": [
+                {
+                    "Text": "When will I know when I'm worthy?",
+                    "Response": "LastChallenger.WhenWorthy"
+                },
+                {
+                    "Text": "What happened to you?",
+                    "Response":"LastChallenger.WhatHappened"
+                },
+                {
+                    "Text": "Who are you?",
+                    "Response": "LastChallenger.WhoAreYou"
+                }
+            ],
+            "Action": null
+        },
+
+        "WhoAreYou": {
+            "Speaker": "The Last Challenger",
+            "Text": "I'm the last person to ever stand head to head to Yharim, the Godseeker himself.",
+            "Replies": [
+                {
+                    "Text": "What happened to you?",
+                    "Response": "LastChallenger.WhatHappened"
+                }
+            ],
+            "Action": null
+        },
+
+        "WhatHappened": {
+            "Speaker": "The Last Challenger",
+            "Text": "I was sealed in this eternal prison over 20 years ago by both Yharim and the Supreme Witch.\nWhile my power lay largely constricted, I am still able to communicate to the outside world.\nTo you, young sorcerer.",
             "Replies": [],
             "Action": null
         },
 
+        "WhenWorthy": {
+            "Speaker": "The Last Challenger",
+            "Text": "You will know when you are worthy, young sorcerer.",
+            "Replies": [],
+            "Action": null
+        },
+
+
+        
         "Worthy": {
             "Speaker": "The Last Challenger",
             "Text": "I've been watching you throughout your journey. At first I thought you were just another unfortunate soul brough into this forsakened world.\nBut you've proven to be... much more... extraordinary.\nI saw glimpses of myself in your battles, and such want to give you a special gift.\nTake these, and do what I could not.\nDefeat the Supreme Witch.\nAnd then all that stands between you and Him is your own strength.",

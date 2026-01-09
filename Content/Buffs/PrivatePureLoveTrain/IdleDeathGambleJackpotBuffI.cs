@@ -13,8 +13,8 @@ namespace sorceryFight.Content.Buffs.PrivatePureLoveTrain
         {
             SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
 
-            sfPlayer.maxCursedEnergyFromOtherSources += 50 * sfPlayer.bossesDefeated.Count;
-            sfPlayer.cursedEnergyRegenFromOtherSources += 13 * sfPlayer.bossesDefeated.Count;
+            sfPlayer.maxCursedEnergyFromOtherSources += 50 * sfPlayer.numberBossesDefeated;
+            sfPlayer.cursedEnergyRegenFromOtherSources += 13 * sfPlayer.numberBossesDefeated;
 
             if (player.buffTime[buffIndex] <= 1)
             {

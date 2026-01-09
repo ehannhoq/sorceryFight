@@ -1,10 +1,6 @@
 SukunasSkull: {
 	DisplayName: Sukunas's Skull
-	Tooltip:
-		'''
-		Material
-		The very skull of the once incarnate King of Curses, [C/8A0606:Ryomen Sukuna.]
-		'''
+	Tooltip: The very skull of the once incarnate King of Curses, [C/8A0606:Ryomen Sukuna.]
 }
 
 CursedFragment: {

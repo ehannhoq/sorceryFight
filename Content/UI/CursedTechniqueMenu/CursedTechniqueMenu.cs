@@ -88,8 +88,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             Texture2D lockedTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/SpecialLockedIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
             string masteryIconHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.Info")}" +
-                             $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.BossesDefeated")} {sfPlayer.bossesDefeated.Count}" +
-                             $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.CostReduction")} {sfPlayer.bossesDefeated.Count}%";
+                             $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.BossesDefeated")} {sfPlayer.numberBossesDefeated}" +
+                             $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.CostReduction")} {sfPlayer.numberBossesDefeated}%";
             SpecialUIElement masteryIcon = new SpecialUIElement(masteryIconTexture, masteryIconHoverText);
             masteryIcon.Left.Set(borderTexture.Width - masteryIconTexture.Width - 28f, 0f);
             masteryIcon.Top.Set(closeButtonTexture.Height + 34f, 0f);

@@ -3,6 +3,7 @@ using System.Linq;
 using CalamityMod.NPCs.Providence;
 using CalamityMod.NPCs.SupremeCalamitas;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -86,7 +87,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
 
             // Main.NewText($"{npc.FullName}: Used Domain {domainCounter} times, " + (domainCooldown ? "on cooldown" : "not on cooldown") + $" Can expand domain? {npc.GetDomain().ExpandCondition(npc)}");
 
-            bool canExpand =  !DomainExpansionController.ActiveDomains.Any(domain => domain is NPCDomainExpansion && domain.owner == npc.whoAmI) && domainController.domainCounter < npc.GetBrainRefreshCount();
+            bool canExpand = !DomainExpansionController.ActiveDomains.Any(domain => domain is NPCDomainExpansion && domain.owner == npc.whoAmI) && domainController.domainCounter < npc.GetBrainRefreshCount();
 
             bool conditionalExpanding = npc.GetDomain().ExpandCondition(npc) && canExpand;
             bool playerExpanding = playerCastedDomain && canExpand;
@@ -109,17 +110,10 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
                 if (domainController.domainTimer == 1)
                 {
                     CameraController.SetCameraPosition(domainController.npcCastingPosition, 260);
-                    int index = CombatText.NewText(npc.getRect(), Color.White, "Domain Expansion:");
-                    Main.combatText[index].lifeTime = 90;
+                    npc.immortal = true;
                 }
 
-                if (domainController.domainTimer == 100)
-                {
-                    int index = CombatText.NewText(npc.getRect(), Color.White, npc.GetDomain().DisplayName);
-                    Main.combatText[index].lifeTime = 90;
-                }
-
-                if (domainController.domainTimer == 200)
+                if (domainController.domainTimer == 120)
                 {
                     DomainExpansionController.ExpandDomain(npc.whoAmI, npc.GetDomain());
                     playerCastedDomain = false;
@@ -127,11 +121,12 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
                     domainController.domainCounter++;
                 }
 
-                if (domainController.domainTimer == 260)
+                if (domainController.domainTimer == 180)
                 {
                     domainController.castingDomain = false;
                     domainController.npcCastingPosition = Vector2.Zero;
                     domainController.domainTimer = 0;
+                    npc.immortal = false;
                 }
 
                 return false;
@@ -139,6 +134,35 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
 
 
             return true;
+        }
+
+        public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            base.PostDraw(npc, spriteBatch, screenPos, drawColor);
+            NPCDomainController domainController = npc.GetGlobalNPC<NPCDomainController>();
+
+            Dictionary<int, string> bossNameMap = new()
+            {
+                { NPCID.CultistBoss, "LunaticCultist" },
+                { ModContent.NPCType<SupremeCalamitas>(), "SupremeCalamitas" },
+            };
+
+            if (bossNameMap.TryGetValue(npc.type, out string npcName))
+            {
+                if (domainController.castingDomain)
+                {
+                    if (domainController.domainTimer < 120)
+                    {
+
+                        Texture2D frame = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IntroCutscenes/{npcName}/{domainController.domainTimer}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                        Rectangle src = new Rectangle(0, 0, frame.Width, frame.Height);
+
+                        spriteBatch.Draw(frame, npc.Center - Main.screenPosition, src, Color.White, 0f, src.Size() * 0.5f, 0.75f, SpriteEffects.None, 0f);
+                    }
+
+                }
+            }
+
         }
 
         public override void Unload()

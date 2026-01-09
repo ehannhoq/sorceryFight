@@ -26,6 +26,11 @@ namespace sorceryFight.Content.Buffs.CursedEnergyTraits
 
         public override bool RightClick(int buffIndex)
         {
+            if (SorceryFight.IsDevMode())
+            {
+                Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>().sharpCursedEnergy = false;
+                return true;
+            }
             return false;
         }
     }

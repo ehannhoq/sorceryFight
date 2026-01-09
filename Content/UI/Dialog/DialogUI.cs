@@ -120,7 +120,7 @@ namespace sorceryFight.Content.UI.Dialog
                             replyText.onClick += () => NextDialog(replyText.dialogKey);
 
                             float left = (Main.screenWidth / Main.UIScale / 2) - (background.texture.Width / 2) + 20;
-                            float top = (Main.screenHeight / Main.UIScale / 2) + (background.texture.Height / 2) - 10 - (20 * i);
+                            float top = (Main.screenHeight / Main.UIScale / 2) + (background.texture.Height / 2) - 10 - (30 * i);
 
                             replyText.TextOriginX = 0f;
                             replyText.TextOriginY = 0f;

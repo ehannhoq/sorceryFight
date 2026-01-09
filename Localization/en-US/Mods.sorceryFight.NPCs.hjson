@@ -1,0 +1,23 @@
+FingerBearer.DisplayName: Finger Bearer
+
+Gakuganji: {
+	DisplayName: Cursed Items Handler
+
+	TownNPCMood: {
+		Content: Everything is in order. The world moves with the rhythm it should.
+		NoHome: Without a place to anchor oneself, even the sharpest mind can falter.
+		FarFromHome: Distance tests patience, one must move deliberately, or risk losing focus.
+		LoveSpace: Space to maneuver, freedom to strike and plan, this is a battlefield’s blessing.
+		DislikeCrowded: So many in one place, each step requires care, each thought must fight for attention.
+		HateCrowded: Chaos reigns here, the lack of order disrupts every strategy I might employ.
+		LikeNPC_Princess: "{NPCName} carries herself with discipline. A presence that commands respect without force."
+		Princess_LovesNPC: "{NPCName} carries herself with discipline. A presence that commands respect without force."
+		LoveBiome: Every corner in {BiomeName} presents an opportunity to observe, adapt, and master. I love it.
+		LikeBiome: I am inspired by {BiomeName}, the landscape encourages careful strategy and rewards those who act with precision.
+		DislikeBiome: I hate {BiomeName}. It bends no rules and respects no order, it is exhausting to navigate.
+		LoveNPC: "{NPCName} understands duty and consequence, a rare mind capable of true control."
+		LikeNPC: "{NPCName} fulfills their role well, their actions are measured, reliable, and precise."
+		DislikeNPC: "{NPCName} disregards order, every action a potential risk to those around them."
+		HateNPC: "{NPCName}, chaotic, insufferable, and reckless; every bit as trying as Gojo. One misstep from them could undo all order."
+	}
+}

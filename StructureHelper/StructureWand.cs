@@ -61,7 +61,7 @@ namespace sorceryFight.StructureHelper
         public override bool AltFunctionUse(Player player)
         {
             Point point = Main.MouseWorld.ToTileCoordinates();
-            StructureHandler.GenerateStructure(StructureHandler.selectedStructure, point);
+            StructureHandler.GenerateStructure(StructureHandler.GetStructure(StructureHandler.selectedStructure), point);
             return false;
         }
     }
