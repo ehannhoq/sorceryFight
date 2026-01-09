@@ -203,7 +203,6 @@ CargoCrate: {
 		'''
 		Launches a cargo crate filled with
 		sharp cursed energy.
-		25% chance to stun the enemy.
 		'''
 	LockedDescription: Defeat the crazed cultist leader at the entrance of the dungeon.
 }
@@ -212,8 +211,7 @@ RailroadSign: {
 	DisplayName: Railroad Sign
 	Description:
 		'''
-		Swing a railroad sign which
-		breaks into pieces afterward.
+		Swing a railroad sign.
 		'''
 	LockedDescription:
 		'''
