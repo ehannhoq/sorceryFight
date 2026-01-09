@@ -1,4 +1,5 @@
 using System;
+using CalamityMod;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Graphics;
@@ -8,172 +9,101 @@ namespace sorceryFight
 {
     public class CameraController : ModSystem
     {
-        private static Vector2 originalCameraPosition;
-        private static Vector2 targetCameraPosition;
-        private static bool cameraPositionActive;
-        private static Vector2 originalCameraZoom;
-        private static Vector2 targetCameraZoom;
-        private static bool cameraZoomActive;
+        private static Vector2 targetScreenPosition;
+        private static float screenPositionInterlopant;
 
-        private static int shakeTimeLeft = 0;
+        private static float zoomMultiplier;
 
-        public static void SetCameraPosition(Vector2 position, int duration, float lerp = 0.5f)
+        public static void SetCameraPosition(Vector2 worldPos, int duration = 0, float lerp = 0.5f)
         {
             if (Main.dedServ) return;
-            
-            if (!cameraPositionActive)
-            {
-                cameraPositionActive = true;
-                originalCameraPosition = Main.screenPosition;
-                targetCameraPosition = originalCameraPosition;
-            }
 
-            Action lerpCamera = () =>
-            {
-                targetCameraPosition = Vector2.Lerp(
-                    targetCameraPosition,
-                    position - new Vector2(Main.screenWidth / 2, Main.screenHeight / 2),
-                    lerp
-                );
-            };
+            targetScreenPosition = worldPos;
+            screenPositionInterlopant = lerp;
 
-            TaskScheduler.Instance.AddContinuousTask(lerpCamera, duration);
-            TaskScheduler.Instance.AddDelayedTask(ResetCameraPosition, duration + 1);
+            if (duration > 0)
+                TaskScheduler.Instance.AddDelayedTask(ResetCameraPosition, duration);
         }
 
-        public static void SetCameraPosition(Vector2 position, float lerp = 0.5f)
+        public static void SetCameraZoom(float zoomMult, int duration = 0, float lerp = 0.5f)
         {
             if (Main.dedServ) return;
-            
-            if (!cameraPositionActive)
-            {
-                cameraPositionActive = true;
-                originalCameraPosition = Main.screenPosition;
-                targetCameraPosition = originalCameraPosition;
-            }
 
-            targetCameraPosition = Vector2.Lerp(
-                targetCameraPosition,
-                position - new Vector2(Main.screenWidth / 2, Main.screenHeight / 2),
+            zoomMultiplier = MathHelper.Lerp(
+                zoomMultiplier,
+                zoomMult,
                 lerp
             );
+
+            if (duration > 0)
+                TaskScheduler.Instance.AddDelayedTask(ResetCameraZoom, duration);
         }
 
-        public static void SetCameraZoom(Vector2 zoom, int duration, float lerp = 0.5f)
+        public static void CameraShake(int duration, float xShake, float yShake)
         {
-            if (Main.dedServ) return;
-
-            if (!cameraZoomActive)
-            {
-                cameraZoomActive = true;
-                originalCameraZoom = Main.BackgroundViewMatrix.Zoom;
-                targetCameraZoom = originalCameraZoom;
-            }
-
-            Action lerpZoom = () =>
-            {
-                targetCameraZoom = Vector2.Lerp(
-                    targetCameraZoom,
-                    zoom,
-                    lerp
-                );
-            };
-
-            TaskScheduler.Instance.AddContinuousTask(lerpZoom, duration);
-            TaskScheduler.Instance.AddDelayedTask(ResetCameraZoom, duration + 1);
-        }
-
-        public static void SetCameraZoom(Vector2 zoom, float lerp = 0.5f)
-        {
-            if (Main.dedServ) return;
-
-            if (!cameraZoomActive)
-            {
-                cameraZoomActive = true;
-                originalCameraZoom = Main.BackgroundViewMatrix.Zoom;
-                targetCameraZoom = originalCameraZoom;
-            }
-
-            targetCameraZoom = Vector2.Lerp(
-                targetCameraZoom,
-                zoom,
-                lerp
-            );
-        }
-
-        public static void CameraShake(int duration, float xShake = 0, float yShake = 0)
-        {
-            if (Main.dedServ) return;
-            
-            if (!cameraPositionActive)
-            {
-                cameraPositionActive = true;
-                originalCameraPosition = Main.screenPosition;
-                targetCameraPosition = originalCameraPosition;
-            }
-
-            targetCameraPosition += new Vector2(Main.rand.NextFloat(-xShake, xShake), Main.rand.NextFloat(-yShake, yShake));
+            screenPositionInterlopant = 0.8f;
 
             TaskScheduler.Instance.AddContinuousTask(() =>
             {
-                Vector2 playerCameraPosition = Main.LocalPlayer.Center - new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
+                float x = xShake;
+                float y = yShake;
 
-                float xVariation = xShake;
-                float yVariation = yShake;
-                ref int timeLeft = ref shakeTimeLeft;
-
-                float progress = (float)timeLeft / duration;
-                float currentShakeX = MathHelper.Lerp(xVariation, 0, progress);
-                float currentShakeY = MathHelper.Lerp(yVariation, 0, progress);
-
-                targetCameraPosition = playerCameraPosition + new Vector2(
-                    Main.rand.NextFloat(-currentShakeX, currentShakeX),
-                    Main.rand.NextFloat(-currentShakeY, currentShakeY)
-                );
-
-                timeLeft++;
+                targetScreenPosition = Main.LocalPlayer.Center + Main.rand.NextVector2CircularEdge(xShake, yShake);
 
             }, duration);
 
-            TaskScheduler.Instance.AddDelayedTask(() =>
-            {
-                ResetCameraPosition();
-                shakeTimeLeft = 0;
-            }, duration + 1);
+            TaskScheduler.Instance.AddDelayedTask(ResetCameraPosition, duration + 1);
         }
+
 
         public static void ResetCameraPosition()
         {
             if (Main.dedServ) return;
 
-            cameraPositionActive = false;
-            Main.screenPosition = originalCameraPosition;
+            TaskScheduler.Instance.AddContinuousTask(() =>
+            {
+                targetScreenPosition = Vector2.Lerp(targetScreenPosition, Main.LocalPlayer.Center, screenPositionInterlopant);
+            }, 60);
+
+            TaskScheduler.Instance.AddDelayedTask(() =>
+            {
+                targetScreenPosition = Main.LocalPlayer.Center;
+                screenPositionInterlopant = 0f;
+            }, 61);
         }
 
         public static void ResetCameraZoom()
         {
             if (Main.dedServ) return;
 
-            cameraZoomActive = false;
-            Main.BackgroundViewMatrix.Zoom = originalCameraZoom;
-        }
+            TaskScheduler.Instance.AddContinuousTask(() =>
+            {
+                zoomMultiplier = MathHelper.Lerp(zoomMultiplier, 0f, 0.5f);
+            }, 60);
 
-        public static void ResetCamera()
-        {
-            ResetCameraPosition();
-            ResetCameraZoom();
+            TaskScheduler.Instance.AddDelayedTask(() =>
+            {
+                zoomMultiplier = 0f;
+            }, 61);
         }
 
         public override void ModifyScreenPosition()
         {
-            if (cameraPositionActive)
-                Main.screenPosition = targetCameraPosition;
+            if (Main.LocalPlayer.dead || !Main.LocalPlayer.active)
+            {
+                ResetCameraPosition();
+                ResetCameraZoom();
+                return;
+            }
+
+            Vector2 idealScreenPosition = targetScreenPosition - new Vector2(Main.screenWidth, Main.screenHeight) * 0.5f;
+            Main.screenPosition = Vector2.Lerp(Main.screenPosition, idealScreenPosition, screenPositionInterlopant);
         }
 
         public override void ModifyTransformMatrix(ref SpriteViewMatrix Transform)
         {
-            if (cameraZoomActive)
-                Transform.Zoom = targetCameraZoom;
+            zoomMultiplier = Math.Clamp(zoomMultiplier, -0.9f, 5f);
+            Transform.Zoom *= 1 + zoomMultiplier;
         }
     }
 }

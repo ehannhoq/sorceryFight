@@ -308,10 +308,8 @@ namespace sorceryFight.SFPlayer
                 if (innateTechnique.DomainExpansion.Unlocked(this))
                 {
                     float zoom = 1.3f * (MathF.Log10(domainTimer + 1f) + 0.22f);
-                    Vector2 zoomVec = new Vector2(zoom, zoom);
-                    zoomVec = Vector2.Clamp(zoomVec, Main.BackgroundViewMatrix.Zoom, Vector2.One * 2);
 
-                    CameraController.SetCameraZoom(zoomVec);
+                    CameraController.SetCameraZoom(zoom);
                 }
             }
             else if (domainTimer != 0)
