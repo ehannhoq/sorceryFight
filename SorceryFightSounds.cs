@@ -54,6 +54,11 @@ namespace sorceryFight
         public static SoundStyle OblivionSwordImpact;
         public static SoundStyle OblivionSwordBigImpact;
 
+        public static SoundStyle ChakiraResonantChargeUp;
+        public static SoundStyle ChakiraResonantProjectileAmbiance;
+        public static SoundStyle ChakiraResonantProjectileFire;
+
+
         public static SoundStyle InvertedSpearOfHeavenSpin;
         public static SoundStyle InvertedSpearOfHeavenCollide;
         public static SoundStyle InvertedSpearOfHeavenSlash;
@@ -105,6 +110,10 @@ namespace sorceryFight
             OblivionSwordBigSlash = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordBigSlash") { Volume = 1f, PitchVariance = 0.75f };
             OblivionSwordImpact = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordImpact") { Volume = 1f, PitchVariance = 0.75f };
             OblivionSwordBigImpact = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordBigImpact") { Volume = 1f, PitchVariance = 0.75f };
+
+            ChakiraResonantChargeUp = new("sorceryFight/Content/Sounds/Items/ChakiraResonant/ChakiraResonantChargeUp") { Volume = 1f, PitchVariance = 0.15f };
+            ChakiraResonantProjectileAmbiance = new("sorceryFight/Content/Sounds/Projectiles/ChakiraResonantProjectileAmbiance") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
+            ChakiraResonantProjectileFire = new("sorceryFight/Content/Sounds/Projectiles/ChakiraResonantProjectileFire") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
 
             InvertedSpearOfHeavenSpin = new("sorceryFight/Content/Sounds/Items/InvertedSpearOfHeaven/InvertedSpearOfHeavenSpin") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 0.25f };
             InvertedSpearOfHeavenCollide = new("sorceryFight/Content/Sounds/Items/InvertedSpearOfHeaven/InvertedSpearOfHeavenCollide") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 0.5f };

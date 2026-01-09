@@ -209,10 +209,7 @@ CargoCrate: {
 
 RailroadSign: {
 	DisplayName: Railroad Sign
-	Description:
-		'''
-		Swing a railroad sign.
-		'''
+	Description: Swing a railroad sign.
 	LockedDescription:
 		'''
 		Defeat the Goddess who slew a dragon and
