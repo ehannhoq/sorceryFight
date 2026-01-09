@@ -29,7 +29,7 @@ namespace sorceryFight.Content.Items.Consumables
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+                SorceryFightPlayer sfPlayer = player.SorceryFight();
                 return sfPlayer.cursedEnergy < sfPlayer.maxCursedEnergy && !sfPlayer.HasActiveDomain;
             }
             return false;
@@ -39,7 +39,7 @@ namespace sorceryFight.Content.Items.Consumables
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                player.GetModPlayer<SorceryFightPlayer>().cursedEnergy += CursedEnergy;
+                player.SorceryFight().cursedEnergy += CursedEnergy;
 
                 if (player.FindBuffIndex(ModContent.BuffType<CursedEnergySickness>()) is int i && i != -1)
                 {

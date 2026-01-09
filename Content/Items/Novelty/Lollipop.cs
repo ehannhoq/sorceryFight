@@ -27,7 +27,7 @@ namespace sorceryFight.Content.Items.Novelty
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+                SorceryFightPlayer sfPlayer = player.SorceryFight();
                 return sfPlayer.cursedEnergy > 0;
             }
             return false;
@@ -37,7 +37,7 @@ namespace sorceryFight.Content.Items.Novelty
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                player.GetModPlayer<SorceryFightPlayer>().cursedEnergy -= 100;
+                player.SorceryFight().cursedEnergy -= 100;
             }
 
             return true;

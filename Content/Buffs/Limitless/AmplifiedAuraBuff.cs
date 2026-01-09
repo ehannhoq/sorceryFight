@@ -44,12 +44,12 @@ namespace sorceryFight.Content.Buffs.Limitless
 
             if (player.HasBuff<MaximumAmplifiedAuraBuff>())
             {
-                player.GetModPlayer<SorceryFightPlayer>().innateTechnique.PassiveTechniques[2].isActive = false;
+                player.SorceryFight().innateTechnique.PassiveTechniques[2].isActive = false;
             }
 
             if (player.HasBuff<FallingBlossomEmotionBuff>())
             {
-                player.GetModPlayer<SorceryFightPlayer>().innateTechnique.PassiveTechniques[3].isActive = false;
+                player.SorceryFight().innateTechnique.PassiveTechniques[3].isActive = false;
             }
 
             if (auraIndices == null)
@@ -63,7 +63,7 @@ namespace sorceryFight.Content.Buffs.Limitless
                 auraIndices[player.whoAmI] = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<AmplifiedAuraProjectile>(), 0, 0, player.whoAmI);
             }
 
-            player.GetModPlayer<SorceryFightPlayer>().disableCurseTechniques = true;
+            player.SorceryFight().disableCurseTechniques = true;
         }
 
         public override void Remove(Player player)
@@ -79,7 +79,7 @@ namespace sorceryFight.Content.Buffs.Limitless
 
             CostPerSecond = 10f; // Base
 
-            SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sf = player.SorceryFight();
             float newCPS = sf.maxCursedEnergy / 100 + CostPerSecond;
 
             if (newCPS > CostPerSecond)
@@ -92,7 +92,7 @@ namespace sorceryFight.Content.Buffs.Limitless
 
             CostPerSecond = 10f; // Base
 
-            SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sf = player.SorceryFight();
             float newCPS = sf.maxCursedEnergy / 100 + CostPerSecond;
 
             if (newCPS > CostPerSecond)

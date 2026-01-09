@@ -79,7 +79,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {
             Projectile.ai[0] += 1;
             Player player = Main.player[Projectile.owner];
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
 
             float totalCastTime = sfPlayer.cursedOfuda ? 360f * CursedOfuda.cursedTechniqueCastTimeDecrease : 360f;
             float textTime = sfPlayer.cursedOfuda ? 90f * CursedOfuda.cursedTechniqueCastTimeDecrease : 90f;
@@ -107,7 +107,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 if (!animating)
                 {
                     animating = true;
-                    player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = true;
+                    player.SorceryFight().disableRegenFromProjectiles = true;
                 }
 
                 animScale = 0f;
@@ -204,14 +204,14 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 animating = false;
                 animScale = 2.5f;
-                Projectile.damage = (int)CalculateTrueDamage(player.GetModPlayer<SorceryFightPlayer>());
+                Projectile.damage = (int)CalculateTrueDamage(player.SorceryFight());
                 Projectile.Hitbox = hitbox;
                 Projectile.timeLeft = (int)LifeTime;
                 Main.projectile[(int)Projectile.ai[1]].Kill();
                 Main.projectile[(int)Projectile.ai[2]].Kill();
                 Projectile.Center = player.Center + new Vector2(0f, -40f);
                 SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleSnap, Projectile.Center);
-                player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
+                player.SorceryFight().disableRegenFromProjectiles = false;
                 int index = CombatText.NewText(player.getRect(), textColor, "Hollow Technique: 200% Hollow Purple.");
                 Main.combatText[index].lifeTime = 180;
 
@@ -221,7 +221,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 if (Main.myPlayer == Projectile.owner)
                 {
                     Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
-                    player.GetModPlayer<SorceryFightPlayer>().AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), 5);
+                    player.SorceryFight().AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), 5);
                 }
             }
         }

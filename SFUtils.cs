@@ -11,6 +11,7 @@ using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Buffs.Limitless;
 using sorceryFight.Content.Buffs.Shrine;
 using sorceryFight.Content.DomainExpansions;
+using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -280,6 +281,11 @@ public static class SFUtils
     public static bool CantUseSword(this Player player, Projectile slash, bool needsToHold = true)
     {
         return player.CantUseHoldout(needsToHold) || player.HeldItem.shoot != slash.type;
+    }
+
+    public static SorceryFightPlayer SorceryFight(this Player player)
+    {
+        return player.SorceryFight();
     }
 
 

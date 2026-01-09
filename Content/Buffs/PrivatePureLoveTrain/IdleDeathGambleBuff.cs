@@ -13,7 +13,7 @@ namespace sorceryFight.Content.Buffs.PrivatePureLoveTrain
     {
         public override void Update(Player player, ref int buffIndex)
         {
-            int multiplier = player.GetModPlayer<SorceryFightPlayer>().idleDeathGambleBuffStrength;
+            int multiplier = player.SorceryFight().idleDeathGambleBuffStrength;
 
             player.moveSpeed *= 1 + multiplier / 10f; 
             player.GetDamage(DamageClass.Melee) *= 1 + multiplier / 20f;
@@ -26,7 +26,7 @@ namespace sorceryFight.Content.Buffs.PrivatePureLoveTrain
 
             if (player.buffTime[buffIndex] <= 1)
             {
-                player.GetModPlayer<SorceryFightPlayer>().idleDeathGambleBuffStrength = 0;
+                player.SorceryFight().idleDeathGambleBuffStrength = 0;
             }
         }
     }

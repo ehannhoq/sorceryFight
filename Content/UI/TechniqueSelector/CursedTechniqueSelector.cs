@@ -47,7 +47,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             if (Main.dedServ) return;
 
             icons = new List<TechniqueSelectorButton>();
-            sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+            sfPlayer = Main.LocalPlayer.SorceryFight();
             isDragging = false;
 
             selectorTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/TechniqueSelector/Selector", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;

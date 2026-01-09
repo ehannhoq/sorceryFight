@@ -121,7 +121,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                     }
                 }
                 justSpawned = 1f;
-                Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = true;
+                Main.player[Projectile.owner].SorceryFight().disableRegenFromProjectiles = true;
                 SoundEngine.PlaySound(SorceryFightSounds.PiercingBlood, Projectile.Center);
             }
 
@@ -131,7 +131,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             if (Projectile.timeLeft <= 10)
             {
                 beamHeight -= 0.2f;
-                Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
+                Main.player[Projectile.owner].SorceryFight().disableRegenFromProjectiles = false;
             }
 
             if (Main.myPlayer == Projectile.owner)

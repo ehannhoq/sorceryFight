@@ -27,7 +27,7 @@ namespace sorceryFight.Content.Items.Consumables
         {
             if (player.whoAmI == Main.myPlayer)
             {
-                SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
+                SorceryFightPlayer sf = player.SorceryFight();
                 sf.RollForPlayerAttributes(true);
             }
             return true;

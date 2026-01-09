@@ -25,7 +25,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
         {
             if (Main.dedServ) return;
 
-            SorceryFightPlayer player = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer player = Main.LocalPlayer.SorceryFight();
             techniqueIcons = new List<TechniqueIcon>();
 
             UIImage background = new UIImage(backgroundTexture);

@@ -20,14 +20,14 @@ namespace sorceryFight.Content.Buffs.PlayerAttributes
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<SorceryFightPlayer>().ctCostReduction += cursedTechniqueCostReduciton;
+            player.SorceryFight().ctCostReduction += cursedTechniqueCostReduciton;
         }
 
         public override bool RightClick(int buffIndex)
         {
             if (SorceryFight.IsDevMode())
             {
-                Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>().sixEyes = false;
+                Main.LocalPlayer.SorceryFight().sixEyes = false;
                 return true;
             }
             return false;

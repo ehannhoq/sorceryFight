@@ -109,7 +109,7 @@ namespace sorceryFight.Content.CursedTechniques
         {
             if (Projectile.owner == Main.myPlayer)
             {
-                Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
+                Main.player[Projectile.owner].SorceryFight().disableRegenFromProjectiles = false;
             }
             base.OnKill(timeLeft);
         }

@@ -30,7 +30,7 @@ namespace sorceryFight.Content.Items.Consumables
         {
             if (player.whoAmI == Main.myPlayer)
             {
-                SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
+                SorceryFightPlayer sf = player.SorceryFight();
 
                 if (!sf.innateTechnique.Name.Equals("Shrine") && !sf.innateTechnique.Name.Equals("Vessel")) return false;
 

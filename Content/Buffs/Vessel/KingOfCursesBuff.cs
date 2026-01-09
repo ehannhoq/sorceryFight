@@ -18,7 +18,7 @@ namespace sorceryFight.Content.Buffs.Vessel
 
         public override void Update(Player player, ref int buffIndex)
         {
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
 
             if (sfPlayer.innateTechnique.Name.Equals("Vessel"))
             {

@@ -114,7 +114,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
 
                     if (Projectile.timeLeft < 170)
                     {
-                        player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
+                        player.SorceryFight().disableRegenFromProjectiles = false;
                         Projectile.rotation = Projectile.velocity.ToRotation();
                         if (Projectile.timeLeft % 10 == 0)
                         {
@@ -129,7 +129,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                     else
                     {
                         Projectile.Center = player.Center + direction * 80f;
-                        player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = true;
+                        player.SorceryFight().disableRegenFromProjectiles = true;
                         Projectile.rotation = direction.ToRotation();
                     }
 
@@ -170,7 +170,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             if (Projectile.ai[1] == 0)
             {
                 SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
-                player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
+                player.SorceryFight().disableRegenFromProjectiles = false;
                 Projectile.NewProjectile(null, Projectile.Center, Vector2.Zero, this.Type, 0, 0, player.whoAmI, ai1: 2);
             }
 

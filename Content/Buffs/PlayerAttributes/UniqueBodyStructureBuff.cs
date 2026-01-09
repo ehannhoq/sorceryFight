@@ -22,7 +22,7 @@ namespace sorceryFight.Content.Buffs.PlayerAttributes
         {
             if (SorceryFight.IsDevMode())
             {
-                Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>().uniqueBodyStructure = false;
+                Main.LocalPlayer.SorceryFight().uniqueBodyStructure = false;
                 return true;
             }
             return false;

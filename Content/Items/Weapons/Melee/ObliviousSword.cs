@@ -64,7 +64,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
 
         public override void UpdateInventory(Player player)
         {
-            SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
 
             addedDamage = (int)Math.Ceiling(MathF.Pow(sfPlayer.numberBossesDefeated, damageMultiplier) / 750f);
 
@@ -75,7 +75,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            tooltips.FindAndReplace("[BOSSES]", Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>().numberBossesDefeated.ToString());
+            tooltips.FindAndReplace("[BOSSES]", Main.LocalPlayer.SorceryFight().numberBossesDefeated.ToString());
             tooltips.FindAndReplace("[DAMAGE]", addedDamage.ToString());
             tooltips.FindAndReplace("[CRIT]", addedCrit.ToString());
         }

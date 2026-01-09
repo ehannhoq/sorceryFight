@@ -16,7 +16,7 @@ namespace sorceryFight.Content
             {
                 if (!player.active || player == null) continue;
 
-                SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+                SorceryFightPlayer sfPlayer = player.SorceryFight();
                 if (sfPlayer.unlockedRCT) continue;
 
                 if (player.statLife < 10)

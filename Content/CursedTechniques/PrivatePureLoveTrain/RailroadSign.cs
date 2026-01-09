@@ -136,7 +136,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
-            player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = true;
+            player.SorceryFight().disableRegenFromProjectiles = true;
             if (InitialRotation == 0f)
             {
                 InitialRotation = Projectile.velocity.ToRotation();
@@ -206,7 +206,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public override void OnKill(int timeLeft)
         {
             Player player = Main.player[Projectile.owner];
-            player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
+            player.SorceryFight().disableRegenFromProjectiles = false;
         }
 
     }

@@ -31,7 +31,7 @@ namespace sorceryFight.Content.Items.Accessories
         {
             player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1 + cursedTechniqueDamageIncrease;
 
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
             sfPlayer.additionalBlackFlashDamageMultiplier += sfPlayer.blackFlashDamageMultiplier * blackFlashDamage;
         }
 

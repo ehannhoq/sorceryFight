@@ -212,7 +212,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
             if (tick > 490 && Main.myPlayer == owner)
             {
-                SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+                SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
                 if (rolls[0] == rolls[1] && rolls[0] == rolls[2])
                 {
                     if (sfPlayer.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()))
@@ -280,7 +280,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         void Roll(Player player)
         {
-            int bossesKilled = player.GetModPlayer<SorceryFightPlayer>().numberBossesDefeated;
+            int bossesKilled = player.SorceryFight().numberBossesDefeated;
 
             float mean = 5 + (0.07f * bossesKilled);
             float std = 3;

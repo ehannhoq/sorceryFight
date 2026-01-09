@@ -94,12 +94,12 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 else if (roll < 98)
                 {
                     rarity = Color.Yellow;
-                    Projectile.damage = (int)(CalculateTrueDamage(Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>()) * 1.5);
+                    Projectile.damage = (int)(CalculateTrueDamage(Main.player[Projectile.owner].SorceryFight()) * 1.5);
                 }
                 else
                 {
                     rarity = Color.Red;
-                    Projectile.damage = (int)(CalculateTrueDamage(Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>()) * 2);
+                    Projectile.damage = (int)(CalculateTrueDamage(Main.player[Projectile.owner].SorceryFight()) * 2);
                 }
 
                 SoundEngine.PlaySound(SorceryFightSounds.TrainDoorsClosing, Projectile.Center);

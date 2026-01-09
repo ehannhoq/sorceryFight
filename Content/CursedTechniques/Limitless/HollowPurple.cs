@@ -86,7 +86,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             }
 
             Player player = Main.player[Projectile.owner];
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
 
             Vector2 projOrigin = player.MountedCenter + player.MountedCenter.DirectionTo(Main.MouseWorld) * 50f;
 
@@ -122,7 +122,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             }
             else if (Projectile.ai[0] == COLLISION_TIME + trueWaitTime)
             {
-                Projectile.damage = (int)CalculateTrueDamage(player.GetModPlayer<SorceryFightPlayer>());
+                Projectile.damage = (int)CalculateTrueDamage(player.SorceryFight());
 
                 Projectile.timeLeft = (int)LifeTime;
                 Projectile.Center = projOrigin;
@@ -159,7 +159,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override void PostDraw(Color lightColor)
         {
             Player player = Main.player[Projectile.owner];
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
             float trueWaitTime = sfPlayer.cursedOfuda ? CursedOfuda.cursedTechniqueCastTimeDecrease * WAIT_TIME : WAIT_TIME;
 
             if (Projectile.ai[0] > COLLISION_TIME)

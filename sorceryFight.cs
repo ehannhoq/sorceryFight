@@ -87,7 +87,7 @@ namespace sorceryFight
 
 			if (Main.netMode == NetmodeID.MultiplayerClient && Main.myPlayer == targetPlayer)
 			{
-				Main.player[targetPlayer].GetModPlayer<SorceryFightPlayer>().AddDefeatedBoss(bossType);
+				Main.player[targetPlayer].SorceryFight().AddDefeatedBoss(bossType);
 			}
 		}
 

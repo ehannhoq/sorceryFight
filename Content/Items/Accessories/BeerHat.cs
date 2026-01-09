@@ -29,7 +29,7 @@ namespace sorceryFight.Content.Items.Accessories
         {
             base.UpdateAccessory(player, hideVisual);
 
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
             sfPlayer.beerHat = true;
         }
 

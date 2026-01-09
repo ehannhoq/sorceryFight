@@ -45,7 +45,7 @@ public class CursedEnergyBar : UIElement
 
         if (IsMouseHovering)
         {
-            var player = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+            var player = Main.LocalPlayer.SorceryFight();
             Main.hoverItemName = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.CE")} {Math.Round((decimal)player.cursedEnergy, 0)} / {player.maxCursedEnergy}\n"
                                 + $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.RegenRate")} {player.cursedEnergyRegenPerSecond} CE/s\n"
                                 + SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip");
@@ -55,7 +55,7 @@ public class CursedEnergyBar : UIElement
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+        sfPlayer = Main.LocalPlayer.SorceryFight();
         if (!initialized)
         {
             initialized = true;
@@ -120,7 +120,7 @@ public class CursedEnergyBar : UIElement
 
     void SetPosition()
     {
-        sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+        sfPlayer = Main.LocalPlayer.SorceryFight();
         if (sfPlayer.CEBarPos == Vector2.Zero)
         {
             Left.Set(1300, 0f);

@@ -39,7 +39,7 @@ public class SorceryFightUI : UIState
         }
 
         base.Update(gameTime);
-        var player = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+        var player = Main.LocalPlayer.SorceryFight();
 
         if (player.yourPotentialSwitch)
         {

@@ -72,7 +72,7 @@ namespace sorceryFight.Content.DomainExpansions
             if (Main.myPlayer == owner)
             {
                 Main.LocalPlayer.wingTime = Main.LocalPlayer.wingTimeMax;
-                SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+                SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
                 sfPlayer.disableRegenFromDE = true;
 
                 if (clashingWith == -1)

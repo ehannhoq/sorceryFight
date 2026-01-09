@@ -31,7 +31,7 @@ namespace sorceryFight.Content.Items.Consumables
             if (player.whoAmI == Main.myPlayer)
             {
                 SoundEngine.PlaySound(SoundID.Item4);
-                SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
+                SorceryFightPlayer sf = player.SorceryFight();
                 sf.cursedSkull = true;
             }
             return true;

@@ -90,7 +90,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         {
             castTime++;
             Player player = Main.player[Projectile.owner];
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
             float totalCastTime = sfPlayer.cursedOfuda ? incantations.Count * 90f * CursedOfuda.cursedTechniqueCastTimeDecrease : incantations.Count * 90f;
 
             if (castTime < totalCastTime)
@@ -100,7 +100,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                     animating = true;
                     Projectile.damage = 0;
                     Projectile.Hitbox = new Rectangle(0, 0, 0, 0);
-                    player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = true;
+                    player.SorceryFight().disableRegenFromProjectiles = true;
                 }
 
                 Projectile.Center = player.Center;
@@ -133,9 +133,9 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             if (animating)
             {
                 animating = false;
-                Projectile.damage = (int)CalculateTrueDamage(player.GetModPlayer<SorceryFightPlayer>());
+                Projectile.damage = (int)CalculateTrueDamage(player.SorceryFight());
                 Projectile.Hitbox = hitbox;
-                player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
+                player.SorceryFight().disableRegenFromProjectiles = false;
                 Projectile.timeLeft = (int)LifeTime;
                 ai2 = 1f;
                 Projectile.Center = player.Center;
@@ -145,7 +145,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 if (Main.myPlayer == Projectile.owner)
                 {
                     Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
-                    player.GetModPlayer<SorceryFightPlayer>().AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), 5);
+                    player.SorceryFight().AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), 5);
 
                 }
                 float velocityRotation = Projectile.velocity.ToRotation();
