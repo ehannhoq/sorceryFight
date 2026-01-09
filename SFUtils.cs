@@ -285,7 +285,7 @@ public static class SFUtils
 
     public static SorceryFightPlayer SorceryFight(this Player player)
     {
-        return player.SorceryFight();
+        return player.GetModPlayer<SorceryFightPlayer>();
     }
 
 
