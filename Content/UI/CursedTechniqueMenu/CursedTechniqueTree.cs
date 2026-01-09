@@ -362,7 +362,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
 
             float iconSize = 30;
-            int originIconCount = 3;
+            int originIconCount = 5;
             float distance = 120f;
             Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
 

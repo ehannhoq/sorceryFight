@@ -174,7 +174,7 @@ PachinkoBalls: {
 		Shoot a pachinko ball that ricochets off of
 		up to five enemies.
 		'''
-	LockedDescription: Defeat the one who guards the Dungeon.
+	LockedDescription: Defeat the Desert Scourge.
 }
 
 HakarisDoor: {
@@ -195,4 +195,27 @@ PassingThrough: {
 		your cursor.
 		'''
 	LockedDescription: Defeat the mechanical recreation of Cthulu's skeleton.
+}
+
+CargoCrate: {
+	DisplayName: Cargo Crate
+	Description:
+		'''
+		Launches a cargo crate filled with
+		sharp cursed energy.
+		'''
+	LockedDescription: Defeat the crazed cultist leader at the entrance of the dungeon.
+}
+
+RailroadSign: {
+	DisplayName: Railroad Sign
+	Description:
+		'''
+		Swing a railroad sign.
+		'''
+	LockedDescription:
+		'''
+		Defeat the Goddess who slew a dragon and
+		gorged Herself in its auric soul of Flame.
+		'''
 }
