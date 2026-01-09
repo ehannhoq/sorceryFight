@@ -33,6 +33,7 @@ namespace sorceryFight
 
         public static SoundStyle PachinkoBallCollision;
         public static SoundStyle TrainDoorsClosing;
+        public static SoundStyle CargoCrateImpact;
 
         public static SoundStyle UnlimitedVoid;
         public static SoundStyle MalevolentShrine;
@@ -75,6 +76,7 @@ namespace sorceryFight
 
             PachinkoBallCollision = new("sorceryFight/Content/Sounds/Projectiles/PachinkoBallCollision") { Volume = 1f };
             TrainDoorsClosing = new("sorceryFight/Content/Sounds/Projectiles/TrainDoorsClosing") { Volume = 1f };
+            CargoCrateImpact = new("sorceryFight/Content/Sounds/Projectiles/CargoCrateImpact") { Volume = 1f };
 
             UnlimitedVoid = new("sorceryFight/Content/Sounds/DomainExpansions/UnlimitedVoid") { Volume = 1f };
             MalevolentShrine = new("sorceryFight/Content/Sounds/DomainExpansions/MalevolentShrine") { Volume = 1f };
