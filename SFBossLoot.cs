@@ -64,7 +64,26 @@ namespace sorceryFight
             MoonLordDrops(ref npc, ref npcLoot, ref nonExpertRule);
             WallOfFleshDrops(ref npc, ref npcLoot, ref nonExpertRule);
             CursedEnergyPotions(ref npc, ref npcLoot, ref nonExpertRule);
-
+           // Cursed Hammer — Eye of Cthulhu
+if (npc.type == NPCID.EyeofCthulhu)
+{
+    npcLoot.Add(
+        ItemDropRule.Common(
+            ModContent.ItemType<Content.Items.Materials.CursedHammer>(),
+            10 // 10% drop chance
+        )
+    );
+}
+// Four Leaf Clover — Plantera
+if (npc.type == NPCID.Plantera)
+{
+    npcLoot.Add(
+        ItemDropRule.Common(
+            ModContent.ItemType<Content.Items.Materials.FourLeafClover>(),
+            4 // 25% chance
+        )
+    );
+}
         }
 
         // Non-Expert only
