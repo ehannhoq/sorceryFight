@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CalamityMod;
+using CalamityMod.Items.Materials;
 using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,7 +26,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         private static Texture2D texture;
 
         private const int baseDamage = 50;
-        private const float damageMultiplier = 3.5f;
+        private const float damageMultiplier = 3.67f;
         private const float critMultiplier = 1;
         private int addedDamage = 0;
         private float addedCrit = 0;
@@ -173,6 +174,18 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             spriteBatch.End();
             spriteBatch.Begin();
             return false;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<ObliviousSword>());
+            recipe.AddIngredient(ModContent.ItemType<UnholyEssence>(), 60);
+            recipe.AddIngredient(ModContent.ItemType<GalacticaSingularity>(), 4);
+            recipe.AddIngredient(ModContent.ItemType<Necroplasm>(), 5);
+            recipe.AddIngredient(ModContent.ItemType<DivineGeode>(), 30);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
         }
     }
 }
