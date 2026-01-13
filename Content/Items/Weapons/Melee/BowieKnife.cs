@@ -11,7 +11,6 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         {
             Item.width = 32;
             Item.height = 32;
-            Item.maxStack = 1;
 
             Item.damage = 30;
             Item.knockBack = 6f;
@@ -29,23 +28,21 @@ namespace sorceryFight.Content.Items.Weapons.Melee
 
         public override void AddRecipes()
         {
-            // --- Demonite version ---
-            Recipe demoniteRecipe = Recipe.Create(Type);
-            demoniteRecipe.AddRecipeGroup(RecipeGroupID.IronBar, 10);
-            demoniteRecipe.AddIngredient(ModContent.ItemType<SulphuricScale>(), 3);
-            demoniteRecipe.AddIngredient(ModContent.ItemType<DubiousPlating>(), 8);
-            demoniteRecipe.AddIngredient(ItemID.DemoniteBar, 3);
-            demoniteRecipe.AddTile(TileID.Anvils);
-            demoniteRecipe.Register();
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddRecipeGroup(RecipeGroupID.IronBar, 10);
+            recipe.AddIngredient(ModContent.ItemType<SulphuricScale>(), 3);
+            recipe.AddIngredient(ModContent.ItemType<DubiousPlating>(), 8);
+            recipe.AddIngredient(ItemID.DemoniteBar, 3);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
 
-            // --- Crimtane version ---
-            Recipe crimtaneRecipe = Recipe.Create(Type);
-            crimtaneRecipe.AddRecipeGroup(RecipeGroupID.IronBar, 10);
-            crimtaneRecipe.AddIngredient(ModContent.ItemType<SulphuricScale>(), 3);
-            crimtaneRecipe.AddIngredient(ModContent.ItemType<DubiousPlating>(), 8);
-            crimtaneRecipe.AddIngredient(ItemID.CrimtaneBar, 3);
-            crimtaneRecipe.AddTile(TileID.Anvils);
-            crimtaneRecipe.Register();
+            recipe = Recipe.Create(Type);
+            recipe.AddRecipeGroup(RecipeGroupID.IronBar, 10);
+            recipe.AddIngredient(ModContent.ItemType<SulphuricScale>(), 3);
+            recipe.AddIngredient(ModContent.ItemType<DubiousPlating>(), 8);
+            recipe.AddIngredient(ItemID.CrimtaneBar, 3);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
         }
     }
 }

@@ -1,11 +1,10 @@
-using CalamityMod;
 using CalamityMod.Items.Materials;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Items.Materials;
 using sorceryFight.Content.Projectiles.Abilities;
 using sorceryFight.Content.Projectiles.Melee;
+using sorceryFight.Content.DamageClasses;
 using sorceryFight.Rarities;
-using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -16,26 +15,30 @@ namespace sorceryFight.Content.Items.Weapons.Melee
 {
     public class SupremeMartialSolution : ModItem
     {
-        private const int RMB_COOLDOWN_TICKS = 60 * 20; // 20 seconds
+        private const int LightningCooldown = 60 * 20;
+        private const int LightningCost = 1350;
 
         public override LocalizedText DisplayName =>
-            SFUtils.GetLocalization("Mods.sorceryFight.Weapons.Melee.SupremeMartialSolution.DisplayName");
+            SFUtils.GetLocalization(
+                "Mods.sorceryFight.Weapons.Melee.SupremeMartialSolution.DisplayName"
+            );
 
         public override LocalizedText Tooltip =>
-            SFUtils.GetLocalization("Mods.sorceryFight.Weapons.Melee.SupremeMartialSolution.Tooltip");
+            SFUtils.GetLocalization(
+                "Mods.sorceryFight.Weapons.Melee.SupremeMartialSolution.Tooltip"
+            );
 
         public override void SetDefaults()
         {
             Item.width = 48;
             Item.height = 48;
-            Item.maxStack = 1;
 
-            // Basic jab attack
             Item.damage = 100;
             Item.knockBack = 3f;
+
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.useTime = 10;
             Item.useAnimation = 10;
-            Item.useStyle = ItemUseStyleID.Shoot;
             Item.autoReuse = true;
 
             Item.noUseGraphic = true;
@@ -49,28 +52,17 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.value = Item.sellPrice(platinum: 1);
         }
 
-        public override void ModifyWeaponCrit(Player player, ref float crit)
-        {
-            crit = 3f;
-        }
-
-        // Enables right-click
         public override bool AltFunctionUse(Player player) => true;
 
         public override bool CanUseItem(Player player)
         {
-            // Left-click: jab
+            // Left click: jab
             if (player.altFunctionUse != 2)
-            {
-                Item.useTime = 10;
-                Item.useAnimation = 10;
-                Item.shoot = ModContent.ProjectileType<SupremeMartialJab>();
-                return player.ownedProjectileCounts[Item.shoot] <= 0;
-            }
+                return player.ownedProjectileCounts[Item.shoot] == 0;
 
-            // Right-click: lightning ability
-            return player.GetModPlayer<SFPlayer>()
-                         .CanUseAbility(RMB_COOLDOWN_TICKS, 1350);
+            // Right click: lightning ability (owned by ModPlayer)
+            return player.SorceryFight()
+                         .CanActivateLightning(LightningCooldown, LightningCost);
         }
 
         public override bool Shoot(
@@ -82,14 +74,11 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             int damage,
             float knockback)
         {
-            // Right-click lightning strike
             if (player.altFunctionUse == 2)
             {
-                Vector2 targetPos = Main.MouseWorld;
-
                 Projectile.NewProjectile(
                     source,
-                    targetPos + new Vector2(0f, -600f),
+                    Main.MouseWorld + new Vector2(0f, -600f),
                     Vector2.UnitY * 30f,
                     ModContent.ProjectileType<CursedLightningStrike>(),
                     2300,
@@ -97,13 +86,12 @@ namespace sorceryFight.Content.Items.Weapons.Melee
                     player.whoAmI
                 );
 
-                player.GetModPlayer<SFPlayer>()
-                      .ConsumeAbility(RMB_COOLDOWN_TICKS, 1350);
+                player.SorceryFight()
+                      .ConsumeLightning(LightningCooldown, LightningCost);
 
                 return false;
             }
 
-            // Left-click jab projectile
             Projectile.NewProjectile(
                 source,
                 player.Center,
@@ -120,16 +108,12 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         public override void AddRecipes()
         {
             Recipe recipe = Recipe.Create(Type);
-
             recipe.AddIngredient(ModContent.ItemType<ForsakenSaber>());
             recipe.AddIngredient(ModContent.ItemType<CoreOfCalamity>(), 3);
             recipe.AddIngredient(ModContent.ItemType<CursedDischarge>(), 5);
             recipe.AddIngredient(ItemID.HallowedBar, 5);
             recipe.AddIngredient(ItemID.BowieKnife);
-
-            // Ancient Manipulator (real internal name)
             recipe.AddTile(TileID.LunarCraftingStation);
-
             recipe.Register();
         }
     }

@@ -33,14 +33,11 @@ namespace sorceryFight.Content.Projectiles.Melee
                 return;
             }
 
-            // Lock projectile to player attack direction
             Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.UnitX);
             Projectile.Center = player.MountedCenter + direction * 32f;
 
-            // Face correct direction
             Projectile.rotation = direction.ToRotation();
 
-            // Keep jab synced with player
             player.itemTime = 2;
             player.itemAnimation = 2;
             player.ChangeDir(direction.X > 0f ? 1 : -1);
@@ -48,13 +45,11 @@ namespace sorceryFight.Content.Projectiles.Melee
 
         public override bool? CanHitNPC(NPC target)
         {
-            // Prevent hitting through walls if desired
             return true;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            // Small electric dust hint (optional, subtle)
             for (int i = 0; i < 6; i++)
             {
                 Dust.NewDust(

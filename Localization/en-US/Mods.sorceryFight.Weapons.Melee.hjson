@@ -30,3 +30,19 @@ ObliviousSword: {
 		[c/6D2673:Dedicated to ObliviousOblivion]
 		'''
 }
+BowieKnife: {
+	DisplayName: Bowie Knife
+	Tooltip:
+		'''
+		A fast, reliable blade with no cursed energy.
+		'''
+}
+
+SupremeMartialSolution: {
+	DisplayName: Supreme Martial Solution
+	Tooltip:
+		'''
+		A perfected martial weapon empowered by cursed lightning.
+		Right-click to call down a devastating lightning strike.
+		'''
+}

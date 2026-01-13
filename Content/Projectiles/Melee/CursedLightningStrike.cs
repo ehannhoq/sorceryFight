@@ -3,9 +3,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using sorceryFight.Content.Buffs;
-using sorceryFight; // or wherever CursedTechniqueDamageClass lives
+using sorceryFight;
 
-namespace sorceryFight.Content.Projectiles.Abilities
+namespace sorceryFight.Content.Projectiles.Melee
 {
     public class CursedLightningStrike : ModProjectile
     {
@@ -21,7 +21,6 @@ namespace sorceryFight.Content.Projectiles.Abilities
             Projectile.timeLeft = 60;
             Projectile.tileCollide = false;
 
-            // Prevent frame-by-frame damage abuse
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 30;
 
@@ -61,7 +60,6 @@ namespace sorceryFight.Content.Projectiles.Abilities
                 }
             }
 
-            // Fade out safely
             Projectile.alpha = Utils.Clamp(Projectile.alpha + 4, 0, 255);
         }
 

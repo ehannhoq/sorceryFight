@@ -17,3 +17,7 @@ LunarCursedFragment: {
 	DisplayName: Lunar Cursed Fragment
 	Tooltip: ""
 }
+CursedDischarge: {
+    DisplayName: Cursed Discharge
+    Tooltip: It flows with an electrical current, that of cursed energy.
+}
