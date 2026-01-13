@@ -7,6 +7,7 @@ using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
+using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Projectiles.Melee;
 using sorceryFight.Content.Rarities;
 using sorceryFight.SFPlayer;
@@ -77,6 +78,9 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         public override void HoldItem(Player player)
         {
             if (player.whoAmI != Main.myPlayer)
+                return;
+
+            if (player.SorceryFight().disableCurseTechniques || player.HasBuff(ModContent.BuffType<BurntTechnique>()))
                 return;
 
             if (PlayerInput.Triggers.Current.MouseRight && CanUseItem(player) && !Main.mapFullscreen && !Main.blockMouse)
