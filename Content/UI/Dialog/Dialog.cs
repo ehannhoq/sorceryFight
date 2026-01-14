@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using Newtonsoft.Json;
 using Terraria;
 using Terraria.Localization;
@@ -16,24 +15,24 @@ public class Dialog
     internal string speaker;
     internal List<string> lines;
     internal Dictionary<string, string> replies;
-    internal string actionName;
-    private Dialog(string speaker, List<string> lines, Dictionary<string, string> replies, string actionName)
+    internal List<IAction> actions;
+    private Dialog(string speaker, List<string> lines, Dictionary<string, string> replies, List<IAction> actions)
     {
         this.speaker = speaker;
         this.lines = lines;
         this.replies = replies;
-        this.actionName = actionName;
+        this.actions = actions;
     }
 
     public static Dialog Create(string dialogKey)
     {
-        string interactableDialogPath = $"sorceryFight/Content/UI/Dialog/{Language.ActiveCulture.Name}.InteractableDialog";
-
+        string interactableDialogPath = $"sorceryFight/Localization/{Language.ActiveCulture.Name}/InteractableDialog.json";
         if (!ModContent.FileExists(interactableDialogPath))
         {
-            interactableDialogPath = "sorceryFight/Content/UI/Dialog/en_US.InteractableDialog";
+            Main.NewText($"Couldn't find {interactableDialogPath}, defaulting to en-US");
+
+            interactableDialogPath = "sorceryFight/Localization/en-US/InteractableDialog.json";
         }
-        interactableDialogPath += ".json";
 
         using MemoryStream memoryStream = new MemoryStream(ModContent.GetFileBytes(interactableDialogPath));
         string jsonString = Encoding.UTF8.GetString(memoryStream.ToArray());
@@ -45,15 +44,15 @@ public class Dialog
         if (parts.Length != 2)
             throw new Exception($"Invalid dialog key: {dialogKey}.");
 
-        string container = parts[0];
+        string dialogSource = parts[0];
         string dialog = parts[1];
 
-        if (!root.ContainsKey(container) || !root[container].ContainsKey(dialog))
+        if (!root.ContainsKey(dialogSource) || !root[dialogSource].ContainsKey(dialog))
             throw new Exception($"Dialog Key {dialogKey} not found.");
 
 
 
-        var dialogData = JsonConvert.DeserializeObject<Dictionary<string, object>>(root[container][dialog].ToString());
+        var dialogData = JsonConvert.DeserializeObject<Dictionary<string, object>>(root[dialogSource][dialog].ToString());
 
         var speaker = dialogData["Speaker"].ToString();
         var lines = dialogData["Text"].ToString().Split("\n").ToList();
@@ -68,13 +67,29 @@ public class Dialog
             replies.Add(text, response);
         }
 
-        var actionName = dialogData["Action"]?.ToString();
-
-        if (actionName == null)
+        var actions = new List<IAction>();
+        var actionData = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(dialogData["Actions"].ToString());
+        foreach (var action in actionData)
         {
-            actionName = string.Empty;
+            string type = action["Type"]?.ToString() ??
+                throw new NullReferenceException($"An action in {dialogKey} doesn't have a 'ActionType' field!");
+
+            string uiText = action["UIText"]?.ToString() ??
+                throw new NullReferenceException($"An action in {dialogKey} doesn't have a 'UIText' field!");
+
+            switch (type)
+            {
+                case "OpenShop":
+                    actions.Add(new OpenShopAction(action["ShopName"], uiText));
+                    break;
+                case "InvokeMethod":
+                    actions.Add(new InvokeMethodAction(action["MethodName"], uiText));
+                    break;
+                default:
+                    throw new Exception($"No such action type of type '{type}'");
+            }
         }
 
-        return new Dialog(speaker, lines, replies, actionName);
+        return new Dialog(speaker, lines, replies, actions);
     }
 }

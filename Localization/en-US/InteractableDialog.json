@@ -17,7 +17,7 @@
                     "Response": "LastChallenger.WhoAreYou"
                 }
             ],
-            "Action": null
+            "Actions": []
         },
 
         "WhoAreYou": {
@@ -29,21 +29,21 @@
                     "Response": "LastChallenger.WhatHappened"
                 }
             ],
-            "Action": null
+            "Actions": []
         },
 
         "WhatHappened": {
             "Speaker": "The Last Challenger",
             "Text": "I was sealed in this eternal prison over 20 years ago by both Yharim and the Supreme Witch.\nWhile my power lay largely constricted, I am still able to communicate to the outside world.\nTo you, young sorcerer.",
             "Replies": [],
-            "Action": null
+            "Actions": []
         },
 
         "WhenWorthy": {
             "Speaker": "The Last Challenger",
             "Text": "You will know when you are worthy, young sorcerer.",
             "Replies": [],
-            "Action": null
+            "Actions": []
         },
 
 
@@ -52,21 +52,42 @@
             "Speaker": "The Last Challenger",
             "Text": "I've been watching you throughout your journey. At first I thought you were just another unfortunate soul brough into this forsakened world.\nBut you've proven to be... much more... extraordinary.\nI saw glimpses of myself in your battles, and such want to give you a special gift.\nTake these, and do what I could not.\nDefeat the Supreme Witch.\nAnd then all that stands between you and Him is your own strength.",
             "Replies": [],
-            "Action": "GrantQuantumCoulombSet"
+            "Actions": [
+                {
+                    "Type": "InvokeMethod",
+                    "UIText": "Take Gift.",
+                    "MethodName": "GrantQuantumCoulombSet"
+                }
+            ]
         },
 
         "PreSupremeCalamitas": {
             "Speaker": "The Last Challenger",
             "Text": "Defeat the Supreme Witch, and finish what I've started.",
             "Replies": [],
-            "Action": null
+            "Actions": []
         },
 
         "PostSupremeCalamitas": {
             "Speaker": "The Last Challenger",
             "Text": "You now stand where I once stood. I'm sure he's waiting for you.\nGood luck, young sorcerer.",
             "Replies": [],
-            "Action": null
+            "Actions": []
+        }
+    },
+
+    "Gakuganji": {
+        "Interact": {
+            "Speaker": "Gakuganji",
+            "Text": "Greetings, young sorcerer. How may I help you today?",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "OpenShop",
+                    "UIText": "Open Cursed Energy Modifiers",
+                    "ShopName": "CursedEnergyModifiers"
+                }
+            ]
         }
     }
 }
