@@ -76,9 +76,9 @@
         }
     },
 
-    "Gakuganji": {
+    "YoshinobuGakuganji": {
         "Interact": {
-            "Speaker": "Gakuganji",
+            "Speaker": "Yoshinobu Gakuganji",
             "Text": "Greetings, young sorcerer. How may I help you today?",
             "Replies": [],
             "Actions": [
@@ -93,6 +93,15 @@
                     "ShopName": "SukunasFingersShop"
                 }
             ]
+        }
+    },
+
+    "ShokoIeiri": {
+        "Interact": {
+            "Speaker": "Shoko Ieiri",
+            "Text": "Need something?",
+            "Replies": [],
+            "Actions": []
         }
     }
 }

@@ -2,24 +2,11 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
-using Terraria.Localization;
-using Terraria.GameContent;
-using Terraria.GameContent.Personalities;
-using System.Collections.Generic;
-using sorceryFight.Content.Items.Consumables;
-using sorceryFight.Content.CursedTechniques.Limitless;
-using sorceryFight.Content.Items.Consumables.SukunasFinger;
-using sorceryFight.SFPlayer;
-using sorceryFight.Content.UI;
-using sorceryFight.Content.UI.Dialog;
-using CalamityMod;
-using Microsoft.Xna.Framework;
 
 namespace sorceryFight.Content.NPCs.TownNPCs
 {
     [AutoloadHead]
-    public class Gakuganji : SorceryFightNPC
+    public class YoshinobuGakuganji : SorceryFightNPC
     {
         public override void SetStaticDefaults()
         {
@@ -35,7 +22,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
 
         public override void SetDefaults()
         {
-            SFNPC.name = "Gakuganji";
+            SFNPC.name = "YoshinobuGakuganji";
             SFNPC.attackDamage = 10;
             SFNPC.knockback = 4f;
             SFNPC.attackCooldown = 30;

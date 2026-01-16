@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using CalamityMod.Items.Weapons.Melee;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.UI;
 using sorceryFight.Content.UI.Dialog;
@@ -6,6 +8,7 @@ using sorceryFight.Content.UI.Shop;
 using Terraria;
 using Terraria.GameInput;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.NPCs.TownNPCs
@@ -29,6 +32,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
 
         private const float maxInteractionDistance = 150f;
 
+
         public override void SetDefaults()
         {
             NPC.townNPC = true;
@@ -48,7 +52,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
         public override List<string> SetNPCNameList()
         {
             return [
-                name
+                SplitFullName(name)
             ];
         }
 
@@ -67,7 +71,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
             Point mouse = Main.MouseWorld.ToPoint();
 
             if (hitbox.Contains(mouse))
-            {                
+            {
                 if (Main.mouseRight && !Main.mouseRightRelease)
                 {
                     if (Main.LocalPlayer.talkNPC == -1)
@@ -77,6 +81,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
                 }
             }
         }
+        
 
         public override bool UsesPartyHat()
         {
@@ -114,6 +119,19 @@ namespace sorceryFight.Content.NPCs.TownNPCs
         public override void TownNPCAttackProjSpeed(ref float multiplier, ref float gravityCorrection, ref float randomOffset)
         {
             multiplier = attackProjectileSpeed;
+        }
+
+        private static string SplitFullName(string name)
+        {
+            for (int i = 1; i < name.Length; i++)
+            {
+                if (char.IsUpper(name[i]))
+                {
+                    return string.Concat(name.AsSpan(0, i), " ", name.AsSpan(i));
+                }
+            }
+
+            return name;
         }
     }
 }

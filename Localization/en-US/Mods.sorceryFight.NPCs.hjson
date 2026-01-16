@@ -1,8 +1,6 @@
 FingerBearer.DisplayName: Finger Bearer
 
-Gakuganji: {
-	DisplayName: Cursed Items Handler
-
+YoshinobuGakuganji: {
 	TownNPCMood: {
 		Content: Everything is in order. The world moves with the rhythm it should.
 		NoHome: Without a place to anchor oneself, even the sharpest mind can falter.
@@ -20,4 +18,21 @@ Gakuganji: {
 		DislikeNPC: "{NPCName} disregards order, every action a potential risk to those around them."
 		HateNPC: "{NPCName}, chaotic, insufferable, and reckless; every bit as trying as Gojo. One misstep from them could undo all order."
 	}
+
+	DisplayName: Yoshinobu Gakuganji
+}
+
+ShokoIeiri: {
+	TownNPCMood: {
+		Princess_LovesNPC: I like {NPCName}.
+		LikeNPC_Princess: I like {NPCName}.
+		HateCrowded: I hate how crowded I am.
+		DislikeCrowded: I dislike how crowded I am.
+		LoveSpace: I love having so much space.
+		FarFromHome: I am too far from home.
+		NoHome: I hate not having a home.
+		Content: I am content.
+	}
+
+	DisplayName: Shoko Ieiri
 }
