@@ -18,8 +18,8 @@ namespace sorceryFight.Content.Projectiles.Melee
         private static readonly int minimumCharge = 60;
         public override void SetDefaults()
         {
-            Projectile.width = (int)(texture.Width * 3.5f);
-            Projectile.height = (int)(texture.Height * 3.5f);
+            Projectile.width = 350;
+            Projectile.height = 350;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;

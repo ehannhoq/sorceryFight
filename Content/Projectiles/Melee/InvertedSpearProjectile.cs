@@ -24,8 +24,8 @@ namespace sorceryFight.Content.Projectiles.Melee
 
         public override void SetDefaults()
         {
-            Projectile.width = (int)(swordTexture.Width * 0.75f);
-            Projectile.height = (int)(swordTexture.Height * 0.75f);
+            Projectile.width = 35;
+            Projectile.height = 35;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.DamageType = CursedTechniqueDamageClass.Instance;
