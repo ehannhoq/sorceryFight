@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.ModLoader;
 
 namespace sorceryFight.Content.UI.Dialog
 {
@@ -6,7 +7,6 @@ namespace sorceryFight.Content.UI.Dialog
     {
         public string shopName;
         public string uiText;
-        private object initiator;
 
 
         public OpenShopAction(string shopName, string uiText)
@@ -18,13 +18,15 @@ namespace sorceryFight.Content.UI.Dialog
 
         public void Invoke()
         {
-            Main.NewText("test");
+            if (Main.dedServ) return;
+
+            Main.playerInventory = true;
+            ModContent.GetInstance<SorceryFightUISystem>().ActivateShopUI(shopName);
         }
 
 
         public void SetInitiator(object initiator)
         {
-            this.initiator = initiator;
         }
 
 

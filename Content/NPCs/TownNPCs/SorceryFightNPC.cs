@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.UI;
 using sorceryFight.Content.UI.Dialog;
+using sorceryFight.Content.UI.Shop;
 using Terraria;
 using Terraria.GameInput;
 using Terraria.ID;
@@ -26,7 +27,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
         public int attackProjectileDelay = 10;
         public float attackProjectileSpeed = 10f;
 
-        private const float maxInteractionDistance = 300f;
+        private const float maxInteractionDistance = 150f;
 
         public override void SetDefaults()
         {
@@ -62,12 +63,12 @@ namespace sorceryFight.Content.NPCs.TownNPCs
 
             if (Vector2.Distance(NPC.Center, Main.LocalPlayer.Center) > maxInteractionDistance) return;
 
-            if (Main.mouseRight && Main.mouseRightRelease)
-            {
-                Rectangle hitbox = NPC.Hitbox;
-                Point mouse = Main.MouseWorld.ToPoint();
+            Rectangle hitbox = NPC.Hitbox;
+            Point mouse = Main.MouseWorld.ToPoint();
 
-                if (hitbox.Contains(mouse))
+            if (hitbox.Contains(mouse))
+            {                
+                if (Main.mouseRight && !Main.mouseRightRelease)
                 {
                     if (Main.LocalPlayer.talkNPC == -1)
                     {
@@ -109,7 +110,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
             attackDelay = attackProjectileDelay;
         }
 
-        
+
         public override void TownNPCAttackProjSpeed(ref float multiplier, ref float gravityCorrection, ref float randomOffset)
         {
             multiplier = attackProjectileSpeed;

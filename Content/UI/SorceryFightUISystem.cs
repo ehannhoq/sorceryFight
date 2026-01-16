@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using sorceryFight.Content.Shops;
 using sorceryFight.Content.UI.Dialog;
+using sorceryFight.Content.UI.Shop;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -14,6 +16,9 @@ namespace sorceryFight.Content.UI
         internal UserInterface sfInterface;
         internal SorceryFightUI sfUI;
         internal DialogUI dialogUI;
+        internal SorceryFightShopUI shopUI;
+
+        internal bool shopUIOpen;
 
         private GameTime _lastUpdateUiGameTime;
 
@@ -38,6 +43,7 @@ namespace sorceryFight.Content.UI
                 sfInterface.SetState(null);
                 sfUI = null;
                 dialogUI = null;
+                shopUI = null;
             }
         }
 
@@ -56,6 +62,7 @@ namespace sorceryFight.Content.UI
         {
             sfUI = null;
             dialogUI = null;
+            shopUI = null;
         }
 
         public override void UpdateUI(GameTime gameTime)
@@ -90,7 +97,6 @@ namespace sorceryFight.Content.UI
 
         public void ActivateDialogUI(Dialog.Dialog dialog, object initiator)
         {
-            if (Main.dedServ) return;
 
             SoundEngine.PlaySound(SoundID.MenuOpen, Main.LocalPlayer.Center);
             dialogUI = new DialogUI(dialog, initiator);
@@ -98,11 +104,24 @@ namespace sorceryFight.Content.UI
             sfInterface.SetState(dialogUI);
         }
 
-        public void DeactivateDialogUI()
+        public void ActivateShopUI(string shopName)
+        {
+            if (Main.dedServ) return;
+
+            SoundEngine.PlaySound(SoundID.MenuOpen, Main.LocalPlayer.Center);
+            SorceryFightShop shop = SorceryFightShopRegistrar.GetShop(shopName);
+            shopUI = new SorceryFightShopUI(shop);
+            shopUI.Activate();
+            sfInterface.SetState(shopUI);
+            shopUIOpen = true;
+        }
+
+        public void ResetUI()
         {
             sfUI = new SorceryFightUI();
             sfUI.Activate();
             sfInterface.SetState(sfUI);
+            shopUIOpen = false;
         }
     }
 }

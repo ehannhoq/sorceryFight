@@ -84,8 +84,13 @@
             "Actions": [
                 {
                     "Type": "OpenShop",
-                    "UIText": "Open Cursed Energy Modifiers",
-                    "ShopName": "CursedEnergyModifiers"
+                    "UIText": "Open Cursed Energy Modifiers Shop",
+                    "ShopName": "CursedEnergyModifiersShop"
+                },
+                {
+                    "Type": "OpenShop",
+                    "UIText": "Open Sukuna's Fingers Shop",
+                    "ShopName": "SukunasFingersShop"
                 }
             ]
         }

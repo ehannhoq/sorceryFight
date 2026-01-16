@@ -143,9 +143,9 @@ namespace sorceryFight.Content.UI.Dialog
                         {
                             DialogActionText actionText = new(action.GetUIText());
                             actionText.onClick += () => {
+                                EndDialog();
                                 action.SetInitiator(initiator);
                                 action.Invoke();
-                                EndDialog();
                             };
 
                             float left = (Main.screenWidth / Main.UIScale / 2) - (background.texture.Width / 2) + 20;
@@ -171,7 +171,7 @@ namespace sorceryFight.Content.UI.Dialog
         private void EndDialog()
         {
             dialog = null;
-            ModContent.GetInstance<SorceryFightUISystem>().DeactivateDialogUI();
+            ModContent.GetInstance<SorceryFightUISystem>().ResetUI();
         }
 
 
