@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using sorceryFight.Content.Shops;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 
-namespace sorceryFight.Content.UI.Shop
+namespace sorceryFight.Content.Shops
 {
     public class SorceryFightShopRegistrar : ModSystem
     {
