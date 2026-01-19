@@ -1,25 +1,14 @@
 
+using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
-using Terraria.Localization;
-using Terraria.GameContent;
-using Terraria.GameContent.Personalities;
-using System.Collections.Generic;
-using sorceryFight.Content.Items.Consumables;
-using sorceryFight.Content.CursedTechniques.Limitless;
-using sorceryFight.Content.Items.Consumables.SukunasFinger;
-using sorceryFight.SFPlayer;
-using sorceryFight.Content.UI;
-using sorceryFight.Content.UI.Dialog;
-using CalamityMod;
-using Microsoft.Xna.Framework;
+
 
 namespace sorceryFight.Content.NPCs.TownNPCs
 {
     [AutoloadHead]
-    public class ShokoIeiri : SorceryFightNPC
+    public class ShokoLeiri : SorceryFightNPC
     {
         public override void SetStaticDefaults()
         {
@@ -35,7 +24,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
 
         public override void SetDefaults()
         {
-            SFNPC.name = "ShokoIeiri";
+            SFNPC.name = "ShokoLeiri";
             SFNPC.attackDamage = 5;
             SFNPC.knockback = 4f;
             SFNPC.attackCooldown = 30;

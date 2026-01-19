@@ -36,3 +36,18 @@ ShokoIeiri: {
 
 	DisplayName: Shoko Ieiri
 }
+
+ShokoLeiri: {
+	TownNPCMood: {
+		Princess_LovesNPC: I like {NPCName}.
+		LikeNPC_Princess: I like {NPCName}.
+		HateCrowded: I hate how crowded I am.
+		DislikeCrowded: I dislike how crowded I am.
+		LoveSpace: I love having so much space.
+		FarFromHome: I am too far from home.
+		NoHome: I hate not having a home.
+		Content: I am content.
+	}
+
+	DisplayName: Shoko Leiri
+}
