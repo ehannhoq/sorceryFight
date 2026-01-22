@@ -12,6 +12,9 @@ using sorceryFight.Content.UI.TechniqueSelector;
 using System;
 using sorceryFight.Content.UI.BlackFlash;
 using sorceryFight.Content.UI;
+using sorceryFight.Content.UI.Quests.QuestToast;
+using static sorceryFight.Content.UI.Quests.QuestToast.QuestToast;
+using sorceryFight.Content.Quests;
 
 public class SorceryFightUI : UIState
 {
@@ -20,6 +23,8 @@ public class SorceryFightUI : UIState
     public CursedTechniqueMenu ctMenu;
     public PassiveTechniqueSelector ptMenu;
     public FlowStateBar flowStateBar;
+    public QuestToast questToast;
+
     private List<UIElement> elementsToRemove;
     bool initialized;
 
@@ -151,6 +156,11 @@ public class SorceryFightUI : UIState
 
         return mousePos.X >= dimensions.X && mousePos.X <= dimensions.X + texture.Width &&
                 mousePos.Y >= dimensions.Y && mousePos.Y <= dimensions.Y + texture.Height;
+    }
+
+    public void QuestToastNotification(string questName, QuestToastType type)
+    {
+        questToast = new QuestToast(questName, type, this);
     }
 
     public void RemoveElement(UIElement element)

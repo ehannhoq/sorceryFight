@@ -8,6 +8,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
+using static sorceryFight.Content.UI.Quests.QuestToast.QuestToast;
 
 namespace sorceryFight.Content.UI
 {
@@ -117,6 +118,13 @@ namespace sorceryFight.Content.UI
             shopUIOpen = true;
         }
 
+        public void QuestToastNotification(string questName, QuestToastType type)
+        {
+            if (sfInterface.CurrentState is SorceryFightUI)
+            {
+                sfUI.QuestToastNotification(questName, type);
+            }
+        }
         public void ResetUI()
         {
             sfUI = new SorceryFightUI();
