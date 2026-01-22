@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MonoMod.Cil;
 using sorceryFight.Content.InnateTechniques;
+using sorceryFight.Content.Quests;
+using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -80,6 +83,10 @@ namespace sorceryFight.SFPlayer
             blackFlashTimeLeft = -60;
             blackFlashCounter = 0;
             additionalBlackFlashDamageMultiplier = 0f;
+
+            questData = new();
+            currentQuests = new List<Quest>();
+            completedQuests = new List<string>();
         }
         public override void SaveData(TagCompound tag)
         {
@@ -91,7 +98,7 @@ namespace sorceryFight.SFPlayer
             tag["cursedEnergy"] = cursedEnergy;
 
             tag["bossesDefeated"] = bossesDefeated;
-            
+
             tag["ctSelector"] = new List<float> { CTSelectorPos.X, CTSelectorPos.Y };
 
             tag["ptSelector"] = new List<float> { PTSelectorPos.X, PTSelectorPos.Y };
@@ -138,6 +145,13 @@ namespace sorceryFight.SFPlayer
                 tag["sukunasFingers"] = indexes;
             }
 
+            var currentQuestsData = new List<string>();
+            foreach (Quest q in currentQuests)
+            {
+                currentQuestsData.Add(q.GetClass());
+            }
+            tag["currentQuests"] = currentQuestsData;
+            tag["completedQuests"] = completedQuests;
         }
 
         public override void LoadData(TagCompound tag)
@@ -195,14 +209,22 @@ namespace sorceryFight.SFPlayer
             if (innateTechnique != null)
             {
                 var indexes = tag.GetList<int>("sukunasFingers");
-                
+
                 for (int i = 0; i < indexes.Count; i++)
                 {
                     sukunasFingers[indexes[i]] = true;
                 }
             }
-        }
 
+            var currentQuestsData = tag.GetList<string>("currentQuests");
+            foreach (var quest in currentQuestsData)
+            {
+                currentQuests.Add(Quest.QuestBuilder(quest));
+            }
+
+            completedQuests = tag.GetList<string>("completedQuests").ToList();
+        }
+        
         public float calculateBaseMaxCE()
         {
             float baseCE = 100f;

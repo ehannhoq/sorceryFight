@@ -12,13 +12,11 @@ namespace sorceryFight.Content.UI.Dialog;
 
 public class Dialog
 {
-    internal string speaker;
     internal List<string> lines;
     internal Dictionary<string, string> replies;
     internal List<IAction> actions;
-    private Dialog(string speaker, List<string> lines, Dictionary<string, string> replies, List<IAction> actions)
+    private Dialog(List<string> lines, Dictionary<string, string> replies, List<IAction> actions)
     {
-        this.speaker = speaker;
         this.lines = lines;
         this.replies = replies;
         this.actions = actions;
@@ -50,12 +48,17 @@ public class Dialog
         if (!root.ContainsKey(dialogSource) || !root[dialogSource].ContainsKey(dialog))
             throw new Exception($"Dialog Key {dialogKey} not found.");
 
-
-
         var dialogData = JsonConvert.DeserializeObject<Dictionary<string, object>>(root[dialogSource][dialog].ToString());
 
-        var speaker = dialogData["Speaker"].ToString();
         var lines = dialogData["Text"].ToString().Split("\n").ToList();
+
+
+        // List<string> additionalLines;
+        // var additionalLinesData = dialogData["AdditionalText"]?.ToString();
+        // if (additionalLinesData != null)
+        // {
+        //     additionalLines = JsonConvert.DeserializeObject<List<string>>(additionalLinesData);
+        // }
 
         var replies = new Dictionary<string, string>();
         var replyData = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(dialogData["Replies"].ToString());
@@ -85,11 +88,20 @@ public class Dialog
                 case "InvokeMethod":
                     actions.Add(new InvokeMethodAction(action["MethodName"], uiText));
                     break;
+                case "QueryQuest":
+                    actions.Add(new QueryQuestAction(uiText));
+                    break;
+                case "GiveQuest":
+                    actions.Add(new GiveQuestAction(action["QuestName"], uiText));
+                    break;
+                case "CloseDialog":
+                    actions.Add(new CloseDialogAction(uiText));
+                    break;
                 default:
                     throw new Exception($"No such action type of type '{type}'");
             }
         }
 
-        return new Dialog(speaker, lines, replies, actions);
+        return new Dialog(lines, replies, actions);
     }
 }

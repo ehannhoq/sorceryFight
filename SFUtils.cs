@@ -331,6 +331,22 @@ public static class SFUtils
             }
         }
     }
+
+    public static string GetClass(this object obj)
+    {
+        string typeName = obj.GetType().ToString();
+        int index;
+        for (index = typeName.Length - 1; index >= 0; index--)
+        {
+            if (typeName[index] == '.')
+            {
+                index++;
+                break;
+            }
+        }
+        
+        return typeName[index..];
+    }
 }
 
 public static class SFConstants

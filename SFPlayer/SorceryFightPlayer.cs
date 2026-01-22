@@ -230,6 +230,8 @@ namespace sorceryFight.SFPlayer
                     TEMP_disabledRegenTimer = 0;
                 }
             }
+            
+            CheckQuests();
         }
 
 

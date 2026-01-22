@@ -1,4 +1,6 @@
 
+using System;
+using sorceryFight.Content.Quests;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;
@@ -24,6 +26,8 @@ namespace sorceryFight.Content.NPCs.TownNPCs
 
         public override void SetDefaults()
         {
+            base.SetDefaults();
+
             SFNPC.name = "ShokoLeiri";
             SFNPC.attackDamage = 5;
             SFNPC.knockback = 4f;
@@ -35,8 +39,9 @@ namespace sorceryFight.Content.NPCs.TownNPCs
             NPC.knockBackResist = 0.5f;
             AnimationType = NPCID.Guide;
 
-            base.SetDefaults();
+            AddQuest(new ShokoQuestI());
         }
+
 
         public override bool CanTownNPCSpawn(int numTownNPCs)
         {

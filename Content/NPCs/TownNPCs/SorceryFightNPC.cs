@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
-using CalamityMod.Items.Weapons.Melee;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Microsoft.Xna.Framework;
+using sorceryFight.Content.Quests;
 using sorceryFight.Content.UI;
 using sorceryFight.Content.UI.Dialog;
-using sorceryFight.Content.UI.Shop;
+using sorceryFight.SFPlayer;
 using Terraria;
-using Terraria.GameInput;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.NPCs.TownNPCs
@@ -21,6 +21,8 @@ namespace sorceryFight.Content.NPCs.TownNPCs
         /// The name of the NPC. Used as the name in game, as well as to retrieve dialog keys.
         /// </summary>
         public string name;
+        public List<Quest> quests;
+        private Dictionary<int, int> questProgress;
 
         public int attackDamage;
         public int attackCooldown;
@@ -32,6 +34,48 @@ namespace sorceryFight.Content.NPCs.TownNPCs
 
         private const float maxInteractionDistance = 150f;
 
+        private void HandleDialog()
+        {
+            if (Main.dedServ) return;
+
+            if (Vector2.Distance(NPC.Center, Main.LocalPlayer.Center) > maxInteractionDistance) return;
+
+            Rectangle hitbox = NPC.Hitbox;
+            Point mouse = Main.MouseWorld.ToPoint();
+
+            if (hitbox.Contains(mouse))
+            {
+                if (Main.mouseRight && !Main.mouseRightRelease)
+                {
+                    if (Main.LocalPlayer.talkNPC == -1)
+                    {
+                        SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
+                        ModContent.GetInstance<SorceryFightUISystem>().ActivateDialogUI(Dialog.Create(name + ".Interact"), this);
+                    }
+                }
+            }
+        }
+
+        public void AddQuest(Quest quest)
+        {
+            quests.Add(quest);
+        }
+
+        public bool GetQuestIfAvailable(SorceryFightPlayer sf, [NotNullWhen(true)] out Quest quest)
+        {
+            for (int i = 0; i < quests.Count; i++)
+            {
+                if (sf.completedQuests.Contains(quests[i].GetClass())) continue;
+                
+                if (quests[i].IsAvailable(sf))
+                {
+                    quest = quests[i];
+                    return true;
+                }
+            }
+            quest = null;
+            return false;
+        }
 
         public override void SetDefaults()
         {
@@ -42,6 +86,8 @@ namespace sorceryFight.Content.NPCs.TownNPCs
             NPC.aiStyle = NPCAIStyleID.Passive;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
+
+            quests = new List<Quest>();
         }
 
         public override bool CanChat()
@@ -61,27 +107,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
             HandleDialog();
         }
 
-        private void HandleDialog()
-        {
-            if (Main.dedServ) return;
 
-            if (Vector2.Distance(NPC.Center, Main.LocalPlayer.Center) > maxInteractionDistance) return;
-
-            Rectangle hitbox = NPC.Hitbox;
-            Point mouse = Main.MouseWorld.ToPoint();
-
-            if (hitbox.Contains(mouse))
-            {
-                if (Main.mouseRight && !Main.mouseRightRelease)
-                {
-                    if (Main.LocalPlayer.talkNPC == -1)
-                    {
-                        ModContent.GetInstance<SorceryFightUISystem>().ActivateDialogUI(Dialog.Create(name + ".Interact"), this);
-                    }
-                }
-            }
-        }
-        
 
         public override bool UsesPartyHat()
         {

@@ -13,6 +13,7 @@ namespace sorceryFight
         // public static ModKeybind CursedFist { get; private set; }
         public static ModKeybind AttemptBlackFlash { get; private set; }
         public static ModKeybind ConsumeCursedEnergyPotion { get; private set; }
+        public static ModKeybind OpenQuestMenu { get; private set; }
 
         public override void Load()
         {
@@ -25,6 +26,7 @@ namespace sorceryFight
             // CursedFist = KeybindLoader.RegisterKeybind(Mod, "CursedFist", "C");
             AttemptBlackFlash = KeybindLoader.RegisterKeybind(Mod, "AttemptBlackFlash", "Mouse3");
             ConsumeCursedEnergyPotion = KeybindLoader.RegisterKeybind(Mod, "ConsumeCursedEnergyPotion", "J");
+            OpenQuestMenu = KeybindLoader.RegisterKeybind(Mod, "OpenQuestMenu", "P");
         }
 
         public override void Unload()
@@ -38,6 +40,7 @@ namespace sorceryFight
             // CursedFist = null;
             AttemptBlackFlash = null;
             ConsumeCursedEnergyPotion = null;
+            OpenQuestMenu = null;
         }
     }
 }

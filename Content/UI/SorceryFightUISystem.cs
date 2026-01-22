@@ -97,6 +97,7 @@ namespace sorceryFight.Content.UI
 
         public void ActivateDialogUI(Dialog.Dialog dialog, object initiator)
         {
+            if (Main.dedServ) return;
 
             SoundEngine.PlaySound(SoundID.MenuOpen, Main.LocalPlayer.Center);
             dialogUI = new DialogUI(dialog, initiator);

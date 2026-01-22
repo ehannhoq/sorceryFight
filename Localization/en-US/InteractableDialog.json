@@ -9,7 +9,7 @@
                 },
                 {
                     "Text": "What happened to you?",
-                    "Response":"LastChallenger.WhatHappened"
+                    "Response": "LastChallenger.WhatHappened"
                 },
                 {
                     "Text": "Who are you?",
@@ -18,7 +18,6 @@
             ],
             "Actions": []
         },
-
         "WhoAreYou": {
             "Text": "I'm the last person to ever stand head to head to Yharim, the Godseeker himself.",
             "Replies": [
@@ -29,21 +28,16 @@
             ],
             "Actions": []
         },
-
         "WhatHappened": {
             "Text": "I was sealed in this eternal prison over 20 years ago by both Yharim and the Supreme Witch.\nWhile my power lay largely constricted, I am still able to communicate to the outside world.\nTo you, young sorcerer.",
             "Replies": [],
             "Actions": []
         },
-
         "WhenWorthy": {
             "Text": "You will know when you are worthy, young sorcerer.",
             "Replies": [],
             "Actions": []
         },
-
-
-        
         "Worthy": {
             "Text": "I've been watching you throughout your journey. At first I thought you were just another unfortunate soul brough into this forsakened world.\nBut you've proven to be... much more... extraordinary.\nI saw glimpses of myself in your battles, and such want to give you a special gift.\nTake these, and do what I could not.\nDefeat the Supreme Witch.\nAnd then all that stands between you and Him is your own strength.",
             "Replies": [],
@@ -55,20 +49,17 @@
                 }
             ]
         },
-
         "PreSupremeCalamitas": {
             "Text": "Defeat the Supreme Witch, and finish what I've started.",
             "Replies": [],
             "Actions": []
         },
-
         "PostSupremeCalamitas": {
             "Text": "You now stand where I once stood. I'm sure he's waiting for you.\nGood luck, young sorcerer.",
             "Replies": [],
             "Actions": []
         }
     },
-
     "YoshinobuGakuganji": {
         "Interact": {
             "Text": "Greetings, young sorcerer. How may I help you today?",
@@ -87,19 +78,65 @@
             ]
         }
     },
-
     "ShokoLeiri": {
         "Interact": {
             "Text": "Need something?",
-            "AdditionalText": [
-                "Don't make this long, I got a smoke break to take soon.",
-                "I don't get paid enough for this..."
-            ],
             "Replies": [],
             "Actions": [
                 {
-                    "Type": "QuestMenu",
+                    "Type": "QueryQuest",
                     "UIText": "Do you need me to do something?"
+                }
+            ]
+        }
+    },
+    "GojoSatoru": {
+        "Interact": {
+            "Text": "What's up?",
+            "Replies": [],
+            "Actions": []
+        },
+        "LunaticCultistDomain": {
+            "Text": "The Lunatic Cultist has a very interesting domain.\nThe sure-hit is pretty easy to avoid if you're quick enough.",
+            "Replies": [
+                {
+                    "Text": "Do you have any tips against it?",
+                    "Reply": "GojoSatoru.LunaticCultistTip"
+                }
+            ],
+            "Actions": []
+        },
+        "LunaticCultistTip": {
+            "Text": "The Cultist leader only expands his domain when he's about to die. Save as much healing items as you can until then.\nOnce he expands his domain, try your best to not stand still, and deal as much damage as you can so you aren't in his domain for long.",
+            "Replies": [],
+            "Actions": []
+        }
+    },
+    "Quests": {
+        "ActiveQuest": {
+            "Text": "You still need to complete the task I gave you.",
+            "Replies": [],
+            "Actions": []
+        },
+
+        "NoQuests": {
+            "Text": "You've done everything I needed you to do.",
+            "Replies": [],
+            "Actions": []
+        },
+
+        "ShokoQuestI": {
+            "Text": "I need you to wear this charm. While you're wearing this, land two consecutive black flashes, and consume atleast 10 heal potions. Then come back to me.",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "GiveQuest",
+                    "UIText": "Sounds good!",
+                    "QuestName": "ShokoQuestI"
+                },
+                {
+                    "Type": "CloseDialog",
+                    "UIText": "I have some other stuff to do first."
                 }
             ]
         }
