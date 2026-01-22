@@ -35,8 +35,11 @@ namespace sorceryFight.Content.UI.Dialog
             background = new SpecialUIElement(ModContent.Request<Texture2D>("sorceryFight/Content/UI/Dialog/DialogBox", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
             dialogText = new UIText("", 1f, false);
             indicator = new UIImage(ModContent.Request<Texture2D>("sorceryFight/Content/UI/Dialog/DialogNextIndicator", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
-
-            SetupUI();
+            
+            TaskScheduler.Instance.AddDelayedTask(() =>
+            {
+                SetupUI();
+            }, 1);
         }
 
         private void SetupUI()

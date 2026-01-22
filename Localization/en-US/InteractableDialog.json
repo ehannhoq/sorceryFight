@@ -90,53 +90,30 @@
             ]
         }
     },
-    "GojoSatoru": {
-        "Interact": {
-            "Text": "What's up?",
-            "Replies": [],
-            "Actions": []
-        },
-        "LunaticCultistDomain": {
-            "Text": "The Lunatic Cultist has a very interesting domain.\nThe sure-hit is pretty easy to avoid if you're quick enough.",
-            "Replies": [
-                {
-                    "Text": "Do you have any tips against it?",
-                    "Reply": "GojoSatoru.LunaticCultistTip"
-                }
-            ],
-            "Actions": []
-        },
-        "LunaticCultistTip": {
-            "Text": "The Cultist leader only expands his domain when he's about to die. Save as much healing items as you can until then.\nOnce he expands his domain, try your best to not stand still, and deal as much damage as you can so you aren't in his domain for long.",
-            "Replies": [],
-            "Actions": []
-        }
-    },
+
     "Quests": {
         "ActiveQuest": {
             "Text": "You still need to complete the task I gave you.",
             "Replies": [],
             "Actions": []
         },
-
         "NoQuests": {
             "Text": "You've done everything I needed you to do.",
             "Replies": [],
             "Actions": []
         },
-
         "ShokoQuestI": {
             "Text": "I need you to wear this charm. While you're wearing this, land two consecutive black flashes, and consume atleast 10 heal potions. Then come back to me.",
             "Replies": [],
             "Actions": [
                 {
+                    "Type": "CloseDialog",
+                    "UIText": "I have some other stuff to do first."
+                },
+                {
                     "Type": "GiveQuest",
                     "UIText": "Sounds good!",
                     "QuestName": "ShokoQuestI"
-                },
-                {
-                    "Type": "CloseDialog",
-                    "UIText": "I have some other stuff to do first."
                 }
             ]
         }
