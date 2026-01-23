@@ -128,10 +128,6 @@ namespace sorceryFight.Content.UI.Shop
                 priceElement.PaddingRight = 24f;
                 itemContainer.Append(priceElement);
 
-
-                float gap = 8f;
-                float offset = i * (itemContainerTexture.Height + gap);
-
                 itemContainer.Width.Set(0f, 1f);
                 itemContainer.Height.Set(itemContainerTexture.Height, 0f);
                 itemListContent.Add(itemContainer);
