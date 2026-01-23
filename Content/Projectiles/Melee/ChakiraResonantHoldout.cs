@@ -197,11 +197,21 @@ namespace sorceryFight.Content.Projectiles.Melee
                 chargeProj.damage = Projectile.damage + (int)(Projectile.damage * 5 * progress);
                 chargeProj.netUpdate = true;
 
+                if (progress > 0.8f)
+                {
+                    ImpactFrameController.ImpactFrame(new Color(135, 214, 232), 8);
+                    CameraController.CameraShake(10, 80f, 12f);
+                }
+                else
+                {
+                    CameraController.ResetCameraPosition();
+                }
+
+                CameraController.ResetCameraZoom();
+
                 SorceryFightPlayer sfPlayer = Main.player[Projectile.owner].SorceryFight();
                 sfPlayer.disableRegenFromProjectiles = false;
 
-                CameraController.ResetCameraZoom();
-                CameraController.ResetCameraPosition();
 
                 SoundEngine.PlaySound(SorceryFightSounds.ChakiraResonantProjectileFire, Projectile.Center);
             }
