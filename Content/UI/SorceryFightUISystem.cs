@@ -120,10 +120,13 @@ namespace sorceryFight.Content.UI
 
         public void QuestToastNotification(string questName, QuestToastType type)
         {
-            if (sfInterface.CurrentState is SorceryFightUI)
+            TaskScheduler.Instance.AddDelayedTask(() =>
             {
-                sfUI.QuestToastNotification(questName, type);
-            }
+                if (sfInterface.CurrentState is SorceryFightUI)
+                {
+                    sfUI.QuestToastNotification(questName, type);
+                }
+            }, 1);
         }
         public void ResetUI()
         {

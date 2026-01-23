@@ -31,18 +31,22 @@ namespace sorceryFight.Content.UI.Quests.QuestToast
 
             time = 0;
             Left.Set(Main.screenWidth / Main.UIScale, 0f);
+            Top.Set(20f, 0f);
 
-            background = new UIImage(ModContent.Request<Texture2D>("sorceryFight/Content/UI/Quests/QuestToast/Background"));
+            var backgroundTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/Quests/QuestToast/Background", ReLogic.Content.AssetRequestMode.ImmediateLoad);
+            background = new UIImage(backgroundTexture);
+            background.Width.Set(backgroundTexture.Value.Width, 0f);
+            background.Height.Set(backgroundTexture.Value.Height, 0f);
             Append(background);
 
-            UIText toastText = new UIText(SFUtils.GetLocalizationValue($"Mods.sorceryFight.Quests.QuestToast.{type}"));
+            UIText toastText = new UIText(SFUtils.GetLocalizationValue($"Mods.sorceryFight.Quests.QuestToast.{type}"), 1.5f);
             toastText.Left.Set(20f, 0f);
             toastText.Top.Set(20f, 0f);
             toastText.TextColor = Color.Yellow;
 
             UIText questText = new UIText(questTitle);
-            questText.Left.Set(40f, 0f);
-            questText.Top.Set(20f, 0f);
+            questText.Left.Set(20f, 0f);
+            questText.Top.Set(60f, 0f);
 
             background.Append(toastText);
             background.Append(questText);
@@ -51,27 +55,32 @@ namespace sorceryFight.Content.UI.Quests.QuestToast
 
         public override void Update(GameTime gameTime)
         {
+            float offScreenX = (Main.screenWidth / Main.UIScale) + (background.Width.Pixels / 2f);
+            float onScreenX = offScreenX - background.Width.Pixels - 100f;
+
             if (time < transitionTime)
             {
-                float startPos = Main.screenWidth / Main.UIScale;
-                float progress = (transitionTime - time) / transitionTime;
-                float easeProg = 1 - MathF.Sqrt(1 - MathF.Pow(progress, 2));
-                Left.Set(startPos - (easeProg * background.Width.Pixels), 0f);
+                float progress = time / transitionTime;
+                float ease = MathF.Sqrt(1 - MathF.Pow(progress - 1, 2));
+                Left.Set(MathHelper.Lerp(offScreenX, onScreenX, ease), 0f);
             }
-
-            if (time > holdTime)
+            else if (time < holdTime)
             {
-                float startPos = (Main.screenWidth / Main.UIScale) - background.Width.Pixels;
-                float progress = (holdTime + transitionTime - time) / (holdTime + transitionTime);
-                float easeProg = 1 - MathF.Sqrt(1 - MathF.Pow(progress, 2));
-                Left.Set(startPos + (easeProg * background.Width.Pixels), 0f);
+                Left.Set(onScreenX, 0f);
             }
-
-            if (time > holdTime + transitionTime)
+            else if (time < holdTime + transitionTime)
+            {
+                float progress = (time - holdTime) / transitionTime;
+                float ease = 1 - MathF.Sqrt(1 - MathF.Pow(progress, 2));
+                Left.Set(MathHelper.Lerp(onScreenX, offScreenX, ease), 0f);
+            }
+            else
             {
                 parentState.RemoveElement(this);
+                return;
             }
 
+            Recalculate();
             time++;
         }
     }

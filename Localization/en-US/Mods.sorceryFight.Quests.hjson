@@ -1,8 +1,7 @@
 QuestToast: {
-	NewQuest: "New Quest!"
-	CompletedQuest: "Quest Completed!"
+	NewQuest: New Quest!
+	CompletedQuest: Quest Completed!
 }
-
 
 ShokoQuestI: {
 	DisplayName: The Essense of Healing.

@@ -161,6 +161,7 @@ public class SorceryFightUI : UIState
     public void QuestToastNotification(string questName, QuestToastType type)
     {
         questToast = new QuestToast(questName, type, this);
+        Append(questToast);
     }
 
     public void RemoveElement(UIElement element)

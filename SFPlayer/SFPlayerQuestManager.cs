@@ -4,8 +4,10 @@ using System.Diagnostics.CodeAnalysis;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using sorceryFight.Content.Quests;
+using sorceryFight.Content.UI;
 using Terraria;
 using Terraria.ModLoader;
+using static sorceryFight.Content.UI.Quests.QuestToast.QuestToast;
 
 namespace sorceryFight.SFPlayer
 {
@@ -33,7 +35,8 @@ namespace sorceryFight.SFPlayer
         public void AddQuest(Quest quest)
         {
             currentQuests.Add(quest);
-            currentQuests.Find(q => q == quest).OnAddedQuest(this);
+            quest.OnAddedQuest(this);
+            ModContent.GetInstance<SorceryFightUISystem>().QuestToastNotification(quest.DisplayName, QuestToastType.NewQuest);
         }
 
         public void ModifyQuestData(Quest quest, string key, object obj)
