@@ -14,7 +14,7 @@ using sorceryFight.Content.UI.BlackFlash;
 using sorceryFight.Content.UI;
 using sorceryFight.Content.UI.Quests.QuestToast;
 using static sorceryFight.Content.UI.Quests.QuestToast.QuestToast;
-using sorceryFight.Content.Quests;
+using sorceryFight.Content.UI.Quests.QuestMenu;
 
 public class SorceryFightUI : UIState
 {
@@ -24,6 +24,7 @@ public class SorceryFightUI : UIState
     public PassiveTechniqueSelector ptMenu;
     public FlowStateBar flowStateBar;
     public QuestToast questToast;
+    public QuestMenu questMenu;
 
     private List<UIElement> elementsToRemove;
     bool initialized;
@@ -86,6 +87,21 @@ public class SorceryFightUI : UIState
                 Elements.Remove(ctMenu);
             }
         }
+
+
+        if (SFKeybinds.OpenQuestMenu.JustPressed)
+        {
+            if (!Elements.Contains(questMenu))
+            {
+                questMenu = new QuestMenu();
+                Append(questMenu);
+            }
+            else
+            {
+                Elements.Remove(questMenu);
+            }
+        }
+
 
         if (player.sfUI == null)
         {
@@ -160,7 +176,7 @@ public class SorceryFightUI : UIState
 
     public void QuestToastNotification(string questName, QuestToastType type)
     {
-        questToast = new QuestToast(questName, type, this);
+        questToast = new QuestToast(questName, type);
         Append(questToast);
     }
 
