@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 namespace sorceryFight.Content.NPCs.TownNPCs
 {
     [AutoloadHead]
-    public class ShokoLeiri : SorceryFightNPC
+    public class ShokoIeiri : SorceryFightNPC
     {
         public override void SetStaticDefaults()
         {
@@ -28,7 +28,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
         {
             base.SetDefaults();
 
-            SFNPC.name = "ShokoLeiri";
+            SFNPC.name = "ShokoIeiri";
             SFNPC.attackDamage = 5;
             SFNPC.knockback = 4f;
             SFNPC.attackCooldown = 30;
