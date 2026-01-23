@@ -17,18 +17,14 @@ namespace sorceryFight.Content.UI.Quests.QuestToast
             CompletedQuest
         }
 
-        private SorceryFightUI parentState;
-
         private UIImage background;
 
         private float time;
         private const float holdTime = 180;
         private const float transitionTime = 45;
 
-        public QuestToast(string questTitle, QuestToastType type, SorceryFightUI parentState)
+        public QuestToast(string questTitle, QuestToastType type)
         {
-            this.parentState = parentState;
-
             time = 0;
             Left.Set(Main.screenWidth / Main.UIScale, 0f);
             Top.Set(20f, 0f);
@@ -76,7 +72,8 @@ namespace sorceryFight.Content.UI.Quests.QuestToast
             }
             else
             {
-                parentState.RemoveElement(this);
+                SorceryFightUI sfUI = (SorceryFightUI)Parent;
+                sfUI.RemoveElement(this);
                 return;
             }
 
