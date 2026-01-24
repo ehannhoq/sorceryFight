@@ -20,6 +20,12 @@ namespace sorceryFight.Content.Quests
         /// </summary>
         public string Description { get; private set; }
 
+
+        /// <summary>
+        /// Whether or not the quest is completed. An NPC checks whether a quest of theirs is in the player's <paramref name="currentQuests"/> but is completed. If so, it moves the quest to the player's <paramref name="completedQuests"/>
+        /// </summary>
+        public bool completed;
+
         /// <summary>
         /// Initializes the quest's <paramref name="DisplayName"/> and <paramref name="Description"/>.
         /// </summary>
@@ -44,6 +50,11 @@ namespace sorceryFight.Content.Quests
         /// Used to unload any variables that may linger on the player.
         /// </summary>
         public virtual void OnCompletedQuest(SorceryFightPlayer sfPlayer) { }
+
+        /// <summary>
+        /// Called when the quest is completed and the player interacts with the NPC for the first after.
+        /// </summary>
+        public abstract void GiveRewards(SorceryFightPlayer sfPlayer);
 
         /// <summary>
         /// Gets called when the player uses an item.

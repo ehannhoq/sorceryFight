@@ -21,8 +21,8 @@ namespace sorceryFight.Content.NPCs.TownNPCs
         /// The name of the NPC. Used as the name in game, as well as to retrieve dialog keys.
         /// </summary>
         public string name;
-        public List<Quest> quests;
-        private Dictionary<int, int> questProgress;
+        private List<Quest> quests;
+        private List<Quest> completedQuests;
 
         public int attackDamage;
         public int attackCooldown;
@@ -45,15 +45,40 @@ namespace sorceryFight.Content.NPCs.TownNPCs
 
             if (hitbox.Contains(mouse))
             {
-                if (Main.mouseRight && !Main.mouseRightRelease)
+                if (Main.mouseRight && Main.mouseRightRelease)
                 {
                     if (Main.LocalPlayer.talkNPC == -1)
                     {
                         SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
-                        ModContent.GetInstance<SorceryFightUISystem>().ActivateDialogUI(Dialog.Create(name + ".Interact"), this);
+
+                        foreach (Quest npcQuest in quests)
+                        {
+                            foreach (Quest playerQuest in sfPlayer.currentQuests)
+                            {
+                                if (playerQuest.completed && playerQuest.GetClass() == npcQuest.GetClass())
+                                {
+                                    sfPlayer.CompleteQuest(playerQuest);
+                                    completedQuests.Add(npcQuest);
+                                    ModContent.GetInstance<SorceryFightUISystem>().ActivateDialogUI(Dialog.Create($"{name}.CompletedQuest"), this);
+                                    return;
+                                }
+                            }
+                        }
+                        
+                        ModContent.GetInstance<SorceryFightUISystem>().ActivateDialogUI(Dialog.Create($"{name}.Interact"), this);
                     }
                 }
             }
+        }
+
+        public void CompletedQuest()
+        {
+            SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
+            foreach (Quest q in completedQuests)
+            {
+                q.GiveRewards(sfPlayer);
+            }
+            completedQuests = new List<Quest>();
         }
 
         public void AddQuest(Quest quest)
@@ -66,7 +91,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
             for (int i = 0; i < quests.Count; i++)
             {
                 if (sf.completedQuests.Contains(quests[i].GetClass())) continue;
-                
+
                 if (quests[i].IsAvailable(sf))
                 {
                     quest = quests[i];
@@ -88,6 +113,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
             NPC.DeathSound = SoundID.NPCDeath1;
 
             quests = new List<Quest>();
+            completedQuests = new List<Quest>();
         }
 
         public override bool CanChat()

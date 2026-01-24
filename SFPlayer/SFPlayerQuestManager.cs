@@ -71,23 +71,23 @@ namespace sorceryFight.SFPlayer
             for (int i = 0; i < currentQuests.Count; i++)
             {
                 Quest quest = currentQuests[i];
+
+                if (quest.completed) continue;
+
                 if (quest.IsCompleted(this))
                 {
-                    CompleteQuest(ref i);
+                    ModContent.GetInstance<SorceryFightUISystem>().QuestToastNotification(quest.DisplayName, QuestToastType.CompletedQuest);
+                    RemoveAllQuestData(quest);
+                    quest.OnCompletedQuest(this);
+                    quest.completed = true;
                 }
             }
         }
 
-        private void CompleteQuest(ref int index)
+        public void CompleteQuest(Quest quest)
         {
-            Main.NewText($"Completed Quest: {currentQuests[index].DisplayName}");
-
-            completedQuests.Add(currentQuests[index].GetClass());
-            RemoveAllQuestData(currentQuests[index]);
-            currentQuests[index].OnCompletedQuest(this);
-
-            currentQuests.RemoveAt(index);
-            index--;
+            currentQuests.Remove(quest);
+            completedQuests.Add(quest.GetClass());
         }
 
         private void RemoveAllQuestData(Quest quest)

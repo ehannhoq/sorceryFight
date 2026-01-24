@@ -33,14 +33,14 @@ namespace sorceryFight.Content.UI.Dialog
                 {
                     if (sfPlayer.currentQuests.Any(q => q.GetClass() == quest.GetClass()))
                     {
-                        uiSystem.ActivateDialogUI(Dialog.Create($"Quests.ActiveQuest"), initiator);
+                        uiSystem.ActivateDialogUI(Dialog.Create($"{sfNPC.name}.ActiveQuest"), initiator);
                         return;
                     }
 
-                    uiSystem.ActivateDialogUI(Dialog.Create($"Quests.{quest.GetClass()}"), initiator);
+                    uiSystem.ActivateDialogUI(Dialog.Create($"{sfNPC.name}.{quest.GetClass()}"), initiator);
                 }
                 else
-                    uiSystem.ActivateDialogUI(Dialog.Create($"Quests.NoQuests"), initiator);
+                    uiSystem.ActivateDialogUI(Dialog.Create($"{sfNPC.name}.NoQuests"), initiator);
             }
         }
 

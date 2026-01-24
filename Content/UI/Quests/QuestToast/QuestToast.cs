@@ -19,15 +19,14 @@ namespace sorceryFight.Content.UI.Quests.QuestToast
 
         private UIImage background;
 
-        private float time;
+        private float time = 0;
         private const float holdTime = 180;
         private const float transitionTime = 45;
 
         public QuestToast(string questTitle, QuestToastType type)
         {
-            time = 0;
-            Left.Set(Main.screenWidth / Main.UIScale, 0f);
-            Top.Set(20f, 0f);
+            Left.Set(Main.screenWidth, 0f);
+            Top.Set(0f, 0f);
 
             var backgroundTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/Quests/QuestToast/Background", ReLogic.Content.AssetRequestMode.ImmediateLoad);
             background = new UIImage(backgroundTexture);
@@ -46,13 +45,12 @@ namespace sorceryFight.Content.UI.Quests.QuestToast
 
             background.Append(toastText);
             background.Append(questText);
-
         }
 
         public override void Update(GameTime gameTime)
         {
-            float offScreenX = (Main.screenWidth / Main.UIScale) + (background.Width.Pixels / 2f);
-            float onScreenX = offScreenX - background.Width.Pixels - 100f;
+            float offScreenX = Main.screenWidth + (background.Width.Pixels / 2f);
+            float onScreenX = offScreenX - background.Width.Pixels * 1.5f;
 
             if (time < transitionTime)
             {
@@ -74,10 +72,10 @@ namespace sorceryFight.Content.UI.Quests.QuestToast
             {
                 SorceryFightUI sfUI = (SorceryFightUI)Parent;
                 sfUI.RemoveElement(this);
+                Recalculate();
                 return;
             }
 
-            Recalculate();
             time++;
         }
     }

@@ -77,3 +77,8 @@ BeerHat: {
 	DisplayName: Drinking Helmet
 	Tooltip: Enables auto-consumption of Cursed Energy potions
 }
+
+ReverseCharm: {
+	DisplayName: Reverse Charm
+	Tooltip: placeholder
+}

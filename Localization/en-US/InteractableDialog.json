@@ -88,20 +88,33 @@
                     "UIText": "Do you need me to do something?"
                 }
             ]
-        }
-    },
+        },
 
-    "Quests": {
         "ActiveQuest": {
             "Text": "You still need to complete the task I gave you.",
             "Replies": [],
             "Actions": []
         },
+
         "NoQuests": {
             "Text": "You've done everything I needed you to do.",
             "Replies": [],
             "Actions": []
         },
+
+        "CompletedQuest": {
+            "Text": "Good job on completing the task. Here is your reward.",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "InvokeMethod",
+                    "UIText": "Take reward.",
+                    "MethodName": "CompletedQuest"
+                }
+            ]
+        },
+
+
         "ShokoQuestI": {
             "Text": "I need you to wear this charm. While you're wearing this, land two consecutive black flashes, and consume atleast 10 heal potions. Then come back to me.",
             "Replies": [],
