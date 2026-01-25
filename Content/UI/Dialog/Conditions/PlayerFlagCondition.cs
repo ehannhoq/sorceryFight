@@ -5,12 +5,12 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.UI.Dialog.Conditions
 {
-    public class FlagCondition : ICondition
+    public class PlayerFlagCondition : ICondition
     {
         private string flag;
         private string value;
 
-        public FlagCondition(string flag, string value)
+        public PlayerFlagCondition(string flag, string value)
         {
             this.flag = flag;
             this.value = value;

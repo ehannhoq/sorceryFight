@@ -68,20 +68,20 @@ public class Dialog
             if (reply["Condition"] != null)
             {
                 var conditionData = JsonConvert.DeserializeObject<Dictionary<string, object>>(reply["Condition"].ToString());
-                string coditionType = conditionData["Type"].ToString();
+                string conditionType = conditionData["Type"].ToString();
 
                 ICondition condition;
-                switch (coditionType)
+                switch (conditionType)
                 {
                     case "BossDefeated":
                         condition = new BossDefeatedCondition(conditionData["Boss"].ToString());
                         break;
-                    case "Flag":
-                        condition = new FlagCondition(conditionData["Flag"].ToString(), conditionData["Value"].ToString());
+                    case "PlayerFlag":
+                        condition = new PlayerFlagCondition(conditionData["Flag"].ToString(), conditionData["Value"].ToString());
                         break;
 
                     default:
-                        throw new Exception($"No such condition type of type '{coditionType}'");
+                        throw new Exception($"No such condition type of type '{conditionType}'");
                 }
 
                 if (!condition.Evaluate(Main.LocalPlayer.SorceryFight()))
@@ -102,20 +102,20 @@ public class Dialog
             if (action.ContainsKey("Condition"))
             {
                 var conditionData = JsonConvert.DeserializeObject<Dictionary<string, object>>(action["Condition"].ToString());
-                string coditionType = conditionData["Type"].ToString();
+                string conditionType = conditionData["Type"].ToString();
 
                 ICondition condition;
-                switch (coditionType)
+                switch (conditionType)
                 {
                     case "BossDefeated":
                         condition = new BossDefeatedCondition(conditionData["Boss"].ToString());
                         break;
-                    case "Flag":
-                        condition = new FlagCondition(conditionData["Flag"].ToString(), conditionData["Value"].ToString());
+                    case "PlayerFlag":
+                        condition = new PlayerFlagCondition(conditionData["Flag"].ToString(), conditionData["Value"].ToString());
                         break;
 
                     default:
-                        throw new Exception($"No such condition type of type '{coditionType}'");
+                        throw new Exception($"No such condition type of type '{conditionType}'");
                 }
 
                 if (!condition.Evaluate(Main.LocalPlayer.SorceryFight()))
