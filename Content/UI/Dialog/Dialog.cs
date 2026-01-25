@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using sorceryFight.Content.UI.Dialog.Actions;
+using sorceryFight.Content.UI.Dialog.Conditions;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -53,19 +55,40 @@ public class Dialog
         var dialogData = JsonConvert.DeserializeObject<Dictionary<string, object>>(root[dialogSource][dialog].ToString());
 
         var lines = dialogData["Text"].ToString().Split("\n").ToList();
+        for (int i = 0; i < lines.Count; i++)
+        {
+            lines[i] = lines[i].Replace("{PlayerName}", Main.LocalPlayer.name);
+        }
 
-
-        // List<string> additionalLines;
-        // var additionalLinesData = dialogData["AdditionalText"]?.ToString();
-        // if (additionalLinesData != null)
-        // {
-        //     additionalLines = JsonConvert.DeserializeObject<List<string>>(additionalLinesData);
-        // }
 
         var replies = new Dictionary<string, string>();
         var replyData = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(dialogData["Replies"].ToString());
         foreach (var reply in replyData)
         {
+            if (reply["Condition"] != null)
+            {
+                var conditionData = JsonConvert.DeserializeObject<Dictionary<string, object>>(reply["Condition"].ToString());
+                string coditionType = conditionData["Type"].ToString();
+
+                ICondition condition;
+                switch (coditionType)
+                {
+                    case "BossDefeated":
+                        condition = new BossDefeatedCondition(conditionData["Boss"].ToString());
+                        break;
+                    case "Flag":
+                        condition = new FlagCondition(conditionData["Flag"].ToString(), conditionData["Value"].ToString());
+                        break;
+
+                    default:
+                        throw new Exception($"No such condition type of type '{coditionType}'");
+                }
+
+                if (!condition.Evaluate(Main.LocalPlayer.SorceryFight()))
+                    continue;
+            }
+
+
             string text = reply["Text"].ToString();
             string response = reply["Response"].ToString();
 
@@ -73,9 +96,33 @@ public class Dialog
         }
 
         var actions = new List<IAction>();
-        var actionData = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(dialogData["Actions"].ToString());
+        var actionData = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(dialogData["Actions"].ToString());
         foreach (var action in actionData)
         {
+            if (action.ContainsKey("Condition"))
+            {
+                var conditionData = JsonConvert.DeserializeObject<Dictionary<string, object>>(action["Condition"].ToString());
+                string coditionType = conditionData["Type"].ToString();
+
+                ICondition condition;
+                switch (coditionType)
+                {
+                    case "BossDefeated":
+                        condition = new BossDefeatedCondition(conditionData["Boss"].ToString());
+                        break;
+                    case "Flag":
+                        condition = new FlagCondition(conditionData["Flag"].ToString(), conditionData["Value"].ToString());
+                        break;
+
+                    default:
+                        throw new Exception($"No such condition type of type '{coditionType}'");
+                }
+
+                if (!condition.Evaluate(Main.LocalPlayer.SorceryFight()))
+                    continue;
+            }
+
+            
             string type = action["Type"]?.ToString() ??
                 throw new NullReferenceException($"An action in {dialogKey} doesn't have a 'ActionType' field!");
 
@@ -85,16 +132,16 @@ public class Dialog
             switch (type)
             {
                 case "OpenShop":
-                    actions.Add(new OpenShopAction(action["ShopName"], uiText));
+                    actions.Add(new OpenShopAction(action["ShopName"].ToString(), uiText));
                     break;
                 case "InvokeMethod":
-                    actions.Add(new InvokeMethodAction(action["MethodName"], uiText));
+                    actions.Add(new InvokeMethodAction(action["MethodName"].ToString(), uiText));
                     break;
                 case "QueryQuest":
                     actions.Add(new QueryQuestAction(uiText));
                     break;
                 case "GiveQuest":
-                    actions.Add(new GiveQuestAction(action["QuestName"], uiText));
+                    actions.Add(new GiveQuestAction(action["QuestName"].ToString(), uiText));
                     break;
                 case "CloseDialog":
                     actions.Add(new CloseDialogAction(uiText));
