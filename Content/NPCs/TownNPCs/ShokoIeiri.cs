@@ -39,7 +39,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
             NPC.knockBackResist = 0.5f;
             AnimationType = NPCID.Guide;
 
-            AddQuest(new ShokoQuestI());
+            AddQuest(new RCTQuestI());
         }
 
 
