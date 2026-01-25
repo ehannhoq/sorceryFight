@@ -24,6 +24,8 @@ namespace sorceryFight.Content.UI.Dialog
         public int dialogIndex;
 
         private SpecialUIElement background;
+        private SpecialUIElement headshotBackground;
+        private SpecialUIElement headshot;
         private UIText dialogText;
         private UIImage indicator;
 
@@ -33,9 +35,11 @@ namespace sorceryFight.Content.UI.Dialog
             this.initiator = initiator;
 
             background = new SpecialUIElement(ModContent.Request<Texture2D>("sorceryFight/Content/UI/Dialog/DialogBox", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
+            headshotBackground = new SpecialUIElement(ModContent.Request<Texture2D>("sorceryFight/Content/UI/Dialog/HeadshotBackground", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
+            headshot = new SpecialUIElement(ModContent.Request<Texture2D>($"sorceryFight/Content/UI/Dialog/Headshots/{dialog.speaker}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value, transparentPixels: true);
             dialogText = new UIText("", 1f, false);
             indicator = new UIImage(ModContent.Request<Texture2D>("sorceryFight/Content/UI/Dialog/DialogNextIndicator", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
-            
+
             TaskScheduler.Instance.AddDelayedTask(() =>
             {
                 SetupUI();
@@ -44,14 +48,22 @@ namespace sorceryFight.Content.UI.Dialog
 
         private void SetupUI()
         {
-            float left = (Main.screenWidth / Main.UIScale / 2) - (background.texture.Width / 2);
+            float gap = 16f;
+            float totalWidth = background.texture.Width + headshotBackground.texture.Width + gap;
+
+            float left = (Main.screenWidth / Main.UIScale / 2) - (totalWidth / 2);
             float top = (Main.screenHeight / Main.UIScale / 2) + (background.texture.Height / 2);
 
-            background.Left.Set(left, 0f);
+            headshotBackground.Left.Set(left, 0f);
+            headshotBackground.Top.Set(top, 0f);
+
+            headshot.Left.Set(left - ((headshot.texture.Width - headshotBackground.texture.Width) / 2f), 0f);
+            headshot.Top.Set(top - ((headshot.texture.Height - headshotBackground.texture.Height) / 2f), 0f);
+
+            background.Left.Set(left + headshotBackground.texture.Width + gap, 0f);
             background.Top.Set(top, 0f);
 
-
-            dialogText.Left.Set(left + 20f, 0f);
+            dialogText.Left.Set(left + headshotBackground.texture.Width + gap + 20f, 0f);
             dialogText.Top.Set(top + 20f, 0f);
 
             dialogText.Width.Set(background.texture.Width - 40f, 0f);
@@ -65,9 +77,11 @@ namespace sorceryFight.Content.UI.Dialog
             dialogText.IsWrapped = true;
 
 
-            indicator.Left.Set(left + background.texture.Width - indicator.Width.Pixels - 20f, 0f);
+            indicator.Left.Set(left + headshotBackground.texture.Width + gap + background.texture.Width - indicator.Width.Pixels - 20f, 0f);
             indicator.Top.Set(top + background.texture.Height - indicator.Height.Pixels - 20f, 0f);
 
+            Append(headshotBackground);
+            Append(headshot);
             Append(background);
             Append(dialogText);
 
@@ -124,12 +138,16 @@ namespace sorceryFight.Content.UI.Dialog
                     if (index == dialogCount - 1 && (replies.Count > 0 || actions.Count > 0))
                     {
                         int i = 1;
+
+                        float gap = 16f;
+                        float totalWidth = background.texture.Width + headshotBackground.texture.Width + gap;
+                        float left = (Main.screenWidth / Main.UIScale / 2) - (totalWidth / 2) + headshotBackground.texture.Width + gap + 20f;
+
                         foreach (var reply in replies)
                         {
                             DialogReplyText replyText = new(reply.Key, reply.Value);
                             replyText.onClick += () => NextDialog(replyText.dialogKey);
 
-                            float left = (Main.screenWidth / Main.UIScale / 2) - (background.texture.Width / 2) + 20;
                             float top = (Main.screenHeight / Main.UIScale / 2) + (background.texture.Height / 2) - 10 - (30 * i);
 
                             replyText.TextOriginX = 0f;
@@ -145,13 +163,13 @@ namespace sorceryFight.Content.UI.Dialog
                         foreach (var action in actions)
                         {
                             DialogActionText actionText = new(action.GetUIText());
-                            actionText.onClick += () => {
+                            actionText.onClick += () =>
+                            {
                                 EndDialog();
                                 action.SetInitiator(initiator);
                                 action.Invoke();
                             };
 
-                            float left = (Main.screenWidth / Main.UIScale / 2) - (background.texture.Width / 2) + 20;
                             float top = (Main.screenHeight / Main.UIScale / 2) + (background.texture.Height / 2) - 10 - (30 * i);
 
                             actionText.TextOriginX = 0f;

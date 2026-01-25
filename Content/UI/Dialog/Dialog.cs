@@ -12,11 +12,13 @@ namespace sorceryFight.Content.UI.Dialog;
 
 public class Dialog
 {
+    internal string speaker;
     internal List<string> lines;
     internal Dictionary<string, string> replies;
     internal List<IAction> actions;
-    private Dialog(List<string> lines, Dictionary<string, string> replies, List<IAction> actions)
+    private Dialog(string speaker, List<string> lines, Dictionary<string, string> replies, List<IAction> actions)
     {
+        this.speaker = speaker;
         this.lines = lines;
         this.replies = replies;
         this.actions = actions;
@@ -102,6 +104,6 @@ public class Dialog
             }
         }
 
-        return new Dialog(lines, replies, actions);
+        return new Dialog(dialogSource, lines, replies, actions);
     }
 }
