@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace sorceryFight.Content.UI.Dialog
+namespace sorceryFight.Content.UI.Dialog.Actions
 {
     public class InvokeMethodAction : IAction
     {

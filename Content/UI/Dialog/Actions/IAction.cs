@@ -1,4 +1,4 @@
-namespace sorceryFight.Content.UI.Dialog
+namespace sorceryFight.Content.UI.Dialog.Actions
 {
     public interface IAction 
     {
