@@ -86,6 +86,8 @@ namespace sorceryFight.SFPlayer
             questData = new();
             currentQuests = new List<Quest>();
             completedQuests = new List<string>();
+
+            leftItAllBehind = false;
         }
         public override void SaveData(TagCompound tag)
         {
@@ -129,6 +131,7 @@ namespace sorceryFight.SFPlayer
             generalBooleans.AddWithCondition("explosiveCursedEnergy", explosiveCursedEnergy);
             generalBooleans.AddWithCondition("sharpCursedEnergy", sharpCursedEnergy);
             generalBooleans.AddWithCondition("overflowingEnergy", overflowingEnergy);
+            generalBooleans.AddWithCondition("leftItAllBehind", leftItAllBehind);
             tag["generalBooleans"] = generalBooleans;
 
             tag["sixEyesLevel"] = sixEyesLevel;
@@ -199,6 +202,7 @@ namespace sorceryFight.SFPlayer
             explosiveCursedEnergy = generalBooleans.Contains("explosiveCursedEnergy");
             sharpCursedEnergy = generalBooleans.Contains("sharpCursedEnergy");
             overflowingEnergy = generalBooleans.Contains("overflowingEnergy");
+            leftItAllBehind = generalBooleans.Contains("leftItAllBehind");
 
             maxCursedEnergy = calculateBaseMaxCE();
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
@@ -226,8 +230,13 @@ namespace sorceryFight.SFPlayer
         
         public float calculateBaseMaxCE()
         {
-            float baseCE = 100f;
+            float baseCost = 100f;
             float sum = 0f;
+
+            if (heavenlyRestriction)
+            {
+                return baseCost + (35 * numberBossesDefeated);
+            }
 
             if (cursedSkull)
                 sum += 100f; // 200 total
@@ -241,13 +250,18 @@ namespace sorceryFight.SFPlayer
             if (cursedProfaneShards)
                 sum += 1000f; // 2000 total
 
-            return baseCE + sum;
+            return baseCost + sum;
         }
 
         public float calculateBaseCERegenRate()
         {
             float baseRegen = 1f;
             float sum = 0f;
+
+            if (heavenlyRestriction)
+            {
+                return baseRegen + (numberBossesDefeated * 2.5f);
+            }
 
             if (cursedEye)
                 sum += 4f; // 5 CE/s

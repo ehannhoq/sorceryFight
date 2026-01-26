@@ -16,7 +16,16 @@ RCTIcon: {
 		allows one to heal any wound of the user, fatal or not.
 		'''
 	LockedInfo: Be at the brink of death at the hands of the lunar god.
-	ContinuousRCT.Info: Heal rate: 1 HP / 5 CE
+}
+
+LeftItAllBehindIcon: {
+	DisplayName: The One Who Left It All Behind
+	Info:
+		'''
+		You've completely detached yourself from cursed energy. As such,
+		your heavenly restriction has been realized to its full potential.
+		'''
+	LockedInfo: Be at the brink of death at the hands of the lunar god.
 }
 
 SimpleDomainIcon: {
@@ -38,6 +47,7 @@ SukunasFingerIcon: {
 
 CursedEnergyBar: {
 	CE: Cursed Energy:
+	Stamina: Stamina:
 	RegenRate: Regeneration Rate:
 	ToolTip:
 		'''

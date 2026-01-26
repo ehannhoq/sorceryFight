@@ -82,9 +82,6 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
         private void AddIcons()
         {
             Texture2D masteryIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/BossKillsIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            Texture2D rctIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/RCTIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            Texture2D simpleDomainIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/SimpleDomainIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            Texture2D domainIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{sfPlayer.innateTechnique.Name}/DomainIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Texture2D lockedTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/SpecialLockedIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
             string masteryIconHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.Info")}" +
@@ -118,32 +115,53 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 index++;
             }
 
-            string rctIconHoverText = sfPlayer.unlockedRCT ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.Info")}" + $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.ContinuousRCT.Info")}"
-             : $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.LockedInfo")}";
-            Texture2D finalRCTTexture = sfPlayer.unlockedRCT ? ref rctIconTexture : ref lockedTexture;
-            SpecialUIElement rctIcon = new SpecialUIElement(finalRCTTexture, rctIconHoverText);
-            rctIcon.Left.Set(conditionalIconPositions[index].X, 0f);
-            rctIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
-            Append(rctIcon);
-            index++;
+            if (!sfPlayer.heavenlyRestriction)
+            {
+                Texture2D rctIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/RCTIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                Texture2D simpleDomainIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/SimpleDomainIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                Texture2D domainIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{sfPlayer.innateTechnique.Name}/DomainIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-            string simpleDomainIconHoverText = sfPlayer.HasDefeatedBoss(NPCID.CultistBoss) ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SimpleDomainIcon.Info")}"
-            : $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SimpleDomainIcon.LockedInfo")}";
-            Texture2D finalSimpleDomainTexture = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? ref simpleDomainIconTexture : ref lockedTexture;
-            SpecialUIElement simpleDomainIcon = new SpecialUIElement(finalSimpleDomainTexture, simpleDomainIconHoverText);
-            simpleDomainIcon.Left.Set(conditionalIconPositions[index].X, 0f);
-            simpleDomainIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
-            Append(simpleDomainIcon);
-            index++;
+                string rctIconHoverText = sfPlayer.unlockedRCT ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.Info")}" + $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.ContinuousRCT.Info")}"
+                : $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.LockedInfo")}";
+                Texture2D finalRCTTexture = sfPlayer.unlockedRCT ? ref rctIconTexture : ref lockedTexture;
+                SpecialUIElement rctIcon = new SpecialUIElement(finalRCTTexture, rctIconHoverText);
+                rctIcon.Left.Set(conditionalIconPositions[index].X, 0f);
+                rctIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
+                Append(rctIcon);
+                index++;
 
-            string domainIconHoverText = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? $"{sfPlayer.innateTechnique.DomainExpansion.DisplayName}\n{sfPlayer.innateTechnique.DomainExpansion.Description(sfPlayer)}"
-             : $"{sfPlayer.innateTechnique.DomainExpansion.LockedDescription}";
-            Texture2D finalDomainTexture = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? ref domainIconTexture : ref lockedTexture;
-            SpecialUIElement domainIcon = new SpecialUIElement(finalDomainTexture, domainIconHoverText);
-            domainIcon.Left.Set(conditionalIconPositions[index].X, 0f);
-            domainIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
-            Append(domainIcon);
-            index++;
+                string simpleDomainIconHoverText = sfPlayer.HasDefeatedBoss(NPCID.CultistBoss) ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SimpleDomainIcon.Info")}"
+                : $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SimpleDomainIcon.LockedInfo")}";
+                Texture2D finalSimpleDomainTexture = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? ref simpleDomainIconTexture : ref lockedTexture;
+                SpecialUIElement simpleDomainIcon = new SpecialUIElement(finalSimpleDomainTexture, simpleDomainIconHoverText);
+                simpleDomainIcon.Left.Set(conditionalIconPositions[index].X, 0f);
+                simpleDomainIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
+                Append(simpleDomainIcon);
+                index++;
+
+                string domainIconHoverText = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? $"{sfPlayer.innateTechnique.DomainExpansion.DisplayName}\n{sfPlayer.innateTechnique.DomainExpansion.Description(sfPlayer)}"
+                : $"{sfPlayer.innateTechnique.DomainExpansion.LockedDescription}";
+                Texture2D finalDomainTexture = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? ref domainIconTexture : ref lockedTexture;
+                SpecialUIElement domainIcon = new SpecialUIElement(finalDomainTexture, domainIconHoverText);
+                domainIcon.Left.Set(conditionalIconPositions[index].X, 0f);
+                domainIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
+                Append(domainIcon);
+                index++;
+            }
+            else
+            {
+                Texture2D leftItAllBehindIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{sfPlayer.innateTechnique.Name}/LeftItAllBehindIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+                string leftItAllBehindIconHoverText = sfPlayer.leftItAllBehind ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.LeftItAllBehindIcon.DisplayName")}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.LeftItAllBehindIcon.Info")}"
+                : $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.LeftItAllBehindIcon.LockedInfo")}";
+                Texture2D finalLeftItAllBehindIconTexture = sfPlayer.leftItAllBehind ? ref leftItAllBehindIconTexture : ref lockedTexture;
+                SpecialUIElement leftItAllBehindIcon = new SpecialUIElement(finalLeftItAllBehindIconTexture, leftItAllBehindIconHoverText);
+                leftItAllBehindIcon.Left.Set(conditionalIconPositions[index].X, 0f);
+                leftItAllBehindIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
+                Append(leftItAllBehindIcon);
+                index++;
+            }
+
 
         }
         public override void Update(GameTime gameTime)

@@ -129,6 +129,11 @@ namespace sorceryFight.SFPlayer
         public Vector2 CEBarPos;
         #endregion
 
+        #region HeavenlyRestriction
+        public bool heavenlyRestriction;
+        public bool leftItAllBehind;
+        #endregion
+
         public override void UpdateEquips()
         {
             if (innateTechnique == null) return;
@@ -167,6 +172,7 @@ namespace sorceryFight.SFPlayer
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
             maxCursedEnergy = calculateBaseMaxCE();
 
+            if (heavenlyRestriction) return;
 
             if (blackFlashTimeLeft != 0)
             {

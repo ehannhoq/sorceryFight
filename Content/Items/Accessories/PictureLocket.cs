@@ -30,6 +30,11 @@ namespace sorceryFight.Content.Items.Accessories
             sfPlayer.pictureLocket = true;
         }
 
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
+        {
+            return !player.SorceryFight().heavenlyRestriction;
+        }
+
         public override void AddRecipes()
         {
             Recipe recipe = Recipe.Create(Type);

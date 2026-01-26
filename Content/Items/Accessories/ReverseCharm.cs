@@ -1,4 +1,5 @@
 using sorceryFight.Rarities;
+using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -16,6 +17,12 @@ namespace sorceryFight.Content.Items.Accessories
             Item.rare = ModContent.RarityType<SorceryFightAccessory>();
             Item.width = 30;
             Item.height = 30;
+            Item.accessory = true;
+        }
+
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
+        {
+            return !player.SorceryFight().heavenlyRestriction;
         }
     }
 }

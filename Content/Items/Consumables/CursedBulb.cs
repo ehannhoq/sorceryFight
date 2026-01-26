@@ -26,6 +26,11 @@ namespace sorceryFight.Content.Items.Consumables
             Item.rare = ItemRarityID.Master;
         }
 
+        public override bool CanUseItem(Player player)
+        {
+            return !player.SorceryFight().heavenlyRestriction;
+        }
+
         public override bool? UseItem(Player player)
         {
             if (player.whoAmI == Main.myPlayer)

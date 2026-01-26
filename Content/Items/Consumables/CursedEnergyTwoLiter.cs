@@ -31,7 +31,7 @@ namespace sorceryFight.Content.Items.Consumables
             if (Main.myPlayer == player.whoAmI)
             {
                 SorceryFightPlayer sfPlayer = player.SorceryFight();
-                return sfPlayer.cursedEnergy < sfPlayer.maxCursedEnergy && !sfPlayer.HasActiveDomain;;
+                return sfPlayer.cursedEnergy < sfPlayer.maxCursedEnergy && !sfPlayer.HasActiveDomain && !sfPlayer.heavenlyRestriction;
             }
             return false;
         }

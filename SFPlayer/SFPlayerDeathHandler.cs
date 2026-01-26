@@ -29,11 +29,11 @@ namespace sorceryFight.SFPlayer
         {
             if (!rctAnimation) return;
 
-            rctTimer ++;
+            rctTimer++;
             Player.creativeGodMode = true;
             if (Player.statLife < Player.statLifeMax2)
             {
-                Player.statLife ++;
+                Player.statLife++;
             }
 
             if (deathPosition == Vector2.Zero)
@@ -48,7 +48,7 @@ namespace sorceryFight.SFPlayer
             }
 
             int numParticles = rctTimer / 90;
-            for (int i = 0; i <= numParticles; i ++)
+            for (int i = 0; i <= numParticles; i++)
             {
                 Vector2 particlePosition = Player.Center + new Vector2(Main.rand.NextFloat(-100f, 100f), Main.rand.NextFloat(-100f, 100f));
                 Vector2 particleVelocity = particlePosition.DirectionTo(Player.Center) * 3;
@@ -62,20 +62,29 @@ namespace sorceryFight.SFPlayer
                 rctAnimation = false;
                 rctTimer = 0;
                 deathPosition = Vector2.Zero;
-                unlockedRCT = true;
 
-                for (int i = 0; i < 100; i ++)
+                if (heavenlyRestriction)
+                {
+                    leftItAllBehind = true;
+                    ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText("Mods.sorceryFight.Misc.LeftItAllBehind.GeneralMessage"), Color.Green, Player.whoAmI);
+                }
+                else
+                {
+                    unlockedRCT = true;
+                    string keybindText = "[" + SFKeybinds.UseRCT.GetAssignedKeys()[Player.whoAmI] + "]" + SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.UnlockedRCT.KeyBindMessage");
+                    ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText("Mods.sorceryFight.Misc.UnlockedRCT.GeneralMessage"), Color.Green, Player.whoAmI);
+                    ChatHelper.SendChatMessageToClient(NetworkText.FromLiteral(keybindText), Color.Green, Player.whoAmI);
+                }
+
+                SorceryFightUI.UpdateTechniqueUI.Invoke();
+
+                for (int i = 0; i < 100; i++)
                 {
                     Vector2 particleOffsetPosition = Player.Center + new Vector2(Main.rand.NextFloat(-200f, 200f), Main.rand.NextFloat(-200f, 200f));
                     Vector2 particleVelocity = Player.Center.DirectionTo(particleOffsetPosition) * 6;
                     LineParticle particle = new LineParticle(Player.Center, particleVelocity, false, 90, 2f, Color.Wheat);
                     GeneralParticleHandler.SpawnParticle(particle);
                 }
-
-                string keybindText = "[" + SFKeybinds.UseRCT.GetAssignedKeys()[Player.whoAmI] + "]" + SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.UnlockedRCT.KeyBindMessage");
-                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText("Mods.sorceryFight.Misc.UnlockedRCT.GeneralMessage"), Color.Green, Player.whoAmI);
-                ChatHelper.SendChatMessageToClient(NetworkText.FromLiteral(keybindText), Color.Green, Player.whoAmI);
-                SorceryFightUI.UpdateTechniqueUI.Invoke();
             }
         }
 
