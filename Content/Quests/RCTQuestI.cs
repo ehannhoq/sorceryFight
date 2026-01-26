@@ -11,53 +11,31 @@ namespace sorceryFight.Content.Quests
 {
     public class RCTQuestI : Quest
     {
-        private const int HEALTH_POTIONS = 2;
-        public override void OnAddedQuest(SorceryFightPlayer sfPlayer)
-        {
-            sfPlayer.Player.QuickSpawnItem(sfPlayer.Player.GetSource_Misc("ReverseCharm"), ModContent.ItemType<ReverseCharm>(), 1);
-        }
+        private const int HP_TO_HEAL = 200;
         public override bool IsCompleted(SorceryFightPlayer sfPlayer)
         {
-            if (!sfPlayer.Player.armor.Any(item => item.type == ModContent.ItemType<ReverseCharm>()))
-                return false;
-
-            if (sfPlayer.blackFlashCounter < 2)
-                return false;
-
-            if (sfPlayer.TryGetQuestData(this, "HealthPotionsConsumed", out object countData))
+            if (sfPlayer.rctAuraIndex != -1)
             {
-                int count = (int)countData;
-                if (count < HEALTH_POTIONS)
-                    return false;
-            }
-            else
-                return false;
+                if (sfPlayer.TryGetQuestData(this, "HealthRegeneratedWithRCT", out object countData))
+                {
+                    float currentHealed = (float)countData;
+                    sfPlayer.ModifyQuestData(this, "HealthRegeneratedWithRCT", currentHealed + SFUtils.RateSecondsToTicks(sfPlayer.rctBaseHealPerSecond + sfPlayer.additionalRCTHealPerSecond));
 
-            return true;
+                    if (currentHealed > HP_TO_HEAL)
+                        return true;
+                }
+                else
+                {
+                    sfPlayer.ModifyQuestData(this, "HealthRegeneratedWithRCT", SFUtils.RateSecondsToTicks(sfPlayer.rctBaseHealPerSecond + sfPlayer.additionalRCTHealPerSecond));
+                }
+            }
+
+            return false;
         }
 
         public override void GiveRewards(SorceryFightPlayer sfPlayer)
         {
-            Main.NewText("tasedawdasd");
-        }
-
-        public override void UsedItem(SorceryFightPlayer sfPlayer, Item item)
-        {
-            if (item.healLife > 0)
-            {
-                if (sfPlayer.TryGetQuestData(this, "HealthPotionsConsumed", out object countData))
-                {
-                    int count = (int)countData;
-                    count++;
-                    sfPlayer.ModifyQuestData(this, "HealthPotionsConsumed", count);
-                }
-                else
-                {
-                    sfPlayer.ModifyQuestData(this, "HealthPotionsConsumed", 1);
-                }
-
-                Main.NewText(sfPlayer.GetQuestData(this, "HealthPotionsConsumed"));
-            }
+            sfPlayer.Player.QuickSpawnItem(sfPlayer.Player.GetSource_Misc("ReverseCharm"), ModContent.ItemType<ReverseCharm>(), 1);
         }
     }
 }
