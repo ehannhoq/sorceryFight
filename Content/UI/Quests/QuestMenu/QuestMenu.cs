@@ -95,10 +95,22 @@ namespace sorceryFight.Content.UI.Quests.QuestMenu
                 questDesc.Left.Set(15f, 0f);
                 questDesc.IsWrapped = true;
 
-                textContainer.Append(questDesc);
 
                 questBackground.Append(questName);
                 questBackground.Append(textContainer);
+
+                if (quest.completed)
+                {
+                    UIText completedText = new UIText("COMPLETED", 0.75f);
+                    completedText.TextColor = Color.Green;
+
+                    completedText.VAlign = 0.5f;
+                    completedText.HAlign = 0.5f;
+
+                    questBackground.Append(completedText);
+                }
+                else
+                    textContainer.Append(questDesc);
 
                 questBackground.Width.Set(0f, 1f);
                 questBackground.Height.Set(backgroundTexture.Value.Height, 0f);
