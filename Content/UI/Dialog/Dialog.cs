@@ -138,7 +138,7 @@ public class Dialog
                     actions.Add(new InvokeMethodAction(action["MethodName"].ToString(), uiText));
                     break;
                 case "QueryQuest":
-                    actions.Add(new QueryQuestAction(uiText));
+                    actions.Add(new QueryQuestAction(action["QuestLine"].ToString(), uiText));
                     break;
                 case "GiveQuest":
                     actions.Add(new GiveQuestAction(action["QuestName"].ToString(), uiText));

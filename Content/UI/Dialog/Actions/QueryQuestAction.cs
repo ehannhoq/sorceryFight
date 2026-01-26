@@ -9,13 +9,15 @@ namespace sorceryFight.Content.UI.Dialog.Actions
 {
     public class QueryQuestAction : IAction
     {
+        public string questLine;
         public string uiText;
 
         private object initiator;
 
 
-        public QueryQuestAction(string uiText)
+        public QueryQuestAction(string questLine, string uiText)
         {
+            this.questLine = questLine;
             this.uiText = uiText;
         }
 
@@ -29,7 +31,7 @@ namespace sorceryFight.Content.UI.Dialog.Actions
                 SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
                 SorceryFightUISystem uiSystem = ModContent.GetInstance<SorceryFightUISystem>();
 
-                if (sfNPC.GetQuestIfAvailable(sfPlayer, out Quest quest))
+                if (sfNPC.GetNextQuestFromQuestLine(sfPlayer, questLine, out Quest quest))
                 {
                     if (sfPlayer.currentQuests.Any(q => q.GetClass() == quest.GetClass()))
                     {
