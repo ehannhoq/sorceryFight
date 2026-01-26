@@ -4,6 +4,26 @@ QuestToast: {
 }
 
 RCTQuestI: {
-	DisplayName: The Essense of Healing.
-	Description: Consume 10 healing potions, as well as land two consecutive black flashes while wearing the Reverse Charm.
+	DisplayName: The Art of the Reverse Cursed Technique
+	Description: Heal 200 HP using just the Reverse Cursed Technique.
+}
+
+SixEyesQuestI: {
+	DisplayName: The Six Eyes
+	Description: placeholder
+}
+
+SixEyesQuestII: {
+	DisplayName: The Six Eyes, Part II
+	Description: placeholder
+}
+
+TechniqueRefreshQuestI: {
+	DisplayName: Technique Refresh
+	Description: placeholder
+}
+
+DomainRefreshQuestI: {
+	DisplayName: Domain Refresh
+	Description: placeholder
 }

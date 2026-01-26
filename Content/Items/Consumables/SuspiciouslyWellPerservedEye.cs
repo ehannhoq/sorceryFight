@@ -29,7 +29,7 @@ namespace sorceryFight.Content.Items.Consumables
             if (Main.myPlayer == player.whoAmI)
             {
                 SorceryFightPlayer sfPlayer = player.SorceryFight();
-                return sfPlayer.sixEyes && !sfPlayer.challengersEye;
+                return sfPlayer.HasSixEyes && !sfPlayer.challengersEye;
             }
             return false;
         }

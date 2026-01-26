@@ -86,10 +86,11 @@ namespace sorceryFight.Content.NPCs.TownNPCs
             quests.Add(quest);
         }
 
-        public bool GetQuestIfAvailable(SorceryFightPlayer sf, [NotNullWhen(true)] out Quest quest)
+        public bool GetNextQuestFromQuestLine(SorceryFightPlayer sf, string questLine, [NotNullWhen(true)] out Quest quest)
         {
             for (int i = 0; i < quests.Count; i++)
             {
+                if (!quests[i].GetClass().Contains(questLine)) continue;
                 if (sf.completedQuests.Contains(quests[i].GetClass())) continue;
 
                 if (quests[i].IsAvailable(sf))

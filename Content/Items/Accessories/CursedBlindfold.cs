@@ -48,7 +48,7 @@ namespace sorceryFight.Content.Items.Accessories
 
         public override bool CanEquipAccessory(Player player, int slot, bool modded)
         {
-            return player.SorceryFight().sixEyes;
+            return player.SorceryFight().HasSixEyes || player.SorceryFight().challengersEye;
         }
 
         public override void AddRecipes()

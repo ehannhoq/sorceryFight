@@ -42,7 +42,6 @@ namespace sorceryFight.SFPlayer
             cursedRuneOfKos = false;
             cursedEnergyRegenFromOtherSources = 0f;
 
-            recievedYourPotential = false;
             yourPotentialSwitch = false;
             usedYourPotentialBefore = false;
             usedCursedFists = false;
@@ -54,7 +53,7 @@ namespace sorceryFight.SFPlayer
             fallingBlossomEmotion = false;
             inSimpleDomain = false;
 
-            sixEyes = false;
+            sixEyesLevel = 0;
             challengersEye = false;
             uniqueBodyStructure = false;
             blessedByBlackFlash = false;
@@ -122,10 +121,8 @@ namespace sorceryFight.SFPlayer
             tag["cursedEnergyRegenModifiers"] = cursedEnergyRegenModifiers;
 
             var generalBooleans = new List<string>();
-            generalBooleans.AddWithCondition("recievedYourPotential", recievedYourPotential);
             generalBooleans.AddWithCondition("usedYourPotentialBefore", usedYourPotentialBefore);
             generalBooleans.AddWithCondition("unlockedRCT", unlockedRCT);
-            generalBooleans.AddWithCondition("sixEyes", sixEyes);
             generalBooleans.AddWithCondition("hollowEyes", challengersEye);
             generalBooleans.AddWithCondition("uniqueBodyStructure", uniqueBodyStructure);
             generalBooleans.AddWithCondition("blessedByBlackFlash", blessedByBlackFlash);
@@ -133,6 +130,8 @@ namespace sorceryFight.SFPlayer
             generalBooleans.AddWithCondition("sharpCursedEnergy", sharpCursedEnergy);
             generalBooleans.AddWithCondition("overflowingEnergy", overflowingEnergy);
             tag["generalBooleans"] = generalBooleans;
+
+            tag["sixEyesLevel"] = sixEyesLevel;
 
             if (innateTechnique != null)
             {
@@ -192,10 +191,8 @@ namespace sorceryFight.SFPlayer
             cursedRuneOfKos = cursedEnergyRegenModifiers.Contains("cursedRuneOfKos");
 
             var generalBooleans = tag.GetList<string>("generalBooleans");
-            recievedYourPotential = generalBooleans.Contains("recievedYourPotential");
             usedYourPotentialBefore = generalBooleans.Contains("usedYourPotentialBefore");
             unlockedRCT = generalBooleans.Contains("unlockedRCT");
-            sixEyes = generalBooleans.Contains("sixEyes");
             challengersEye = generalBooleans.Contains("hollowEyes");
             uniqueBodyStructure = generalBooleans.Contains("uniqueBodyStructure");
             blessedByBlackFlash = generalBooleans.Contains("blessedByBlackFlash");
@@ -216,13 +213,15 @@ namespace sorceryFight.SFPlayer
                 }
             }
 
+            sixEyesLevel = tag.ContainsKey("sixEyesLevel") ? tag.GetShort("sixEyesLevel") : (short)0;
+
             var currentQuestsData = tag.GetList<string>("currentQuests");
             foreach (var quest in currentQuestsData)
             {
-                currentQuests.Add(Quest.QuestBuilder(quest));
+                // currentQuests.Add(Quest.QuestBuilder(quest));
             }
 
-            completedQuests = tag.GetList<string>("completedQuests").ToList();
+            // completedQuests = tag.GetList<string>("completedQuests").ToList();
         }
         
         public float calculateBaseMaxCE()

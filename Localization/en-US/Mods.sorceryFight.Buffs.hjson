@@ -1,7 +1,33 @@
 PlayerAttributes: {
+	AwakenedSixEyes: {
+		DisplayName: Awakened Six Eyes
+		Description:
+			'''
+			Reduces the cost of Cursed Techniques by {0}%
+			Grants permanent Dangersense
+			'''
+	}
+
 	SixEyes: {
 		DisplayName: Six Eyes
-		Description: Reduces the cost of Cursed Techniques by {0}%.
+		Description:
+			'''
+			Reduces the cost of Cursed Techniques by {0}%
+			Grants permanent Dangersense
+			Grants permanent Night Owl
+			'''
+	}
+
+	TrueSixEyes: {
+		DisplayName: True Six Eyes
+		Description:
+			'''
+			Reduces the cost of Cursed Techniques by {0}%
+			Grants permanent Dangersense
+			Grants permanent Night Owl
+			Grants permanent Spelunker
+			Grants permanent Hunter
+			'''
 	}
 
 	ChallengersEye: {

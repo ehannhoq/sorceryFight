@@ -60,6 +60,9 @@
             "Actions": []
         }
     },
+
+
+
     "YoshinobuGakuganji": {
         "Interact": {
             "Text": "Greetings, young sorcerer. How may I help you today?",
@@ -78,6 +81,9 @@
             ]
         }
     },
+
+
+
     "ShokoIeiri": {
         "Interact": {
             "Text": "Need something?",
@@ -85,23 +91,28 @@
             "Actions": [
                 {
                     "Type": "QueryQuest",
-                    "UIText": "Do you need me to do something?"
+                    "QuestLine": "RCT",
+                    "UIText": "Can you help me with the Reverse Curse Technique?",
+                    "Condition": {
+                        "Type": "PlayerFlag",
+                        "Flag": "unlockedRCT",
+                        "Value": "true"
+                    }
                 }
             ]
         },
+
 
         "ActiveQuest": {
             "Text": "You still need to complete the task I gave you.",
             "Replies": [],
             "Actions": []
         },
-
         "NoQuests": {
-            "Text": "You've done everything I needed you to do.",
+            "Text": "There's nothing else I need you to do.",
             "Replies": [],
             "Actions": []
         },
-
         "CompletedQuest": {
             "Text": "Good job on completing the task. Here is your reward.",
             "Replies": [],
@@ -115,8 +126,84 @@
         },
 
 
-        "ShokoQuestI": {
-            "Text": "I need you to wear this charm. While you're wearing this, land two consecutive black flashes, and consume atleast 10 heal potions. Then come back to me.",
+        "RCTQuestI": {
+            "Text": "I can't really 'teach' you to be better at the reverse cursed technique, but I can give you an item that will boost it's efficiency.\nHowever, before I give you that, I need you to prove that you can use the reverse cursed technique on your own.\nHeal upto 200 health points using the reverse cursed technique, then come back to me.",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "CloseDialog",
+                    "UIText": "Sorry, I have some other stuff to do first."
+                },
+                {
+                    "Type": "GiveQuest",
+                    "UIText": "Sounds good!",
+                    "QuestName": "RCTQuestI"
+                }
+            ]
+        }
+    },
+
+
+
+    "GojoSatoru": {
+        "Interact": {
+            "Text": "Yo, {PlayerName}.",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "QueryQuest",
+                    "QuestLine": "TechniqueRefresh",
+                    "UIText": "Can you teach me how you refresh your technique?"
+                },
+                {
+                    "Type": "QueryQuest",
+                    "QuestLine": "SixEyes",
+                    "UIText": "Can you help me with my Six Eyes?",
+                    "Condition": {
+                        "Type": "PlayerFlag",
+                        "Flag": "HasSixEyes",
+                        "Value": "true"
+                    }
+                },
+                {
+                    "Type": "QueryQuest",
+                    "QuestLine": "DomainRefresh",
+                    "UIText": "How are you able to expand your domain multiple times?",
+                    "Condition": {
+                        "Type": "PlayerFlag",
+                        "Flag": "UnlockedDomainExpansion",
+                        "Value": "true"
+                    }
+                }
+            ]
+        },
+
+
+        "ActiveQuest": {
+            "Text": "Didn't I already tell you to go do something else? Go back to doing that.",
+            "Replies": [],
+            "Actions": []
+        },
+        "NoQuests": {
+            "Text": "You've done everything I needed you to do.",
+            "Replies": [],
+            "Actions": []
+        },
+        "CompletedQuest": {
+            "Text": "Good job on completing the task. Here is your reward.",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "InvokeMethod",
+                    "UIText": "Take reward.",
+                    "MethodName": "CompletedQuest"
+                }
+            ]
+        },
+
+
+        "SixEyesQuestI": {
+            "Text": "Seems you've just awakened the Six Eyes. It seems pretty premature at the moment, so let me help you out.\n",
             "Replies": [],
             "Actions": [
                 {
@@ -126,7 +213,56 @@
                 {
                     "Type": "GiveQuest",
                     "UIText": "Sounds good!",
-                    "QuestName": "ShokoQuestI"
+                    "QuestName": "SixEyesQuestI"
+                }
+            ]
+        },
+        "SixEyesQuestII": {
+            "Text": "Looks like your Six Eyes is developing nicely. There's one more thing I'd like for you to do though.\n",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "CloseDialog",
+                    "UIText": "I have some other stuff to do first."
+                },
+                {
+                    "Type": "GiveQuest",
+                    "UIText": "Sounds good!",
+                    "QuestName": "SixEyesQuestII"
+                }
+            ]
+        },
+
+
+        "TechniqueRefreshQuestI": {
+            "Text": "Technique refresh? Well, that's an interesting ask.\n",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "CloseDialog",
+                    "UIText": "I have some other stuff to do first."
+                },
+                {
+                    "Type": "GiveQuest",
+                    "UIText": "Sounds good!",
+                    "QuestName": "TechniqueRefreshQuestI"
+                }
+            ]
+        },
+
+        
+        "DomainRefreshQuestI": {
+            "Text": "Simple. I destroy the part of my brain where my technique is engraved, then immedietly heal it with the reverse cursed technique. It's a very delicate maneuver, with even the slightest misstep costing a lot.\n",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "CloseDialog",
+                    "UIText": "I have some other stuff to do first."
+                },
+                {
+                    "Type": "GiveQuest",
+                    "UIText": "Sounds good!",
+                    "QuestName": "DomainRefreshQuestI"
                 }
             ]
         }

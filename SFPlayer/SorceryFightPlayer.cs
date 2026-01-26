@@ -63,7 +63,6 @@ namespace sorceryFight.SFPlayer
         #endregion
 
         #region One-off Variables
-        public bool recievedYourPotential;
         public bool yourPotentialSwitch;
         public bool usedYourPotentialBefore;
         public bool usedCursedFists;
@@ -73,6 +72,8 @@ namespace sorceryFight.SFPlayer
         #endregion
 
         #region Domain
+        public bool UnlockedSimpleDomain => new SimpleDomainFloating().Unlocked(this);
+        public bool UnlockedDomainExpansion => innateTechnique.DomainExpansion.Unlocked(this);
         public bool inDomainAnimation;
         public int domainTimer;
         public bool HasActiveDomain => DomainExpansionController.ActiveDomains.Any(d => d is PlayerDomainExpansion && d is not ISimpleDomain && d.owner == Player.whoAmI);
@@ -82,7 +83,11 @@ namespace sorceryFight.SFPlayer
         #endregion
 
         #region Player Attributes
-        public bool sixEyes;
+        public short sixEyesLevel;
+        public bool AwakenedSixEyes => sixEyesLevel == 1;
+        public bool SixEyes => sixEyesLevel == 2;
+        public bool TrueSixEyes => sixEyesLevel == 3;
+        public bool HasSixEyes { get { return sixEyesLevel > 0; } }
         public bool challengersEye;
         public bool uniqueBodyStructure;
         public bool blessedByBlackFlash;
@@ -267,13 +272,11 @@ namespace sorceryFight.SFPlayer
         }
 
 
-        public override void OnEnterWorld()
+        public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
         {
-            if (Main.myPlayer == Player.whoAmI && !recievedYourPotential)
-            {
-                Player.QuickSpawnItem(Player.GetSource_Misc("YourPotential"), ModContent.ItemType<YourPotential>());
-                recievedYourPotential = true;
-            }
+            return [
+                ModContent.GetModItem(ModContent.ItemType<YourPotential>()).Item
+            ];
         }
 
 
@@ -307,7 +310,7 @@ namespace sorceryFight.SFPlayer
                 if (HasActiveDomain)
                     domainTimer = 1;
 
-                if (innateTechnique.DomainExpansion.Unlocked(this))
+                if (UnlockedDomainExpansion)
                 {
                     float zoom = 1.3f * (MathF.Log10(domainTimer + 1f) + 0.22f);
 
@@ -325,7 +328,7 @@ namespace sorceryFight.SFPlayer
                         ToggleSimpleDomain();
                     }
                 }
-                else if (innateTechnique.DomainExpansion.Unlocked(this))
+                else if (UnlockedDomainExpansion)
                 {
                     if (DomainExpansionController.ActiveDomains.TryGet(d => d is ISimpleDomain && d.owner == Player.whoAmI, out DomainExpansion de))
                     {
@@ -514,7 +517,7 @@ namespace sorceryFight.SFPlayer
             if (Main.myPlayer == Player.whoAmI)
             {
                 int index;
-                if (!new SimpleDomainFloating().Unlocked(this))
+                if (!UnlockedSimpleDomain)
                 {
                     index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You haven't unlocked this yet!");
                     Main.combatText[index].lifeTime = 60;
@@ -587,9 +590,9 @@ namespace sorceryFight.SFPlayer
         public void RollForPlayerAttributes(bool isReroll = false)
         {
             bool successfulRoll = false;
-            if (SFUtils.Roll(SFConstants.SixEyesPercent) && !sixEyes && !challengersEye)
+            if (SFUtils.Roll(SFConstants.SixEyesPercent) && sixEyesLevel == 0 && !challengersEye)
             {
-                sixEyes = true;
+                sixEyesLevel = 1;
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.SixEyes"), Color.Khaki, Player.whoAmI);
                 successfulRoll = true;
             }
@@ -660,8 +663,12 @@ namespace sorceryFight.SFPlayer
         {
             if (challengersEye)
                 Player.AddBuff(ModContent.BuffType<ChallengersEyeBuff>(), 2);
-            else if (sixEyes)
+            else if (AwakenedSixEyes)
+                Player.AddBuff(ModContent.BuffType<AwakenedSixEyesBuff>(), 2);
+            else if (SixEyes)
                 Player.AddBuff(ModContent.BuffType<SixEyesBuff>(), 2);
+            else if (TrueSixEyes)
+                Player.AddBuff(ModContent.BuffType<TrueSixEyesBuff>(), 2);
 
             if (uniqueBodyStructure)
                 Player.AddBuff(ModContent.BuffType<UniqueBodyStructureBuff>(), 2);
