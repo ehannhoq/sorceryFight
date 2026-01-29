@@ -347,6 +347,13 @@ public static class SFUtils
         
         return typeName[index..];
     }
+
+    public static void RotateVelocityTowardsCursor(this Projectile projectile)
+    {
+        Vector2 mousePos = Main.MouseWorld;
+        projectile.velocity = mousePos - projectile.Center;
+        projectile.velocity.Normalize();
+    }
 }
 
 public static class SFConstants

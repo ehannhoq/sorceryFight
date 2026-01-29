@@ -194,7 +194,7 @@ PassingThrough: {
 		Summon a subway cart that rams through 
 		your cursor.
 		'''
-	LockedDescription: Defeat the mechanical recreation of Cthulu's skeleton.
+	LockedDescription: Defeat the mechanical recreation of Cthulu's skull.
 }
 
 CargoCrate: {
@@ -215,4 +215,32 @@ RailroadSign: {
 		Defeat the Goddess who slew a dragon and
 		gorged Herself in its auric soul of Flame.
 		'''
+}
+
+PebbleBarrage: {
+	DisplayName: Pebble Barrage
+	Description: placeholder
+	LockedDescription:
+		'''
+		Defeat the piece of Cthulhu that was
+		ripped out from him centuries ago.
+		'''
+}
+
+RamCharge: {
+	DisplayName: Ram Charge
+	Description: placeholder
+	LockedDescription: Defeat the one who guards the Dungeon.
+}
+
+FlashStep: {
+	DisplayName: FlashStep
+	Description: placeholder
+	LockedDescription: Defeat the mechanical recreation of Cthulu's skull.
+}
+
+LightspeedBarrage: {
+	DisplayName: Lightspeed Barrage
+	Description: placeholder
+	LockedDescription: Defeat the Servants of the Scourge.
 }

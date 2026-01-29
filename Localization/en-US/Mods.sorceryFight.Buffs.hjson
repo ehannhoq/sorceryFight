@@ -169,6 +169,18 @@ HollowWickerBasketBuff: {
 	LockedDescription: Defeat the stone-faced ritualistic idol of the Lihzahrd tribe.
 }
 
+MindlessCarnage: {
+	DisplayName: Mindless Carnage
+	Description: placeholder
+	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
+}
+
+InorganicPerception: {
+	DisplayName: Inorganic Perception
+	Description: placeholder
+	LockedDescription: Defeat the stone-faced ritualistic idol of the Lihzahrd tribe.
+}
+
 IdleDeathGambleJackpotBuffI: {
 	DisplayName: Jackpot
 	Description: You've hit the jackpot. You now have larger CE reserves.

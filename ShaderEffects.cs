@@ -34,6 +34,11 @@ namespace sorceryFight
                 Asset<Effect> blackHole = Mod.Assets.Request<Effect>("Content/Shaders/Blackhole", AssetRequestMode.ImmediateLoad);
                 Filters.Scene["SF:Blackhole"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(blackHole, "Blackhole"), EffectPriority.Medium);
                 Filters.Scene["SF:Blackhole"].Load();
+
+
+                Asset<Effect> mindlessBarrage = Mod.Assets.Request<Effect>("Content/Shaders/MindlessBarrage", AssetRequestMode.ImmediateLoad);
+                Filters.Scene["SF:MindlessBarrage"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(mindlessBarrage, "MindlessBarrage"), EffectPriority.Medium);
+                Filters.Scene["SF:MindlessBarrage"].Load();
             }
         }
     }

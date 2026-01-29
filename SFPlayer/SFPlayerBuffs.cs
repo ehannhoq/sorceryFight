@@ -11,15 +11,14 @@ namespace sorceryFight.SFPlayer
         public bool infinity;
         public bool domainAmp;
         public bool hollowWickerBasket;
+        public bool immune;
         public override bool ImmuneTo(PlayerDeathReason damageSource, int cooldownCounter, bool dodgeable)
         {
             if (innateTechnique == null) return base.ImmuneTo(damageSource, cooldownCounter, dodgeable);
 
             if (Player == Main.LocalPlayer)
             {
-                bool immune = infinity || hollowWickerBasket;
-                if (immune)
-                    return true;
+                return infinity || hollowWickerBasket || immune;
             }
 
             return base.ImmuneTo(damageSource, cooldownCounter, dodgeable);

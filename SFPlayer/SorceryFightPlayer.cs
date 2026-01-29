@@ -297,6 +297,8 @@ namespace sorceryFight.SFPlayer
                     ShootTechnique();
             }
 
+            if (heavenlyRestriction) return;
+
 
             if (SFKeybinds.UseRCT.Current)
                 UseRCT();
