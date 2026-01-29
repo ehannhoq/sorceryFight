@@ -23,7 +23,7 @@ namespace sorceryFight.Content.Projectiles.Melee
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.DamageType = CursedTechniqueDamageClass.Instance;
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.frameCounter = 0;
         }

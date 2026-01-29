@@ -42,7 +42,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.rare = ModContent.RarityType<SorceryFightWeapon>();
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.shoot = ModContent.ProjectileType<InvertedSpearSlash>();
-            Item.DamageType = CursedTechniqueDamageClass.Instance;
+            Item.DamageType = DamageClass.Melee;
             Item.noMelee = true;
             Item.ArmorPenetration = 1000;
         }
