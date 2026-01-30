@@ -69,7 +69,9 @@ float4 MindlessBarrage(float2 coords : TEXCOORD0) : COLOR0
         redMask
     );
 
-    return float4(colorNoGrayOnRed * (1 - vignette), blur.a);
+    colorNoGrayOnRed *= (1 - vignette);
+
+    return float4(c.rgb * (1 - uOpacity) + colorNoGrayOnRed * uOpacity, blur.a);
 }
 
 technique Technique1

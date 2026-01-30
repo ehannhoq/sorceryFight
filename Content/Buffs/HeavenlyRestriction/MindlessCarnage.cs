@@ -7,6 +7,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Graphics.Effects;
+using System;
 
 namespace sorceryFight.Content.Buffs.HeavenlyRestriction
 {
@@ -37,6 +38,8 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
         private const float minDamageBoost = 1.1f;
         private const float maxDamageBoost = 2f;
 
+        private static float ease = 0.0f;
+
         public override bool Unlocked(SorceryFightPlayer sf)
         {
             return sf.HasDefeatedBoss(NPCID.CultistBoss);
@@ -47,26 +50,29 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
             player.AddBuff(ModContent.BuffType<MindlessCarnage>(), 2);
 
             if (Main.myPlayer != player.whoAmI) return;
-            
-            if (!Filters.Scene["SF:GaussianBlur"].IsActive())
+
+            if (!Filters.Scene["SF:MindlessBarrage"].IsActive())
             {
-                Filters.Scene.Activate("SF:GaussianBlur");
+                Filters.Scene.Activate("SF:MindlessBarrage");
             }
-            else
-            {
-                Filters.Scene["SF:GaussianBlur"].GetShader().UseOpacity(1f).UseTargetPosition(player.Center);
-            }
+
+            ease = MathHelper.Clamp(ease + 0.04f, 0f, 1f);
+            Filters.Scene["SF:MindlessBarrage"].GetShader().UseOpacity(ease).UseTargetPosition(player.Center);
         }
 
         public override void Remove(Player player)
         {
             if (Main.myPlayer != player.whoAmI) return;
 
-            if (Filters.Scene["SF:GaussianBlur"].IsActive())
+            ease = MathHelper.Clamp(ease - 0.04f, 0f, 1f);
+            CameraController.ResetCameraPosition();
+
+            if (ease > 0)
+                Filters.Scene["SF:MindlessBarrage"].GetShader().UseOpacity(ease).UseTargetPosition(player.Center);
+            else
             {
-                Filters.Scene.Activate("SF:GaussianBlur").GetShader().UseOpacity(0f);
-                Filters.Scene["SF:GaussianBlur"].Deactivate();
-                CameraController.ResetCameraPosition();
+                Filters.Scene["SF:MindlessBarrage"].Deactivate();
+                ease = 0;
             }
         }
 
@@ -76,7 +82,7 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
 
             if (Main.myPlayer == player.whoAmI)
             {
-                Vector2 cameraOffset = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-2, 2));
+                Vector2 cameraOffset = new Vector2(Main.rand.NextFloat(-5 * ease, 5 * ease), Main.rand.NextFloat(-2 * ease, 2 * ease));
                 CameraController.SetCameraPosition(player.Center + cameraOffset);
             }
 
