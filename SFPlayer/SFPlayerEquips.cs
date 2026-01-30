@@ -14,6 +14,7 @@ namespace sorceryFight.SFPlayer
         public bool pictureLocket;
         public bool cursedOfuda;
         public bool beerHat;
+        public bool cursedBlindfold;
 
         public override void ResetEffects()
         {
@@ -21,6 +22,7 @@ namespace sorceryFight.SFPlayer
             pictureLocket = false;
             cursedOfuda = false;
             beerHat = false;
+            cursedBlindfold = false;
         }
 
         private bool BeerHatRecoverCE(float minRecover = -1f)

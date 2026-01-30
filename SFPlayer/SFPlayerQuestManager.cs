@@ -6,6 +6,7 @@ using MonoMod.Cil;
 using sorceryFight.Content.Quests;
 using sorceryFight.Content.UI;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using static sorceryFight.Content.UI.Quests.QuestToast.QuestToast;
 
@@ -27,6 +28,7 @@ namespace sorceryFight.SFPlayer
                 return base.UseItem(item, player);
             }
         }
+
         public List<Quest> currentQuests;
         public List<string> completedQuests;
 
@@ -43,12 +45,6 @@ namespace sorceryFight.SFPlayer
         {
             string source = quest.GetClass();
             questData[source + key] = obj;
-        }
-
-        public object GetQuestData(Quest quest, string key)
-        {
-            string source = quest.GetClass();
-            return questData[source + key];
         }
 
         public bool TryGetQuestData(Quest quest, string key, [NotNullWhen(true)] out object obj)
@@ -98,6 +94,29 @@ namespace sorceryFight.SFPlayer
                 if (key.Contains(source))
                     questData.Remove(key);
             }
+        }
+
+        public void OnKilledNPC(int npcType)
+        {
+            if (Main.dedServ)
+            {
+                SendKilledNPCToClients(npcType);
+                return;
+            }
+
+            foreach (Quest quest in currentQuests)
+            {
+                quest.KilledNPC(this, ContentSamples.NpcsByNetId[npcType]);
+            }
+        }
+
+        public void SendKilledNPCToClients(int npcType)
+        {
+            ModPacket packet = Mod.GetPacket();
+            packet.Write((byte)MessageType.KilledNPC);
+            packet.Write(Player.whoAmI);
+            packet.Write(npcType);
+            packet.Send();
         }
     }
 }

@@ -122,28 +122,34 @@ public class Dialog
                     continue;
             }
 
-            
+
             string type = action["Type"]?.ToString() ??
                 throw new NullReferenceException($"An action in {dialogKey} doesn't have a 'ActionType' field!");
-
-            string uiText = action["UIText"]?.ToString() ??
-                throw new NullReferenceException($"An action in {dialogKey} doesn't have a 'UIText' field!");
+            string uiText;
 
             switch (type)
             {
                 case "OpenShop":
+                    uiText = action["UIText"]?.ToString();
                     actions.Add(new OpenShopAction(action["ShopName"].ToString(), uiText));
                     break;
                 case "InvokeMethod":
+                    uiText = action["UIText"]?.ToString();
                     actions.Add(new InvokeMethodAction(action["MethodName"].ToString(), uiText));
                     break;
+                case "EndOfDialog":
+                    actions.Add(new EndOfDialogAction(action["MethodName"].ToString()));
+                    break;
                 case "QueryQuest":
+                    uiText = action["UIText"]?.ToString();
                     actions.Add(new QueryQuestAction(action["QuestLine"].ToString(), uiText));
                     break;
                 case "GiveQuest":
+                    uiText = action["UIText"]?.ToString();
                     actions.Add(new GiveQuestAction(action["QuestName"].ToString(), uiText));
                     break;
                 case "CloseDialog":
+                    uiText = action["UIText"]?.ToString();
                     actions.Add(new CloseDialogAction(uiText));
                     break;
                 default:

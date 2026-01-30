@@ -60,9 +60,6 @@
             "Actions": []
         }
     },
-
-
-
     "YoshinobuGakuganji": {
         "Interact": {
             "Text": "Greetings, young sorcerer. How may I help you today?",
@@ -81,9 +78,6 @@
             ]
         }
     },
-
-
-
     "ShokoIeiri": {
         "Interact": {
             "Text": "Need something?",
@@ -101,8 +95,6 @@
                 }
             ]
         },
-
-
         "ActiveQuest": {
             "Text": "You still need to complete the task I gave you.",
             "Replies": [],
@@ -113,19 +105,6 @@
             "Replies": [],
             "Actions": []
         },
-        "CompletedQuest": {
-            "Text": "Good job on completing the task. Here is your reward.",
-            "Replies": [],
-            "Actions": [
-                {
-                    "Type": "InvokeMethod",
-                    "UIText": "Take reward.",
-                    "MethodName": "CompletedQuest"
-                }
-            ]
-        },
-
-
         "RCTQuestI": {
             "Text": "I can't really 'teach' you to be better at the reverse cursed technique, but I can give you an item that will boost it's efficiency.\nHowever, before I give you that, I need you to prove that you can use the reverse cursed technique on your own.\nHeal upto 200 health points using the reverse cursed technique, then come back to me.",
             "Replies": [],
@@ -140,21 +119,23 @@
                     "QuestName": "RCTQuestI"
                 }
             ]
+        },
+        "RCTQuestI_Completed": {
+            "Text": "You're getting the hang of it. Here, take this charm.",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "EndOfDialog",
+                    "MethodName": "CompletedQuest"
+                }
+            ]
         }
     },
-
-
-
     "GojoSatoru": {
         "Interact": {
             "Text": "Yo, {PlayerName}.",
             "Replies": [],
             "Actions": [
-                {
-                    "Type": "QueryQuest",
-                    "QuestLine": "TechniqueRefresh",
-                    "UIText": "Can you teach me how you refresh your technique?"
-                },
                 {
                     "Type": "QueryQuest",
                     "QuestLine": "SixEyes",
@@ -164,21 +145,9 @@
                         "Flag": "HasSixEyes",
                         "Value": "true"
                     }
-                },
-                {
-                    "Type": "QueryQuest",
-                    "QuestLine": "DomainRefresh",
-                    "UIText": "How are you able to expand your domain multiple times?",
-                    "Condition": {
-                        "Type": "PlayerFlag",
-                        "Flag": "UnlockedDomainExpansion",
-                        "Value": "true"
-                    }
                 }
             ]
         },
-
-
         "ActiveQuest": {
             "Text": "Didn't I already tell you to go do something else? Go back to doing that.",
             "Replies": [],
@@ -189,21 +158,8 @@
             "Replies": [],
             "Actions": []
         },
-        "CompletedQuest": {
-            "Text": "Good job on completing the task. Here is your reward.",
-            "Replies": [],
-            "Actions": [
-                {
-                    "Type": "InvokeMethod",
-                    "UIText": "Take reward.",
-                    "MethodName": "CompletedQuest"
-                }
-            ]
-        },
-
-
         "SixEyesQuestI": {
-            "Text": "Seems you've just awakened the Six Eyes. It seems pretty premature at the moment, so let me help you out.\n",
+            "Text": "Seems you've just awakened the Six Eyes. It seems pretty premature at the moment, so you might experience some strain if you leave it uncovered for too long.\nTake this, this will block almost all light, but with your Six Eyes you should be able to 'see' through them.\nDefeat 50 enemies with this on, so you can grasp the basics of the Six Eyes without straining too hard.",
             "Replies": [],
             "Actions": [
                 {
@@ -217,8 +173,18 @@
                 }
             ]
         },
+        "SixEyesQuestI_Completed": {
+            "Text": "Took you long enough. But it looks like your Six Eyes is maturing quite nicely. Take a look at it.",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "EndOfDialog",
+                    "MethodName": "CompletedQuest"
+                }
+            ]
+        },
         "SixEyesQuestII": {
-            "Text": "Looks like your Six Eyes is developing nicely. There's one more thing I'd like for you to do though.\n",
+            "Text": "There's one more thing I'd like for you to do though. While the blindfold does a good job at not straining your eyes, the best way to fully grasp the Six Eyes is to fight through the pain.\nDefeat the Lunatic Cultist while your Six Eyes are strained, then come back to me.",
             "Replies": [],
             "Actions": [
                 {
@@ -232,37 +198,13 @@
                 }
             ]
         },
-
-
-        "TechniqueRefreshQuestI": {
-            "Text": "Technique refresh? Well, that's an interesting ask.\n",
+        "SixEyesQuestII_Completed": {
+            "Text": "You've got potential. I've ever seen such perfect Six Eyes-while, besides mine of course.",
             "Replies": [],
             "Actions": [
                 {
-                    "Type": "CloseDialog",
-                    "UIText": "I have some other stuff to do first."
-                },
-                {
-                    "Type": "GiveQuest",
-                    "UIText": "Sounds good!",
-                    "QuestName": "TechniqueRefreshQuestI"
-                }
-            ]
-        },
-
-        
-        "DomainRefreshQuestI": {
-            "Text": "Simple. I destroy the part of my brain where my technique is engraved, then immedietly heal it with the reverse cursed technique. It's a very delicate maneuver, with even the slightest misstep costing a lot.\n",
-            "Replies": [],
-            "Actions": [
-                {
-                    "Type": "CloseDialog",
-                    "UIText": "I have some other stuff to do first."
-                },
-                {
-                    "Type": "GiveQuest",
-                    "UIText": "Sounds good!",
-                    "QuestName": "DomainRefreshQuestI"
+                    "Type": "EndOfDialog",
+                    "MethodName": "CompletedQuest"
                 }
             ]
         }

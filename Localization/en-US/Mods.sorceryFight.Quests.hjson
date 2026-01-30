@@ -9,13 +9,13 @@ RCTQuestI: {
 }
 
 SixEyesQuestI: {
-	DisplayName: The Six Eyes
-	Description: placeholder
+	DisplayName: Learn to See
+	Description: Defeat 50 enemies using the Pitch-Black Blindfold.
 }
 
 SixEyesQuestII: {
-	DisplayName: The Six Eyes, Part II
-	Description: placeholder
+	DisplayName: Endure the Strain.
+	Description: While under the Strained Six Eyes debuff, defeat the Lunatic Cultist.
 }
 
 TechniqueRefreshQuestI: {

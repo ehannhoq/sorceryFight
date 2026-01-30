@@ -53,8 +53,6 @@ namespace sorceryFight.Content.NPCs.TownNPCs
 
             AddQuest(new SixEyesQuestI());
             AddQuest(new SixEyesQuestII());
-            AddQuest(new TechniqueRefreshQuestI());
-            AddQuest(new DomainRefreshQuestI());
         }
 
         public override void AI()

@@ -59,7 +59,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
                                 {
                                     sfPlayer.CompleteQuest(playerQuest);
                                     completedQuests.Add(npcQuest);
-                                    ModContent.GetInstance<SorceryFightUISystem>().ActivateDialogUI(Dialog.Create($"{name}.CompletedQuest"), this);
+                                    ModContent.GetInstance<SorceryFightUISystem>().ActivateDialogUI(Dialog.Create($"{name}.{playerQuest.GetClass()}_Completed"), this);
                                     return;
                                 }
                             }

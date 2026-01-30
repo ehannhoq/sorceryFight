@@ -62,6 +62,11 @@ namespace sorceryFight.Content.Quests
         public virtual void UsedItem(SorceryFightPlayer sfPlayer, Item item) { }
 
         /// <summary>
+        /// Gets called when the player kills an NPC.
+        /// </summary>
+        public virtual void KilledNPC(SorceryFightPlayer sfPlayer, NPC npc) { }
+
+        /// <summary>
         /// Determines if the player has successfully completed this quest.
         /// </summary>
         public abstract bool IsCompleted(SorceryFightPlayer sfPlayer);

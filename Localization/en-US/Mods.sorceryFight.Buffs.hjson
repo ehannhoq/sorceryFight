@@ -231,6 +231,15 @@ BrainDamage: {
 	Description: You are not able to expand your domain!
 }
 
+StrainedSixEyes: {
+	DisplayName: Strained Six Eyes
+	Description:
+		'''
+		{0}% reduced max Cursed Energy.
+		{1}/s Cursed Energy drain.
+		'''
+}
+
 CursedEnergySickness: {
 	DisplayName: Cursed Energy Sickness
 	Description: Cursed Technique damage reduced by {0}%.

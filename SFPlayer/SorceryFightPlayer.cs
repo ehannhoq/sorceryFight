@@ -38,7 +38,7 @@ namespace sorceryFight.SFPlayer
         public InnateTechnique innateTechnique;
         public CursedTechnique selectedTechnique;
         public float cursedEnergy;
-        public float maxCursedEnergy;
+        public float maxCursedEnergy { get; private set; }
         public float cursedEnergyRegenPerSecond;
         public float cursedEnergyUsagePerSecond;
 

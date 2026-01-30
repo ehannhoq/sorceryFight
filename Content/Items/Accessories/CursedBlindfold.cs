@@ -35,6 +35,8 @@ namespace sorceryFight.Content.Items.Accessories
             base.UpdateAccessory(player, hideVisual);
 
             SorceryFightPlayer sfPlayer = player.SorceryFight();
+            sfPlayer.cursedBlindfold = true;
+            
             if (sfPlayer.innateTechnique != null)
             {
                 if (sfPlayer.innateTechnique.Name.Equals("Limitless"))

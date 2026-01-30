@@ -6,6 +6,7 @@ using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.UI.Dialog.Actions;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
@@ -20,6 +21,7 @@ namespace sorceryFight.Content.UI.Dialog
         public Dialog dialog;
         public object initiator;
         private bool listenForLeftClick = false;
+        private Action endOfDialogAction = null;
         private bool clearOptions = false;
         public int dialogIndex;
 
@@ -162,6 +164,17 @@ namespace sorceryFight.Content.UI.Dialog
 
                         foreach (var action in actions)
                         {
+                            if (action.GetType() == typeof(EndOfDialogAction))
+                            {
+                                if (actions.Count > 1 || replies.Count > 0)
+                                    throw new Exception($"'EndOfDialog' actions must be the only action or reply available for a dialog.");
+                                
+                                listenForLeftClick = true;
+                                action.SetInitiator(initiator);
+                                endOfDialogAction = action.Invoke;
+                                break;
+                            }
+
                             DialogActionText actionText = new(action.GetUIText());
                             actionText.onClick += () =>
                             {
@@ -191,6 +204,7 @@ namespace sorceryFight.Content.UI.Dialog
 
         private void EndDialog()
         {
+            endOfDialogAction?.Invoke();
             dialog = null;
             ModContent.GetInstance<SorceryFightUISystem>().ResetUI();
         }
