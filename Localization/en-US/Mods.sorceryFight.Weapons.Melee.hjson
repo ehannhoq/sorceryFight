@@ -11,8 +11,10 @@ InvertedSpear: {
 	DisplayName: Inverted Spear of Heaven
 	Tooltip:
 		'''
-		[c/E0DA5A:Right click to throw the spear using the Chain of a Thousand]
-		[c/E0DA5A:Miles, extending out to your cursor before returning.]
+		Imbued with a foreign cursed technique, it's blade can nullify any cursed
+		technique.
+		[c/E0DA5A:Right click to toggle to a swinging charge up, which upon]
+		[c/E0DA5A:releasing throws out the spear for an undefined distance.]
 		'''
 }
 
