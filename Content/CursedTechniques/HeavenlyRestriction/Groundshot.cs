@@ -13,12 +13,12 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 {
-    public class PebbleBarrage : CursedTechnique
+    public class Groundshot : CursedTechnique
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.PebbleBarrage.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PebbleBarrage.Description");
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.Groundshot.DisplayName");
+        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Groundshot.Description");
 
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PebbleBarrage.LockedDescription");
+        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Groundshot.LockedDescription");
 
         public override float Cost => 30f;
 
@@ -28,7 +28,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
         public override int Damage => 50;
 
-        public override int MasteryDamageMultiplier => 50;
+        public override int MasteryDamageMultiplier => 75;
 
         public override float Speed => 30f;
 
@@ -44,7 +44,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
         public override int GetProjectileType()
         {
-            return ModContent.ProjectileType<PebbleBarrage>();
+            return ModContent.ProjectileType<Groundshot>();
         }
 
         public override bool Unlocked(SorceryFightPlayer sf)
@@ -84,7 +84,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             Projectile.Center = player.Center + new Vector2(0f, player.height * 1.5f) + new Vector2(35 * player.direction, 0f);
             Projectile.velocity = Vector2.Zero;
 
-            // SoundEngine.PlaySound(SorceryFightSounds.GroundKick, player.Center);
+            SoundEngine.PlaySound(SorceryFightSounds.GroundshotGroundSlam, player.Center);
         }
 
         public override void AI()
@@ -118,7 +118,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
                 Projectile.tileCollide = true;
                 impactPos = Projectile.Center;
-                // SoundEngine.PlaySound(SorceryFightSounds.PunchImpact, player.Center);
+                SoundEngine.PlaySound(SorceryFightSounds.GroundshotPunch, player.Center);
                 player.SorceryFight().disableRegenFromProjectiles = false;
             }
             else

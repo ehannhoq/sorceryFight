@@ -217,9 +217,15 @@ RailroadSign: {
 		'''
 }
 
-PebbleBarrage: {
-	DisplayName: Pebble Barrage
-	Description: placeholder
+Groundshot: {
+	DisplayName: Groundshot
+	Description:
+		'''
+		Stomp the ground with incredible force,
+		with a boulder propelling forward. Then
+		punch it towards your cursor with incredibl
+		force.
+		'''
 	LockedDescription:
 		'''
 		Defeat the piece of Cthulhu that was
@@ -229,18 +235,31 @@ PebbleBarrage: {
 
 RamCharge: {
 	DisplayName: Ram Charge
-	Description: placeholder
+	Description:
+		'''
+		Dash towards your cursor, dealing damage to
+		anything in your path.
+		'''
 	LockedDescription: Defeat the one who guards the Dungeon.
 }
 
 FlashStep: {
 	DisplayName: FlashStep
-	Description: placeholder
+	Description:
+		'''
+		Immedietely teleport to your cursor. Has max range of tiles,
+		which increases with mastery.
+		'''
 	LockedDescription: Defeat the mechanical recreation of Cthulu's skull.
 }
 
 LightspeedBarrage: {
 	DisplayName: Lightspeed Barrage
-	Description: placeholder
+	Description:
+		'''
+		Auto-dash to the nearest enemy. If there 
+		are any more nearby enemies, auto-dash to 
+		them as well.
+		'''
 	LockedDescription: Defeat the Servants of the Scourge.
 }

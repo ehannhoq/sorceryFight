@@ -14,6 +14,7 @@ namespace sorceryFight
         public static SoundStyle CommonWoosh;
         public static SoundStyle CommonHeartBeat;
         public static SoundStyle CommonBoom;
+        public static SoundStyle DashImpact;
         public static SoundStyle BlackFlashImpact;
 
         public static SoundStyle AmplificationBlueChargeUp;
@@ -63,6 +64,9 @@ namespace sorceryFight
         public static SoundStyle InvertedSpearOfHeavenCollide;
         public static SoundStyle InvertedSpearOfHeavenSlash;
         public static SoundStyle InvertedSpearOfHeavenImpact;
+
+        public static SoundStyle GroundshotGroundSlam;
+        public static SoundStyle GroundshotPunch;
 
         public override void Load()
         {
@@ -119,6 +123,11 @@ namespace sorceryFight
             InvertedSpearOfHeavenCollide = new("sorceryFight/Content/Sounds/Items/InvertedSpearOfHeaven/InvertedSpearOfHeavenCollide") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 0.5f };
             InvertedSpearOfHeavenSlash = new("sorceryFight/Content/Sounds/Items/InvertedSpearOfHeaven/InvertedSpearOfHeavenSlash") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 1f };
             InvertedSpearOfHeavenImpact = new("sorceryFight/Content/Sounds/Items/InvertedSpearOfHeaven/InvertedSpearOfHeavenImpact") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 1f };
+
+            GroundshotGroundSlam = new("sorceryFight/Content/Sounds/Projectiles/GroundshotGroundSlam") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
+            GroundshotPunch = new("sorceryFight/Content/Sounds/Projectiles/GroundshotPunch") { Volume = 0.75f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 0.3f};
+
+            DashImpact = new("sorceryFight/Content/Sounds/DashImpact") { Volume = 0.75f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 0.3f};
         }
     }
 }

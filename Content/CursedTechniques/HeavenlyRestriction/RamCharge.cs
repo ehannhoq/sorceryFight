@@ -1,10 +1,14 @@
 using System;
+using System.Collections.Generic;
+using CalamityMod.Projectiles.Rogue;
 using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Buffs;
 using sorceryFight.SFPlayer;
 using Steamworks;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
@@ -19,24 +23,27 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.RamCharge.LockedDescription");
 
-        public override float Cost => 30f;
+        public override float Cost => 5f;
 
         public override Color textColor => Color.White;
 
         public override bool DisplayNameInGame => false;
 
-        public override int Damage => 60;
+        public override int Damage => 150;
 
-        public override int MasteryDamageMultiplier => 50;
+        public override int MasteryDamageMultiplier => 175;
 
         public override float Speed => 15f;
 
         public override float LifeTime => 40;
 
-        private static Texture2D impactTexture;
+        private static Texture2D impactRing;
+        private static Texture2D impactCircle;
         ref float tick => ref Projectile.ai[0];
         private Vector2 startPos;
         private Vector2 startVel;
+        private Dictionary<Vector2, int> impactPositions = new();
+
 
         private const float minSpeed = 20f;
         private const float maxSpeed = 60f;
@@ -51,9 +58,22 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             return sf.HasDefeatedBoss(NPCID.SkeletronHead);
         }
 
+        public override float CalculateTrueCost(SorceryFightPlayer sf)
+        {
+            float speedDiff = maxSpeed - minSpeed;
+            float trueSpeed = sf.leftItAllBehind ? ((float)sf.numberBossesDefeated / SorceryFight.totalBosses * speedDiff) + minSpeed : (sf.numberBossesDefeated / (SorceryFight.totalBosses / 1.5f) * speedDiff) + minSpeed;
+
+            float adjustedCost = Cost * trueSpeed;
+            float finalCost = adjustedCost - (adjustedCost * (sf.bossesDefeated.Count / 100f));
+            finalCost *= 1 - sf.ctCostReduction;
+
+            return finalCost;
+        }
+
         public override void SetStaticDefaults()
         {
-            impactTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/HeavenlyRestriction/ImpactRing", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            impactRing = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/HeavenlyRestriction/ImpactRing", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            impactCircle = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/HeavenlyRestriction/ImpactCircle", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
 
         public override void SetDefaults()
@@ -65,6 +85,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             Projectile.DamageType = DamageClass.Melee;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
+            Projectile.penetrate = -1;
         }
         public override void OnSpawn(IEntitySource source)
         {
@@ -79,6 +100,8 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
             float speedDiff = maxSpeed - minSpeed;
             float trueSpeed = sfPlayer.leftItAllBehind ? (sfPlayer.numberBossesDefeated / SorceryFight.totalBosses * speedDiff) + minSpeed : (sfPlayer.numberBossesDefeated / (SorceryFight.totalBosses / 1.5f) * speedDiff) + minSpeed;
+            float playerSpeedMultiplier = player.moveSpeed / 2.5f;
+            trueSpeed *= playerSpeedMultiplier > 1 ? playerSpeedMultiplier : 1f;
             Projectile.velocity.Normalize();
             Projectile.velocity *= trueSpeed;
         }
@@ -95,6 +118,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             if (tick++ >= LifeTime)
             {
                 Projectile.Kill();
+
                 player.SorceryFight().immune = false;
                 player.SorceryFight().disableRegenFromProjectiles = false;
 
@@ -104,6 +128,25 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             {
                 startPos -= Projectile.velocity * 0.1f;
             }
+
+
+            foreach (var kvp in impactPositions)
+            {
+                var key = kvp.Key;
+                impactPositions[key]++;
+            }
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.FinalDamage *= Projectile.velocity.Length() / 16f;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            impactPositions.Add(target.Center, 0);
+            SoundEngine.PlaySound(SorceryFightSounds.DashImpact, target.Center);
+
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -118,14 +161,6 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Rectangle impactSrc = new Rectangle(0, 0, impactTexture.Width, impactTexture.Height);
-
-
-            float impactScale = MathF.Sqrt(1 - MathF.Pow((tick / 60) - 1, 2)) * Projectile.velocity.Length() / 5f;
-            ;
-            float impactOpacity = MathF.Sqrt(1 - MathF.Pow(tick / 60, 2));
-
-            impactOpacity = Math.Clamp(impactOpacity, 0f, 1f);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(
@@ -138,7 +173,31 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
                 Main.GameViewMatrix.ZoomMatrix
             );
 
-            Main.EntitySpriteDraw(impactTexture, startPos - Main.screenPosition, impactSrc, Color.White * impactOpacity, startVel.ToRotation(), impactSrc.Size() * 0.5f, impactScale, SpriteEffects.None);
+            Rectangle impactSrc = new Rectangle(0, 0, impactRing.Width, impactRing.Height);
+
+            float impactScale = MathF.Sqrt(1 - MathF.Pow((tick / 60) - 1, 2)) * Projectile.velocity.Length() / 5f;
+            float impactOpacity = MathF.Sqrt(1 - MathF.Pow(tick / 60, 2));
+
+            impactOpacity = Math.Clamp(impactOpacity, 0f, 1f);
+
+            Main.EntitySpriteDraw(impactRing, startPos - Main.screenPosition, impactSrc, Color.White * impactOpacity, startVel.ToRotation(), impactSrc.Size() * 0.5f, impactScale, SpriteEffects.None);
+
+            foreach (var kvp in impactPositions)
+            {
+                var tick = kvp.Value;
+                var position = kvp.Key;
+
+                Rectangle impactCircleSrc = new Rectangle(0, 0, impactCircle.Width, impactCircle.Height);
+
+                float t = Math.Clamp(tick / 30f, 0f, 1f);
+
+                float impactCircleOpacity = MathF.Sqrt(1f - t * t);
+
+                float scaleT = Math.Clamp(1f - MathF.Pow(t - 1f, 2f), 0f, 1f);
+                float impactCircleScale = MathF.Sqrt(scaleT) * 2.5f;
+
+                Main.EntitySpriteDraw(impactCircle, position - Main.screenPosition, impactCircleSrc, Color.White * impactCircleOpacity, 0f, impactCircleSrc.Size() * 0.5f, impactCircleScale, SpriteEffects.None);
+            }
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin();

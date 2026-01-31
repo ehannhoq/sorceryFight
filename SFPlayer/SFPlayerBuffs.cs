@@ -33,7 +33,7 @@ namespace sorceryFight.SFPlayer
 
             foreach (PassiveTechnique passiveTechnique in innateTechnique.PassiveTechniques)
             {
-                if (Player.HasBuff<BurntTechnique>())
+                if (Player.HasBuff<BurntTechnique>() || (!beerHat && cursedEnergy < 2))
                 {
                     passiveTechnique.isActive = false;
                 }

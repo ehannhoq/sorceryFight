@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using sorceryFight.Content.Buffs;
 using sorceryFight.SFPlayer;
 using Steamworks;
 using Terraria;
@@ -16,7 +17,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.FlashStep.LockedDescription");
 
-        public override float Cost => 30f;
+        public override float Cost => 250f;
 
         public override Color textColor => Color.White;
 
@@ -75,9 +76,10 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
                         break;
                 }
 
+                CameraController.SetCameraPosition(player.Center);
                 player.Center += dir * currentDistance;
+                CameraController.ResetCameraPosition();
             }
-
             Projectile.Kill();
         }
     }

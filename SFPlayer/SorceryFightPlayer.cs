@@ -79,7 +79,7 @@ namespace sorceryFight.SFPlayer
         public bool HasActiveDomain => DomainExpansionController.ActiveDomains.Any(d => d is PlayerDomainExpansion && d is not ISimpleDomain && d.owner == Player.whoAmI);
         public bool fallingBlossomEmotion;
         public bool inSimpleDomain;
-        public bool immuneToDomains => fallingBlossomEmotion || hollowWickerBasket || inSimpleDomain;
+        public bool immuneToDomains => fallingBlossomEmotion || hollowWickerBasket || inSimpleDomain || heavenlyRestriction;
         #endregion
 
         #region Player Attributes
@@ -219,7 +219,14 @@ namespace sorceryFight.SFPlayer
                 {
                     if (!BeerHatRecoverCE())
                         AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
-                } else AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
+                }
+                else
+                {
+                    if (heavenlyRestriction)
+                        Player.AddBuff(ModContent.BuffType<Exhaustion>(), SFUtils.BuffSecondsToTicks(DefaultBurntTechniqueDuration));
+                    else
+                        AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
+                }
             }
 
 
@@ -241,7 +248,7 @@ namespace sorceryFight.SFPlayer
                     TEMP_disabledRegenTimer = 0;
                 }
             }
-            
+
             CheckQuests();
         }
 
@@ -402,6 +409,13 @@ namespace sorceryFight.SFPlayer
                 return;
             }
 
+            if (Player.HasBuff<Exhaustion>())
+            {
+                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your body is exhausted!");
+                Main.combatText[index].lifeTime = 180;
+                return;
+            }
+
             if (cursedEnergy < selectedTechnique.CalculateTrueCost(this))
             {
                 if (beerHat)
@@ -413,8 +427,10 @@ namespace sorceryFight.SFPlayer
 
                 if (!successfullyRecoveredCe)
                 {
-                    int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Not enough Cursed Energy!");
-                    Main.combatText[index].lifeTime = 180;
+                    if (heavenlyRestriction)
+                        Player.AddBuff(ModContent.BuffType<Exhaustion>(), SFUtils.BuffSecondsToTicks(DefaultBurntTechniqueDuration));
+                    else
+                        AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
                     return;
                 }
             }

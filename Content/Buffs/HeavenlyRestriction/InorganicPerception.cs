@@ -33,11 +33,17 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.CultistBoss);
+            return sf.HasDefeatedBoss(NPCID.Golem);
         }
 
         public override void Apply(Player player)
         {
+            player.AddBuff(ModContent.BuffType<InorganicPerception>(), 2);
+
+            if (player.HasBuff<MindlessCarnage>())
+            {
+                player.SorceryFight().innateTechnique.PassiveTechniques[0].isActive = false;
+            }
         }
 
         public override void Remove(Player player)

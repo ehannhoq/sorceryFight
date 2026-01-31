@@ -97,6 +97,15 @@ BurntTechnique: {
 		'''
 }
 
+Exhaustion: {
+	DisplayName: Exhaustion
+	Description:
+		'''
+		You're too exhausted!
+		You won't be able to use any abilities.
+		'''
+}
+
 Infinity: {
 	DisplayName: Infinity
 	Description:
@@ -171,7 +180,14 @@ HollowWickerBasketBuff: {
 
 MindlessCarnage: {
 	DisplayName: Mindless Carnage
-	Description: placeholder
+	Description:
+		'''
+		Your mind goes blank, eyes go gray.
+		Damage and speed scales to the strongest
+		enemy near you.
+		Stamina drain also increases the stronger
+		the enemy.
+		'''
 	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
 }
 

@@ -42,12 +42,17 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.CultistBoss);
+            return sf.HasDefeatedBoss(NPCID.WallofFlesh);
         }
 
         public override void Apply(Player player)
         {
             player.AddBuff(ModContent.BuffType<MindlessCarnage>(), 2);
+
+            if (player.HasBuff<InorganicPerception>())
+            {
+                player.SorceryFight().innateTechnique.PassiveTechniques[1].isActive = false;
+            }
 
             if (Main.myPlayer != player.whoAmI) return;
 
@@ -65,10 +70,12 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
             if (Main.myPlayer != player.whoAmI) return;
 
             ease = MathHelper.Clamp(ease - 0.04f, 0f, 1f);
-            CameraController.ResetCameraPosition();
 
             if (ease > 0)
+            {
                 Filters.Scene["SF:MindlessBarrage"].GetShader().UseOpacity(ease).UseTargetPosition(player.Center);
+                CameraController.ResetCameraPosition();
+            }
             else
             {
                 Filters.Scene["SF:MindlessBarrage"].Deactivate();
@@ -78,7 +85,7 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
 
         public override void Update(Player player, ref int buffIndex)
         {
-            base.Update(player, ref buffIndex);
+            CostPerSecond = 65f;
 
             if (Main.myPlayer == player.whoAmI)
             {
@@ -88,6 +95,7 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
 
             player.AddBuff(BuffID.Dangersense, 2);
             player.AddBuff(BuffID.Hunter, 2);
+            player.statDefense /= 0.8f;
 
             float minDistance = 2000f;
             NPC strongestNPC = null;
@@ -113,8 +121,15 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
 
             if (strongestNPC == null) return;
 
-            player.moveSpeed += ((maxSpeed - minSpeed) / 2 * (npcDamage / 600f)) + ((maxSpeed - minSpeed) / 2 * (npcHealth / 100000f)) + minSpeed;
-            player.GetDamage(DamageClass.Melee) *= ((maxDamageBoost - minDamageBoost) / 2 * (npcDamage / 600f)) + ((maxDamageBoost - minDamageBoost) / 2 * (npcHealth / 100000f)) + minDamageBoost;
+            float damageProportion = npcDamage / 600f;
+            float healthProportion = npcHealth / 100000f;
+
+            // TODO: if theres a system that identifies the current strongest boss, use that bosses health and contact damage instead of these arbituary numbers.
+            player.moveSpeed += ((maxSpeed - minSpeed) / 2 * damageProportion) + ((maxSpeed - minSpeed) / 2 * healthProportion) + minSpeed;
+            player.GetDamage(DamageClass.Melee) *= ((maxDamageBoost - minDamageBoost) / 2 * damageProportion) + ((maxDamageBoost - minDamageBoost) / 2 * healthProportion) + minDamageBoost;
+
+            CostPerSecond += 50 * ((damageProportion + healthProportion) / 2);
+            base.Update(player, ref buffIndex);
         }
     }
 }

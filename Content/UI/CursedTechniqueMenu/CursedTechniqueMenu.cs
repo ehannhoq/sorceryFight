@@ -87,14 +87,27 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             string masteryIconHoverText;
 
             if (sfPlayer.heavenlyRestriction)
-                masteryIconHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_Info")}" +
-                             $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.BossesDefeated")} {sfPlayer.numberBossesDefeated}" +
-                             $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_CostReduction")} {sfPlayer.numberBossesDefeated}%" +
-                             $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_IncreasedMeleeDamage")} {2f * sfPlayer.numberBossesDefeated}%" +
-                             $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_IncreasedAttackSpeed")} {3f * sfPlayer.numberBossesDefeated}%" +
-                             $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_IncreasedMoveSpeed")} {0.5f * sfPlayer.numberBossesDefeated}%" +
-                             $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_IncreasedJumpSpeed")} {0.1f * sfPlayer.numberBossesDefeated}" +
-                             $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_IncreasedDefense")} {sfPlayer.numberBossesDefeated}";
+            {
+                if (sfPlayer.leftItAllBehind)
+                    masteryIconHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_Info")}" +
+                                 $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.BossesDefeated")} {sfPlayer.numberBossesDefeated}" +
+                                 $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_CostReduction")} {sfPlayer.numberBossesDefeated}%" +
+                                 $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_IncreasedMeleeDamage")} {2f * sfPlayer.numberBossesDefeated}%" +
+                                 $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_IncreasedAttackSpeed")} {3f * sfPlayer.numberBossesDefeated}%" +
+                                 $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_IncreasedMoveSpeed")} {0.5f * sfPlayer.numberBossesDefeated}%" +
+                                 $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_IncreasedJumpSpeed")} {0.1f * sfPlayer.numberBossesDefeated}" +
+                                 $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_IncreasedDefense")} {sfPlayer.numberBossesDefeated}";
+                else
+                    masteryIconHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_Info")}" +
+                                 $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.BossesDefeated")} {sfPlayer.numberBossesDefeated}" +
+                                 $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_CostReduction")} {sfPlayer.numberBossesDefeated}%" +
+                                 $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_IncreasedMeleeDamage")} {1f * sfPlayer.numberBossesDefeated}%" +
+                                 $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_IncreasedAttackSpeed")} {1f * sfPlayer.numberBossesDefeated}%" +
+                                 $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_IncreasedMoveSpeed")} {0.01f * sfPlayer.numberBossesDefeated}%" +
+                                 $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_IncreasedJumpSpeed")} {0.05f * sfPlayer.numberBossesDefeated}" +
+                                 $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_IncreasedDefense")} {sfPlayer.numberBossesDefeated / 2}";
+
+            }
             else
                 masteryIconHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.Info")}" +
                              $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.BossesDefeated")} {sfPlayer.numberBossesDefeated}" +
