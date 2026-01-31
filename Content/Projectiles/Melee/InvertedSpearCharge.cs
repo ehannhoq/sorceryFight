@@ -134,9 +134,7 @@ namespace sorceryFight.Content.Projectiles.Melee
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            modifiers.ArmorPenetration += target.defense;
-            modifiers.ScalingArmorPenetration += 1f;
-            modifiers.Defense *= 0;
+            modifiers.DefenseEffectiveness *= 0;
             base.ModifyHitNPC(target, ref modifiers);
         }
 
