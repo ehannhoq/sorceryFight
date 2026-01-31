@@ -6,6 +6,17 @@ MasteryIcon: {
 		'''
 	BossesDefeated: Bosses Defeated:
 	CostReduction: Cursed Energy cost reduction:
+	HR_Info:
+		'''
+		Heavenly Restriction Mastery
+		The more bosses you defeat along your journey, the more powerful and efficient your Heavenly Restriction becomes.
+		'''
+	HR_CostReduction: Stamina cost reduction:
+	HR_IncreasedMeleeDamage: Increased melee damage:
+	HR_IncreasedAttackSpeed: Increased attack speed:
+	HR_IncreasedMoveSpeed: Increased movement speed:
+	HR_IncreasedJumpSpeed: Increased jump speed:
+	HR_IncreasedDefense: Increased defense:
 }
 
 RCTIcon: {
