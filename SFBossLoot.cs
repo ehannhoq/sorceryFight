@@ -37,6 +37,7 @@ using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.Items.Consumables.SukunasFinger;
 using sorceryFight.Content.Items.Materials;
 using sorceryFight.Content.Items.Novelty;
+using sorceryFight.Content.Items.Weapons.Melee;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -164,6 +165,7 @@ namespace sorceryFight
             if (npc.type != NPCID.MoonLordCore) return;
 
             nonExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CelestialAmulet>(), CelestialAmulet.ChanceDenominator));
+            nonExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InvertedSpear>(), 5));
             nonExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<LunarCursedFragment>(), 1, 9, 12));
         }
 
