@@ -223,10 +223,10 @@ namespace sorceryFight.SFPlayer
             var currentQuestsData = tag.GetList<string>("currentQuests");
             foreach (var quest in currentQuestsData)
             {
-                // currentQuests.Add(Quest.QuestBuilder(quest));
+                currentQuests.Add(Quest.QuestBuilder(quest));
             }
 
-            // completedQuests = tag.GetList<string>("completedQuests").ToList();
+            completedQuests = tag.GetList<string>("completedQuests").ToList();
         }
         
         public float calculateBaseMaxCE()
