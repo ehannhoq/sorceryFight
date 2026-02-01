@@ -16,7 +16,7 @@ namespace sorceryFight.Content.Buffs
         {
             player.GetDamage(DamageClass.Melee) *= 0.9f;
             player.moveSpeed -= 0.13f;
-            player.jumpSpeedBoost -= 10f;
+            player.jumpSpeedBoost -= 0.5f;
         }
 
         public override bool RightClick(int buffIndex)
