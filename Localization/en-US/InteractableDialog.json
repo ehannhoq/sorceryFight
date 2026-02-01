@@ -67,12 +67,12 @@
             "Actions": [
                 {
                     "Type": "OpenShop",
-                    "UIText": "Open Cursed Energy Modifiers Shop",
+                    "UIText": "Do you sell any Cursed Energy modifiers?",
                     "ShopName": "CursedEnergyModifiersShop"
                 },
                 {
                     "Type": "OpenShop",
-                    "UIText": "Open Sukuna's Fingers Shop",
+                    "UIText": "Do you have any spare Sukuna's Fingers?",
                     "ShopName": "SukunasFingersShop"
                 }
             ]
@@ -205,6 +205,67 @@
                 {
                     "Type": "EndOfDialog",
                     "MethodName": "CompletedQuest"
+                }
+            ]
+        }
+    },
+    "TodoAoi": {
+        "Interact": {
+            "Text": "Have you seen my brother?",
+            "Replies": [
+                {
+                    "Text": "What's that around your neck?",
+                    "Response": "TodoAoi.PictureLocketQuery"
+                }
+            ],
+            "Actions": []
+        },
+        "ActiveQuest": {
+            "Text": "You still haven't done what I asked you to do.",
+            "Replies": [],
+            "Actions": []
+        },
+        "NoQuests": {
+            "Text": "You've already got your own picture locket.",
+            "Replies": [],
+            "Actions": []
+        },
+        "PictureLocketQuery": {
+            "Text": "This? This contains two pictures that I hold very dearly to me.\nYuji Itadori, and of course,\nTakada-chan!!!\n...\nIt reminds me of who I'm fighting for. I was even able to land a black flash nearly at will with it!",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "QueryQuest",
+                    "QuestLine": "BlackFlash",
+                    "UIText": "Nearly at will? Can I have something like that?"
+                }
+            ]
+        },
+        "BlackFlashQuestI": {
+            "Text": "Ohoho, of course! But, theres a few things I need you to do first.\nFirst, I need to know that you can even black flash. Hit three consecutive black flashes.\nAlso, every boss has a 1% chance to drop the 'Thank you' painting, which is essential for the picture locket.\nBring me that, and I can make you your own locket!",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "CloseDialog",
+                    "UIText": "I have some other stuff to do first."
+                },
+                {
+                    "Type": "GiveQuest",
+                    "UIText": "Sounds good!",
+                    "QuestName": "BlackFlashQuestI"
+                }
+            ]
+        }
+    },
+    "AtsuyaKusakabe": {
+        "Interact": {
+            "Text": "What do you want?",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "OpenShop",
+                    "UIText": "Do you sell any cursed energy potions?",
+                    "ShopName": "CursedEnergyPotionsShop"
                 }
             ]
         }

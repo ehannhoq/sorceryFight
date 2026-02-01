@@ -34,14 +34,5 @@ namespace sorceryFight.Content.Items.Accessories
         {
             return !player.SorceryFight().heavenlyRestriction;
         }
-
-        public override void AddRecipes()
-        {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.Chain, 10);
-            recipe.AddIngredient(ModContent.ItemType<CalamityMod.Items.Placeables.Furniture.DevPaintings.ThankYouPainting>());
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();
-        }
     }
 }
