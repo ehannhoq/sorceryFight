@@ -80,5 +80,9 @@ BeerHat: {
 
 ReverseCharm: {
 	DisplayName: Reverse Charm
-	Tooltip: placeholder
+	Tooltip:
+		'''
+		+{0} HP/s healed while using RCT
+		{1}% increased RCT efficiency
+		'''
 }
