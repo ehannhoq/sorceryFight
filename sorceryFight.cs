@@ -35,9 +35,6 @@ namespace sorceryFight
 		/// A reflection method allowing to retrieve ModContent.ProjectileTypes dynamically at runtime.
 		/// </summary>
 		public static MethodInfo ModContentProjectileType;
-
-
-
 		private static List<string> DevModeNames =
 		[
 			"The Honored One",
@@ -50,20 +47,18 @@ namespace sorceryFight
 			"gooloohoodoo5",
 			"gooloohoodoo6",
 			"gooloohoodoo7",
-			"Perseus",
-			"TheRealCriky"
+			"TheRealCriky",
+			"prowler",
+			"rend",
+			"KaiTheExaminer",
+			"Ryomen"
 		];
-
-
 		private static readonly int vanillaBossesCount = 32;
-
-
 		public override void PostSetupContent()
 		{
 			ModContentProjectileType = typeof(ModContent).GetMethod("ProjectileType");
 			CountBosses();
 		}
-
 
 		private void CountBosses()
 		{
@@ -79,14 +74,11 @@ namespace sorceryFight
 			}
 		}
 
-
 		public override void Unload()
 		{
 			totalBosses = 0;
 			ModContentProjectileType = null;
 		}
-
-
 		public override void HandlePacket(BinaryReader reader, int _)
 		{
 			byte messageType = reader.ReadByte();
@@ -109,8 +101,6 @@ namespace sorceryFight
 					break;
 			}
 		}
-
-
 		private void HandleBossDefeatedPacket(BinaryReader reader)
 		{
 			int targetPlayer = reader.ReadInt32();
@@ -121,8 +111,6 @@ namespace sorceryFight
 				Main.player[targetPlayer].SorceryFight().AddDefeatedBoss(bossType);
 			}
 		}
-
-
 		private void HandleDomainSyncingPacket(BinaryReader reader)
 		{
 			int whoAmI = reader.ReadInt32();
@@ -165,8 +153,6 @@ namespace sorceryFight
 				packet.Send(-1, whoAmI);
 			}
 		}
-
-
 		private void HandlePlayerCastingDomainPacket(BinaryReader reader)
 		{
 			int sentFrom = reader.ReadInt32();
@@ -180,7 +166,6 @@ namespace sorceryFight
 				packet.Send(-1, sentFrom);
 			}
 		}
-
 		private void HandleKilledNPCPacket(BinaryReader reader)
 		{
 			int targetPlayer = reader.ReadInt32();
