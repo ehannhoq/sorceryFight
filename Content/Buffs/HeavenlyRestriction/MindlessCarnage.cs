@@ -18,13 +18,10 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
         {
             get
             {
-                return $"CE Consumption: {CostPerSecond} CE/s\n"
-                        + "You must be standing still in order to recieve the buffs.\n"
-                        + "Grants immunity to enemy domains.\n"
-                        + "Grants +20 defense.\n"
-                        + "Grants immunity to knockback.\n"
-                        + "You cannot use Cursed Techniques while this is active,\n"
-                        + "unless you have a unique body structure.\n";
+                return $"Stamina Consumption: {CostPerSecond} CE/s\n"
+                        + "Your screen goes black and gray, and only see red.\n"
+                        + "Your movement speed and strength scales to the strongest enemy near you.\n"
+                        + "However, stamina consumption also scales to the strongest enemy near you.";
             }
         }
         public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.MindlessCarnage.Description");
