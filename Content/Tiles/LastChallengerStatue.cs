@@ -79,7 +79,7 @@ namespace sorceryFight.Content.Tiles
 
         public override bool RightClick(int i, int j)
         {
-            SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
             LastChallengerStatueManager lcsManager = Main.LocalPlayer.GetModPlayer<LastChallengerStatueManager>();
 
             string dialogKey = "LastChallenger.Unworthy";

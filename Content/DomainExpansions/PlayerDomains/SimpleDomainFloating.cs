@@ -76,7 +76,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
                 }
             }
 
-            SorceryFightPlayer sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
 
             if (Main.myPlayer == owner)
             {
@@ -92,7 +92,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
             // Since domains are synced across all clients, we're allowed to have each client determine logic for themselves, even if they don't own the domain.
             if (Main.dedServ) return;
             
-            sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+            sfPlayer = Main.LocalPlayer.SorceryFight();
             sfPlayer.inSimpleDomain = false;
 
             foreach (Player player in Main.ActivePlayers)
@@ -113,8 +113,8 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
             currentTexture = null;
             frame = 0;
             frameTime = 0;
-            Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>().inSimpleDomain = false;
-            Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>().disableCurseTechniques = false;
+            Main.LocalPlayer.SorceryFight().inSimpleDomain = false;
+            Main.LocalPlayer.SorceryFight().disableCurseTechniques = false;
         }
 
         public override bool Unlocked(SorceryFightPlayer sf)

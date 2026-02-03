@@ -39,6 +39,8 @@ public abstract class InnateTechnique()
                 return new VesselTechnique();
             case "PrivatePureLoveTrain":
                 return new PrivatePureLoveTrainTechnique();
+            case "HeavenlyRestriction":
+                return new HeavenlyRestriction();
         }
 
         return null;
@@ -53,7 +55,8 @@ public abstract class InnateTechnique()
                     new LimitlessTechnique(),
                     new ShrineTechnique(),
                     new VesselTechnique(),
-                    new PrivatePureLoveTrainTechnique()
+                    new PrivatePureLoveTrainTechnique(),
+                    new HeavenlyRestriction()
                 };
         }
     }

@@ -28,7 +28,7 @@ namespace sorceryFight.Content.Buffs.CursedEnergyTraits
         {
             if (SorceryFight.IsDevMode())
             {
-                Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>().sharpCursedEnergy = false;
+                Main.LocalPlayer.SorceryFight().sharpCursedEnergy = false;
                 return true;
             }
             return false;

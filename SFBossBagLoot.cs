@@ -7,6 +7,7 @@ using sorceryFight.Content.Items.Accessories;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.Items.Consumables.SukunasFinger;
 using sorceryFight.Content.Items.Materials;
+using sorceryFight.Content.Items.Weapons.Melee;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -113,6 +114,7 @@ namespace sorceryFight
             if (item.type != ItemID.MoonLordBossBag) return;
 
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CelestialAmulet>(), CelestialAmulet.ChanceDenominator, 1, 1));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<InvertedSpear>(), 5, 1, 1));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<LunarCursedFragment>(), 1, 14, 17));
         }
 

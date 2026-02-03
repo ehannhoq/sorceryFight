@@ -23,11 +23,16 @@ namespace sorceryFight.Content.Items.Consumables
             Item.rare = ModContent.RarityType<SorceryFightWeapon>();
         }
 
+        public override bool CanUseItem(Player player)
+        {
+            return !player.SorceryFight().heavenlyRestriction;
+        }
+
         public override bool? UseItem(Player player)
         {
             if (player.whoAmI == Main.myPlayer)
             {
-                SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();                
+                SorceryFightPlayer sf = player.SorceryFight();
                 sf.RollForCursedEnergyTraits(true);
             }
             return true;

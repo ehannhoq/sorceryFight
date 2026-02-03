@@ -26,17 +26,13 @@ namespace sorceryFight.Content.Items.Accessories
         {
             base.UpdateAccessory(player, hideVisual);
 
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
             sfPlayer.pictureLocket = true;
         }
 
-        public override void AddRecipes()
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
         {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.Chain, 10);
-            recipe.AddIngredient(ModContent.ItemType<CalamityMod.Items.Placeables.Furniture.DevPaintings.ThankYouPainting>());
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();
+            return !player.SorceryFight().heavenlyRestriction;
         }
     }
 }

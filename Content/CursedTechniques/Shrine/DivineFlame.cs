@@ -87,7 +87,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         {
             castTimer++;
             Player player = Main.player[Projectile.owner];
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
             float totalCastTime = sfPlayer.cursedOfuda ? 150f * CursedOfuda.cursedTechniqueCastTimeDecrease : 150f;
             float transitionTime = sfPlayer.cursedOfuda ? 30f * CursedOfuda.cursedTechniqueCastTimeDecrease : 30f;
 
@@ -106,7 +106,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 if (!casting)
                 {
                     casting = true;
-                    player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = true;
+                    player.SorceryFight().disableRegenFromProjectiles = true;
                     Projectile.Hitbox = new Rectangle(0, 0, 0, 0);
                     Projectile.damage = 0;
                     texturePhase = 0;

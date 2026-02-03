@@ -82,7 +82,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         {
             if (!hasHit.Contains(Projectile.whoAmI))
             {
-                modifiers.FinalDamage.Flat = CalculateTrueDamage(Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>());
+                modifiers.FinalDamage.Flat = CalculateTrueDamage(Main.player[Projectile.owner].SorceryFight());
                 hasHit.Add(Projectile.whoAmI);
 
                 if (isBarrage == 0)
@@ -94,7 +94,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                         if (dist < 250f)
                         {
                             Player player = Main.player[Projectile.owner];
-                            SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
+                            SorceryFightPlayer sf = player.SorceryFight();
 
                             Vector2 playerPos = player.MountedCenter;
                             Vector2 mousePos = Main.MouseWorld;

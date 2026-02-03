@@ -19,7 +19,9 @@ namespace sorceryFight.Content.InnateTechniques
         {
             new PachinkoBalls(),
             new HakarisDoor(),
-            new PassingThrough()
+            new PassingThrough(),
+            new CargoCrate(),
+            new RailroadSign()
         };
 
         public override PlayerDomainExpansion DomainExpansion { get; } = new IdleDeathGamble();

@@ -76,7 +76,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         {
             if (!hasHit.Contains(Projectile.whoAmI))
             {
-                modifiers.FinalDamage.Flat = CalculateTrueDamage(Main.player[Projectile.owner].GetModPlayer<SorceryFightPlayer>());
+                modifiers.FinalDamage.Flat = CalculateTrueDamage(Main.player[Projectile.owner].SorceryFight());
                 hasHit.Add(Projectile.whoAmI);
             }
             

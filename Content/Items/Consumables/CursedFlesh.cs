@@ -26,12 +26,17 @@ namespace sorceryFight.Content.Items.Consumables
             Item.rare = ItemRarityID.Master;
         }
 
+        public override bool CanUseItem(Player player)
+        {
+            return !player.SorceryFight().heavenlyRestriction;
+        }
+
         public override bool? UseItem(Player player)
         {
             if (player.whoAmI == Main.myPlayer)
             {
                 SoundEngine.PlaySound(SoundID.Item4);
-                SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
+                SorceryFightPlayer sf = player.SorceryFight();
                 sf.cursedFlesh = true;
             }
             return true;

@@ -15,7 +15,8 @@ namespace sorceryFight
 	{
 		DefeatedBoss,
 		SyncDomain,
-		PlayerCastingDomain
+		PlayerCastingDomain,
+		KilledNPC
 	}
 	public class SorceryFight : Mod
 	{
@@ -102,6 +103,10 @@ namespace sorceryFight
 				case (byte)MessageType.PlayerCastingDomain:
 					HandlePlayerCastingDomainPacket(reader);
 					break;
+
+				case (byte)MessageType.KilledNPC:
+					HandleKilledNPCPacket(reader);
+					break;
 			}
 		}
 
@@ -113,7 +118,7 @@ namespace sorceryFight
 
 			if (Main.netMode == NetmodeID.MultiplayerClient && Main.myPlayer == targetPlayer)
 			{
-				Main.player[targetPlayer].GetModPlayer<SorceryFightPlayer>().AddDefeatedBoss(bossType);
+				Main.player[targetPlayer].SorceryFight().AddDefeatedBoss(bossType);
 			}
 		}
 
@@ -173,6 +178,17 @@ namespace sorceryFight
 				ModPacket packet = GetPacket();
 				packet.Write((byte)MessageType.PlayerCastingDomain);
 				packet.Send(-1, sentFrom);
+			}
+		}
+
+		private void HandleKilledNPCPacket(BinaryReader reader)
+		{
+			int targetPlayer = reader.ReadInt32();
+			int npcType = reader.ReadInt32();
+
+			if (Main.netMode == NetmodeID.MultiplayerClient && Main.myPlayer == targetPlayer)
+			{
+				Main.player[targetPlayer].SorceryFight().OnKilledNPC(npcType);
 			}
 		}
 	}

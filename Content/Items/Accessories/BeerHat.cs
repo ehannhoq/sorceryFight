@@ -25,11 +25,16 @@ namespace sorceryFight.Content.Items.Accessories
             Item.height = 50;
         }
 
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
+        {
+            return !player.SorceryFight().heavenlyRestriction;
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             base.UpdateAccessory(player, hideVisual);
 
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
             sfPlayer.beerHat = true;
         }
 

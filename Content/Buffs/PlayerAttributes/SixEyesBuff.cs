@@ -1,6 +1,7 @@
 using System;
 using sorceryFight.SFPlayer;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -8,7 +9,7 @@ namespace sorceryFight.Content.Buffs.PlayerAttributes
 {
     public class SixEyesBuff : ModBuff
     {
-        public static readonly float cursedTechniqueCostReduciton = 0.25f;
+        public static readonly float cursedTechniqueCostReduciton = 0.23f;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.PlayerAttributes.SixEyes.DisplayName");
         public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.PlayerAttributes.SixEyes.Description").WithFormatArgs((int)(cursedTechniqueCostReduciton * 100));
         public override void SetStaticDefaults()
@@ -20,14 +21,16 @@ namespace sorceryFight.Content.Buffs.PlayerAttributes
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<SorceryFightPlayer>().ctCostReduction += cursedTechniqueCostReduciton;
+            player.SorceryFight().ctCostReduction += cursedTechniqueCostReduciton;
+            player.AddBuff(BuffID.Dangersense, 2);
+            player.AddBuff(BuffID.NightOwl, 2);
         }
 
         public override bool RightClick(int buffIndex)
         {
             if (SorceryFight.IsDevMode())
             {
-                Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>().sixEyes = false;
+                Main.LocalPlayer.SorceryFight().sixEyesLevel = 0;
                 return true;
             }
             return false;

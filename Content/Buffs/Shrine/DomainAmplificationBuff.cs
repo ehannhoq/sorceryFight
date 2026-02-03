@@ -35,7 +35,7 @@ namespace sorceryFight.Content.Buffs.Shrine
         public override void Apply(Player player)
         {
             player.AddBuff(ModContent.BuffType<DomainAmplificationBuff>(), 2);
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
 
             if (player.HasBuff<HollowWickerBasketBuff>())
             {
@@ -61,7 +61,7 @@ namespace sorceryFight.Content.Buffs.Shrine
 
         public override void Remove(Player player)
         {
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
             sfPlayer.domainAmp = false;
 
             if (auraIndices == null)
@@ -81,7 +81,7 @@ namespace sorceryFight.Content.Buffs.Shrine
 
         public override void Update(Player player, ref int buffIndex)
         {
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
 
             float minimumDistance = 25f;
             float accumulativeDamage = 0f;

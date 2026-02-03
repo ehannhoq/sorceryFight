@@ -1,23 +1,9 @@
 InnateTechniques: {
-	Limitless: {
-		DisplayName: Limitless
-		Description: placeholder
-	}
-
-	Shrine: {
-		DisplayName: Shrine
-		Description: placeholder
-	}
-
-	PrivatePureLoveTrain: {
-		DisplayName: Private Pure Love Train
-		Description: placeholder
-	}
-
-	Vessel: {
-		DisplayName: Vessel
-		Description: placeholder
-	}
+	Limitless.DisplayName: Limitless
+	Shrine.DisplayName: Shrine
+	PrivatePureLoveTrain.DisplayName: Private Pure Love Train
+	Vessel.DisplayName: Vessel
+	HeavenlyRestriction.DisplayName: Heavenly Restriction
 }
 
 UnlockedRCT: {
@@ -25,11 +11,14 @@ UnlockedRCT: {
 	KeyBindMessage: ": Hold down to use your cursed energy to heal yourself!"
 }
 
+LeftItAllBehind.GeneralMessage: At the brink of death, you lose total connection to cursed energy. You feel awakened again.
+
 InnateTechniqueUnlocker: {
 	Limitless: The essense of Infinity begins to flow through your veins.
 	Shrine: The depths of hell opens up to welcome its potential king.
 	PrivatePureLoveTrain: You suddenly feel a lot more lucky than before.
 	Vessel: A foreign, ancient soul seems to have been sealed within your body. A soul of pure evil.
+	HeavenlyRestriction: You feel the cursed energy within you vanish into seemingly nothingness.
 
 	PlayerAttributes: {
 		SixEyes: Your eyes begin to glow radiantly, being able to see the flow of even the faintest of Cursed Energy in the air.

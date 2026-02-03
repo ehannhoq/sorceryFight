@@ -14,6 +14,7 @@ namespace sorceryFight
         public static SoundStyle CommonWoosh;
         public static SoundStyle CommonHeartBeat;
         public static SoundStyle CommonBoom;
+        public static SoundStyle DashImpact;
         public static SoundStyle BlackFlashImpact;
 
         public static SoundStyle AmplificationBlueChargeUp;
@@ -36,6 +37,7 @@ namespace sorceryFight
 
         public static SoundStyle PachinkoBallCollision;
         public static SoundStyle TrainDoorsClosing;
+        public static SoundStyle CargoCrateImpact;
 
         public static SoundStyle UnlimitedVoid;
         public static SoundStyle MalevolentShrine;
@@ -53,10 +55,23 @@ namespace sorceryFight
         public static SoundStyle OblivionSwordImpact;
         public static SoundStyle OblivionSwordBigImpact;
 
+        public static SoundStyle ChakiraResonantChargeUp;
+        public static SoundStyle ChakiraResonantProjectileAmbiance;
+        public static SoundStyle ChakiraResonantProjectileFire;
+
+
+        public static SoundStyle InvertedSpearOfHeavenSpin;
+        public static SoundStyle InvertedSpearOfHeavenCollide;
+        public static SoundStyle InvertedSpearOfHeavenSlash;
+        public static SoundStyle InvertedSpearOfHeavenImpact;
+
+        public static SoundStyle GroundshotGroundSlam;
+        public static SoundStyle GroundshotPunch;
+
         public override void Load()
         {
-            CommonFire = new("sorceryFight/Content/Sounds/CommonFire") { Volume = 1f };
-            CommonWoosh = new("sorceryFight/Content/Sounds/CommonWoosh") { Volume = 1f };
+            CommonFire = new("sorceryFight/Content/Sounds/CommonFire") { Volume = 1f, PitchVariance = 0.75f };
+            CommonWoosh = new("sorceryFight/Content/Sounds/CommonWoosh") { Volume = 1f, PitchVariance = 0.75f };
             CommonHeartBeat = new("sorceryFight/Content/Sounds/CommonHeartBeat") { Volume = 1f };
             CommonBoom = new("sorceryFight/Content/Sounds/CommonBoom") { Volume = 1f };
             BlackFlashImpact = new("sorceryFight/Content/Sounds/BlackFlashImpact") { Volume = 1f };
@@ -81,6 +96,7 @@ namespace sorceryFight
 
             PachinkoBallCollision = new("sorceryFight/Content/Sounds/Projectiles/PachinkoBallCollision") { Volume = 1f };
             TrainDoorsClosing = new("sorceryFight/Content/Sounds/Projectiles/TrainDoorsClosing") { Volume = 1f };
+            CargoCrateImpact = new("sorceryFight/Content/Sounds/Projectiles/CargoCrateImpact") { Volume = 1f };
 
             UnlimitedVoid = new("sorceryFight/Content/Sounds/DomainExpansions/UnlimitedVoid") { Volume = 1f };
             MalevolentShrine = new("sorceryFight/Content/Sounds/DomainExpansions/MalevolentShrine") { Volume = 1f };
@@ -94,10 +110,24 @@ namespace sorceryFight
             PhantasmicLabyrinth = new("sorceryFight/Content/Sounds/DomainExpansions/PhantasmicLabyrinth") { Volume = 1f };
             AshenedPillarsOfCalamity = new("sorceryFight/Content/Sounds/DomainExpansions/AshenedPillarsOfCalamity") { Volume = 1f };
 
-            OblivionSwordSlash = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordSlash") { Volume = 1f };
-            OblivionSwordBigSlash = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordBigSlash") { Volume = 1f };
-            OblivionSwordImpact = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordImpact") { Volume = 1f };
-            OblivionSwordBigImpact = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordBigImpact") { Volume = 1f };
+            OblivionSwordSlash = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordSlash") { Volume = 1f, PitchVariance = 0.75f };
+            OblivionSwordBigSlash = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordBigSlash") { Volume = 1f, PitchVariance = 0.75f };
+            OblivionSwordImpact = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordImpact") { Volume = 1f, PitchVariance = 0.75f };
+            OblivionSwordBigImpact = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordBigImpact") { Volume = 1f, PitchVariance = 0.75f };
+
+            ChakiraResonantChargeUp = new("sorceryFight/Content/Sounds/Items/ChakiraResonant/ChakiraResonantChargeUp") { Volume = 1f, PitchVariance = 0.15f };
+            ChakiraResonantProjectileAmbiance = new("sorceryFight/Content/Sounds/Projectiles/ChakiraResonantProjectileAmbiance") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
+            ChakiraResonantProjectileFire = new("sorceryFight/Content/Sounds/Projectiles/ChakiraResonantProjectileFire") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
+
+            InvertedSpearOfHeavenSpin = new("sorceryFight/Content/Sounds/Items/InvertedSpearOfHeaven/InvertedSpearOfHeavenSpin") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 0.25f };
+            InvertedSpearOfHeavenCollide = new("sorceryFight/Content/Sounds/Items/InvertedSpearOfHeaven/InvertedSpearOfHeavenCollide") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 0.5f };
+            InvertedSpearOfHeavenSlash = new("sorceryFight/Content/Sounds/Items/InvertedSpearOfHeaven/InvertedSpearOfHeavenSlash") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 1f };
+            InvertedSpearOfHeavenImpact = new("sorceryFight/Content/Sounds/Items/InvertedSpearOfHeaven/InvertedSpearOfHeavenImpact") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 1f };
+
+            GroundshotGroundSlam = new("sorceryFight/Content/Sounds/Projectiles/GroundshotGroundSlam") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
+            GroundshotPunch = new("sorceryFight/Content/Sounds/Projectiles/GroundshotPunch") { Volume = 0.75f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 0.3f};
+
+            DashImpact = new("sorceryFight/Content/Sounds/DashImpact") { Volume = 0.75f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 0.3f};
         }
     }
 }

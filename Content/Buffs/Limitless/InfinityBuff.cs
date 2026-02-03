@@ -40,18 +40,18 @@ namespace sorceryFight.Content.Buffs.Limitless
         {
             player.AddBuff(ModContent.BuffType<InfinityBuff>(), 2);
 
-            player.GetModPlayer<SorceryFightPlayer>().infinity = true;
+            player.SorceryFight().infinity = true;
         }
 
         public override void Remove(Player player)
         {
-            SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sf = player.SorceryFight();
             sf.infinity = false;
         }
 
         public override void Update(Player player, ref int buffIndex)
         {
-            SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sf = player.SorceryFight();
             float infinityDistance = 50f;
             CostPerSecond = 1f;
 

@@ -1,0 +1,273 @@
+{
+    "LastChallenger": {
+        "Unworthy": {
+            "Text": "You are not worthy yet, young sorcerer.",
+            "Replies": [
+                {
+                    "Text": "When will I know when I'm worthy?",
+                    "Response": "LastChallenger.WhenWorthy"
+                },
+                {
+                    "Text": "What happened to you?",
+                    "Response": "LastChallenger.WhatHappened"
+                },
+                {
+                    "Text": "Who are you?",
+                    "Response": "LastChallenger.WhoAreYou"
+                }
+            ],
+            "Actions": []
+        },
+        "WhoAreYou": {
+            "Text": "I'm the last person to ever stand head to head to Yharim, the Godseeker himself.",
+            "Replies": [
+                {
+                    "Text": "What happened to you?",
+                    "Response": "LastChallenger.WhatHappened"
+                }
+            ],
+            "Actions": []
+        },
+        "WhatHappened": {
+            "Text": "I was sealed in this eternal prison over 20 years ago by both Yharim and the Supreme Witch.\nWhile my power lay largely constricted, I am still able to communicate to the outside world.\nTo you, young sorcerer.",
+            "Replies": [],
+            "Actions": []
+        },
+        "WhenWorthy": {
+            "Text": "You will know when you are worthy, young sorcerer.",
+            "Replies": [],
+            "Actions": []
+        },
+        "Worthy": {
+            "Text": "I've been watching you throughout your journey. At first I thought you were just another unfortunate soul brough into this forsakened world.\nBut you've proven to be... much more... extraordinary.\nI saw glimpses of myself in your battles, and such want to give you a special gift.\nTake these, and do what I could not.\nDefeat the Supreme Witch.\nAnd then all that stands between you and Him is your own strength.",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "InvokeMethod",
+                    "UIText": "Take Gift.",
+                    "MethodName": "GrantQuantumCoulombSet"
+                }
+            ]
+        },
+        "PreSupremeCalamitas": {
+            "Text": "Defeat the Supreme Witch, and finish what I've started.",
+            "Replies": [],
+            "Actions": []
+        },
+        "PostSupremeCalamitas": {
+            "Text": "You now stand where I once stood. I'm sure he's waiting for you.\nGood luck, young sorcerer.",
+            "Replies": [],
+            "Actions": []
+        }
+    },
+    "YoshinobuGakuganji": {
+        "Interact": {
+            "Text": "Greetings, young sorcerer. How may I help you today?",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "OpenShop",
+                    "UIText": "Do you sell any Cursed Energy modifiers?",
+                    "ShopName": "CursedEnergyModifiersShop"
+                },
+                {
+                    "Type": "OpenShop",
+                    "UIText": "Do you have any spare Sukuna's Fingers?",
+                    "ShopName": "SukunasFingersShop"
+                }
+            ]
+        }
+    },
+    "ShokoIeiri": {
+        "Interact": {
+            "Text": "Need something?",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "QueryQuest",
+                    "QuestLine": "RCT",
+                    "UIText": "Can you help me with the Reverse Curse Technique?",
+                    "Condition": {
+                        "Type": "PlayerFlag",
+                        "Flag": "unlockedRCT",
+                        "Value": "true"
+                    }
+                }
+            ]
+        },
+        "ActiveQuest": {
+            "Text": "You still need to complete the task I gave you.",
+            "Replies": [],
+            "Actions": []
+        },
+        "NoQuests": {
+            "Text": "There's nothing else I need you to do.",
+            "Replies": [],
+            "Actions": []
+        },
+        "RCTQuestI": {
+            "Text": "I can't really 'teach' you to be better at the reverse cursed technique, but I can give you an item that will boost it's efficiency.\nHowever, before I give you that, I need you to prove that you can use the reverse cursed technique on your own.\nHeal upto 200 health points using the reverse cursed technique, then come back to me.",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "CloseDialog",
+                    "UIText": "Sorry, I have some other stuff to do first."
+                },
+                {
+                    "Type": "GiveQuest",
+                    "UIText": "Sounds good!",
+                    "QuestName": "RCTQuestI"
+                }
+            ]
+        },
+        "RCTQuestI_Completed": {
+            "Text": "You're getting the hang of it. Here, take this charm.",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "EndOfDialog",
+                    "MethodName": "CompletedQuest"
+                }
+            ]
+        }
+    },
+    "GojoSatoru": {
+        "Interact": {
+            "Text": "Yo, {PlayerName}.",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "QueryQuest",
+                    "QuestLine": "SixEyes",
+                    "UIText": "Can you help me with my Six Eyes?",
+                    "Condition": {
+                        "Type": "PlayerFlag",
+                        "Flag": "HasSixEyes",
+                        "Value": "true"
+                    }
+                }
+            ]
+        },
+        "ActiveQuest": {
+            "Text": "Didn't I already tell you to go do something else? Go back to doing that.",
+            "Replies": [],
+            "Actions": []
+        },
+        "NoQuests": {
+            "Text": "You've done everything I needed you to do.",
+            "Replies": [],
+            "Actions": []
+        },
+        "SixEyesQuestI": {
+            "Text": "Seems you've just awakened the Six Eyes. It seems pretty premature at the moment, so you might experience some strain if you leave it uncovered for too long.\nTake this, this will block almost all light, but with your Six Eyes you should be able to 'see' through them.\nDefeat 50 enemies with this on, so you can grasp the basics of the Six Eyes without straining too hard.",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "CloseDialog",
+                    "UIText": "I have some other stuff to do first."
+                },
+                {
+                    "Type": "GiveQuest",
+                    "UIText": "Sounds good!",
+                    "QuestName": "SixEyesQuestI"
+                }
+            ]
+        },
+        "SixEyesQuestI_Completed": {
+            "Text": "Took you long enough. But it looks like your Six Eyes is maturing quite nicely. Take a look at it.",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "EndOfDialog",
+                    "MethodName": "CompletedQuest"
+                }
+            ]
+        },
+        "SixEyesQuestII": {
+            "Text": "There's one more thing I'd like for you to do though. While the blindfold does a good job at not straining your eyes, the best way to fully grasp the Six Eyes is to fight through the pain.\nDefeat the Lunatic Cultist while your Six Eyes are strained, then come back to me.",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "CloseDialog",
+                    "UIText": "I have some other stuff to do first."
+                },
+                {
+                    "Type": "GiveQuest",
+                    "UIText": "Sounds good!",
+                    "QuestName": "SixEyesQuestII"
+                }
+            ]
+        },
+        "SixEyesQuestII_Completed": {
+            "Text": "You've got potential. I've ever seen such perfect Six Eyes-while, besides mine of course.",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "EndOfDialog",
+                    "MethodName": "CompletedQuest"
+                }
+            ]
+        }
+    },
+    "TodoAoi": {
+        "Interact": {
+            "Text": "Have you seen my brother?",
+            "Replies": [
+                {
+                    "Text": "What's that around your neck?",
+                    "Response": "TodoAoi.PictureLocketQuery"
+                }
+            ],
+            "Actions": []
+        },
+        "ActiveQuest": {
+            "Text": "You still haven't done what I asked you to do.",
+            "Replies": [],
+            "Actions": []
+        },
+        "NoQuests": {
+            "Text": "You've already got your own picture locket.",
+            "Replies": [],
+            "Actions": []
+        },
+        "PictureLocketQuery": {
+            "Text": "This? This contains two pictures that I hold very dearly to me.\nYuji Itadori, and of course,\nTakada-chan!!!\n...\nIt reminds me of who I'm fighting for. I was even able to land a black flash nearly at will with it!",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "QueryQuest",
+                    "QuestLine": "BlackFlash",
+                    "UIText": "Nearly at will? Can I have something like that?"
+                }
+            ]
+        },
+        "BlackFlashQuestI": {
+            "Text": "Ohoho, of course! But, theres a few things I need you to do first.\nFirst, I need to know that you can even black flash. Hit three consecutive black flashes.\nAlso, every boss has a 1% chance to drop the 'Thank you' painting, which is essential for the picture locket.\nBring me that, and I can make you your own locket!",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "CloseDialog",
+                    "UIText": "I have some other stuff to do first."
+                },
+                {
+                    "Type": "GiveQuest",
+                    "UIText": "Sounds good!",
+                    "QuestName": "BlackFlashQuestI"
+                }
+            ]
+        }
+    },
+    "AtsuyaKusakabe": {
+        "Interact": {
+            "Text": "What do you want?",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "OpenShop",
+                    "UIText": "Do you sell any cursed energy potions?",
+                    "ShopName": "CursedEnergyPotionsShop"
+                }
+            ]
+        }
+    }
+}

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using Newtonsoft.Json;
+using sorceryFight.Content.UI.Dialog.Actions;
+using sorceryFight.Content.UI.Dialog.Conditions;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -16,24 +17,24 @@ public class Dialog
     internal string speaker;
     internal List<string> lines;
     internal Dictionary<string, string> replies;
-    internal string actionName;
-    private Dialog(string speaker, List<string> lines, Dictionary<string, string> replies, string actionName)
+    internal List<IAction> actions;
+    private Dialog(string speaker, List<string> lines, Dictionary<string, string> replies, List<IAction> actions)
     {
         this.speaker = speaker;
         this.lines = lines;
         this.replies = replies;
-        this.actionName = actionName;
+        this.actions = actions;
     }
 
     public static Dialog Create(string dialogKey)
     {
-        string interactableDialogPath = $"sorceryFight/Content/UI/Dialog/{Language.ActiveCulture.Name}.InteractableDialog";
-
+        string interactableDialogPath = $"sorceryFight/Localization/{Language.ActiveCulture.Name}/InteractableDialog.json";
         if (!ModContent.FileExists(interactableDialogPath))
         {
-            interactableDialogPath = "sorceryFight/Content/UI/Dialog/en_US.InteractableDialog";
+            Main.NewText($"Couldn't find {interactableDialogPath}, defaulting to en-US");
+
+            interactableDialogPath = "sorceryFight/Localization/en-US/InteractableDialog.json";
         }
-        interactableDialogPath += ".json";
 
         using MemoryStream memoryStream = new MemoryStream(ModContent.GetFileBytes(interactableDialogPath));
         string jsonString = Encoding.UTF8.GetString(memoryStream.ToArray());
@@ -45,36 +46,117 @@ public class Dialog
         if (parts.Length != 2)
             throw new Exception($"Invalid dialog key: {dialogKey}.");
 
-        string container = parts[0];
+        string dialogSource = parts[0];
         string dialog = parts[1];
 
-        if (!root.ContainsKey(container) || !root[container].ContainsKey(dialog))
+        if (!root.ContainsKey(dialogSource) || !root[dialogSource].ContainsKey(dialog))
             throw new Exception($"Dialog Key {dialogKey} not found.");
 
+        var dialogData = JsonConvert.DeserializeObject<Dictionary<string, object>>(root[dialogSource][dialog].ToString());
 
-
-        var dialogData = JsonConvert.DeserializeObject<Dictionary<string, object>>(root[container][dialog].ToString());
-
-        var speaker = dialogData["Speaker"].ToString();
         var lines = dialogData["Text"].ToString().Split("\n").ToList();
+        for (int i = 0; i < lines.Count; i++)
+        {
+            lines[i] = lines[i].Replace("{PlayerName}", Main.LocalPlayer.name);
+        }
+
 
         var replies = new Dictionary<string, string>();
         var replyData = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(dialogData["Replies"].ToString());
         foreach (var reply in replyData)
         {
+            if (reply["Condition"] != null)
+            {
+                var conditionData = JsonConvert.DeserializeObject<Dictionary<string, object>>(reply["Condition"].ToString());
+                string conditionType = conditionData["Type"].ToString();
+
+                ICondition condition;
+                switch (conditionType)
+                {
+                    case "BossDefeated":
+                        condition = new BossDefeatedCondition(conditionData["Boss"].ToString());
+                        break;
+                    case "PlayerFlag":
+                        condition = new PlayerFlagCondition(conditionData["Flag"].ToString(), conditionData["Value"].ToString());
+                        break;
+
+                    default:
+                        throw new Exception($"No such condition type of type '{conditionType}'");
+                }
+
+                if (!condition.Evaluate(Main.LocalPlayer.SorceryFight()))
+                    continue;
+            }
+
+
             string text = reply["Text"].ToString();
             string response = reply["Response"].ToString();
 
             replies.Add(text, response);
         }
 
-        var actionName = dialogData["Action"]?.ToString();
-
-        if (actionName == null)
+        var actions = new List<IAction>();
+        var actionData = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(dialogData["Actions"].ToString());
+        foreach (var action in actionData)
         {
-            actionName = string.Empty;
+            if (action.ContainsKey("Condition"))
+            {
+                var conditionData = JsonConvert.DeserializeObject<Dictionary<string, object>>(action["Condition"].ToString());
+                string conditionType = conditionData["Type"].ToString();
+
+                ICondition condition;
+                switch (conditionType)
+                {
+                    case "BossDefeated":
+                        condition = new BossDefeatedCondition(conditionData["Boss"].ToString());
+                        break;
+                    case "PlayerFlag":
+                        condition = new PlayerFlagCondition(conditionData["Flag"].ToString(), conditionData["Value"].ToString());
+                        break;
+
+                    default:
+                        throw new Exception($"No such condition type of type '{conditionType}'");
+                }
+
+                if (!condition.Evaluate(Main.LocalPlayer.SorceryFight()))
+                    continue;
+            }
+
+
+            string type = action["Type"]?.ToString() ??
+                throw new NullReferenceException($"An action in {dialogKey} doesn't have a 'ActionType' field!");
+            string uiText;
+
+            switch (type)
+            {
+                case "OpenShop":
+                    uiText = action["UIText"]?.ToString();
+                    actions.Add(new OpenShopAction(action["ShopName"].ToString(), uiText));
+                    break;
+                case "InvokeMethod":
+                    uiText = action["UIText"]?.ToString();
+                    actions.Add(new InvokeMethodAction(action["MethodName"].ToString(), uiText));
+                    break;
+                case "EndOfDialog":
+                    actions.Add(new EndOfDialogAction(action["MethodName"].ToString()));
+                    break;
+                case "QueryQuest":
+                    uiText = action["UIText"]?.ToString();
+                    actions.Add(new QueryQuestAction(action["QuestLine"].ToString(), uiText));
+                    break;
+                case "GiveQuest":
+                    uiText = action["UIText"]?.ToString();
+                    actions.Add(new GiveQuestAction(action["QuestName"].ToString(), uiText));
+                    break;
+                case "CloseDialog":
+                    uiText = action["UIText"]?.ToString();
+                    actions.Add(new CloseDialogAction(uiText));
+                    break;
+                default:
+                    throw new Exception($"No such action type of type '{type}'");
+            }
         }
 
-        return new Dialog(speaker, lines, replies, actionName);
+        return new Dialog(dialogSource, lines, replies, actions);
     }
 }

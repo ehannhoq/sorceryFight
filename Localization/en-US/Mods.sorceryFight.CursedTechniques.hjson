@@ -174,7 +174,7 @@ PachinkoBalls: {
 		Shoot a pachinko ball that ricochets off of
 		up to five enemies.
 		'''
-	LockedDescription: Defeat the one who guards the Dungeon.
+	LockedDescription: Defeat the Desert Scourge.
 }
 
 HakarisDoor: {
@@ -194,5 +194,72 @@ PassingThrough: {
 		Summon a subway cart that rams through 
 		your cursor.
 		'''
-	LockedDescription: Defeat the mechanical recreation of Cthulu's skeleton.
+	LockedDescription: Defeat the mechanical recreation of Cthulu's skull.
+}
+
+CargoCrate: {
+	DisplayName: Cargo Crate
+	Description:
+		'''
+		Launches a cargo crate filled with
+		sharp cursed energy.
+		'''
+	LockedDescription: Defeat the crazed cultist leader at the entrance of the dungeon.
+}
+
+RailroadSign: {
+	DisplayName: Railroad Sign
+	Description: Swing a railroad sign.
+	LockedDescription:
+		'''
+		Defeat the Goddess who slew a dragon and
+		gorged Herself in its auric soul of Flame.
+		'''
+}
+
+Groundshot: {
+	DisplayName: Groundshot
+	Description:
+		'''
+		Stomp the ground with incredible force,
+		with a boulder propelling forward. Then
+		punch it towards your cursor with incredibl
+		force.
+		'''
+	LockedDescription:
+		'''
+		Defeat the piece of Cthulhu that was
+		ripped out from him centuries ago.
+		'''
+}
+
+RamCharge: {
+	DisplayName: Ram Charge
+	Description:
+		'''
+		Dash towards your cursor, dealing damage to
+		anything in your path.
+		'''
+	LockedDescription: Defeat the one who guards the Dungeon.
+}
+
+FlashStep: {
+	DisplayName: FlashStep
+	Description:
+		'''
+		Immedietely teleport to your cursor. Has max range of tiles,
+		which increases with mastery.
+		'''
+	LockedDescription: Defeat the mechanical recreation of Cthulu's skull.
+}
+
+LightspeedBarrage: {
+	DisplayName: Lightspeed Barrage
+	Description:
+		'''
+		Auto-dash to the nearest enemy. If there 
+		are any more nearby enemies, auto-dash to 
+		them as well.
+		'''
+	LockedDescription: Defeat the Servants of the Scourge.
 }

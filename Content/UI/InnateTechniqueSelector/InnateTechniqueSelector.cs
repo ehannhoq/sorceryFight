@@ -91,8 +91,9 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
                 if (timeCounter > 305)
                 {
                     Player player = Main.LocalPlayer;
-                    SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+                    SorceryFightPlayer sfPlayer = player.SorceryFight();
                     sfPlayer.innateTechnique = selectedTechnique;
+                    sfPlayer.heavenlyRestriction = false;
                     sfPlayer.selectedTechnique = null;
                     sfPlayer.DisablePTBooleans();
                     sfPlayer.cursedEnergy = sfPlayer.maxCursedEnergy;

@@ -6,6 +6,17 @@ MasteryIcon: {
 		'''
 	BossesDefeated: Bosses Defeated:
 	CostReduction: Cursed Energy cost reduction:
+	HR_Info:
+		'''
+		Heavenly Restriction Mastery
+		The more bosses you defeat along your journey, the more powerful and efficient your Heavenly Restriction becomes.
+		'''
+	HR_CostReduction: Stamina cost reduction:
+	HR_IncreasedMeleeDamage: Increased melee damage:
+	HR_IncreasedAttackSpeed: Increased attack speed:
+	HR_IncreasedMoveSpeed: Increased movement speed:
+	HR_IncreasedJumpSpeed: Increased jump speed:
+	HR_IncreasedDefense: Increased defense:
 }
 
 RCTIcon: {
@@ -16,7 +27,17 @@ RCTIcon: {
 		allows one to heal any wound of the user, fatal or not.
 		'''
 	LockedInfo: Be at the brink of death at the hands of the lunar god.
-	ContinuousRCT.Info: Heal rate: 1 HP / 5 CE
+}
+
+LeftItAllBehindIcon: {
+	DisplayName: The One Who Left It All Behind
+	Info:
+		'''
+		You've completely detached yourself from cursed energy. As such,
+		your heavenly restriction has been realized to its full potential.
+		Increases overall stats.
+		'''
+	LockedInfo: Be at the brink of death at the hands of the lunar god.
 }
 
 SimpleDomainIcon: {
@@ -38,6 +59,7 @@ SukunasFingerIcon: {
 
 CursedEnergyBar: {
 	CE: Cursed Energy:
+	Stamina: Stamina:
 	RegenRate: Regeneration Rate:
 	ToolTip:
 		'''

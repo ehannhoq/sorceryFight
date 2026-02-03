@@ -17,6 +17,10 @@ Mods: {
 			InvertedSpearCharge.DisplayName: Inverted Spear Charge
 			CleaveMS.DisplayName: Cleave M S
 			HollowPurpleCollision.DisplayName: Hollow Purple Collision
+			InvertedSpearProjectile.DisplayName: Inverted Spear Projectile
+			ChakiraResonantSlash.DisplayName: Chakira Resonant Slash
+			ChakiraResonantHoldout.DisplayName: Chakira Resonant Holdout
+			ChakiraResonantCharge.DisplayName: Chakira Resonant Charge
 		}
 
 		Configs: {
@@ -89,6 +93,11 @@ Mods: {
 			LastChallengerStatueItem: {
 				DisplayName: Last Challenger Statue Item
 				Tooltip: ""
+			}
+
+			BowieKnife: {
+				Tooltip: ""
+				DisplayName: Bowie Knife
 			}
 		}
 	}

@@ -34,7 +34,9 @@ namespace sorceryFight.Content.Items.Accessories
         {
             base.UpdateAccessory(player, hideVisual);
 
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
+            sfPlayer.cursedBlindfold = true;
+            
             if (sfPlayer.innateTechnique != null)
             {
                 if (sfPlayer.innateTechnique.Name.Equals("Limitless"))
@@ -48,7 +50,7 @@ namespace sorceryFight.Content.Items.Accessories
 
         public override bool CanEquipAccessory(Player player, int slot, bool modded)
         {
-            return player.GetModPlayer<SorceryFightPlayer>().sixEyes;
+            return player.SorceryFight().HasSixEyes || player.SorceryFight().challengersEye;
         }
 
         public override void AddRecipes()

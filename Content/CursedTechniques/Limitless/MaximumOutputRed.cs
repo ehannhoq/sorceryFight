@@ -135,7 +135,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     Projectile.damage = 0;
                     scale = 0;
                     SoundEngine.PlaySound(SorceryFightSounds.ReversalRedChargeUp, Projectile.Center);
-                    player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = true;
+                    player.SorceryFight().disableRegenFromProjectiles = true;
                 }
 
 
@@ -159,7 +159,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     if (!spawnedFromPurple)
                     {
                         SoundEngine.PlaySound(SorceryFightSounds.MaximumOutputRedFire, Projectile.Center);
-                        Projectile.damage = (int)CalculateTrueDamage(player.GetModPlayer<SorceryFightPlayer>());
+                        Projectile.damage = (int)CalculateTrueDamage(player.SorceryFight());
                     }
 
                     if (Main.myPlayer == Projectile.owner)
@@ -167,7 +167,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                         if (!spawnedFromPurple)
                         {
                             Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
-                            player.GetModPlayer<SorceryFightPlayer>().disableRegenFromProjectiles = false;
+                            player.SorceryFight().disableRegenFromProjectiles = false;
                         }
 
                         if (Filters.Scene["SF:MaximumRed"].IsActive())

@@ -11,13 +11,16 @@ namespace sorceryFight
     {
         public override void OnKill(NPC npc)
         {
-            if (!npc.boss) return;
             foreach (Player player in Main.ActivePlayers)
             {
                 if (!npc.playerInteraction[player.whoAmI]) continue;
 
-                SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
-                sfPlayer.AddDefeatedBoss(npc.type);
+                SorceryFightPlayer sfPlayer = player.SorceryFight();
+
+                sfPlayer.OnKilledNPC(npc.type);
+
+                if (npc.boss)
+                    sfPlayer.AddDefeatedBoss(npc.type);
             }
         }
     }

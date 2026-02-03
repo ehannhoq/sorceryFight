@@ -31,7 +31,7 @@ namespace sorceryFight.Content.Buffs.PrivatePureLoveTrain
                     player.DelBuff(index);
             }
 
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
 
             sfPlayer.maxCursedEnergyFromOtherSources += 100 * sfPlayer.numberBossesDefeated;
             sfPlayer.cursedEnergyRegenFromOtherSources += 25 * sfPlayer.numberBossesDefeated;

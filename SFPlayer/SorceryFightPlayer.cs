@@ -38,7 +38,7 @@ namespace sorceryFight.SFPlayer
         public InnateTechnique innateTechnique;
         public CursedTechnique selectedTechnique;
         public float cursedEnergy;
-        public float maxCursedEnergy;
+        public float maxCursedEnergy { get; private set; }
         public float cursedEnergyRegenPerSecond;
         public float cursedEnergyUsagePerSecond;
 
@@ -63,7 +63,6 @@ namespace sorceryFight.SFPlayer
         #endregion
 
         #region One-off Variables
-        public bool recievedYourPotential;
         public bool yourPotentialSwitch;
         public bool usedYourPotentialBefore;
         public bool usedCursedFists;
@@ -73,16 +72,22 @@ namespace sorceryFight.SFPlayer
         #endregion
 
         #region Domain
+        public bool UnlockedSimpleDomain => new SimpleDomainFloating().Unlocked(this);
+        public bool UnlockedDomainExpansion => innateTechnique.DomainExpansion.Unlocked(this);
         public bool inDomainAnimation;
         public int domainTimer;
         public bool HasActiveDomain => DomainExpansionController.ActiveDomains.Any(d => d is PlayerDomainExpansion && d is not ISimpleDomain && d.owner == Player.whoAmI);
         public bool fallingBlossomEmotion;
         public bool inSimpleDomain;
-        public bool immuneToDomains => fallingBlossomEmotion || hollowWickerBasket || inSimpleDomain;
+        public bool immuneToDomains => fallingBlossomEmotion || hollowWickerBasket || inSimpleDomain || heavenlyRestriction;
         #endregion
 
         #region Player Attributes
-        public bool sixEyes;
+        public short sixEyesLevel;
+        public bool AwakenedSixEyes => sixEyesLevel == 1;
+        public bool SixEyes => sixEyesLevel == 2;
+        public bool TrueSixEyes => sixEyesLevel == 3;
+        public bool HasSixEyes { get { return sixEyesLevel > 0; } }
         public bool challengersEye;
         public bool uniqueBodyStructure;
         public bool blessedByBlackFlash;
@@ -124,6 +129,11 @@ namespace sorceryFight.SFPlayer
         public Vector2 CEBarPos;
         #endregion
 
+        #region HeavenlyRestriction
+        public bool heavenlyRestriction;
+        public bool leftItAllBehind;
+        #endregion
+
         public override void UpdateEquips()
         {
             if (innateTechnique == null) return;
@@ -162,6 +172,7 @@ namespace sorceryFight.SFPlayer
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
             maxCursedEnergy = calculateBaseMaxCE();
 
+            if (heavenlyRestriction) return;
 
             if (blackFlashTimeLeft != 0)
             {
@@ -208,7 +219,14 @@ namespace sorceryFight.SFPlayer
                 {
                     if (!BeerHatRecoverCE())
                         AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
-                } else AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
+                }
+                else
+                {
+                    if (heavenlyRestriction)
+                        Player.AddBuff(ModContent.BuffType<Exhaustion>(), SFUtils.BuffSecondsToTicks(DefaultBurntTechniqueDuration));
+                    else
+                        AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
+                }
             }
 
 
@@ -230,6 +248,8 @@ namespace sorceryFight.SFPlayer
                     TEMP_disabledRegenTimer = 0;
                 }
             }
+
+            CheckQuests();
         }
 
 
@@ -265,13 +285,11 @@ namespace sorceryFight.SFPlayer
         }
 
 
-        public override void OnEnterWorld()
+        public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
         {
-            if (Main.myPlayer == Player.whoAmI && !recievedYourPotential)
-            {
-                Player.QuickSpawnItem(Player.GetSource_Misc("YourPotential"), ModContent.ItemType<YourPotential>());
-                recievedYourPotential = true;
-            }
+            return [
+                ModContent.GetModItem(ModContent.ItemType<YourPotential>()).Item
+            ];
         }
 
 
@@ -285,6 +303,8 @@ namespace sorceryFight.SFPlayer
                 if (!disableCurseTechniques || uniqueBodyStructure)
                     ShootTechnique();
             }
+
+            if (heavenlyRestriction) return;
 
 
             if (SFKeybinds.UseRCT.Current)
@@ -305,13 +325,11 @@ namespace sorceryFight.SFPlayer
                 if (HasActiveDomain)
                     domainTimer = 1;
 
-                if (innateTechnique.DomainExpansion.Unlocked(this))
+                if (UnlockedDomainExpansion)
                 {
                     float zoom = 1.3f * (MathF.Log10(domainTimer + 1f) + 0.22f);
-                    Vector2 zoomVec = new Vector2(zoom, zoom);
-                    zoomVec = Vector2.Clamp(zoomVec, Main.BackgroundViewMatrix.Zoom, Vector2.One * 2);
 
-                    CameraController.SetCameraZoom(zoomVec);
+                    CameraController.SetCameraZoom(zoom);
                 }
             }
             else if (domainTimer != 0)
@@ -325,7 +343,7 @@ namespace sorceryFight.SFPlayer
                         ToggleSimpleDomain();
                     }
                 }
-                else if (innateTechnique.DomainExpansion.Unlocked(this))
+                else if (UnlockedDomainExpansion)
                 {
                     if (DomainExpansionController.ActiveDomains.TryGet(d => d is ISimpleDomain && d.owner == Player.whoAmI, out DomainExpansion de))
                     {
@@ -391,6 +409,13 @@ namespace sorceryFight.SFPlayer
                 return;
             }
 
+            if (Player.HasBuff<Exhaustion>())
+            {
+                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your body is exhausted!");
+                Main.combatText[index].lifeTime = 180;
+                return;
+            }
+
             if (cursedEnergy < selectedTechnique.CalculateTrueCost(this))
             {
                 if (beerHat)
@@ -402,8 +427,10 @@ namespace sorceryFight.SFPlayer
 
                 if (!successfullyRecoveredCe)
                 {
-                    int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Not enough Cursed Energy!");
-                    Main.combatText[index].lifeTime = 180;
+                    if (heavenlyRestriction)
+                        Player.AddBuff(ModContent.BuffType<Exhaustion>(), SFUtils.BuffSecondsToTicks(DefaultBurntTechniqueDuration));
+                    else
+                        AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
                     return;
                 }
             }
@@ -514,7 +541,7 @@ namespace sorceryFight.SFPlayer
             if (Main.myPlayer == Player.whoAmI)
             {
                 int index;
-                if (!new SimpleDomainFloating().Unlocked(this))
+                if (!UnlockedSimpleDomain)
                 {
                     index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You haven't unlocked this yet!");
                     Main.combatText[index].lifeTime = 60;
@@ -587,9 +614,9 @@ namespace sorceryFight.SFPlayer
         public void RollForPlayerAttributes(bool isReroll = false)
         {
             bool successfulRoll = false;
-            if (SFUtils.Roll(SFConstants.SixEyesPercent) && !sixEyes && !challengersEye)
+            if (SFUtils.Roll(SFConstants.SixEyesPercent) && sixEyesLevel == 0 && !challengersEye)
             {
-                sixEyes = true;
+                sixEyesLevel = 1;
                 ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.SixEyes"), Color.Khaki, Player.whoAmI);
                 successfulRoll = true;
             }
@@ -660,8 +687,12 @@ namespace sorceryFight.SFPlayer
         {
             if (challengersEye)
                 Player.AddBuff(ModContent.BuffType<ChallengersEyeBuff>(), 2);
-            else if (sixEyes)
+            else if (AwakenedSixEyes)
+                Player.AddBuff(ModContent.BuffType<AwakenedSixEyesBuff>(), 2);
+            else if (SixEyes)
                 Player.AddBuff(ModContent.BuffType<SixEyesBuff>(), 2);
+            else if (TrueSixEyes)
+                Player.AddBuff(ModContent.BuffType<TrueSixEyesBuff>(), 2);
 
             if (uniqueBodyStructure)
                 Player.AddBuff(ModContent.BuffType<UniqueBodyStructureBuff>(), 2);

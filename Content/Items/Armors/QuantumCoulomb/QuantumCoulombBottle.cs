@@ -33,7 +33,7 @@ namespace sorceryFight.Content.Items.Armors.QuantumCoulomb
 
         public override void UpdateEquip(Player player)
         {
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
             player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1 + ctDamage;
             player.GetDamage(DamageClass.Generic) *= 1 + allDamage;
             sfPlayer.cursedEnergyRegenFromOtherSources += ceRegen;

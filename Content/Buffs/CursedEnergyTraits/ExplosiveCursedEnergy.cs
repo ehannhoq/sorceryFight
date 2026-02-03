@@ -22,14 +22,14 @@ namespace sorceryFight.Content.Buffs.CursedEnergyTraits
         public override void Update(Player player, ref int buffIndex)
         {
             player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1 + cursedTechniqueDamageIncrease;
-            player.GetModPlayer<SorceryFightPlayer>().ctCostReduction -= cursedTechniqueCostIncrease;
+            player.SorceryFight().ctCostReduction -= cursedTechniqueCostIncrease;
         }
 
         public override bool RightClick(int buffIndex)
         {
             if (SorceryFight.IsDevMode())
             {
-                Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>().explosiveCursedEnergy = false;
+                Main.LocalPlayer.SorceryFight().explosiveCursedEnergy = false;
                 return true;
             }
             return false;

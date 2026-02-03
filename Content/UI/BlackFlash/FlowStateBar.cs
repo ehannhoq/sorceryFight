@@ -24,7 +24,7 @@ namespace sorceryFight.Content.UI.BlackFlash
 
             emptyTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/BlackFlash/FlowStateEmptyIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             fullTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/BlackFlash/FlowStateFilledIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+            sfPlayer = Main.LocalPlayer.SorceryFight();
         }
 
         public override void Update(GameTime gameTime)

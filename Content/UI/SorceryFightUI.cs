@@ -12,6 +12,9 @@ using sorceryFight.Content.UI.TechniqueSelector;
 using System;
 using sorceryFight.Content.UI.BlackFlash;
 using sorceryFight.Content.UI;
+using sorceryFight.Content.UI.Quests.QuestToast;
+using static sorceryFight.Content.UI.Quests.QuestToast.QuestToast;
+using sorceryFight.Content.UI.Quests.QuestMenu;
 
 public class SorceryFightUI : UIState
 {
@@ -20,6 +23,9 @@ public class SorceryFightUI : UIState
     public CursedTechniqueMenu ctMenu;
     public PassiveTechniqueSelector ptMenu;
     public FlowStateBar flowStateBar;
+    public QuestToast questToast;
+    public QuestMenu questMenu;
+
     private List<UIElement> elementsToRemove;
     bool initialized;
 
@@ -39,7 +45,7 @@ public class SorceryFightUI : UIState
         }
 
         base.Update(gameTime);
-        var player = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+        var player = Main.LocalPlayer.SorceryFight();
 
         if (player.yourPotentialSwitch)
         {
@@ -81,6 +87,21 @@ public class SorceryFightUI : UIState
                 Elements.Remove(ctMenu);
             }
         }
+
+
+        if (SFKeybinds.OpenQuestMenu.JustPressed)
+        {
+            if (!Elements.Contains(questMenu))
+            {
+                questMenu = new QuestMenu();
+                Append(questMenu);
+            }
+            else
+            {
+                Elements.Remove(questMenu);
+            }
+        }
+
 
         if (player.sfUI == null)
         {
@@ -151,6 +172,12 @@ public class SorceryFightUI : UIState
 
         return mousePos.X >= dimensions.X && mousePos.X <= dimensions.X + texture.Width &&
                 mousePos.Y >= dimensions.Y && mousePos.Y <= dimensions.Y + texture.Height;
+    }
+
+    public void QuestToastNotification(string questName, QuestToastType type)
+    {
+        questToast = new QuestToast(questName, type);
+        Append(questToast);
     }
 
     public void RemoveElement(UIElement element)

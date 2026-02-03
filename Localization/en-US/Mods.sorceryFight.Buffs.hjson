@@ -1,7 +1,33 @@
 PlayerAttributes: {
+	AwakenedSixEyes: {
+		DisplayName: Awakened Six Eyes
+		Description:
+			'''
+			Reduces the cost of Cursed Techniques by {0}%
+			Grants permanent Dangersense
+			'''
+	}
+
 	SixEyes: {
 		DisplayName: Six Eyes
-		Description: Reduces the cost of Cursed Techniques by {0}%.
+		Description:
+			'''
+			Reduces the cost of Cursed Techniques by {0}%
+			Grants permanent Dangersense
+			Grants permanent Night Owl
+			'''
+	}
+
+	TrueSixEyes: {
+		DisplayName: True Six Eyes
+		Description:
+			'''
+			Reduces the cost of Cursed Techniques by {0}%
+			Grants permanent Dangersense
+			Grants permanent Night Owl
+			Grants permanent Spelunker
+			Grants permanent Hunter
+			'''
 	}
 
 	ChallengersEye: {
@@ -68,6 +94,15 @@ BurntTechnique: {
 		'''
 		Your Innate Technique has been exhuasted!
 		You won't be able to use any cursed techniques.
+		'''
+}
+
+Exhaustion: {
+	DisplayName: Exhaustion
+	Description:
+		'''
+		You're too exhausted!
+		You won't be able to use any abilities.
 		'''
 }
 
@@ -143,6 +178,25 @@ HollowWickerBasketBuff: {
 	LockedDescription: Defeat the stone-faced ritualistic idol of the Lihzahrd tribe.
 }
 
+MindlessCarnage: {
+	DisplayName: Mindless Carnage
+	Description:
+		'''
+		Your mind goes blank, eyes go gray.
+		Damage and speed scales to the strongest
+		enemy near you.
+		Stamina drain also increases the stronger
+		the enemy.
+		'''
+	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
+}
+
+InorganicPerception: {
+	DisplayName: Inorganic Perception
+	Description: placeholder
+	LockedDescription: Defeat the stone-faced ritualistic idol of the Lihzahrd tribe.
+}
+
 IdleDeathGambleJackpotBuffI: {
 	DisplayName: Jackpot
 	Description: You've hit the jackpot. You now have larger CE reserves.
@@ -191,6 +245,15 @@ KingOfCursesBuff: {
 BrainDamage: {
 	DisplayName: Brain Damage
 	Description: You are not able to expand your domain!
+}
+
+StrainedSixEyes: {
+	DisplayName: Strained Six Eyes
+	Description:
+		'''
+		{0}% reduced max Cursed Energy.
+		{1}/s Cursed Energy drain.
+		'''
 }
 
 CursedEnergySickness: {

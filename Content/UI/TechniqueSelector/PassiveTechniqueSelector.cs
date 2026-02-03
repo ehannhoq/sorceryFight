@@ -24,7 +24,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             public TechniqueSelectorButton(Texture2D texture, string hoverText, int id) : base(texture, hoverText)
             {
                 this.id = id;
-                sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+                sfPlayer = Main.LocalPlayer.SorceryFight();
                 Width.Set(texture.Width, 0f);
                 Height.Set(texture.Height, 0f);
             }
@@ -62,7 +62,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             if (Main.dedServ) return;
 
             icons = new List<TechniqueSelectorButton>();
-            sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+            sfPlayer = Main.LocalPlayer.SorceryFight();
             isDragging = false;
 
             ReloadUI();

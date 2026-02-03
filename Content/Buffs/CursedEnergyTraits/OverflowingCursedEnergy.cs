@@ -21,7 +21,7 @@ namespace sorceryFight.Content.Buffs.CursedEnergyTraits
 
         public override void Update(Player player, ref int buffIndex)
         {
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
             sfPlayer.maxCursedEnergyFromOtherSources += sfPlayer.maxCursedEnergy * maxCursedEnergyIncrease;
             sfPlayer.cursedEnergyRegenFromOtherSources += cursedEnergyRegenIncrease;
         }
@@ -30,7 +30,7 @@ namespace sorceryFight.Content.Buffs.CursedEnergyTraits
         {
             if (SorceryFight.IsDevMode())
             {
-                Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>().overflowingEnergy = false;
+                Main.LocalPlayer.SorceryFight().overflowingEnergy = false;
                 return true;
             }
             return false;

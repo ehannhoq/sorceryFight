@@ -6,6 +6,7 @@ using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.UI.Dialog.Actions;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
@@ -19,29 +20,52 @@ namespace sorceryFight.Content.UI.Dialog
     {
         public Dialog dialog;
         public object initiator;
-        private bool showIndicator = false;
+        private bool listenForLeftClick = false;
+        private Action endOfDialogAction = null;
         private bool clearOptions = false;
         public int dialogIndex;
-        private SpecialUIElement background = new SpecialUIElement(ModContent.Request<Texture2D>("sorceryFight/Content/UI/Dialog/DialogBox", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
-        private UIText dialogText = new UIText("", 1f, false);
-        private SFButton indicator = new SFButton(ModContent.Request<Texture2D>("sorceryFight/Content/UI/Dialog/DialogNextIndicator", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value, "");
+
+        private SpecialUIElement background;
+        private SpecialUIElement headshotBackground;
+        private SpecialUIElement headshot;
+        private UIText dialogText;
+        private UIImage indicator;
+
         public DialogUI(Dialog dialog, object initiator)
         {
             this.dialog = dialog;
             this.initiator = initiator;
-            SetupUI();
+
+            background = new SpecialUIElement(ModContent.Request<Texture2D>("sorceryFight/Content/UI/Dialog/DialogBox", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
+            headshotBackground = new SpecialUIElement(ModContent.Request<Texture2D>("sorceryFight/Content/UI/Dialog/HeadshotBackground", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
+            headshot = new SpecialUIElement(ModContent.Request<Texture2D>($"sorceryFight/Content/UI/Dialog/Headshots/{dialog.speaker}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value, transparentPixels: true);
+            dialogText = new UIText("", 1f, false);
+            indicator = new UIImage(ModContent.Request<Texture2D>("sorceryFight/Content/UI/Dialog/DialogNextIndicator", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value);
+
+            TaskScheduler.Instance.AddDelayedTask(() =>
+            {
+                SetupUI();
+            }, 1);
         }
 
         private void SetupUI()
         {
-            float left = (Main.screenWidth / Main.UIScale / 2) - (background.texture.Width / 2);
+            float gap = 16f;
+            float totalWidth = background.texture.Width + headshotBackground.texture.Width + gap;
+
+            float left = (Main.screenWidth / Main.UIScale / 2) - (totalWidth / 2);
             float top = (Main.screenHeight / Main.UIScale / 2) + (background.texture.Height / 2);
 
-            background.Left.Set(left, 0f);
+            headshotBackground.Left.Set(left, 0f);
+            headshotBackground.Top.Set(top, 0f);
+
+            headshot.Left.Set(left - ((headshot.texture.Width - headshotBackground.texture.Width) / 2f), 0f);
+            headshot.Top.Set(top - ((headshot.texture.Height - headshotBackground.texture.Height) / 2f), 0f);
+
+            background.Left.Set(left + headshotBackground.texture.Width + gap, 0f);
             background.Top.Set(top, 0f);
 
-
-            dialogText.Left.Set(left + 20f, 0f);
+            dialogText.Left.Set(left + headshotBackground.texture.Width + gap + 20f, 0f);
             dialogText.Top.Set(top + 20f, 0f);
 
             dialogText.Width.Set(background.texture.Width - 40f, 0f);
@@ -55,15 +79,16 @@ namespace sorceryFight.Content.UI.Dialog
             dialogText.IsWrapped = true;
 
 
-            indicator.Left.Set(left + background.texture.Width - indicator.texture.Width - 20f, 0f);
-            indicator.Top.Set(top + background.texture.Height - indicator.texture.Height - 20f, 0f);
+            indicator.Left.Set(left + headshotBackground.texture.Width + gap + background.texture.Width - indicator.Width.Pixels - 20f, 0f);
+            indicator.Top.Set(top + background.texture.Height - indicator.Height.Pixels - 20f, 0f);
 
+            Append(headshotBackground);
+            Append(headshot);
             Append(background);
             Append(dialogText);
 
             dialogIndex = 0;
             DisplayLine(dialog.lines[dialogIndex]);
-            indicator.ClickAction += NextLine;
         }
 
         private void NextLine()
@@ -92,7 +117,7 @@ namespace sorceryFight.Content.UI.Dialog
 
         private void DisplayLine(string line)
         {
-            showIndicator = false;
+            listenForLeftClick = false;
             dialogText.SetText("");
 
             for (int i = 0; i < line.Length; i++)
@@ -110,16 +135,21 @@ namespace sorceryFight.Content.UI.Dialog
                     int index = dialogIndex;
                     int dialogCount = dialog.lines.Count;
                     var replies = dialog.replies;
+                    var actions = dialog.actions;
 
-                    if (index == dialogCount - 1 && replies.Count > 0)
+                    if (index == dialogCount - 1 && (replies.Count > 0 || actions.Count > 0))
                     {
                         int i = 1;
+
+                        float gap = 16f;
+                        float totalWidth = background.texture.Width + headshotBackground.texture.Width + gap;
+                        float left = (Main.screenWidth / Main.UIScale / 2) - (totalWidth / 2) + headshotBackground.texture.Width + gap + 20f;
+
                         foreach (var reply in replies)
                         {
-                            DialogReplyText replyText = new DialogReplyText(reply.Key, reply.Value);
+                            DialogReplyText replyText = new(reply.Key, reply.Value);
                             replyText.onClick += () => NextDialog(replyText.dialogKey);
 
-                            float left = (Main.screenWidth / Main.UIScale / 2) - (background.texture.Width / 2) + 20;
                             float top = (Main.screenHeight / Main.UIScale / 2) + (background.texture.Height / 2) - 10 - (30 * i);
 
                             replyText.TextOriginX = 0f;
@@ -131,11 +161,42 @@ namespace sorceryFight.Content.UI.Dialog
 
                             i++;
                         }
+
+                        foreach (var action in actions)
+                        {
+                            if (action.GetType() == typeof(EndOfDialogAction))
+                            {
+                                if (actions.Count > 1 || replies.Count > 0)
+                                    throw new Exception($"'EndOfDialog' actions must be the only action or reply available for a dialog.");
+                                
+                                listenForLeftClick = true;
+                                action.SetInitiator(initiator);
+                                endOfDialogAction = action.Invoke;
+                                break;
+                            }
+
+                            DialogActionText actionText = new(action.GetUIText());
+                            actionText.onClick += () =>
+                            {
+                                EndDialog();
+                                action.SetInitiator(initiator);
+                                action.Invoke();
+                            };
+
+                            float top = (Main.screenHeight / Main.UIScale / 2) + (background.texture.Height / 2) - 10 - (30 * i);
+
+                            actionText.TextOriginX = 0f;
+                            actionText.TextOriginY = 0f;
+
+                            actionText.Left.Set(left, 0f);
+                            actionText.Top.Set(top, 0f);
+                            Append(actionText);
+
+                            i++;
+                        }
                     }
                     else
-                    {
-                        showIndicator = true;
-                    }
+                        listenForLeftClick = true;
                 },
                 line.Length * 1 + 1);
         }
@@ -143,19 +204,9 @@ namespace sorceryFight.Content.UI.Dialog
 
         private void EndDialog()
         {
-            if (dialog.actionName != string.Empty)
-            {
-                var method = initiator.GetType().GetMethod(dialog.actionName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-
-                if (method != null)
-                {
-                    method.Invoke(initiator, null);
-                }
-                else throw new Exception($"Method {dialog.actionName} not found in {initiator.GetType().Name}");
-            }
-
+            endOfDialogAction?.Invoke();
             dialog = null;
-            ModContent.GetInstance<SorceryFightUISystem>().DeactivateDialogUI();
+            ModContent.GetInstance<SorceryFightUISystem>().ResetUI();
         }
 
 
@@ -163,15 +214,20 @@ namespace sorceryFight.Content.UI.Dialog
         {
             base.Update(gameTime);
 
-            if (showIndicator && !Elements.Contains(indicator))
+            if (listenForLeftClick && !Elements.Contains(indicator))
                 Append(indicator);
-            else if (!showIndicator && Elements.Contains(indicator))
+            else if (!listenForLeftClick && Elements.Contains(indicator))
                 Elements.Remove(indicator);
 
-            if (clearOptions && Elements.Any(e => e is DialogReplyText))
+            if (clearOptions && Elements.Any(e => e is DialogReplyText || e is DialogActionText))
             {
                 clearOptions = false;
-                Elements.RemoveAll(e => e is DialogReplyText);
+                Elements.RemoveAll(e => e is DialogReplyText || e is DialogActionText);
+            }
+
+            if (listenForLeftClick && Main.mouseLeft && !Main.mouseLeftRelease)
+            {
+                NextLine();
             }
         }
     }

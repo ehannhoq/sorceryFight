@@ -46,24 +46,7 @@ namespace sorceryFight.Content.Projectiles.Melee
                     Projectile.frame = 0;
             }
 
-            Player player = Main.player[Projectile.owner];
-            Vector2 playerRotatedPoint = player.RotatedRelativePoint(player.MountedCenter, true);
-            float velocityAngle = Projectile.velocity.ToRotation();
-            float offset = 120f * Projectile.scale;
-
-            Projectile.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
-            Projectile.direction = (Math.Cos(velocityAngle) > 0).ToDirectionInt();
-            Projectile.rotation = velocityAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
-            Projectile.Center = playerRotatedPoint + velocityAngle.ToRotationVector2() * offset;
-            player.ChangeDir(Projectile.direction);
-
-            if (Main.myPlayer == Projectile.owner)
-            {
-                if (player.CantUseSword(Projectile))
-                {
-                    Projectile.Kill();
-                }
-            }
+            Projectile.PositionProjectileForSlash(120f);
 
         }
 

@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MonoMod.Cil;
 using sorceryFight.Content.InnateTechniques;
+using sorceryFight.Content.Quests;
+using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -39,7 +42,6 @@ namespace sorceryFight.SFPlayer
             cursedRuneOfKos = false;
             cursedEnergyRegenFromOtherSources = 0f;
 
-            recievedYourPotential = false;
             yourPotentialSwitch = false;
             usedYourPotentialBefore = false;
             usedCursedFists = false;
@@ -51,7 +53,7 @@ namespace sorceryFight.SFPlayer
             fallingBlossomEmotion = false;
             inSimpleDomain = false;
 
-            sixEyes = false;
+            sixEyesLevel = 0;
             challengersEye = false;
             uniqueBodyStructure = false;
             blessedByBlackFlash = false;
@@ -72,6 +74,7 @@ namespace sorceryFight.SFPlayer
             pictureLocket = false;
             cursedOfuda = false;
             beerHat = false;
+            cursedBlindfold = false;
 
             blackFlashDamageMultiplier = 3;
             blackFlashTime = 30;
@@ -80,6 +83,12 @@ namespace sorceryFight.SFPlayer
             blackFlashTimeLeft = -60;
             blackFlashCounter = 0;
             additionalBlackFlashDamageMultiplier = 0f;
+
+            questData = new();
+            currentQuests = new List<Quest>();
+            completedQuests = new List<string>();
+
+            leftItAllBehind = false;
         }
         public override void SaveData(TagCompound tag)
         {
@@ -91,7 +100,7 @@ namespace sorceryFight.SFPlayer
             tag["cursedEnergy"] = cursedEnergy;
 
             tag["bossesDefeated"] = bossesDefeated;
-            
+
             tag["ctSelector"] = new List<float> { CTSelectorPos.X, CTSelectorPos.Y };
 
             tag["ptSelector"] = new List<float> { PTSelectorPos.X, PTSelectorPos.Y };
@@ -115,17 +124,18 @@ namespace sorceryFight.SFPlayer
             tag["cursedEnergyRegenModifiers"] = cursedEnergyRegenModifiers;
 
             var generalBooleans = new List<string>();
-            generalBooleans.AddWithCondition("recievedYourPotential", recievedYourPotential);
             generalBooleans.AddWithCondition("usedYourPotentialBefore", usedYourPotentialBefore);
             generalBooleans.AddWithCondition("unlockedRCT", unlockedRCT);
-            generalBooleans.AddWithCondition("sixEyes", sixEyes);
             generalBooleans.AddWithCondition("hollowEyes", challengersEye);
             generalBooleans.AddWithCondition("uniqueBodyStructure", uniqueBodyStructure);
             generalBooleans.AddWithCondition("blessedByBlackFlash", blessedByBlackFlash);
             generalBooleans.AddWithCondition("explosiveCursedEnergy", explosiveCursedEnergy);
             generalBooleans.AddWithCondition("sharpCursedEnergy", sharpCursedEnergy);
             generalBooleans.AddWithCondition("overflowingEnergy", overflowingEnergy);
+            generalBooleans.AddWithCondition("leftItAllBehind", leftItAllBehind);
             tag["generalBooleans"] = generalBooleans;
+
+            tag["sixEyesLevel"] = sixEyesLevel;
 
             if (innateTechnique != null)
             {
@@ -138,6 +148,13 @@ namespace sorceryFight.SFPlayer
                 tag["sukunasFingers"] = indexes;
             }
 
+            var currentQuestsData = new List<string>();
+            foreach (Quest q in currentQuests)
+            {
+                currentQuestsData.Add(q.GetClass());
+            }
+            tag["currentQuests"] = currentQuestsData;
+            tag["completedQuests"] = completedQuests;
         }
 
         public override void LoadData(TagCompound tag)
@@ -178,16 +195,15 @@ namespace sorceryFight.SFPlayer
             cursedRuneOfKos = cursedEnergyRegenModifiers.Contains("cursedRuneOfKos");
 
             var generalBooleans = tag.GetList<string>("generalBooleans");
-            recievedYourPotential = generalBooleans.Contains("recievedYourPotential");
             usedYourPotentialBefore = generalBooleans.Contains("usedYourPotentialBefore");
             unlockedRCT = generalBooleans.Contains("unlockedRCT");
-            sixEyes = generalBooleans.Contains("sixEyes");
             challengersEye = generalBooleans.Contains("hollowEyes");
             uniqueBodyStructure = generalBooleans.Contains("uniqueBodyStructure");
             blessedByBlackFlash = generalBooleans.Contains("blessedByBlackFlash");
             explosiveCursedEnergy = generalBooleans.Contains("explosiveCursedEnergy");
             sharpCursedEnergy = generalBooleans.Contains("sharpCursedEnergy");
             overflowingEnergy = generalBooleans.Contains("overflowingEnergy");
+            leftItAllBehind = generalBooleans.Contains("leftItAllBehind");
 
             maxCursedEnergy = calculateBaseMaxCE();
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
@@ -195,18 +211,33 @@ namespace sorceryFight.SFPlayer
             if (innateTechnique != null)
             {
                 var indexes = tag.GetList<int>("sukunasFingers");
-                
+
                 for (int i = 0; i < indexes.Count; i++)
                 {
                     sukunasFingers[indexes[i]] = true;
                 }
             }
-        }
 
+            sixEyesLevel = tag.ContainsKey("sixEyesLevel") ? tag.GetShort("sixEyesLevel") : (short)0;
+
+            var currentQuestsData = tag.GetList<string>("currentQuests");
+            foreach (var quest in currentQuestsData)
+            {
+                currentQuests.Add(Quest.QuestBuilder(quest));
+            }
+
+            completedQuests = tag.GetList<string>("completedQuests").ToList();
+        }
+        
         public float calculateBaseMaxCE()
         {
-            float baseCE = 100f;
+            float baseCost = 100f;
             float sum = 0f;
+
+            if (heavenlyRestriction)
+            {
+                return baseCost + (35 * numberBossesDefeated);
+            }
 
             if (cursedSkull)
                 sum += 100f; // 200 total
@@ -220,13 +251,18 @@ namespace sorceryFight.SFPlayer
             if (cursedProfaneShards)
                 sum += 1000f; // 2000 total
 
-            return baseCE + sum;
+            return baseCost + sum;
         }
 
         public float calculateBaseCERegenRate()
         {
             float baseRegen = 1f;
             float sum = 0f;
+
+            if (heavenlyRestriction)
+            {
+                return baseRegen + (numberBossesDefeated * 2.5f);
+            }
 
             if (cursedEye)
                 sum += 4f; // 5 CE/s

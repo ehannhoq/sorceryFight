@@ -242,7 +242,7 @@ namespace sorceryFight.Content.DomainExpansions
             {
                 if (Main.myPlayer == de.owner)
                 {
-                    SorceryFightPlayer sf = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+                    SorceryFightPlayer sf = Main.LocalPlayer.SorceryFight();
                     sf.disableRegenFromDE = false;
 
                     if (de is not ISimpleDomain)

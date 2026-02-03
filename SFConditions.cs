@@ -56,7 +56,7 @@ namespace sorceryFight
                         return false;
                 }
                 else
-                    return !info.player.GetModPlayer<SorceryFightPlayer>().HasDefeatedBoss(info.npc.type);
+                    return !info.player.SorceryFight().HasDefeatedBoss(info.npc.type);
 
             }
 

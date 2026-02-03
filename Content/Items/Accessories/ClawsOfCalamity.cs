@@ -27,11 +27,16 @@ namespace sorceryFight.Content.Items.Accessories
             Item.defense = 4;
         }
 
+        public override bool CanEquipAccessory(Player player, int slot, bool modded)
+        {
+            return !player.SorceryFight().heavenlyRestriction;
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1 + cursedTechniqueDamageIncrease;
 
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
             sfPlayer.additionalBlackFlashDamageMultiplier += sfPlayer.blackFlashDamageMultiplier * blackFlashDamage;
         }
 

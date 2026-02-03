@@ -11,6 +11,7 @@ using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Buffs.Limitless;
 using sorceryFight.Content.Buffs.Shrine;
 using sorceryFight.Content.DomainExpansions;
+using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -282,6 +283,11 @@ public static class SFUtils
         return player.CantUseHoldout(needsToHold) || player.HeldItem.shoot != slash.type;
     }
 
+    public static SorceryFightPlayer SorceryFight(this Player player)
+    {
+        return player.GetModPlayer<SorceryFightPlayer>();
+    }
+
 
     public static Type FindTypeAcrossMods(string fullName)
     {
@@ -297,6 +303,56 @@ public static class SFUtils
         }
 
         return null;
+    }
+
+
+    /// <summary>
+    /// Helper method that calculates and positions the projectile if the projectile is serving as a slash for a weapon.
+    /// </summary>
+    /// <param name="proj"></param>
+    public static void PositionProjectileForSlash(this Projectile proj, float offset)
+    {
+        Player player = Main.player[proj.owner];
+        Vector2 playerRotatedPoint = player.RotatedRelativePoint(player.MountedCenter, true);
+        float velocityAngle = proj.velocity.ToRotation();
+
+        proj.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
+        proj.direction = (Math.Cos(velocityAngle) > 0).ToDirectionInt();
+        proj.rotation = velocityAngle + (proj.direction == -1).ToInt() * MathHelper.Pi;
+        proj.Center = playerRotatedPoint + velocityAngle.ToRotationVector2() * offset;
+        player.ChangeDir(proj.direction);
+
+        if (Main.myPlayer == proj.owner)
+        {
+
+            if (player.CantUseSword(proj))
+            {
+                proj.Kill();
+            }
+        }
+    }
+
+    public static string GetClass(this object obj)
+    {
+        string typeName = obj.GetType().ToString();
+        int index;
+        for (index = typeName.Length - 1; index >= 0; index--)
+        {
+            if (typeName[index] == '.')
+            {
+                index++;
+                break;
+            }
+        }
+        
+        return typeName[index..];
+    }
+
+    public static void RotateVelocityTowardsCursor(this Projectile projectile)
+    {
+        Vector2 mousePos = Main.MouseWorld;
+        projectile.velocity = mousePos - projectile.Center;
+        projectile.velocity.Normalize();
     }
 }
 

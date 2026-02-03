@@ -47,7 +47,7 @@ namespace sorceryFight.Content.DomainExpansions
             {
                 foreach (Player player in Main.player)
                 {
-                    if (player.active && !player.dead && !player.GetModPlayer<SorceryFightPlayer>().immuneToDomains)
+                    if (player.active && !player.dead && !player.SorceryFight().immuneToDomains)
                     {
                         float distance = Vector2.DistanceSquared(player.Center, this.center);
                         if (distance < SureHitRange.Squared())

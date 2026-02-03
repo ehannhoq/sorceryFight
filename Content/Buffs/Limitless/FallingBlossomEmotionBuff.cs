@@ -44,12 +44,12 @@ namespace sorceryFight.Content.Buffs.Limitless
 
             if (player.HasBuff<AmplifiedAuraBuff>())
             {
-                player.GetModPlayer<SorceryFightPlayer>().innateTechnique.PassiveTechniques[1].isActive = false;
+                player.SorceryFight().innateTechnique.PassiveTechniques[1].isActive = false;
 
             }
             if (player.HasBuff<MaximumAmplifiedAuraBuff>())
             {
-                player.GetModPlayer<SorceryFightPlayer>().innateTechnique.PassiveTechniques[2].isActive = false;
+                player.SorceryFight().innateTechnique.PassiveTechniques[2].isActive = false;
             }
 
             if (auraIndices == null)
@@ -63,8 +63,8 @@ namespace sorceryFight.Content.Buffs.Limitless
                 auraIndices[player.whoAmI] = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<FallingBlossomEmotionProjectile>(), 0, 0, player.whoAmI);
             }
 
-            player.GetModPlayer<SorceryFightPlayer>().disableCurseTechniques = true;
-            player.GetModPlayer<SorceryFightPlayer>().fallingBlossomEmotion = true;
+            player.SorceryFight().disableCurseTechniques = true;
+            player.SorceryFight().fallingBlossomEmotion = true;
         }
 
         public override void Remove(Player player)
@@ -77,7 +77,7 @@ namespace sorceryFight.Content.Buffs.Limitless
                 Main.projectile[auraIndices[player.whoAmI]].Kill();
                 auraIndices.Remove(player.whoAmI);
             }
-            SorceryFightPlayer sf = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sf = player.SorceryFight();
 
             sf.fallingBlossomEmotion = false;
             player.noKnockback = true;

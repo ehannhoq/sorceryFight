@@ -21,7 +21,7 @@ namespace sorceryFight.Content.Buffs.PlayerAttributes
 
         public override void Update(Player player, ref int buffIndex)
         {
-            SorceryFightPlayer sfPlayer = player.GetModPlayer<SorceryFightPlayer>();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
             sfPlayer.additionalBlackFlashDamageMultiplier += increasedDamage;
             sfPlayer.blackFlashWindowTime += increasedWindow;
         }
@@ -30,7 +30,7 @@ namespace sorceryFight.Content.Buffs.PlayerAttributes
         {
             if (SorceryFight.IsDevMode())
             {
-                Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>().blessedByBlackFlash = false;
+                Main.LocalPlayer.SorceryFight().blessedByBlackFlash = false;
                 return true;
             }
             return false;

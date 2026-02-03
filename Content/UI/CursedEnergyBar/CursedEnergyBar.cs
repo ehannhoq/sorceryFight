@@ -5,6 +5,8 @@ using sorceryFight;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ModLoader;
+using Terraria.ModLoader.Config;
 using Terraria.UI;
 
 public class CursedEnergyBar : UIElement
@@ -18,9 +20,13 @@ public class CursedEnergyBar : UIElement
     Vector2 offset;
     Texture2D borderTexture;
 
+    private bool changedToHeavenlyRestriction;
+
     public CursedEnergyBar(Texture2D borderTexture, Texture2D barTexture)
     {
         if (Main.dedServ) return;
+
+        changedToHeavenlyRestriction = false;
 
         this.borderTexture = borderTexture;
 
@@ -45,9 +51,9 @@ public class CursedEnergyBar : UIElement
 
         if (IsMouseHovering)
         {
-            var player = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
-            Main.hoverItemName = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.CE")} {Math.Round((decimal)player.cursedEnergy, 0)} / {player.maxCursedEnergy}\n"
-                                + $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.RegenRate")} {player.cursedEnergyRegenPerSecond} CE/s\n"
+            var player = Main.LocalPlayer.SorceryFight();
+            Main.hoverItemName = $"{SFUtils.GetLocalizationValue($"Mods.sorceryFight.UI.CursedEnergyBar.{(player.heavenlyRestriction ? "Stamina" : "CE")}")} {Math.Round((decimal)player.cursedEnergy, 0)} / {player.maxCursedEnergy}\n"
+                                + $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.RegenRate")} {player.cursedEnergyRegenPerSecond} {(player.heavenlyRestriction ? "Stamina" : "CE")}/s\n"
                                 + SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip");
         }
     }
@@ -55,12 +61,21 @@ public class CursedEnergyBar : UIElement
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+        sfPlayer = Main.LocalPlayer.SorceryFight();
+
         if (!initialized)
         {
             initialized = true;
             SetPosition();
+
         }
+
+        if (sfPlayer.heavenlyRestriction && !changedToHeavenlyRestriction)
+        {
+            ceBar.barTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedEnergyBar/StaminaBarFill", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            changedToHeavenlyRestriction = true;
+        }
+
         if (Main.playerInventory && SorceryFightUI.MouseHovering(this, ceBar.barTexture) && Main.mouseLeft && !isDragging)
         {
             isDragging = true;
@@ -120,7 +135,7 @@ public class CursedEnergyBar : UIElement
 
     void SetPosition()
     {
-        sfPlayer = Main.LocalPlayer.GetModPlayer<SorceryFightPlayer>();
+        sfPlayer = Main.LocalPlayer.SorceryFight();
         if (sfPlayer.CEBarPos == Vector2.Zero)
         {
             Left.Set(1300, 0f);
