@@ -45,8 +45,8 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         private Dictionary<Vector2, int> impactPositions = new();
 
 
-        private const float minSpeed = 20f;
-        private const float maxSpeed = 60f;
+        private const float minSpeed = 10f;
+        private const float maxSpeed = 20f;
 
         public override int GetProjectileType()
         {
@@ -61,7 +61,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         public override float CalculateTrueCost(SorceryFightPlayer sf)
         {
             float speedDiff = maxSpeed - minSpeed;
-            float trueSpeed = sf.leftItAllBehind ? ((float)sf.numberBossesDefeated / SorceryFight.totalBosses * speedDiff) + minSpeed : (sf.numberBossesDefeated / (SorceryFight.totalBosses / 1.5f) * speedDiff) + minSpeed;
+            float trueSpeed = sf.unlockedRCT ? ((float)sf.numberBossesDefeated / SorceryFight.totalBosses * speedDiff) + minSpeed : (sf.numberBossesDefeated / (SorceryFight.totalBosses / 1.5f) * speedDiff) + minSpeed;
 
             float adjustedCost = Cost * trueSpeed;
             float finalCost = adjustedCost - (adjustedCost * (sf.bossesDefeated.Count / 100f));
@@ -99,9 +99,10 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             startVel = Projectile.velocity;
 
             float speedDiff = maxSpeed - minSpeed;
-            float trueSpeed = sfPlayer.leftItAllBehind ? (sfPlayer.numberBossesDefeated / SorceryFight.totalBosses * speedDiff) + minSpeed : (sfPlayer.numberBossesDefeated / (SorceryFight.totalBosses / 1.5f) * speedDiff) + minSpeed;
+            float trueSpeed = sfPlayer.unlockedRCT ? ((float)sfPlayer.numberBossesDefeated / SorceryFight.totalBosses * speedDiff * 1.5f) + minSpeed : ((float)sfPlayer.numberBossesDefeated / SorceryFight.totalBosses * speedDiff) + minSpeed;
             float playerSpeedMultiplier = player.moveSpeed / 2.5f;
             trueSpeed *= playerSpeedMultiplier > 1 ? playerSpeedMultiplier : 1f;
+            Main.NewText($"({sfPlayer.numberBossesDefeated}/{SorceryFight.totalBosses} * {speedDiff}) + {minSpeed} = {trueSpeed}");
             Projectile.velocity.Normalize();
             Projectile.velocity *= trueSpeed;
         }

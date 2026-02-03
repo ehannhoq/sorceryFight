@@ -88,7 +88,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
             if (sfPlayer.heavenlyRestriction)
             {
-                if (sfPlayer.leftItAllBehind)
+                if (sfPlayer.unlockedRCT)
                     masteryIconHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_Info")}" +
                                  $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.BossesDefeated")} {sfPlayer.numberBossesDefeated}" +
                                  $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.MasteryIcon.HR_CostReduction")} {sfPlayer.numberBossesDefeated}%" +
@@ -178,9 +178,9 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             {
                 Texture2D leftItAllBehindIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{sfPlayer.innateTechnique.Name}/LeftItAllBehindIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                string leftItAllBehindIconHoverText = sfPlayer.leftItAllBehind ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.LeftItAllBehindIcon.DisplayName")}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.LeftItAllBehindIcon.Info")}"
+                string leftItAllBehindIconHoverText = sfPlayer.unlockedRCT ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.LeftItAllBehindIcon.DisplayName")}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.LeftItAllBehindIcon.Info")}"
                 : $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.LeftItAllBehindIcon.LockedInfo")}";
-                Texture2D finalLeftItAllBehindIconTexture = sfPlayer.leftItAllBehind ? ref leftItAllBehindIconTexture : ref lockedTexture;
+                Texture2D finalLeftItAllBehindIconTexture = sfPlayer.unlockedRCT ? ref leftItAllBehindIconTexture : ref lockedTexture;
                 SpecialUIElement leftItAllBehindIcon = new SpecialUIElement(finalLeftItAllBehindIconTexture, leftItAllBehindIconHoverText);
                 leftItAllBehindIcon.Left.Set(conditionalIconPositions[index].X, 0f);
                 leftItAllBehindIcon.Top.Set(conditionalIconPositions[index].Y, 0f);

@@ -18,7 +18,7 @@ namespace sorceryFight.Content
 
                 SorceryFightPlayer sfPlayer = player.SorceryFight();
 
-                if (sfPlayer.unlockedRCT || sfPlayer.leftItAllBehind) continue;
+                if (sfPlayer.unlockedRCT) continue;
 
                 if (player.statLife < 10)
                 {
