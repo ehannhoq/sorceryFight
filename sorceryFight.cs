@@ -3,6 +3,8 @@ using sorceryFight.Content.DomainExpansions.NPCDomains;
 using sorceryFight.SFPlayer;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using Terraria;
 using Terraria.ID;
@@ -21,39 +23,44 @@ namespace sorceryFight
 	public class SorceryFight : Mod
 	{
 		/// <summary>
-		/// Whether or not the player's name is a developer name (grants developer powers).
-		/// </summary>
-		/// <returns></returns>
-		public static bool IsDevMode() => DevModeNames.Contains(Main.LocalPlayer.name);
-
-		/// <summary>
 		/// The total number of bosses loaded across all mods.
 		/// </summary>
 		public static int totalBosses;
 
 		/// <summary>
-		/// A reflection method allowing to retrieve ModContent.ProjectileTypes dynamically at runtime.
+		/// A reflection method allowing to retrieve ModContent.ProjectileTypes at runtime.
 		/// </summary>
 		public static MethodInfo ModContentProjectileType;
-		private static List<string> DevModeNames =
-		[
-			"The Honored One",
-			"ehann",
-			"gooloohoodoo",
-			"gooloohoodoo1",
-			"gooloohoodoo2",
-			"gooloohoodoo3",
-			"gooloohoodoo4",
-			"gooloohoodoo5",
-			"gooloohoodoo6",
-			"gooloohoodoo7",
-			"TheRealCriky",
-			"prowler",
-			"rend",
-			"KaiTheExaminer",
-			"Ryomen"
-		];
+
+		public static NPC strongestBoss;
+
 		private static readonly int vanillaBossesCount = 32;
+		/// <summary>
+		/// Whether or not the player's name is a developer name (grants developer powers).
+		/// </summary>
+		/// <returns></returns>
+		public static bool IsDevMode()
+		{
+			List<string> devModeNames =
+			[
+				"The Honored One",
+				"ehann",
+				"gooloohoodoo",
+				"gooloohoodoo1",
+				"gooloohoodoo2",
+				"gooloohoodoo3",
+				"gooloohoodoo4",
+				"gooloohoodoo5",
+				"gooloohoodoo6",
+				"gooloohoodoo7",
+				"TheRealCriky",
+				"prowler",
+				"rend",
+				"KaiTheExaminer",
+				"Ryomen"
+			];
+			return devModeNames.Contains(Main.LocalPlayer.name);
+		}
 		public override void PostSetupContent()
 		{
 			ModContentProjectileType = typeof(ModContent).GetMethod("ProjectileType");
@@ -72,6 +79,44 @@ namespace sorceryFight
 					totalBosses++;
 				}
 			}
+		}
+
+		private void DetermineStrongestBoss()
+		{
+			List<NPC> bosses = new();
+
+			for (short i = 0; i < NPCID.Count; i++)
+			{
+				NPC npc = ContentSamples.NpcsByNetId[i];
+				if (!npc.boss) continue;
+
+				bosses.Add(npc);
+			}
+
+			foreach (ModNPC modNPC in ModContent.GetContent<ModNPC>())
+			{
+				NPC npc = ContentSamples.NpcsByNetId[modNPC.Type];
+				if (!npc.boss) continue;
+
+				bosses.Add(npc);
+			}
+
+			float largestDistance = 0;
+
+			foreach (NPC boss in bosses)
+			{
+				float health = boss.lifeMax;
+				float damage = boss.damage;
+
+				float distance = new Vector2(health, damage).Length();
+				if (distance > largestDistance)
+				{
+					largestDistance = distance;
+					strongestBoss = boss;
+				}
+			}
+
+			Logger.Debug($"Strongest Boss: {strongestBoss.FullName}");
 		}
 
 		public override void Unload()
