@@ -102,7 +102,6 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             float trueSpeed = sfPlayer.unlockedRCT ? ((float)sfPlayer.numberBossesDefeated / SorceryFight.totalBosses * speedDiff * 1.5f) + minSpeed : ((float)sfPlayer.numberBossesDefeated / SorceryFight.totalBosses * speedDiff) + minSpeed;
             float playerSpeedMultiplier = player.moveSpeed / 2.5f;
             trueSpeed *= playerSpeedMultiplier > 1 ? playerSpeedMultiplier : 1f;
-            Main.NewText($"({sfPlayer.numberBossesDefeated}/{SorceryFight.totalBosses} * {speedDiff}) + {minSpeed} = {trueSpeed}");
             Projectile.velocity.Normalize();
             Projectile.velocity *= trueSpeed;
         }
