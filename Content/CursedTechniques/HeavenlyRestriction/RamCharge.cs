@@ -99,9 +99,10 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             startVel = Projectile.velocity;
 
             float speedDiff = maxSpeed - minSpeed;
-            float trueSpeed = sfPlayer.unlockedRCT ? ((float)sfPlayer.numberBossesDefeated / SorceryFight.totalBosses * speedDiff * 1.5f) + minSpeed : ((float)sfPlayer.numberBossesDefeated / SorceryFight.totalBosses * speedDiff) + minSpeed;
+            float trueSpeed = ((float)sfPlayer.numberBossesDefeated / SorceryFight.totalBosses * speedDiff) + minSpeed;
             float playerSpeedMultiplier = player.moveSpeed / 2.5f;
             trueSpeed *= playerSpeedMultiplier > 1 ? playerSpeedMultiplier : 1f;
+            trueSpeed *= sfPlayer.unlockedRCT ? 1.5f : 1f;
             Projectile.velocity.Normalize();
             Projectile.velocity *= trueSpeed;
         }
