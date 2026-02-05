@@ -39,7 +39,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.Golem);
+            return sf.HasDefeatedBoss(NPCID.CultistBoss);
         }
 
 
