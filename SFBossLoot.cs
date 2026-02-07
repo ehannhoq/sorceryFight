@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using CalamityMod;
 using CalamityMod.Items.Accessories;
-using CalamityMod.Items.Weapons.Ranged;
 using CalamityMod.NPCs.AquaticScourge;
 using CalamityMod.NPCs.AstrumAureus;
 using CalamityMod.NPCs.AstrumDeus;
 using CalamityMod.NPCs.BrimstoneElemental;
 using CalamityMod.NPCs.Bumblebirb;
-using CalamityMod.NPCs.CalamityAIs.CalamityBossAIs;
 using CalamityMod.NPCs.CalClone;
 using CalamityMod.NPCs.CeaselessVoid;
 using CalamityMod.NPCs.Cryogen;
@@ -43,6 +41,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static CalamityMod.DropHelper;
+
 
 namespace sorceryFight
 {
@@ -87,7 +86,7 @@ namespace sorceryFight
                 { NPCID.WallofFlesh, ModContent.ItemType<CursedFlesh>() },
                 { NPCID.Plantera, ModContent.ItemType<CursedBulb>() },
                 { NPCID.Golem, ModContent.ItemType<CursedRock>() },
-                { ModContent.NPCType<Bumblefuck>(), ModContent.ItemType<CursedEffulgentFeather>() },
+                { ModContent.NPCType<Dragonfolly>(), ModContent.ItemType<CursedEffulgentFeather>() },
                 { ModContent.NPCType<Signus>(), ModContent.ItemType<CursedRuneOfKos>() },
             };
 
@@ -132,7 +131,7 @@ namespace sorceryFight
 
                 { NPCID.MoonLordCore, ModContent.ItemType<SukunasFingerXIII>() },
 
-                { ModContent.NPCType<Bumblefuck>(), ModContent.ItemType<SukunasFingerXIV>() },
+                { ModContent.NPCType<Dragonfolly>(), ModContent.ItemType<SukunasFingerXIV>() },
 
                 { ModContent.NPCType<Providence>(), ModContent.ItemType<SukunasFingerXV>() },
 
@@ -275,7 +274,7 @@ namespace sorceryFight
                 { ModContent.NPCType<ProfanedGuardianHealer>(), two },
                 { ModContent.NPCType<ProfanedGuardianDefender>(), two },
                 { ModContent.NPCType<ProfanedGuardianCommander>(), two },
-                { ModContent.NPCType<Bumblefuck>(), two },
+                { ModContent.NPCType<Dragonfolly>(), two },
                 { ModContent.NPCType<Providence>(), two },
                 { ModContent.NPCType<StormWeaverHead>(), two },
                 { ModContent.NPCType<CeaselessVoid>(), two },

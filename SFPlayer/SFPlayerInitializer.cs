@@ -87,8 +87,6 @@ namespace sorceryFight.SFPlayer
             questData = new();
             currentQuests = new List<Quest>();
             completedQuests = new List<string>();
-
-            leftItAllBehind = false;
         }
         public override void SaveData(TagCompound tag)
         {
@@ -132,7 +130,6 @@ namespace sorceryFight.SFPlayer
             generalBooleans.AddWithCondition("explosiveCursedEnergy", explosiveCursedEnergy);
             generalBooleans.AddWithCondition("sharpCursedEnergy", sharpCursedEnergy);
             generalBooleans.AddWithCondition("overflowingEnergy", overflowingEnergy);
-            generalBooleans.AddWithCondition("leftItAllBehind", leftItAllBehind);
             tag["generalBooleans"] = generalBooleans;
 
             tag["sixEyesLevel"] = sixEyesLevel;
@@ -203,7 +200,6 @@ namespace sorceryFight.SFPlayer
             explosiveCursedEnergy = generalBooleans.Contains("explosiveCursedEnergy");
             sharpCursedEnergy = generalBooleans.Contains("sharpCursedEnergy");
             overflowingEnergy = generalBooleans.Contains("overflowingEnergy");
-            leftItAllBehind = generalBooleans.Contains("leftItAllBehind");
 
             maxCursedEnergy = calculateBaseMaxCE();
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();

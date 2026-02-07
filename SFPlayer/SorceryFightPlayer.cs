@@ -131,7 +131,6 @@ namespace sorceryFight.SFPlayer
 
         #region HeavenlyRestriction
         public bool heavenlyRestriction;
-        public bool leftItAllBehind;
         #endregion
 
         public override void UpdateEquips()

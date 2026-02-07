@@ -32,14 +32,13 @@ namespace sorceryFight.Content.InnateTechniques
         public override void PreUpdate(SorceryFightPlayer sf)
         {
             sf.heavenlyRestriction = true;
-            sf.unlockedRCT = false;
         }
 
         public override void UpdateEquips(SorceryFightPlayer sf)
         {
             Player player = sf.Player;
 
-            if (sf.leftItAllBehind)
+            if (sf.unlockedRCT)
             {
                 player.GetDamage(DamageClass.Melee) *= 1 + (0.02f * sf.numberBossesDefeated);
                 player.GetAttackSpeed(DamageClass.Melee) *= 1 + (0.03f * sf.numberBossesDefeated);

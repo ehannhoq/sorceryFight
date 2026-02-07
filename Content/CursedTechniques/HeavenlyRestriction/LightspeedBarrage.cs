@@ -210,7 +210,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             SorceryFightPlayer sfPlayer = player.SorceryFight();
 
             float speedDiff = maxSpeed - minSpeed;
-            float trueSpeed = sfPlayer.leftItAllBehind ? (sfPlayer.numberBossesDefeated / SorceryFight.totalBosses * speedDiff) + minSpeed : (sfPlayer.numberBossesDefeated / (SorceryFight.totalBosses / 1.5f) * speedDiff) + minSpeed;
+            float trueSpeed = sfPlayer.unlockedRCT ? (sfPlayer.numberBossesDefeated / SorceryFight.totalBosses * speedDiff) + minSpeed : (sfPlayer.numberBossesDefeated / (SorceryFight.totalBosses / 1.5f) * speedDiff) + minSpeed;
 
 
             if (GetNearestNPCPos(out Vector2 position))

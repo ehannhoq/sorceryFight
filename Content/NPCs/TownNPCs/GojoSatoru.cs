@@ -12,11 +12,12 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.NPCs.TownNPCs
 {
+    [AutoloadHead]
     public class GojoSatoru : SorceryFightNPC
     {
-        public bool blindfolded = true;
-        public override string Texture => blindfolded ? "sorceryFight/Content/NPCs/TownNPCs/GojoSatoru" : "sorceryFight/Content/NPCs/TownNPCs/GojoSatoru_NoBlindfold";
-        public override string HeadTexture => blindfolded ? "GojoSatoru_Head" : "GojoSatoru_NoBlindfild_Head";
+        public bool notBlindfolded = false;
+        public override string Texture => notBlindfolded ? "sorceryFight/Content/NPCs/TownNPCs/GojoSatoru_NoBlindfold" : "sorceryFight/Content/NPCs/TownNPCs/GojoSatoru";
+        public override string HeadTexture => notBlindfolded ? "sorceryFight/Content/NPCs/TownNPCs/GojoSatoru_NoBlindfold_Head" : "sorceryFight/Content/NPCs/TownNPCs/GojoSatoru_Head";
 
         private Dictionary<int, Vector2> velocityData = new Dictionary<int, Vector2>();
 
@@ -47,7 +48,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
             NPC.defense = 100;
             NPC.lifeMax = 10000;
             NPC.knockBackResist = 0f;
-            NPC.dontTakeDamageFromHostiles = true;
+            
 
             AnimationType = NPCID.Guide;
 
@@ -74,11 +75,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
 
         public override bool CanTownNPCSpawn(int numTownNPCs)
         {
-            if (NPC.downedGolemBoss)
-            {
-                return true;
-            }
-            return false;
+            return NPC.downedGolemBoss;
         }
 
         private void Infinity()

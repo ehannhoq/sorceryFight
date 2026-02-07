@@ -62,15 +62,14 @@ namespace sorceryFight.SFPlayer
                 rctAnimation = false;
                 rctTimer = 0;
                 deathPosition = Vector2.Zero;
+                unlockedRCT = true;
 
                 if (heavenlyRestriction)
                 {
-                    leftItAllBehind = true;
                     ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText("Mods.sorceryFight.Misc.LeftItAllBehind.GeneralMessage"), Color.Green, Player.whoAmI);
                 }
                 else
                 {
-                    unlockedRCT = true;
                     string keybindText = "[" + SFKeybinds.UseRCT.GetAssignedKeys()[Player.whoAmI] + "]" + SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.UnlockedRCT.KeyBindMessage");
                     ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText("Mods.sorceryFight.Misc.UnlockedRCT.GeneralMessage"), Color.Green, Player.whoAmI);
                     ChatHelper.SendChatMessageToClient(NetworkText.FromLiteral(keybindText), Color.Green, Player.whoAmI);

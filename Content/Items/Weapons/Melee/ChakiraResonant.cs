@@ -80,7 +80,9 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             if (player.whoAmI != Main.myPlayer)
                 return;
 
-            if (player.SorceryFight().disableCurseTechniques || player.HasBuff(ModContent.BuffType<BurntTechnique>()))
+            SorceryFightPlayer sfPlayer = player.SorceryFight(); 
+
+            if ((!sfPlayer.uniqueBodyStructure && sfPlayer.disableCurseTechniques) || player.HasBuff(ModContent.BuffType<BurntTechnique>()) || sfPlayer.heavenlyRestriction)
                 return;
 
             if (PlayerInput.Triggers.Current.MouseRight && CanUseItem(player) && !Main.mapFullscreen && !Main.blockMouse)
