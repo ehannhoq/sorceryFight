@@ -87,3 +87,41 @@ JetstreamSetBonus:
 	After {5} true melee strikes, you gain the Bloodshed buff. {6} second cooldown
 	Enemies have a {7}% chance to drop a heart on hit
 	'''
+
+JujutsuHighPants: {
+	DisplayName: Jujutsu High Pants
+	Tooltip:
+		'''
+		{0}% Increased cursed technique damage
+		{1}% Increased critical strike chance
+		'''
+}
+
+JujutsuHighShirt: {
+	DisplayName: Jujutsu High Shirt
+	Tooltip:
+		'''
+		{0}% Increased cursed technique damage
+		{1}% Increased critical strike chance
+		'''
+}
+
+SpecialGradePants: {
+	DisplayName: Special Grade Pants
+	Tooltip:
+		'''
+		{0}% Increased cursed technique damage
+		{1}% Decreased cursed technique cost
+		{2} Maximum Cursed Energy
+		'''
+}
+
+SpecialGradeShirt: {
+	DisplayName: Special Grade Shirt
+	Tooltip:
+		'''
+		{0}% Increased cursed technique damage
+		{1}% Increased RCT output
+		{2} Maximum Cursed Energy
+		'''
+}

@@ -14,11 +14,11 @@ namespace sorceryFight.Content.Items.Armors.SpecialGradeUniform
     public class SpecialGradePants : ModItem
     {
         public static float cursedTechniqueDamageIncrease = 0.07f;
-        public static float cursedTechniqueCostDecrease = 1.05f;
+        public static float cursedTechniqueCostDecrease = 0.05f;
         public static int maxCursedEnergyIncrease = 125; // total 250 increase
         
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Armors.SpecialGradePants.DisplayName");
-        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Armors.SpecialGradePants.Tooltip").WithFormatArgs((int)(cursedTechniqueDamageIncrease * 100), (int)((1 - cursedTechniqueCostDecrease) * 100), maxCursedEnergyIncrease);
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Armors.SpecialGradePants.Tooltip").WithFormatArgs((int)(cursedTechniqueDamageIncrease * 100), (int)(cursedTechniqueCostDecrease * 100), maxCursedEnergyIncrease);
         
         public override void SetDefaults()
         {
@@ -30,9 +30,10 @@ namespace sorceryFight.Content.Items.Armors.SpecialGradeUniform
 
         public override void UpdateEquip(Player player)
         {
+            SorceryFightPlayer sfPlayer = player.SorceryFight(); 
             player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1f + cursedTechniqueDamageIncrease;
             sfPlayer.maxCursedEnergyFromOtherSources += maxCursedEnergyIncrease;
-            sfPlayer.ctCostReduction += 1 - cursedTechniqueCostDecrease;
+            sfPlayer.ctCostReduction += cursedTechniqueCostDecrease;
 
         }
 
@@ -41,7 +42,7 @@ namespace sorceryFight.Content.Items.Armors.SpecialGradeUniform
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.Silk, 16);
             recipe.AddIngredient(ItemID.BeetleHusk, 12);
-            recipe.AddIngredient(ItemID.SoulOfLight, 10);
+            recipe.AddIngredient(ItemID.SoulofLight, 10);
             recipe.AddIngredient(ModContent.ItemType<InfusedCursedFragment>(), 6);
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.Register();

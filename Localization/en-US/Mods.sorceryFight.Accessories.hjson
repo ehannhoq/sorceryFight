@@ -86,3 +86,12 @@ ReverseCharm: {
 		{1}% increased RCT efficiency
 		'''
 }
+
+HellstoneSlab: {
+	DisplayName: Hellstone Slab
+	Tooltip:
+		'''
+		{0} Maximum Cursed Energy
+		{1}% CE/s regen
+		'''
+}

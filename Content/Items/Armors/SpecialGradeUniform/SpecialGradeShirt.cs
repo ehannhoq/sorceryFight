@@ -18,7 +18,7 @@ namespace sorceryFight.Content.Items.Armors.SpecialGradeUniform
         public static int maxCursedEnergyIncrease = 125; // total 250 increase
 
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Armors.SpecialGradeShirt.DisplayName");
-        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Armors.SpecialGradeShirt.Tooltip").WithFormatArgs((int)(cursedTechniqueDamageIncrease * 100), (int)((1 - rctOutput) * 100), maxCursedEnergyIncrease);
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Armors.SpecialGradeShirt.Tooltip").WithFormatArgs((int)(cursedTechniqueDamageIncrease * 100), (int)(rctOutput * 100), maxCursedEnergyIncrease);
 
         public override void SetDefaults()
         {
@@ -30,9 +30,10 @@ namespace sorceryFight.Content.Items.Armors.SpecialGradeUniform
 
         public override void UpdateEquip(Player player)
         {
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
             player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1f + cursedTechniqueDamageIncrease;
             sfPlayer.maxCursedEnergyFromOtherSources += maxCursedEnergyIncrease;
-            sfPlayer.additionalRCTHealPerSecond += 1.5f * sf.rctBaseHealPerSecond;
+            sfPlayer.additionalRCTHealPerSecond += (int)(1.5f * sfPlayer.rctBaseHealPerSecond);
         }
 
         public override void AddRecipes()
@@ -40,7 +41,7 @@ namespace sorceryFight.Content.Items.Armors.SpecialGradeUniform
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.Silk, 18);
             recipe.AddIngredient(ItemID.BeetleHusk, 14);
-            recipe.AddIngredient(ItemID.SoulOfLight, 12);
+            recipe.AddIngredient(ItemID.SoulofLight, 12);
             recipe.AddIngredient(ModContent.ItemType<InfusedCursedFragment>(), 7);
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.Register();
