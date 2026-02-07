@@ -1,11 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using CalamityMod.NPCs.NormalNPCs;
-using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
@@ -89,7 +84,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                 {
                     foreach (NPC npc in Main.ActiveNPCs)
                     {
-                        if (npc.friendly || npc.type == NPCID.TargetDummy || npc.type == ModContent.NPCType<SuperDummyNPC>() || npc.whoAmI == target.whoAmI) continue;
+                        if (npc.friendly || npc.type == NPCID.TargetDummy || npc.whoAmI == target.whoAmI) continue;
                         float dist = Vector2.Distance(npc.Center, target.Center);
                         if (dist < 250f)
                         {

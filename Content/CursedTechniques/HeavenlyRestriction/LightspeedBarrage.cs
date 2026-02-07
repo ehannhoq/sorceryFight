@@ -227,7 +227,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
             foreach (NPC npc in Main.ActiveNPCs)
             {
-                if (npc.friendly || npc.type == NPCID.TargetDummy || npc.type == ModContent.NPCType<SuperDummyNPC>()) continue;
+                if (npc.friendly || npc.type == NPCID.TargetDummy) continue;
                 if (enemiesHit.Contains(npc.whoAmI)) continue;
 
                 float dist = (Projectile.Center - npc.Center).Length();
