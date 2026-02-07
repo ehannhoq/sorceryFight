@@ -1,35 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using CalamityMod;
-using CalamityMod.Items.Accessories;
-using CalamityMod.NPCs.AquaticScourge;
-using CalamityMod.NPCs.AstrumAureus;
-using CalamityMod.NPCs.AstrumDeus;
-using CalamityMod.NPCs.BrimstoneElemental;
-using CalamityMod.NPCs.Bumblebirb;
-using CalamityMod.NPCs.CalClone;
-using CalamityMod.NPCs.CeaselessVoid;
-using CalamityMod.NPCs.Cryogen;
-using CalamityMod.NPCs.DevourerofGods;
-using CalamityMod.NPCs.ExoMechs.Apollo;
-using CalamityMod.NPCs.ExoMechs.Ares;
-using CalamityMod.NPCs.ExoMechs.Artemis;
-using CalamityMod.NPCs.ExoMechs.Thanatos;
-using CalamityMod.NPCs.HiveMind;
-using CalamityMod.NPCs.Leviathan;
-using CalamityMod.NPCs.OldDuke;
-using CalamityMod.NPCs.Perforator;
-using CalamityMod.NPCs.PlaguebringerGoliath;
-using CalamityMod.NPCs.Polterghast;
-using CalamityMod.NPCs.ProfanedGuardians;
-using CalamityMod.NPCs.Providence;
-using CalamityMod.NPCs.Ravager;
-using CalamityMod.NPCs.Signus;
-using CalamityMod.NPCs.SlimeGod;
-using CalamityMod.NPCs.StormWeaver;
-using CalamityMod.NPCs.SupremeCalamitas;
-using CalamityMod.NPCs.Yharon;
 using sorceryFight.Content.Items.Accessories;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.Items.Consumables.SukunasFinger;
@@ -40,8 +10,6 @@ using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static CalamityMod.DropHelper;
-
 
 namespace sorceryFight
 {
@@ -79,15 +47,15 @@ namespace sorceryFight
                 { NPCID.SkeletronHead, ModContent.ItemType<CursedSkull>() },
                 { NPCID.SkeletronPrime, ModContent.ItemType<CursedMechanicalSoul>() },
                 { NPCID.MoonLordCore, ModContent.ItemType<CursedPhantasmalEye>() },
-                { ModContent.NPCType<Providence>(), ModContent.ItemType<CursedProfanedShards>() },
+                // { ModContent.NPCType<Providence>(), ModContent.ItemType<CursedProfanedShards>() },
 
                 // CE Regen Modifiers
                 { NPCID.EyeofCthulhu, ModContent.ItemType<CursedEye>() },
                 { NPCID.WallofFlesh, ModContent.ItemType<CursedFlesh>() },
                 { NPCID.Plantera, ModContent.ItemType<CursedBulb>() },
                 { NPCID.Golem, ModContent.ItemType<CursedRock>() },
-                { ModContent.NPCType<Dragonfolly>(), ModContent.ItemType<CursedEffulgentFeather>() },
-                { ModContent.NPCType<Signus>(), ModContent.ItemType<CursedRuneOfKos>() },
+                // { ModContent.NPCType<Dragonfolly>(), ModContent.ItemType<CursedEffulgentFeather>() },
+                // { ModContent.NPCType<Signus>(), ModContent.ItemType<CursedRuneOfKos>() },
             };
 
             if (npcLootMap.TryGetValue(npc.type, out int itemID))
@@ -106,8 +74,8 @@ namespace sorceryFight
             {
                 { NPCID.EyeofCthulhu, ModContent.ItemType<SukunasFingerI>() },
 
-                { ModContent.NPCType<HiveMind>(), ModContent.ItemType<SukunasFingerII>() },
-                { ModContent.NPCType<PerforatorHive>(), ModContent.ItemType<SukunasFingerII>() },
+                // { ModContent.NPCType<HiveMind>(), ModContent.ItemType<SukunasFingerII>() },
+                // { ModContent.NPCType<PerforatorHive>(), ModContent.ItemType<SukunasFingerII>() },
 
                 { NPCID.SkeletronHead, ModContent.ItemType<SukunasFingerIII>() },
 
@@ -115,35 +83,35 @@ namespace sorceryFight
 
                 { NPCID.SkeletronPrime, ModContent.ItemType<SukunasFingerV>() },
 
-                { ModContent.NPCType<CalamitasClone>(), ModContent.ItemType<SukunasFingerVI>() },
+                // { ModContent.NPCType<CalamitasClone>(), ModContent.ItemType<SukunasFingerVI>() },
 
                 { NPCID.Plantera, ModContent.ItemType<SukunasFingerVII>() },
 
-                { ModContent.NPCType<Anahita>(), ModContent.ItemType<SukunasFingerVIII>() },
+                // { ModContent.NPCType<Anahita>(), ModContent.ItemType<SukunasFingerVIII>() },
 
                 { NPCID.Golem, ModContent.ItemType<SukunasFingerIX>() },
 
-                { ModContent.NPCType<RavagerBody>(), ModContent.ItemType<SukunasFingerX>() },
+                // { ModContent.NPCType<RavagerBody>(), ModContent.ItemType<SukunasFingerX>() },
 
                 { NPCID.CultistBoss, ModContent.ItemType<SukunasFingerXI>() },
 
-                { ModContent.NPCType<AstrumDeusHead>(), ModContent.ItemType<SukunasFingerXII>() },
+                // { ModContent.NPCType<AstrumDeusHead>(), ModContent.ItemType<SukunasFingerXII>() },
 
                 { NPCID.MoonLordCore, ModContent.ItemType<SukunasFingerXIII>() },
 
-                { ModContent.NPCType<Dragonfolly>(), ModContent.ItemType<SukunasFingerXIV>() },
+                // { ModContent.NPCType<Dragonfolly>(), ModContent.ItemType<SukunasFingerXIV>() },
 
-                { ModContent.NPCType<Providence>(), ModContent.ItemType<SukunasFingerXV>() },
+                // { ModContent.NPCType<Providence>(), ModContent.ItemType<SukunasFingerXV>() },
 
-                { ModContent.NPCType<CeaselessVoid>(), ModContent.ItemType<SukunasFingerXVI>() },
+                // { ModContent.NPCType<CeaselessVoid>(), ModContent.ItemType<SukunasFingerXVI>() },
 
-                { ModContent.NPCType<StormWeaverHead>(), ModContent.ItemType<SukunasFingerXVII>() },
+                // { ModContent.NPCType<StormWeaverHead>(), ModContent.ItemType<SukunasFingerXVII>() },
 
-                { ModContent.NPCType<Signus>(), ModContent.ItemType<SukunasFingerXVIII>() },
+                // { ModContent.NPCType<Signus>(), ModContent.ItemType<SukunasFingerXVIII>() },
 
-                { ModContent.NPCType<Polterghast>(), ModContent.ItemType<SukunasFingerXIX>() },
+                // { ModContent.NPCType<Polterghast>(), ModContent.ItemType<SukunasFingerXIX>() },
 
-                { ModContent.NPCType<DevourerofGodsHead>(), ModContent.ItemType<SukunasFingerXX>() }
+                // { ModContent.NPCType<DevourerofGodsHead>(), ModContent.ItemType<SukunasFingerXX>() }
             };
 
             if (npcLootMap.TryGetValue(npc.type, out int itemID))
@@ -172,28 +140,28 @@ namespace sorceryFight
         {
             if (npc.type != NPCID.WallofFlesh) return;
 
-            List<IItemDropRule> rules = npcLoot.Get(true);
+            // List<IItemDropRule> rules = npcLoot.Get(true);
 
-            rules.RemoveAll(rule =>
-            {
-                if (rule is AllOptionsAtOnceWithPityDropRule itemRule)
-                {
-                    foreach (var weightedItemStack in itemRule.stacks.ToArray())
-                    {
-                        int itemID = SFUtils.GetInternalFieldFromCalamity<int>(
-                            "CalamityMod.WeightedItemStack",
-                            "itemID",
-                            weightedItemStack
-                        );
+            // rules.RemoveAll(rule =>
+            // {
+            //     if (rule is AllOptionsAtOnceWithPityDropRule itemRule)
+            //     {
+            //         foreach (var weightedItemStack in itemRule.stacks.ToArray())
+            //         {
+            //             int itemID = SFUtils.GetInternalFieldFromCalamity<int>(
+            //                 "CalamityMod.WeightedItemStack",
+            //                 "itemID",
+            //                 weightedItemStack
+            //             );
 
-                        if (itemID == ItemID.WarriorEmblem)
-                        {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            });
+            //             if (itemID == ItemID.WarriorEmblem)
+            //             {
+            //                 return true;
+            //             }
+            //         }
+            //     }
+            //     return false;
+            // });
 
             int[] emblems = new int[]
             {
@@ -201,7 +169,7 @@ namespace sorceryFight
                         ItemID.RangerEmblem,
                         ItemID.SorcererEmblem,
                         ItemID.SummonerEmblem,
-                        ModContent.ItemType<RogueEmblem>(),
+                        // ModContent.ItemType<RogueEmblem>(),
                         ModContent.ItemType<JujutsuEmblem>()
             };
 
@@ -226,10 +194,10 @@ namespace sorceryFight
                 { NPCID.QueenBee, soda },
                 { NPCID.WallofFlesh, soda },
 
-                { ModContent.NPCType<PerforatorHive>(), soda },
-                { ModContent.NPCType<HiveMind>(), soda },
-                { ModContent.NPCType<EbonianPaladin>(), soda },
-                { ModContent.NPCType<CrimulanPaladin>(), soda }
+                // { ModContent.NPCType<PerforatorHive>(), soda },
+                // { ModContent.NPCType<HiveMind>(), soda },
+                // { ModContent.NPCType<EbonianPaladin>(), soda },
+                // { ModContent.NPCType<CrimulanPaladin>(), soda }
             };
             drops.Add(sodaMap);
             // Cursed Energy Tall
@@ -243,10 +211,10 @@ namespace sorceryFight
                 { NPCID.SkeletronPrime, tall },
                 { NPCID.Plantera, tall },
 
-                { ModContent.NPCType<Cryogen>(), tall },
-                { ModContent.NPCType<AquaticScourgeHead>(), tall },
-                { ModContent.NPCType<BrimstoneElemental>(), tall },
-                { ModContent.NPCType<CalamitasClone>(), tall },
+                // { ModContent.NPCType<Cryogen>(), tall },
+                // { ModContent.NPCType<AquaticScourgeHead>(), tall },
+                // { ModContent.NPCType<BrimstoneElemental>(), tall },
+                // { ModContent.NPCType<CalamitasClone>(), tall },
             };
             drops.Add(tallMap);
 
@@ -258,11 +226,11 @@ namespace sorceryFight
                 { NPCID.HallowBoss, mug },
                 { NPCID.DukeFishron, mug },
                 { NPCID.CultistBoss, mug },
-                { ModContent.NPCType<Anahita>(), tall },
-                { ModContent.NPCType<Leviathan>(), tall },
-                { ModContent.NPCType<AstrumAureus>(), tall },
-                { ModContent.NPCType<PlaguebringerGoliath>(), tall },
-                { ModContent.NPCType<RavagerHead>(), tall },
+                // { ModContent.NPCType<Anahita>(), tall },
+                // { ModContent.NPCType<Leviathan>(), tall },
+                // { ModContent.NPCType<AstrumAureus>(), tall },
+                // { ModContent.NPCType<PlaguebringerGoliath>(), tall },
+                // { ModContent.NPCType<RavagerHead>(), tall },
             };
             drops.Add(mugMap);
 
@@ -271,16 +239,16 @@ namespace sorceryFight
             Dictionary<int, int> twoMap = new()
             {
                 { NPCID.MoonLordCore, two },
-                { ModContent.NPCType<ProfanedGuardianHealer>(), two },
-                { ModContent.NPCType<ProfanedGuardianDefender>(), two },
-                { ModContent.NPCType<ProfanedGuardianCommander>(), two },
-                { ModContent.NPCType<Dragonfolly>(), two },
-                { ModContent.NPCType<Providence>(), two },
-                { ModContent.NPCType<StormWeaverHead>(), two },
-                { ModContent.NPCType<CeaselessVoid>(), two },
-                { ModContent.NPCType<Signus>(), two },
-                { ModContent.NPCType<Polterghast>(), two },
-                { ModContent.NPCType<OldDuke>(), two }
+                // { ModContent.NPCType<ProfanedGuardianHealer>(), two },
+                // { ModContent.NPCType<ProfanedGuardianDefender>(), two },
+                // { ModContent.NPCType<ProfanedGuardianCommander>(), two },
+                // { ModContent.NPCType<Dragonfolly>(), two },
+                // { ModContent.NPCType<Providence>(), two },
+                // { ModContent.NPCType<StormWeaverHead>(), two },
+                // { ModContent.NPCType<CeaselessVoid>(), two },
+                // { ModContent.NPCType<Signus>(), two },
+                // { ModContent.NPCType<Polterghast>(), two },
+                // { ModContent.NPCType<OldDuke>(), two }
             };
             drops.Add(twoMap);
 
@@ -288,13 +256,13 @@ namespace sorceryFight
             int five = ModContent.ItemType<CursedEnergyFiveGallon>();
             Dictionary<int, int> fiveMap = new()
             {
-                { ModContent.NPCType<DevourerofGodsHead>(), five },
-                { ModContent.NPCType<Yharon>(), five },
-                { ModContent.NPCType<Artemis>(), five },
-                { ModContent.NPCType<Apollo>(), five },
-                { ModContent.NPCType<AresBody>(), five },
-                { ModContent.NPCType<ThanatosHead>(), five },
-                { ModContent.NPCType<SupremeCalamitas>(), five }
+                // { ModContent.NPCType<DevourerofGodsHead>(), five },
+                // { ModContent.NPCType<Yharon>(), five },
+                // { ModContent.NPCType<Artemis>(), five },
+                // { ModContent.NPCType<Apollo>(), five },
+                // { ModContent.NPCType<AresBody>(), five },
+                // { ModContent.NPCType<ThanatosHead>(), five },
+                // { ModContent.NPCType<SupremeCalamitas>(), five }
             };
             drops.Add(fiveMap);
 

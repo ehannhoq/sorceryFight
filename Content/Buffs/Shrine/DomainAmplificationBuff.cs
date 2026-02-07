@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs.Vessel;
@@ -114,10 +113,10 @@ namespace sorceryFight.Content.Buffs.Shrine
             }
 
             float multiplier = 1;
-            if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
-            {
-                multiplier = 1.5f;
-            }
+            // if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
+            // {
+            //     multiplier = 1.5f;
+            // }
 
             CostPerSecond = 10f;
             CostPerSecond += accumulativeDamage * multiplier;

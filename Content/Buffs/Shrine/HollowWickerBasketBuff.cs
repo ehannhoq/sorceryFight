@@ -1,4 +1,3 @@
-using CalamityMod;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
@@ -134,10 +133,10 @@ namespace sorceryFight.Content.Buffs.Shrine
             }
 
             int multiplier = 1;
-            if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
-            {
-                multiplier = 3;
-            }
+            // if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
+            // {
+            //     multiplier = 3;
+            // }
 
             CostPerSecond = 50f;
             CostPerSecond += accumulativeDamage * 3f * multiplier;

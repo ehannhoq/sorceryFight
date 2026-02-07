@@ -1,4 +1,3 @@
-using CalamityMod;
 using Microsoft.Xna.Framework;
 using sorceryFight.SFPlayer;
 using System.Collections.Generic;
@@ -98,7 +97,6 @@ namespace sorceryFight.Content.Buffs.Limitless
             player.GetDamage(DamageClass.Ranged) *= (DamageMultiplier / 100) + 1;
             player.GetDamage(DamageClass.Magic) *= (DamageMultiplier / 100) + 1;
             player.GetDamage(DamageClass.Summon) *= (DamageMultiplier / 100) + 1;
-            player.GetDamage(RogueDamageClass.Throwing) *= (DamageMultiplier / 100) + 1;
             player.GetDamage(CursedTechniqueDamageClass.Instance) *= (DamageMultiplier / 100) + 1;
         }
     }

@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using sorceryFight.Content.Quests;
-using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;

@@ -1,9 +1,7 @@
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
-using sorceryFight.SFPlayer;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using Terraria;

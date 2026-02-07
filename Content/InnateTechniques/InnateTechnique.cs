@@ -1,12 +1,8 @@
 using System.Collections.Generic;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.Buffs;
-using Terraria;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.SFPlayer;
-using Terraria.ModLoader;
-using System.IO;
-using System;
 using sorceryFight.Content.InnateTechniques;
 
 namespace sorceryFight.Content.InnateTechniques

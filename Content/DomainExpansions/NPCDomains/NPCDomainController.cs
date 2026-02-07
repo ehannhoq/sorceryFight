@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using CalamityMod.NPCs.Providence;
-using CalamityMod.NPCs.SupremeCalamitas;
+// using CalamityMod.NPCs.Providence;
+// using CalamityMod.NPCs.SupremeCalamitas;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -14,8 +14,8 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
     {
         public static NPCDomainExpansion GetDomain(this NPC npc)
         {
-            if (npc.type == ModContent.NPCType<SupremeCalamitas>())
-                return new AshenedPillarsOfCalamity();
+            // if (npc.type == ModContent.NPCType<SupremeCalamitas>())
+            //     return new AshenedPillarsOfCalamity();
 
             return npc.type switch
             {
@@ -26,8 +26,8 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
 
         public static int GetBrainRefreshCount(this NPC npc)
         {
-            if (npc.type == ModContent.NPCType<SupremeCalamitas>())
-                return 2; // SCal will soon be able to expand more than one domain. ** AFTER BRAIN DAMAGE REWORK **
+            // if (npc.type == ModContent.NPCType<SupremeCalamitas>())
+            //     return 2; // SCal will soon be able to expand more than one domain. ** AFTER BRAIN DAMAGE REWORK **
 
             return 1;
         }
@@ -143,8 +143,8 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
 
             Dictionary<int, string> bossNameMap = new()
             {
-                { NPCID.CultistBoss, "LunaticCultist" },
-                { ModContent.NPCType<SupremeCalamitas>(), "SupremeCalamitas" },
+                { NPCID.CultistBoss, "LunaticCultist" }
+                // { ModContent.NPCType<SupremeCalamitas>(), "SupremeCalamitas" },
             };
 
             if (bossNameMap.TryGetValue(npc.type, out string npcName))

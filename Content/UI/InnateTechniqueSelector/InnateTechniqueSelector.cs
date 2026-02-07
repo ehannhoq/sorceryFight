@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.InnateTechniques;
 using Terraria;
 using Terraria.Chat;
 using Terraria.GameContent.UI.Elements;
@@ -112,28 +110,28 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
 
                 int particleCount = timeCounter / 120 + 1;
 
-                if (timeCounter <= 300)
-                {
-                    for (int i = 0; i < particleCount; i++)
-                    {
-                        Vector2 offsetPos = pos + new Vector2(Main.rand.NextFloat(-100, 100), Main.rand.NextFloat(-100, 100));
-                        Vector2 vel = offsetPos.DirectionTo(pos) * 2;
+                // if (timeCounter <= 300)
+                // {
+                //     for (int i = 0; i < particleCount; i++)
+                //     {
+                //         Vector2 offsetPos = pos + new Vector2(Main.rand.NextFloat(-100, 100), Main.rand.NextFloat(-100, 100));
+                //         Vector2 vel = offsetPos.DirectionTo(pos) * 2;
 
-                        SparkleParticle particle = new SparkleParticle(offsetPos, vel, Color.Wheat, Color.White, 0.5f, 35);
-                        GeneralParticleHandler.SpawnParticle(particle);
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < 20; i++)
-                    {
-                        Vector2 targetPos = pos + new Vector2(Main.rand.NextFloat(-100, 100), Main.rand.NextFloat(-100, 100));
-                        Vector2 vel = pos.DirectionTo(targetPos) * 5;
+                //         SparkleParticle particle = new SparkleParticle(offsetPos, vel, Color.Wheat, Color.White, 0.5f, 35);
+                //         GeneralParticleHandler.SpawnParticle(particle);
+                //     }
+                // }
+                // else
+                // {
+                //     for (int i = 0; i < 20; i++)
+                //     {
+                //         Vector2 targetPos = pos + new Vector2(Main.rand.NextFloat(-100, 100), Main.rand.NextFloat(-100, 100));
+                //         Vector2 vel = pos.DirectionTo(targetPos) * 5;
 
-                        SparkleParticle particle = new SparkleParticle(pos, vel, Color.Wheat, Color.White, 0.5f, 60);
-                        GeneralParticleHandler.SpawnParticle(particle);
-                    }
-                }
+                //         SparkleParticle particle = new SparkleParticle(pos, vel, Color.Wheat, Color.White, 0.5f, 60);
+                //         GeneralParticleHandler.SpawnParticle(particle);
+                //     }
+                // }
             }
         }
         public void OnClick(InnateTechnique selectedTechnique)

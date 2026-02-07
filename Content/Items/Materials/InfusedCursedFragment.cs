@@ -1,5 +1,4 @@
 using sorceryFight.Rarities;
-using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;

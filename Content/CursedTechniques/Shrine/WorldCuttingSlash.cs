@@ -1,10 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Composition.Hosting.Core;
-using System.Security.Cryptography.X509Certificates;
-using CalamityMod.NPCs.DevourerofGods;
-using CalamityMod.NPCs.Providence;
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
@@ -13,7 +8,6 @@ using sorceryFight.Content.Items.Accessories;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -46,7 +40,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         }
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
+            return true;
+            // return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
         }
 
         public override float CalculateTrueDamage(SorceryFightPlayer sf)
@@ -114,12 +109,12 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                     Main.combatText[index].lifeTime = 60;
                     ai1++;
 
-                    for (int i = 0; i < 30; i++)
-                    {
-                        Vector2 velocity = new Vector2(Main.rand.NextFloat(-15, 15), Main.rand.NextFloat(-15, 15));
-                        LineParticle particle = new LineParticle(Projectile.Center, velocity, false, 30, 1, textColor);
-                        GeneralParticleHandler.SpawnParticle(particle);
-                    }
+                    // for (int i = 0; i < 30; i++)
+                    // {
+                    //     Vector2 velocity = new Vector2(Main.rand.NextFloat(-15, 15), Main.rand.NextFloat(-15, 15));
+                    //     LineParticle particle = new LineParticle(Projectile.Center, velocity, false, 30, 1, textColor);
+                    //     GeneralParticleHandler.SpawnParticle(particle);
+                    // }
                 }
                 
                 if (castTime == totalCastTime - 40)
@@ -156,13 +151,13 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            for (int i = 0; i < 10; i++)
-            {
-                Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
+            // for (int i = 0; i < 10; i++)
+            // {
+            //     Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
 
-                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
-            }
+            //     LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
+            //     GeneralParticleHandler.SpawnParticle(particle);
+            // }
             base.OnHitNPC(target, hit, damageDone);
         }
 

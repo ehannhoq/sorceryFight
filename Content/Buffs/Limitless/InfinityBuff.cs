@@ -125,10 +125,10 @@ namespace sorceryFight.Content.Buffs.Limitless
             }
 
             int multiplier = 1;
-            if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
-            {
-                multiplier = 3;
-            }
+            // if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
+            // {
+            //     multiplier = 3;
+            // }
 
             CostPerSecond += accumulativeDamage *= multiplier;
 

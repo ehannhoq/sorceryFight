@@ -1,14 +1,9 @@
 using System;
-using CalamityMod;
-using CalamityMod.Buffs.StatDebuffs;
-using CalamityMod.Items.Accessories;
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
-using tModPorter;
 
 namespace sorceryFight.SFPlayer
 {
@@ -60,8 +55,7 @@ namespace sorceryFight.SFPlayer
         private void BlackFlash(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (hit.DamageType != DamageClass.Magic && hit.DamageType != DamageClass.Melee &&
-                hit.DamageType != DamageClass.Ranged && hit.DamageType != DamageClass.Summon &&
-                hit.DamageType.CountsAsClass(new CalamityMod.RogueDamageClass()) && hit.DamageType.CountsAsClass(new CalamityMod.TrueMeleeDamageClass()))
+                hit.DamageType != DamageClass.Ranged && hit.DamageType != DamageClass.Summon)
                 return;
 
             SoundEngine.PlaySound(SorceryFightSounds.BlackFlashImpact, Player.Center);
@@ -70,14 +64,14 @@ namespace sorceryFight.SFPlayer
 
             Vector2 direction = Player.Center.DirectionTo(target.Center) * 30f;
 
-            for (int i = 0; i < 15; i++)
-            {
-                Vector2 variation = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
-                LineParticle redParticle = new LineParticle(target.Center, direction + variation, false, 60, 6f, Color.Red);
-                LineParticle blackParticle = new LineParticle(target.Center, direction + variation, false, 60, 5f, Color.White);
-                GeneralParticleHandler.SpawnParticle(redParticle);
-                GeneralParticleHandler.SpawnParticle(blackParticle);
-            }
+            // for (int i = 0; i < 15; i++)
+            // {
+            //     Vector2 variation = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
+            //     LineParticle redParticle = new LineParticle(target.Center, direction + variation, false, 60, 6f, Color.Red);
+            //     LineParticle blackParticle = new LineParticle(target.Center, direction + variation, false, 60, 5f, Color.White);
+            //     GeneralParticleHandler.SpawnParticle(redParticle);
+            //     GeneralParticleHandler.SpawnParticle(blackParticle);
+            // }
 
             if (!infinity && !hollowWickerBasket)
             {

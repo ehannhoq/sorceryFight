@@ -1,5 +1,3 @@
-using CalamityMod.Particles;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -168,13 +166,13 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 else
                     animScale = goalScale;
 
-                for (int i = 0; i < 2; i++)
-                {
-                    Vector2 particleOffset = Projectile.Center + new Vector2(Main.rand.NextFloat(-80f, 80f), Main.rand.NextFloat(-80f, 80f));
-                    Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                    LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 10, 1, textColor);
-                    GeneralParticleHandler.SpawnParticle(particle);
-                }
+                // for (int i = 0; i < 2; i++)
+                // {
+                //     Vector2 particleOffset = Projectile.Center + new Vector2(Main.rand.NextFloat(-80f, 80f), Main.rand.NextFloat(-80f, 80f));
+                //     Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
+                //     LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 10, 1, textColor);
+                //     GeneralParticleHandler.SpawnParticle(particle);
+                // }
 
                 return;
             }
@@ -190,13 +188,13 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {
             base.OnHitNPC(target, hit, damageDone);
 
-            for (int i = 0; i < 10; i++)
-            {
-                Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 7), Main.rand.NextFloat(-7, 7));
+            // for (int i = 0; i < 10; i++)
+            // {
+            //     Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 7), Main.rand.NextFloat(-7, 7));
 
-                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
-            }
+            //     LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
+            //     GeneralParticleHandler.SpawnParticle(particle);
+            // }
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -217,13 +215,13 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         }
         private void SpecialKill()
         {
-            for (int i = 0; i < 40; i++)
-            {
-                Vector2 particleOffset = Projectile.Center + new Vector2(Main.rand.NextFloat(-120f, 120f), Main.rand.NextFloat(-120f, 120f));
-                Vector2 particleVelocity = particleOffset.DirectionFrom(Projectile.Center);
-                LineParticle particle = new LineParticle(Projectile.Center, particleVelocity * 3, false, 20, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
-            }
+            // for (int i = 0; i < 40; i++)
+            // {
+            //     Vector2 particleOffset = Projectile.Center + new Vector2(Main.rand.NextFloat(-120f, 120f), Main.rand.NextFloat(-120f, 120f));
+            //     Vector2 particleVelocity = particleOffset.DirectionFrom(Projectile.Center);
+            //     LineParticle particle = new LineParticle(Projectile.Center, particleVelocity * 3, false, 20, 1, textColor);
+            //     GeneralParticleHandler.SpawnParticle(particle);
+            // }
             Projectile.Kill();
         }
     }

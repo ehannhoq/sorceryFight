@@ -1,5 +1,4 @@
 using System;
-using CalamityMod.NPCs.DevourerofGods;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs.PrivatePureLoveTrain;
@@ -20,11 +19,11 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
         {
             string desc = SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.Description");
             desc += "\n";
-            if (player.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()))
-            {
-                desc += SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.TierIII");
-            }
-            else if (player.unlockedRCT)
+            // if (player.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()))
+            // {
+            //     desc += SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.TierIII");
+            // }
+            if (player.unlockedRCT)
             {
                 desc += SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.TierII");
             }
@@ -215,11 +214,11 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
                 SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
                 if (rolls[0] == rolls[1] && rolls[0] == rolls[2])
                 {
-                    if (sfPlayer.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()))
-                    {
-                        StageIIIReward();
-                        return;
-                    }
+                    // if (sfPlayer.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()))
+                    // {
+                    //     StageIIIReward();
+                    //     return;
+                    // }
 
                     if (sfPlayer.unlockedRCT)
                     {

@@ -1,9 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using sorceryFight;
-using Terraria;
-using Terraria.Chat.Commands;
 using Terraria.UI;
 
 public enum Orientation

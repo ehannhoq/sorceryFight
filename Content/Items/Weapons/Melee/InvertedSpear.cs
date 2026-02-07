@@ -1,7 +1,3 @@
-using System;
-using System.Linq;
-using CalamityMod;
-using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Projectiles.Melee;

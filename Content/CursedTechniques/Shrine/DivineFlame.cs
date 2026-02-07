@@ -1,10 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CalamityMod.NPCs.NormalNPCs;
-using CalamityMod.NPCs.Providence;
-using CalamityMod.Particles;
-using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs.Vessel;
@@ -48,7 +44,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         }
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<Providence>()) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
+            // return sf.HasDefeatedBoss(ModContent.NPCType<Providence>()) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
+            return true;
         }
 
         public override float CalculateTrueDamage(SorceryFightPlayer sf)
@@ -129,26 +126,26 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                     }
                 }
 
-                if (castTimer < (int)transitionTime)
-                {
-                    Vector2 pos = Projectile.Center;
-                    Vector2 velocity = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
-                    GlowSparkParticle particle = new GlowSparkParticle(pos, velocity, false, 60, 0.01f, textColor, new Vector2(1, 1));
-                    GeneralParticleHandler.SpawnParticle(particle);
-                }
+                // if (castTimer < (int)transitionTime)
+                // {
+                //     Vector2 pos = Projectile.Center;
+                //     Vector2 velocity = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
+                //     GlowSparkParticle particle = new GlowSparkParticle(pos, velocity, false, 60, 0.01f, textColor, new Vector2(1, 1));
+                //     GeneralParticleHandler.SpawnParticle(particle);
+                // }
 
                 if (castTimer == (int)transitionTime)
                 {
                     texturePhase = 1;
                     int index = CombatText.NewText(player.getRect(), textColor, "Divine Flame");
                     Main.combatText[index].lifeTime = 60;
-                    for (int i = 0; i < 3; i++)
-                    {
-                        Vector2 pos = Projectile.Center;
-                        Vector2 velocity = new Vector2(Main.rand.NextFloat(-50f, 50f), Main.rand.NextFloat(-50f, 50f));
-                        GlowSparkParticle particle = new GlowSparkParticle(pos, velocity, false, 60, 0.1f, textColor, new Vector2(1, 1));
-                        GeneralParticleHandler.SpawnParticle(particle);
-                    }
+                    // for (int i = 0; i < 3; i++)
+                    // {
+                    //     Vector2 pos = Projectile.Center;
+                    //     Vector2 velocity = new Vector2(Main.rand.NextFloat(-50f, 50f), Main.rand.NextFloat(-50f, 50f));
+                    //     GlowSparkParticle particle = new GlowSparkParticle(pos, velocity, false, 60, 0.1f, textColor, new Vector2(1, 1));
+                    //     GeneralParticleHandler.SpawnParticle(particle);
+                    // }
                 }
 
                 if (castTimer == (int)totalCastTime - 10)
@@ -163,10 +160,10 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                         Projectile.rotation = Projectile.Center.DirectionTo(Main.MouseWorld).ToRotation();
 
 
-                    Vector2 pos = Projectile.Center;
-                    Vector2 velocity = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
-                    GlowSparkParticle particle = new GlowSparkParticle(pos, velocity, false, 60, 0.02f, textColor, new Vector2(1, 1));
-                    GeneralParticleHandler.SpawnParticle(particle);
+                    // Vector2 pos = Projectile.Center;
+                    // Vector2 velocity = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
+                    // GlowSparkParticle particle = new GlowSparkParticle(pos, velocity, false, 60, 0.02f, textColor, new Vector2(1, 1));
+                    // GeneralParticleHandler.SpawnParticle(particle);
                 }
                 return;
             }
@@ -201,10 +198,10 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Projectile.direction = (Math.Cos(velocityRotation) > 0).ToDirectionInt();
             Projectile.rotation = Projectile.velocity.ToRotation();
 
-            Vector2 pos2 = Projectile.Center;
-            Vector2 velocity2 = new Vector2(Main.rand.NextFloat(-50f, 50f), Main.rand.NextFloat(-50f, 50f));
-            GlowSparkParticle particle2 = new GlowSparkParticle(pos2, velocity2, false, 60, 0.05f, textColor, new Vector2(1, 1));
-            GeneralParticleHandler.SpawnParticle(particle2);
+            // Vector2 pos2 = Projectile.Center;
+            // Vector2 velocity2 = new Vector2(Main.rand.NextFloat(-50f, 50f), Main.rand.NextFloat(-50f, 50f));
+            // GlowSparkParticle particle2 = new GlowSparkParticle(pos2, velocity2, false, 60, 0.05f, textColor, new Vector2(1, 1));
+            // GeneralParticleHandler.SpawnParticle(particle2);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -240,20 +237,20 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         {
             SoundEngine.PlaySound(SorceryFightSounds.DivineFlameExplosion, Projectile.Center);
 
-            for (int i = 0; i < 20; i++)
-            {
-                Vector2 vel = new Vector2(Main.rand.NextFloat(-50f, 50f), Main.rand.NextFloat(-50f, 50f));
-                LineParticle particle = new LineParticle(Projectile.Center, vel, false, 120, 5f, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
+            // for (int i = 0; i < 20; i++)
+            // {
+            //     Vector2 vel = new Vector2(Main.rand.NextFloat(-50f, 50f), Main.rand.NextFloat(-50f, 50f));
+            //     LineParticle particle = new LineParticle(Projectile.Center, vel, false, 120, 5f, textColor);
+            //     GeneralParticleHandler.SpawnParticle(particle);
 
-                Vector2 vel2 = new Vector2(Main.rand.NextFloat(-25f, 25f), Main.rand.NextFloat(-25f, 25f));
-                LineParticle particle2 = new LineParticle(Projectile.Center, vel2, false, 120, 1f, new Color(textColor.R + 10, textColor.G + 10, textColor.B + 10));
-                GeneralParticleHandler.SpawnParticle(particle2);
-            }
+            //     Vector2 vel2 = new Vector2(Main.rand.NextFloat(-25f, 25f), Main.rand.NextFloat(-25f, 25f));
+            //     LineParticle particle2 = new LineParticle(Projectile.Center, vel2, false, 120, 1f, new Color(textColor.R + 10, textColor.G + 10, textColor.B + 10));
+            //     GeneralParticleHandler.SpawnParticle(particle2);
+            // }
 
             foreach (NPC npc in Main.ActiveNPCs)
             {
-                if (npc.friendly || npc.type == NPCID.TargetDummy || npc.type == ModContent.NPCType<SuperDummyNPC>()) continue;
+                if (npc.friendly || npc.type == NPCID.TargetDummy) continue;
 
                 float distance = Vector2.Distance(npc.Center, Projectile.Center);
                 if (distance < 750f)

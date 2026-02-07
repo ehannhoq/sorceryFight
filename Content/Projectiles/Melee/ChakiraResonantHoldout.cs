@@ -1,13 +1,8 @@
 using System;
-using CalamityMod;
-using CalamityMod.Particles;
-using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Particles;
 using sorceryFight.Content.Particles.UIParticles;
-using sorceryFight.Content.Projectiles;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
@@ -175,12 +170,12 @@ namespace sorceryFight.Content.Projectiles.Melee
                 ParticleController.SpawnParticle(particle);
             }
 
-            for (int i = 0; i < 2; i++)
-            {
-                Vector2 posVariation = new Vector2(Main.rand.NextFloat(-10, 10), Main.rand.NextFloat(-10, 10));
-                SparkleParticle particle = new SparkleParticle(target.Center + posVariation, Projectile.velocity * 2f, new Color(252, 232, 151), Color.White, 2f, 10, 0.75f, 0.2f);
-                GeneralParticleHandler.SpawnParticle(particle);
-            }
+            // for (int i = 0; i < 2; i++)
+            // {
+            //     Vector2 posVariation = new Vector2(Main.rand.NextFloat(-10, 10), Main.rand.NextFloat(-10, 10));
+            //     SparkleParticle particle = new SparkleParticle(target.Center + posVariation, Projectile.velocity * 2f, new Color(252, 232, 151), Color.White, 2f, 10, 0.75f, 0.2f);
+            //     GeneralParticleHandler.SpawnParticle(particle);
+            // }
         }
 
         public override void OnKill(int timeLeft)

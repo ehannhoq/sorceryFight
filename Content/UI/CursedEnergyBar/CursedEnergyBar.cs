@@ -6,7 +6,6 @@ using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config;
 using Terraria.UI;
 
 public class CursedEnergyBar : UIElement

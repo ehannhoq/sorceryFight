@@ -1,9 +1,6 @@
-using CalamityMod.Items.Materials;
-using sorceryFight.Content.Items.Materials;
 using sorceryFight.Rarities;
 using sorceryFight.SFPlayer;
 using Terraria;
-using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 

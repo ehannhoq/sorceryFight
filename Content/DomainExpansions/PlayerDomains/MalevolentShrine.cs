@@ -1,6 +1,3 @@
-using System;
-using CalamityMod.NPCs.DevourerofGods;
-using CalamityMod.NPCs.NormalNPCs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.CursedTechniques.Shrine;
@@ -9,7 +6,6 @@ using sorceryFight.SFPlayer;
 using sorceryFight.StructureHelper;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.DomainExpansions.PlayerDomains
@@ -86,9 +82,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
+            return true;
         }
-
-
     }
 }

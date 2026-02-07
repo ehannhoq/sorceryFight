@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CalamityMod.Items.Placeables.FurnitureProfaned;
-using CalamityMod.Tiles.FurnitureProfaned;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

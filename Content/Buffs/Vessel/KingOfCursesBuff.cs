@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using CalamityMod;
 using sorceryFight.Content.InnateTechniques;
 using sorceryFight.SFPlayer;
 using Terraria;

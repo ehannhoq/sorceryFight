@@ -1,4 +1,3 @@
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Steamworks;
@@ -7,12 +6,8 @@ using Terraria.Audio;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
-using CalamityMod.NPCs.Providence;
 using sorceryFight.Content.Items.Accessories;
 using System;
-using CalamityMod.NPCs.Signus;
-using CalamityMod.NPCs.StormWeaver;
-using CalamityMod.NPCs.CeaselessVoid;
 using sorceryFight.Content.Projectiles.VFX;
 using sorceryFight.Content.Particles;
 using sorceryFight.Content.Particles.UIParticles;
@@ -48,7 +43,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<Signus>()) && sf.HasDefeatedBoss(ModContent.NPCType<StormWeaverHead>()) && sf.HasDefeatedBoss(ModContent.NPCType<CeaselessVoid>());
+            return true;
+            // return sf.HasDefeatedBoss(ModContent.NPCType<Signus>()) && sf.HasDefeatedBoss(ModContent.NPCType<StormWeaverHead>()) && sf.HasDefeatedBoss(ModContent.NPCType<CeaselessVoid>());
         }
         public override int GetProjectileType()
         {
@@ -252,13 +248,13 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {
             base.OnHitNPC(target, hit, damageDone);
 
-            for (int i = 0; i < 20; i++)
-            {
-                Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 7), Main.rand.NextFloat(-7, 7));
+            // for (int i = 0; i < 20; i++)
+            // {
+            //     Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 7), Main.rand.NextFloat(-7, 7));
 
-                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
-            }
+            //     LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
+            //     GeneralParticleHandler.SpawnParticle(particle);
+            // }
         }
     }
 }

@@ -8,7 +8,6 @@ using Terraria.DataStructures;
 using sorceryFight.Content.Buffs.PlayerAttributes;
 using Terraria.Chat;
 using Terraria.ID;
-using CalamityMod.CalPlayer.Dashes;
 using System;
 using sorceryFight.Content.Buffs.Vessel;
 using sorceryFight.Content.Items.Consumables;
@@ -65,8 +64,6 @@ namespace sorceryFight.SFPlayer
         #region One-off Variables
         public bool yourPotentialSwitch;
         public bool usedYourPotentialBefore;
-        public bool usedCursedFists;
-        private HashSet<int> npcsHitWithCursedFists;
         public int idleDeathGambleBuffStrength;
         public SorceryFightUI sfUI;
         #endregion
@@ -368,26 +365,6 @@ namespace sorceryFight.SFPlayer
                 sfUI.BlackFlashWindow(lowerWindowTime, lowerWindowTime + blackFlashWindowTime);
             }
 
-            // if (SFKeybinds.CursedFist.JustPressed)
-            // {
-            //     if (Player.HasBuff<BurntTechnique>())
-            //     {
-            //         int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
-            //         Main.combatText[index].lifeTime = 60;
-            //         return;
-            //     }
-
-            //     CursedFist();
-            // }
-
-            if (usedCursedFists)
-            {
-                if (Player.dashDelay <= 15)
-                    usedCursedFists = false;
-                else
-                    CalculateCursedFistsHitbox();
-            }
-
             if (SFKeybinds.ConsumeCursedEnergyPotion.JustPressed)
                 if (cursedEnergy < maxCursedEnergy)
                     BeerHatRecoverCE();
@@ -559,54 +536,6 @@ namespace sorceryFight.SFPlayer
                 index = CombatText.NewText(Player.getRect(), Color.LightCyan, "New Shadow Style: Simple Domain");
                 Main.combatText[index].lifeTime = 60;
 
-            }
-        }
-
-
-
-        void CursedFist()
-        {
-            if (Player.dashDelay > 0) return;
-            npcsHitWithCursedFists.Clear();
-            usedCursedFists = true;
-
-            Player.dashDelay = 45;
-            float runSpeed = Math.Max(Player.accRunSpeed, Player.maxRunSpeed);
-            Player.velocity.X += runSpeed * Player.direction;
-
-            CalculateCursedFistsHitbox();
-        }
-
-
-        void CalculateCursedFistsHitbox()
-        {
-            Rectangle hitArea = new Rectangle((int)(Player.position.X + Player.velocity.X * 0.5 - 4f), (int)(Player.position.Y + Player.velocity.Y * 0.5 - 4f), Player.width + 8, Player.height + 8);
-            foreach (NPC npc in Main.ActiveNPCs)
-            {
-                if (npcsHitWithCursedFists.Contains(npc.whoAmI)) continue;
-                if (Player.dontHurtCritters && NPCID.Sets.CountsAsCritter[npc.type]) continue;
-                if (npc.dontTakeDamage && npc.friendly) continue;
-
-                if (hitArea.Intersects(npc.getRect()) && (npc.noTileCollide || Player.CanHit(npc)))
-                {
-                    DashHitContext hitContext = new DashHitContext
-                    {
-                        BaseDamage = 50,
-                        BaseKnockback = 6f,
-                        HitDirection = Player.direction,
-                        damageClass = DamageClass.Melee,
-                        PlayerImmunityFrames = 10
-                    };
-
-                    int dashDamage = (int)Player.GetTotalDamage(hitContext.damageClass).ApplyTo(hitContext.BaseDamage);
-                    float dashKB = Player.GetTotalKnockback(hitContext.damageClass).ApplyTo(hitContext.BaseKnockback);
-                    bool rollCrit = Main.rand.Next(100) < Player.GetTotalCritChance(hitContext.damageClass);
-
-                    Player.ApplyDamageToNPC(npc, dashDamage, dashKB, hitContext.HitDirection, rollCrit, hitContext.damageClass, true);
-                    Player.GiveImmuneTimeForCollisionAttack(hitContext.PlayerImmunityFrames);
-
-                    npcsHitWithCursedFists.Add(npc.whoAmI);
-                }
             }
         }
 
