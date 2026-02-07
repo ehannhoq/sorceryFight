@@ -1,35 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using CalamityMod;
-using CalamityMod.Items.Accessories;
-using CalamityMod.Items.SummonItems;
-using CalamityMod.Items.TreasureBags;
-using CalamityMod.NPCs;
-using CalamityMod.NPCs.AstrumAureus;
-using CalamityMod.NPCs.AstrumDeus;
-using CalamityMod.NPCs.Bumblebirb;
-using CalamityMod.NPCs.CalClone;
-using CalamityMod.NPCs.CeaselessVoid;
-using CalamityMod.NPCs.DevourerofGods;
-using CalamityMod.NPCs.HiveMind;
-using CalamityMod.NPCs.Leviathan;
-using CalamityMod.NPCs.Perforator;
-using CalamityMod.NPCs.Polterghast;
-using CalamityMod.NPCs.Providence;
-using CalamityMod.NPCs.Ravager;
-using CalamityMod.NPCs.Signus;
-using CalamityMod.NPCs.StormWeaver;
-using sorceryFight.Content.Items.Accessories;
-using sorceryFight.Content.Items.Consumables;
-using sorceryFight.Content.Items.Consumables.SukunasFinger;
 using sorceryFight.Content.Items.Materials;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static CalamityMod.DropHelper;
 
 namespace sorceryFight
 {
