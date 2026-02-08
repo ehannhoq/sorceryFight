@@ -63,6 +63,7 @@ namespace sorceryFight
 		{
 			ModContentProjectileType = typeof(ModContent).GetMethod("ProjectileType");
 			CountBosses();
+			DetermineStrongestBoss();
 		}
 
 		private void CountBosses()
@@ -86,7 +87,7 @@ namespace sorceryFight
 			for (short i = 0; i < NPCID.Count; i++)
 			{
 				NPC npc = ContentSamples.NpcsByNetId[i];
-				if (!npc.boss) continue;
+				if (!npc.boss || npc.dontCountMe) continue;
 
 				bosses.Add(npc);
 			}
@@ -94,7 +95,7 @@ namespace sorceryFight
 			foreach (ModNPC modNPC in ModContent.GetContent<ModNPC>())
 			{
 				NPC npc = ContentSamples.NpcsByNetId[modNPC.Type];
-				if (!npc.boss) continue;
+				if (!npc.boss || npc.dontCountMe) continue;
 
 				bosses.Add(npc);
 			}
