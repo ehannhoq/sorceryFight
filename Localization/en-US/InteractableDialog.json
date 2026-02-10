@@ -209,13 +209,13 @@
             ]
         }
     },
-    "TodoAoi": {
+    "AoiTodo": {
         "Interact": {
             "Text": "Have you seen my brother?",
             "Replies": [
                 {
                     "Text": "What's that around your neck?",
-                    "Response": "TodoAoi.PictureLocketQuery"
+                    "Response": "AoiTodo.PictureLocketQuery"
                 }
             ],
             "Actions": []
