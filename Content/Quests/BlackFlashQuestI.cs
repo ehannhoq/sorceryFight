@@ -1,5 +1,5 @@
 using System.Linq;
-using CalamityMod.Items.Placeables.Furniture.DevPaintings;
+using CalamityMod.Items.Placeables.Furniture.Paintings;
 using sorceryFight.Content.Items.Accessories;
 using sorceryFight.SFPlayer;
 using Terraria.ModLoader;
