@@ -130,8 +130,6 @@ namespace sorceryFight.Content.UI
         }
         public void ResetUI()
         {
-            sfUI = new SorceryFightUI();
-            sfUI.Activate();
             sfInterface.SetState(sfUI);
             shopUIOpen = false;
         }
