@@ -31,8 +31,7 @@ public class Dialog
         string interactableDialogPath = $"sorceryFight/Localization/{Language.ActiveCulture.Name}/InteractableDialog.json";
         if (!ModContent.FileExists(interactableDialogPath))
         {
-            Main.NewText($"Couldn't find {interactableDialogPath}, defaulting to en-US");
-
+            ModContent.GetInstance<SorceryFight>().Logger.Debug($"Couldn't find {interactableDialogPath}, defaulting to en-US");
             interactableDialogPath = "sorceryFight/Localization/en-US/InteractableDialog.json";
         }
 
