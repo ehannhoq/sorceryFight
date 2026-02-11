@@ -65,7 +65,7 @@ public class Dialog
         var replyData = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(dialogData["Replies"].ToString());
         foreach (var reply in replyData)
         {
-            if (reply["Condition"] != null)
+            if (reply.ContainsKey("Condition"))
             {
                 var conditionData = JsonConvert.DeserializeObject<Dictionary<string, object>>(reply["Condition"].ToString());
                 string conditionType = conditionData["Type"].ToString();
