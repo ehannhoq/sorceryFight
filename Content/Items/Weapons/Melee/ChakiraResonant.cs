@@ -133,7 +133,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Main.spriteBatch.DrawString(
                 line.Font,
                 line.Text,
-                new Vector2(line.X - (4 * offset.X), line.Y - offset.Y),
+                new Vector2(line.X - (8 * offset.X), line.Y - offset.Y),
                 line.Color * alpha,
                 line.Rotation,
                 line.Origin,
