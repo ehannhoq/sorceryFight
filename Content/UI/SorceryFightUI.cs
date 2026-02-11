@@ -70,6 +70,7 @@ public class SorceryFightUI : UIState
             PassiveTechniqueSelector ptSelector = new PassiveTechniqueSelector();
             Append(ptSelector);
 
+            LoadCEBar();
             Append(ceBar);
         }
 
