@@ -2,6 +2,7 @@ using System.Linq;
 using CalamityMod.Items.Placeables.Furniture.Paintings;
 using sorceryFight.Content.Items.Accessories;
 using sorceryFight.SFPlayer;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Quests
@@ -12,17 +13,23 @@ namespace sorceryFight.Content.Quests
         public override bool IsCompleted(SorceryFightPlayer sfPlayer)
         {
             int count = 0;
-            if (sfPlayer.blackFlashCounter == -59)
+
+            if (sfPlayer.TryGetQuestData(this, "BlackFlashCounter", out object obj))
             {
-                if (sfPlayer.TryGetQuestData(this, "BlackFlashCounter", out object obj))
-                {
-                    count = (int)obj;
-                    count++;
-                    sfPlayer.ModifyQuestData(this, "BlackFlashCounter", count);
-                }
-                else
-                    sfPlayer.ModifyQuestData(this, "BlackFlashCounter", 1);
+                count = (int)obj;
             }
+            else
+            {
+                sfPlayer.ModifyQuestData(this, "BlackFlashCounter", 0);
+            }
+
+            if (sfPlayer.blackFlashTimeLeft == -59)
+            {
+                count++;
+                sfPlayer.ModifyQuestData(this, "BlackFlashCounter", count);
+            }
+
+            Main.NewText($"{count}/{BLACK_FLASH_COUNT}");
 
             return count >= BLACK_FLASH_COUNT && sfPlayer.Player.inventory.Any(item => item.type == ModContent.ItemType<ThankYouPainting>());
         }
