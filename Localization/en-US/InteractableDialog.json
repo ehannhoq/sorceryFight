@@ -255,6 +255,16 @@
                     "QuestName": "BlackFlashQuestI"
                 }
             ]
+        },
+        "BlackFlashQuestI_Completed": {
+            "Text": "Perfect. Here, your very own picture locket!",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "EndOfDialog",
+                    "MethodName": "CompletedQuest"
+                }
+            ]
         }
     },
     "AtsuyaKusakabe": {

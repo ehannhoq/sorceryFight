@@ -1,4 +1,5 @@
 
+using sorceryFight.Content.Quests;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,6 +23,8 @@ namespace sorceryFight.Content.NPCs.TownNPCs
 
         public override void SetDefaults()
         {
+            base.SetDefaults();
+
             SFNPC.name = "AoiTodo";
             SFNPC.attackDamage = 50;
             SFNPC.knockback = 5f;
@@ -33,7 +36,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
             NPC.knockBackResist = 0.75f;
             AnimationType = NPCID.Guide;
 
-            base.SetDefaults();
+            AddQuest(new BlackFlashQuestI());
         }
 
         public override bool CanTownNPCSpawn(int numTownNPCs)

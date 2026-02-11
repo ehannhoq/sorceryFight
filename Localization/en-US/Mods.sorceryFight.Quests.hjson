@@ -18,12 +18,7 @@ SixEyesQuestII: {
 	Description: While under the Strained Six Eyes debuff, defeat the Lunatic Cultist.
 }
 
-TechniqueRefreshQuestI: {
-	DisplayName: Technique Refresh
-	Description: placeholder
-}
-
-DomainRefreshQuestI: {
-	DisplayName: Domain Refresh
-	Description: placeholder
+BlackFlashQuestI: {
+	DisplayName: The Picture Locket
+	Description: Hit three consecutive Black Flashes, and have the Thank You painting in your inventory.
 }
