@@ -7,11 +7,6 @@ YourPotential: {
 		'''
 }
 
-YourTruePotential: {
-	DisplayName: Your True Potential
-	Tooltip: Unleashes your true potential.
-}
-
 GeneticReroll: {
 	DisplayName: Dice of Genetic Reroll
 	Tooltip:
