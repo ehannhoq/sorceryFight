@@ -242,7 +242,7 @@
             ]
         },
         "BlackFlashQuestI": {
-            "Text": "Ohoho, of course! But, theres a few things I need you to do first.\nFirst, I need to know that you can even black flash. Hit three consecutive black flashes.\nAlso, every boss has a 1% chance to drop the 'Thank you' painting, which is essential for the picture locket.\nBring me that, and I can make you your own locket!",
+            "Text": "Ohoho, of course! But, theres a few things I need you to do first.\nFirst, I need to know that you can even black flash. Hit three black flashes.\nAlso, every boss has a 1% chance to drop the 'Thank you' painting, which is essential for the picture locket.\nBring me that, and I can make you your own locket!",
             "Replies": [],
             "Actions": [
                 {
