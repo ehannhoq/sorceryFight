@@ -7,7 +7,7 @@ namespace sorceryFight.Content.Quests
 {
     public class SixEyesQuestI : Quest
     {
-        private const int NPC_KILL_COUNT = 5;
+        private const int NPC_KILL_COUNT = 50;
         public override void OnAddedQuest(SorceryFightPlayer sfPlayer)
         {
             sfPlayer.Player.QuickSpawnItem(sfPlayer.Player.GetSource_Misc("PitchBlack_Blindfold"), ModContent.ItemType<CursedBlindfold>());
