@@ -29,8 +29,6 @@ namespace sorceryFight.Content.Quests
                 sfPlayer.ModifyQuestData(this, "BlackFlashCounter", count);
             }
 
-            Main.NewText($"{count}/{BLACK_FLASH_COUNT}");
-
             return count >= BLACK_FLASH_COUNT && sfPlayer.Player.inventory.Any(item => item.type == ModContent.ItemType<ThankYouPainting>());
         }
         public override void GiveRewards(SorceryFightPlayer sfPlayer)
