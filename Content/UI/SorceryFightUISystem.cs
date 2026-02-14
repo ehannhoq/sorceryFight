@@ -130,8 +130,13 @@ namespace sorceryFight.Content.UI
         }
         public void ResetUI()
         {
+            sfUI = new();
+            sfUI.Activate();
             sfInterface.SetState(sfUI);
             shopUIOpen = false;
+
+            var sfPlayer = Main.LocalPlayer.SorceryFight();
+            sfPlayer.sfUI = sfUI;
         }
     }
 }
