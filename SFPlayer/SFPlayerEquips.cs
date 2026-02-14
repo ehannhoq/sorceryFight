@@ -23,6 +23,7 @@ namespace sorceryFight.SFPlayer
             cursedOfuda = false;
             beerHat = false;
             cursedBlindfold = false;
+            onDeath = false;
         }
 
         private bool BeerHatRecoverCE(float minRecover = -1f)

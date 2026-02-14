@@ -252,38 +252,6 @@ namespace sorceryFight.SFPlayer
         }
 
 
-        public override void UpdateDead()
-        {
-            ResetBuffs();
-            deathPosition = Player.position;
-
-            if (rctAnimation)
-            {
-                PreventDeath();
-            }
-
-            if (!rctAnimation && sukunasFingerConsumed >= 1)
-            {
-
-                if (Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>()) && innateTechnique.Name == "Shrine")
-                    Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(15 + (sukunasFingerConsumed * 2.25f)));
-
-                else if (innateTechnique.Name == "Vessel")
-                {
-                    int chance = SorceryFight.IsDevMode() ? 100 : 5 + (int)(sukunasFingerConsumed * 0.5);
-                    if (SFUtils.Roll(chance))
-                    {
-                        PreventDeath();
-                        Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(15 + (sukunasFingerConsumed * 2.25f)));
-                    }
-                }
-            }
-
-            disableRegenFromDE = false;
-            disableRegenFromProjectiles = false;
-        }
-
-
         public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
         {
             return [

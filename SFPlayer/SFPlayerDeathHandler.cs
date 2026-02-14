@@ -1,5 +1,6 @@
 using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
+using sorceryFight.Content.Buffs.Vessel;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -11,8 +12,8 @@ namespace sorceryFight.SFPlayer
     public partial class SorceryFightPlayer : ModPlayer
     {
         public bool preventDeath = false;
+        public bool onDeath = false;
         public Vector2 deathPosition = Vector2.Zero;
-
         public bool rctAnimation = false;
         public int rctTimer = 0;
 
@@ -88,5 +89,44 @@ namespace sorceryFight.SFPlayer
         }
 
 
+        public override void UpdateDead()
+        {
+            ResetBuffs();
+            deathPosition = Player.position;
+
+            if (rctAnimation)
+            {
+                PreventDeath();
+            }
+
+            if (!onDeath)
+            {
+                OnDeath();
+                onDeath = true;
+            }
+
+
+            disableRegenFromDE = false;
+            disableRegenFromProjectiles = false;
+        }
+
+        private void OnDeath()
+        {
+            if (!rctAnimation && sukunasFingerConsumed >= 1)
+            {
+                if (Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>()) && innateTechnique.Name == "Shrine")
+                    Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(15 + (sukunasFingerConsumed * 2.25f)));
+
+                else if (innateTechnique.Name == "Vessel")
+                {
+                    int chance = SorceryFight.IsDevMode() ? 100 : 5 + (int)(sukunasFingerConsumed * 0.5);
+                    if (SFUtils.Roll(chance))
+                    {
+                        PreventDeath();
+                        Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(15 + (sukunasFingerConsumed * 2.25f)));
+                    }
+                }
+            }
+        }
     }
 }
