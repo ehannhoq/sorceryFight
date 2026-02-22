@@ -63,7 +63,7 @@ HollowPurple: {
 		and divergence, an imaginary mass is formed.
 		The CE output far surpasses of Blue and Red.
 		'''
-	LockedDescription: Defeat the Servants of the Scourge.
+	LockedDescription: Defeat the Sentinels of the Devourer.
 }
 
 HollowPurple200Percent: {
@@ -174,7 +174,7 @@ PachinkoBalls: {
 		Shoot a pachinko ball that ricochets off of
 		up to five enemies.
 		'''
-	LockedDescription: Defeat the Desert Scourge.
+	LockedDescription: Defeat the sea serpent that scourges the desert.
 }
 
 HakarisDoor: {
@@ -261,5 +261,5 @@ LightspeedBarrage: {
 		are any more nearby enemies, auto-dash to 
 		them as well.
 		'''
-	LockedDescription: Defeat the Servants of the Scourge.
+	LockedDescription: Defeat the Sentinels of the Devourer.
 }
