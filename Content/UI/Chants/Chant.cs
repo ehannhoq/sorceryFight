@@ -4,6 +4,7 @@ using CalamityMod.Fonts;
 using CalamityMod.Projectiles.Magic;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
@@ -63,7 +64,14 @@ namespace sorceryFight.Content.UI.Chants
 
             int index = (int)(tick / timeBetweenChants) % texts.Count;
             if (!Elements.Contains(texts[index]))
+            {
+                if (index == texts.Count - 1)
+                    SoundEngine.PlaySound(SorceryFightSounds.ChantingFinished);
+                else
+                    SoundEngine.PlaySound(SorceryFightSounds.ChantingChargeUp);
+
                 Append(texts[index]);
+            }
 
 
             base.Update(gameTime);

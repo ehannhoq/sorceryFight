@@ -80,7 +80,7 @@ namespace sorceryFight.Content.UI.Chants
 
             for (int i = 0; i < charactersDisplayed; i++)
             {
-                charTimers[i] = charTimers[i] + dt / fadeDuration;
+                charTimers[i] = Math.Min(charTimers[i] + dt / fadeDuration, 1f);
             }
 
             if (charactersDisplayed < fullText.Length)

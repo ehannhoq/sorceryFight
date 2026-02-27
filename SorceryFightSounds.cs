@@ -68,6 +68,10 @@ namespace sorceryFight
         public static SoundStyle GroundshotGroundSlam;
         public static SoundStyle GroundshotPunch;
 
+        public static SoundStyle ChantingChargeUp;
+        public static SoundStyle ChantingFinished;
+
+
         public override void Load()
         {
             CommonFire = new("sorceryFight/Content/Sounds/CommonFire") { Volume = 1f, PitchVariance = 0.75f };
@@ -128,6 +132,9 @@ namespace sorceryFight
             GroundshotPunch = new("sorceryFight/Content/Sounds/Projectiles/GroundshotPunch") { Volume = 0.75f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 0.3f};
 
             DashImpact = new("sorceryFight/Content/Sounds/DashImpact") { Volume = 0.75f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 0.3f};
+            
+            ChantingChargeUp = new("sorceryFight/Content/Sounds/Chanting/ChantingChargeUp") { Volume = 0.75f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 0.2f};
+            ChantingFinished = new("sorceryFight/Content/Sounds/Chanting/ChantingFinished") { Volume = 0.75f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 0.2f};
         }
     }
 }
