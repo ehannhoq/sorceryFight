@@ -19,7 +19,7 @@ YoshinobuGakuganji: {
 		HateNPC: "{NPCName}, chaotic, insufferable, and reckless; every bit as trying as Gojo. One misstep from them could undo all order."
 	}
 
-	DisplayName: Yoshinobu Gakuganji
+	DisplayName: Principal
 }
 
 ShokoIeiri: {
@@ -34,7 +34,7 @@ ShokoIeiri: {
 		Content: I am content.
 	}
 
-	DisplayName: Shoko Ieiri
+	DisplayName: Doctor
 }
 
 GojoSatoru: {
@@ -49,11 +49,11 @@ GojoSatoru: {
 		Content: I am content.
 	}
 
-	DisplayName: Gojo Satoru
+	DisplayName: Strongest
 }
 
 AtsuyaKusakabe: {
-	DisplayName: Atsuya Kusakabe
+	DisplayName: Master Swordsman
 
 	TownNPCMood: {
 		Content: I am content.
@@ -79,5 +79,5 @@ AoiTodo: {
 		Content: I am content.
 	}
 
-	DisplayName: Aoi Todo
+	DisplayName: Besto Friendo
 }
