@@ -12,6 +12,7 @@ using sorceryFight.SFPlayer;
 using CalamityMod.NPCs.DevourerofGods;
 using System;
 using sorceryFight.Content.Items.Accessories;
+using Terraria.DataStructures;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {
@@ -27,7 +28,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override Color textColor { get; } = new Color(235, 117, 233);
         public override bool DisplayNameInGame { get; } = false;
 
-        
+
         public override int Damage => 50000;
         public override int MasteryDamageMultiplier => 200;
         public override float Speed { get; } = 50f;
@@ -50,7 +51,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<HollowPurple200Percent>();
-        } 
+        }
 
         public override void SetDefaults()
         {
@@ -81,11 +82,15 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             Player player = Main.player[Projectile.owner];
             SorceryFightPlayer sfPlayer = player.SorceryFight();
 
-            float totalCastTime = sfPlayer.cursedOfuda ? 360f * CursedOfuda.cursedTechniqueCastTimeDecrease : 360f;
-            float textTime = sfPlayer.cursedOfuda ? 90f * CursedOfuda.cursedTechniqueCastTimeDecrease : 90f;
-            float blueCastTime = sfPlayer.cursedOfuda ? 90f * CursedOfuda.cursedTechniqueCastTimeDecrease : 90f;
-            float redCastTime = sfPlayer.cursedOfuda ? 180f * CursedOfuda.cursedTechniqueCastTimeDecrease : 180f;
-            float collisionStartTime = sfPlayer.cursedOfuda ? 320f * CursedOfuda.cursedTechniqueCastTimeDecrease : 320f;
+            float multiplier = sfPlayer.cursedOfuda ? CursedOfuda.cursedTechniqueCastTimeDecrease : 1f;
+
+            float textTime = 90f * multiplier;
+            float bufferTime = 20f * multiplier;
+
+            float blueCastTime = 90f * multiplier;
+            float redCastTime = 180f * multiplier;
+            float collisionStartTime = 290f * multiplier + bufferTime;
+            float totalCastTime = 320f * multiplier + bufferTime * 3f;
 
             if (Projectile.ai[0] > LifeTime + totalCastTime)
             {
@@ -108,6 +113,15 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 {
                     animating = true;
                     player.SorceryFight().disableRegenFromProjectiles = true;
+                    player.SorceryFight().sfUI.InitializeChant(incantations, (int)(textTime * multiplier), (int)bufferTime, new UI.Chants.ChantTextStyle(
+                        textColor: new Color(216, 157, 237, 255),
+                        text2Color: new Color(176, 76, 212, 255),
+                        borderWidth: 2.0f,
+                        borderColor: new Color(82, 41, 107, 255),
+                        border2Color: new Color(19, 17, 79, 255),
+                        glowRadius: 3.0f,
+                        glowColor: new Color(203, 165, 232, 255)
+                    ));
                 }
 
                 animScale = 0f;
@@ -115,14 +129,14 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Projectile.Hitbox = new Rectangle(0, 0, 0, 0);
                 Projectile.Center = player.Center + new Vector2(0f, -30f);
 
-                if ((int)Projectile.ai[0] % (int)textTime == 1 && incantationsIndex < incantations.Count)
-                {
-                    int index = CombatText.NewText(player.getRect(), textColor, incantations[incantationsIndex]);
-                    Main.combatText[index].lifeTime = sfPlayer.cursedOfuda ? (int)(60 * CursedOfuda.cursedTechniqueCastTimeDecrease) : 60;
+                // if ((int)Projectile.ai[0] % (int)textTime == 1 && incantationsIndex < incantations.Count)
+                // {
+                //     int index = CombatText.NewText(player.getRect(), textColor, incantations[incantationsIndex], true, false);
+                //     Main.combatText[index].lifeTime = sfPlayer.cursedOfuda ? (int)(60 * CursedOfuda.cursedTechniqueCastTimeDecrease) : 60;
 
-                    if (incantationsIndex < incantations.Count)
-                        incantationsIndex++;
-                }
+                //     if (incantationsIndex < incantations.Count)
+                //         incantationsIndex++;
+                // }
 
 
                 Vector2 bluePosition = player.Center + blueOffset;
@@ -153,7 +167,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Projectile red = Main.projectile[(int)Projectile.ai[2]];
 
                 if (Projectile.ai[0] >= (int)blueCastTime && blue.type == ModContent.ProjectileType<AmplificationBlue>())
-                { 
+                {
                     blue.Center = bluePosition;
 
                     Vector2 particleOffsetPosition = bluePosition + new Vector2(Main.rand.NextFloat(-20f, 20f), Main.rand.NextFloat(-20f, 20f));
