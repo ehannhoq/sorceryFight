@@ -39,6 +39,11 @@ namespace sorceryFight
                 Asset<Effect> mindlessBarrage = Mod.Assets.Request<Effect>("Content/Shaders/MindlessBarrage", AssetRequestMode.ImmediateLoad);
                 Filters.Scene["SF:MindlessBarrage"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(mindlessBarrage, "MindlessBarrage"), EffectPriority.Medium);
                 Filters.Scene["SF:MindlessBarrage"].Load();
+
+
+                Asset<Effect> worldCuttingSlash = Mod.Assets.Request<Effect>("Content/Shaders/WorldCuttingSlash", AssetRequestMode.ImmediateLoad);
+                Filters.Scene["SF:WorldCuttingSlash"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(worldCuttingSlash, "WorldCuttingSlash"), EffectPriority.Medium);
+                Filters.Scene["SF:WorldCuttingSlash"].Load();
             }
         }
     }

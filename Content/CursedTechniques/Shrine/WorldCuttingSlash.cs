@@ -13,6 +13,8 @@ using sorceryFight.Content.Items.Accessories;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -32,14 +34,16 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override Color textColor => new Color(245, 214, 208);
         public override bool DisplayNameInGame => false;
         public override int Damage => 20000;
-        public override int MasteryDamageMultiplier => 500;
+        public override int MasteryDamageMultiplier => 750;
         public override float Speed => 60f;
         public override float LifeTime => 300f;
         ref float castTime => ref Projectile.ai[0];
-        ref float ai1 => ref Projectile.ai[1];
-        ref float ai2 => ref Projectile.ai[2];
-        Rectangle hitbox;
-        bool animating;
+        ref float totalCastTime => ref Projectile.localAI[0];
+        ref float multiplier => ref Projectile.localAI[1];
+        ref float slashed => ref Projectile.localAI[2];
+        private const float INCANTATION_TIME = 90.0f;
+        private const float BUFFER_TIME = 30.0f;
+        private const float SHADER_TIME = 120.0f;
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<WorldCuttingSlash>();
@@ -75,100 +79,105 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 172;
-            Projectile.height = 498;
+            Projectile.width = 1;
+            Projectile.height = 1;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
-            animating = false;
-            hitbox = Projectile.Hitbox;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.Hitbox = new Rectangle((int)Projectile.position.X, (int)Projectile.position.Y, 1, 1);
+            Projectile.scale = 0.0f;
+
+            Player player = Main.player[Projectile.owner];
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
+
+            sfPlayer.disableRegenFromProjectiles = true;
+
+            multiplier = sfPlayer.cursedOfuda ? CursedOfuda.cursedTechniqueCastTimeDecrease : 1.0f;
+            totalCastTime = (incantations.Count * INCANTATION_TIME + SHADER_TIME + BUFFER_TIME) * multiplier;
         }
 
         public override void AI()
         {
             castTime++;
             Player player = Main.player[Projectile.owner];
-            SorceryFightPlayer sfPlayer = player.SorceryFight();
-            float totalCastTime = sfPlayer.cursedOfuda ? incantations.Count * 90f * CursedOfuda.cursedTechniqueCastTimeDecrease : incantations.Count * 90f;
+            Projectile.Center = player.Center;
+
+            if (Main.myPlayer == player.whoAmI)
+            {
+                Projectile.velocity = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.UnitX);
+            }
+
+            float incantationTime = INCANTATION_TIME * incantations.Count * multiplier;
+            if (castTime == 1)
+            {
+                player.SorceryFight().sfUI.InitializeChant(incantations, (int)(INCANTATION_TIME * multiplier), (int)BUFFER_TIME, new UI.Chants.ChantTextStyle(
+                    textColor: Color.Black,
+                    text2Color: new Color(41, 11, 9, 255),
+                    borderWidth: 2.0f,
+                    borderColor: Color.White,
+                    border2Color: new Color(230, 206, 179, 255),
+                    glowRadius: 3.0f,
+                    glowColor: new Color(245, 209, 196, 255)
+                ));
+            }
+
+            if (castTime <= incantationTime + BUFFER_TIME)
+            {
+                return;
+            }
 
             if (castTime < totalCastTime)
             {
-                if (!animating)
+                if (slashed == 0.0f)
                 {
-                    animating = true;
-                    Projectile.damage = 0;
-                    Projectile.Hitbox = new Rectangle(0, 0, 0, 0);
-                    player.SorceryFight().disableRegenFromProjectiles = true;
+                    Projectile.netUpdate = true;
+                    CameraController.CameraShake(15, 10, 10);
+                    ImpactFrameController.ImpactFrame(Color.White, 2);
+                    player.AddBuff(ModContent.BuffType<BurntTechnique>(), SFUtils.BuffSecondsToTicks(5.0f));
+                    player.SorceryFight().disableRegenFromProjectiles = false;
+                    slashed = 1f;
+                    SoundEngine.PlaySound(SorceryFightSounds.WorldCuttingSlash, Projectile.Center);
                 }
 
-                Projectile.Center = player.Center;
-                Projectile.timeLeft = 30;
+                float percent = (castTime - totalCastTime) / (totalCastTime - incantationTime) + 1;
+                float progress = MathF.Pow((percent * 2) - 1, 3);
+                progress = 1 - Math.Clamp(progress, 0.0f, 1.0f);
 
+                if (!Filters.Scene["SF:WorldCuttingSlash"].Active)
+                    Filters.Scene.Activate("SF:WorldCuttingSlash").GetShader().UseTargetPosition(Projectile.Center).UseDirection(Projectile.velocity).UseOpacity(1.0f);
 
-                if (castTime % (int)(totalCastTime / incantations.Count) == 1 & ai1 < incantations.Count)
-                {
-                    int index = CombatText.NewText(player.getRect(), textColor, incantations[(int)ai1]);
-                    SoundEngine.PlaySound(SorceryFightSounds.CommonHeartBeat, player.Center);
-                    Main.combatText[index].lifeTime = 60;
-                    ai1++;
-
-                    for (int i = 0; i < 30; i++)
-                    {
-                        Vector2 velocity = new Vector2(Main.rand.NextFloat(-15, 15), Main.rand.NextFloat(-15, 15));
-                        LineParticle particle = new LineParticle(Projectile.Center, velocity, false, 30, 1, textColor);
-                        GeneralParticleHandler.SpawnParticle(particle);
-                    }
-                }
-                
-                if (castTime == totalCastTime - 40)
-                {
-                    SoundEngine.PlaySound(SorceryFightSounds.CommonWoosh, Projectile.Center);
-                }
+                Filters.Scene["SF:WorldCuttingSlash"].GetShader().UseProgress(progress);
 
                 return;
             }
 
-            if (animating)
-            {
-                animating = false;
-                Projectile.damage = (int)CalculateTrueDamage(player.SorceryFight());
-                Projectile.Hitbox = hitbox;
-                player.SorceryFight().disableRegenFromProjectiles = false;
-                Projectile.timeLeft = (int)LifeTime;
-                ai2 = 1f;
-                Projectile.Center = player.Center;
-                int index = CombatText.NewText(player.getRect(), textColor, "Dismantle");
-                Main.combatText[index].lifeTime = 180;
-                SoundEngine.PlaySound(SorceryFightSounds.WorldCuttingSlash, Projectile.Center);
-                if (Main.myPlayer == Projectile.owner)
-                {
-                    Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
-                    player.SorceryFight().AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), 5);
 
-                }
-                float velocityRotation = Projectile.velocity.ToRotation();
-                Projectile.direction = (Math.Cos(velocityRotation) > 0).ToDirectionInt();
-                Projectile.rotation = Projectile.velocity.ToRotation();
-            }
+            Filters.Scene["SF:WorldCuttingSlash"].GetShader().UseOpacity(0.0f);
+            Filters.Scene.Deactivate("SF:WorldCuttingSlash");
+            Projectile.Kill();
         }
 
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            for (int i = 0; i < 10; i++)
-            {
-                Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
-
-                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
-            }
-            base.OnHitNPC(target, hit, damageDone);
+            modifiers.Defense *= 0.0f;
+            modifiers.DefenseEffectiveness *= 0.0f;
         }
 
-        public override bool PreDraw(ref Color lightColor)
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, new Vector2(texture.Width / 2f, texture.Height / 2f), ai2, SpriteEffects.None, 0f);
+            if (slashed == 1f)
+            {
+                float useless = 0.0f;
+                if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + Projectile.velocity * 2000.0f, 10.0f, ref useless))
+                    return true;
+            }
+
             return false;
         }
     }
