@@ -15,6 +15,7 @@ using sorceryFight.Content.UI;
 using sorceryFight.Content.UI.Quests.QuestToast;
 using static sorceryFight.Content.UI.Quests.QuestToast.QuestToast;
 using sorceryFight.Content.UI.Quests.QuestMenu;
+using sorceryFight.Content.UI.Chants;
 
 public class SorceryFightUI : UIState
 {
@@ -25,6 +26,7 @@ public class SorceryFightUI : UIState
     public FlowStateBar flowStateBar;
     public QuestToast questToast;
     public QuestMenu questMenu;
+    public Chant chantUI;
 
     private List<UIElement> elementsToRemove;
     bool initialized;
@@ -181,6 +183,12 @@ public class SorceryFightUI : UIState
         Append(questToast);
     }
 
+    public void InitializeChant(List<string> chants, int timeBetweenChants, int bufferTime, ChantTextStyle style)
+    {
+        chantUI = new Chant(chants, timeBetweenChants, bufferTime, style);
+        Append(chantUI);
+    }
+    
     public void RemoveElement(UIElement element)
     {
         elementsToRemove.Add(element);
