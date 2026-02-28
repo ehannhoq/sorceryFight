@@ -39,6 +39,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         }
 
         public static Texture2D texture;
+        public static Texture2D flashTexture;
 
         public bool animating;
         public float animScale;
@@ -112,6 +113,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 if (!animating)
                 {
                     animating = true;
+                    Projectile.velocity = Vector2.Zero;
                     player.SorceryFight().disableRegenFromProjectiles = true;
                     player.SorceryFight().sfUI.InitializeChant(incantations, (int)(textTime * multiplier), (int)bufferTime, new UI.Chants.ChantTextStyle(
                         textColor: new Color(216, 157, 237, 255),
@@ -149,6 +151,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                         int index = Projectile.NewProjectile(Projectile.GetSource_FromThis(), bluePosition, Vector2.Zero, ModContent.ProjectileType<AmplificationBlue>(), 0, 0f, Projectile.owner, default, 1);
                         if (index >= 0)
                             Projectile.ai[1] = index;
+
+                        Projectile.netUpdate = true;
                     }
                 }
 
@@ -160,6 +164,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                         int index = Projectile.NewProjectile(Projectile.GetSource_FromThis(), redPosition, Vector2.Zero, ModContent.ProjectileType<MaximumOutputRed>(), 0, 0f, Projectile.owner, default, 1);
                         if (index >= 0)
                             Projectile.ai[2] = index;
+
+                        Projectile.netUpdate = true;
                     }
                 }
 
@@ -236,6 +242,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 {
                     Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
                     player.SorceryFight().AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), 5);
+                    Projectile.netUpdate = true;
                 }
             }
         }
@@ -258,7 +265,11 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             SpriteBatch spriteBatch = Main.spriteBatch;
 
             if (texture == null && !Main.dedServ)
-                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/HollowPurple200Percent").Value;
+                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/HollowPurple200Percent", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+
+            if (flashTexture == null && !Main.dedServ)
+                flashTexture = ModContent.Request<Texture2D>("sorceryFight/Content/Projectiles/VFX/HollowPurpleFlash", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
 
             int frameHeight = texture.Height / FRAME_COUNT;
@@ -268,6 +279,42 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
             spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
+
+            float multiplier = Main.player[Projectile.owner].SorceryFight().cursedOfuda ? CursedOfuda.cursedTechniqueCastTimeDecrease : 1f;
+            float bufferTime = 20f * multiplier;
+            float collisionStartTime = 290f * multiplier + bufferTime;
+            float totalCastTime = 320f * multiplier + bufferTime * 3f;
+
+            if (Projectile.ai[0] > collisionStartTime && Projectile.ai[0] < totalCastTime)
+            {
+                float progress = (Projectile.ai[0] - collisionStartTime) / (totalCastTime - collisionStartTime);
+                Rectangle flashSource = new Rectangle(0, 0, flashTexture.Width, flashTexture.Height);
+
+                spriteBatch.End();
+                spriteBatch.Begin(
+                    SpriteSortMode.Immediate,
+                    BlendState.NonPremultiplied,
+                    SamplerState.LinearClamp,
+                    DepthStencilState.None,
+                    RasterizerState.CullNone,
+                    null,
+                    Main.GameViewMatrix.ZoomMatrix
+                );
+
+                spriteBatch.Draw(flashTexture, Projectile.Center - Main.screenPosition, flashSource, new Color(255, 255, 255, (int)(255 * progress)), 0.0f, flashSource.Size() * 0.5f, 4.0f, SpriteEffects.None, 0f);
+
+
+                spriteBatch.End();
+                spriteBatch.Begin(
+                    SpriteSortMode.Deferred,
+                    BlendState.AlphaBlend,
+                    SamplerState.LinearClamp,
+                    DepthStencilState.None,
+                    RasterizerState.CullNone,
+                    null,
+                    Main.GameViewMatrix.TransformationMatrix
+                );
+            }
 
             return false;
         }
