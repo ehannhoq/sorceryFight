@@ -34,7 +34,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override Color textColor => new Color(245, 214, 208);
         public override bool DisplayNameInGame => false;
         public override int Damage => 20000;
-        public override int MasteryDamageMultiplier => 750;
+        public override int MasteryDamageMultiplier => 525;
         public override float Speed => 60f;
         public override float LifeTime => 300f;
         ref float castTime => ref Projectile.ai[0];
