@@ -21,6 +21,8 @@ Mods: {
 			ChakiraResonantSlash.DisplayName: Chakira Resonant Slash
 			ChakiraResonantHoldout.DisplayName: Chakira Resonant Holdout
 			ChakiraResonantCharge.DisplayName: Chakira Resonant Charge
+			ExampleBlackRopeSlash.DisplayName: Example Black Rope Slash
+			BlackRopeWhip.DisplayName: Black Rope Whip
 		}
 
 		Configs: {

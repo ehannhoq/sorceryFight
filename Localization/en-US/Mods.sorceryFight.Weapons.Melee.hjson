@@ -1,3 +1,8 @@
+BlackRope: {
+	DisplayName: Black Rope
+	Tooltip: A Rope that nullifies stuff
+}
+
 CrikySword: {
 	DisplayName: Subatomic Particle Splitter
 	Tooltip:

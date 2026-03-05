@@ -150,7 +150,7 @@ ChainDismantle: {
 	Description:
 		'''
 		A slash attack that chains onto any other
-		enemies within a radiusupon first successful 
+		enemies within a radius upon first successful 
 		hit. Also ignores defense.
 		'''
 	LockedDescription: Consome atleast 17 of Ryomen Sukuna's Fingers.
@@ -160,7 +160,7 @@ PiercingBlood: {
 	DisplayName: Piercing Blood
 	Description:
 		'''
-		Convergint your blood into a single point,
+		Converging your blood into a single point,
 		you shoot a concetrated beam of blood; piercing
 		through anything.
 		'''
