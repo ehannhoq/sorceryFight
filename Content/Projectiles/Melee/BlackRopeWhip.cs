@@ -41,13 +41,15 @@ namespace sorceryFight.Content.Projectiles.Melee
             //Projectile.frameCounter = 0;
         }
 
+        //lines from here pulled from tmodloader example whip 
+
         private float Timer
         {
             get => Projectile.ai[0];
             set => Projectile.ai[0] = value;
         }
 
-
+        
         private void DrawLine(List<Vector2> list)
         {
             Texture2D texture = TextureAssets.FishingLine.Value;
@@ -161,6 +163,7 @@ namespace sorceryFight.Content.Projectiles.Melee
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
+            //This does not work for unknown reasons
             target.AddBuff(ModContent.BuffType<BurntTechnique>(), 300);
             target.AddBuff(BuffID.OnFire, 300);
             for (int i = 0; i < 3; i++)

@@ -37,6 +37,8 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.height = 90; 
             Item.maxStack = 1;
             Item.useTime = 1;
+            
+            //set low to attempt to test pvp cte debuff
             Item.damage = 10;
             Item.shootSpeed = 4f;
             Item.autoReuse = false;
