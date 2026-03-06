@@ -191,6 +191,28 @@ MindlessCarnage: {
 	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
 }
 
+FlowingRedScaleBuff: {
+	DisplayName: Flowing Red Scale
+	Description:
+		'''
+		An ancient technique. It pumps blood
+		actively through the user's body, increasing
+		defense and reducing incoming damage taken.
+		'''
+	LockedDescription: Consume 5 of Sukuna's Fingers
+}
+
+FlowingRedScaleStackBuff: {
+	DisplayName: Flowing Red Scale Stack
+	Description:
+		'''
+		An Improved technique. It pumps blood
+		actively through the user's body, further increasing
+		defense and reducing incoming damage taken.
+		'''
+	LockedDescription: Consume 10 of Sukuna's Fingers
+}
+
 InorganicPerception: {
 	DisplayName: Inorganic Perception
 	Description: placeholder

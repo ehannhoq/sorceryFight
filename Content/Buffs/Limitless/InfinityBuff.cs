@@ -130,7 +130,7 @@ namespace sorceryFight.Content.Buffs.Limitless
                 multiplier = 3;
             }
 
-            CostPerSecond += accumulativeDamage *= multiplier *= 0;
+            CostPerSecond += accumulativeDamage *= multiplier;
 
             base.Update(player, ref buffIndex);
         }
