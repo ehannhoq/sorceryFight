@@ -26,6 +26,10 @@ namespace sorceryFight.SFPlayer
             cursedEnergyRegenPerSecond = 1f;
             cursedEnergyUsagePerSecond = 0f;
 
+            maxBloodEnergy = 100f;
+            bloodEnergyRegenPerSecond = 1f;
+            bloodEnergyUsagePerSecond = 0f;
+
             bossesDefeated = new List<int>();
 
             cursedSkull = false;
@@ -105,6 +109,8 @@ namespace sorceryFight.SFPlayer
 
             tag["ceBar"] = new List<float> { CEBarPos.X, CEBarPos.Y };
 
+            tag["beBar"] = new List<float> { BEBarPos.X, BEBarPos.Y };
+
             var maxCEModifiers = new List<string>();
             maxCEModifiers.AddWithCondition("cursedSkull", cursedSkull);
             maxCEModifiers.AddWithCondition("cursedMechanicalSoul", cursedMechanicalSoul);
@@ -175,6 +181,10 @@ namespace sorceryFight.SFPlayer
 
             CEBarPos = tag.ContainsKey("ceBar")
             ? new Microsoft.Xna.Framework.Vector2(tag.Get<List<float>>("ceBar")[0], tag.Get<List<float>>("ceBar")[1])
+            : Microsoft.Xna.Framework.Vector2.Zero;
+
+            BEBarPos = tag.ContainsKey("beBar")
+            ? new Microsoft.Xna.Framework.Vector2(tag.Get<List<float>>("beBar")[0], tag.Get<List<float>>("beBar")[1])
             : Microsoft.Xna.Framework.Vector2.Zero;
 
             var maxCEModifiers = tag.GetList<string>("maxCEModifiers");

@@ -9,24 +9,25 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using Terraria.UI;
 
-public class CursedEnergyBar : UIElement
+public class BloodEnergyBar : UIElement
 {
     SorceryFightPlayer sfPlayer;
     public UIImage border;
-    public ValueBar ceBarValue;
+    public ValueBar beBarValue;
     bool isDragging;
     private bool initialized;
     bool hasRightClicked;
     Vector2 offset;
     Texture2D borderTexture;
 
-    private bool changedToHeavenlyRestriction;
 
-    public CursedEnergyBar(Texture2D borderTexture, Texture2D barTexture)
+    public BloodEnergyBar(Texture2D borderTexture, Texture2D barTexture)
     {
         if (Main.dedServ) return;
 
-        changedToHeavenlyRestriction = false;
+        IgnoresMouseInteraction = true;
+
+
 
         this.borderTexture = borderTexture;
 
@@ -34,27 +35,33 @@ public class CursedEnergyBar : UIElement
         Height.Set(borderTexture.Height, 0f);
 
         border = new UIImage(borderTexture);
+        ModContent.GetInstance<SorceryFight>().Logger.Debug("BORDER TEXTURE WIDTH:" + border.Width);
         Append(border);
 
-        ceBarValue = new ValueBar(barTexture, Orientation.Vertical);
-        ceBarValue.Left.Set((borderTexture.Width - barTexture.Width) / 2f, 0f);
-        ceBarValue.Top.Set(0, 0f);
-        Append(ceBarValue);
+        beBarValue = new ValueBar(barTexture, Orientation.Vertical);
+        beBarValue.Left.Set((borderTexture.Width - barTexture.Width) / 2f, 0f);
+        beBarValue.Top.Set(0, 0f);
+        Append(beBarValue);
 
-        Left.Set(1300, 0f);
+        Left.Set(1200, 0f);
         Top.Set(20, 0f);
+
+        border.IgnoresMouseInteraction = true;
+        beBarValue.IgnoresMouseInteraction = true;
     }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         base.DrawSelf(spriteBatch);
 
+
+
         if (IsMouseHovering)
         {
             var player = Main.LocalPlayer.SorceryFight();
-            Main.hoverItemName = $"{SFUtils.GetLocalizationValue($"Mods.sorceryFight.UI.CursedEnergyBar.{(player.heavenlyRestriction ? "Stamina" : "CE")}")} {Math.Round((decimal)player.cursedEnergy, 0)} / {player.maxCursedEnergy}\n"
-                                + $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.RegenRate")} {player.cursedEnergyRegenPerSecond} {(player.heavenlyRestriction ? "Stamina" : "CE")}/s\n"
-                                + SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip");
+            Main.hoverItemName = $"{SFUtils.GetLocalizationValue($"Mods.sorceryFight.UI.BloodEnergyBar.BE")} {Math.Round((decimal)player.bloodEnergy, 0)} / {player.maxBloodEnergy}\n"
+                                + $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.BloodEnergyBar.RegenRate")} {player.bloodEnergyRegenPerSecond} BE/s\n"
+                                + SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.BloodEnergyBar.ToolTip");
         }
     }
 
@@ -70,13 +77,8 @@ public class CursedEnergyBar : UIElement
 
         }
 
-        if (sfPlayer.heavenlyRestriction && !changedToHeavenlyRestriction)
-        {
-            ceBarValue.barTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedEnergyBar/StaminaBarFill", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            changedToHeavenlyRestriction = true;
-        }
 
-        if (Main.playerInventory && SorceryFightUI.MouseHovering(this, ceBarValue.barTexture) && Main.mouseLeft && !isDragging)
+        if (Main.playerInventory && SorceryFightUI.MouseHovering(this, beBarValue.barTexture) && Main.mouseLeft && !isDragging)
         {
             isDragging = true;
             offset = new Vector2(Main.mouseX, Main.mouseY) - new Vector2(Left.Pixels, Top.Pixels);
@@ -98,29 +100,7 @@ public class CursedEnergyBar : UIElement
             }
         }
 
-        if (Main.playerInventory && SorceryFightUI.MouseHovering(this, ceBarValue.barTexture) && Main.mouseRight && !isDragging)
-        {
-            Rectangle mouseRect = new Rectangle((int)Main.MouseWorld.X - 8, (int)Main.MouseWorld.Y - 8, 16, 16);
-            if (!hasRightClicked)
-            {
-                if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
-                {
-                    sfPlayer.CEBarPos = Vector2.Zero;
-                    SetPosition();
-                    CombatText.NewText(mouseRect, Color.White, "UI Position Reset!");
-                    Main.mouseRightRelease = true;
-                }
-                else
-                {
-                    sfPlayer.CEBarPos = new Vector2(this.Left.Pixels, this.Top.Pixels);
-                    CombatText.NewText(mouseRect, Color.White, "UI Position Saved!");
-                    Main.mouseRightRelease = true;
-                }
-            }
-
-        }
-
-        if (Main.playerInventory && SorceryFightUI.MouseHovering(this, ceBarValue.barTexture) && Main.mouseRight && !isDragging)
+        if (Main.playerInventory && SorceryFightUI.MouseHovering(this, beBarValue.barTexture) && Main.mouseRight && !isDragging)
         {
             Rectangle mouseRect = new Rectangle((int)Main.MouseWorld.X - 8, (int)Main.MouseWorld.Y - 8, 16, 16);
             if (!hasRightClicked)
@@ -143,11 +123,11 @@ public class CursedEnergyBar : UIElement
         }
 
 
-        if (Main.mouseRight && SorceryFightUI.MouseHovering(this, ceBarValue.barTexture))
+        if (Main.mouseRight && SorceryFightUI.MouseHovering(this, beBarValue.barTexture))
         {
             hasRightClicked = true;
         }
-        else if (Main.mouseRightRelease && SorceryFightUI.MouseHovering(this, ceBarValue.barTexture))
+        else if (Main.mouseRightRelease && SorceryFightUI.MouseHovering(this, beBarValue.barTexture))
         {
             hasRightClicked = false;
         }
@@ -158,15 +138,15 @@ public class CursedEnergyBar : UIElement
     void SetPosition()
     {
         sfPlayer = Main.LocalPlayer.SorceryFight();
-        if (sfPlayer.CEBarPos == Vector2.Zero)
+        if (sfPlayer.BEBarPos == Vector2.Zero)
         {
             Left.Set(1300, 0f);
             Top.Set(20, 0f);
         }
         else
         {
-            Left.Set(sfPlayer.CEBarPos.X, 0f);
-            Top.Set(sfPlayer.CEBarPos.Y, 0f);
+            Left.Set(sfPlayer.BEBarPos.X, 0f);
+            Top.Set(sfPlayer.BEBarPos.Y, 0f);
         }
     }
 }

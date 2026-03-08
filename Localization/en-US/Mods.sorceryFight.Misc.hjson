@@ -11,6 +11,15 @@ UnlockedRCT: {
 	KeyBindMessage: ": Hold down to use your cursed energy to heal yourself!"
 }
 
+SukunaRevive: {
+	0: let's use this open space!
+	1: I'm holding this brat hostage!
+	2: having trouble switching back?!
+	3: show me what you've got.
+	4: that brat...is such a dumbass!
+	5: IT'LL BE A MASSACRE!
+}
+
 LeftItAllBehind.GeneralMessage: At the brink of death, you lose total connection to cursed energy. You feel awakened again.
 
 InnateTechniqueUnlocker: {

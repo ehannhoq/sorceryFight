@@ -69,3 +69,15 @@ CursedEnergyBar: {
 		- Shift + Right-Click to reset position
 		'''
 }
+
+BloodEnergyBar: {
+	BE: Blood Energy:
+	RegenRate: Regeneration Rate:
+	ToolTip:
+		'''
+		When your inventory is open:
+		- This bar is draggable
+		- Right-Click to save position
+		- Shift + Right-Click to reset position
+		'''
+}

@@ -27,9 +27,9 @@ namespace sorceryFight.Content.Buffs.Vessel
                 SorceryFightUI.UpdateTechniqueUI.Invoke();
             }
 
-            if (player.statLife > (int)(player.statLifeMax2 * 0.2f))
+            if (player.statLife > (int)(player.statLifeMax2 * 0.5f))
             {
-                player.statLife = (int)(player.statLifeMax2 * 0.2f);
+                player.statLife = (int)(player.statLifeMax2 * 0.5f);
             }
 
             sfPlayer.maxCursedEnergyFromOtherSources += 1500;
@@ -61,6 +61,7 @@ namespace sorceryFight.Content.Buffs.Vessel
 
         public override bool RightClick(int buffIndex)
         {
+            Main.NewText("You Can't Get rid of me like that Brat!");
             return false;
         }
 

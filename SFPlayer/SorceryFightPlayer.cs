@@ -38,9 +38,14 @@ namespace sorceryFight.SFPlayer
         public InnateTechnique innateTechnique;
         public CursedTechnique selectedTechnique;
         public float cursedEnergy;
+        public float bloodEnergy;
         public float maxCursedEnergy { get; private set; }
         public float cursedEnergyRegenPerSecond;
         public float cursedEnergyUsagePerSecond;
+
+        public float maxBloodEnergy { get; private set; }
+        public float bloodEnergyRegenPerSecond;
+        public float bloodEnergyUsagePerSecond;
 
         #endregion
 
@@ -127,6 +132,7 @@ namespace sorceryFight.SFPlayer
         public Vector2 CTSelectorPos;
         public Vector2 PTSelectorPos;
         public Vector2 CEBarPos;
+        public Vector2 BEBarPos;
         #endregion
 
         #region HeavenlyRestriction
@@ -167,6 +173,9 @@ namespace sorceryFight.SFPlayer
             blackFlashWindowTime = 1;
             rctEfficiency = 0.0f;
             additionalRCTHealPerSecond = 0;
+
+            bloodEnergyRegenPerSecond = 0f;
+            maxBloodEnergy = 0f;
 
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
             maxCursedEnergy = calculateBaseMaxCE();
