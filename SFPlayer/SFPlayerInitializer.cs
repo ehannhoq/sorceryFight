@@ -26,6 +26,7 @@ namespace sorceryFight.SFPlayer
             cursedEnergyRegenPerSecond = 1f;
             cursedEnergyUsagePerSecond = 0f;
 
+            bloodEnergy = 5f;
             maxBloodEnergy = 100f;
             bloodEnergyRegenPerSecond = 1f;
             bloodEnergyUsagePerSecond = 0f;

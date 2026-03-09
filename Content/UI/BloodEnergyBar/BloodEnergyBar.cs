@@ -55,7 +55,6 @@ public class BloodEnergyBar : UIElement
         base.DrawSelf(spriteBatch);
 
 
-
         if (IsMouseHovering)
         {
             var player = Main.LocalPlayer.SorceryFight();

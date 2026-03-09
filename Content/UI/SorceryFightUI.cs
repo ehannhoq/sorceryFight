@@ -34,7 +34,7 @@ public class SorceryFightUI : UIState
 
     public override void OnInitialize()
     {
-        //LoadCEBar();
+        LoadCEBar();
         LoadBEBar();
         elementsToRemove = new List<UIElement>();
         initialized = false;
