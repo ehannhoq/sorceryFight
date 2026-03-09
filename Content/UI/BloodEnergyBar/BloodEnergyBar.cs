@@ -35,7 +35,7 @@ public class BloodEnergyBar : UIElement
         Height.Set(borderTexture.Height, 0f);
 
         border = new UIImage(borderTexture);
-        ModContent.GetInstance<SorceryFight>().Logger.Debug("BORDER TEXTURE WIDTH:" + border.Width);
+
         Append(border);
 
         beBarValue = new ValueBar(barTexture, Orientation.Vertical);
@@ -53,8 +53,8 @@ public class BloodEnergyBar : UIElement
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         base.DrawSelf(spriteBatch);
-
-
+        ModContent.GetInstance<SorceryFight>().Logger.Info(beBarValue.fillPercentage);
+            
         if (IsMouseHovering)
         {
             var player = Main.LocalPlayer.SorceryFight();
@@ -62,6 +62,9 @@ public class BloodEnergyBar : UIElement
                                 + $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.BloodEnergyBar.RegenRate")} {player.bloodEnergyRegenPerSecond} BE/s\n"
                                 + SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.BloodEnergyBar.ToolTip");
         }
+
+
+
     }
 
     public override void Update(GameTime gameTime)

@@ -174,8 +174,8 @@ namespace sorceryFight.SFPlayer
             rctEfficiency = 0.0f;
             additionalRCTHealPerSecond = 0;
 
-            bloodEnergyRegenPerSecond = 0f;
-            maxBloodEnergy = 0f;
+            bloodEnergyRegenPerSecond = 1f;
+            maxBloodEnergy = 1f;
 
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
             maxCursedEnergy = calculateBaseMaxCE();

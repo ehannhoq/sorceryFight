@@ -97,7 +97,7 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
                     sfPlayer.selectedTechnique = null;
                     sfPlayer.DisablePTBooleans();
                     sfPlayer.cursedEnergy = sfPlayer.maxCursedEnergy;
-                    sfPlayer.bloodEnergy = sfPlayer.maxBloodEnergy;
+                    sfPlayer.bloodEnergy = 10f;
                     ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.{selectedTechnique.Name}"), Color.Khaki, player.whoAmI);
 
                     if (!sfPlayer.usedYourPotentialBefore)
