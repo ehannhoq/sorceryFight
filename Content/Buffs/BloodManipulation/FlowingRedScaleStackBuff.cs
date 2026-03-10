@@ -13,7 +13,6 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
 {
     public class FlowingRedScaleStackBuff : PassiveTechnique
     {
-        //change these
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.FlowingRedScaleStackBuff.DisplayName");
         public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.FlowingRedScaleStackBuff.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.Buffs.FlowingRedScaleStackBuff.LockedDescription");

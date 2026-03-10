@@ -4,6 +4,7 @@ InnateTechniques: {
 	PrivatePureLoveTrain.DisplayName: Private Pure Love Train
 	Vessel.DisplayName: Vessel
 	HeavenlyRestriction.DisplayName: Heavenly Restriction
+	BloodManipulation.DisplayName: Blood Manipulation
 }
 
 UnlockedRCT: {
@@ -28,6 +29,7 @@ InnateTechniqueUnlocker: {
 	PrivatePureLoveTrain: You suddenly feel a lot more lucky than before.
 	Vessel: A foreign, ancient soul seems to have been sealed within your body. A soul of pure evil.
 	HeavenlyRestriction: You feel the cursed energy within you vanish into seemingly nothingness.
+	BloodManipulation: You feel the cursed energy within you boil your blood in anticipation
 
 	PlayerAttributes: {
 		SixEyes: Your eyes begin to glow radiantly, being able to see the flow of even the faintest of Cursed Energy in the air.

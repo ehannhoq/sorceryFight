@@ -81,7 +81,7 @@ public class SorceryFightUI : UIState
             LoadCEBar();
             Append(ceBar);
 
-            if (Main.LocalPlayer.SorceryFight().innateTechnique.Name == "Vessel")
+            if (Main.LocalPlayer.SorceryFight().innateTechnique.Name == "Vessel" || Main.LocalPlayer.SorceryFight().innateTechnique.Name == "BloodManipulation")
             {
                 LoadBEBar();
                 Append(beBar);
@@ -89,7 +89,6 @@ public class SorceryFightUI : UIState
 
         }
 
-        //renable asap
         ceBar.ceBarValue.fillPercentage = player.cursedEnergy / player.maxCursedEnergy;
         beBar.beBarValue.fillPercentage = player.bloodEnergy / player.maxBloodEnergy;
 

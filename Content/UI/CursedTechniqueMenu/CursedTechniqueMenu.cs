@@ -155,24 +155,29 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 rctIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
                 Append(rctIcon);
                 index++;
+                
 
+                //what to do when no domain?
                 string simpleDomainIconHoverText = sfPlayer.HasDefeatedBoss(NPCID.CultistBoss) ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SimpleDomainIcon.Info")}"
                 : $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SimpleDomainIcon.LockedInfo")}";
-                Texture2D finalSimpleDomainTexture = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? ref simpleDomainIconTexture : ref lockedTexture;
+                Texture2D finalSimpleDomainTexture = sfPlayer.HasDefeatedBoss(NPCID.CultistBoss) ? ref simpleDomainIconTexture : ref lockedTexture;
                 SpecialUIElement simpleDomainIcon = new SpecialUIElement(finalSimpleDomainTexture, simpleDomainIconHoverText);
                 simpleDomainIcon.Left.Set(conditionalIconPositions[index].X, 0f);
                 simpleDomainIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
                 Append(simpleDomainIcon);
                 index++;
 
-                string domainIconHoverText = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? $"{sfPlayer.innateTechnique.DomainExpansion.DisplayName}\n{sfPlayer.innateTechnique.DomainExpansion.Description(sfPlayer)}"
-                : $"{sfPlayer.innateTechnique.DomainExpansion.LockedDescription}";
-                Texture2D finalDomainTexture = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? ref domainIconTexture : ref lockedTexture;
-                SpecialUIElement domainIcon = new SpecialUIElement(finalDomainTexture, domainIconHoverText);
-                domainIcon.Left.Set(conditionalIconPositions[index].X, 0f);
-                domainIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
-                Append(domainIcon);
-                index++;
+                if (sfPlayer.innateTechnique.DomainExpansion != null)
+                {
+                    string domainIconHoverText = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? $"{sfPlayer.innateTechnique.DomainExpansion.DisplayName}\n{sfPlayer.innateTechnique.DomainExpansion.Description(sfPlayer)}"
+                    : $"{sfPlayer.innateTechnique.DomainExpansion.LockedDescription}";
+                    Texture2D finalDomainTexture = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? ref domainIconTexture : ref lockedTexture;
+                    SpecialUIElement domainIcon = new SpecialUIElement(finalDomainTexture, domainIconHoverText);
+                    domainIcon.Left.Set(conditionalIconPositions[index].X, 0f);
+                    domainIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
+                    Append(domainIcon);
+                    index++;
+                }
             }
             else
             {
