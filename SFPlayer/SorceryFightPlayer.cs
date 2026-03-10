@@ -193,10 +193,6 @@ namespace sorceryFight.SFPlayer
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
             maxCursedEnergy = calculateBaseMaxCE();
 
-            ModContent.GetInstance<SorceryFight>().Logger.Info("Blood Energy Value:" + bloodEnergy);
-
-            ModContent.GetInstance<SorceryFight>().Logger.Info("Max Blood Energy Value:" + maxBloodEnergy);
-
 
 
             if (heavenlyRestriction) return;
@@ -241,7 +237,6 @@ namespace sorceryFight.SFPlayer
             if (bloodEnergy < maxBloodEnergy)
             {
                 bloodEnergy += SFUtils.RateSecondsToTicks(bloodEnergyRegenPerSecond);
-                ModContent.GetInstance<SorceryFight>().Logger.Info("Blood Energy Regen Value:" + bloodEnergyRegenPerSecond);
             }
 
             if (cursedEnergy > maxCursedEnergy)
@@ -282,7 +277,7 @@ namespace sorceryFight.SFPlayer
             cursedEnergyRegenFromOtherSources = 0f;
             maxCursedEnergyFromOtherSources = 0f;
             disableRegenFromBuffs = false;
-            disableCurseTechniques = false;
+            //disableCurseTechniques = false;
             blackFlashTime = 30;
 
             bloodEnergyRegenPerSecond = 0f;
@@ -319,6 +314,8 @@ namespace sorceryFight.SFPlayer
 
             if (SFKeybinds.UseTechnique.JustPressed)
             {
+                ModContent.GetInstance<SorceryFight>().Logger.Info("Keybing Just Pressed" + SFKeybinds.UseTechnique.JustPressed + "Is: " + disableCurseTechniques);
+
                 if (!disableCurseTechniques || uniqueBodyStructure)
                     ShootTechnique();
             }

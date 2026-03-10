@@ -48,7 +48,7 @@ public class CursedEnergyBar : UIElement
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         base.DrawSelf(spriteBatch);
-        ModContent.GetInstance<SorceryFight>().Logger.Info("Cursed Energy Bar Value:" + ceBarValue.fillPercentage);
+        //ModContent.GetInstance<SorceryFight>().Logger.Info("Cursed Energy Bar Value:" + ceBarValue.fillPercentage);
 
 
         if (IsMouseHovering)

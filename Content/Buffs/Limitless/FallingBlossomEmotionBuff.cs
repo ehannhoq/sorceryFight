@@ -82,6 +82,8 @@ namespace sorceryFight.Content.Buffs.Limitless
             sf.fallingBlossomEmotion = false;
             player.noKnockback = true;
 
+            sf.disableCurseTechniques = false;
+
         }
 
         public override void Update(Player player, ref int buffIndex)

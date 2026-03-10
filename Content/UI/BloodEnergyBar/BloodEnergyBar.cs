@@ -53,7 +53,7 @@ public class BloodEnergyBar : UIElement
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         base.DrawSelf(spriteBatch);
-        ModContent.GetInstance<SorceryFight>().Logger.Info("Blood Energy Bar Value:" + beBarValue.fillPercentage);
+        //ModContent.GetInstance<SorceryFight>().Logger.Info("Blood Energy Bar Value:" + beBarValue.fillPercentage);
             
         if (IsMouseHovering)
         {

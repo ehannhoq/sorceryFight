@@ -72,6 +72,8 @@ namespace sorceryFight.Content.Buffs.Shrine
                 Main.projectile[auraIndices[player.whoAmI]].Kill();
                 auraIndices.Remove(player.whoAmI);
             }
+
+            sfPlayer.disableCurseTechniques = false;
         }
 
         public override bool Unlocked(SorceryFightPlayer sf)
