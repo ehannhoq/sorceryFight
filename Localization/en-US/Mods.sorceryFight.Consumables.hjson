@@ -197,3 +197,13 @@ CursedEnergyDrinks: {
 			'''
 	}
 }
+
+DeathPaintingOne: {
+	DisplayName: Death Painting Eso
+	Description: Consume to increase Blood regeneration rate by 5 BE/s.
+}
+
+DeathPaintingTwo: {
+	DisplayName: Death Painting Kechizu
+	Description: Consume to increase Blood capacity by 100 BE.
+}

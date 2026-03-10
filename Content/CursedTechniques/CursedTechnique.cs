@@ -16,6 +16,8 @@ namespace sorceryFight.Content.CursedTechniques
         public abstract string Description { get; }
         public abstract string LockedDescription { get; }
         public abstract float Cost { get; }
+
+        public virtual float BloodCost { get; } = 0;
         public abstract Color textColor { get; }
         public abstract bool DisplayNameInGame { get; }
         public abstract int Damage { get; }

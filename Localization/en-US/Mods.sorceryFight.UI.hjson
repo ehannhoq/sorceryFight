@@ -71,7 +71,7 @@ CursedEnergyBar: {
 }
 
 BloodEnergyBar: {
-	BE: Blood Energy:
+	BE: Blood:
 	RegenRate: Regeneration Rate:
 	ToolTip:
 		'''

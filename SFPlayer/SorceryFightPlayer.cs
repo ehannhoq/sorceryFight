@@ -10,7 +10,7 @@ using Terraria.Chat;
 using Terraria.ID;
 using CalamityMod.CalPlayer.Dashes;
 using System;
-using sorceryFight.Content.Buffs.Vessel;
+using sorceryFight.Content.Buffs.Vessel;    
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.DomainExpansions;
 using System.Linq;
@@ -65,6 +65,9 @@ namespace sorceryFight.SFPlayer
         public bool cursedEffulgentFeather;
         public bool cursedRuneOfKos;
         public float cursedEnergyRegenFromOtherSources;
+
+        public bool deathPaintingOne;
+        public bool deathPaintingTwo;
         #endregion
 
         #region One-off Variables
@@ -107,6 +110,8 @@ namespace sorceryFight.SFPlayer
         #region Shrine/Vessel Specific Variables
         public bool[] sukunasFingers;
         public int sukunasFingerConsumed => sukunasFingers.Count(x => x);
+
+
         #endregion
 
         #region RCT
@@ -174,11 +179,25 @@ namespace sorceryFight.SFPlayer
             rctEfficiency = 0.0f;
             additionalRCTHealPerSecond = 0;
 
-            bloodEnergyRegenPerSecond = 1f;
-            maxBloodEnergy = 1f;
+            if (innateTechnique.Name == "Vessel")
+            {
+                bloodEnergyRegenPerSecond = calculateBaseBERegenRate();
+                maxBloodEnergy = calculateBaseMaxBE();
+            }
+            else
+            {
+                bloodEnergyRegenPerSecond = 1f;
+                maxBloodEnergy = 100f;
+            }
 
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
             maxCursedEnergy = calculateBaseMaxCE();
+
+            ModContent.GetInstance<SorceryFight>().Logger.Info("Blood Energy Value:" + bloodEnergy);
+
+            ModContent.GetInstance<SorceryFight>().Logger.Info("Max Blood Energy Value:" + maxBloodEnergy);
+
+
 
             if (heavenlyRestriction) return;
 
@@ -207,6 +226,11 @@ namespace sorceryFight.SFPlayer
                 cursedEnergy -= SFUtils.RateSecondsToTicks(cursedEnergyUsagePerSecond);
             }
 
+            if (bloodEnergy > 0)
+            {
+                bloodEnergy -= SFUtils.RateSecondsToTicks(bloodEnergyUsagePerSecond);
+            }
+
             bool disabledRegen = disableRegenFromBuffs || disableRegenFromProjectiles || disableRegenFromDE;
 
             if (cursedEnergy < maxCursedEnergy && !disabledRegen)
@@ -214,12 +238,28 @@ namespace sorceryFight.SFPlayer
                 cursedEnergy += SFUtils.RateSecondsToTicks(cursedEnergyRegenPerSecond);
             }
 
+            if (bloodEnergy < maxBloodEnergy)
+            {
+                bloodEnergy += SFUtils.RateSecondsToTicks(bloodEnergyRegenPerSecond);
+                ModContent.GetInstance<SorceryFight>().Logger.Info("Blood Energy Regen Value:" + bloodEnergyRegenPerSecond);
+            }
+
             if (cursedEnergy > maxCursedEnergy)
             {
                 cursedEnergy = maxCursedEnergy;
             }
 
-            if (cursedEnergy < 0)
+            if (bloodEnergy > maxBloodEnergy)
+            {
+                bloodEnergy = maxBloodEnergy;
+            }
+
+            if (bloodEnergy < 0)
+            {
+                bloodEnergy = 0.2f;
+            }
+
+                if (cursedEnergy < 0)
             {
                 cursedEnergy = 0;
 
@@ -244,6 +284,9 @@ namespace sorceryFight.SFPlayer
             disableRegenFromBuffs = false;
             disableCurseTechniques = false;
             blackFlashTime = 30;
+
+            bloodEnergyRegenPerSecond = 0f;
+            bloodEnergyUsagePerSecond = 0f;
 
             if (disabledRegen)
             {

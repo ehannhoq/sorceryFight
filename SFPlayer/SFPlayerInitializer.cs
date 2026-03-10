@@ -26,7 +26,7 @@ namespace sorceryFight.SFPlayer
             cursedEnergyRegenPerSecond = 1f;
             cursedEnergyUsagePerSecond = 0f;
 
-            bloodEnergy = 5f;
+            bloodEnergy = 0f;
             maxBloodEnergy = 100f;
             bloodEnergyRegenPerSecond = 1f;
             bloodEnergyUsagePerSecond = 0f;
@@ -46,6 +46,9 @@ namespace sorceryFight.SFPlayer
             cursedEffulgentFeather = false;
             cursedRuneOfKos = false;
             cursedEnergyRegenFromOtherSources = 0f;
+
+            //Blood Energy modifiers
+            deathPaintingOne = false;
 
             yourPotentialSwitch = false;
             usedYourPotentialBefore = false;
@@ -102,6 +105,8 @@ namespace sorceryFight.SFPlayer
 
             tag["cursedEnergy"] = cursedEnergy;
 
+            tag["bloodEnergy"] = bloodEnergy;
+
             tag["bossesDefeated"] = bossesDefeated;
 
             tag["ctSelector"] = new List<float> { CTSelectorPos.X, CTSelectorPos.Y };
@@ -127,6 +132,15 @@ namespace sorceryFight.SFPlayer
             cursedEnergyRegenModifiers.AddWithCondition("cursedEffulgentFeather", cursedEffulgentFeather);
             cursedEnergyRegenModifiers.AddWithCondition("cursedRuneOfKos", cursedRuneOfKos);
             tag["cursedEnergyRegenModifiers"] = cursedEnergyRegenModifiers;
+
+            var maxBEModifiers = new List<string>();
+            maxCEModifiers.AddWithCondition("deathPaintingTwo", deathPaintingTwo);
+            tag["maxBEModifiers"] = maxCEModifiers;
+
+
+            var bloodEnergyRegenModifiers = new List<string>();
+            bloodEnergyRegenModifiers.AddWithCondition("deathPaintingOne", deathPaintingOne);
+            tag["bloodEnergyRegenModifiers"] = bloodEnergyRegenModifiers;
 
             var generalBooleans = new List<string>();
             generalBooleans.AddWithCondition("usedYourPotentialBefore", usedYourPotentialBefore);
@@ -202,6 +216,13 @@ namespace sorceryFight.SFPlayer
             cursedEffulgentFeather = cursedEnergyRegenModifiers.Contains("cursedEffulgentFeather");
             cursedRuneOfKos = cursedEnergyRegenModifiers.Contains("cursedRuneOfKos");
 
+            var maxBEModifiers = tag.GetList<string>("maxBEModifiers");
+            deathPaintingTwo = maxCEModifiers.Contains("DeathPaintingTwo");
+
+
+            var bloodEnergyRegenModifiers = tag.GetList<string>("bloodEnergyRegenModifiers");
+            deathPaintingOne = cursedEnergyRegenModifiers.Contains("deathPaintingOne");
+
             var generalBooleans = tag.GetList<string>("generalBooleans");
             usedYourPotentialBefore = generalBooleans.Contains("usedYourPotentialBefore");
             unlockedRCT = generalBooleans.Contains("unlockedRCT");
@@ -214,6 +235,12 @@ namespace sorceryFight.SFPlayer
 
             maxCursedEnergy = calculateBaseMaxCE();
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
+
+
+
+             maxBloodEnergy = calculateBaseMaxBE();
+             bloodEnergyRegenPerSecond = calculateBaseBERegenRate();
+
 
             if (innateTechnique != null)
             {
@@ -259,6 +286,29 @@ namespace sorceryFight.SFPlayer
                 sum += 1000f; // 2000 total
 
             return baseCost + sum;
+        }
+
+        public float calculateBaseMaxBE()
+        {
+            float baseCost = 100f;
+            float sum = 0f;
+
+
+            if (deathPaintingTwo)
+                sum += 100f; // 200 total
+
+            return baseCost + sum;
+        }
+
+        public float calculateBaseBERegenRate()
+        {
+            float baseRegen = 1f;
+            float sum = 0f;
+
+            if (deathPaintingOne)
+                sum += 4f; // 5 CE/s
+
+            return baseRegen + sum;
         }
 
         public float calculateBaseCERegenRate()

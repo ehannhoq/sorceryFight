@@ -48,6 +48,8 @@ public class CursedEnergyBar : UIElement
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         base.DrawSelf(spriteBatch);
+        ModContent.GetInstance<SorceryFight>().Logger.Info("Cursed Energy Bar Value:" + ceBarValue.fillPercentage);
+
 
         if (IsMouseHovering)
         {
@@ -127,14 +129,14 @@ public class CursedEnergyBar : UIElement
             {
                 if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
                 {
-                    sfPlayer.BEBarPos = Vector2.Zero;
+                    sfPlayer.CEBarPos = Vector2.Zero;
                     SetPosition();
                     CombatText.NewText(mouseRect, Color.White, "UI Position Reset!");
                     Main.mouseRightRelease = true;
                 }
                 else
                 {
-                    sfPlayer.BEBarPos = new Vector2(this.Left.Pixels, this.Top.Pixels);
+                    sfPlayer.CEBarPos = new Vector2(this.Left.Pixels, this.Top.Pixels);
                     CombatText.NewText(mouseRect, Color.White, "UI Position Saved!");
                     Main.mouseRightRelease = true;
                 }

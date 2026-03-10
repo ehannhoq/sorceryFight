@@ -31,11 +31,19 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override int Damage => 100;
         public override int MasteryDamageMultiplier => 18;
         public override float Speed => 0f;
+
+        //Lifetime is made useless but must be implmented 
         public override float LifeTime => 240f;
 
+        //this number gets doubled in SorceryFightPlayer.ApplyBloodCost, so the actual cost is 8 CE/s
+        public override float BloodCost => 4f;
+
+        private bool keyHeld = false;
         private const float MAX_LENGTH = 1600f;
         private const float STEP_SIZE = 4f;
         private const float BASE_BEAM_HEIGHT = 0.5f;
+        private int bloodCostTimer = 0;
+
         ref float justSpawned => ref Projectile.ai[0];
         ref float beamHeight => ref Projectile.ai[1];
 
@@ -67,7 +75,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Projectile.penetrate = -1;
             Projectile.ignoreWater = true;
             beamHeight = 0.0f;
-            Projectile.timeLeft = (int)LifeTime;
+            //Projectile.timeLeft = (int)LifeTime;
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)
@@ -81,6 +89,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         {
             if (Main.myPlayer == Projectile.owner)
             {
+                keyHeld = SFKeybinds.UseTechnique.Current;
+
                 Player player = Main.player[Projectile.owner];
                 Projectile.Center = player.Center;
 
@@ -125,13 +135,23 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 SoundEngine.PlaySound(SorceryFightSounds.PiercingBlood, Projectile.Center);
             }
 
-            if (beamHeight < 2.0f && Projectile.timeLeft > 10)
+            if (beamHeight < 2.0f && keyHeld)
                 beamHeight += 0.2f;
 
-            if (Projectile.timeLeft <= 10)
+            //custom code for subtracting blood energy while the beam is held out
+            if (keyHeld)
+            {
+                bloodCostTimer = 0;
+                SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
+                sf.bloodEnergyUsagePerSecond += BloodCost;
+            }
+
+            if (!keyHeld)
             {
                 beamHeight -= 0.2f;
                 Main.player[Projectile.owner].SorceryFight().disableRegenFromProjectiles = false;
+                if (beamHeight <= 0f)
+                    Projectile.Kill();
             }
 
             if (Main.myPlayer == Projectile.owner)

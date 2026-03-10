@@ -12,6 +12,8 @@ namespace sorceryFight.Content.Buffs
 
         public abstract bool isActive { get; set; }
         public abstract float CostPerSecond { get; set; }
+
+        public virtual float BloodCostPerSecond { get; set; }
         public abstract bool Unlocked(SorceryFightPlayer sf);
 
         public override void SetStaticDefaults()
@@ -29,10 +31,14 @@ namespace sorceryFight.Content.Buffs
 
             float finalCostPerSecond = CostPerSecond;
 
+            float finalBloodCostPerSecond = BloodCostPerSecond;
+
             if (sf.uniqueBodyStructure)
                 finalCostPerSecond *= 1 - UniqueBodyStructureBuff.passiveTechniqueCostReduction;
 
             sf.cursedEnergyUsagePerSecond += finalCostPerSecond;
+
+            sf.bloodEnergyUsagePerSecond += finalBloodCostPerSecond;
         }
     }
 }

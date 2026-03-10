@@ -19,7 +19,11 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.Buffs.FlowingRedScaleBuff.LockedDescription");
 
         public override bool isActive { get; set; } = false;
+        public override float BloodCostPerSecond { get; set; } = -10;
+
         public override float CostPerSecond { get; set; } = 10f;
+
+        public float beBoost = 5f;
 
         float BossMultiplier = 1.5f;
         public virtual int DefenseAddition { get; set; } = 12;
@@ -32,6 +36,8 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
                 return $"CE Consumption: {CostPerSecond} CE/s\n"
                         + $"+{DefenseAddition}% defense boost.\n"
                         + $"+{DamageNegation}% damage negation.\n"
+                        + $"Generates 10 BE/s \n"
+                        + "If you don't have RCT it will consume health instead\n"
                         + "You cannot use Cursed Techniques while this is active,\n"
                         + "unless you have a unique body structure.\n"
                         + $"Flowing Red Scale takes +{BossMultiplier}x more CE during boss fights.\n";
@@ -100,9 +106,19 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
                 multiplier = BossMultiplier;
             }
 
-            CostPerSecond = 10f;
+            if (sfPlayer.unlockedRCT)
+            {
+                CostPerSecond = 10f;
+                CostPerSecond += CostPerSecond * multiplier;
+            }
+            else
+            {
+                CostPerSecond = 0;
+                player.lifeRegen -= 10;
+            }
+
             CostPerSecond += CostPerSecond * multiplier;
-            
+
             base.Update(player, ref buffIndex);
         }
     }

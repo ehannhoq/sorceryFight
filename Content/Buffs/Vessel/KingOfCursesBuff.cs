@@ -20,6 +20,13 @@ namespace sorceryFight.Content.Buffs.Vessel
         {
             SorceryFightPlayer sfPlayer = player.SorceryFight();
 
+            // if the player tries to use your potential with the buff on it will break the code
+            if(sfPlayer.innateTechnique == null)
+            {
+                player.DelBuff(buffIndex);
+                return;
+            }
+
             if (sfPlayer.innateTechnique.Name.Equals("Vessel"))
             {
                 sfPlayer.innateTechnique = new ShrineTechnique();

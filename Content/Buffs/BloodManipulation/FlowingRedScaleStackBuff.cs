@@ -1,9 +1,10 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs.Vessel;
 using sorceryFight.SFPlayer;
+using System;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -20,6 +21,8 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
         public override bool isActive { get; set; } = false;
         public override float CostPerSecond { get; set; } = 40f;
 
+        public override float BloodCostPerSecond { get; set; } = -30;
+
         float BossMultiplier = 1.5f;
         public virtual int DefenseAddition { get; set; } = 36;
         public virtual float DamageNegation { get; set; } = 0.30f;
@@ -31,6 +34,8 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
                 return $"CE Consumption: {CostPerSecond} CE/s\n"
                         + $"+{DefenseAddition}% defense boost.\n"
                         + $"+{DamageNegation}% damage negation.\n"
+                        + $"Generates 30 BE/s \n"
+                        + "If you don't have RCT it will consume health instead\n"
                         + "You cannot use Cursed Techniques while this is active,\n"
                         + "unless you have a unique body structure.\n"
                         + $"Flowing Red Scale takes +{BossMultiplier}x more CE during boss fights.\n";
@@ -99,8 +104,19 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
                 multiplier = BossMultiplier;
             }
 
-            CostPerSecond = 10f;
-            CostPerSecond += CostPerSecond * multiplier;
+            if (sfPlayer.unlockedRCT)
+            {
+                CostPerSecond = 40f;
+                CostPerSecond += CostPerSecond * multiplier;
+            }
+            else
+            {
+                CostPerSecond = 0;
+                player.lifeRegen -= 40;
+            }
+
+
+
             
             base.Update(player, ref buffIndex);
         }

@@ -35,7 +35,11 @@ public class SorceryFightUI : UIState
     public override void OnInitialize()
     {
         LoadCEBar();
+
+
+        //if (Main.LocalPlayer?.SorceryFight()?.innateTechnique?.Name == "Vessel")
         LoadBEBar();
+
         elementsToRemove = new List<UIElement>();
         initialized = false;
         flowStateBar = null;
@@ -77,8 +81,11 @@ public class SorceryFightUI : UIState
             LoadCEBar();
             Append(ceBar);
 
-            LoadBEBar();
-            Append(beBar);
+            if (Main.LocalPlayer.SorceryFight().innateTechnique.Name == "Vessel")
+            {
+                LoadBEBar();
+                Append(beBar);
+            }
 
         }
 

@@ -25,7 +25,7 @@ public class BloodEnergyBar : UIElement
     {
         if (Main.dedServ) return;
 
-        IgnoresMouseInteraction = true;
+        //IgnoresMouseInteraction = true;
 
 
 
@@ -46,14 +46,14 @@ public class BloodEnergyBar : UIElement
         Left.Set(1200, 0f);
         Top.Set(20, 0f);
 
-        border.IgnoresMouseInteraction = true;
-        beBarValue.IgnoresMouseInteraction = true;
+        //border.IgnoresMouseInteraction = true;
+        //beBarValue.IgnoresMouseInteraction = true;
     }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         base.DrawSelf(spriteBatch);
-        ModContent.GetInstance<SorceryFight>().Logger.Info(beBarValue.fillPercentage);
+        ModContent.GetInstance<SorceryFight>().Logger.Info("Blood Energy Bar Value:" + beBarValue.fillPercentage);
             
         if (IsMouseHovering)
         {
@@ -142,7 +142,7 @@ public class BloodEnergyBar : UIElement
         sfPlayer = Main.LocalPlayer.SorceryFight();
         if (sfPlayer.BEBarPos == Vector2.Zero)
         {
-            Left.Set(1300, 0f);
+            Left.Set(1200, 0f);
             Top.Set(20, 0f);
         }
         else
