@@ -73,7 +73,7 @@ namespace sorceryFight.Content.Buffs.Shrine
                 auraIndices.Remove(player.whoAmI);
             }
 
-            sfPlayer.disableCurseTechniques = false;
+           // sfPlayer.disableCurseTechniques = false;
         }
 
         public override bool Unlocked(SorceryFightPlayer sf)

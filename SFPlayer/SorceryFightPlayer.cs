@@ -277,7 +277,7 @@ namespace sorceryFight.SFPlayer
             cursedEnergyRegenFromOtherSources = 0f;
             maxCursedEnergyFromOtherSources = 0f;
             disableRegenFromBuffs = false;
-            //disableCurseTechniques = false;
+            disableCurseTechniques = false;
             blackFlashTime = 30;
 
             bloodEnergyRegenPerSecond = 0f;
@@ -314,7 +314,7 @@ namespace sorceryFight.SFPlayer
 
             if (SFKeybinds.UseTechnique.JustPressed)
             {
-                ModContent.GetInstance<SorceryFight>().Logger.Info("Keybing Just Pressed" + SFKeybinds.UseTechnique.JustPressed + "Is: " + disableCurseTechniques);
+                //ModContent.GetInstance<SorceryFight>().Logger.Info("Keybing Just Pressed" + SFKeybinds.UseTechnique.JustPressed + "Is: " + disableCurseTechniques);
 
                 if (!disableCurseTechniques || uniqueBodyStructure)
                     ShootTechnique();

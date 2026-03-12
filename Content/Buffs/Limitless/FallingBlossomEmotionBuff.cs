@@ -82,7 +82,7 @@ namespace sorceryFight.Content.Buffs.Limitless
             sf.fallingBlossomEmotion = false;
             player.noKnockback = true;
 
-            sf.disableCurseTechniques = false;
+            //sf.disableCurseTechniques = false;
 
         }
 

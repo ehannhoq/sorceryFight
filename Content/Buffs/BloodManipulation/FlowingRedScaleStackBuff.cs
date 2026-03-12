@@ -89,7 +89,14 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.sukunasFingerConsumed >= 5;
+            if (sf.innateTechnique.Name == "Vessel")
+            {
+                return sf.sukunasFingerConsumed >= 5;
+            }
+            else
+            {
+                return sf.HasDefeatedBoss(NPCID.CultistBoss);
+            }
         }
 
         public override void Update(Player player, ref int buffIndex)
