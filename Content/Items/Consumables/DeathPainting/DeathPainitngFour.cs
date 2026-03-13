@@ -8,10 +8,10 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Items.Consumables.DeathPainting
 {
-    public class DeathPaintingOne : ModItem
-    {   
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.DeathPaintingOne.DisplayName");
-        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.DeathPaintingOne.Description");
+    public class DeathPaintingFour : ModItem
+    {
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.DeathPaintingFour.DisplayName");
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.DeathPaintingFour.Description");
         public override void SetStaticDefaults()
         {
             //Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 8));
@@ -36,9 +36,9 @@ namespace sorceryFight.Content.Items.Consumables.DeathPainting
         {
             if (player.whoAmI == Main.myPlayer)
             {
-                //SoundEngine.PlaySound(SoundID.Item4);
+               //SoundEngine.PlaySound(SoundID.Item4);
                 SorceryFightPlayer sf = player.SorceryFight();
-                sf.deathPaintingOne = true;
+                sf.deathPaintingFour = true;
             }
             return true;
         }

@@ -68,6 +68,12 @@ namespace sorceryFight.SFPlayer
 
         public bool deathPaintingOne;
         public bool deathPaintingTwo;
+        public bool deathPaintingThree;
+        public bool deathPaintingFour;
+        public bool deathPaintingFive;
+        public bool deathPaintingSix;
+        public bool deathPaintingSeven;
+        public bool deathPaintingEight;
         #endregion
 
         #region One-off Variables
@@ -251,10 +257,12 @@ namespace sorceryFight.SFPlayer
 
             if (bloodEnergy < 0)
             {
+                AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
                 bloodEnergy = 0.2f;
+                Player.Hurt(PlayerDeathReason.ByCustomReason($"{Player.name} overexerted their blood energy."), (int)(Math.Abs(bloodEnergy)) , 0, false, false);
             }
 
-                if (cursedEnergy < 0)
+            if (cursedEnergy < 0)
             {
                 cursedEnergy = 0;
 

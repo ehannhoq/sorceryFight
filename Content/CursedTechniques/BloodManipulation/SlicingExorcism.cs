@@ -3,12 +3,14 @@ using CalamityMod.Sounds;
 using Microsoft.Build.Graph;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Particles;
+using sorceryFight.SFPlayer;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using sorceryFight.SFPlayer;
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
@@ -22,7 +24,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SlicingExorcism.LockedDescription");
         public override float Cost => 40f;
 
-        public override float BloodCost => 40f;
+        public override float BloodCost => 20f;
 
         public override Color textColor => new Color(255, 0, 0);
         public override bool DisplayNameInGame => true;
@@ -62,6 +64,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Projectile.height = 65;
             Projectile.tileCollide = true;
             animating = false;
+            Projectile.penetrate = -1;
             animScale = 1.25f;
         }
         public override void AI()
@@ -96,9 +99,18 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 }
 
 
-                Vector2 particleOffset = Projectile.Center + new Vector2(Main.rand.NextFloat(-40f, 40f), Main.rand.NextFloat(-40f, 40f));
+                //Vector2 particleOffset = Projectile.Center + new Vector2(Main.rand.NextFloat(-40f, 40f), Main.rand.NextFloat(-40f, 40f));
+                //Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
+                //LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 10, 1, textColor);
+                //GeneralParticleHandler.SpawnParticle(particle);
+
+                float verticalness = 1f - Math.Abs(Projectile.velocity.SafeNormalize(Vector2.Zero).X);
+                float spreadWidth = MathHelper.Lerp(8f, 60f, verticalness);
+                Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(30f, 120f);
+                Vector2 perpendicular = Projectile.velocity.RotatedBy(MathHelper.PiOver2).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(-spreadWidth, spreadWidth);
+                Vector2 particleOffset = Projectile.Center + behindOffset + perpendicular;
                 Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 10, 1, textColor);
+                LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 20, 1f, textColor);
                 GeneralParticleHandler.SpawnParticle(particle);
 
                 return;

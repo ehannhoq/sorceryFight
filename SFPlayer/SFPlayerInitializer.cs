@@ -295,7 +295,19 @@ namespace sorceryFight.SFPlayer
 
 
             if (deathPaintingTwo)
-                sum += 100f; // 200 total
+                sum += 100f;
+
+            if (deathPaintingThree)
+                sum += 200f;
+
+            if (deathPaintingFour)
+                sum += 300f;
+
+            if (deathPaintingSix)
+                sum += 400f;
+
+            if (deathPaintingSeven)
+                sum += 500f;
 
             return baseCost + sum;
         }
@@ -306,7 +318,13 @@ namespace sorceryFight.SFPlayer
             float sum = 0f;
 
             if (deathPaintingOne)
-                sum += 4f; // 5 CE/s
+                sum += 5f;
+
+            if (deathPaintingFive)
+                sum += 10f;
+
+            if (deathPaintingEight)
+                sum += 20f;
 
             return baseRegen + sum;
         }

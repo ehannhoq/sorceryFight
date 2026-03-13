@@ -11,10 +11,10 @@ namespace sorceryFight.Content.Items.Consumables.DeathPainting
     public class DeathPaintingTwo : ModItem
     {
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.DeathPaintingTwo.DisplayName");
-        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.DeathPaintingTwo.Tooltip");
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.DeathPaintingTwo.Description");
         public override void SetStaticDefaults()
         {
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 8));
+            //Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 8));
         }
         public override void SetDefaults()
         {
@@ -28,7 +28,8 @@ namespace sorceryFight.Content.Items.Consumables.DeathPainting
 
         public override bool CanUseItem(Player player)
         {
-            return player.SorceryFight().innateTechnique.Name == "Vessel";
+            string techName = player.SorceryFight().innateTechnique.Name;
+            return techName == "Vessel" || techName == "BloodManipulation";
         }
 
         public override bool? UseItem(Player player)

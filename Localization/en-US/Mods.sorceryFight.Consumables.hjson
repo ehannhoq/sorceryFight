@@ -199,11 +199,41 @@ CursedEnergyDrinks: {
 }
 
 DeathPaintingOne: {
-	DisplayName: Death Painting Eso
+	DisplayName: Death Painting Sho-oso
 	Description: Consume to increase Blood regeneration rate by 5 BE/s.
 }
 
 DeathPaintingTwo: {
-	DisplayName: Death Painting Kechizu
+	DisplayName: Death Painting Shoso
 	Description: Consume to increase Blood capacity by 100 BE.
+}
+
+DeathPaintingThree: {
+	DisplayName: Death Painting Tanso
+	Description: Consume to increase Blood capacity by 200 BE.
+}
+
+DeathPaintingFour: {
+	DisplayName: Death Painting Eso
+	Description: Consume to increase Blood capacity by 300 BE.
+}
+
+DeathPaintingFive: {
+	DisplayName: Death Painting Kechizu
+	Description: Consume to increase Blood regeneration rate by 10 BE/s.
+}
+
+DeathPaintingSix: {
+	DisplayName: Death Painting Kotsuso
+	Description: Consume to increase Blood capacity by 400 BE.
+}
+
+DeathPaintingSeven: {
+	DisplayName: Death Painting Noranso
+	Description: Consume to increase Blood capacity by 500 BE.
+}
+
+DeathPaintingEight: {
+	DisplayName: Death Painting Sanso
+	Description: Consume to increase Blood regeneration rate by 20 BE/s.
 }
