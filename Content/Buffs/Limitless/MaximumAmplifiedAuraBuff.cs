@@ -15,6 +15,8 @@ namespace sorceryFight.Content.Buffs.Limitless
         public float DamageMultiplier { get; set; } = 50f;
 
         public override LocalizedText DisplayName { get; } = SFUtils.GetLocalization("Mods.sorceryFight.Buffs.MaximumAmplifiedAuraBuff.DisplayName");
+
+        public override bool isAura => true;
         public override string Stats
         {
             get
@@ -39,14 +41,10 @@ namespace sorceryFight.Content.Buffs.Limitless
         {
             player.AddBuff(ModContent.BuffType<MaximumAmplifiedAuraBuff>(), 2);
 
-            if (player.HasBuff<AmplifiedAuraBuff>())
+            foreach (var technique in player.SorceryFight().innateTechnique.PassiveTechniques)
             {
-                player.SorceryFight().innateTechnique.PassiveTechniques[1].isActive = false;
-            }
-
-            if (player.HasBuff<FallingBlossomEmotionBuff>())
-            {
-                player.SorceryFight().innateTechnique.PassiveTechniques[3].isActive = false;
+                if (technique.isAura && technique != this)
+                    technique.isActive = false;
             }
 
             if (Main.myPlayer == player.whoAmI && !auraIndices.ContainsKey(player.whoAmI))

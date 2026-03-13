@@ -26,6 +26,8 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
         public virtual int DefenseAddition { get; set; } = 36;
         public virtual float DamageNegation { get; set; } = 0.30f;
 
+        public override bool isAura => true;
+
         public override string Stats
         {
             get
@@ -49,11 +51,11 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
             player.AddBuff(ModContent.BuffType<FlowingRedScaleStackBuff>(), 2);
             SorceryFightPlayer sfPlayer = player.SorceryFight();
 
-            if (player.HasBuff<FlowingRedScaleStackBuff>())
+            foreach (var technique in player.SorceryFight().innateTechnique.PassiveTechniques)
             {
-                sfPlayer.innateTechnique.PassiveTechniques[0].isActive = false;
+                if (technique.isAura && technique != this)
+                    technique.isActive = false;
             }
-
 
             if (auraIndices == null)
                 auraIndices = new Dictionary<int, int>();

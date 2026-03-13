@@ -15,6 +15,8 @@ namespace sorceryFight.Content.Buffs.Shrine
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.DomainAmplificationBuff.DisplayName");
         public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.DomainAmplificationBuff.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.Buffs.DomainAmplificationBuff.LockedDescription");
+
+        public override bool isAura => true;
         public override string Stats
         {
             get
@@ -37,9 +39,10 @@ namespace sorceryFight.Content.Buffs.Shrine
             player.AddBuff(ModContent.BuffType<DomainAmplificationBuff>(), 2);
             SorceryFightPlayer sfPlayer = player.SorceryFight();
 
-            if (player.HasBuff<HollowWickerBasketBuff>())
+            foreach (var technique in player.SorceryFight().innateTechnique.PassiveTechniques)
             {
-                sfPlayer.innateTechnique.PassiveTechniques[1].isActive = false;
+                if (technique.isAura && technique != this)
+                    technique.isActive = false;
             }
 
             sfPlayer.domainAmp = true;

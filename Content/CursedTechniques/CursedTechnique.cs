@@ -76,6 +76,11 @@ namespace sorceryFight.Content.CursedTechniques
 
                 sf.cursedEnergy -= CalculateTrueCost(sf);
 
+                if(BloodCost > 0)
+                {
+                    sf.bloodEnergy -= BloodCost;
+                }
+
                 if (DisplayNameInGame)
                 {
                     int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);

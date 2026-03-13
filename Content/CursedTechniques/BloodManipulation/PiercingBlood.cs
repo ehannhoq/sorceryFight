@@ -36,13 +36,12 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override float LifeTime => 240f;
 
         //this number gets doubled in SorceryFightPlayer.ApplyBloodCost, so the actual cost is 8 CE/s
-        public override float BloodCost => 4f;
+        public float BloodCostPerSecond => 4f;
 
         private bool keyHeld = false;
         private const float MAX_LENGTH = 1600f;
         private const float STEP_SIZE = 4f;
         private const float BASE_BEAM_HEIGHT = 0.5f;
-        private int bloodCostTimer = 0;
 
         ref float justSpawned => ref Projectile.ai[0];
         ref float beamHeight => ref Projectile.ai[1];
@@ -54,7 +53,14 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.sukunasFingerConsumed >= 19;
+            if (sf.innateTechnique.Name == "Vessel")
+            {
+                return sf.sukunasFingerConsumed >= 19;
+            }
+            else
+            {
+                return sf.HasDefeatedBoss(NPCID.MoonLordCore);
+            }
         }
 
         public override void SetStaticDefaults()
@@ -141,9 +147,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             //custom code for subtracting blood energy while the beam is held out
             if (keyHeld)
             {
-                bloodCostTimer = 0;
                 SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
-                sf.bloodEnergyUsagePerSecond += BloodCost;
+                sf.bloodEnergyUsagePerSecond += BloodCostPerSecond;
             }
 
             if (!keyHeld)

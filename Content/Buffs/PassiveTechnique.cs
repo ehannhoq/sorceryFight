@@ -10,6 +10,8 @@ namespace sorceryFight.Content.Buffs
         public abstract string Stats { get;}
         public abstract string LockedDescription { get; }
 
+        public virtual bool isAura { get; } = false;
+
         public abstract bool isActive { get; set; }
         public abstract float CostPerSecond { get; set; }
 
@@ -40,5 +42,6 @@ namespace sorceryFight.Content.Buffs
 
             sf.bloodEnergyUsagePerSecond += finalBloodCostPerSecond;
         }
+
     }
 }

@@ -263,3 +263,13 @@ LightspeedBarrage: {
 		'''
 	LockedDescription: Defeat the Sentinels of the Devourer.
 }
+
+SlicingExorcism: {
+	DisplayName: Slicing Exorcism
+	Description:
+		'''
+		By compressing blood into a sphere then flattening it
+		you create a powerful slicing disk that carves through flesh like butter
+		'''
+	LockedDescription: Defeat the one who guards the Dungeon.
+}

@@ -9,6 +9,7 @@ using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.SFPlayer;
 using Terraria.ModLoader;
+using sorceryFight.Content.Buffs.Limitless;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -20,11 +21,13 @@ namespace sorceryFight.Content.InnateTechniques
         {
             new FlowingRedScaleBuff(),
             new FlowingRedScaleStackBuff(),
+            new FallingBlossomEmotionBuff()
         };
 
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
-            new PiercingBlood()
+            new PiercingBlood(),
+            new SlicingExorcism()
         };
 
         public override PlayerDomainExpansion DomainExpansion => null;

@@ -23,11 +23,11 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
 
         public override float CostPerSecond { get; set; } = 10f;
 
-        public float beBoost = 5f;
-
         float BossMultiplier = 1.5f;
         public virtual int DefenseAddition { get; set; } = 12;
         public virtual float DamageNegation { get; set; } = 0.10f;
+
+        public override bool isAura => true;
 
         public override string Stats
         {
@@ -52,12 +52,11 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
             player.AddBuff(ModContent.BuffType<FlowingRedScaleBuff>(), 2);
             SorceryFightPlayer sfPlayer = player.SorceryFight();
 
-            if (player.HasBuff<FlowingRedScaleStackBuff>())
+            foreach (var technique in player.SorceryFight().innateTechnique.PassiveTechniques)
             {
-                sfPlayer.innateTechnique.PassiveTechniques[1].isActive = false;
+                if (technique.isAura && technique != this)
+                    technique.isActive = false;
             }
-
-
 
             if (auraIndices == null)
                 auraIndices = new Dictionary<int, int>();
@@ -92,7 +91,14 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.sukunasFingerConsumed >= 5;
+            if (sf.innateTechnique.Name == "Vessel")
+            {
+                return sf.sukunasFingerConsumed >= 5;
+            }
+            else
+            {
+                return sf.HasDefeatedBoss(NPCID.EyeofCthulhu);
+            }
         }
 
         public override void Update(Player player, ref int buffIndex)
