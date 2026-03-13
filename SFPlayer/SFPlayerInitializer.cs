@@ -134,12 +134,18 @@ namespace sorceryFight.SFPlayer
             tag["cursedEnergyRegenModifiers"] = cursedEnergyRegenModifiers;
 
             var maxBEModifiers = new List<string>();
-            maxCEModifiers.AddWithCondition("deathPaintingTwo", deathPaintingTwo);
-            tag["maxBEModifiers"] = maxCEModifiers;
+            maxBEModifiers.AddWithCondition("deathPaintingTwo", deathPaintingTwo);
+            maxBEModifiers.AddWithCondition("deathPaintingTwo", deathPaintingThree);
+            maxBEModifiers.AddWithCondition("deathPaintingTwo", deathPaintingFour);
+            maxBEModifiers.AddWithCondition("deathPaintingTwo", deathPaintingSix);
+            maxBEModifiers.AddWithCondition("deathPaintingTwo", deathPaintingSeven);
+            tag["maxBEModifiers"] = maxBEModifiers;
 
 
             var bloodEnergyRegenModifiers = new List<string>();
             bloodEnergyRegenModifiers.AddWithCondition("deathPaintingOne", deathPaintingOne);
+            bloodEnergyRegenModifiers.AddWithCondition("deathPaintingOne", deathPaintingFive);
+            bloodEnergyRegenModifiers.AddWithCondition("deathPaintingOne", deathPaintingEight);
             tag["bloodEnergyRegenModifiers"] = bloodEnergyRegenModifiers;
 
             var generalBooleans = new List<string>();

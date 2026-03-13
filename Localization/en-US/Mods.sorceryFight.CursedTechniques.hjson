@@ -273,3 +273,13 @@ SlicingExorcism: {
 		'''
 	LockedDescription: Defeat the one who guards the Dungeon.
 }
+
+UnlimitedPiercingBlood: {
+	DisplayName: Unlimited Piercing Blood
+	Description:
+		'''
+		By compressing blood into a sphere then flattening it
+		you create a powerful slicing disk that carves through flesh like butter
+		'''
+	LockedDescription: Defeat the one who guards the Dungeon.
+}

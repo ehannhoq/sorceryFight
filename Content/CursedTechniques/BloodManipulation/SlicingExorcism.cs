@@ -123,37 +123,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 animating = false;
             }
 
-            //foreach (Projectile proj in Main.ActiveProjectiles)
-            //{
-            //    if (!proj.hostile && proj != Main.projectile[Projectile.whoAmI] && proj.MoveableByBlue())
-            //    {
-            //        float distance = Vector2.Distance(proj.Center, Projectile.Center);
-
-            //        if (distance <= AttractionRadius)
-            //        {
-            //            Vector2 direction = proj.Center.DirectionTo(Projectile.Center);
-            //            Vector2 newVelocity = Vector2.Lerp(proj.velocity, direction * AttractionStrength, 0.1f);
-
-            //            proj.velocity = newVelocity;
-            //        }
-            //    }
-            //}
-
-            //foreach (NPC npc in Main.ActiveNPCs)
-            //{
-            //    if (!npc.friendly && npc.type != NPCID.TargetDummy && npc.MoveableByBlue())
-            //    {
-            //        float distance = Vector2.Distance(npc.Center, Projectile.Center);
-            //        if (distance <= AttractionRadius)
-            //        {
-            //            Vector2 direction = npc.Center.DirectionTo(Projectile.Center);
-            //            Vector2 newVelocity = Vector2.Lerp(npc.velocity, direction * AttractionStrength, 0.1f);
-
-            //            npc.velocity = newVelocity;
-            //        }
-            //    }
-            //}
-
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -179,6 +148,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         {
             base.OnHitNPC(target, hit, damageDone);
             Projectile.penetrate = 0;
+
+            target.AddBuff(BuffID.Poisoned, 300);
 
             for (int i = 0; i < 6; i++)
             {
