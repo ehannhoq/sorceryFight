@@ -4,17 +4,16 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.Projectiles.Melee
+namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
     public class UnlimitedPiercingBloodProjectile : ModProjectile
     {
-        public override string Texture => "sorceryFight/Content/CursedTechniques/CursedTechnique";
         private Texture2D texture;
-        private const int FRAMES = 16;
-        private const int TICKS_PER_FRAME = 2;
+        private const int FRAME_COUNT = 5;
+        private const int TICKS_PER_FRAME = 5;
         private int target = -1;
-        private float trackingRadius = 250f;
-
+        private float trackingRadius = 800f;
+        public float animScale;
         public override void SetDefaults()
         {
             Projectile.width = 150;
@@ -27,6 +26,7 @@ namespace sorceryFight.Content.Projectiles.Melee
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
             Projectile.timeLeft = 300;
+            animScale = 1.25f;
         }
 
         public override void AI()
@@ -34,8 +34,11 @@ namespace sorceryFight.Content.Projectiles.Melee
             if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
             {
                 Projectile.frameCounter = 0;
-                if (Projectile.frame++ >= FRAMES - 1)
+
+                if (Projectile.frame++ >= FRAME_COUNT - 1)
+                {
                     Projectile.frame = 0;
+                }
             }
 
             Main.NewText("Target State" + target);
@@ -71,26 +74,20 @@ namespace sorceryFight.Content.Projectiles.Melee
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(
-                SpriteSortMode.Immediate,
-                BlendState.NonPremultiplied,
-                SamplerState.LinearClamp,
-                DepthStencilState.None,
-                RasterizerState.CullNone,
-                null,
-                Main.GameViewMatrix.ZoomMatrix
-            );
+            SpriteBatch spriteBatch = Main.spriteBatch;
 
-            texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/PiercingBloodCollision", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            if (texture == null && !Main.dedServ)
+                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/PiercingBloodCollision").Value;
 
-            Rectangle sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
-            Vector2 projOrigin = sourceRectangle.Size() * 0.5f;
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, projOrigin, 1f, SpriteEffects.None, 0f);
+            int frameHeight = texture.Height / FRAME_COUNT;
+            int frameY = Projectile.frame * frameHeight;
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin();
+            Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
+
+            Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
+
             return false;
         }
     }
