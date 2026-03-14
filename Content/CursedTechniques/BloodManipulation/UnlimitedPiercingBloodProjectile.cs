@@ -13,10 +13,7 @@ namespace sorceryFight.Content.Projectiles.Melee
         private const int FRAMES = 16;
         private const int TICKS_PER_FRAME = 2;
         private int target = -1;
-
-        private const float TrackingRadius = 800f;
-        private const float HomingSpeed = 20;
-        private const float LerpFactor = 0.25f;
+        private float trackingRadius = 250f;
 
         public override void SetDefaults()
         {
@@ -41,14 +38,16 @@ namespace sorceryFight.Content.Projectiles.Melee
                     Projectile.frame = 0;
             }
 
+            Main.NewText("Target State" + target);
+
             if (target == -1)
                 FindTarget();
-            else if (!Main.npc[target].active)
+            else if (target >= 0 && !Main.npc[target].active)
                 FindTarget();
-            else
+            else if (target >= 0)
             {
-                Vector2 targetVelocity = (Main.npc[target].Center - Projectile.Center).SafeNormalize(Vector2.Zero) * HomingSpeed;
-                Projectile.velocity = Vector2.Lerp(Projectile.velocity, targetVelocity, LerpFactor);
+                Vector2 targetVelocity = (Main.npc[target].Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 20f;
+                Projectile.velocity = Vector2.Lerp(Projectile.velocity, targetVelocity, 0.25f);
             }
 
             Projectile.rotation = Projectile.velocity.ToRotation();
@@ -56,17 +55,10 @@ namespace sorceryFight.Content.Projectiles.Melee
 
         void FindTarget()
         {
-            target = -1;
-            float closestDist = TrackingRadius * TrackingRadius;
-
             foreach (NPC npc in Main.ActiveNPCs)
             {
-                if (!npc.CanBeChasedBy()) continue;
-
-                float dist = Vector2.DistanceSquared(npc.Center, Projectile.Center);
-                if (dist < closestDist)
+                if (npc.CanBeChasedBy() && Vector2.DistanceSquared(npc.Center, Projectile.Center) < trackingRadius.Squared())
                 {
-                    closestDist = dist;
                     target = npc.whoAmI;
                 }
             }
@@ -74,7 +66,7 @@ namespace sorceryFight.Content.Projectiles.Melee
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            this.target = -1;
+            this.target = -2;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -90,7 +82,7 @@ namespace sorceryFight.Content.Projectiles.Melee
                 Main.GameViewMatrix.ZoomMatrix
             );
 
-            texture ??= ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/PiercingBloodCollision", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/PiercingBloodCollision", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
             Rectangle sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
             Vector2 projOrigin = sourceRectangle.Size() * 0.5f;

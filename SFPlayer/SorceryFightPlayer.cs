@@ -148,6 +148,8 @@ namespace sorceryFight.SFPlayer
 
         #region HeavenlyRestriction
         public bool heavenlyRestriction;
+
+        public bool noInnateDomain;
         #endregion
 
         public override void UpdateEquips()
@@ -342,18 +344,22 @@ namespace sorceryFight.SFPlayer
                     rctAuraIndex = -1;
                 }
 
-
             if (SFKeybinds.DomainExpansion.Current)
             {
-                domainTimer++;
-                if (HasActiveDomain)
-                    domainTimer = 1;
-
-                if (UnlockedDomainExpansion)
+                if (noInnateDomain == true)
                 {
-                    float zoom = 1.3f * (MathF.Log10(domainTimer + 1f) + 0.22f);
+                    ToggleSimpleDomain();
+                } else {
+                    domainTimer++;
+                    if (HasActiveDomain)
+                        domainTimer = 1;
 
-                    CameraController.SetCameraZoom(zoom);
+                    if (UnlockedDomainExpansion)
+                    {
+                        float zoom = 1.3f * (MathF.Log10(domainTimer + 1f) + 0.22f);
+
+                        CameraController.SetCameraZoom(zoom);
+                    }
                 }
             }
             else if (domainTimer != 0)

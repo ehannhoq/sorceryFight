@@ -1,5 +1,6 @@
 ﻿using CalamityMod.Particles;
 using CalamityMod.Sounds;
+using Humanizer;
 using Microsoft.Build.Graph;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -41,7 +42,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override float Speed => 0f;
         public override float LifeTime => 300f;
 
-        private float spawnTimer = 0f;
+        private float spawnTimer = 0;
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
@@ -62,7 +63,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public override int GetProjectileType()
         {
-            return ModContent.ProjectileType<SlicingExorcism>();
+            return ModContent.ProjectileType<UnlimitedPiercingBlood>();
         }
 
 
@@ -75,36 +76,44 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override void AI()
         {
             keyHeld = SFKeybinds.UseTechnique.Current;
+            Mod.Logger.Info("AI running");
+            Main.NewText("spawning projectile");
 
-            if (keyHeld)
-            {
-                spawnTimer++;
+            ModContent.GetInstance<SorceryFight>().Logger.Info("This is what the bum is doing:" + spawnTimer);
+            if (Main.myPlayer == Projectile.owner){
+                if (keyHeld)
+                    {
+                        spawnTimer++;
 
-                if (spawnTimer >= 60f)
-                {
-                    spawnTimer = 0f;
+                        if (spawnTimer >= 10f)
+                        {
+                            spawnTimer = 0f;
 
-                    SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
-                    sf.bloodEnergyUsagePerSecond += BloodCostPerSecond;
-                    Player player = Main.player[Projectile.owner];
-                    // auraIndices[player.whoAmI] = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<AmplifiedAuraProjectile>(), 0, 0, player.whoAmI);
+                            SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
+                            sf.bloodEnergyUsagePerSecond += BloodCostPerSecond;
+                            Player player = Main.player[Projectile.owner];
+                            // auraIndices[player.whoAmI] = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<AmplifiedAuraProjectile>(), 0, 0, player.whoAmI);
 
-                    Projectile.NewProjectile(
-                    player.GetSource_FromThis(),
-                    player.Center,
-                    player.DirectionTo(Main.MouseWorld) * Speed, // initial velocity toward mouse if no target
-                    ModContent.ProjectileType<UnlimitedPiercingBloodProjectile>(),
-                    Damage,
-                    0f,
-                    player.whoAmI
-                    //targetIndex
-                    );
-                }
+                            Vector2 velocity = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * Speed;
 
-            } else {
-               Projectile.Kill();
+                            Main.NewText("spawning projectile, Velocity: " + velocity);
+
+                            Projectile.NewProjectile(
+                            player.GetSource_FromThis(),
+                            player.Center,
+                            velocity,
+                            ModContent.ProjectileType<UnlimitedPiercingBloodProjectile>(),
+                            Damage,
+                            0f,
+                            player.whoAmI
+                            //targetIndex
+                            );
+                        }
+
+                    } else {
+                        Projectile.Kill();
+                    }
             }
-
 
         }
 

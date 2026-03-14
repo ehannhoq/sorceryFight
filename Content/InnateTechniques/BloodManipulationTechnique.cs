@@ -30,6 +30,11 @@ namespace sorceryFight.Content.InnateTechniques
             new UnlimitedPiercingBlood()
         };
 
+        public override void PreUpdate(SorceryFightPlayer sf)
+        {
+            sf.noInnateDomain = true;
+        }
+
         public override PlayerDomainExpansion DomainExpansion => null;
 
 
