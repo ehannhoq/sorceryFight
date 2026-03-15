@@ -14,14 +14,14 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
-    public class SlicingExorcism : CursedTechnique
+    public class SuperNova : CursedTechnique
     {
 
         public static readonly int FRAME_COUNT = 8;
         public static readonly int TICKS_PER_FRAME = 5;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.SlicingExorcism.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SlicingExorcism.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SlicingExorcism.LockedDescription");
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.SuperNova.DisplayName");
+        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SuperNova.Description");
+        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SuperNova.LockedDescription");
         public override float Cost => 40f;
 
         public override float BloodCost => 20f;
@@ -36,7 +36,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override float LifeTime => 300f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
+            return sf.HasDefeatedBoss(NPCID.MoonLordCore);
         }
 
 
@@ -53,7 +53,31 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public override int GetProjectileType()
         {
-            return ModContent.ProjectileType<SlicingExorcism>();
+            return ModContent.ProjectileType<SuperNova>();
+        }
+
+        public override int UseTechnique(SorceryFightPlayer sf)
+        {
+            Player player = sf.Player;
+            sf.cursedEnergy -= Cost;
+
+            if (Main.myPlayer == player.whoAmI)
+            {
+                if (DisplayNameInGame)
+                {
+                    int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
+                    Main.combatText[index1].lifeTime = 180;
+                }
+
+                Vector2 mousePos = Main.MouseWorld;
+                var entitySource = player.GetSource_FromThis();
+                int index = Projectile.NewProjectile(entitySource, mousePos, Vector2.Zero, GetProjectileType(), (int)CalculateTrueDamage(sf), 0f, player.whoAmI);
+                Main.projectile[index].ai[0] = 0;
+                Main.projectile[index].ai[1] = Main.rand.Next(0, 3);
+                Main.projectile[index].ai[2] = Main.rand.NextFloat(0, 6);
+                return index;
+            }
+            return -1;
         }
 
 
@@ -69,16 +93,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         }
         public override void AI()
         {
-            Projectile.rotation = Projectile.velocity.ToRotation();
-            Projectile.ai[0] += 1;
-            float beginAnimTime = 30f;
-            Player player = Main.player[Projectile.owner];
-
-            if (Projectile.ai[0] > LifeTime + beginAnimTime)
-            {
-                Projectile.Kill();
-            }
-
             if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
             {
                 Projectile.frameCounter = 0;
@@ -88,40 +102,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                     Projectile.frame = 0;
                 }
             }
-
-            if (Projectile.ai[0] < beginAnimTime)
-            {
-                if (!animating)
-                {
-                    Projectile.Center += new Vector2(0, -30);
-                    animating = true;
-                    SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
-                }
-
-                //Code that was for expanding the spread of the particles based on height of shooting, but rotating the projectile itself looked better 
-                //float verticalness = 1f - Math.Abs(Projectile.velocity.SafeNormalize(Vector2.Zero).X);
-                //float spreadWidth = MathHelper.Lerp(8f, 60f, verticalness);
-                //Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(30f, 120f);
-                //Vector2 perpendicular = Projectile.velocity.RotatedBy(MathHelper.PiOver2).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(-spreadWidth, spreadWidth);
-                //Vector2 particleOffset = Projectile.Center + behindOffset + perpendicular;
-                //Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                //LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 20, 1f, textColor);
-                //GeneralParticleHandler.SpawnParticle(particle);
-
-                Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(10f, 40f);
-                Vector2 particleOffset = Projectile.Center + behindOffset;
-                Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 20, 1f, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
-                return;
-            }
-
-            if (animating)
-            {
-                Projectile.tileCollide = true;
-                animating = false;
-            }
-
         }
 
         public override bool PreDraw(ref Color lightColor)

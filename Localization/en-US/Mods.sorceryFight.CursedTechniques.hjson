@@ -283,3 +283,13 @@ UnlimitedPiercingBlood: {
 		'''
 	LockedDescription: Defeat the one who guards the Dungeon.
 }
+
+SuperNova: {
+	DisplayName: Super Nova
+	Description:
+		'''
+		Place a sphere of compressed blood at your mouse position then
+		wait for it to explode like a shotgun blast in two seconds
+		'''
+	LockedDescription: Defeat the one who guards the Moon.
+}

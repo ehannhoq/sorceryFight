@@ -27,7 +27,8 @@ namespace sorceryFight.Content.InnateTechniques
         {
             new PiercingBlood(),
             new SlicingExorcism(),
-            new UnlimitedPiercingBlood()
+            new UnlimitedPiercingBlood(),
+            new SuperNova()
         };
 
         public override void PreUpdate(SorceryFightPlayer sf)
