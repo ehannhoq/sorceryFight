@@ -135,17 +135,17 @@ namespace sorceryFight.SFPlayer
 
             var maxBEModifiers = new List<string>();
             maxBEModifiers.AddWithCondition("deathPaintingTwo", deathPaintingTwo);
-            maxBEModifiers.AddWithCondition("deathPaintingTwo", deathPaintingThree);
-            maxBEModifiers.AddWithCondition("deathPaintingTwo", deathPaintingFour);
-            maxBEModifiers.AddWithCondition("deathPaintingTwo", deathPaintingSix);
-            maxBEModifiers.AddWithCondition("deathPaintingTwo", deathPaintingSeven);
+            maxBEModifiers.AddWithCondition("deathPaintingThree", deathPaintingThree);
+            maxBEModifiers.AddWithCondition("deathPaintingFour", deathPaintingFour);
+            maxBEModifiers.AddWithCondition("deathPaintingSix", deathPaintingSix);
+            maxBEModifiers.AddWithCondition("deathPaintingSeven", deathPaintingSeven);
             tag["maxBEModifiers"] = maxBEModifiers;
 
 
             var bloodEnergyRegenModifiers = new List<string>();
             bloodEnergyRegenModifiers.AddWithCondition("deathPaintingOne", deathPaintingOne);
-            bloodEnergyRegenModifiers.AddWithCondition("deathPaintingOne", deathPaintingFive);
-            bloodEnergyRegenModifiers.AddWithCondition("deathPaintingOne", deathPaintingEight);
+            bloodEnergyRegenModifiers.AddWithCondition("deathPaintingFive", deathPaintingFive);
+            bloodEnergyRegenModifiers.AddWithCondition("deathPaintingEight", deathPaintingEight);
             tag["bloodEnergyRegenModifiers"] = bloodEnergyRegenModifiers;
 
             var generalBooleans = new List<string>();
@@ -223,11 +223,17 @@ namespace sorceryFight.SFPlayer
             cursedRuneOfKos = cursedEnergyRegenModifiers.Contains("cursedRuneOfKos");
 
             var maxBEModifiers = tag.GetList<string>("maxBEModifiers");
-            deathPaintingTwo = maxCEModifiers.Contains("DeathPaintingTwo");
+            deathPaintingTwo = maxBEModifiers.Contains("deathPaintingTwo");
+            deathPaintingThree = maxBEModifiers.Contains("deathPaintingThree");
+            deathPaintingFour = maxBEModifiers.Contains("deathPaintingFour");
+            deathPaintingSix = maxBEModifiers.Contains("deathPaintingSix");
+            deathPaintingSeven = maxBEModifiers.Contains("deathPaintingSeven");
 
 
             var bloodEnergyRegenModifiers = tag.GetList<string>("bloodEnergyRegenModifiers");
-            deathPaintingOne = cursedEnergyRegenModifiers.Contains("deathPaintingOne");
+            deathPaintingOne = bloodEnergyRegenModifiers.Contains("deathPaintingOne");
+            deathPaintingFive = bloodEnergyRegenModifiers.Contains("deathPaintingFive");
+            deathPaintingEight = bloodEnergyRegenModifiers.Contains("deathPaintingEight");
 
             var generalBooleans = tag.GetList<string>("generalBooleans");
             usedYourPotentialBefore = generalBooleans.Contains("usedYourPotentialBefore");

@@ -10,8 +10,8 @@ namespace sorceryFight.Content.Items.Consumables.DeathPainting
 {
     public class DeathPaintingEight : ModItem
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.DeathPaintingSeven.DisplayName");
-        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.DeathPaintingSeven.Description");
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.DeathPaintingEight.DisplayName");
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.DeathPaintingEight.Description");
         public override void SetStaticDefaults()
         {
             //Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 8));

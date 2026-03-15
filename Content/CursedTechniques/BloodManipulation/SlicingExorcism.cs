@@ -71,7 +71,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         {
             Projectile.ai[0] += 1;
             float beginAnimTime = 30f;
-            bool spawnedFromPurple = Projectile.ai[1] == 1;
             Player player = Main.player[Projectile.owner];
 
             if (Projectile.ai[0] > LifeTime + beginAnimTime)
@@ -118,8 +117,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
             if (animating)
             {
-                if (!spawnedFromPurple)
-                    Projectile.tileCollide = true;
+                Projectile.tileCollide = true;
                 animating = false;
             }
 
