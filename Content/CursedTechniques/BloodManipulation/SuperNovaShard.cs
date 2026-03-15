@@ -114,7 +114,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Main.NewText("Hit NPC" + target);
+            //Main.NewText("Hit NPC" + target);
             base.OnHitNPC(target, hit, damageDone);
             Projectile.penetrate = 0;
 
