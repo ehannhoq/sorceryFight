@@ -94,6 +94,7 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
                     SorceryFightPlayer sfPlayer = player.SorceryFight();
                     sfPlayer.innateTechnique = selectedTechnique;
                     sfPlayer.heavenlyRestriction = false;
+                    sfPlayer.noInnateDomain = false;
                     sfPlayer.selectedTechnique = null;
                     sfPlayer.DisablePTBooleans();
                     sfPlayer.cursedEnergy = sfPlayer.maxCursedEnergy;
