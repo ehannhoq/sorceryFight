@@ -33,7 +33,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override int MasteryDamageMultiplier => 50;
 
         public override float Speed => 25f;
-        public override float LifeTime => 300f;
+        public override float LifeTime => 120f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
             return sf.HasDefeatedBoss(NPCID.MoonLordCore);
@@ -72,6 +72,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 Vector2 mousePos = Main.MouseWorld;
                 var entitySource = player.GetSource_FromThis();
                 int index = Projectile.NewProjectile(entitySource, mousePos, Vector2.Zero, GetProjectileType(), (int)CalculateTrueDamage(sf), 0f, player.whoAmI);
+                //what do these do?
                 Main.projectile[index].ai[0] = 0;
                 Main.projectile[index].ai[1] = Main.rand.Next(0, 3);
                 Main.projectile[index].ai[2] = Main.rand.NextFloat(0, 6);
@@ -90,6 +91,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             animating = false;
             Projectile.penetrate = -1;
             animScale = 1.25f;
+            Projectile.timeLeft = (int)LifeTime;
         }
         public override void AI()
         {
@@ -104,12 +106,26 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             }
         }
 
+        public override void OnKill(int timeLeft)
+        {
+            //only create shotgun blast when it expires naturaully (2 seconds)
+            if (timeLeft == 0)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    float angle = MathHelper.TwoPi / 8 * i;
+                    Vector2 velocity = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)) * 10f;
+                    Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, velocity, ModContent.ProjectileType<SuperNovaShard>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                }
+            }
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
 
             if (texture == null && !Main.dedServ)
-                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/SlicingExorcism").Value;
+                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/SuperNova").Value;
 
 
             int frameHeight = texture.Height / FRAME_COUNT;

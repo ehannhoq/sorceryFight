@@ -24,6 +24,7 @@ Mods: {
 			ExampleBlackRopeSlash.DisplayName: Example Black Rope Slash
 			BlackRopeWhip.DisplayName: Black Rope Whip
 			UnlimitedPiercingBloodProjectile.DisplayName: Unlimited Piercing Blood Projectile
+			SuperNovaShard.DisplayName: Super Nova Shard
 		}
 
 		Configs: {
