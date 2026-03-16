@@ -18,7 +18,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
     {
 
         private Texture2D texture;
-        private const int FRAME_COUNT = 8;
+        private const int FRAME_COUNT = 7;
         private const int TICKS_PER_FRAME = 5;
 
         public bool animating;
@@ -98,7 +98,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             SpriteBatch spriteBatch = Main.spriteBatch;
 
             if (texture == null && !Main.dedServ)
-                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/SlicingExorcism").Value;
+                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/SuperNovaShard").Value;
 
 
             int frameHeight = texture.Height / FRAME_COUNT;

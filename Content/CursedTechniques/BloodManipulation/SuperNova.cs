@@ -71,11 +71,9 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
                 Vector2 mousePos = Main.MouseWorld;
                 var entitySource = player.GetSource_FromThis();
-                int index = Projectile.NewProjectile(entitySource, mousePos, Vector2.Zero, GetProjectileType(), (int)CalculateTrueDamage(sf), 0f, player.whoAmI);
-                //what do these do?
-                Main.projectile[index].ai[0] = 0;
-                Main.projectile[index].ai[1] = Main.rand.Next(0, 3);
-                Main.projectile[index].ai[2] = Main.rand.NextFloat(0, 6);
+                int index = Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, GetProjectileType(), (int)CalculateTrueDamage(sf), 0f, player.whoAmI);
+                Main.projectile[index].ai[0] = Main.MouseWorld.X;
+                Main.projectile[index].ai[1] = Main.MouseWorld.Y;
                 return index;
             }
             return -1;
@@ -87,7 +85,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             base.SetDefaults();
             Projectile.width = 65;
             Projectile.height = 65;
-            Projectile.tileCollide = true;
+            Projectile.tileCollide = false;
             animating = false;
             Projectile.penetrate = -1;
             animScale = 1.25f;
@@ -104,6 +102,22 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                     Projectile.frame = 0;
                 }
             }
+
+            Vector2 targetPos = new Vector2(Projectile.ai[0], Projectile.ai[1]);
+
+            if (Vector2.Distance(Projectile.Center, targetPos) > Speed)
+            {
+                Projectile.velocity = Projectile.DirectionTo(targetPos) * Speed;
+            }
+            else
+            {
+                Projectile.Center = targetPos;
+                Projectile.velocity = Vector2.Zero;
+                Projectile.penetrate = 1;
+                Projectile.tileCollide = true;
+            }
+
+
         }
 
         public override void OnKill(int timeLeft)
@@ -111,9 +125,9 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             //only create shotgun blast when it expires naturaully (2 seconds)
             if (timeLeft == 0)
             {
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < 16; i++)
                 {
-                    float angle = MathHelper.TwoPi / 8 * i;
+                    float angle = MathHelper.TwoPi / 16 * i;
                     Vector2 velocity = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)) * 10f;
                     Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, velocity, ModContent.ProjectileType<SuperNovaShard>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                 }
@@ -142,7 +156,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
-            Projectile.penetrate = 0;
 
             target.AddBuff(BuffID.Poisoned, 300);
 

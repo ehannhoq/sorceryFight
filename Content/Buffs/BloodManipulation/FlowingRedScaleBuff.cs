@@ -114,6 +114,21 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
                 multiplier = BossMultiplier;
             }
 
+            /**
+            if (sfPlayer.unlockedRCT)
+            {
+                CostPerSecond = 10f;
+                CostPerSecond += CostPerSecond * multiplier;
+            }
+            else
+            {
+                CostPerSecond = 0;
+                player.lifeRegen -= 10;
+            }
+
+
+
+            **/
             if (sfPlayer.unlockedRCT)
             {
                 CostPerSecond = 10f;
