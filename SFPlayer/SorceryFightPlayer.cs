@@ -187,16 +187,10 @@ namespace sorceryFight.SFPlayer
             rctEfficiency = 0.0f;
             additionalRCTHealPerSecond = 0;
 
-            if (innateTechnique.Name == "Vessel"  || innateTechnique.Name == "BloodManipulation" )
-            {
-                bloodEnergyRegenPerSecond = calculateBaseBERegenRate();
-                maxBloodEnergy = calculateBaseMaxBE();
-            }
-            else
-            {
-                bloodEnergyRegenPerSecond = 1f;
-                maxBloodEnergy = 100f;
-            }
+
+             bloodEnergyRegenPerSecond = calculateBaseBERegenRate();
+             maxBloodEnergy = calculateBaseMaxBE();
+
 
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
             maxCursedEnergy = calculateBaseMaxCE();

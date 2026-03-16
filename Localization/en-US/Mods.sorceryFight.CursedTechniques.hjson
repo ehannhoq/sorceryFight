@@ -293,3 +293,9 @@ SuperNova: {
 		'''
 	LockedDescription: Defeat the one who guards the Moon.
 }
+
+GarudaKick: {
+	DisplayName: Garuda Kick
+	Description: Kick Garuda
+	LockedDescription: Defeat the one who guards the Moon.
+}

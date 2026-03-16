@@ -1,6 +1,9 @@
-﻿using System;
+﻿using CalamityMod.Particles;
+using CalamityMod.Sounds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Particles;
+using System;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -14,6 +17,10 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         private int target = -1;
         private float trackingRadius = 800f;
         public float animScale;
+        private int noTargetCounter = 0;
+
+        private Color textColor => new Color(255, 0, 0);
+
         public override void SetDefaults()
         {
             Projectile.width = 150;
@@ -45,8 +52,14 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
             if (target == -1)
                 FindTarget();
+                if(100 < noTargetCounter++)
+                    Projectile.Kill();
             else if (target >= 0 && !Main.npc[target].active)
                 FindTarget();
+                Vector2 mouseVelocity = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 20f;
+                Projectile.velocity = Vector2.Lerp(Projectile.velocity, mouseVelocity, 0.25f);
+            if (100 < noTargetCounter++)
+                    Projectile.Kill();
             else if (target >= 0)
             {
                 Vector2 targetVelocity = (Main.npc[target].Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 20f;
@@ -54,6 +67,14 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             }
 
             Projectile.rotation = Projectile.velocity.ToRotation();
+
+            Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(10f, 40f);
+            Vector2 particleOffset = Projectile.Center + behindOffset;
+            Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
+            LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 20, 1f, textColor);
+            GeneralParticleHandler.SpawnParticle(particle);
+            return;
+
         }
 
         void FindTarget()

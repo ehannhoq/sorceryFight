@@ -12,26 +12,48 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.CursedTechniques.BloodManipulation
+namespace sorceryFight.Content.CursedTechniques.StarRage
 {
-    public class SuperNovaShard : ModProjectile
+    public class GarudaKick : CursedTechnique
     {
 
-        private Texture2D texture;
-        private const int FRAME_COUNT = 7;
-        private const int TICKS_PER_FRAME = 5;
+        public static readonly int FRAME_COUNT = 8;
+        public static readonly int TICKS_PER_FRAME = 5;
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.GarudaKick.DisplayName");
+        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.GarudaKick.Description");
+        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.GarudaKick.LockedDescription");
+        public override float Cost => 40f;
+
+        public override float BloodCost => 20f;
+
+        public override Color textColor => new Color(255, 0, 0);
+        public override bool DisplayNameInGame => true;
+
+        public override int Damage => 30;
+        public override int MasteryDamageMultiplier => 50;
+
+        public override float Speed => 25f;
+        public override float LifeTime => 300f;
+        public override bool Unlocked(SorceryFightPlayer sf)
+        {
+            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
+        }
+
+
+        public static Texture2D texture;
 
         public bool animating;
         public float animScale;
-
-        private const float LifeTime = 60f;
-
-        private Color projColor = new Color(255, 0, 0);
 
 
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = FRAME_COUNT;
+        }
+
+        public override int GetProjectileType()
+        {
+            return ModContent.ProjectileType<GarudaKick>();
         }
 
 
@@ -41,7 +63,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Projectile.width = 65;
             Projectile.height = 65;
             Projectile.tileCollide = true;
-            Projectile.friendly = true;
             animating = false;
             Projectile.penetrate = -1;
             animScale = 1.25f;
@@ -77,21 +98,21 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                     SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
                 }
 
-                //Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(10f, 40f);
-                //Vector2 particleOffset = Projectile.Center + behindOffset;
+                //Code that was for expanding the spread of the particles based on height of shooting, but rotating the projectile itself looked better 
+                //float verticalness = 1f - Math.Abs(Projectile.velocity.SafeNormalize(Vector2.Zero).X);
+                //float spreadWidth = MathHelper.Lerp(8f, 60f, verticalness);
+                //Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(30f, 120f);
+                //Vector2 perpendicular = Projectile.velocity.RotatedBy(MathHelper.PiOver2).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(-spreadWidth, spreadWidth);
+                //Vector2 particleOffset = Projectile.Center + behindOffset + perpendicular;
                 //Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                //LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 20, 1f, projColor);
-                //particle.Color *= 0.5f;
+                //LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 20, 1f, textColor);
                 //GeneralParticleHandler.SpawnParticle(particle);
 
                 Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(10f, 40f);
                 Vector2 particleOffset = Projectile.Center + behindOffset;
-
-                Dust dust = Dust.NewDustPerfect(particleOffset, DustID.RedTorch, Vector2.Zero);
-                dust.noGravity = true;
-                dust.scale = Main.rand.NextFloat(0.8f, 1.5f);
-                dust.alpha = 150; // 0 = opaque, 255 = invisible
-                dust.velocity = particleOffset.DirectionTo(Projectile.Center) * 3f;
+                Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
+                LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 20, 1f, textColor);
+                GeneralParticleHandler.SpawnParticle(particle);
                 return;
             }
 
@@ -108,7 +129,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             SpriteBatch spriteBatch = Main.spriteBatch;
 
             if (texture == null && !Main.dedServ)
-                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/SuperNovaShard").Value;
+                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/StarRage/GarudaKick").Value;
 
 
             int frameHeight = texture.Height / FRAME_COUNT;
@@ -124,7 +145,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            //Main.NewText("Hit NPC" + target);
             base.OnHitNPC(target, hit, damageDone);
             Projectile.penetrate = 0;
 
@@ -134,7 +154,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
 
-                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, projColor);
+                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
                 GeneralParticleHandler.SpawnParticle(particle);
             }
         }

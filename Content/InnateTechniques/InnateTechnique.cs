@@ -58,6 +58,7 @@ public abstract class InnateTechnique()
                     new ShrineTechnique(),
                     new VesselTechnique(),
                     new BloodManipulationTechnique(),
+                    new StarRageTechnique(),
                     new PrivatePureLoveTrainTechnique(),
                     new HeavenlyRestriction()
                 };
