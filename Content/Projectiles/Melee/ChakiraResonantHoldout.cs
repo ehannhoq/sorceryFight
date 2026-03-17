@@ -62,6 +62,8 @@ namespace sorceryFight.Content.Projectiles.Melee
 
             if (!IsSlash && Projectile.active)
             {
+                Projectile.damage = 0;
+
                 if (charge == 0)
                 {
                     SoundEngine.PlaySound(SorceryFightSounds.ChakiraResonantChargeUp, Projectile.Center);
@@ -188,32 +190,13 @@ namespace sorceryFight.Content.Projectiles.Melee
             if (!IsSlash && chargeProjIndex != -1f)
             {
                 Projectile chargeProj = Main.projectile[(int)chargeProjIndex];
-
-                float progress = charge / MAX_CHARGE;
-                float minSpeed = 10f;
-                float maxSpeed = 25f;
-
-                chargeProj.velocity = Projectile.velocity.SafeNormalize(Vector2.UnitX) * (maxSpeed - ((maxSpeed - minSpeed) * progress));
-                chargeProj.damage = Projectile.damage + (int)(Projectile.damage * 5 * progress);
-                chargeProj.netUpdate = true;
-
-                if (progress > 0.8f)
-                {
-                    ImpactFrameController.ImpactFrame(new Color(135, 214, 232), 8);
-                    CameraController.CameraShake(10, 80f, 12f);
-                }
-                else
-                {
-                    CameraController.ResetCameraPosition();
-                }
-
+                chargeProj.Kill();
+                
+                CameraController.ResetCameraPosition();
                 CameraController.ResetCameraZoom();
 
                 SorceryFightPlayer sfPlayer = Main.player[Projectile.owner].SorceryFight();
                 sfPlayer.disableRegenFromProjectiles = false;
-
-
-                SoundEngine.PlaySound(SorceryFightSounds.ChakiraResonantProjectileFire, Projectile.Center);
             }
         }
     }

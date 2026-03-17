@@ -10,21 +10,16 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Projectiles
 {
-    public class ChakiraResonantCharge : ModProjectile
+    public class ChakiraResonantBeam : ModProjectile
     {
         public override string Texture => "sorceryFight/Content/CursedTechniques/CursedTechnique";
         public static readonly int FRAMES = 60;
         public static readonly int TICKS_PER_FRAME = 1;
 
         private Texture2D texture;
-
         private ref float prog => ref Projectile.ai[0];
-        private ref float beamIndex => ref Projectile.ai[1];
-
-        public override void OnSpawn(IEntitySource source)
-        {
-            beamIndex = -1;
-        }
+        private const float MAX_LENGTH = 2000f;
+        private const float STEP_SIZE = 150f;
 
         public override void SetDefaults()
         {
@@ -50,25 +45,18 @@ namespace sorceryFight.Content.Projectiles
                 }
             }
 
-            if (Projectile.frame % 30 == 1)
-                SoundEngine.PlaySound(SorceryFightSounds.ChakiraResonantProjectileAmbiance, Projectile.Center);
-
-            if (1f - prog < 0.05)
+            float beamLength = 0f;
+            Vector2 direction = Projectile.rotation.ToRotationVector2();
+            for (float i = 0f; i < MAX_LENGTH; i += STEP_SIZE)
             {
-                Player player = Main.player[Projectile.owner];
-
-                if (beamIndex == -1)
-                    beamIndex = Projectile.NewProjectile(player.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<ChakiraResonantBeam>(), 0, 0, Projectile.owner, Projectile.whoAmI);
-
-                Projectile beamProj = Main.projectile[(int)beamIndex];
-                beamProj.Center = Projectile.Center;
-
-                if (Main.myPlayer == Projectile.owner)
+                Vector2 checkPos = Projectile.Center + direction * i;
+                if (!Collision.CanHitLine(Projectile.Center, 1, 1, checkPos, 1, 1))
                 {
-                    beamProj.rotation = (Main.MouseWorld - player.Center).ToRotation();
-                    beamProj.netUpdate = true;
+                    break;
                 }
+                beamLength = i;
             }
+            Projectile.ai[1] = beamLength;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -84,24 +72,21 @@ namespace sorceryFight.Content.Projectiles
                 Main.GameViewMatrix.ZoomMatrix
             );
 
-            texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Projectiles/ChakiraResonantCharge/{Projectile.frame}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            Rectangle sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
-            Vector2 projOrigin = sourceRectangle.Size() * 0.5f;
+            texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Projectiles/ChakiraResonantBeam/{Projectile.frame}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, projOrigin, prog * 2f, SpriteEffects.None, 0f);
+            float beamLength = Projectile.ai[1];
+            beamLength = MathHelper.Clamp(beamLength, 0f, MAX_LENGTH);
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin();
-            return false;
-        }
+            Vector2 dir = Projectile.rotation.ToRotationVector2();
+            Vector2 start = Projectile.Center - Main.screenPosition;
+            Vector2 origin = new Vector2(0, texture.Height / 2f);
 
-        public override void OnKill(int timeLeft)
-        {
-            if (beamIndex != -1)
+            for (float i = 0f; i < beamLength; i += STEP_SIZE)
             {
-                Projectile beamProj = Main.projectile[(int)beamIndex];
-                beamProj.Kill();
+                Main.EntitySpriteDraw(texture, start + dir * i, null, Color.White, Projectile.rotation, origin, 2f, SpriteEffects.None);
             }
+
+            return false;
         }
     }
 }

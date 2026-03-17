@@ -21,6 +21,7 @@ Mods: {
 			ChakiraResonantSlash.DisplayName: Chakira Resonant Slash
 			ChakiraResonantHoldout.DisplayName: Chakira Resonant Holdout
 			ChakiraResonantCharge.DisplayName: Chakira Resonant Charge
+			ChakiraResonantBeam.DisplayName: Chakira Resonant Beam
 		}
 
 		Configs: {
