@@ -79,7 +79,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Mod.Logger.Info("AI running");
             Main.NewText("spawning projectile");
 
-            ModContent.GetInstance<SorceryFight>().Logger.Info("This is what the bum is doing:" + spawnTimer);
+            //ModContent.GetInstance<SorceryFight>().Logger.Info("This is what the bum is doing:" + spawnTimer);
             if (Main.myPlayer == Projectile.owner){
                 if (keyHeld)
                     {

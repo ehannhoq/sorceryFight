@@ -213,6 +213,12 @@ FlowingRedScaleStackBuff: {
 	LockedDescription: Consume 10 of Sukuna's Fingers
 }
 
+SummonGarudaBuff: {
+	DisplayName: Garuda
+	Description: Summon Garuda
+	LockedDescription: Defeat Golem
+}
+
 InorganicPerception: {
 	DisplayName: Inorganic Perception
 	Description: placeholder

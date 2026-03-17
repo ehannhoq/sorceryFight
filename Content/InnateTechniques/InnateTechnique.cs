@@ -41,6 +41,8 @@ public abstract class InnateTechnique()
                 return new PrivatePureLoveTrainTechnique();
             case "BloodManipulation":
                 return new BloodManipulationTechnique();
+            case "StarRage":
+                return new StarRageTechnique();
             case "HeavenlyRestriction":
                 return new HeavenlyRestriction();
         }

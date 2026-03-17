@@ -9,6 +9,7 @@ namespace sorceryFight.SFPlayer
     public partial class SorceryFightPlayer : ModPlayer
     {
         public bool infinity;
+        public bool summonGaruda;
         public bool domainAmp;
         public bool hollowWickerBasket;
         public bool immune;
@@ -40,11 +41,24 @@ namespace sorceryFight.SFPlayer
 
                 if (passiveTechnique.isActive)
                 {
-                    passiveTechnique.Apply(Player);
+                    //code for Garuda, buff removal lives in the projectile
+                    if (passiveTechnique.runOnce)
+                    {
+                        //this was stupid and doesn't work
+                        //apply / remove should only be called once and all logic should live in update 
+                        passiveTechnique.ApplyOnce(Player);
+                    }
+                    else
+                    {
+                        passiveTechnique.Apply(Player);
+                    }
                 }
                 else
                 {
-                    passiveTechnique.Remove(Player);
+                    if (!passiveTechnique.runOnce)
+                    {
+                        passiveTechnique.Remove(Player);
+                    }
                 }
             }
         }

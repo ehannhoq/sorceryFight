@@ -9,6 +9,7 @@ using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.SFPlayer;
 using Terraria.ModLoader;
 using sorceryFight.Content.Buffs.Limitless;
+using sorceryFight.Content.Buffs.StarRage;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -18,6 +19,7 @@ namespace sorceryFight.Content.InnateTechniques
         public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.StarRage.DisplayName");
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
+            new SummonGarudaBuff(),
             new FallingBlossomEmotionBuff()
         };
 

@@ -25,6 +25,9 @@ Mods: {
 			BlackRopeWhip.DisplayName: Black Rope Whip
 			UnlimitedPiercingBloodProjectile.DisplayName: Unlimited Piercing Blood Projectile
 			SuperNovaShard.DisplayName: Super Nova Shard
+			GarudaBody.DisplayName: Garuda Body
+			GarudaHead.DisplayName: Garuda Head
+			GarudaTail.DisplayName: Garuda Tail
 		}
 
 		Configs: {
