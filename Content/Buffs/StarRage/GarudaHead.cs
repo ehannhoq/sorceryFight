@@ -266,7 +266,7 @@ namespace sorceryFight.Content.Buffs.StarRage
                     SpriteEffects fx = Math.Abs(segments[i].rotation) > MathHelper.PiOver2 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
                     if (i < segments.Count - 1)
                     {
-                        Main.EntitySpriteDraw((i == 5 || i == 12) ? texBody2 : texBody, segments[i].Center - Main.screenPosition, null, segments[i].GetAlpha(lightColor), segments[i].rotation + MathHelper.Pi / 2f, texBody.Size() / 2f, segments[i].scale, fx, 0);
+                        Main.EntitySpriteDraw((i % 2 != 0 && i < segments.Count) ? texBody2 : texBody, segments[i].Center - Main.screenPosition, null, segments[i].GetAlpha(lightColor), segments[i].rotation + MathHelper.Pi / 2f, texBody.Size() / 2f, segments[i].scale, fx, 0);
                     }
                     else if (i < segments.Count)
                     {
@@ -274,7 +274,7 @@ namespace sorceryFight.Content.Buffs.StarRage
                     }
                     else
                     {
-                        Main.EntitySpriteDraw(texTail2, segments[i].Center - Main.screenPosition - new Vector2(10, 0).RotatedBy(segments[i].rotation), null, segments[i].GetAlpha(lightColor), segments[i].rotation + MathHelper.Pi / 2f, texTail.Size() / 2f, segments[i].scale, fx, 0);
+                        Main.EntitySpriteDraw(texTail2, segments[i].Center - Main.screenPosition, null, segments[i].GetAlpha(lightColor), segments[i].rotation + MathHelper.Pi / 2f, texTail.Size() / 2f, segments[i].scale, fx, 0);
 
                     }
                 }
