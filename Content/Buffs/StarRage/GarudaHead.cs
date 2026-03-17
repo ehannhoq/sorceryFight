@@ -256,9 +256,9 @@ namespace sorceryFight.Content.Buffs.StarRage
         {
             Texture2D tex = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
             Texture2D texBody = ModContent.Request<Texture2D>("sorceryFight/Content/Buffs/StarRage/GarudaBody").Value;
-            Texture2D texBody2 = ModContent.Request<Texture2D>("sorceryFight/Content/Buffs/StarRage/GarudaBody").Value;
-            Texture2D texTail = ModContent.Request<Texture2D>("sorceryFight/Content/Buffs/StarRage/GarudaBody").Value;
-            Texture2D texTail2 = ModContent.Request<Texture2D>("sorceryFight/Content/Buffs/StarRage/GarudaBody").Value;
+            Texture2D texBody2 = ModContent.Request<Texture2D>("sorceryFight/Content/Buffs/StarRage/GarudaBody2").Value;
+            Texture2D texTail = ModContent.Request<Texture2D>("sorceryFight/Content/Buffs/StarRage/GarudaTail").Value;
+            Texture2D texTail2 = ModContent.Request<Texture2D>("sorceryFight/Content/Buffs/StarRage/GarudaTail2").Value;
             for (var i = segments.Count; i > 0; i--)
             {
                 if (segments.ContainsKey(i))
