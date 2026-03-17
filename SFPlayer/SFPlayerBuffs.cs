@@ -41,24 +41,13 @@ namespace sorceryFight.SFPlayer
 
                 if (passiveTechnique.isActive)
                 {
-                    //code for Garuda, buff removal lives in the projectile
-                    if (passiveTechnique.runOnce)
-                    {
-                        //this was stupid and doesn't work
-                        //apply / remove should only be called once and all logic should live in update 
-                        passiveTechnique.ApplyOnce(Player);
-                    }
-                    else
-                    {
-                        passiveTechnique.Apply(Player);
-                    }
+                   //apply / remove should only be called once and all logic should live in update 
+                   //already implemented this way in Garuda
+                    passiveTechnique.Apply(Player);
                 }
                 else
                 {
-                    if (!passiveTechnique.runOnce)
-                    {
-                        passiveTechnique.Remove(Player);
-                    }
+                    passiveTechnique.Remove(Player);
                 }
             }
         }

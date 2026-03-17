@@ -16,7 +16,6 @@ namespace sorceryFight.Content.Buffs
         public abstract float CostPerSecond { get; set; }
 
         public virtual float BloodCostPerSecond { get; set; }
-        public virtual bool runOnce { get; } = false;
         public abstract bool Unlocked(SorceryFightPlayer sf);
 
         public override void SetStaticDefaults()
@@ -27,7 +26,6 @@ namespace sorceryFight.Content.Buffs
 
         public abstract void Apply(Player player);
         public abstract void Remove(Player player);
-        public virtual void ApplyOnce(Player player) { }
 
         public override void Update(Player player, ref int buffIndex)
         {

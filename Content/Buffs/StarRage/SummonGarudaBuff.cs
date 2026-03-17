@@ -18,8 +18,6 @@ namespace sorceryFight.Content.Buffs.StarRage
         public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.SummonGarudaBuff.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.Buffs.SummonGarudaBuff.LockedDescription");
 
-        public override bool runOnce => true;
-
         public int Damage => 20;
 
         public override string Stats
@@ -41,11 +39,6 @@ namespace sorceryFight.Content.Buffs.StarRage
 
         public override void Apply(Player player)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override void ApplyOnce(Player player)
-        {
             SorceryFightPlayer sfPlayer = player.SorceryFight();
             if (sfPlayer.summonGaruda == true)
             {
@@ -61,14 +54,13 @@ namespace sorceryFight.Content.Buffs.StarRage
 
 
             sfPlayer.summonGaruda = true;
-
         }
 
         public override void Remove(Player player)
         {
-            //SorceryFightPlayer sfPlayer = player.SorceryFight();
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
             //sfPlayer.summonGaruda = false;
-            throw new System.NotImplementedException();
+            sfPlayer.summonGaruda = false;
         }
 
         public static void SummonGaruda(int headType, int bodyType, int tailType, Vector2 spawnPos, Player player, IEntitySource source, int damage, float knockback)
