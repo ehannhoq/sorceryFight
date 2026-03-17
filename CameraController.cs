@@ -18,8 +18,13 @@ namespace sorceryFight
         {
             if (Main.dedServ) return;
 
+            TaskScheduler.Instance.AddContinuousTask(() =>
+            {
+                targetScreenPosition = Vector2.Lerp(targetScreenPosition, worldPos, lerp);
+            }, 10);
+
             targetScreenPosition = worldPos;
-            screenPositionInterlopant = lerp;
+            screenPositionInterlopant = 1f;
 
             if (duration > 0)
                 TaskScheduler.Instance.AddDelayedTask(ResetCameraPosition, duration);
@@ -96,8 +101,10 @@ namespace sorceryFight
                 return;
             }
 
+            if (screenPositionInterlopant <= 0f) return;
+
             Vector2 idealScreenPosition = targetScreenPosition - new Vector2(Main.screenWidth, Main.screenHeight) * 0.5f;
-            Main.screenPosition = Vector2.Lerp(Main.screenPosition, idealScreenPosition, screenPositionInterlopant);
+            Main.screenPosition = idealScreenPosition;
         }
 
         public override void ModifyTransformMatrix(ref SpriteViewMatrix Transform)
