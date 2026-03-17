@@ -19,7 +19,8 @@ namespace sorceryFight.Content.Projectiles
         private Texture2D texture;
 
         private ref float prog => ref Projectile.ai[0];
-        private ref float beamIndex => ref Projectile.ai[1];
+        private ref float logProg => ref Projectile.ai[1];
+        private ref float beamIndex => ref Projectile.ai[2];
 
         public override void OnSpawn(IEntitySource source)
         {
@@ -53,21 +54,19 @@ namespace sorceryFight.Content.Projectiles
             if (Projectile.frame % 30 == 1)
                 SoundEngine.PlaySound(SorceryFightSounds.ChakiraResonantProjectileAmbiance, Projectile.Center);
 
-            if (1f - prog < 0.05)
+
+            Player player = Main.player[Projectile.owner];
+
+            if (beamIndex == -1)
+                beamIndex = Projectile.NewProjectile(player.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<ChakiraResonantBeam>(), Projectile.damage, 0, Projectile.owner, Projectile.whoAmI);
+
+            Projectile beamProj = Main.projectile[(int)beamIndex];
+            beamProj.Center = Projectile.Center;
+
+            if (Main.myPlayer == Projectile.owner)
             {
-                Player player = Main.player[Projectile.owner];
-
-                if (beamIndex == -1)
-                    beamIndex = Projectile.NewProjectile(player.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<ChakiraResonantBeam>(), 0, 0, Projectile.owner, Projectile.whoAmI);
-
-                Projectile beamProj = Main.projectile[(int)beamIndex];
-                beamProj.Center = Projectile.Center;
-
-                if (Main.myPlayer == Projectile.owner)
-                {
-                    beamProj.rotation = (Main.MouseWorld - player.Center).ToRotation();
-                    beamProj.netUpdate = true;
-                }
+                beamProj.rotation = (Main.MouseWorld - player.Center).ToRotation();
+                beamProj.netUpdate = true;
             }
         }
 
@@ -84,11 +83,31 @@ namespace sorceryFight.Content.Projectiles
                 Main.GameViewMatrix.ZoomMatrix
             );
 
+            if (beamIndex != -1)
+            {
+                Projectile beamProj = Main.projectile[(int)beamIndex];
+                ChakiraResonantBeam beam = beamProj.ModProjectile as ChakiraResonantBeam;
+                if (beam != null)
+                {
+                    Texture2D beamTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/Projectiles/ChakiraResonantBeam/{beamProj.frame}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+                    Vector2 dir = beamProj.rotation.ToRotationVector2();
+                    Vector2 start = beamProj.Center - Main.screenPosition;
+                    Vector2 origin = new Vector2(0, beamTexture.Height / 2f);
+
+                    for (float i = 0f; i < beamProj.ai[0]; i += ChakiraResonantBeam.STEP_SIZE)
+                    {
+                        Vector2 scale = new Vector2(1f, beamProj.ai[1]);
+                        Main.EntitySpriteDraw(beamTexture, start + dir * i, null, Color.White, beamProj.rotation, origin, scale * 2f, SpriteEffects.None);
+                    }
+                }
+            }
+
             texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Projectiles/ChakiraResonantCharge/{Projectile.frame}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Rectangle sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
             Vector2 projOrigin = sourceRectangle.Size() * 0.5f;
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, projOrigin, prog * 2f, SpriteEffects.None, 0f);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, projOrigin, logProg * 2f, SpriteEffects.None, 0f);
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin();

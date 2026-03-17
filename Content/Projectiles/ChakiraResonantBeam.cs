@@ -17,9 +17,12 @@ namespace sorceryFight.Content.Projectiles
         public static readonly int TICKS_PER_FRAME = 1;
 
         private Texture2D texture;
-        private ref float prog => ref Projectile.ai[0];
-        private const float MAX_LENGTH = 2000f;
-        private const float STEP_SIZE = 150f;
+        public const float MAX_LENGTH = 2000f;
+        public const float STEP_SIZE = 300f;
+
+        private ref float beamLength => ref Projectile.ai[0];
+        private ref float beamHeight => ref Projectile.ai[1];
+        private ref float tick => ref Projectile.ai[2];
 
         public override void SetDefaults()
         {
@@ -31,7 +34,7 @@ namespace sorceryFight.Content.Projectiles
             Projectile.penetrate = -1;
             Projectile.DamageType = CursedTechniqueDamageClass.Instance;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 30;
+            Projectile.idStaticNPCHitCooldown = 10;
         }
 
         public override void AI()
@@ -45,7 +48,6 @@ namespace sorceryFight.Content.Projectiles
                 }
             }
 
-            float beamLength = 0f;
             Vector2 direction = Projectile.rotation.ToRotationVector2();
             for (float i = 0f; i < MAX_LENGTH; i += STEP_SIZE)
             {
@@ -55,36 +57,30 @@ namespace sorceryFight.Content.Projectiles
                     break;
                 }
                 beamLength = i;
+                beamLength = MathHelper.Clamp(beamLength, 0f, MAX_LENGTH);
             }
-            Projectile.ai[1] = beamLength;
+
+            if (tick++ >= 60)
+                tick = 60;
+            float easeOutProg = MathF.Sqrt(1 - MathF.Pow((tick / 60f) - 1, 2));
+            easeOutProg = MathHelper.Clamp(easeOutProg, 0.0f, 1.0f);
+            beamHeight = easeOutProg;
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(
-                SpriteSortMode.Immediate,
-                BlendState.NonPremultiplied,
-                SamplerState.LinearClamp,
-                DepthStencilState.None,
-                RasterizerState.CullNone,
-                null,
-                Main.GameViewMatrix.ZoomMatrix
-            );
+            return false;
+        }
 
-            texture = ModContent.Request<Texture2D>($"sorceryFight/Content/Projectiles/ChakiraResonantBeam/{Projectile.frame}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-            float beamLength = Projectile.ai[1];
-            beamLength = MathHelper.Clamp(beamLength, 0f, MAX_LENGTH);
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            if (projHitbox.Intersects(targetHitbox))
+                return true;
 
-            Vector2 dir = Projectile.rotation.ToRotationVector2();
-            Vector2 start = Projectile.Center - Main.screenPosition;
-            Vector2 origin = new Vector2(0, texture.Height / 2f);
-
-            for (float i = 0f; i < beamLength; i += STEP_SIZE)
-            {
-                Main.EntitySpriteDraw(texture, start + dir * i, null, Color.White, Projectile.rotation, origin, 2f, SpriteEffects.None);
-            }
+            float useless = 0f;
+            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + Projectile.rotation.ToRotationVector2() * beamLength, Projectile.height, ref useless))
+                return true;
 
             return false;
         }

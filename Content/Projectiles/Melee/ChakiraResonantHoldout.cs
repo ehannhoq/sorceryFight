@@ -5,6 +5,7 @@ using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Particles;
 using sorceryFight.Content.Particles.UIParticles;
 using sorceryFight.Content.Projectiles;
@@ -29,6 +30,8 @@ namespace sorceryFight.Content.Projectiles.Melee
         private bool IsSlash => Projectile.ai[0] == 0f;
         private ref float chargeProjIndex => ref Projectile.ai[1];
         private ref float charge => ref Projectile.ai[2];
+
+        private int damage;
 
         public override void OnSpawn(IEntitySource source)
         {
@@ -62,51 +65,55 @@ namespace sorceryFight.Content.Projectiles.Melee
 
             if (!IsSlash && Projectile.active)
             {
-                Projectile.damage = 0;
+                charge++;
 
-                if (charge == 0)
+                if (charge == 1)
                 {
                     SoundEngine.PlaySound(SorceryFightSounds.ChakiraResonantChargeUp, Projectile.Center);
+                    damage = Projectile.damage;
+                    Projectile.damage = 0;
                 }
 
-                SorceryFightPlayer sfPlayer = Main.player[Projectile.owner].SorceryFight();
-                if (sfPlayer.cursedEnergy > 1 && charge < MAX_CHARGE)
-                {
-                    sfPlayer.disableRegenFromProjectiles = true;
-
-                    float cursedEnergyPerTick = (sfPlayer.maxCursedEnergy - 100) / MAX_CHARGE;
-                    sfPlayer.cursedEnergy -= cursedEnergyPerTick;
-
-                    if (charge++ >= MAX_CHARGE)
-                        charge = MAX_CHARGE;
-                }
+                Player player = Main.player[Projectile.owner];
 
                 if (charge < MIN_CHARGE)
                     return;
 
+                player.SorceryFight().disableRegenFromProjectiles = true;
 
-                float prog = (charge - MIN_CHARGE) / MAX_CHARGE;
-                float logProg = MathF.Log10(prog + 0.01f) + 2f;
-                logProg /= 2f;
+                float newCharge = charge - MIN_CHARGE; // 0 -> 300
+
+                float progress = newCharge / MAX_CHARGE;
+                progress = MathHelper.Clamp(progress, 0.0f, 1.0f);
+
+                float easeOutProg = MathF.Sqrt(1 - MathF.Pow(progress - 1, 2));
+                easeOutProg = MathHelper.Clamp(easeOutProg, 0.0f, 1.0f);
 
                 if (Main.myPlayer == Projectile.owner)
                 {
-                    if (chargeProjIndex == -1f)
+                    if (chargeProjIndex == -1)
                     {
                         Vector2 spawnPos = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitX) * 350f;
-                        chargeProjIndex = Projectile.NewProjectile(sfPlayer.Player.GetSource_FromThis(), spawnPos, Vector2.Zero, ModContent.ProjectileType<ChakiraResonantCharge>(), 0, 0, Projectile.owner, Projectile.whoAmI);
+                        chargeProjIndex = Projectile.NewProjectile(player.GetSource_FromThis(), spawnPos, Vector2.Zero, ModContent.ProjectileType<ChakiraResonantCharge>(), damage, 0, Projectile.owner, Projectile.whoAmI);
                     }
 
-                    float cameraZoom = -(logProg / 4);
-                    CameraController.SetCameraZoom(cameraZoom);
+                    float zoomProgress = -(easeOutProg / 3.5f);
+                    CameraController.SetCameraZoom(zoomProgress);
 
-                    Vector2 cameraOffset = Main.rand.NextVector2CircularEdge(prog * 7f, prog * 7f);
-                    CameraController.SetCameraPosition(sfPlayer.Player.Center + cameraOffset);
+                    SorceryFightPlayer sfPlayer = player.SorceryFight();
+
+                    sfPlayer.cursedEnergyUsagePerSecond += 125f * (newCharge / MAX_CHARGE);
+                    if (player.HasBuff(ModContent.BuffType<BurntTechnique>()))
+                    {
+                        Projectile.Kill();
+                    }
                 }
 
                 Projectile chargeProj = Main.projectile[(int)chargeProjIndex];
-                chargeProj.ai[0] = logProg;
+                chargeProj.ai[0] = progress;
+                chargeProj.ai[1] = easeOutProg;
                 chargeProj.Center = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.UnitX) * 350f;
+
             }
         }
 
@@ -191,7 +198,7 @@ namespace sorceryFight.Content.Projectiles.Melee
             {
                 Projectile chargeProj = Main.projectile[(int)chargeProjIndex];
                 chargeProj.Kill();
-                
+
                 CameraController.ResetCameraPosition();
                 CameraController.ResetCameraZoom();
 
