@@ -17,6 +17,7 @@ using System.Linq;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
 using sorceryFight.Content.Buffs.CursedEnergyTraits;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 
 namespace sorceryFight.SFPlayer
@@ -90,6 +91,7 @@ namespace sorceryFight.SFPlayer
         public bool UnlockedDomainExpansion => innateTechnique.DomainExpansion.Unlocked(this);
         public bool inDomainAnimation;
         public int domainTimer;
+        public int chargeTimer;
         public bool HasActiveDomain => DomainExpansionController.ActiveDomains.Any(d => d is PlayerDomainExpansion && d is not ISimpleDomain && d.owner == Player.whoAmI);
         public bool fallingBlossomEmotion;
         public bool inSimpleDomain;
@@ -316,13 +318,16 @@ namespace sorceryFight.SFPlayer
             if (Player.dead) return;
 
 
-            if (SFKeybinds.UseTechnique.JustPressed)
+            if (SFKeybinds.UseTechnique.Current)
             {
-                //ModContent.GetInstance<SorceryFight>().Logger.Info("Keybing Just Pressed" + SFKeybinds.UseTechnique.JustPressed + "Is: " + disableCurseTechniques);
-
-                if (!disableCurseTechniques || uniqueBodyStructure)
-                    ShootTechnique();
+                chargeTimer++;
             }
+
+            if (SFKeybinds.UseTechnique.JustReleased)
+            {
+                ShootTechnique(chargeTimer);
+            }
+
 
             if (heavenlyRestriction) return;
 
@@ -419,7 +424,7 @@ namespace sorceryFight.SFPlayer
         }
 
 
-        public void ShootTechnique()
+        public void ShootTechnique(int timeCharged)
         {
             if (selectedTechnique == null || disableRegenFromProjectiles)
             {
@@ -459,7 +464,25 @@ namespace sorceryFight.SFPlayer
                 }
             }
 
-            selectedTechnique.UseTechnique(this);
+            if (selectedTechnique.hasCharge == 0)
+            {
+                selectedTechnique.UseTechnique(this);
+            }
+            else if (selectedTechnique.hasCharge == 1)
+            {
+                if (selectedTechnique.minChargeTime < timeCharged)
+                {
+                    Main.NewText("Not enough Charge!");
+                    return;
+                }
+                selectedTechnique.TimeCharged = timeCharged;
+                selectedTechnique.UseTechnique(this);
+            }
+            else
+            {
+                selectedTechnique.TimeCharged = timeCharged;
+                selectedTechnique.UseTechnique(this);
+            }
         }
 
 

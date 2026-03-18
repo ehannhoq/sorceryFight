@@ -17,6 +17,16 @@ namespace sorceryFight.Content.CursedTechniques
         public abstract string LockedDescription { get; }
         public abstract float Cost { get; }
 
+        public virtual int hasCharge { get; set; } = 0;
+        //0 = no charge technique
+        //1 = technique is charged
+        //2 = technique has a charged and normal press
+
+        public virtual int minChargeTime { get; set; } = 0;
+        //minimum time in ticks needed to trigger activation of a charged ability
+
+        public int TimeCharged;
+
         public virtual float BloodCost { get; } = 0;
         public abstract Color textColor { get; }
         public abstract bool DisplayNameInGame { get; }
