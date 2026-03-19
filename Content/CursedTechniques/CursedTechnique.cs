@@ -36,6 +36,7 @@ namespace sorceryFight.Content.CursedTechniques
         public abstract float LifeTime { get; }
         public abstract bool Unlocked(SorceryFightPlayer sf);
         public abstract int GetProjectileType();
+        
         public virtual string GetStats(SorceryFightPlayer sf)
         {
             return $"Damage: {Math.Round(CalculateTrueDamage(sf), 2)}\n"
@@ -130,5 +131,12 @@ namespace sorceryFight.Content.CursedTechniques
             }
             base.OnKill(timeLeft);
         }
+
+        public virtual bool UseCondition(SorceryFightPlayer sf)
+        {
+            return true;
+        }
+
+
     }
 }

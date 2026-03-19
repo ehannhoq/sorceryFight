@@ -461,6 +461,11 @@ namespace sorceryFight.SFPlayer
                 return;
             }
 
+            if (!selectedTechnique.UseCondition(this))
+            {
+                return;
+            }
+
             if (Player.HasBuff<BurntTechnique>())
             {
                 int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");

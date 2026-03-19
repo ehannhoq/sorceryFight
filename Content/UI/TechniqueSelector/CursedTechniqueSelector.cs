@@ -20,11 +20,31 @@ namespace sorceryFight.Content.UI.TechniqueSelector
         internal class TechniqueSelectorButton : SFButton
         {
             internal int id;
+
+            SorceryFightPlayer sfPlayer;
             public TechniqueSelectorButton(Texture2D texture, string hoverText, int id) : base(texture, hoverText)
             {
                 this.id = id;
+                sfPlayer = Main.LocalPlayer.SorceryFight();
                 Width.Set(texture.Width, 0f);
                 Height.Set(texture.Height, 0f);
+            }
+
+            protected override void DrawSelf(SpriteBatch spriteBatch)
+            {
+                base.DrawSelf(spriteBatch);
+
+                CalculatedStyle dim = GetDimensions();
+
+                Color finalColor = Color.White;
+
+                //Grey out the technique when use condition is not met
+                if (!sfPlayer.innateTechnique.CursedTechniques[id].UseCondition(sfPlayer))
+                {
+                    finalColor = Color.Gray;
+                }
+
+                spriteBatch.Draw(texture, new Vector2(dim.X, dim.Y), finalColor);
             }
 
             public override void OnClick()

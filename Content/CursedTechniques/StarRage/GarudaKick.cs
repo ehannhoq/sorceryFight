@@ -56,6 +56,10 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             return ModContent.ProjectileType<GarudaKick>();
         }
 
+        public override bool UseCondition(SorceryFightPlayer sf)
+        {
+            return !sf.summonGaruda;
+        }
 
         public override void SetDefaults()
         {
