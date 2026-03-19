@@ -48,6 +48,7 @@ namespace sorceryFight.SFPlayer
         public float bloodEnergyRegenPerSecond;
         public float bloodEnergyUsagePerSecond;
 
+
         #endregion
 
         #region Max Cursed Energy Modifiers
@@ -148,11 +149,21 @@ namespace sorceryFight.SFPlayer
         public Vector2 BEBarPos;
         #endregion
 
+        public bool noInnateDomain;
+
         #region HeavenlyRestriction
         public bool heavenlyRestriction;
-
-        public bool noInnateDomain;
         #endregion
+
+        #region StarRage
+        public float starEnergy;
+        public float maxStarEnergy { get; private set; }
+        public float starEnergyRegenPerSecond;
+        public float starEnergyUsagePerSecond;
+        public bool summonGaruda;
+        public NPC garudaCurrentTarget;
+        #endregion
+
 
         public override void UpdateEquips()
         {
@@ -231,6 +242,11 @@ namespace sorceryFight.SFPlayer
                 bloodEnergy -= SFUtils.RateSecondsToTicks(bloodEnergyUsagePerSecond);
             }
 
+            if(starEnergy > 0)
+            {
+                starEnergy -= SFUtils.RateSecondsToTicks(starEnergyUsagePerSecond);
+            }
+
             bool disabledRegen = disableRegenFromBuffs || disableRegenFromProjectiles || disableRegenFromDE;
 
             if (cursedEnergy < maxCursedEnergy && !disabledRegen)
@@ -241,6 +257,11 @@ namespace sorceryFight.SFPlayer
             if (bloodEnergy < maxBloodEnergy)
             {
                 bloodEnergy += SFUtils.RateSecondsToTicks(bloodEnergyRegenPerSecond);
+            }
+
+            if (starEnergy < maxStarEnergy)
+            {
+                starEnergy += SFUtils.RateSecondsToTicks(starEnergyRegenPerSecond);
             }
 
             if (cursedEnergy > maxCursedEnergy)
@@ -318,15 +339,24 @@ namespace sorceryFight.SFPlayer
             if (Player.dead) return;
 
 
-            if (SFKeybinds.UseTechnique.Current)
+            if (SFKeybinds.UseTechnique.JustPressed)
             {
-                chargeTimer++;
+                //ModContent.GetInstance<SorceryFight>().Logger.Info("Keybing Just Pressed" + SFKeybinds.UseTechnique.JustPressed + "Is: " + disableCurseTechniques);
+
+                if (!disableCurseTechniques || uniqueBodyStructure)
+                    ShootTechnique();
             }
 
-            if (SFKeybinds.UseTechnique.JustReleased)
-            {
-                ShootTechnique(chargeTimer);
-            }
+            //seeing when just released creates problem with blood manip constant fire techs
+            //if (SFKeybinds.UseTechnique.Current)
+            //{
+            //    chargeTimer++;
+            //}
+
+            //if (SFKeybinds.UseTechnique.JustReleased)
+            //{
+            //    ShootTechnique(chargeTimer);
+            //}
 
 
             if (heavenlyRestriction) return;
@@ -424,7 +454,7 @@ namespace sorceryFight.SFPlayer
         }
 
 
-        public void ShootTechnique(int timeCharged)
+        public void ShootTechnique()
         {
             if (selectedTechnique == null || disableRegenFromProjectiles)
             {
@@ -464,25 +494,7 @@ namespace sorceryFight.SFPlayer
                 }
             }
 
-            if (selectedTechnique.hasCharge == 0)
-            {
-                selectedTechnique.UseTechnique(this);
-            }
-            else if (selectedTechnique.hasCharge == 1)
-            {
-                if (selectedTechnique.minChargeTime < timeCharged)
-                {
-                    Main.NewText("Not enough Charge!");
-                    return;
-                }
-                selectedTechnique.TimeCharged = timeCharged;
-                selectedTechnique.UseTechnique(this);
-            }
-            else
-            {
-                selectedTechnique.TimeCharged = timeCharged;
-                selectedTechnique.UseTechnique(this);
-            }
+            selectedTechnique.UseTechnique(this);
         }
 
 

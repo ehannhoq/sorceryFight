@@ -9,7 +9,6 @@ namespace sorceryFight.SFPlayer
     public partial class SorceryFightPlayer : ModPlayer
     {
         public bool infinity;
-        public bool summonGaruda;
         public bool domainAmp;
         public bool hollowWickerBasket;
         public bool immune;

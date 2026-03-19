@@ -81,8 +81,18 @@ namespace sorceryFight.Content.Buffs.StarRage
             target ??= ClosestNPCAt(Projectile.Center, 2500, true);
 
             if (target != null && Projectile.position.Distance(player.position) <= 2500)
-            {
-                AttackTarget(target);
+            {   
+                SorceryFightPlayer sf = player.SorceryFight();
+                if (sf.garudaCurrentTarget != null && sf.garudaCurrentTarget.CanBeChasedBy(null, false))
+                {
+                    //add function to lock down the target
+                    RestrainTarget(sf.garudaCurrentTarget);
+                    //Main.NewText("Locking on to target: " + sf.garudaCurrentTarget.FullName);
+                }
+                else
+                {
+                    AttackTarget(target);
+                }
             }
             else
             {
@@ -213,7 +223,7 @@ namespace sorceryFight.Content.Buffs.StarRage
             }
 
             // Charge if the target is far away.
-            if (distanceFromDestination > 1500f)
+            if (distanceFromDestination > 2500f)
                 idealFlyAcceleration = MathHelper.Min(6f, Projectile.ai[1] + 1f);
 
             Projectile.ai[1] = MathHelper.Lerp(Projectile.ai[1], idealFlyAcceleration, 0.3f);
@@ -250,7 +260,112 @@ namespace sorceryFight.Content.Buffs.StarRage
                     Projectile.ai[2] = 0;
                 }
             }
+
+            if (distanceFromDestination > 320f)
+            {
+                float speed = Projectile.velocity.Length();
+                if (speed < 23f)
+                    speed += 0.08f;
+
+                if (speed > 32f)
+                    speed -= 0.08f;
+
+                // Go faster if the line of sight is aiming closely at the target.
+                if (directionToTargetOrthogonality < 0.85f && directionToTargetOrthogonality > 0.5f)
+                    speed += 16f;
+
+                // And go slower otherwise so that the dragon can angle towards the target more accurately.
+                if (directionToTargetOrthogonality < 0.5f && directionToTargetOrthogonality > -0.7f)
+                    speed -= 16f;
+
+                speed = MathHelper.Clamp(speed, 16f, 34f);
+
+                Projectile.velocity = Projectile.velocity.ToRotation().AngleTowards(Projectile.AngleTo(destination), Projectile.ai[1]).ToRotationVector2() * speed;
+
+                // failsafe to prevent orbiting
+                Projectile.ai[2]++;
+                if (Projectile.ai[2] >= 90)
+                {
+                    Projectile.velocity = Projectile.DirectionTo(destination) * 30;
+                    Projectile.ai[2] = 0;
+                }
+
+            }
+
         }
+
+        internal void RestrainTarget(NPC target)
+        {
+
+            float idealFlyAcceleration = 0.18f;
+
+            Vector2 destination = target.Center;
+            float distanceFromDestination = Projectile.Distance(destination);
+
+            if (distanceFromDestination > 1000f)
+                //add a check for extreme scaling of the height and width here
+            {
+                AttackTarget(target);
+                return;
+            }
+
+            Main.NewText("Distance From Target: " + distanceFromDestination);
+
+            Main.NewText(target.height);
+            Main.NewText(target.width);
+
+            //These swerve is what makes Garuda turn around, we want it to turn faster the smaller the create it's constricitng is, so lower distance 
+            //Also lower the distance on 
+
+            //ideally we want our base lower value here to be 100f
+
+            if (Projectile.Distance(destination) > 100f)
+            {
+                Projectile.ai[2] = 0;
+                destination += (Projectile.ai[0] % 30f / 30f * MathHelper.TwoPi).ToRotationVector2() * 145f;
+                distanceFromDestination = Projectile.Distance(destination);
+                idealFlyAcceleration *= 2.5f;
+            }
+
+            Projectile.ai[1] = MathHelper.Lerp(Projectile.ai[1], idealFlyAcceleration, 0.3f);
+
+            float directionToTargetOrthogonality = Vector2.Dot(Projectile.velocity.SafeNormalize(Vector2.Zero), (destination - Projectile.Center).SafeNormalize(Vector2.Zero));
+
+            // Fly towards the target if it's far.
+            // Our base value here should be about 300f
+            if (distanceFromDestination > 150f)
+            {
+                float speed = Projectile.velocity.Length();
+                if (speed < 23f)
+                    speed += 0.08f;
+
+                if (speed > 32f)
+                    speed -= 0.08f;
+
+                // Go faster if the line of sight is aiming closely at the target.
+                if (directionToTargetOrthogonality < 0.85f && directionToTargetOrthogonality > 0.5f)
+                    speed += 16f;
+
+                // And go slower otherwise so that the dragon can angle towards the target more accurately.
+                if (directionToTargetOrthogonality < 0.5f && directionToTargetOrthogonality > -0.7f)
+                    speed -= 16f;
+
+                speed = MathHelper.Clamp(speed, 16f, 34f);
+
+                Projectile.velocity = Projectile.velocity.ToRotation().AngleTowards(Projectile.AngleTo(destination), Projectile.ai[1]).ToRotationVector2() * speed;
+
+                // failsafe to prevent orbiting
+                //lower this because we want orbit
+                Projectile.ai[2]++;
+                Main.NewText("Orbit timer: " + Projectile.ai[2]);
+                if (Projectile.ai[2] >= 90)
+                {
+                    Projectile.velocity = Projectile.DirectionTo(destination) * 30;
+                    Projectile.ai[2] = 0;
+                }
+            }
+        }
+
 
         public override bool PreDraw(ref Color lightColor)
         {

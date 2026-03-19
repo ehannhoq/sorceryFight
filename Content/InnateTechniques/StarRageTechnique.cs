@@ -10,6 +10,7 @@ using sorceryFight.SFPlayer;
 using Terraria.ModLoader;
 using sorceryFight.Content.Buffs.Limitless;
 using sorceryFight.Content.Buffs.StarRage;
+using sorceryFight.Content.CursedTechniques.BloodManipulation;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -25,6 +26,7 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
+            new StarChannel(),
             new GarudaKick()
         };
 

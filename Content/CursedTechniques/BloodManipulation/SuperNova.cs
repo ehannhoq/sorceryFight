@@ -17,7 +17,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
     public class SuperNova : CursedTechnique
     {
 
-        public static readonly int FRAME_COUNT = 8;
+        public static readonly int FRAME_COUNT = 3;
         public static readonly int TICKS_PER_FRAME = 5;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.SuperNova.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SuperNova.Description");
@@ -83,8 +83,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 65;
-            Projectile.height = 65;
+            Projectile.width = 16;
+            Projectile.height = 16;
             Projectile.tileCollide = false;
             animating = false;
             Projectile.penetrate = -1;

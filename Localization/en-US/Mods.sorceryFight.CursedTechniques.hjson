@@ -284,6 +284,22 @@ UnlimitedPiercingBlood: {
 	LockedDescription: Defeat the one who guards the Dungeon.
 }
 
+BloodDaggerStorm: {
+	DisplayName: Blood Dagger Storm
+	Description:
+		'''
+		By constantly compressing blood into daggers and firing them with tiny lines of blood attached
+		they can be redirected mid air towards your cursor, seeking out enemies as they get closer
+		'''
+	LockedDescription: Defeat the one who guards the Dungeon.
+}
+
+SelfBloodBalde: {
+	DisplayName: Self Blood Blade
+	Description: Draw a line accross your blody, a bloody blade erupts from it
+	LockedDescription: Defeat the one who guards the Dungeon.
+}
+
 SuperNova: {
 	DisplayName: Super Nova
 	Description:
@@ -297,5 +313,18 @@ SuperNova: {
 GarudaKick: {
 	DisplayName: Garuda Kick
 	Description: Kick Garuda
+	LockedDescription: Defeat the one who guards the Moon.
+}
+
+StarChannel: {
+	DisplayName: Star Channel
+	Description:
+		'''
+		Hold down to actively charge up star power.
+		If have Garuda active and your cursor passes by 
+		an enemy, he will trap that enemy.
+		After Unlocking Your domain you can hold down this key for ten seconds
+		to create a black hole at Garuda's position, it doesn't need to stay on the enemy
+		'''
 	LockedDescription: Defeat the one who guards the Moon.
 }
