@@ -53,13 +53,14 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         }
         public override void AI()
         {
-            Projectile.rotation = Projectile.velocity.ToRotation();
             Projectile.ai[0] += 1;
             Player player = Main.player[Projectile.owner];
 
             if (Projectile.ai[0] > LifeTime)
             {
                 Projectile.Kill();
+                Filters.Scene["SF:DivineFlame"].GetShader().UseOpacity(0f);
+                Filters.Scene["SF:DivineFlame"].Deactivate();
             }
 
             if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
@@ -77,8 +78,9 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             {
                 if (!Filters.Scene["SF:Blackhole"].IsActive()){
                     Main.NewText("blackhole active this player is" + Main.player[Main.myPlayer].name);
-                    Filters.Scene.Activate("SF:Blackhole").GetShader().UseOpacity(1f);
+                    Filters.Scene.Activate("SF:Blackhole").GetShader().UseTargetPosition(Projectile.Center).UseOpacity(1f);
                 }
+                //Use this formula to scale width and height of the projectile for hitboxes: Projectile.ai[0] / LifeTime (needs adjustment to be somewhat accurate with average screensizes)
                 Filters.Scene["SF:Blackhole"].GetShader().UseProgress(Projectile.ai[0] / LifeTime);
             }
 

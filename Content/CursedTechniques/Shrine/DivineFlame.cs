@@ -125,6 +125,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                     {
                         if (!Filters.Scene["SF:DivineFlame"].IsActive()) Filters.Scene.Activate("SF:DivineFlame").GetShader().UseOpacity(1f);
 
+                        //this formula transitions the blackhole from small to large
                         Filters.Scene["SF:DivineFlame"].GetShader().UseProgress(castTimer / totalCastTime);
                     }
                 }
