@@ -23,7 +23,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public bool animating;
         public float animScale;
 
-        private const float LifeTime = 240f;
+        private const float LifeTime = 480f;
 
         private Color projColor = new Color(255, 0, 0);
 
@@ -77,12 +77,13 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             if (!Main.dedServ && Main.myPlayer == Projectile.owner)
             {
                 if (!Filters.Scene["SF:Blackhole"].IsActive()){
-                    Main.NewText("blackhole active this player is" + Main.player[Main.myPlayer].name);
                     Filters.Scene.Activate("SF:Blackhole").GetShader().UseTargetPosition(Projectile.Center).UseOpacity(1f);
                 }
                 //Use this formula to scale width and height of the projectile for hitboxes: Projectile.ai[0] / LifeTime (needs adjustment to be somewhat accurate with average screensizes)
                 Filters.Scene["SF:Blackhole"].GetShader().UseProgress(Projectile.ai[0] / LifeTime);
             }
+
+            
 
         }
 

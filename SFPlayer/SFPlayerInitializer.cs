@@ -47,8 +47,6 @@ namespace sorceryFight.SFPlayer
             cursedRuneOfKos = false;
             cursedEnergyRegenFromOtherSources = 0f;
 
-            //Blood Energy modifiers
-            deathPaintingOne = false;
 
             yourPotentialSwitch = false;
             usedYourPotentialBefore = false;
@@ -71,6 +69,7 @@ namespace sorceryFight.SFPlayer
             overflowingEnergy = false;
 
             sukunasFingers = new bool[20];
+            deathPaintings = new bool[8];
 
             unlockedRCT = false;
             rctAuraIndex = -1;
@@ -133,20 +132,6 @@ namespace sorceryFight.SFPlayer
             cursedEnergyRegenModifiers.AddWithCondition("cursedRuneOfKos", cursedRuneOfKos);
             tag["cursedEnergyRegenModifiers"] = cursedEnergyRegenModifiers;
 
-            var maxBEModifiers = new List<string>();
-            maxBEModifiers.AddWithCondition("deathPaintingTwo", deathPaintingTwo);
-            maxBEModifiers.AddWithCondition("deathPaintingThree", deathPaintingThree);
-            maxBEModifiers.AddWithCondition("deathPaintingFour", deathPaintingFour);
-            maxBEModifiers.AddWithCondition("deathPaintingSix", deathPaintingSix);
-            maxBEModifiers.AddWithCondition("deathPaintingSeven", deathPaintingSeven);
-            tag["maxBEModifiers"] = maxBEModifiers;
-
-
-            var bloodEnergyRegenModifiers = new List<string>();
-            bloodEnergyRegenModifiers.AddWithCondition("deathPaintingOne", deathPaintingOne);
-            bloodEnergyRegenModifiers.AddWithCondition("deathPaintingFive", deathPaintingFive);
-            bloodEnergyRegenModifiers.AddWithCondition("deathPaintingEight", deathPaintingEight);
-            tag["bloodEnergyRegenModifiers"] = bloodEnergyRegenModifiers;
 
             var generalBooleans = new List<string>();
             generalBooleans.AddWithCondition("usedYourPotentialBefore", usedYourPotentialBefore);
@@ -170,6 +155,17 @@ namespace sorceryFight.SFPlayer
                         indexes.Add(i);
                 }
                 tag["sukunasFingers"] = indexes;
+            }
+
+            if (innateTechnique != null)
+            {
+                var indexes = new List<int>();
+                for (int i = 0; i < 8; i++)
+                {
+                    if (deathPaintings[i])
+                        indexes.Add(i);
+                }
+                tag["deathPaintings"] = indexes;
             }
 
             var currentQuestsData = new List<string>();
@@ -222,19 +218,6 @@ namespace sorceryFight.SFPlayer
             cursedEffulgentFeather = cursedEnergyRegenModifiers.Contains("cursedEffulgentFeather");
             cursedRuneOfKos = cursedEnergyRegenModifiers.Contains("cursedRuneOfKos");
 
-            var maxBEModifiers = tag.GetList<string>("maxBEModifiers");
-            deathPaintingTwo = maxBEModifiers.Contains("deathPaintingTwo");
-            deathPaintingThree = maxBEModifiers.Contains("deathPaintingThree");
-            deathPaintingFour = maxBEModifiers.Contains("deathPaintingFour");
-            deathPaintingSix = maxBEModifiers.Contains("deathPaintingSix");
-            deathPaintingSeven = maxBEModifiers.Contains("deathPaintingSeven");
-
-
-            var bloodEnergyRegenModifiers = tag.GetList<string>("bloodEnergyRegenModifiers");
-            deathPaintingOne = bloodEnergyRegenModifiers.Contains("deathPaintingOne");
-            deathPaintingFive = bloodEnergyRegenModifiers.Contains("deathPaintingFive");
-            deathPaintingEight = bloodEnergyRegenModifiers.Contains("deathPaintingEight");
-
             var generalBooleans = tag.GetList<string>("generalBooleans");
             usedYourPotentialBefore = generalBooleans.Contains("usedYourPotentialBefore");
             unlockedRCT = generalBooleans.Contains("unlockedRCT");
@@ -248,9 +231,17 @@ namespace sorceryFight.SFPlayer
             maxCursedEnergy = calculateBaseMaxCE();
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
 
+            if (innateTechnique != null)
+            {
+                var indexes = tag.GetList<int>("deathPaintings");
 
+                for (int i = 0; i < indexes.Count; i++)
+                {
+                    deathPaintings[indexes[i]] = true;
+                }
+            }
 
-             maxBloodEnergy = calculateBaseMaxBE();
+            maxBloodEnergy = calculateBaseMaxBE();
              bloodEnergyRegenPerSecond = calculateBaseBERegenRate();
 
 
@@ -303,42 +294,15 @@ namespace sorceryFight.SFPlayer
         public float calculateBaseMaxBE()
         {
             float baseCost = 100f;
-            float sum = 0f;
-
-
-            if (deathPaintingTwo)
-                sum += 100f;
-
-            if (deathPaintingThree)
-                sum += 200f;
-
-            if (deathPaintingFour)
-                sum += 300f;
-
-            if (deathPaintingSix)
-                sum += 400f;
-
-            if (deathPaintingSeven)
-                sum += 500f;
-
-            return baseCost + sum;
+            float[] maxBEBonuses = { 0f, 100f, 200f, 300f, 0f, 400f, 500f, 0f };
+            return baseCost + maxBEBonuses.Where((bonus, i) => deathPaintings[i]).Sum();
         }
 
         public float calculateBaseBERegenRate()
         {
             float baseRegen = 1f;
-            float sum = 0f;
-
-            if (deathPaintingOne)
-                sum += 5f;
-
-            if (deathPaintingFive)
-                sum += 10f;
-
-            if (deathPaintingEight)
-                sum += 20f;
-
-            return baseRegen + sum;
+            float[] regenBonuses = { 5f, 0f, 0f, 0f, 10f, 0f, 0f, 20f };
+            return baseRegen + regenBonuses.Where((bonus, i) => deathPaintings[i]).Sum();
         }
 
         public float calculateBaseCERegenRate()

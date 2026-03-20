@@ -3,7 +3,9 @@ using CalamityMod.Sounds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Particles;
+using Steamworks;
 using System;
+using System.Composition.Hosting.Core;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -14,8 +16,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         private Texture2D texture;
         private const int FRAME_COUNT = 7;
         private const int TICKS_PER_FRAME = 5;
-        private int target = -1;
-        private float trackingRadius = 800f;
+        
+        private float trackingRadius = 400f;
         public float animScale;
         private int noTargetCounter = 0;
 
@@ -48,22 +50,27 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 }
             }
 
-            Main.NewText("Target State" + target);
+            Main.NewText("Target State" + Projectile.ai[1]);
 
-            if (target == -1)
-                FindTarget();
-                if(100 < noTargetCounter++)
-                    Projectile.Kill();
-            else if (target >= 0 && !Main.npc[target].active)
-                FindTarget();
+            // Validate target first
+            if (Projectile.ai[1] < 0 || !Main.npc[(int)Projectile.ai[1]].active)
+                Projectile.ai[1] = FindTarget();
+
+            if (Projectile.ai[1] >= 0 && Main.npc[(int)Projectile.ai[1]].Distance(Projectile.Center) < trackingRadius)
+            {
+                Vector2 targetVelocity = (Main.npc[(int)Projectile.ai[1]].Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 20f;
+                Projectile.velocity = Vector2.Lerp(Projectile.velocity, targetVelocity, 0.25f);
+            }
+            else
+            {
                 Vector2 mouseVelocity = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 20f;
                 Projectile.velocity = Vector2.Lerp(Projectile.velocity, mouseVelocity, 0.25f);
-            if (100 < noTargetCounter++)
-                    Projectile.Kill();
-            else if (target >= 0)
+                noTargetCounter++;
+            }
+
+            if (160 < noTargetCounter)
             {
-                Vector2 targetVelocity = (Main.npc[target].Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 20f;
-                Projectile.velocity = Vector2.Lerp(Projectile.velocity, targetVelocity, 0.25f);
+                Projectile.Kill();
             }
 
             Projectile.rotation = Projectile.velocity.ToRotation();
@@ -77,20 +84,23 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         }
 
-        void FindTarget()
+        int FindTarget()
         {
             foreach (NPC npc in Main.ActiveNPCs)
             {
                 if (npc.CanBeChasedBy() && Vector2.DistanceSquared(npc.Center, Projectile.Center) < trackingRadius.Squared())
                 {
-                    target = npc.whoAmI;
+                    //changed this from a void to an int and started storing it in projectile ai 1 to make it track better, not sure if it worked
+                    int target = npc.whoAmI;
+                    return target;
                 }
             }
+            return -1;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            this.target = -2;
+            Projectile.Kill();
         }
 
         public override bool PreDraw(ref Color lightColor)

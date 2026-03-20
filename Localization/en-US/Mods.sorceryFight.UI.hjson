@@ -57,6 +57,11 @@ SukunasFingerIcon: {
 	Consumed: fingers consumed.
 }
 
+DeathPaintingIcon: {
+	Info: You've eaten a Death Painting? How are you... alive?
+	Consumed: Death Paintings consumed.
+}
+
 CursedEnergyBar: {
 	CE: Cursed Energy:
 	Stamina: Stamina:

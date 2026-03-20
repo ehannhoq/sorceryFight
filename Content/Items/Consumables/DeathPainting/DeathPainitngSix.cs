@@ -38,7 +38,7 @@ namespace sorceryFight.Content.Items.Consumables.DeathPainting
             {
                //SoundEngine.PlaySound(SoundID.Item4);
                 SorceryFightPlayer sf = player.SorceryFight();
-                sf.deathPaintingSix = true;
+                sf.deathPaintings[5] = true;
             }
             return true;
         }

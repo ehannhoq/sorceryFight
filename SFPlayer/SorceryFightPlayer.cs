@@ -68,14 +68,6 @@ namespace sorceryFight.SFPlayer
         public bool cursedRuneOfKos;
         public float cursedEnergyRegenFromOtherSources;
 
-        public bool deathPaintingOne;
-        public bool deathPaintingTwo;
-        public bool deathPaintingThree;
-        public bool deathPaintingFour;
-        public bool deathPaintingFive;
-        public bool deathPaintingSix;
-        public bool deathPaintingSeven;
-        public bool deathPaintingEight;
         #endregion
 
         #region One-off Variables
@@ -120,6 +112,8 @@ namespace sorceryFight.SFPlayer
         public bool[] sukunasFingers;
         public int sukunasFingerConsumed => sukunasFingers.Count(x => x);
 
+        public bool[] deathPaintings;
+        public int deathPaintingsConsumed => deathPaintings.Count(x => x);
 
         #endregion
 

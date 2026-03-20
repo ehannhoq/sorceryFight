@@ -94,8 +94,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                             ModContent.ProjectileType<BloodDaggerStormProjectile>(),
                             Damage,
                             0f,
-                            player.whoAmI
-                            //targetIndex
+                            player.whoAmI,
+                            ai1: -1f
                             );
                         }
 

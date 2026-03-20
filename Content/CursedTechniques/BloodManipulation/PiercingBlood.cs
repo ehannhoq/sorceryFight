@@ -144,7 +144,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             if (beamHeight < 2.0f && keyHeld)
                 beamHeight += 0.2f;
 
-            //custom code for subtracting blood energy while the beam is held out
+            //need to add code to make sure multiple of this projecitle can't be active at the same time
             if (keyHeld)
             {
                 SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();

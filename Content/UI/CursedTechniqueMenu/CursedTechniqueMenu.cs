@@ -120,7 +120,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
 
             List<Vector2> conditionalIconPositions = new List<Vector2>();
-            int conditionalIconsCount = 5;
+            int conditionalIconsCount = 6;
             int conditionalIconSize = 40;
             for (int i = 0; i < conditionalIconsCount; i++)
             {
@@ -134,6 +134,17 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             {
                 Texture2D sukunasFingerTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/SukunasFingerIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 string sukunasFingerHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Info")}\n{sfPlayer.sukunasFingerConsumed} {SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Consumed")}";
+                SpecialUIElement sukunasFingerIcon = new SpecialUIElement(sukunasFingerTexture, sukunasFingerHoverText);
+                sukunasFingerIcon.Left.Set(conditionalIconPositions[index].X, 0f);
+                sukunasFingerIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
+                Append(sukunasFingerIcon);
+                index++;
+            }
+
+            if (sfPlayer.deathPaintings.Any(p => p))
+            {
+                Texture2D sukunasFingerTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/DeathPaintingIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                string sukunasFingerHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.DeathPaintingIcon.Info")}\n{sfPlayer.deathPaintingsConsumed} {SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.DeathPaintingIcon.Consumed")}";
                 SpecialUIElement sukunasFingerIcon = new SpecialUIElement(sukunasFingerTexture, sukunasFingerHoverText);
                 sukunasFingerIcon.Left.Set(conditionalIconPositions[index].X, 0f);
                 sukunasFingerIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
