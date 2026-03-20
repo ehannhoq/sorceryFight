@@ -70,6 +70,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
             if (Projectile.ai[0] < beginAnimTime)
             {
+                //clean this up by removing animating checks
                 if (!animating)
                 {
                     Projectile.Center += new Vector2(0, -30);

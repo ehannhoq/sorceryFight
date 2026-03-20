@@ -1,13 +1,9 @@
 using System;
-using CalamityMod.Projectiles.Magic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.Buffs.Vessel;
-using sorceryFight.Content.Items.Accessories;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -40,7 +36,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         }
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
+            return sf.HasDefeatedBoss(NPCID.SkeletronHead); ;
         }
 
         public override string GetStats(SorceryFightPlayer sf)

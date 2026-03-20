@@ -29,6 +29,7 @@ Mods: {
 			GarudaHead.DisplayName: Garuda Head
 			GarudaTail.DisplayName: Garuda Tail
 			BloodDaggerStormProjectile.DisplayName: Blood Dagger Storm Projectile
+			BlackholeProjectile.DisplayName: Blackhole Projectile
 		}
 
 		Configs: {

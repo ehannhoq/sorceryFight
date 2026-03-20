@@ -1,7 +1,6 @@
-using System;
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Buffs.StarRage;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
@@ -30,7 +29,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public override int MasteryDamageMultiplier => 18;
         public override float Speed => 0f;
 
-        private float blackHoleThreshold = 360f;
+        private float blackholeThreshold = 360f;
 
         private float starRegen => 34f;
 
@@ -84,36 +83,61 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                 keyHeld = SFKeybinds.UseTechnique.Current;
 
                 Projectile.Center = Main.MouseWorld;
-            }
 
-
-            //custom code for subtracting blood energy while the beam is held out
-            if (keyHeld)
-            {
+                Player player = Main.player[Projectile.owner];
                 SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
-                //add star power
-                //sf.bloodEnergyUsagePerSecond += BloodCostPerSecond;
-                sf.starEnergyRegenPerSecond += starRegen;
-                //check if star energy is going to be full, if it is, play sound effect
-                if (100f < sf.starEnergy + SFUtils.RateSecondsToTicks(sf.starEnergyRegenPerSecond - sf.starEnergyUsagePerSecond))
+
+                if (keyHeld)
                 {
-                    SoundEngine.PlaySound(SorceryFightSounds.PachinkoBallCollision, Projectile.Center);
+
+                    //add star power
+                    sf.starEnergyRegenPerSecond += starRegen;
+                    //check if star energy is going to be full, if it is, play sound effect
+                    if (100f < sf.starEnergy + SFUtils.RateSecondsToTicks(sf.starEnergyRegenPerSecond - sf.starEnergyUsagePerSecond))
+                    {
+                        SoundEngine.PlaySound(SorceryFightSounds.PachinkoBallCollision, Projectile.Center);
+                    }
+
+                    blackholeThreshold--;
                 }
 
-                blackHoleThreshold--;
-            }
+                if (!keyHeld)
+                {
+                    Projectile.Kill();
+                }
 
-            if (!keyHeld)
-            {
-                Projectile.Kill();
-            }
+                if(blackholeThreshold <= 0)
+                {
+                    Main.NewText("BLACKHOLE TRIGGERED");
+                    //Spawn black hole at Garuda position then kill him
 
-            if(blackHoleThreshold <= 0)
-            {
-                Main.NewText("BLACKHOLE TRIGGERED");
-                //Spawn black hole at Garuda position then kill him
 
-                Projectile.Kill();
+                    foreach (Projectile projectile in Main.ActiveProjectiles)
+                    {
+                        if (projectile.type == ModContent.ProjectileType<GarudaHead>() && projectile.owner == Projectile.owner)
+                        {
+                            int blackHoleDamage = 10;
+                            Projectile.NewProjectile(
+                            projectile.GetSource_FromThis(),
+                            projectile.Center,
+                            Vector2.Zero,
+                            ModContent.ProjectileType<BlackholeProjectile>(),
+                            blackHoleDamage,
+                            0f,
+                            player.whoAmI
+                            );
+
+
+                            projectile.Kill();
+                            //Need code to uncheck the garuda summon box in the UI and remove the buff
+                            sf.summonGaruda = false;
+                            Projectile.Kill();
+                        }
+
+                    }
+
+                }
+
             }
 
         }
