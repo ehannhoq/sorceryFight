@@ -1,8 +1,9 @@
 using CalamityMod.Particles;
 using CalamityMod.Sounds;
-using Microsoft.Build.Graph;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Particles;
 using sorceryFight.SFPlayer;
 using System;
@@ -127,9 +128,9 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         {
             //Main.NewText("Hit NPC" + target);
             base.OnHitNPC(target, hit, damageDone);
+            int paintingCount = Main.player[Projectile.owner].SorceryFight().deathPaintings.Count(p => p);
+            target.AddBuff(ModContent.BuffType<BloodPoison>(), paintingCount * 60);
             Projectile.penetrate = 0;
-
-            target.AddBuff(BuffID.Poisoned, 300);
 
             for (int i = 0; i < 6; i++)
             {

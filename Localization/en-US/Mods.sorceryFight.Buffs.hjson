@@ -303,3 +303,8 @@ BloodshedCooldown: {
 	DisplayName: Bloodshed Cooldown
 	Description: ""
 }
+
+BloodPoison: {
+	DisplayName: Blood Poison
+	Description: Mods.sorceryFight.Buffs.BloodPoison.Description
+}

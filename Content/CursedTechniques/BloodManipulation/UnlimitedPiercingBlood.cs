@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Particles;
 using sorceryFight.SFPlayer;
 using System;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -186,7 +188,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                     {
                         foreach (NPC npc in Main.ActiveNPCs)
                         {
-                            if (!npc.active || !npc.HasBuff(BuffID.Poisoned))
+                            if (!npc.active || !npc.HasBuff(ModContent.BuffType<BloodPoison>()))
                                 continue;
 
                             //spawn at a random point along the beam but not more than 1000f
@@ -272,7 +274,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
-            target.AddBuff(BuffID.Poisoned, 300);
+            int paintingCount = Main.player[Projectile.owner].SorceryFight().deathPaintings.Count(p => p);
+            target.AddBuff(ModContent.BuffType<BloodPoison>(), paintingCount * 60);
 
         }
 

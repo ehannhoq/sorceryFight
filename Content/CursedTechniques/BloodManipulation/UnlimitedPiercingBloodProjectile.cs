@@ -2,8 +2,10 @@
 using CalamityMod.Sounds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Particles;
 using System;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -73,7 +75,9 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
-            target.AddBuff(BuffID.Poisoned, 300);
+            int paintingCount = Main.player[Projectile.owner].SorceryFight().deathPaintings.Count(p => p);
+            target.AddBuff(ModContent.BuffType<BloodPoison>(), 300 + paintingCount * 60);
+            Projectile.penetrate = 0;
         }
 
         public override bool PreDraw(ref Color lightColor)

@@ -1,7 +1,9 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Buffs;
 using sorceryFight.SFPlayer;
+using System;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -162,6 +164,13 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
 
             return false;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+            int paintingCount = Main.player[Projectile.owner].SorceryFight().deathPaintings.Count(p => p);
+            target.AddBuff(ModContent.BuffType<BloodPoison>(), 300 + paintingCount * 60);
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)

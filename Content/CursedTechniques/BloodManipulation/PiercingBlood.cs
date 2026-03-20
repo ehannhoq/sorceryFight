@@ -1,8 +1,9 @@
-using System;
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Buffs;
 using sorceryFight.SFPlayer;
+using System;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -213,7 +214,12 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
             return false;
         }
-
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+            int paintingCount = Main.player[Projectile.owner].SorceryFight().deathPaintings.Count(p => p);
+            target.AddBuff(ModContent.BuffType<BloodPoison>(), paintingCount * 60);
+        }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
