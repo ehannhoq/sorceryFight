@@ -103,12 +103,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                         Projectile.Kill();
                     }
             }
-
         }
-
-
-
-
-
     }
 }

@@ -127,7 +127,7 @@ WorldCuttingSlash: {
 	DisplayName: The Slash that Cuts the World
 	Description:
 		'''
-		Instead at aiming a Dismantle at a target,
+		Instead of aiming a Dismantle at a target,
 		the user instead targets the entire world.
 		This powerful slash cuts through everything
 		and anything.
