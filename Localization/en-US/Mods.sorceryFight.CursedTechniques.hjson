@@ -278,8 +278,9 @@ UnlimitedPiercingBlood: {
 	DisplayName: Unlimited Piercing Blood
 	Description:
 		'''
-		By compressing blood into a sphere then flattening it
-		you create a powerful slicing disk that carves through flesh like butter
+		Shoot a beam of Unlimited Piercing Blood that spawns mini Piercing Bloods
+		These Mini Piercing Bloods are created for every enemy posioned by your blood
+		The more of them there are, the more mini beams spawn
 		'''
 	LockedDescription: Defeat the one who guards the Dungeon.
 }
@@ -294,9 +295,13 @@ BloodDaggerStorm: {
 	LockedDescription: Defeat the one who guards the Dungeon.
 }
 
-SelfBloodBalde: {
-	DisplayName: Self Blood Blade
-	Description: Draw a line accross your blody, a bloody blade erupts from it
+SelfBloodBlade: {
+	DisplayName: Blood Blade
+	Description:
+		'''
+		Create a spinning blade of blood infront of you,
+		it can be rotated 360 degrees around you
+		'''
 	LockedDescription: Defeat the one who guards the Dungeon.
 }
 

@@ -43,7 +43,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         {
             float cost = CalculateTrueCost(sf);
             float percent = cost / sf.maxCursedEnergy;
-            return $"Damage: {Math.Round(CalculateTrueDamage(sf), 2)} + {Math.Round(baseDamagePercent * 100, 2)}% of target's health\n"
+            return $"Damage: {Math.Round(CalculateTrueDamage(sf), 2)}\n"
                 + $"Cost: {Math.Round(CalculateTrueCost(sf), 2)} CE\n";
         }
 
