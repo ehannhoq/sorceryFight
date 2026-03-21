@@ -133,7 +133,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             if (sfPlayer.sukunasFingerConsumed >= 1)
             {
                 Texture2D sukunasFingerTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/SukunasFingerIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                string sukunasFingerHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Info")}\n{sfPlayer.sukunasFingerConsumed} {SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Consumed")}";
+                string sukunasFingerHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Info")}\n{sfPlayer.sukunasFingerConsumed} {SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Consumed")}\n{25 + (int)(sfPlayer.sukunasFingerConsumed * 3.75)} {SFUtils.GetLocalization("Mods.sorceryFight.UI.SukunasFingerIcon.KingOfCurses")}";
                 SpecialUIElement sukunasFingerIcon = new SpecialUIElement(sukunasFingerTexture, sukunasFingerHoverText);
                 sukunasFingerIcon.Left.Set(conditionalIconPositions[index].X, 0f);
                 sukunasFingerIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
