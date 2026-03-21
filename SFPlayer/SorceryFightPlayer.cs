@@ -367,22 +367,17 @@ namespace sorceryFight.SFPlayer
                     rctAuraIndex = -1;
                 }
 
-            if (SFKeybinds.DomainExpansion.Current)
+            if (SFKeybinds.DomainExpansion.Current && noInnateDomain == false)
             {
-                if (noInnateDomain == true)
+                domainTimer++;
+                if (HasActiveDomain)
+                    domainTimer = 1;
+
+                if (UnlockedDomainExpansion)
                 {
-                    ToggleSimpleDomain();
-                } else {
-                    domainTimer++;
-                    if (HasActiveDomain)
-                        domainTimer = 1;
+                    float zoom = 1.3f * (MathF.Log10(domainTimer + 1f) + 0.22f);
 
-                    if (UnlockedDomainExpansion)
-                    {
-                        float zoom = 1.3f * (MathF.Log10(domainTimer + 1f) + 0.22f);
-
-                        CameraController.SetCameraZoom(zoom);
-                    }
+                    CameraController.SetCameraZoom(zoom);
                 }
             }
             else if (domainTimer != 0)
@@ -410,6 +405,10 @@ namespace sorceryFight.SFPlayer
                 CameraController.ResetCameraZoom();
             }
 
+            if(SFKeybinds.DomainExpansion.JustReleased && noInnateDomain == true)
+            {
+                ToggleSimpleDomain();
+            }
 
 
             if (SFKeybinds.AttemptBlackFlash.JustPressed && blackFlashTimeLeft == 0)
