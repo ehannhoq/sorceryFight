@@ -102,7 +102,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         {
             base.OnHitNPC(target, hit, damageDone);
             int paintingCount = Main.player[Projectile.owner].SorceryFight().deathPaintings.Count(p => p);
-            target.AddBuff(ModContent.BuffType<BloodPoison>(), 300 + paintingCount * 60);
+            target.AddBuff(ModContent.BuffType<BloodPoison>(), paintingCount * 60);
             Projectile.penetrate = 0;
         }
 
