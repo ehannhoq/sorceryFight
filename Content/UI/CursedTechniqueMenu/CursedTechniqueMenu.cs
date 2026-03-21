@@ -144,7 +144,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             if (sfPlayer.deathPaintings.Any(p => p))
             {
                 Texture2D sukunasFingerTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/DeathPaintingIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                string sukunasFingerHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.DeathPaintingIcon.Info")}\n{sfPlayer.deathPaintingsConsumed} {SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.DeathPaintingIcon.Consumed")}";
+                string sukunasFingerHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.DeathPaintingIcon.Info")}\n{sfPlayer.deathPaintingsConsumed} {SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.DeathPaintingIcon.Consumed")}\n{(SFUtils.RateSecondsToTicks(300 + sfPlayer.deathPaintingsConsumed * 60))} {SFUtils.GetLocalization("Mods.sorceryFight.UI.DeathPaintingIcon.Poison")}";
                 SpecialUIElement sukunasFingerIcon = new SpecialUIElement(sukunasFingerTexture, sukunasFingerHoverText);
                 sukunasFingerIcon.Left.Set(conditionalIconPositions[index].X, 0f);
                 sukunasFingerIcon.Top.Set(conditionalIconPositions[index].Y, 0f);

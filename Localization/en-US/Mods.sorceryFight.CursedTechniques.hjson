@@ -279,7 +279,7 @@ UnlimitedPiercingBlood: {
 	Description:
 		'''
 		Shoot a beam of Unlimited Piercing Blood that spawns mini Piercing Bloods
-		These Mini Piercing Bloods are created for every enemy posioned by your blood
+		These Mini Piercing Bloods are created for every enemy poisoned by your blood
 		The more of them there are, the more mini beams spawn
 		'''
 	LockedDescription: Defeat the one who guards the Dungeon.

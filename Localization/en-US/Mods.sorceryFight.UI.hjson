@@ -61,6 +61,7 @@ SukunasFingerIcon: {
 DeathPaintingIcon: {
 	Info: You've eaten a Death Painting? How are you... alive?
 	Consumed: Death Paintings consumed.
+	Poison: Seconds of poison is applied to enemies by your blood
 }
 
 CursedEnergyBar: {

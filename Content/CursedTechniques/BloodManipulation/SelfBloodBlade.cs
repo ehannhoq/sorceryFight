@@ -128,7 +128,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Projectile.velocity = aimDirection;
             Projectile.direction = (Math.Cos(aimAngle) > 0).ToDirectionInt();
             Projectile.rotation = aimAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
-            Projectile.Center = playerRotatedPoint + aimDirection * 160f;
+            Projectile.Center = playerRotatedPoint + aimDirection * 120f;
 
             player.ChangeDir(Projectile.direction);
 
