@@ -187,6 +187,7 @@ namespace sorceryFight.SFPlayer
             Keybinds();
 
             cursedEnergyRegenPerSecond = 0f;
+            bloodEnergyRegenPerSecond = 0f;
             maxCursedEnergy = 0f;
             ctCostReduction = 0f;
             additionalBlackFlashDamageMultiplier = 0f;
@@ -301,7 +302,6 @@ namespace sorceryFight.SFPlayer
             disableCurseTechniques = false;
             blackFlashTime = 30;
 
-            bloodEnergyRegenPerSecond = 0f;
             bloodEnergyUsagePerSecond = 0f;
 
             if (disabledRegen)

@@ -53,11 +53,12 @@ public class BloodEnergyBar : UIElement
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         base.DrawSelf(spriteBatch);
-        //ModContent.GetInstance<SorceryFight>().Logger.Info("Blood Energy Bar Value:" + beBarValue.fillPercentage);
+
             
         if (IsMouseHovering)
         {
             var player = Main.LocalPlayer.SorceryFight();
+            ModContent.GetInstance<SorceryFight>().Logger.Info("Blood Energy Bar Value:" + player.bloodEnergyRegenPerSecond);
             Main.hoverItemName = $"{SFUtils.GetLocalizationValue($"Mods.sorceryFight.UI.BloodEnergyBar.BE")} {Math.Round((decimal)player.bloodEnergy, 0)} / {player.maxBloodEnergy}\n"
                                 + $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.BloodEnergyBar.RegenRate")} {player.bloodEnergyRegenPerSecond} BE/s\n"
                                 + SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.BloodEnergyBar.ToolTip");
