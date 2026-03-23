@@ -16,6 +16,18 @@ namespace sorceryFight.Content.CursedTechniques
         public abstract string Description { get; }
         public abstract string LockedDescription { get; }
         public abstract float Cost { get; }
+
+        //public virtual int hasCharge { get; set; } = 0;
+        //0 = no charge technique
+        //1 = technique is charged
+        //2 = technique has a charged and normal press
+
+        //public virtual int minChargeTime { get; set; } = 0;
+        //minimum time in ticks needed to trigger activation of a charged ability
+
+        //public int TimeCharged;
+
+        public virtual float BloodCost { get; } = 0;
         public abstract Color textColor { get; }
         public abstract bool DisplayNameInGame { get; }
         public abstract int Damage { get; }
@@ -24,6 +36,7 @@ namespace sorceryFight.Content.CursedTechniques
         public abstract float LifeTime { get; }
         public abstract bool Unlocked(SorceryFightPlayer sf);
         public abstract int GetProjectileType();
+        
         public virtual string GetStats(SorceryFightPlayer sf)
         {
             return $"Damage: {Math.Round(CalculateTrueDamage(sf), 2)}\n"
@@ -74,6 +87,11 @@ namespace sorceryFight.Content.CursedTechniques
 
                 sf.cursedEnergy -= CalculateTrueCost(sf);
 
+                if(BloodCost > 0)
+                {
+                    sf.bloodEnergy -= BloodCost;
+                }
+
                 if (DisplayNameInGame)
                 {
                     int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
@@ -113,5 +131,12 @@ namespace sorceryFight.Content.CursedTechniques
             }
             base.OnKill(timeLeft);
         }
+
+        public virtual bool UseCondition(SorceryFightPlayer sf)
+        {
+            return true;
+        }
+
+
     }
 }

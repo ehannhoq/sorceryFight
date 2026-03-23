@@ -1,5 +1,4 @@
 using System;
-using sorceryFight.Content.Items.Consumables;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;

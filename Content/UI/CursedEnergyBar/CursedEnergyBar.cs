@@ -13,7 +13,7 @@ public class CursedEnergyBar : UIElement
 {
     SorceryFightPlayer sfPlayer;
     public UIImage border;
-    public ValueBar ceBar;
+    public ValueBar ceBarValue;
     bool isDragging;
     private bool initialized;
     bool hasRightClicked;
@@ -36,10 +36,10 @@ public class CursedEnergyBar : UIElement
         border = new UIImage(borderTexture);
         Append(border);
 
-        ceBar = new ValueBar(barTexture, Orientation.Vertical);
-        ceBar.Left.Set((borderTexture.Width - barTexture.Width) / 2f, 0f);
-        ceBar.Top.Set(0, 0f);
-        Append(ceBar);
+        ceBarValue = new ValueBar(barTexture, Orientation.Vertical);
+        ceBarValue.Left.Set((borderTexture.Width - barTexture.Width) / 2f, 0f);
+        ceBarValue.Top.Set(0, 0f);
+        Append(ceBarValue);
 
         Left.Set(1300, 0f);
         Top.Set(20, 0f);
@@ -48,6 +48,8 @@ public class CursedEnergyBar : UIElement
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         base.DrawSelf(spriteBatch);
+        //ModContent.GetInstance<SorceryFight>().Logger.Info("Cursed Energy Bar Value:" + ceBarValue.fillPercentage);
+
 
         if (IsMouseHovering)
         {
@@ -72,11 +74,11 @@ public class CursedEnergyBar : UIElement
 
         if (sfPlayer.heavenlyRestriction && !changedToHeavenlyRestriction)
         {
-            ceBar.barTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedEnergyBar/StaminaBarFill", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            ceBarValue.barTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedEnergyBar/StaminaBarFill", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             changedToHeavenlyRestriction = true;
         }
 
-        if (Main.playerInventory && SorceryFightUI.MouseHovering(this, ceBar.barTexture) && Main.mouseLeft && !isDragging)
+        if (Main.playerInventory && SorceryFightUI.MouseHovering(this, ceBarValue.barTexture) && Main.mouseLeft && !isDragging)
         {
             isDragging = true;
             offset = new Vector2(Main.mouseX, Main.mouseY) - new Vector2(Left.Pixels, Top.Pixels);
@@ -98,7 +100,29 @@ public class CursedEnergyBar : UIElement
             }
         }
 
-        if (Main.playerInventory && SorceryFightUI.MouseHovering(this, ceBar.barTexture) && Main.mouseRight && !isDragging)
+        if (Main.playerInventory && SorceryFightUI.MouseHovering(this, ceBarValue.barTexture) && Main.mouseRight && !isDragging)
+        {
+            Rectangle mouseRect = new Rectangle((int)Main.MouseWorld.X - 8, (int)Main.MouseWorld.Y - 8, 16, 16);
+            if (!hasRightClicked)
+            {
+                if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
+                {
+                    sfPlayer.CEBarPos = Vector2.Zero;
+                    SetPosition();
+                    CombatText.NewText(mouseRect, Color.White, "UI Position Reset!");
+                    Main.mouseRightRelease = true;
+                }
+                else
+                {
+                    sfPlayer.CEBarPos = new Vector2(this.Left.Pixels, this.Top.Pixels);
+                    CombatText.NewText(mouseRect, Color.White, "UI Position Saved!");
+                    Main.mouseRightRelease = true;
+                }
+            }
+
+        }
+
+        if (Main.playerInventory && SorceryFightUI.MouseHovering(this, ceBarValue.barTexture) && Main.mouseRight && !isDragging)
         {
             Rectangle mouseRect = new Rectangle((int)Main.MouseWorld.X - 8, (int)Main.MouseWorld.Y - 8, 16, 16);
             if (!hasRightClicked)
@@ -121,11 +145,11 @@ public class CursedEnergyBar : UIElement
         }
 
 
-        if (Main.mouseRight && SorceryFightUI.MouseHovering(this, ceBar.barTexture))
+        if (Main.mouseRight && SorceryFightUI.MouseHovering(this, ceBarValue.barTexture))
         {
             hasRightClicked = true;
         }
-        else if (Main.mouseRightRelease && SorceryFightUI.MouseHovering(this, ceBar.barTexture))
+        else if (Main.mouseRightRelease && SorceryFightUI.MouseHovering(this, ceBarValue.barTexture))
         {
             hasRightClicked = false;
         }

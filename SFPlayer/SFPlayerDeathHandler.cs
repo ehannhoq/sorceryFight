@@ -119,10 +119,13 @@ namespace sorceryFight.SFPlayer
 
                 else if (innateTechnique.Name == "Vessel")
                 {
-                    int chance = SorceryFight.IsDevMode() ? 100 : 5 + (int)(sukunasFingerConsumed * 0.5);
+                    int chance = SorceryFight.IsDevMode() ? 100 : 25 + (int)(sukunasFingerConsumed * 3.75);
                     if (SFUtils.Roll(chance))
                     {
                         PreventDeath();
+                        int messageIndex = Main.rand.Next(6);
+                        ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText("Mods.sorceryFight.Misc.SukunaRevive." + messageIndex), Color.Green, Player.whoAmI);
+
                         Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(15 + (sukunasFingerConsumed * 2.25f)));
                     }
                 }

@@ -69,6 +69,12 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 case "Vessel":
                     DrawVessel(center, player);
                     break;
+                case "BloodManipulation":
+                    DrawBloodManipulation(center, player);
+                    break;
+                case "StarRage":
+                    DrawStarRage(center, player);
+                    break;
                 case "PrivatePureLoveTrain":
                     DrawPPLT(center, player);
                     break;
@@ -335,29 +341,154 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
         void DrawVessel(Vector2 _, SorceryFightPlayer player)
         {
             List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
+            List<PassiveTechnique> passiveTechniques = player.innateTechnique.PassiveTechniques;
 
             float iconSize = 30;
-            int originIconCount = 3;
-            float distance = 120f;
+            int originIconCount = 5;
+            float distance = 80f;
+
             Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
 
 
-            for (int i = 0; i < cursedTechniques.Count; i++)
+            for (int i = 0; i < cursedTechniques.Count + passiveTechniques.Count; i++)
             {
-                CursedTechnique ct = cursedTechniques[i];
-                string texturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Vessel/c{i}";
-                Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                if (i >= cursedTechniques.Count)
+                {
+                    int j = i - cursedTechniques.Count;
+                    PassiveTechnique pt = passiveTechniques[j];
+                    string ptTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Vessel/p{j}";
+                    Texture2D ptTexture = ModContent.Request<Texture2D>(ptTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                bool unlocked = ct.Unlocked(player);
-                string hoverText = unlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+                    bool ptUnlocked = pt.Unlocked(player);
+                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.LockedDescription}";
 
-                TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
-                icon.Left.Set(originPositions[i].X, 0f);
-                icon.Top.Set(originPositions[i].Y, 0f);
+                    TechniqueIcon ptIcon = new TechniqueIcon(ptTexture, ptUnlocked, ptHoverText);
+                    ptIcon.Left.Set(originPositions[i].X, 0f);
+                    ptIcon.Top.Set(originPositions[i].Y, 0f);
+                    Append(ptIcon);
+                    techniqueIcons.Add(ptIcon);
+                }
+                else
+                {
+                    CursedTechnique ct = cursedTechniques[i];
+                    string ctTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Vessel/c{i}";
+                    Texture2D ctTexture = ModContent.Request<Texture2D>(ctTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                Append(icon);
-                techniqueIcons.Add(icon);
+                    bool ctUnlocked = ct.Unlocked(player);
+                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+
+                    TechniqueIcon ctIcon = new TechniqueIcon(ctTexture, ctUnlocked, ctHoverText);
+                    ctIcon.Left.Set(originPositions[i].X, 0f);
+                    ctIcon.Top.Set(originPositions[i].Y, 0f);
+                    Append(ctIcon);
+                    techniqueIcons.Add(ctIcon);
+                }
+
             }
+
+
+        }
+
+        void DrawBloodManipulation(Vector2 _, SorceryFightPlayer player)
+        {
+            List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
+            List<PassiveTechnique> passiveTechniques = player.innateTechnique.PassiveTechniques;
+
+            float iconSize = 30;
+            int originIconCount = 9;
+            float distance = 70f;
+
+            Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
+
+
+            for (int i = 0; i < cursedTechniques.Count + passiveTechniques.Count; i++)
+            {
+                if (i >= cursedTechniques.Count)
+                {
+                    int j = i - cursedTechniques.Count;
+                    PassiveTechnique pt = passiveTechniques[j];
+                    string ptTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/BloodManipulation/p{j}";
+                    Texture2D ptTexture = ModContent.Request<Texture2D>(ptTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+                    bool ptUnlocked = pt.Unlocked(player);
+                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.LockedDescription}";
+
+                    TechniqueIcon ptIcon = new TechniqueIcon(ptTexture, ptUnlocked, ptHoverText);
+                    ptIcon.Left.Set(originPositions[i].X, 0f);
+                    ptIcon.Top.Set(originPositions[i].Y, 0f);
+                    Append(ptIcon);
+                    techniqueIcons.Add(ptIcon);
+                }
+                else
+                {
+                    CursedTechnique ct = cursedTechniques[i];
+                    string ctTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/BloodManipulation/c{i}";
+                    Texture2D ctTexture = ModContent.Request<Texture2D>(ctTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+                    bool ctUnlocked = ct.Unlocked(player);
+                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+
+                    TechniqueIcon ctIcon = new TechniqueIcon(ctTexture, ctUnlocked, ctHoverText);
+                    ctIcon.Left.Set(originPositions[i].X, 0f);
+                    ctIcon.Top.Set(originPositions[i].Y, 0f);
+                    Append(ctIcon);
+                    techniqueIcons.Add(ctIcon);
+                }
+
+            }
+
+
+        }
+
+        void DrawStarRage(Vector2 _, SorceryFightPlayer player)
+        {
+            List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
+            List<PassiveTechnique> passiveTechniques = player.innateTechnique.PassiveTechniques;
+
+            float iconSize = 30;
+            int originIconCount = 4;
+            float distance = 70f;
+
+            Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
+
+
+            for (int i = 0; i < cursedTechniques.Count + passiveTechniques.Count; i++)
+            {
+                if (i >= cursedTechniques.Count)
+                {
+                    int j = i - cursedTechniques.Count;
+                    PassiveTechnique pt = passiveTechniques[j];
+                    string ptTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/StarRage/p{j}";
+                    Texture2D ptTexture = ModContent.Request<Texture2D>(ptTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+                    bool ptUnlocked = pt.Unlocked(player);
+                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.LockedDescription}";
+
+                    TechniqueIcon ptIcon = new TechniqueIcon(ptTexture, ptUnlocked, ptHoverText);
+                    ptIcon.Left.Set(originPositions[i].X, 0f);
+                    ptIcon.Top.Set(originPositions[i].Y, 0f);
+                    Append(ptIcon);
+                    techniqueIcons.Add(ptIcon);
+                }
+                else
+                {
+                    CursedTechnique ct = cursedTechniques[i];
+                    string ctTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/StarRage/c{i}";
+                    Texture2D ctTexture = ModContent.Request<Texture2D>(ctTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+                    bool ctUnlocked = ct.Unlocked(player);
+                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+
+                    TechniqueIcon ctIcon = new TechniqueIcon(ctTexture, ctUnlocked, ctHoverText);
+                    ctIcon.Left.Set(originPositions[i].X, 0f);
+                    ctIcon.Top.Set(originPositions[i].Y, 0f);
+                    Append(ctIcon);
+                    techniqueIcons.Add(ctIcon);
+                }
+
+            }
+
+
         }
 
         void DrawPPLT(Vector2 _, SorceryFightPlayer player)

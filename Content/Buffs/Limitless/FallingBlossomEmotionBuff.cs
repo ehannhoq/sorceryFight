@@ -12,6 +12,9 @@ namespace sorceryFight.Content.Buffs.Limitless
     public class FallingBlossomEmotionBuff : PassiveTechnique
     {
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.FallingBlossomEmotionBuff.DisplayName");
+
+        public override bool isAura => true;
+
         public override string Stats
         {
             get
@@ -42,14 +45,10 @@ namespace sorceryFight.Content.Buffs.Limitless
             player.AddBuff(ModContent.BuffType<FallingBlossomEmotionBuff>(), 2);
 
 
-            if (player.HasBuff<AmplifiedAuraBuff>())
+            foreach (var technique in player.SorceryFight().innateTechnique.PassiveTechniques)
             {
-                player.SorceryFight().innateTechnique.PassiveTechniques[1].isActive = false;
-
-            }
-            if (player.HasBuff<MaximumAmplifiedAuraBuff>())
-            {
-                player.SorceryFight().innateTechnique.PassiveTechniques[2].isActive = false;
+                if (technique.isAura && technique != this)
+                    technique.isActive = false;
             }
 
             if (auraIndices == null)
@@ -81,6 +80,8 @@ namespace sorceryFight.Content.Buffs.Limitless
 
             sf.fallingBlossomEmotion = false;
             player.noKnockback = true;
+
+            sf.disableCurseTechniques = false;
 
         }
 

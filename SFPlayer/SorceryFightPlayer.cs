@@ -10,13 +10,14 @@ using Terraria.Chat;
 using Terraria.ID;
 using CalamityMod.CalPlayer.Dashes;
 using System;
-using sorceryFight.Content.Buffs.Vessel;
+using sorceryFight.Content.Buffs.Vessel;    
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.DomainExpansions;
 using System.Linq;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
 using sorceryFight.Content.Buffs.CursedEnergyTraits;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 
 namespace sorceryFight.SFPlayer
@@ -38,9 +39,15 @@ namespace sorceryFight.SFPlayer
         public InnateTechnique innateTechnique;
         public CursedTechnique selectedTechnique;
         public float cursedEnergy;
+        public float bloodEnergy;
         public float maxCursedEnergy { get; private set; }
         public float cursedEnergyRegenPerSecond;
         public float cursedEnergyUsagePerSecond;
+
+        public float maxBloodEnergy { get; private set; }
+        public float bloodEnergyRegenPerSecond;
+        public float bloodEnergyUsagePerSecond;
+
 
         #endregion
 
@@ -60,6 +67,7 @@ namespace sorceryFight.SFPlayer
         public bool cursedEffulgentFeather;
         public bool cursedRuneOfKos;
         public float cursedEnergyRegenFromOtherSources;
+
         #endregion
 
         #region One-off Variables
@@ -76,6 +84,7 @@ namespace sorceryFight.SFPlayer
         public bool UnlockedDomainExpansion => innateTechnique.DomainExpansion.Unlocked(this);
         public bool inDomainAnimation;
         public int domainTimer;
+        public int chargeTimer;
         public bool HasActiveDomain => DomainExpansionController.ActiveDomains.Any(d => d is PlayerDomainExpansion && d is not ISimpleDomain && d.owner == Player.whoAmI);
         public bool fallingBlossomEmotion;
         public bool inSimpleDomain;
@@ -102,6 +111,10 @@ namespace sorceryFight.SFPlayer
         #region Shrine/Vessel Specific Variables
         public bool[] sukunasFingers;
         public int sukunasFingerConsumed => sukunasFingers.Count(x => x);
+
+        public bool[] deathPaintings;
+        public int deathPaintingsConsumed => deathPaintings.Count(x => x);
+
         #endregion
 
         #region RCT
@@ -127,11 +140,24 @@ namespace sorceryFight.SFPlayer
         public Vector2 CTSelectorPos;
         public Vector2 PTSelectorPos;
         public Vector2 CEBarPos;
+        public Vector2 BEBarPos;
         #endregion
+
+        public bool noInnateDomain;
 
         #region HeavenlyRestriction
         public bool heavenlyRestriction;
         #endregion
+
+        #region StarRage
+        public float starEnergy;
+        public float maxStarEnergy { get; private set; }
+        public float starEnergyRegenPerSecond;
+        public float starEnergyUsagePerSecond;
+        public bool summonGaruda;
+        public NPC garudaCurrentTarget;
+        #endregion
+
 
         public override void UpdateEquips()
         {
@@ -161,6 +187,7 @@ namespace sorceryFight.SFPlayer
             Keybinds();
 
             cursedEnergyRegenPerSecond = 0f;
+            bloodEnergyRegenPerSecond = 0f;
             maxCursedEnergy = 0f;
             ctCostReduction = 0f;
             additionalBlackFlashDamageMultiplier = 0f;
@@ -168,8 +195,15 @@ namespace sorceryFight.SFPlayer
             rctEfficiency = 0.0f;
             additionalRCTHealPerSecond = 0;
 
+
+             bloodEnergyRegenPerSecond = calculateBaseBERegenRate();
+             maxBloodEnergy = calculateBaseMaxBE();
+
+
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
             maxCursedEnergy = calculateBaseMaxCE();
+
+
 
             if (heavenlyRestriction) return;
 
@@ -198,6 +232,16 @@ namespace sorceryFight.SFPlayer
                 cursedEnergy -= SFUtils.RateSecondsToTicks(cursedEnergyUsagePerSecond);
             }
 
+            if (bloodEnergy > 0)
+            {
+                bloodEnergy -= SFUtils.RateSecondsToTicks(bloodEnergyUsagePerSecond);
+            }
+
+            if(starEnergy > 0)
+            {
+                starEnergy -= SFUtils.RateSecondsToTicks(starEnergyUsagePerSecond);
+            }
+
             bool disabledRegen = disableRegenFromBuffs || disableRegenFromProjectiles || disableRegenFromDE;
 
             if (cursedEnergy < maxCursedEnergy && !disabledRegen)
@@ -205,9 +249,31 @@ namespace sorceryFight.SFPlayer
                 cursedEnergy += SFUtils.RateSecondsToTicks(cursedEnergyRegenPerSecond);
             }
 
+            if (bloodEnergy < maxBloodEnergy)
+            {
+                bloodEnergy += SFUtils.RateSecondsToTicks(bloodEnergyRegenPerSecond);
+            }
+
+            if (starEnergy < maxStarEnergy)
+            {
+                starEnergy += SFUtils.RateSecondsToTicks(starEnergyRegenPerSecond);
+            }
+
             if (cursedEnergy > maxCursedEnergy)
             {
                 cursedEnergy = maxCursedEnergy;
+            }
+
+            if (bloodEnergy > maxBloodEnergy)
+            {
+                bloodEnergy = maxBloodEnergy;
+            }
+
+            if (bloodEnergy < 0)
+            {
+                AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
+                bloodEnergy = 0.2f;
+                Player.Hurt(PlayerDeathReason.ByCustomReason($"{Player.name} overexerted their blood energy."), (int)(Math.Abs(bloodEnergy)) , 0, false, false);
             }
 
             if (cursedEnergy < 0)
@@ -235,6 +301,8 @@ namespace sorceryFight.SFPlayer
             disableRegenFromBuffs = false;
             disableCurseTechniques = false;
             blackFlashTime = 30;
+
+            bloodEnergyUsagePerSecond = 0f;
 
             if (disabledRegen)
             {
@@ -267,9 +335,23 @@ namespace sorceryFight.SFPlayer
 
             if (SFKeybinds.UseTechnique.JustPressed)
             {
+                //ModContent.GetInstance<SorceryFight>().Logger.Info("Keybing Just Pressed" + SFKeybinds.UseTechnique.JustPressed + "Is: " + disableCurseTechniques);
+
                 if (!disableCurseTechniques || uniqueBodyStructure)
                     ShootTechnique();
             }
+
+            //seeing when just released creates problem with blood manip constant fire techs
+            //if (SFKeybinds.UseTechnique.Current)
+            //{
+            //    chargeTimer++;
+            //}
+
+            //if (SFKeybinds.UseTechnique.JustReleased)
+            //{
+            //    ShootTechnique(chargeTimer);
+            //}
+
 
             if (heavenlyRestriction) return;
 
@@ -285,8 +367,7 @@ namespace sorceryFight.SFPlayer
                     rctAuraIndex = -1;
                 }
 
-
-            if (SFKeybinds.DomainExpansion.Current)
+            if (SFKeybinds.DomainExpansion.Current && noInnateDomain == false)
             {
                 domainTimer++;
                 if (HasActiveDomain)
@@ -324,6 +405,10 @@ namespace sorceryFight.SFPlayer
                 CameraController.ResetCameraZoom();
             }
 
+            if(SFKeybinds.DomainExpansion.JustReleased && noInnateDomain == true)
+            {
+                ToggleSimpleDomain();
+            }
 
 
             if (SFKeybinds.AttemptBlackFlash.JustPressed && blackFlashTimeLeft == 0)
@@ -365,6 +450,11 @@ namespace sorceryFight.SFPlayer
         public void ShootTechnique()
         {
             if (selectedTechnique == null || disableRegenFromProjectiles)
+            {
+                return;
+            }
+
+            if (!selectedTechnique.UseCondition(this))
             {
                 return;
             }

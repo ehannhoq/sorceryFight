@@ -21,6 +21,7 @@ public class SorceryFightUI : UIState
 {
     public static Action UpdateTechniqueUI;
     public CursedEnergyBar ceBar;
+    public BloodEnergyBar beBar;
     public CursedTechniqueMenu ctMenu;
     public PassiveTechniqueSelector ptMenu;
     public FlowStateBar flowStateBar;
@@ -34,6 +35,11 @@ public class SorceryFightUI : UIState
     public override void OnInitialize()
     {
         LoadCEBar();
+
+
+        //if (Main.LocalPlayer?.SorceryFight()?.innateTechnique?.Name == "Vessel")
+        LoadBEBar();
+
         elementsToRemove = new List<UIElement>();
         initialized = false;
         flowStateBar = null;
@@ -74,9 +80,17 @@ public class SorceryFightUI : UIState
 
             LoadCEBar();
             Append(ceBar);
+
+            if (Main.LocalPlayer.SorceryFight().innateTechnique.Name == "Vessel" || Main.LocalPlayer.SorceryFight().innateTechnique.Name == "BloodManipulation")
+            {
+                LoadBEBar();
+                Append(beBar);
+            }
+
         }
 
-        ceBar.ceBar.fillPercentage = player.cursedEnergy / player.maxCursedEnergy;
+        ceBar.ceBarValue.fillPercentage = player.cursedEnergy / player.maxCursedEnergy;
+        beBar.beBarValue.fillPercentage = player.bloodEnergy / player.maxBloodEnergy;
 
         if (SFKeybinds.OpenTechniqueUI.JustPressed)
         {
@@ -166,6 +180,19 @@ public class SorceryFightUI : UIState
         var barTexture = ModContent.Request<Texture2D>(fillBarPath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
         ceBar = new CursedEnergyBar(borderTexture, barTexture);
+    }
+
+    public void LoadBEBar()
+    {
+        if (Main.dedServ) return;
+
+        string borderBarPath = "sorceryFight/Content/UI/BloodEnergyBar/BloodEnergyBarBorder";
+        string fillBarPath = "sorceryFight/Content/UI/BloodEnergyBar/BloodEnergyBarFill";
+
+        var borderTexture = ModContent.Request<Texture2D>(borderBarPath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+        var barTexture = ModContent.Request<Texture2D>(fillBarPath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+        beBar = new BloodEnergyBar(borderTexture, barTexture);
     }
 
     public static bool MouseHovering(UIElement ui, Texture2D texture)

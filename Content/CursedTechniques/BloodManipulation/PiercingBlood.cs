@@ -1,8 +1,9 @@
-using System;
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Buffs;
 using sorceryFight.SFPlayer;
+using System;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -31,11 +32,18 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override int Damage => 100;
         public override int MasteryDamageMultiplier => 18;
         public override float Speed => 0f;
+
+        //Lifetime is made useless but must be implmented 
         public override float LifeTime => 240f;
 
+        //this number gets doubled in SorceryFightPlayer.ApplyBloodCost, so the actual cost is 8 CE/s
+        public float BloodCostPerSecond => 4f;
+
+        private bool keyHeld = false;
         private const float MAX_LENGTH = 1600f;
         private const float STEP_SIZE = 4f;
         private const float BASE_BEAM_HEIGHT = 0.5f;
+
         ref float justSpawned => ref Projectile.ai[0];
         ref float beamHeight => ref Projectile.ai[1];
 
@@ -46,7 +54,14 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.sukunasFingerConsumed >= 19;
+            if (sf.innateTechnique.Name == "Vessel")
+            {
+                return sf.sukunasFingerConsumed >= 19;
+            }
+            else
+            {
+                return sf.HasDefeatedBoss(NPCID.MoonLordCore);
+            }
         }
 
         public override void SetStaticDefaults()
@@ -67,7 +82,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Projectile.penetrate = -1;
             Projectile.ignoreWater = true;
             beamHeight = 0.0f;
-            Projectile.timeLeft = (int)LifeTime;
+            //Projectile.timeLeft = (int)LifeTime;
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)
@@ -81,6 +96,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         {
             if (Main.myPlayer == Projectile.owner)
             {
+                keyHeld = SFKeybinds.UseTechnique.Current;
+
                 Player player = Main.player[Projectile.owner];
                 Projectile.Center = player.Center;
 
@@ -125,13 +142,22 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 SoundEngine.PlaySound(SorceryFightSounds.PiercingBlood, Projectile.Center);
             }
 
-            if (beamHeight < 2.0f && Projectile.timeLeft > 10)
+            if (beamHeight < 2.0f && keyHeld)
                 beamHeight += 0.2f;
 
-            if (Projectile.timeLeft <= 10)
+            //need to add code to make sure multiple of this projecitle can't be active at the same time
+            if (keyHeld)
+            {
+                SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
+                sf.bloodEnergyUsagePerSecond += BloodCostPerSecond;
+            }
+
+            if (!keyHeld)
             {
                 beamHeight -= 0.2f;
                 Main.player[Projectile.owner].SorceryFight().disableRegenFromProjectiles = false;
+                if (beamHeight <= 0f)
+                    Projectile.Kill();
             }
 
             if (Main.myPlayer == Projectile.owner)
@@ -188,7 +214,12 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
             return false;
         }
-
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+            int paintingCount = Main.player[Projectile.owner].SorceryFight().deathPaintings.Count(p => p);
+            target.AddBuff(ModContent.BuffType<BloodPoison>(), paintingCount * 60);
+        }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {

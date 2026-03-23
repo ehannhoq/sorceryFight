@@ -12,6 +12,8 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
     public class InorganicPerception : PassiveTechnique
     {
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.InorganicPerception.DisplayName");
+
+        public override bool isAura => true;
         public override string Stats
         {
             get
@@ -40,9 +42,10 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
         {
             player.AddBuff(ModContent.BuffType<InorganicPerception>(), 2);
 
-            if (player.HasBuff<MindlessCarnage>())
+            foreach (var technique in player.SorceryFight().innateTechnique.PassiveTechniques)
             {
-                player.SorceryFight().innateTechnique.PassiveTechniques[0].isActive = false;
+                if (technique.isAura && technique != this)
+                    technique.isActive = false;
             }
         }
 

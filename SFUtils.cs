@@ -354,6 +354,13 @@ public static class SFUtils
         projectile.velocity = mousePos - projectile.Center;
         projectile.velocity.Normalize();
     }
+
+    public static T ModProjectile<T>(this Projectile projectile) where T : ModProjectile
+    {
+        return projectile.ModProjectile as T;
+    }
+
+
 }
 
 public static class SFConstants
