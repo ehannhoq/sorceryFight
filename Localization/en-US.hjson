@@ -30,6 +30,7 @@ Mods: {
 			GarudaTail.DisplayName: Garuda Tail
 			BloodDaggerStormProjectile.DisplayName: Blood Dagger Storm Projectile
 			BlackholeProjectile.DisplayName: Blackhole Projectile
+			ChakiraResonantBeam.DisplayName: Chakira Resonant Beam
 		}
 
 		Configs: {

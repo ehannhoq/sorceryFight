@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using CalamityMod.NPCs.Providence;
 using CalamityMod.NPCs.SupremeCalamitas;
+using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -20,6 +22,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
             return npc.type switch
             {
                 NPCID.CultistBoss => new PhantasmicLabyrinth(),
+                NPCID.HallowBoss => new FieldOfHallowedButterflies(),
                 _ => null
             };
         }
@@ -143,26 +146,28 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
 
             Dictionary<int, string> bossNameMap = new()
             {
-                { NPCID.CultistBoss, "LunaticCultist" },
-                { ModContent.NPCType<SupremeCalamitas>(), "SupremeCalamitas" },
+                // { NPCID.CultistBoss, "LunaticCultist" },
+                { NPCID.HallowBoss, "EmpressOfLight" },
+                // { ModContent.NPCType<SupremeCalamitas>(), "SupremeCalamitas" },
             };
 
             if (bossNameMap.TryGetValue(npc.type, out string npcName))
             {
                 if (domainController.castingDomain)
                 {
-                    if (domainController.domainTimer < 120)
+                    if (domainController.domainTimer < 150)
                     {
-
+                        Texture2D magicPixel = TextureAssets.MagicPixel.Value;
                         Texture2D frame = ModContent.Request<Texture2D>($"sorceryFight/Content/DomainExpansions/IntroCutscenes/{npcName}/{domainController.domainTimer}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+                        Rectangle blackBGSrc = new Rectangle(0, 0, Main.screenWidth, frame.Height);
                         Rectangle src = new Rectangle(0, 0, frame.Width, frame.Height);
 
-                        spriteBatch.Draw(frame, npc.Center - Main.screenPosition, src, Color.White, 0f, src.Size() * 0.5f, 0.75f, SpriteEffects.None, 0f);
+                        spriteBatch.Draw(magicPixel, domainController.npcCastingPosition - Main.screenPosition, blackBGSrc, Color.Black, 0f, blackBGSrc.Size() * 0.5f, 0.75f, SpriteEffects.None, 0f);
+                        spriteBatch.Draw(frame, domainController.npcCastingPosition - Main.screenPosition, src, Color.White, 0f, src.Size() * 0.5f, 0.75f, SpriteEffects.None, 0f);
                     }
-
                 }
             }
-
         }
 
         public override void Unload()
