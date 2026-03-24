@@ -43,10 +43,11 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override int UseTechnique(SorceryFightPlayer sf)
         {
             Player player = sf.Player;
-            sf.cursedEnergy -= Cost;
+
 
             if (Main.myPlayer == player.whoAmI)
             {
+                sf.cursedEnergy -= CalculateTrueCost(sf);
                 if (DisplayNameInGame)
                 {
                     int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);

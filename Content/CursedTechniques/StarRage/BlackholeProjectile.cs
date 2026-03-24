@@ -74,16 +74,20 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             }
 
             SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
-            if (!Main.dedServ && Main.myPlayer == Projectile.owner)
+            if (!Main.dedServ)
             {
-                if (!Filters.Scene["SF:Blackhole"].IsActive()){
-                    Filters.Scene.Activate("SF:Blackhole").GetShader().UseTargetPosition(Projectile.Center).UseOpacity(1f);
+                if (!Filters.Scene["SF:Blackhole"].IsActive())
+                {
+                    Filters.Scene.Activate("SF:Blackhole")
+                        .GetShader()
+                        .UseTargetPosition(Projectile.Center)
+                        .UseOpacity(1f);
                 }
-                //Use this formula to scale width and height of the projectile for hitboxes: Projectile.ai[0] / LifeTime (needs adjustment to be somewhat accurate with average screensizes)
+
                 Filters.Scene["SF:Blackhole"].GetShader().UseProgress(Projectile.ai[0] / LifeTime);
             }
 
-            
+
 
         }
 
