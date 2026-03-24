@@ -1,12 +1,13 @@
 using CalamityMod.Particles;
 using CalamityMod.Sounds;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Particles;
 using sorceryFight.SFPlayer;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -19,7 +20,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
     {
 
         public static readonly int FRAME_COUNT = 7;
-        public static readonly int TICKS_PER_FRAME = 3;
+        public static readonly int TICKS_PER_FRAME = 6;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.MassPunch.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.MassPunch.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.MassPunch.LockedDescription");
@@ -34,7 +35,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public override int MasteryDamageMultiplier => 50;
 
         public override float Speed => 0f;
-        public override float LifeTime => 21f;
+        public override float LifeTime => 42f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
             return sf.HasDefeatedBoss(NPCID.SkeletronHead);
@@ -98,12 +99,12 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             Player player = Main.player[Projectile.owner];
 
             Projectile.ai[0]++;
-            float progress = Projectile.ai[0] / 21f;
+            float progress = Projectile.ai[0] / 42f;
 
             if (progress >= 1f)
                 Projectile.Kill();
 
-            float xOffset = MathHelper.Lerp(-100f, 100f, progress);
+            float xOffset = MathHelper.Lerp(-100f, 100f, progress) * player.direction;
             Projectile.Center = player.Center + new Vector2(xOffset, 0f);
 
             if (Projectile.ai[0] > LifeTime)
@@ -123,6 +124,11 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
         }
 
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> alreadyDrawnProjectiles)
+        {
+            overPlayers.Add(index);
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
@@ -135,7 +141,8 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             int frameY = Projectile.frame * frameHeight;
 
             Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
-
+            Player player = Main.player[Projectile.owner];
+            SpriteEffects effects = player.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
             spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
 
