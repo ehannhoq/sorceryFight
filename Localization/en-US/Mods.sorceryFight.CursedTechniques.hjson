@@ -333,3 +333,9 @@ StarChannel: {
 		'''
 	LockedDescription: Defeat the one who guards the Moon.
 }
+
+MassPunch: {
+	DisplayName: Mass Punch
+	Description: Swing a weighted fist accross your body
+	LockedDescription: Defeat the one who guards the Moon.
+}

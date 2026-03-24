@@ -27,7 +27,8 @@ namespace sorceryFight.Content.InnateTechniques
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
             new StarChannel(),
-            new GarudaKick()
+            new GarudaKick(),
+            new MassPunch(),
         };
 
         public override void PreUpdate(SorceryFightPlayer sf)
