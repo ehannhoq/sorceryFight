@@ -30,9 +30,5 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override PlayerDomainExpansion DomainExpansion { get; } = new MalevolentShrine();
 
-        public override void UpdateEquips(SorceryFightPlayer sf)
-        {
-            sf.Player.moveSpeed += 0.02f * sf.sukunasFingerConsumed;
-        }
     }
 }

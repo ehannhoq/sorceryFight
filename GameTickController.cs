@@ -19,10 +19,10 @@ namespace sorceryFight.Content
         public override void PostUpdateEverything()
         {
             GameSpeed = 1.0f;
-            if (SFKeybinds.Test.Current)
-            {
-                GameSpeed = 0.5f;
-            }
+            //if (SFKeybinds.Test.Current)
+            //{
+            //    GameSpeed = 0.5f;
+            //}
         }
 
         private void DoUpdate(On_Main.orig_DoUpdate orig, Main self, ref GameTime gameTime)
