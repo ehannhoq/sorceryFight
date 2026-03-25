@@ -303,6 +303,7 @@ namespace sorceryFight.SFPlayer
             blackFlashTime = 30;
 
             bloodEnergyUsagePerSecond = 0f;
+            starEnergyRegenPerSecond = 0f;
 
             if (disabledRegen)
             {

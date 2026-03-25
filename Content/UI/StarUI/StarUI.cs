@@ -64,7 +64,7 @@ public class StarUI : ModSystem
         SorceryFightPlayer sf = Main.LocalPlayer.SorceryFight();
 
         // If not drawing the stealth meter, save its latest position to config and leave.
-        if (sf.innateTechnique.Name == "StarRage")
+        if (sf.innateTechnique?.Name == "StarRage")
         {
             DrawStarBar(spriteBatch, sf, screenPos);
         }
