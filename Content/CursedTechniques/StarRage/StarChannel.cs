@@ -38,6 +38,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
         private bool keyHeld = false;
         public float animScale;
+        public bool hasPlayedSound;
 
 
         public override int GetProjectileType()
@@ -93,9 +94,10 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                     //add star power
                     sf.starEnergyRegenPerSecond += starRegen;
                     //check if star energy is going to be full, if it is, play sound effect
-                    if (100f < sf.starEnergy + SFUtils.RateSecondsToTicks(sf.starEnergyRegenPerSecond - sf.starEnergyUsagePerSecond))
+                    if (!hasPlayedSound && sf.maxStarEnergy < sf.starEnergy + SFUtils.RateSecondsToTicks(sf.starEnergyRegenPerSecond - sf.starEnergyUsagePerSecond))
                     {
                         SoundEngine.PlaySound(SorceryFightSounds.PachinkoBallCollision, Projectile.Center);
+                        hasPlayedSound = true;
                     }
 
                     blackholeThreshold--;

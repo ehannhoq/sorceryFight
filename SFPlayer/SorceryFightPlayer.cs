@@ -151,7 +151,7 @@ namespace sorceryFight.SFPlayer
 
         #region StarRage
         public float starEnergy;
-        public float maxStarEnergy { get; private set; }
+        public float maxStarEnergy { get; private set; } = 100f;
         public float starEnergyRegenPerSecond;
         public float starEnergyUsagePerSecond;
         public bool summonGaruda;

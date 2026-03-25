@@ -46,6 +46,31 @@ Mods: {
 					Label: Disable Impact Frames
 					Tooltip: ""
 				}
+
+				StarMeter: {
+					Label: Star Meter
+					Tooltip: ""
+				}
+
+				MeterPosLock: {
+					Label: Meter Pos Lock
+					Tooltip: ""
+				}
+
+				StarMeterPosX: {
+					Label: Star Meter Pos X
+					Tooltip: ""
+				}
+
+				StarMeterPosY: {
+					Label: Star Meter Pos Y
+					Tooltip: ""
+				}
+
+				StarMeterTransparency: {
+					Label: Star Meter Transparency
+					Tooltip: ""
+				}
 			}
 
 			SorceryFightServerConfig: {
