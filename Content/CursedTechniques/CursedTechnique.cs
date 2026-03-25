@@ -28,6 +28,8 @@ namespace sorceryFight.Content.CursedTechniques
         //public int TimeCharged;
 
         public virtual float BloodCost { get; } = 0;
+
+        public virtual float StarCost { get; } = 0;
         public abstract Color textColor { get; }
         public abstract bool DisplayNameInGame { get; }
         public abstract int Damage { get; }
@@ -90,6 +92,11 @@ namespace sorceryFight.Content.CursedTechniques
                 if(BloodCost > 0)
                 {
                     sf.bloodEnergy -= BloodCost;
+                }
+
+                if (StarCost > 0)
+                {
+                    sf.starEnergy -= StarCost;
                 }
 
                 if (DisplayNameInGame)

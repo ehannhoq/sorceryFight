@@ -29,6 +29,7 @@ namespace sorceryFight.Content.InnateTechniques
             new StarChannel(),
             new GarudaKick(),
             new MassPunch(),
+            new GarudaWhip()
         };
 
         public override void PreUpdate(SorceryFightPlayer sf)
