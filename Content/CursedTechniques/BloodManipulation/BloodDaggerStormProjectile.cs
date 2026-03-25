@@ -50,7 +50,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 }
             }
 
-            Main.NewText("Target State" + Projectile.ai[1]);
+            //Main.NewText("Target State" + Projectile.ai[1]);
 
             // Validate target first
             if (Projectile.ai[1] < 0 || !Main.npc[(int)Projectile.ai[1]].active)

@@ -201,7 +201,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
 
 
-                            Main.NewText("CREATING PROJECTILE" + beamSpawnArea);
+                            //Main.NewText("CREATING PROJECTILE" + beamSpawnArea);
 
                             Projectile.NewProjectile(
                                 Projectile.GetSource_FromThis(),

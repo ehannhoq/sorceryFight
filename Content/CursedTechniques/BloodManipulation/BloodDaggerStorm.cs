@@ -1,16 +1,6 @@
-﻿using CalamityMod.Particles;
-using CalamityMod.Sounds;
-using Humanizer;
-using Microsoft.Build.Graph;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.Particles;
-using sorceryFight.Content.Projectiles.Melee;
+﻿using Microsoft.Xna.Framework;
 using sorceryFight.SFPlayer;
-using System;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -46,29 +36,21 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             return sf.HasDefeatedBoss(NPCID.SkeletronHead);
         }
 
-
-        public static Texture2D texture;
-
-        public bool animating;
-        public float animScale;
-
-
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<BloodDaggerStorm>();
         }
 
 
-        public override void SetDefaults()
+        public override bool PreDraw(ref Color lightColor)
         {
-            base.SetDefaults();
+            return false;
         }
         public override void AI()
         {
             keyHeld = SFKeybinds.UseTechnique.Current;
-            Mod.Logger.Info("AI running");
+            //Mod.Logger.Info("AI running");
 
-            //ModContent.GetInstance<SorceryFight>().Logger.Info("This is what the bum is doing:" + spawnTimer);
             if (Main.myPlayer == Projectile.owner){
                 if (keyHeld)
                     {
@@ -85,7 +67,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
                             Vector2 velocity = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * Speed;
 
-                            Main.NewText("spawning projectile, Velocity: " + velocity);
+                            //Main.NewText("spawning projectile, Velocity: " + velocity);
 
                             Projectile.NewProjectile(
                             player.GetSource_FromThis(),

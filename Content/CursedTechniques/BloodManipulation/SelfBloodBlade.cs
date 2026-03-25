@@ -55,13 +55,20 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
             if (player.whoAmI == Main.myPlayer)
             {
-                Vector2 playerPos = player.MountedCenter;
-                Vector2 mousePos = Main.MouseWorld;
-                Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * Speed;
                 var entitySource = player.GetSource_FromThis();
+
                 sf.cursedEnergy -= CalculateTrueCost(sf);
 
-                return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
+                if (BloodCost > 0)
+                    sf.bloodEnergy -= BloodCost;
+
+                if (DisplayNameInGame)
+                {
+                    int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
+                    Main.combatText[index1].lifeTime = 180;
+                }
+
+                return Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
             }
             return -1;
         }
@@ -149,9 +156,11 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             int frameY = Projectile.frame * frameHeight;
 
             Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
+            Player player = Main.player[Projectile.owner];
+            SpriteEffects effects = player.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
-            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, effects, 0f);
 
             return false;
         }
