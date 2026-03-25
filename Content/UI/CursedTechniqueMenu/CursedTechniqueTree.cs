@@ -446,7 +446,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             List<PassiveTechnique> passiveTechniques = player.innateTechnique.PassiveTechniques;
 
             float iconSize = 30;
-            int originIconCount = 5;
+            int originIconCount = 6;
             float distance = 70f;
 
             Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);

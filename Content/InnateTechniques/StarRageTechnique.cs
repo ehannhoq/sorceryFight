@@ -32,12 +32,7 @@ namespace sorceryFight.Content.InnateTechniques
             new GarudaWhip()
         };
 
-        public override void PreUpdate(SorceryFightPlayer sf)
-        {
-            sf.noInnateDomain = true;
-        }
-
-        public override PlayerDomainExpansion DomainExpansion => null;
+        public override PlayerDomainExpansion DomainExpansion { get; } = new Supernova();
 
 
     }
