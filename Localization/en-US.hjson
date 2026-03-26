@@ -71,6 +71,61 @@ Mods: {
 					Label: Star Meter Transparency
 					Tooltip: ""
 				}
+
+				CursedEnergyBar: {
+					Label: Cursed Energy Bar
+					Tooltip: ""
+				}
+
+				CursedEnergyBarPosLock: {
+					Label: Cursed Energy Bar Pos Lock
+					Tooltip: ""
+				}
+
+				CursedEnergyBarPosX: {
+					Label: Cursed Energy Bar Pos X
+					Tooltip: ""
+				}
+
+				CursedEnergyBarPosY: {
+					Label: Cursed Energy Bar Pos Y
+					Tooltip: ""
+				}
+
+				CursedEnergyBarTransparency: {
+					Label: Cursed Energy Bar Transparency
+					Tooltip: ""
+				}
+
+				BloodEnergyBar: {
+					Label: Blood Energy Bar
+					Tooltip: ""
+				}
+
+				BloodEnergyBarPosLock: {
+					Label: Blood Energy Bar Pos Lock
+					Tooltip: ""
+				}
+
+				BloodEnergyBarPosX: {
+					Label: Blood Energy Bar Pos X
+					Tooltip: ""
+				}
+
+				BloodEnergyBarPosY: {
+					Label: Blood Energy Bar Pos Y
+					Tooltip: ""
+				}
+
+				BloodEnergyBarTransparency: {
+					Label: Blood Energy Bar Transparency
+					Tooltip: ""
+				}
+
+				StarMeterPosLock: {
+					Label: Star Meter Pos Lock
+					Tooltip: ""
+				}
 			}
 
 			SorceryFightServerConfig: {

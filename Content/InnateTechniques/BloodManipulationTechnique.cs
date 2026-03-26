@@ -26,8 +26,8 @@ namespace sorceryFight.Content.InnateTechniques
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
             new SlicingExorcism(),
-            new PiercingBlood(),
             new SelfBloodBlade(),
+            new PiercingBlood(),
             new BloodDaggerStorm(),
             new SuperNova(),
             new UnlimitedPiercingBlood()

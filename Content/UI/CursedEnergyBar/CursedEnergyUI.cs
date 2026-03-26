@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using Terraria.UI;
 
-public class StarUI : ModSystem
+public class CursedEnergyUI : ModSystem
 {
 
     //All based on the stealth UI
@@ -25,25 +25,24 @@ public class StarUI : ModSystem
     Vector2 offset;
     Texture2D borderTexture;
 
-    internal const float DefaultStarPosX = 53.242188f;
-    internal const float DefaultStarPosY = 44.517544f;
+    internal const float DefaultCursedBarPosX = 78.242188f;
+    internal const float DefaultCursedBarPosY = 12.645349f;
     private const float MouseDragEpsilon = 0.05f; // 0.05%
 
     private static Vector2? dragOffset = null;
-    private static Texture2D edgeTexture, barTexture, fullBarTexture;
+    private static Texture2D edgeTexture, barTexture;
 
     public override void OnModLoad()
     {
-        edgeTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/StarUI/StarMeterBorder", AssetRequestMode.ImmediateLoad).Value;
-        barTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/StarUI/StarMeterFill", AssetRequestMode.ImmediateLoad).Value;
-        fullBarTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/StarUI/StarMeterFull", AssetRequestMode.ImmediateLoad).Value;
+        edgeTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedEnergyBar/CursedEnergyBarBorder", AssetRequestMode.ImmediateLoad).Value;
+        barTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedEnergyBar/CursedEnergyBarFill", AssetRequestMode.ImmediateLoad).Value;
         Reset();
     }
 
     public override void Unload()
     {
         Reset();
-        edgeTexture = barTexture = fullBarTexture = null;
+        edgeTexture = barTexture = null;
     }
 
     private static void Reset() => dragOffset = null;
@@ -51,11 +50,11 @@ public class StarUI : ModSystem
     public static void Draw(SpriteBatch spriteBatch, Player player)
     {
         // Sanity check the planned position before drawing
-        Vector2 screenRatioPosition = new Vector2(ModContent.GetInstance<ClientConfig>().StarMeterPosX, ModContent.GetInstance<ClientConfig>().StarMeterPosY);
+        Vector2 screenRatioPosition = new Vector2(ModContent.GetInstance<ClientConfig>().CursedEnergyBarPosX, ModContent.GetInstance<ClientConfig>().CursedEnergyBarPosY);
         if (screenRatioPosition.X < 0f || screenRatioPosition.X > 100f)
-            screenRatioPosition.X = DefaultStarPosX;
+            screenRatioPosition.X = DefaultCursedBarPosX;
         if (screenRatioPosition.Y < 0f || screenRatioPosition.Y > 100f)
-            screenRatioPosition.Y = DefaultStarPosY;
+            screenRatioPosition.Y = DefaultCursedBarPosY;
 
         // Convert the screen ratio position to an absolute position in pixels
         // Cast to integer to prevent blurriness which results from decimal pixel positions
@@ -66,22 +65,23 @@ public class StarUI : ModSystem
 
         SorceryFightPlayer sf = Main.LocalPlayer.SorceryFight();
 
-        // If not drawing the star meter, save its latest position to config and leave.
-        if (sf.innateTechnique?.Name == "StarRage")
+        // If not drawing the cursed meter, save its latest position to config and leave.
+        if (sf.innateTechnique != null)
         {
-            DrawStarBar(spriteBatch, sf, screenPos);
+            DrawCursedEnergyBar(spriteBatch, sf, screenPos);
         }
         else
         {
             bool changed = false;
-            if (ModContent.GetInstance<ClientConfig>().StarMeterPosX != screenRatioPosition.X)
+            if (ModContent.GetInstance<ClientConfig>().CursedEnergyBarPosX != screenRatioPosition.X)
             {
-                ModContent.GetInstance<ClientConfig>().StarMeterPosX = screenRatioPosition.X;
+                ModContent.GetInstance<ClientConfig>().CursedEnergyBarPosX = screenRatioPosition.X;
                 changed = true;
             }
-            if (ModContent.GetInstance<ClientConfig>().StarMeterPosY != screenRatioPosition.Y)
+            if (ModContent.GetInstance<ClientConfig>().CursedEnergyBarPosY != screenRatioPosition.Y)
             {
-                ModContent.GetInstance<ClientConfig>().StarMeterPosY = screenRatioPosition.Y;
+                ModContent.GetInstance<ClientConfig>().CursedEnergyBarPosY = screenRatioPosition.Y;
+                ModContent.GetInstance<ClientConfig>().CursedEnergyBarPosY = screenRatioPosition.Y;
                 changed = true;
             }
 
@@ -90,28 +90,28 @@ public class StarUI : ModSystem
         }
 
         Rectangle mouseHitbox = new Rectangle((int)Main.MouseScreen.X, (int)Main.MouseScreen.Y, 8, 8);
-        Rectangle starBar = Utils.CenteredRectangle(screenPos, edgeTexture.Size() * uiScale);
+        Rectangle cursedEnergyBar = Utils.CenteredRectangle(screenPos, edgeTexture.Size() * uiScale);
 
         MouseState ms = Mouse.GetState();
         Vector2 mousePos = Main.MouseScreen;
 
         // Handle mouse dragging
-        if (starBar.Intersects(mouseHitbox))
+        if (cursedEnergyBar.Intersects(mouseHitbox))
         {
-            if (!ModContent.GetInstance<ClientConfig>().StarMeterPosLock)
+            if (!ModContent.GetInstance<ClientConfig>().CursedEnergyBarPosLock)
                 Main.LocalPlayer.mouseInterface = true;
 
-            // If the mouse is on top of the meter, show the player's exact numeric star power
-            if (sf.maxStarEnergy > 0f)
+            // If the mouse is on top of the meter, show the player's exact numeric cursed power
+            if (sf.maxCursedEnergy > 0f)
             {
-                Main.hoverItemName = $"{SFUtils.GetLocalizationValue($"Mods.sorceryFight.UI.StarBar.SE")} {Math.Round((decimal)sf.starEnergy, 0)} / {sf.maxStarEnergy}\n"
-                                    + $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.StarBar.RegenRate")} {sf.starEnergyRegenPerSecond} SE/s\n"
-                                    + SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.StarBar.ToolTip");
+                Main.hoverItemName = $"{SFUtils.GetLocalizationValue($"Mods.sorceryFight.UI.CursedEnergyBar.CE")} {Math.Round((decimal)sf.cursedEnergy, 0)} / {sf.maxCursedEnergy}\n"
+                                    + $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.RegenRate")} {sf.cursedEnergyRegenPerSecond} CE/s\n"
+                                    + SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip");
             }
 
             Vector2 newScreenRatioPosition = screenRatioPosition;
             // As long as the mouse button is held down, drag the meter along with an offset.
-            if (!ModContent.GetInstance<ClientConfig>().StarMeterPosLock && ms.LeftButton == ButtonState.Pressed)
+            if (!ModContent.GetInstance<ClientConfig>().CursedEnergyBarPosLock && ms.LeftButton == ButtonState.Pressed)
             {
                 // If the drag offset doesn't exist yet, create it.
                 if (!dragOffset.HasValue)
@@ -129,8 +129,8 @@ public class StarUI : ModSystem
             Vector2 delta = newScreenRatioPosition - screenRatioPosition;
             if (Math.Abs(delta.X) >= MouseDragEpsilon || Math.Abs(delta.Y) >= MouseDragEpsilon)
             {
-                ModContent.GetInstance<ClientConfig>().StarMeterPosX = newScreenRatioPosition.X;
-                ModContent.GetInstance<ClientConfig>().StarMeterPosY = newScreenRatioPosition.Y;
+                ModContent.GetInstance<ClientConfig>().CursedEnergyBarPosX = newScreenRatioPosition.X;
+                ModContent.GetInstance<ClientConfig>().CursedEnergyBarPosY = newScreenRatioPosition.Y;
             }
 
             // When the mouse is released, save the config and destroy the drag offset.
@@ -142,17 +142,21 @@ public class StarUI : ModSystem
         }
     }
 
-    private static void DrawStarBar(SpriteBatch spriteBatch, SorceryFightPlayer sf, Vector2 screenPos)
+    private static void DrawCursedEnergyBar(SpriteBatch spriteBatch, SorceryFightPlayer sf, Vector2 screenPos)
     {
         float uiScale = Main.UIScale;
-        float transparency = ModContent.GetInstance<ClientConfig>().StarMeterTransparency;
+        float transparency = ModContent.GetInstance<ClientConfig>().CursedEnergyBarTransparency;
         float offset = (edgeTexture.Width - barTexture.Width) * 0.5f;
 
         spriteBatch.Draw(edgeTexture, screenPos, null, Color.White * transparency, 0f, edgeTexture.Size() * 0.5f, uiScale, SpriteEffects.None, 0);
 
-        float completionRatio = sf.maxStarEnergy <= 0f ? 0f : sf.starEnergy / sf.maxStarEnergy;
-        bool full = sf.maxStarEnergy > 0f && sf.starEnergy >= sf.maxStarEnergy;
-        Texture2D activeBar = full ? fullBarTexture : barTexture;
+        float completionRatio = sf.maxCursedEnergy <= 0f ? 0f : sf.cursedEnergy / sf.maxCursedEnergy;
+        Texture2D activeBar = barTexture;
+
+        if(sf.innateTechnique.Name == "HeavenlyRestriction")
+        {
+            activeBar = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedEnergyBar/StaminaBarFill", AssetRequestMode.ImmediateLoad).Value;
+        }
 
         int filledHeight = (int)(barTexture.Height * completionRatio);
         if (filledHeight <= 0) return;
@@ -166,13 +170,13 @@ public class StarUI : ModSystem
         spriteBatch.Draw(activeBar, barPos, barRectangle, Color.White * transparency, 0f, Vector2.Zero, uiScale, SpriteEffects.None, 0);
     }
 
-    //This actually calls the star UI, maybe create another file to do it if this is rolled out for other UIs, Reference Calamity UIManagementSystem.cs
+    //This actually calls the cursed UI, maybe create another file to do it if this is rolled out for other UIs, Reference Calamity UIManagementSystem.cs
     public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
     {
         int mouseIndex = layers.FindIndex(layer => layer.Name == "Vanilla: Mouse Text");
         if (mouseIndex != -1)
         {
-            layers.Insert(mouseIndex, new LegacyGameInterfaceLayer("Star UI", () =>
+            layers.Insert(mouseIndex, new LegacyGameInterfaceLayer("Cursed UI", () =>
             {
                 Draw(Main.spriteBatch, Main.LocalPlayer);
                 return true;

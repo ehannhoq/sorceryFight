@@ -68,23 +68,17 @@ CursedEnergyBar: {
 	CE: Cursed Energy:
 	Stamina: Stamina:
 	RegenRate: Regeneration Rate:
-	ToolTip:
-		'''
-		When your inventory is open:
-		- This bar is draggable
-		- Right-Click to save position
-		- Shift + Right-Click to reset position
-		'''
+	ToolTip: This bar can be Adjusted in the config
 }
 
 BloodEnergyBar: {
 	BE: Blood:
 	RegenRate: Regeneration Rate:
-	ToolTip:
-		'''
-		When your inventory is open:
-		- This bar is draggable
-		- Right-Click to save position
-		- Shift + Right-Click to reset position
-		'''
+	ToolTip: This bar can be Adjusted in the config
+}
+
+StarBar: {
+	SE: Star Power:
+	RegenRate: Regeneration Rate:
+	ToolTip: This bar can be Adjusted in the config
 }
