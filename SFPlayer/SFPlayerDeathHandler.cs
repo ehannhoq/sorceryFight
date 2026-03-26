@@ -114,12 +114,13 @@ namespace sorceryFight.SFPlayer
         {
             if (!rctAnimation && sukunasFingerConsumed >= 1)
             {
+                //King of Curses is set to 2 ticks when it's re-applied, this reapplies it if the player dies again
                 if (Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>()) && innateTechnique.Name == "Shrine")
-                    Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(15 + (sukunasFingerConsumed * 2.25f)));
+                    Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(2));
 
                 else if (innateTechnique.Name == "Vessel")
                 {
-                    int chance = SorceryFight.IsDevMode() ? 100 : 25 + (int)(sukunasFingerConsumed * 3.75);
+                    int chance = SorceryFight.IsDevMode() ? 100 : 15 + (int)(sukunasFingerConsumed * 3);
                     if (SFUtils.Roll(chance))
                     {
                         PreventDeath();
