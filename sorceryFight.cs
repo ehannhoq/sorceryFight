@@ -31,8 +31,13 @@ namespace sorceryFight
 			"gooloohoodoo5",
 			"gooloohoodoo6",
 			"gooloohoodoo7",
-			"Perseus",
-			"TheRealCriky"
+			"TheRealCriky",
+			"prowler",
+			"rend",
+			"KaiTheExaminer",
+			"Ryomen Sukuna",
+			"Kuroka",
+			"Sicko",
 		];
 
 		private static readonly int vanillaBossesCount = 32;
