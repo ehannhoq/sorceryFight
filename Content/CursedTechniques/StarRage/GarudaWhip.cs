@@ -19,9 +19,9 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
         //public static readonly int FRAME_COUNT = 8;
         //public static readonly int TICKS_PER_FRAME = 5;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.GarudaKick.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.GarudaKick.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.GarudaKick.LockedDescription");
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.GarudaWhip.DisplayName");
+        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.GarudaWhip.Description");
+        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.GarudaWhip.LockedDescription");
         public override float Cost => 40f;
 
         public override float StarCost => 20f;

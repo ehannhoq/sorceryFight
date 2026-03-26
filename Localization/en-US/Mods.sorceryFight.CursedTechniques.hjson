@@ -339,3 +339,9 @@ MassPunch: {
 	Description: Swing a weighted fist accross your body
 	LockedDescription: Defeat the one who guards the Moon.
 }
+
+GarudaWhip: {
+	DisplayName: Garuda Whip
+	Description: Whip Garuda
+	LockedDescription: Defeat the one who guards the Moon.
+}

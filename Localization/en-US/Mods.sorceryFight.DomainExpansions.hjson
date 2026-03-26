@@ -21,6 +21,18 @@ MalevolentShrine: {
 	LockedDescription: Defeat the Devourer of Gods.
 }
 
+Supernova: {
+	DisplayName: Supernova
+	Description:
+		'''
+		A Domain Expansion with no barrier; anything
+		near the caster will be constantly striken
+		down by Dismantles and Cleaves. There is
+		no range on this domain.
+		'''
+	LockedDescription: Defeat the Devourer of Gods.
+}
+
 Home: {
 	DisplayName: Hometown
 	Description:

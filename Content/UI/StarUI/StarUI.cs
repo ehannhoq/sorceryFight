@@ -22,8 +22,8 @@ public class StarUI : ModSystem
     Vector2 offset;
     Texture2D borderTexture;
 
-    internal const float DefaultStarPosX = 50.304603f;
-    internal const float DefaultStarPosY = 56.765408f;
+    internal const float DefaultStarPosX = 53.242188f;
+    internal const float DefaultStarPosY = 44.517544f;
     private const float MouseDragEpsilon = 0.05f; // 0.05%
 
     private static Vector2? dragOffset = null;
