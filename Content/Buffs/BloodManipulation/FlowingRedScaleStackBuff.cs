@@ -8,6 +8,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using CalamityMod.NPCs.Leviathan;
 
 namespace sorceryFight.Content.Buffs.BloodManipulation
 {
@@ -97,7 +98,7 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
             }
             else
             {
-                return sf.HasDefeatedBoss(NPCID.CultistBoss);
+                return sf.HasDefeatedBoss(ModContent.NPCType<Anahita>());
             }
         }
 

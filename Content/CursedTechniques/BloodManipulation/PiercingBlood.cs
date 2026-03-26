@@ -9,6 +9,8 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using CalamityMod.NPCs.Cryogen;
+
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
@@ -56,11 +58,12 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         {
             if (sf.innateTechnique.Name == "Vessel")
             {
-                return sf.sukunasFingerConsumed >= 19;
+                return sf.sukunasFingerConsumed >= 6;
             }
             else
             {
-                return sf.HasDefeatedBoss(NPCID.MoonLordCore);
+                return sf.HasDefeatedBoss(ModContent.NPCType<Cryogen>());
+
             }
         }
 

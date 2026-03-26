@@ -199,7 +199,7 @@ FlowingRedScaleBuff: {
 		actively through the user's body, increasing
 		defense and reducing incoming damage taken.
 		'''
-	LockedDescription: Consume 5 of Sukuna's Fingers
+	LockedDescription: Consume 3 of Sukuna's Fingers (Vessel) or defeat Perforator / HiveMind (Blood)
 }
 
 FlowingRedScaleStackBuff: {
@@ -210,7 +210,7 @@ FlowingRedScaleStackBuff: {
 		actively through the user's body, further increasing
 		defense and reducing incoming damage taken.
 		'''
-	LockedDescription: Consume 10 of Sukuna's Fingers
+	LockedDescription: Consume 10 of Sukuna's Fingers (Vessel) or defeat Leviathan (Blood)
 }
 
 SummonGarudaBuff: {

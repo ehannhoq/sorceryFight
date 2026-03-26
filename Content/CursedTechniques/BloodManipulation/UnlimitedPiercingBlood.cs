@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
+using CalamityMod.NPCs.OldDuke;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
@@ -32,7 +33,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override float Cost => 750f;
         public override Color textColor => new Color(132, 4, 4);
         public override bool DisplayNameInGame => true;
-        public override int Damage => 100;
+        public override int Damage => 200;
         public override int MasteryDamageMultiplier => 18;
         public override float Speed => 0f;
 
@@ -40,7 +41,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override float LifeTime => 240f;
 
         //this number gets doubled in SorceryFightPlayer.ApplyBloodCost, so the actual cost is 8 CE/s
-        public float BloodCostPerSecond => 4f;
+        public float BloodCostPerSecond => 25f;
 
         private bool keyHeld = false;
         private const float MAX_LENGTH = 1600f;
@@ -65,7 +66,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             }
             else
             {
-                return sf.HasDefeatedBoss(NPCID.MoonLordCore);
+                return sf.HasDefeatedBoss(ModContent.NPCType<OldDuke>());
             }
         }
 
@@ -214,7 +215,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                                 spawnPos,
                                 velocity,
                                 ModContent.ProjectileType<UnlimitedPiercingBloodProjectile>(),
-                                100,
+                                400,
                                 0f,
                                 Projectile.owner,
                                 ai1: (float)npc.whoAmI

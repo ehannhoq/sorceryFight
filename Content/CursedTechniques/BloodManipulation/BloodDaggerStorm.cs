@@ -19,21 +19,29 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override Color textColor => new Color(255, 0, 0);
         public override bool DisplayNameInGame => true;
 
-        public override int Damage => 30;
+        public override int Damage => 100;
         public override int MasteryDamageMultiplier => 50;
 
         private bool keyHeld = false;
 
-        public float BloodCostPerSecond => 4f;
+        public float BloodCostPerSecond => 40f;
 
         public override float Speed => 0f;
         public override float LifeTime => 300f;
 
         private float spawnTimer = 0;
 
+
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
+            if (sf.innateTechnique.Name == "Vessel")
+            {
+                return sf.sukunasFingerConsumed >= 10;
+            }   
+            else
+            {
+                return sf.HasDefeatedBoss(NPCID.HallowBoss);
+            }
         }
 
         public override int GetProjectileType()
@@ -55,11 +63,10 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 if (keyHeld)
                     {
                         spawnTimer++;
-
+                        
                         if (spawnTimer >= 10f)
                         {
                             spawnTimer = 0f;
-
                             SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
                             sf.bloodEnergyUsagePerSecond += BloodCostPerSecond;
                             Player player = Main.player[Projectile.owner];

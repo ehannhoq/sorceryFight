@@ -37,7 +37,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override float LifeTime => 300f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
+            return sf.HasDefeatedBoss(NPCID.KingSlime);
         }
 
 
@@ -61,8 +61,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 65;
-            Projectile.height = 65;
+            Projectile.width = 35;
+            Projectile.height = 15;
             Projectile.tileCollide = true;
             animating = false;
             Projectile.penetrate = -1;

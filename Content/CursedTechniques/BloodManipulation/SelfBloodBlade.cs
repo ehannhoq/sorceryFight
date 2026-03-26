@@ -9,6 +9,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using CalamityMod.NPCs.SlimeGod;
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
@@ -22,7 +23,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.SelfBloodBlade.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SelfBloodBlade.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SelfBloodBlade.LockedDescription");
-        public override float Cost => 75f;
+        public override float Cost => 100f;
+        public override float BloodCost => 50f;
         public override Color textColor => new Color(120, 21, 8);
         public override bool DisplayNameInGame => false;
         public override int Damage => 50;
@@ -38,7 +40,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         }
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead); ;
+            return sf.HasDefeatedBoss(ModContent.NPCType<SlimeGodCore>());
         }
 
         public override string GetStats(SorceryFightPlayer sf)
@@ -84,8 +86,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Projectile.height = 188;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
-            Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = -1;
+            //Projectile.usesLocalNPCImmunity = true;
+            //Projectile.localNPCHitCooldown = -1;
             animScale = 2f;
         }
 

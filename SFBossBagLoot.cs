@@ -1,13 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using CalamityMod.Items.Accessories;
 using CalamityMod.Items.TreasureBags;
 using sorceryFight.Content.Items.Accessories;
 using sorceryFight.Content.Items.Consumables;
+using sorceryFight.Content.Items.Consumables.DeathPainting;
 using sorceryFight.Content.Items.Consumables.SukunasFinger;
 using sorceryFight.Content.Items.Materials;
 using sorceryFight.Content.Items.Weapons.Melee;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -27,6 +28,7 @@ namespace sorceryFight
 
             CursedModifiers(ref item, ref firstTimeRule);
             SukunasFingers(ref item, ref firstTimeRule);
+            DeathPaintings(ref item, ref firstTimeRule);
 
             MoonlordBag(ref item, ref itemLoot);
             WallOfFleshBag(ref item, ref itemLoot);
@@ -101,6 +103,26 @@ namespace sorceryFight
                 { ModContent.ItemType<PolterghastBag>(), ModContent.ItemType<SukunasFingerXIX>() },
 
                 { ModContent.ItemType<DevourerofGodsBag>(), ModContent.ItemType<SukunasFingerXX>() }
+            };
+
+            if (itemLootMap.TryGetValue(item.type, out var loot))
+            {
+                firstTimeRule.OnSuccess(ItemDropRule.Common(loot, 1, 1, 1));
+            }
+        }
+
+        private void DeathPaintings(ref Item item, ref LeadingConditionRule firstTimeRule)
+        {
+            Dictionary<int, int> itemLootMap = new()
+             {
+                { ItemID.EyeOfCthulhuBossBag, ModContent.ItemType<DeathPaintingOne>() },
+                { ItemID.SkeletronBossBag, ModContent.ItemType<DeathPaintingTwo>() },
+                { ItemID.WallOfFleshBossBag, ModContent.ItemType<DeathPaintingThree>() },
+                { ItemID.PlanteraBossBag, ModContent.ItemType<DeathPaintingFour>() },
+                { ItemID.MoonLordBossBag, ModContent.ItemType<DeathPaintingFive>() },
+                { ModContent.ItemType<ProvidenceBag>(), ModContent.ItemType<DeathPaintingSix>() },
+                { ModContent.ItemType<DevourerofGodsBag>(), ModContent.ItemType<DeathPaintingSeven>() },
+                { ModContent.ItemType<YharonBag>(), ModContent.ItemType<DeathPaintingEight>() }
             };
 
             if (itemLootMap.TryGetValue(item.type, out var loot))

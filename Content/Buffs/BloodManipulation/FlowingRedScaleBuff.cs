@@ -7,6 +7,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using CalamityMod.NPCs.Perforator;
+using CalamityMod.NPCs.HiveMind;
 
 //remove Later
 
@@ -93,11 +95,12 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
         {
             if (sf.innateTechnique.Name == "Vessel")
             {
-                return sf.sukunasFingerConsumed >= 5;
+                return sf.sukunasFingerConsumed >= 3;
             }
             else
             {
-                return sf.HasDefeatedBoss(NPCID.EyeofCthulhu);
+                return sf.HasDefeatedBoss(ModContent.NPCType<PerforatorHive>()) || sf.HasDefeatedBoss(ModContent.NPCType<HiveMind>());
+
             }
         }
 
