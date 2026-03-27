@@ -33,7 +33,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override float LifeTime => 32f;
         //double from cleave 16 
 
-        float baseDamagePercent = 0.05f;
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<SelfBloodBlade>();
@@ -173,9 +172,5 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             target.AddBuff(ModContent.BuffType<BloodPoison>(), paintingCount * 60);
         }
 
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
-        {
-            modifiers.FinalDamage.Flat += target.life * baseDamagePercent;
-        }
     }
 }

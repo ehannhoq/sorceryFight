@@ -189,6 +189,21 @@ Mods: {
 				Tooltip: ""
 				DisplayName: Bowie Knife
 			}
+
+			MegumiSword: {
+				DisplayName: Megumi Sword
+				Tooltip: ""
+			}
+
+			MeiMeiAxe: {
+				DisplayName: Mei Mei Axe
+				Tooltip: ""
+			}
+
+			MegumiSwordShibuya: {
+				Tooltip: ""
+				DisplayName: Megumi Sword Shibuya
+			}
 		}
 	}
 }

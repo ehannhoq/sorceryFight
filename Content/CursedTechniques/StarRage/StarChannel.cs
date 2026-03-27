@@ -110,7 +110,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
                 if(blackholeThreshold <= 0)
                 {
-                    Main.NewText("BLACKHOLE TRIGGERED");
+                    //Main.NewText("BLACKHOLE TRIGGERED");
                     //Spawn black hole at Garuda position then kill him
 
 

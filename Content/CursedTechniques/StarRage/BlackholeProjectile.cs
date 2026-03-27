@@ -6,10 +6,11 @@ using sorceryFight.SFPlayer;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.Graphics.Effects;
+using static tModPorter.ProgressUpdate;
 
 namespace sorceryFight.Content.CursedTechniques.StarRage
 {
@@ -23,9 +24,16 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public bool animating;
         public float animScale;
 
-        private const float LifeTime = 480f;
+        private const float LifeTime = 1680f;
 
-        private Color projColor = new Color(255, 0, 0);
+        //The time at which the blackhole reaches it's maximum size, it then stats for the rest of Lifetime
+        private const float expandTime = 480f;
+
+        //private Color projColor = new Color(255, 0, 0);
+
+        //radius * 2 values at 1 tick and 100% progress
+        private const int MinSize = 6;
+        private const int MaxSize = 2752;
 
 
         public override void SetStaticDefaults()
@@ -48,7 +56,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             Projectile.ignoreWater = true;
             Projectile.tileCollide = false;
             animScale = 1f;
-            //Projectile.timeLeft = (int)LifeTime;
 
         }
         public override void AI()
@@ -56,11 +63,19 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             Projectile.ai[0] += 1;
             Player player = Main.player[Projectile.owner];
 
+            float expandProgress = Math.Clamp(Projectile.ai[0] / expandTime, 0f, 1f);
+
             if (Projectile.ai[0] > LifeTime)
             {
+                if (!Main.dedServ)
+                {
+                    //Main.NewText("Removing Blackhole shader");
+                    Filters.Scene["SF:Blackhole"].GetShader().UseOpacity(0f);
+                    Filters.Scene["SF:Blackhole"].Deactivate();
+                }
                 Projectile.Kill();
-                Filters.Scene["SF:DivineFlame"].GetShader().UseOpacity(0f);
-                Filters.Scene["SF:DivineFlame"].Deactivate();
+                //return is important or it will recall the shader later in the code
+                return;
             }
 
             if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
@@ -83,11 +98,43 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                         .UseTargetPosition(Projectile.Center)
                         .UseOpacity(1f);
                 }
-
-                Filters.Scene["SF:Blackhole"].GetShader().UseProgress(Projectile.ai[0] / LifeTime);
+            }
+            else
+            {
+                //add code for drawing sprite of blackhole as a fallback
             }
 
+            Filters.Scene["SF:Blackhole"].GetShader().UseProgress(expandProgress);
 
+            //resize hitbox based on progress
+            int currentSize = (int)MathHelper.Lerp(MinSize, MaxSize, expandProgress);
+            Projectile.position += new Vector2(
+                (Projectile.width - currentSize) / 2f,
+                (Projectile.height - currentSize) / 2f
+            );
+            Projectile.width = currentSize;
+            Projectile.height = currentSize;
+
+
+
+            //code to get an idea of the blackhole size
+            if ((int)Projectile.ai[0] % 30 == 0)
+            {
+
+                // shader radius is in UV
+                // use Y since UV Y goes 0->1
+                float shaderRadiusPixels = expandProgress * Main.screenHeight;
+
+                Vector2 shaderEdge = Projectile.Center + new Vector2(shaderRadiusPixels, 0f);
+                Main.NewText($"Progress: {expandProgress:F2} | Radius px: {shaderRadiusPixels:F1} | Edge: {shaderEdge}", Color.Cyan);
+            }
+
+            if ((int)Projectile.ai[0] == 1)
+            {
+                float progressAtTick1 = 1f / expandTime;
+                float shaderRadiusPixels = progressAtTick1 * Main.screenHeight;
+                Main.NewText($"Tick 1 radius: {shaderRadiusPixels:F1}px | Progress: {progressAtTick1:F4}", Color.Yellow);
+            }
 
         }
 
