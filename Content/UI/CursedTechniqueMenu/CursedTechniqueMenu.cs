@@ -157,7 +157,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 Texture2D rctIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/RCTIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 Texture2D simpleDomainIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/SimpleDomainIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                string rctIconHoverText = sfPlayer.unlockedRCT ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.Info")}" + $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.ContinuousRCT.Info")}"
+                string rctIconHoverText = sfPlayer.unlockedRCT ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.Info")}"
                 : $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.LockedInfo")}";
                 Texture2D finalRCTTexture = sfPlayer.unlockedRCT ? ref rctIconTexture : ref lockedTexture;
                 SpecialUIElement rctIcon = new SpecialUIElement(finalRCTTexture, rctIconHoverText);

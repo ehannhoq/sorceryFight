@@ -41,7 +41,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override float LifeTime => 240f;
 
         //this number gets doubled in SorceryFightPlayer.ApplyBloodCost, so the actual cost is 8 CE/s
-        public float BloodCostPerSecond => 25f;
+        public override float BloodCostPerSecond => 50f;
 
         private bool keyHeld = false;
         private const float MAX_LENGTH = 1600f;

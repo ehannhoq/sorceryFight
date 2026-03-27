@@ -13,10 +13,10 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 {
-    public class Supernova : PlayerDomainExpansion
+    public class StarCastle : PlayerDomainExpansion
     {
         public static Dictionary<int, float[]> frozenNPCs = new Dictionary<int, float[]>();
-        public override string InternalName => "Supernova";
+        public override string InternalName => "StarCastle";
 
         public override SoundStyle CastSound => SorceryFightSounds.UnlimitedVoid;
 

@@ -61,8 +61,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
                 sf.cursedEnergy -= CalculateTrueCost(sf);
 
-                if (BloodCost > 0)
-                    sf.bloodEnergy -= BloodCost;
+                sf.bloodEnergy -= BloodCost;
 
                 if (DisplayNameInGame)
                 {

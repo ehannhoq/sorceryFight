@@ -24,7 +24,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         private bool keyHeld = false;
 
-        public float BloodCostPerSecond => 40f;
+        public override float BloodCostPerSecond => 30f;
 
         public override float Speed => 0f;
         public override float LifeTime => 300f;
@@ -63,12 +63,13 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 if (keyHeld)
                     {
                         spawnTimer++;
-                        
-                        if (spawnTimer >= 10f)
+
+                        SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
+                        sf.bloodEnergyUsagePerSecond += BloodCostPerSecond;
+
+                    if (spawnTimer >= 10f)
                         {
                             spawnTimer = 0f;
-                            SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
-                            sf.bloodEnergyUsagePerSecond += BloodCostPerSecond;
                             Player player = Main.player[Projectile.owner];
                             // auraIndices[player.whoAmI] = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<AmplifiedAuraProjectile>(), 0, 0, player.whoAmI);
 

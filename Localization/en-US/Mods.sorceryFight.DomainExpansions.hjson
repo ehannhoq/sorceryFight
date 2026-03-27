@@ -21,8 +21,8 @@ MalevolentShrine: {
 	LockedDescription: Defeat the Devourer of Gods.
 }
 
-Supernova: {
-	DisplayName: Supernova
+StarCastle: {
+	DisplayName: Star Castle
 	Description:
 		'''
 		A Domain Expansion with no barrier; anything
