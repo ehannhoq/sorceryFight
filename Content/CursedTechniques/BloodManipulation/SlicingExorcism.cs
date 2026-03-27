@@ -23,14 +23,14 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.SlicingExorcism.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SlicingExorcism.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SlicingExorcism.LockedDescription");
-        public override float Cost => 40f;
+        public override float Cost => 20f;
 
         public override float BloodCost => 20f;
 
         public override Color textColor => new Color(255, 0, 0);
         public override bool DisplayNameInGame => true;
 
-        public override int Damage => 30;
+        public override int Damage => 18;
         public override int MasteryDamageMultiplier => 50;
 
         public override float Speed => 25f;

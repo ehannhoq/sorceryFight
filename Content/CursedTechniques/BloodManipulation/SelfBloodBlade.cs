@@ -23,8 +23,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.SelfBloodBlade.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SelfBloodBlade.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SelfBloodBlade.LockedDescription");
-        public override float Cost => 100f;
-        public override float BloodCost => 50f;
+        public override float Cost => 50f;
+        public override float BloodCost => 30f;
         public override Color textColor => new Color(120, 21, 8);
         public override bool DisplayNameInGame => false;
         public override int Damage => 50;

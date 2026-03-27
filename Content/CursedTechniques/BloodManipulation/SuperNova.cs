@@ -26,7 +26,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SuperNova.LockedDescription");
         public override float Cost => 40f;
 
-        public override float BloodCost => 300f;
+        public override float BloodCost => 150f;
 
         public override Color textColor => new Color(255, 0, 0);
         public override bool DisplayNameInGame => true;

@@ -21,7 +21,7 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.Buffs.FlowingRedScaleBuff.LockedDescription");
 
         public override bool isActive { get; set; } = false;
-        public override float BloodCostPerSecond { get; set; } = -10;
+        public override float BloodRegenPerSecond { get; set; } = 10;
 
         public override float CostPerSecond { get; set; } = 10f;
 

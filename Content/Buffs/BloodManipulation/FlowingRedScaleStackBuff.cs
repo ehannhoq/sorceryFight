@@ -21,7 +21,7 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
         public override bool isActive { get; set; } = false;
         public override float CostPerSecond { get; set; } = 40f;
 
-        public override float BloodCostPerSecond { get; set; } = -30;
+        public override float BloodRegenPerSecond { get; set; } = 30;
 
         float BossMultiplier = 1.5f;
         public virtual int DefenseAddition { get; set; } = 36;

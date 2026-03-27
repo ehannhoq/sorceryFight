@@ -24,7 +24,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         private bool keyHeld = false;
 
-        public override float BloodCostPerSecond => 30f;
+        public override float BloodCostPerSecond => 50f;
 
         public override float Speed => 0f;
         public override float LifeTime => 300f;
