@@ -345,3 +345,15 @@ GarudaWhip: {
 	Description: Whip Garuda
 	LockedDescription: Defeat the one who guards the Moon.
 }
+
+MassKick: {
+	DisplayName: Mass Kick
+	Description: Swing a weighted kick upwards
+	LockedDescription: Defeat the one who guards the Moon.
+}
+
+StarRush: {
+	DisplayName: Star Rush
+	Description: Charge at the cursor, do massive damage and stun the first enemy hit
+	LockedDescription: Defeat the one who guards the Moon.
+}

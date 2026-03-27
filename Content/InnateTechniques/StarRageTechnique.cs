@@ -28,8 +28,10 @@ namespace sorceryFight.Content.InnateTechniques
         {
             new StarChannel(),
             new GarudaKick(),
+            new GarudaWhip(),
             new MassPunch(),
-            new GarudaWhip()
+            new MassKick(),
+            new StarRush()
         };
 
         public override PlayerDomainExpansion DomainExpansion { get; } = new StarCastle();

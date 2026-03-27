@@ -17,8 +17,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public static readonly int TICKS_PER_FRAME = 5;
 
         public static Texture2D texture;
-        public static Texture2D convergenceTexture;
-        public static Texture2D collisionTexture;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.StarChannel.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.StarChannel.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.StarChannel.LockedDescription");
@@ -30,6 +28,8 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public override float Speed => 0f;
 
         private float blackholeThreshold = 360f;
+
+        private const int blackHoleDamage = 40000;
 
         private float starRegen => 34f;
 
@@ -118,7 +118,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                     {
                         if (projectile.type == ModContent.ProjectileType<GarudaHead>() && projectile.owner == Projectile.owner)
                         {
-                            int blackHoleDamage = 10;
                             Projectile.NewProjectile(
                             projectile.GetSource_FromThis(),
                             projectile.Center,

@@ -39,6 +39,11 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             return sf.HasDefeatedBoss(NPCID.SkeletronHead);
         }
 
+        public override int GetProjectileType()
+        {
+            return ModContent.ProjectileType<GarudaWhipProjectile>();
+        }
+
 
         public static Texture2D texture;
 
@@ -46,182 +51,32 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public float animScale;
 
 
-        public override void SetStaticDefaults()
-        {
-            //Main.projFrames[Projectile.type] = FRAME_COUNT;
-            ProjectileID.Sets.IsAWhip[Type] = true;
-            if (Main.dedServ) return;
-        }
 
-        public override int GetProjectileType()
+        public override int UseTechnique(SorceryFightPlayer sf)
         {
-            return ModContent.ProjectileType<GarudaWhip>();
-        }
+            Player player = sf.Player;
+            if (player.whoAmI != Main.myPlayer) return -1;
 
-        public override bool UseCondition(SorceryFightPlayer sf)
-        {
-            return !sf.summonGaruda;
-        }
+            sf.cursedEnergy -= CalculateTrueCost(sf);
+            sf.starEnergy -= StarCost;
 
-        public override void SetDefaults()
-        {
-            Projectile.DefaultToWhip();
-            Projectile.DamageType = CursedTechniqueDamageClass.Instance;
-            Projectile.friendly = true;
-            Projectile.width = 65;
-            Projectile.height = 65;
-            Projectile.extraUpdates = 0;
-            Projectile.WhipSettings.Segments = 20;
-            Projectile.WhipSettings.RangeMultiplier = 1f;
-            Projectile.tileCollide = true;
-            animating = false;
-            Projectile.penetrate = -1;
-            animScale = 1.25f;
-        }
-        public override void AI()
-        {
-            Projectile.rotation = Projectile.velocity.ToRotation();
-            Projectile.ai[0] += 1;
-            float beginAnimTime = 30f;
-            Player player = Main.player[Projectile.owner];
-
-            if (Projectile.ai[0] > LifeTime + beginAnimTime)
+            if (DisplayNameInGame)
             {
-                Projectile.Kill();
+                int index = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
+                Main.combatText[index].lifeTime = 180;
             }
 
-            if (Projectile.ai[0] < beginAnimTime)
-            {
-                if (!animating)
-                {
-                    Projectile.Center += new Vector2(0, -30);
-                    animating = true;
-                    SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
-                }
+            Vector2 velocity = (Main.MouseWorld - player.MountedCenter).SafeNormalize(Vector2.Zero) * Speed;
 
-                return;
-            }
-
-            if (animating)
-            {
-                Projectile.tileCollide = true;
-                animating = false;
-            }
-
+            return Projectile.NewProjectile(
+                player.GetSource_FromThis(),
+                player.MountedCenter,
+                velocity,
+                GetProjectileType(),
+                (int)CalculateTrueDamage(sf),
+                0,
+                player.whoAmI
+            );
         }
-
-        private void DrawLine(List<Vector2> list)
-        {
-            Texture2D texture = TextureAssets.FishingLine.Value;
-            Rectangle frame = texture.Frame();
-            Vector2 origin = new Vector2(frame.Width / 2, 2);
-
-            Vector2 pos = list[0];
-            for (int i = 0; i < list.Count - 1; i++)
-            {
-                Vector2 element = list[i];
-                Vector2 diff = list[i + 1] - element;
-
-                float rotation = diff.ToRotation() - MathHelper.PiOver2;
-                //Make the Whip Red
-                Color color = Lighting.GetColor(element.ToTileCoordinates(), Color.Red);
-                Vector2 scale = new Vector2(1, (diff.Length() + 2) / frame.Height);
-
-                Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation, origin, scale, SpriteEffects.None, 0);
-
-                pos += diff;
-            }
-        }
-
-        private float Timer
-        {
-            get => Projectile.ai[0];
-            set => Projectile.ai[0] = value;
-        }
-
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-
-            if (texture == null && !Main.dedServ)
-                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/StarRage/GarudaWhip").Value;
-
-
-            List<Vector2> list = new List<Vector2>();
-            Projectile.FillWhipControlPoints(Projectile, list);
-
-            DrawLine(list);
-
-            SpriteEffects flip = Projectile.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-
-            Main.instance.LoadProjectile(Type);
-
-            Vector2 pos = list[0];
-
-            for (int i = 0; i < list.Count - 1; i++)
-            {
-                // These two values are set to suit this projectile's sprite, but won't necessarily work for your own.
-                // You can change them if they don't!
-                Rectangle frame = new Rectangle(0, 0, 10, 26);
-                Vector2 origin = new Vector2(5, 8);
-                float scale = 1;
-
-                // These statements determine what part of the spritesheet to draw for the current segment.
-                // They can also be changed to suit your sprite.
-                if (i == list.Count - 2)
-                {
-                    frame.Y = 74;
-                    frame.Height = 18;
-
-                    // For a more impactful look, this scales the tip of the whip up when fully extended, and down when curled up.
-                    Projectile.GetWhipSettings(Projectile, out float timeToFlyOut, out int _, out float _);
-                    float t = Timer / timeToFlyOut;
-                    scale = MathHelper.Lerp(0.5f, 1.5f, Utils.GetLerpValue(0.1f, 0.7f, t, true) * Utils.GetLerpValue(0.9f, 0.7f, t, true));
-                }
-                else if (i > 10)
-                {
-                    frame.Y = 58;
-                    frame.Height = 16;
-                }
-                else if (i > 5)
-                {
-                    frame.Y = 42;
-                    frame.Height = 16;
-                }
-                else if (i > 0)
-                {
-                    frame.Y = 26;
-                    frame.Height = 16;
-                }
-
-                Vector2 element = list[i];
-                Vector2 diff = list[i + 1] - element;
-
-                float rotation = diff.ToRotation() - MathHelper.PiOver2; // This projectile's sprite faces down, so PiOver2 is used to correct rotation.
-                Color color = Lighting.GetColor(element.ToTileCoordinates());
-
-                Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation, origin, scale, flip, 0);
-
-
-                pos += diff;
-            }
-            return false;
-        }
-        
-
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            base.OnHitNPC(target, hit, damageDone);
-            Projectile.penetrate = 0;
-
-            target.AddBuff(BuffID.Poisoned, 300);
-
-            for (int i = 0; i < 6; i++)
-            {
-                Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
-
-            }
-        }
-
     }
 }

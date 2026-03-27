@@ -31,6 +31,7 @@ Mods: {
 			BloodDaggerStormProjectile.DisplayName: Blood Dagger Storm Projectile
 			BlackholeProjectile.DisplayName: Blackhole Projectile
 			ChakiraResonantBeam.DisplayName: Chakira Resonant Beam
+			GarudaWhipProjectile.DisplayName: Garuda Whip Projectile
 		}
 
 		Configs: {

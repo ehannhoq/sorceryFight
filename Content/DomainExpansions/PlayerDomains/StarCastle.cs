@@ -69,6 +69,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
             {
                 DrawInnerDomain(() =>
                 {
+                    Main.NewText("1 to 140 ticks");
                     Texture2D whiteTexture = TextureAssets.MagicPixel.Value;
                     Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
                     Color fadeColor = new Color(255f, 255f, 255f, whiteFade);
@@ -82,6 +83,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
             {
                 DrawInnerDomain(() =>
                 {
+                    Main.NewText("greater than 140 ticks");
                     Texture2D whiteTexture = TextureAssets.MagicPixel.Value;
                     Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
 
@@ -94,6 +96,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
                 {
                     DrawInnerDomain(() =>
                     {
+                        Main.NewText("340 to 390 ticks");
                         Texture2D whiteTexture = TextureAssets.MagicPixel.Value;
                         Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
                         Color fadeColor = new Color(255f, 255f, 255f, whiteFade);
