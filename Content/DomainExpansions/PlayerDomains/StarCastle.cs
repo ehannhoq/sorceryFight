@@ -65,51 +65,49 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
                 sf.starEnergy = 100f;
             }
 
-            if (tick > 1 && tick < 140)
+            //if (tick > 1 && tick < 140)
+            //{
+            //    DrawInnerDomain(() =>
+            //    {
+            //        Main.NewText("1 to 140 ticks");
+            //        Texture2D whiteTexture = TextureAssets.MagicPixel.Value;
+            //        Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
+            //        Color fadeColor = new Color(255f, 255f, 255f, whiteFade);
+
+            //        spriteBatch.Draw(whiteTexture, screenRectangle, fadeColor);
+            //    });
+            //    return;
+            //}
+
+
+            DrawInnerDomain(() =>
             {
-                DrawInnerDomain(() =>
-                {
-                    Main.NewText("1 to 140 ticks");
-                    Texture2D whiteTexture = TextureAssets.MagicPixel.Value;
-                    Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
-                    Color fadeColor = new Color(255f, 255f, 255f, whiteFade);
+                //Main.NewText("greater than 140 ticks");
+                Texture2D whiteTexture = TextureAssets.MagicPixel.Value;
+                Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
 
-                    spriteBatch.Draw(whiteTexture, screenRectangle, fadeColor);
-                });
-                return;
-            }
-
-            if (tick > 140)
-            {
-                DrawInnerDomain(() =>
-                {
-                    Main.NewText("greater than 140 ticks");
-                    Texture2D whiteTexture = TextureAssets.MagicPixel.Value;
-                    Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
-
-                    spriteBatch.Draw(whiteTexture, screenRectangle, Color.Black);
-                },
-                () => spriteBatch.Draw(BaseTexture, center - Main.screenPosition, new Rectangle(0, 0, BaseTexture.Width, BaseTexture.Height), Color.White, 0f, new Rectangle(0, 0, BaseTexture.Width, BaseTexture.Height).Size() * 0.5f, 2f, SpriteEffects.None, 0f)
-                );
+                spriteBatch.Draw(whiteTexture, screenRectangle, Color.Black);
+            },
+            () => spriteBatch.Draw(BaseTexture, center - Main.screenPosition, new Rectangle(0, 0, BaseTexture.Width, BaseTexture.Height), Color.White, 0f, new Rectangle(0, 0, BaseTexture.Width, BaseTexture.Height).Size() * 0.5f, 2f, SpriteEffects.None, 0f)
+            );
             
-                if (tick > 340 && tick < 390)
-                {
-                    DrawInnerDomain(() =>
-                    {
-                        Main.NewText("340 to 390 ticks");
-                        Texture2D whiteTexture = TextureAssets.MagicPixel.Value;
-                        Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
-                        Color fadeColor = new Color(255f, 255f, 255f, whiteFade);
+            //if (tick > 210 && tick < 250)
+            //{
+            //    DrawInnerDomain(() =>
+            //    {
+            //        Main.NewText("210 to 210 ticks");
+            //        Texture2D whiteTexture = TextureAssets.MagicPixel.Value;
+            //        Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
+            //        Color fadeColor = new Color(255f, 255f, 255f, whiteFade);
 
-                        spriteBatch.Draw(whiteTexture, screenRectangle, fadeColor);
-                    });
-                }
+            //        spriteBatch.Draw(whiteTexture, screenRectangle, fadeColor);
+            //    });
+            //}
 
-                if (tick > 389)
-                {
-                    Rectangle src = new Rectangle(0, 0, DomainTexture.Width, DomainTexture.Height);
-                    spriteBatch.Draw(DomainTexture, center - Main.screenPosition, src, Color.White, 0f, src.Size() * 0.5f, 2f, SpriteEffects.None, 0f);
-                }
+            if (tick > 250)
+            {
+                Rectangle src = new Rectangle(0, 0, DomainTexture.Width, DomainTexture.Height);
+                spriteBatch.Draw(DomainTexture, center - Main.screenPosition, src, Color.White, 0f, src.Size() * 0.5f, 2f, SpriteEffects.None, 0f);
             }
         }
 
@@ -119,13 +117,14 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
             tick++;
 
+            //what does this do?
             if ((whiteFade += 0.03f) > 1)
                 whiteFade = 1;
 
             if (tick == 340)
                 whiteFade = 0;
 
-            if (tick > 140 && tick < 390)
+            if (tick < 250)
             {
                 for (int i = 0; i < 5; i++)
                 {
