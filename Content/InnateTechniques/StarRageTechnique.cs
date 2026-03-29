@@ -27,15 +27,14 @@ namespace sorceryFight.Content.InnateTechniques
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
             new StarChannel(),
-            new GarudaKick()
+            new GarudaKick(),
+            new GarudaWhip(),
+            new MassPunch(),
+            new MassKick(),
+            new StarRush()
         };
 
-        public override void PreUpdate(SorceryFightPlayer sf)
-        {
-            sf.noInnateDomain = true;
-        }
-
-        public override PlayerDomainExpansion DomainExpansion => null;
+        public override PlayerDomainExpansion DomainExpansion { get; } = new StarCastle();
 
 
     }

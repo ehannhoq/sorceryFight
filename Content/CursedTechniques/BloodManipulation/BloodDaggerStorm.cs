@@ -1,16 +1,6 @@
-﻿using CalamityMod.Particles;
-using CalamityMod.Sounds;
-using Humanizer;
-using Microsoft.Build.Graph;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.Particles;
-using sorceryFight.Content.Projectiles.Melee;
+﻿using Microsoft.Xna.Framework;
 using sorceryFight.SFPlayer;
-using System;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -29,29 +19,30 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override Color textColor => new Color(255, 0, 0);
         public override bool DisplayNameInGame => true;
 
-        public override int Damage => 30;
+        public override int Damage => 100;
         public override int MasteryDamageMultiplier => 50;
 
         private bool keyHeld = false;
 
-        public float BloodCostPerSecond => 4f;
+        public override float BloodCostPerSecond => 50f;
 
         public override float Speed => 0f;
         public override float LifeTime => 300f;
 
         private float spawnTimer = 0;
 
+
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
+            if (sf.innateTechnique.Name == "Vessel")
+            {
+                return sf.sukunasFingerConsumed >= 10;
+            }   
+            else
+            {
+                return sf.HasDefeatedBoss(NPCID.HallowBoss);
+            }
         }
-
-
-        public static Texture2D texture;
-
-        public bool animating;
-        public float animScale;
-
 
         public override int GetProjectileType()
         {
@@ -59,33 +50,32 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         }
 
 
-        public override void SetDefaults()
+        public override bool PreDraw(ref Color lightColor)
         {
-            base.SetDefaults();
+            return false;
         }
         public override void AI()
         {
             keyHeld = SFKeybinds.UseTechnique.Current;
-            Mod.Logger.Info("AI running");
+            //Mod.Logger.Info("AI running");
 
-            //ModContent.GetInstance<SorceryFight>().Logger.Info("This is what the bum is doing:" + spawnTimer);
             if (Main.myPlayer == Projectile.owner){
                 if (keyHeld)
                     {
                         spawnTimer++;
 
-                        if (spawnTimer >= 10f)
+                        SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
+                        sf.bloodEnergyUsagePerSecond += BloodCostPerSecond;
+
+                    if (spawnTimer >= 10f)
                         {
                             spawnTimer = 0f;
-
-                            SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
-                            sf.bloodEnergyUsagePerSecond += BloodCostPerSecond;
                             Player player = Main.player[Projectile.owner];
                             // auraIndices[player.whoAmI] = Projectile.NewProjectile(entitySource, playerPos, Vector2.Zero, ModContent.ProjectileType<AmplifiedAuraProjectile>(), 0, 0, player.whoAmI);
 
                             Vector2 velocity = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * Speed;
 
-                            Main.NewText("spawning projectile, Velocity: " + velocity);
+                            //Main.NewText("spawning projectile, Velocity: " + velocity);
 
                             Projectile.NewProjectile(
                             player.GetSource_FromThis(),

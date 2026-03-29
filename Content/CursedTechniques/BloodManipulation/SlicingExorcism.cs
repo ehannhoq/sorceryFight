@@ -23,21 +23,21 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.SlicingExorcism.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SlicingExorcism.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SlicingExorcism.LockedDescription");
-        public override float Cost => 40f;
+        public override float Cost => 20f;
 
         public override float BloodCost => 20f;
 
         public override Color textColor => new Color(255, 0, 0);
         public override bool DisplayNameInGame => true;
 
-        public override int Damage => 30;
+        public override int Damage => 18;
         public override int MasteryDamageMultiplier => 50;
 
         public override float Speed => 25f;
         public override float LifeTime => 300f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
+            return sf.HasDefeatedBoss(NPCID.KingSlime);
         }
 
 
@@ -61,8 +61,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 65;
-            Projectile.height = 65;
+            Projectile.width = 35;
+            Projectile.height = 15;
             Projectile.tileCollide = true;
             animating = false;
             Projectile.penetrate = -1;

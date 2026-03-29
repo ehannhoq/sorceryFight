@@ -32,7 +32,8 @@ namespace sorceryFight
 			"gooloohoodoo6",
 			"gooloohoodoo7",
 			"Perseus",
-			"TheRealCriky"
+			"TheRealCriky",
+			"Kuroka"
 		];
 
 		private static readonly int vanillaBossesCount = 32;

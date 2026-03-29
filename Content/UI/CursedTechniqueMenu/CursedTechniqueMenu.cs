@@ -133,7 +133,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             if (sfPlayer.sukunasFingerConsumed >= 1)
             {
                 Texture2D sukunasFingerTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/SukunasFingerIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                string sukunasFingerHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Info")}\n{sfPlayer.sukunasFingerConsumed} {SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Consumed")}\n{25 + (int)(sfPlayer.sukunasFingerConsumed * 3.75)} {SFUtils.GetLocalization("Mods.sorceryFight.UI.SukunasFingerIcon.KingOfCurses")}";
+                string sukunasFingerHoverText = $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Info")}\n{sfPlayer.sukunasFingerConsumed} {SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.SukunasFingerIcon.Consumed")}\n{(sfPlayer.sukunasFingerConsumed == 0 ? 0 : 15 + (int)(sfPlayer.sukunasFingerConsumed * 3))} {SFUtils.GetLocalization("Mods.sorceryFight.UI.SukunasFingerIcon.KingOfCurses")} {SFUtils.GetLocalization("Mods.sorceryFight.UI.SukunasFingerIcon.KingOfCurses")}";
                 SpecialUIElement sukunasFingerIcon = new SpecialUIElement(sukunasFingerTexture, sukunasFingerHoverText);
                 sukunasFingerIcon.Left.Set(conditionalIconPositions[index].X, 0f);
                 sukunasFingerIcon.Top.Set(conditionalIconPositions[index].Y, 0f);
@@ -157,7 +157,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 Texture2D rctIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/RCTIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 Texture2D simpleDomainIconTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/SimpleDomainIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                string rctIconHoverText = sfPlayer.unlockedRCT ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.Info")}" + $"\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.ContinuousRCT.Info")}"
+                string rctIconHoverText = sfPlayer.unlockedRCT ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.Info")}"
                 : $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.RCTIcon.LockedInfo")}";
                 Texture2D finalRCTTexture = sfPlayer.unlockedRCT ? ref rctIconTexture : ref lockedTexture;
                 SpecialUIElement rctIcon = new SpecialUIElement(finalRCTTexture, rctIconHoverText);

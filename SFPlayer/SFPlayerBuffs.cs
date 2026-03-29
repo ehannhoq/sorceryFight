@@ -36,6 +36,14 @@ namespace sorceryFight.SFPlayer
                 if (Player.HasBuff<BurntTechnique>() || (!beerHat && cursedEnergy < 2))
                 {
                     passiveTechnique.isActive = false;
+                    continue;
+                }
+
+                if (!passiveTechnique.UseCondition(Player))
+                {
+                    passiveTechnique.isActive = false;
+                    //Main.NewText("Technique on cooldonw!");
+                    continue;
                 }
 
                 if (passiveTechnique.isActive)

@@ -51,7 +51,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
             if (Projectile.ai[1] < 0 || !Main.npc[(int)Projectile.ai[1]].active || Main.npc[(int)Projectile.ai[1]].Distance(Projectile.Center) > trackingRadius)
             {
-                Main.NewText("Couldn't find target!!!");
+                //Main.NewText("Couldn't find target!!!");
                 Projectile.Kill();
             }
             else

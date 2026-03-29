@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs.StarRage;
+using sorceryFight.Content.Buffs;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
@@ -17,8 +18,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public static readonly int TICKS_PER_FRAME = 5;
 
         public static Texture2D texture;
-        public static Texture2D convergenceTexture;
-        public static Texture2D collisionTexture;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.StarChannel.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.StarChannel.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.StarChannel.LockedDescription");
@@ -31,6 +30,8 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
         private float blackholeThreshold = 360f;
 
+        private const int blackHoleDamage = 40000;
+
         private float starRegen => 34f;
 
         //Lifetime is made useless but must be implmented 
@@ -38,6 +39,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
         private bool keyHeld = false;
         public float animScale;
+        public bool hasPlayedSound;
 
 
         public override int GetProjectileType()
@@ -93,9 +95,10 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                     //add star power
                     sf.starEnergyRegenPerSecond += starRegen;
                     //check if star energy is going to be full, if it is, play sound effect
-                    if (100f < sf.starEnergy + SFUtils.RateSecondsToTicks(sf.starEnergyRegenPerSecond - sf.starEnergyUsagePerSecond))
+                    if (!hasPlayedSound && sf.maxStarEnergy < sf.starEnergy + SFUtils.RateSecondsToTicks(sf.starEnergyRegenPerSecond - sf.starEnergyUsagePerSecond))
                     {
                         SoundEngine.PlaySound(SorceryFightSounds.PachinkoBallCollision, Projectile.Center);
+                        hasPlayedSound = true;
                     }
 
                     blackholeThreshold--;
@@ -108,7 +111,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
                 if(blackholeThreshold <= 0)
                 {
-                    Main.NewText("BLACKHOLE TRIGGERED");
+                    //Main.NewText("BLACKHOLE TRIGGERED");
                     //Spawn black hole at Garuda position then kill him
 
 
@@ -116,7 +119,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                     {
                         if (projectile.type == ModContent.ProjectileType<GarudaHead>() && projectile.owner == Projectile.owner)
                         {
-                            int blackHoleDamage = 10;
                             Projectile.NewProjectile(
                             projectile.GetSource_FromThis(),
                             projectile.Center,
@@ -127,11 +129,12 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                             player.whoAmI
                             );
 
-
+                            sf.summonGaruda = false;
                             projectile.Kill();
                             //Need code to uncheck the garuda summon box in the UI and remove the buff
-                            sf.summonGaruda = false;
+
                             player.ClearBuff(ModContent.BuffType<SummonGarudaBuff>());
+                            player.AddBuff(ModContent.BuffType<GarudaCooldown>(), 3600);
                             Projectile.Kill();
                         }
 

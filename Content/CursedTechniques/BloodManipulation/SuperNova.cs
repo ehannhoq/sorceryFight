@@ -12,6 +12,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using CalamityMod.NPCs.AstrumDeus;
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
@@ -25,7 +26,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SuperNova.LockedDescription");
         public override float Cost => 40f;
 
-        public override float BloodCost => 20f;
+        public override float BloodCost => 150f;
 
         public override Color textColor => new Color(255, 0, 0);
         public override bool DisplayNameInGame => true;
@@ -37,7 +38,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override float LifeTime => 120f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.MoonLordCore);
+            return sf.HasDefeatedBoss(ModContent.NPCType<AstrumDeusHead>());
         }
 
 
@@ -60,7 +61,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override int UseTechnique(SorceryFightPlayer sf)
         {
             Player player = sf.Player;
-            sf.cursedEnergy -= Cost;
+            sf.bloodEnergy -= BloodCost;
+            sf.cursedEnergy -= CalculateTrueCost(sf);
 
             if (Main.myPlayer == player.whoAmI)
             {
@@ -130,7 +132,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 {
                     float angle = MathHelper.TwoPi / 16 * i;
                     Vector2 velocity = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)) * 10f;
-                    Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, velocity, ModContent.ProjectileType<SuperNovaShard>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, velocity, ModContent.ProjectileType<SuperNovaShard>(), 500, Projectile.knockBack, Projectile.owner);
                 }
             }
         }

@@ -112,10 +112,6 @@ namespace sorceryFight.SFPlayer
 
             tag["ptSelector"] = new List<float> { PTSelectorPos.X, PTSelectorPos.Y };
 
-            tag["ceBar"] = new List<float> { CEBarPos.X, CEBarPos.Y };
-
-            tag["beBar"] = new List<float> { BEBarPos.X, BEBarPos.Y };
-
             var maxCEModifiers = new List<string>();
             maxCEModifiers.AddWithCondition("cursedSkull", cursedSkull);
             maxCEModifiers.AddWithCondition("cursedMechanicalSoul", cursedMechanicalSoul);
@@ -194,14 +190,6 @@ namespace sorceryFight.SFPlayer
 
             PTSelectorPos = tag.ContainsKey("ptSelector")
             ? new Microsoft.Xna.Framework.Vector2(tag.Get<List<float>>("ptSelector")[0], tag.Get<List<float>>("ptSelector")[1])
-            : Microsoft.Xna.Framework.Vector2.Zero;
-
-            CEBarPos = tag.ContainsKey("ceBar")
-            ? new Microsoft.Xna.Framework.Vector2(tag.Get<List<float>>("ceBar")[0], tag.Get<List<float>>("ceBar")[1])
-            : Microsoft.Xna.Framework.Vector2.Zero;
-
-            BEBarPos = tag.ContainsKey("beBar")
-            ? new Microsoft.Xna.Framework.Vector2(tag.Get<List<float>>("beBar")[0], tag.Get<List<float>>("beBar")[1])
             : Microsoft.Xna.Framework.Vector2.Zero;
 
             var maxCEModifiers = tag.GetList<string>("maxCEModifiers");

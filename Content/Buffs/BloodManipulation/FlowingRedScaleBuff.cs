@@ -7,6 +7,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using CalamityMod.NPCs.Perforator;
+using CalamityMod.NPCs.HiveMind;
 
 //remove Later
 
@@ -19,7 +21,7 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.Buffs.FlowingRedScaleBuff.LockedDescription");
 
         public override bool isActive { get; set; } = false;
-        public override float BloodCostPerSecond { get; set; } = -10;
+        public override float BloodRegenPerSecond { get; set; } = 10;
 
         public override float CostPerSecond { get; set; } = 10f;
 
@@ -93,11 +95,12 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
         {
             if (sf.innateTechnique.Name == "Vessel")
             {
-                return sf.sukunasFingerConsumed >= 5;
+                return sf.sukunasFingerConsumed >= 3;
             }
             else
             {
-                return sf.HasDefeatedBoss(NPCID.EyeofCthulhu);
+                return sf.HasDefeatedBoss(ModContent.NPCType<PerforatorHive>()) || sf.HasDefeatedBoss(ModContent.NPCType<HiveMind>());
+
             }
         }
 

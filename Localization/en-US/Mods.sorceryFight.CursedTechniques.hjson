@@ -142,7 +142,7 @@ SoulDismantle: {
 		A devastating slash that targets the soul,
 		ignoring any and all defense.
 		'''
-	LockedDescription: Consume atleast 15 of Ryomen Sukuna's Fingers.
+	LockedDescription: Consume at least 15 of Ryomen Sukuna's Fingers.
 }
 
 ChainDismantle: {
@@ -153,7 +153,7 @@ ChainDismantle: {
 		enemies within a radius upon first successful 
 		hit. Also ignores defense.
 		'''
-	LockedDescription: Consome atleast 17 of Ryomen Sukuna's Fingers.
+	LockedDescription: Consome at least 17 of Ryomen Sukuna's Fingers.
 }
 
 PiercingBlood: {
@@ -164,7 +164,7 @@ PiercingBlood: {
 		you shoot a concetrated beam of blood; piercing
 		through anything.
 		'''
-	LockedDescription: Consume atleast 19 of Ryomen Sukuna's Fingers.
+	LockedDescription: Consume at least 6 of Ryomen Sukuna's Fingers (Vessel) or defeat Cryogen (Blood).
 }
 
 PachinkoBalls: {
@@ -271,7 +271,7 @@ SlicingExorcism: {
 		By compressing blood into a sphere then flattening it
 		you create a powerful slicing disk that carves through flesh like butter
 		'''
-	LockedDescription: Defeat the one who guards the Dungeon.
+	LockedDescription: Defeat the King of Slimes
 }
 
 UnlimitedPiercingBlood: {
@@ -282,7 +282,7 @@ UnlimitedPiercingBlood: {
 		These Mini Piercing Bloods are created for every enemy poisoned by your blood
 		The more of them there are, the more mini beams spawn
 		'''
-	LockedDescription: Defeat the one who guards the Dungeon.
+	LockedDescription: Defeat the Old duke
 }
 
 BloodDaggerStorm: {
@@ -292,7 +292,7 @@ BloodDaggerStorm: {
 		By constantly compressing blood into daggers and firing them with tiny lines of blood attached
 		they can be redirected mid air towards your cursor, seeking out enemies as they get closer
 		'''
-	LockedDescription: Defeat the one who guards the Dungeon.
+	LockedDescription: Consume at least 10 of Ryomen Sukuna's Fingers (Vessel) or defeat the Empress of Light (Blood).
 }
 
 SelfBloodBlade: {
@@ -302,7 +302,7 @@ SelfBloodBlade: {
 		Create a spinning blade of blood infront of you,
 		it can be rotated 360 degrees around you
 		'''
-	LockedDescription: Defeat the one who guards the Dungeon.
+	LockedDescription: Defeat The Slime God
 }
 
 SuperNova: {
@@ -312,7 +312,7 @@ SuperNova: {
 		Place a sphere of compressed blood at your mouse position then
 		wait for it to explode like a shotgun blast in two seconds
 		'''
-	LockedDescription: Defeat the one who guards the Moon.
+	LockedDescription: Defeat Astrum Deus
 }
 
 GarudaKick: {
@@ -331,5 +331,29 @@ StarChannel: {
 		After Unlocking Your domain you can hold down this key for ten seconds
 		to create a black hole at Garuda's position, it doesn't need to stay on the enemy
 		'''
+	LockedDescription: Defeat the one who guards the Moon.
+}
+
+MassPunch: {
+	DisplayName: Mass Punch
+	Description: Swing a weighted fist accross your body
+	LockedDescription: Defeat the one who guards the Moon.
+}
+
+GarudaWhip: {
+	DisplayName: Garuda Whip
+	Description: Whip Garuda
+	LockedDescription: Defeat the one who guards the Moon.
+}
+
+MassKick: {
+	DisplayName: Mass Kick
+	Description: Swing a weighted kick upwards
+	LockedDescription: Defeat the one who guards the Moon.
+}
+
+StarRush: {
+	DisplayName: Star Rush
+	Description: Charge at the cursor, do massive damage and stun the first enemy hit
 	LockedDescription: Defeat the one who guards the Moon.
 }

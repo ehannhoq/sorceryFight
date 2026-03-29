@@ -28,6 +28,9 @@ namespace sorceryFight.Content.CursedTechniques
         //public int TimeCharged;
 
         public virtual float BloodCost { get; } = 0;
+
+        public virtual float BloodCostPerSecond { get; } = 0;
+        public virtual float StarCost { get; } = 0;
         public abstract Color textColor { get; }
         public abstract bool DisplayNameInGame { get; }
         public abstract int Damage { get; }
@@ -36,11 +39,19 @@ namespace sorceryFight.Content.CursedTechniques
         public abstract float LifeTime { get; }
         public abstract bool Unlocked(SorceryFightPlayer sf);
         public abstract int GetProjectileType();
-        
+
         public virtual string GetStats(SorceryFightPlayer sf)
         {
-            return $"Damage: {Math.Round(CalculateTrueDamage(sf), 2)}\n"
+            string stats = $"Damage: {Math.Round(CalculateTrueDamage(sf), 2)}\n"
                 + $"Cost: {Math.Round(CalculateTrueCost(sf), 2)} CE\n";
+
+            if (BloodCost > 0)
+                stats += $"Blood Cost: {BloodCost}\n";
+
+            if (BloodCostPerSecond > 0)
+                stats += $"Blood Cost Per Second: {BloodCostPerSecond}\n";
+
+            return stats;
         }
         public virtual float CalculateTrueDamage(SorceryFightPlayer sf)
         { 
@@ -90,6 +101,11 @@ namespace sorceryFight.Content.CursedTechniques
                 if(BloodCost > 0)
                 {
                     sf.bloodEnergy -= BloodCost;
+                }
+
+                if (StarCost > 0)
+                {
+                    sf.starEnergy -= StarCost;
                 }
 
                 if (DisplayNameInGame)

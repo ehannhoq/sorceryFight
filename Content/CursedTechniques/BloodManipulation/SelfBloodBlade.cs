@@ -9,6 +9,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using CalamityMod.NPCs.SlimeGod;
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
@@ -22,7 +23,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.SelfBloodBlade.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SelfBloodBlade.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SelfBloodBlade.LockedDescription");
-        public override float Cost => 75f;
+        public override float Cost => 50f;
+        public override float BloodCost => 30f;
         public override Color textColor => new Color(120, 21, 8);
         public override bool DisplayNameInGame => false;
         public override int Damage => 50;
@@ -31,14 +33,13 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override float LifeTime => 32f;
         //double from cleave 16 
 
-        float baseDamagePercent = 0.05f;
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<SelfBloodBlade>();
         }
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead); ;
+            return sf.HasDefeatedBoss(ModContent.NPCType<SlimeGodCore>());
         }
 
         public override string GetStats(SorceryFightPlayer sf)
@@ -49,33 +50,25 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 + $"Cost: {Math.Round(CalculateTrueCost(sf), 2)} CE\n";
         }
 
-        public override float CalculateTrueDamage(SorceryFightPlayer sf)
-        {
-            return base.CalculateTrueDamage(sf) + (0.01f * (sf.sukunasFingerConsumed / 20f));
-        }
-
-        public override float CalculateTrueCost(SorceryFightPlayer sf)
-        {
-            float finalCost = Cost - (Cost * (sf.numberBossesDefeated / 100f));
-            finalCost += sf.maxCursedEnergy * 0.05f;
-            finalCost *= 1 - sf.ctCostReduction;
-            finalCost *= 1 - (0.01f * sf.sukunasFingerConsumed);
-            return finalCost;
-        }
-
         public override int UseTechnique(SorceryFightPlayer sf)
         {
             Player player = sf.Player;
 
             if (player.whoAmI == Main.myPlayer)
             {
-                Vector2 playerPos = player.MountedCenter;
-                Vector2 mousePos = Main.MouseWorld;
-                Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * Speed;
                 var entitySource = player.GetSource_FromThis();
+
                 sf.cursedEnergy -= CalculateTrueCost(sf);
 
-                return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
+                sf.bloodEnergy -= BloodCost;
+
+                if (DisplayNameInGame)
+                {
+                    int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
+                    Main.combatText[index1].lifeTime = 180;
+                }
+
+                return Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
             }
             return -1;
         }
@@ -91,8 +84,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Projectile.height = 188;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
-            Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = -1;
+            //Projectile.usesLocalNPCImmunity = true;
+            //Projectile.localNPCHitCooldown = -1;
             animScale = 2f;
         }
 
@@ -163,9 +156,11 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             int frameY = Projectile.frame * frameHeight;
 
             Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
+            Player player = Main.player[Projectile.owner];
+            SpriteEffects effects = player.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
-            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, effects, 0f);
 
             return false;
         }
@@ -177,9 +172,5 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             target.AddBuff(ModContent.BuffType<BloodPoison>(), paintingCount * 60);
         }
 
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
-        {
-            modifiers.FinalDamage.Flat += target.life * baseDamagePercent;
-        }
     }
 }

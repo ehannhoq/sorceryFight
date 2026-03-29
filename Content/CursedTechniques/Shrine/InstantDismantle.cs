@@ -43,10 +43,11 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override int UseTechnique(SorceryFightPlayer sf)
         {
             Player player = sf.Player;
-            sf.cursedEnergy -= Cost;
+
 
             if (Main.myPlayer == player.whoAmI)
             {
+                sf.cursedEnergy -= CalculateTrueCost(sf);
                 if (DisplayNameInGame)
                 {
                     int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
@@ -62,15 +63,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 return index;
             }
             return -1;
-        }
-
-        public override float CalculateTrueDamage(SorceryFightPlayer sf)
-        {
-            return base.CalculateTrueDamage(sf) * (1 + (0.01f * sf.sukunasFingerConsumed));
-        }
-        public override float CalculateTrueCost(SorceryFightPlayer sf)
-        {
-            return base.CalculateTrueCost(sf) * (1 - (0.01f * sf.sukunasFingerConsumed));
         }
 
         public override void SetDefaults()

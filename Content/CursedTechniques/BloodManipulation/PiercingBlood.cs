@@ -9,6 +9,8 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using CalamityMod.NPCs.Cryogen;
+
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
@@ -26,7 +28,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.PiercingBlood.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PiercingBlood.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PiercingBlood.LockedDescription");
-        public override float Cost => 750f;
+        public override float Cost => 100f;
         public override Color textColor => new Color(132, 4, 4);
         public override bool DisplayNameInGame => true;
         public override int Damage => 100;
@@ -36,8 +38,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         //Lifetime is made useless but must be implmented 
         public override float LifeTime => 240f;
 
-        //this number gets doubled in SorceryFightPlayer.ApplyBloodCost, so the actual cost is 8 CE/s
-        public float BloodCostPerSecond => 4f;
+        //this number gets doubled in SorceryFightPlayer.ApplyBloodCost
+        public override float BloodCostPerSecond => 15f;
 
         private bool keyHeld = false;
         private const float MAX_LENGTH = 1600f;
@@ -56,11 +58,12 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         {
             if (sf.innateTechnique.Name == "Vessel")
             {
-                return sf.sukunasFingerConsumed >= 19;
+                return sf.sukunasFingerConsumed >= 6;
             }
             else
             {
-                return sf.HasDefeatedBoss(NPCID.MoonLordCore);
+                return sf.HasDefeatedBoss(ModContent.NPCType<Cryogen>());
+
             }
         }
 

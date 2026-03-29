@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using CalamityMod;
 using CalamityMod.Items.Accessories;
 using CalamityMod.NPCs.AquaticScourge;
@@ -32,10 +29,14 @@ using CalamityMod.NPCs.SupremeCalamitas;
 using CalamityMod.NPCs.Yharon;
 using sorceryFight.Content.Items.Accessories;
 using sorceryFight.Content.Items.Consumables;
+using sorceryFight.Content.Items.Consumables.DeathPainting;
 using sorceryFight.Content.Items.Consumables.SukunasFinger;
 using sorceryFight.Content.Items.Materials;
 using sorceryFight.Content.Items.Novelty;
 using sorceryFight.Content.Items.Weapons.Melee;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -59,7 +60,7 @@ namespace sorceryFight
 
             CursedModifiers(ref npc, ref npcLoot, ref nonExpertRule);
             SukunasFingers(ref npc, ref npcLoot, ref nonExpertRule);
-
+            DeathPaintings(ref npc, ref npcLoot, ref nonExpertRule);
             SkeletronPrimeDrops(ref npc, ref npcLoot, ref nonExpertRule);
             MoonLordDrops(ref npc, ref npcLoot, ref nonExpertRule);
             WallOfFleshDrops(ref npc, ref npcLoot, ref nonExpertRule);
@@ -144,6 +145,29 @@ namespace sorceryFight
                 { ModContent.NPCType<Polterghast>(), ModContent.ItemType<SukunasFingerXIX>() },
 
                 { ModContent.NPCType<DevourerofGodsHead>(), ModContent.ItemType<SukunasFingerXX>() }
+            };
+
+            if (npcLootMap.TryGetValue(npc.type, out int itemID))
+            {
+                firstTimeRule.OnSuccess(ItemDropRule.Common(itemID));
+            }
+        }
+
+        private void DeathPaintings(ref NPC npc, ref NPCLoot npcLoot, ref LeadingConditionRule nonExpertRule)
+        {
+            LeadingConditionRule firstTimeRule = new LeadingConditionRule(new SFConditions.FirstTimeDefeatingBoss());
+            nonExpertRule.Add(firstTimeRule);
+
+            Dictionary<int, int> npcLootMap = new()
+            {
+                { NPCID.EyeofCthulhu, ModContent.ItemType<DeathPaintingOne>() },
+                { NPCID.SkeletronHead, ModContent.ItemType<DeathPaintingTwo>() },
+                { NPCID.WallofFlesh, ModContent.ItemType<DeathPaintingThree>() },
+                { NPCID.Plantera, ModContent.ItemType<DeathPaintingFour>() },
+                { NPCID.MoonLordCore, ModContent.ItemType<DeathPaintingFive>() },
+                { ModContent.NPCType<Providence>(), ModContent.ItemType<DeathPaintingSix>() },
+                { ModContent.NPCType<DevourerofGodsHead>(), ModContent.ItemType<DeathPaintingSeven>() },
+                { ModContent.NPCType<Yharon>(), ModContent.ItemType<DeathPaintingEight>() }
             };
 
             if (npcLootMap.TryGetValue(npc.type, out int itemID))
