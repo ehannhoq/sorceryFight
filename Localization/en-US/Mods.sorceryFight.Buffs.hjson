@@ -308,3 +308,8 @@ BloodPoison: {
 	DisplayName: Blood Poison
 	Description: Mods.sorceryFight.Buffs.BloodPoison.Description
 }
+
+GarudaCooldown: {
+	DisplayName: Garuda Cooldown
+	Description: Mods.sorceryFight.Buffs.GarudaCooldown.Description
+}

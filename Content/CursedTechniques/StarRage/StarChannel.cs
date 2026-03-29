@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs.StarRage;
+using sorceryFight.Content.Buffs;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
@@ -128,11 +129,12 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                             player.whoAmI
                             );
 
-
+                            sf.summonGaruda = false;
                             projectile.Kill();
                             //Need code to uncheck the garuda summon box in the UI and remove the buff
-                            sf.summonGaruda = false;
+
                             player.ClearBuff(ModContent.BuffType<SummonGarudaBuff>());
+                            player.AddBuff(ModContent.BuffType<GarudaCooldown>(), 3600);
                             Projectile.Kill();
                         }
 

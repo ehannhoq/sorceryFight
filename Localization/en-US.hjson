@@ -127,6 +127,13 @@ Mods: {
 					Label: Star Meter Pos Lock
 					Tooltip: ""
 				}
+
+				Headers.BloodEnergyBar: Blood Energy Bar Header
+
+				BloodEnergyBarScale: {
+					Label: Blood Energy Bar Scale
+					Tooltip: Adjusts the size of the Blood Energy Bar. Default is 1.0
+				}
 			}
 
 			SorceryFightServerConfig: {

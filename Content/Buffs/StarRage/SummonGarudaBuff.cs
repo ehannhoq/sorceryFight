@@ -77,6 +77,10 @@ namespace sorceryFight.Content.Buffs.StarRage
             }
         }
 
+        public override bool UseCondition(Player player)
+        {
+            return !player.HasBuff(ModContent.BuffType<GarudaCooldown>());
+        }
 
 
         public override void Update(Player player, ref int buffIndex)

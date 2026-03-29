@@ -40,10 +40,17 @@ namespace sorceryFight
         [DefaultValue(1f)]
         public float CursedEnergyBarTransparency { get; set; }
 
-
+        [Header("BloodEnergyBar")]
         [BackgroundColor(192, 54, 64, 192)]
         [DefaultValue(true)]
         public bool BloodEnergyBar { get; set; }
+
+        [Label("Blood Energy Bar Scale")]
+        [Tooltip("Adjusts the size of the Blood Energy Bar. Default is 1.0")]
+        [Range(0.5f, 3.0f)]
+        [Increment(0.05f)]
+        [DefaultValue(1f)]
+        public float BloodEnergyBarScale { get; set; } = 1f;
 
         [BackgroundColor(192, 54, 64, 192)]
         [DefaultValue(true)]

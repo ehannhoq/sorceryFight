@@ -43,5 +43,10 @@ namespace sorceryFight.Content.Buffs
             sf.bloodEnergyRegenPerSecond += finalBloodRegenPerSecond;
         }
 
+        public virtual bool UseCondition(Player player)
+        {
+            return true;
+        }
+
     }
 }
