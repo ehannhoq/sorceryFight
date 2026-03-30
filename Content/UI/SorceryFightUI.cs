@@ -65,12 +65,12 @@ public class SorceryFightUI : UIState
         if (!initialized)
         {
             initialized = true;
+
             CursedTechniqueSelector ctSelector = new CursedTechniqueSelector();
             Append(ctSelector);
 
             PassiveTechniqueSelector ptSelector = new PassiveTechniqueSelector();
             Append(ptSelector);
-
         }
 
         if (SFKeybinds.OpenTechniqueUI.JustPressed)

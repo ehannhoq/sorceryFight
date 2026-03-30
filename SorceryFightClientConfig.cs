@@ -1,3 +1,4 @@
+using sorceryFight.Content.UI.TechniqueSelector;
 using System;
 using System.ComponentModel;
 using Terraria.ModLoader.Config;
@@ -13,7 +14,24 @@ namespace sorceryFight
         [DefaultValue(false)]
         public bool DisableImpactFrames { get; set; }
 
+        #region CursedTechniqueSelector
+        [Header("CursedTechniqueSelector")]
+        [Label("Cursed Technique Selector X Position")]
+        [Range(0f, 100f)]
+        [DefaultValue(CursedTechniqueSelector.DefaultCTSelectorPosX)]
+        public float CTSelectorPosX { get; set; } = 46.875f;
 
+        [Label("Cursed Technique Selector Y Position")]
+        [Range(0f, 100f)]
+        [DefaultValue(CursedTechniqueSelector.DefaultCTSelectorPosX)]
+        public float CTSelectorPosY { get; set; } = 90.789f;
+
+        [Label("Lock Cursed Technique Selector Position")]
+        [DefaultValue(false)]
+        public bool CTSelectorPosLock { get; set; } = false;
+        #endregion
+
+        #region Energy Bars
         [BackgroundColor(54, 192, 220, 192)]
         [DefaultValue(true)]
         public bool CursedEnergyBar { get; set; }
@@ -99,7 +117,7 @@ namespace sorceryFight
         [Range(0f, 1f)]
         [DefaultValue(1f)]
         public float StarMeterTransparency { get; set; }
-
+        #endregion
 
     }
 }

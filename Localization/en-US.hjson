@@ -128,11 +128,29 @@ Mods: {
 					Tooltip: ""
 				}
 
-				Headers.BloodEnergyBar: Blood Energy Bar Header
+				Headers: {
+					BloodEnergyBar: Blood Energy Bar Header
+					CursedTechniqueSelector: Cursed Technique Selector Header
+				}
 
 				BloodEnergyBarScale: {
 					Label: Blood Energy Bar Scale
 					Tooltip: Adjusts the size of the Blood Energy Bar. Default is 1.0
+				}
+
+				CTSelectorPosX: {
+					Label: Cursed Technique Selector X Position
+					Tooltip: ""
+				}
+
+				CTSelectorPosY: {
+					Label: Cursed Technique Selector Y Position
+					Tooltip: ""
+				}
+
+				CTSelectorPosLock: {
+					Label: Lock Cursed Technique Selector Position
+					Tooltip: ""
 				}
 			}
 

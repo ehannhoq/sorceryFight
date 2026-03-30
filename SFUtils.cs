@@ -107,6 +107,8 @@ public static class SFUtils
         return NetworkText.FromKey(key);
     }
 
+
+    // seemingly completely useless and requires calamity mod
     /// <summary>
     /// Draws a line between two points using a sprite batch. TAKEN FROM CALAMITY MOD, MODIFIED BY EHANN
     /// </summary>
@@ -115,18 +117,18 @@ public static class SFUtils
     /// <param name="end">The ending point of the line.</param>
     /// <param name="color">The color to draw the line with.</param>
     /// <param name="width">The width of the line.</param>
-    public static void DrawLineUI(this SpriteBatch spriteBatch, Vector2 start, Vector2 end, Color color, float width)
-    {
-        if (Main.dedServ) return;
-        if (start == end)
-            return;
+    //public static void DrawLineUI(this SpriteBatch spriteBatch, Vector2 start, Vector2 end, Color color, float width)
+    //{
+    //    if (Main.dedServ) return;
+    //    if (start == end)
+    //        return;
 
-        Texture2D line = ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Line").Value;
-        float rotation = (end - start).ToRotation();
-        Vector2 scale = new Vector2(Vector2.Distance(start, end) / line.Width, width);
+    //    Texture2D line = ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Line").Value;
+    //    float rotation = (end - start).ToRotation();
+    //    Vector2 scale = new Vector2(Vector2.Distance(start, end) / line.Width, width);
 
-        spriteBatch.Draw(line, start, null, color, rotation, line.Size() * Vector2.UnitY * 0.5f, scale, SpriteEffects.None, 0f);
-    }
+    //    spriteBatch.Draw(line, start, null, color, rotation, line.Size() * Vector2.UnitY * 0.5f, scale, SpriteEffects.None, 0f);
+    //}
 
 
     /// <summary>

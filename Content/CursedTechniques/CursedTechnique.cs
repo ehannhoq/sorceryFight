@@ -40,6 +40,8 @@ namespace sorceryFight.Content.CursedTechniques
         public abstract bool Unlocked(SorceryFightPlayer sf);
         public abstract int GetProjectileType();
 
+        public virtual Color selectorBG { get; set; }
+
         public virtual string GetStats(SorceryFightPlayer sf)
         {
             string stats = $"Damage: {Math.Round(CalculateTrueDamage(sf), 2)}\n"
