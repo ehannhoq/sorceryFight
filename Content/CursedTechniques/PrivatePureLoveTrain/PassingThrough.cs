@@ -24,9 +24,9 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public override float Speed => 30f;
         public override float LifeTime => 180f;
 
-        public override Color selectorBGColor => new Color(0, 5, 75, 220);
+        //public override Color selectorBGColor => new Color(0, 5, 75, 220);
 
-        public override Color selectorBorderColor => new Color(0, 200, 0, 200);
+        //public override Color selectorBorderColor => new Color(0, 200, 0, 200);
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<PassingThrough>();

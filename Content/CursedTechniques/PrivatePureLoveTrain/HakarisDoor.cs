@@ -28,9 +28,9 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public override float LifeTime => 40f;
         public Color rarity;
 
-        public override Color selectorBGColor => new Color(20, 50, 155, 255);
+        //public override Color selectorBGColor => new Color(20, 50, 155, 255);
 
-        public override Color selectorBorderColor => new Color(0, 100, 0, 200);
+        //public override Color selectorBorderColor => new Color(0, 100, 0, 200);
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<HakarisDoor>();

@@ -18,9 +18,9 @@ namespace sorceryFight.Content.InnateTechniques
         public override string Name => "Vessel";
         public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.Vessel.DisplayName");
 
-        public override Color innateBGColor => new Color(20, 5, 5, 220);
+        public override Color innateBGColor => new Color(236, 171, 162, 70);
 
-        public override Color innateBorderColor => new Color(180, 20, 20, 200);
+        public override Color innateBorderColor => new Color(64, 76, 140, 128);
 
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {

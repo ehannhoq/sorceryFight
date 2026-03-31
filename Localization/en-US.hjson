@@ -132,6 +132,8 @@ Mods: {
 					BloodEnergyBar: Blood Energy Bar Header
 					CursedTechniqueSelector: Cursed Technique Selector Header
 					PassiveTechniqueSelector: Passive Technique Selector Header
+					CursedEnergyBar: Cursed Energy Bar Header
+					StarEnergyBar: Star Energy Bar Header
 				}
 
 				BloodEnergyBarScale: {
