@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.UI.CursedTechniqueMenu;
 using sorceryFight.SFPlayer;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,17 +33,44 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
             protected override void DrawSelf(SpriteBatch spriteBatch)
             {
-                base.DrawSelf(spriteBatch);
+                CalculatedStyle dims = GetDimensions();
+                Rectangle bgRect = dims.ToRectangle();
+                bgRect.Inflate(4, 4);
+                Rectangle borderRect = bgRect;
+                borderRect.Inflate(2, 2);
 
-                CalculatedStyle dim = GetDimensions();
+                Color borderColor;
+                if (sfPlayer.innateTechnique.PassiveTechniques[id].selectorBorderColor != default)
+                    borderColor = sfPlayer.innateTechnique.PassiveTechniques[id].selectorBorderColor;
+                else
+                    borderColor = sfPlayer.innateTechnique.innateBorderColor;
 
-                Color finalColor = Color.White;
+                Color bgColor;
+                if (sfPlayer.innateTechnique.PassiveTechniques[id].selectorBGColor != default)
+                    bgColor = sfPlayer.innateTechnique.PassiveTechniques[id].selectorBGColor;
+                else
+                    bgColor = sfPlayer.innateTechnique.innateBGColor;
 
+                //darken the background when the technique is active
                 if (sfPlayer.innateTechnique.PassiveTechniques[id].isActive)
-                    finalColor = Color.Gray;
+                    bgColor = new Color((int)(bgColor.R * 0.8f), (int)(bgColor.G * 0.8f), (int)(bgColor.B * 0.8f), bgColor.A);
+
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X, bgRect.Y - 2, bgRect.Width, 2), borderColor);
+                // bottom border
+                
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X, bgRect.Bottom, bgRect.Width, 2), borderColor);
+                // left border
+
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X - 2, bgRect.Y - 2, 2, bgRect.Height + 4), borderColor);
+                // right border
+
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.Right, bgRect.Y - 2, 2, bgRect.Height + 4), borderColor);
+                // top border
+
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, bgRect, bgColor);
 
 
-                spriteBatch.Draw(texture, new Vector2(dim.X, dim.Y), finalColor);
+                base.DrawSelf(spriteBatch);
             }
 
 
@@ -51,128 +80,124 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 SoundEngine.PlaySound(SoundID.Mech with { Volume = 1f });
             }
         }
+        internal const float DefaultPTSelectorPosX = 9.114583f;
+        internal const float DefaultPTSelectorPosY = 50f;
+        private const float MouseDragEpsilon = 0.05f;
+        internal const int ButtonGap = 12;
+        private static Vector2? dragOffset = null;
         SorceryFightPlayer sfPlayer;
         List<TechniqueSelectorButton> icons;
         int unlockedTechniques;
-        bool isDragging;
-        bool hasRightClicked;
-        Vector2 offset;
         public PassiveTechniqueSelector()
         {
             if (Main.dedServ) return;
 
             icons = new List<TechniqueSelectorButton>();
             sfPlayer = Main.LocalPlayer.SorceryFight();
-            isDragging = false;
 
             ReloadUI();
-            SetPosition();
+
             SorceryFightUI.UpdateTechniqueUI += ReloadUI;
         }
+
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-            if (Main.playerInventory && HoveringOverUI() && Main.mouseLeft && !isDragging)
+            if (unlockedTechniques == 0) return;
+
+            // --- Screen ratio position ---
+            Vector2 screenRatioPosition = new Vector2(
+                ModContent.GetInstance<ClientConfig>().PTSelectorPosX,
+                ModContent.GetInstance<ClientConfig>().PTSelectorPosY
+            );
+
+            if (screenRatioPosition.X < 0f || screenRatioPosition.X > 100f)
+                screenRatioPosition.X = DefaultPTSelectorPosX;
+            if (screenRatioPosition.Y < 0f || screenRatioPosition.Y > 100f)
+                screenRatioPosition.Y = DefaultPTSelectorPosY;
+
+            Vector2 screenPos;
+            screenPos.X = (int)(screenRatioPosition.X * 0.01f * Main.screenWidth);
+            screenPos.Y = (int)(screenRatioPosition.Y * 0.01f * Main.screenHeight);
+
+            Left.Set(screenPos.X, 0f);
+            Top.Set(screenPos.Y, 0f);
+            Recalculate();
+
+            // --- Mouse drag ---
+            MouseState ms = Mouse.GetState();
+            Vector2 mousePos = Main.MouseScreen;
+
+            if (HoveringOverUI())
             {
-                isDragging = true;
-                offset = new Vector2(Main.mouseX, Main.mouseY) - new Vector2(Left.Pixels, Top.Pixels);
-            }
+                if (!ModContent.GetInstance<ClientConfig>().PTSelectorPosLock)
+                    Main.LocalPlayer.mouseInterface = true;
 
-            if (isDragging)
-            {
-                float clampedLeft = Math.Clamp(Main.mouseX - offset.X, 10, Main.screenWidth - 60 - 10);
-                float clampedTop = Math.Clamp(Main.mouseY - offset.Y, 10, Main.screenHeight - 60 * unlockedTechniques - 10);
+                Vector2 newScreenRatioPosition = screenRatioPosition;
 
-                Left.Set(clampedLeft, 0f);
-                Top.Set(clampedTop, 0f);
-
-                Recalculate();
-
-                if (!Main.mouseLeft)
+                if (!ModContent.GetInstance<ClientConfig>().PTSelectorPosLock && ms.LeftButton == ButtonState.Pressed)
                 {
-                    isDragging = false;
-                    Recalculate();
-                }
-            }
+                    if (!dragOffset.HasValue)
+                        dragOffset = mousePos - screenPos;
 
-            if (Left.Pixels >= Main.screenWidth || Top.Pixels >= Main.screenHeight)
-            {
-                SetPosition();
-            }
-
-            if (Main.playerInventory && HoveringOverUI() && Main.mouseRight && !isDragging)
-            {
-                Rectangle mouseRect = new Rectangle((int)Main.MouseWorld.X - 8, (int)Main.MouseWorld.Y - 8, 16, 16);
-                if (!hasRightClicked)
-                {
-                    if (Main.keyState.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift))
-                    {
-                        sfPlayer.PTSelectorPos = Vector2.Zero;
-                        SetPosition();
-                        CombatText.NewText(mouseRect, Color.White, "UI Position Reset!");
-                        Main.mouseRightRelease = true;
-                    }
-                    else
-                    {
-                        sfPlayer.PTSelectorPos = new Vector2(this.Left.Pixels, this.Top.Pixels);
-                        CombatText.NewText(mouseRect, Color.White, "UI Position Saved!");
-                        Main.mouseRightRelease = true;
-                    }
+                    Vector2 newCorner = mousePos - dragOffset.GetValueOrDefault(Vector2.Zero);
+                    newScreenRatioPosition.X = (100f * newCorner.X) / Main.screenWidth;
+                    newScreenRatioPosition.Y = (100f * newCorner.Y) / Main.screenHeight;
                 }
 
-            }
+                Vector2 delta = newScreenRatioPosition - screenRatioPosition;
+                if (Math.Abs(delta.X) >= MouseDragEpsilon || Math.Abs(delta.Y) >= MouseDragEpsilon)
+                {
+                    ModContent.GetInstance<ClientConfig>().PTSelectorPosX = newScreenRatioPosition.X;
+                    ModContent.GetInstance<ClientConfig>().PTSelectorPosY = newScreenRatioPosition.Y;
+                }
 
-            if (Main.mouseRight && HoveringOverUI())
-            {
-                hasRightClicked = true;
+                if (dragOffset.HasValue && ms.LeftButton == ButtonState.Released)
+                {
+                    dragOffset = null;
+                    ModContent.GetInstance<ClientConfig>().SaveChanges();
+                }
             }
-            else if (Main.mouseRightRelease && HoveringOverUI())
+            else
             {
-                hasRightClicked = false;
+                if (dragOffset.HasValue && ms.LeftButton == ButtonState.Released)
+                {
+                    dragOffset = null;
+                    ModContent.GetInstance<ClientConfig>().SaveChanges();
+                }
             }
         }
 
         void ReloadUI()
         {
+            SorceryFightUI.UpdateTechniqueUI -= ReloadUI;
+
             Elements.Clear();
             icons.Clear();
             unlockedTechniques = 0;
 
             for (int i = 0; i < sfPlayer.innateTechnique.PassiveTechniques.Count; i++)
             {
-                Texture2D ptTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueSelector/{sfPlayer.innateTechnique.Name}/p{i}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                string ptHoverText = $"{sfPlayer.innateTechnique.PassiveTechniques[i].DisplayName.Value}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip")}";
-                TechniqueSelectorButton ptIcon = new TechniqueSelectorButton(ptTexture, ptHoverText, i);
-                icons.Add(ptIcon);
-
                 if (sfPlayer.innateTechnique.PassiveTechniques[i].Unlocked(sfPlayer))
                 {
+                    Texture2D ptTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueSelector/{sfPlayer.innateTechnique.Name}/p{i}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    string ptHoverText = $"{sfPlayer.innateTechnique.PassiveTechniques[i].DisplayName.Value}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip")}";
+                    TechniqueSelectorButton ptIcon = new TechniqueSelectorButton(ptTexture, ptHoverText, i);
                     ptIcon.Left.Set(0f, 0f);
-                    ptIcon.Top.Set(unlockedTechniques * ptIcon.texture.Height, 0f);
-                    unlockedTechniques++;
+                    ptIcon.Top.Set(unlockedTechniques * (ptIcon.texture.Height + ButtonGap), 0f);
                     Append(ptIcon);
+                    icons.Add(ptIcon);
+                    unlockedTechniques++;
                 }
             }
 
+            Width.Set(60f, 0f);
+            Height.Set(unlockedTechniques * 60f + (unlockedTechniques - 1) * ButtonGap, 0f);
             Recalculate();
-            SetPosition();
-        }
 
-        void SetPosition()
-        {
-            if (sfPlayer.PTSelectorPos == Vector2.Zero)
-            {
-                Left.Set(110f, 0f);
-                Top.Set(Main.screenHeight - (unlockedTechniques * 60) - 50f, 0f);
-            }
-            else
-            {
-                Left.Set(sfPlayer.PTSelectorPos.X, 0f);
-                Top.Set(sfPlayer.PTSelectorPos.Y, 0f);
-            }
-
+            SorceryFightUI.UpdateTechniqueUI += ReloadUI;
         }
 
         bool HoveringOverUI()

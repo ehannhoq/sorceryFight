@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using System.IO;
 using System;
 using sorceryFight.Content.InnateTechniques;
+using Microsoft.Xna.Framework;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -26,6 +27,10 @@ public abstract class InnateTechnique()
     public abstract List<PassiveTechnique> PassiveTechniques { get; }
     public abstract List<CursedTechnique> CursedTechniques { get; }
     public abstract PlayerDomainExpansion DomainExpansion { get; }
+
+    public virtual Color innateBGColor { get; set; }
+
+    public virtual Color innateBorderColor { get; set; }
 
     public static InnateTechnique GetInnateTechnique(string name)
     {

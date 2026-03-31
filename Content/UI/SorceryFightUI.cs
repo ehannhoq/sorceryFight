@@ -38,6 +38,17 @@ public class SorceryFightUI : UIState
         flowStateBar = null;
     }
 
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
+
+        base.Draw(spriteBatch);
+
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
+    }
+
     public override void Update(GameTime gameTime)
     {
         foreach (UIElement element in elementsToRemove)
@@ -65,12 +76,12 @@ public class SorceryFightUI : UIState
         if (!initialized)
         {
             initialized = true;
+
             CursedTechniqueSelector ctSelector = new CursedTechniqueSelector();
             Append(ctSelector);
 
             PassiveTechniqueSelector ptSelector = new PassiveTechniqueSelector();
             Append(ptSelector);
-
         }
 
         if (SFKeybinds.OpenTechniqueUI.JustPressed)
