@@ -28,9 +28,9 @@ public abstract class InnateTechnique()
     public abstract List<CursedTechnique> CursedTechniques { get; }
     public abstract PlayerDomainExpansion DomainExpansion { get; }
 
-    public virtual Color innateBGColorOverride { get; set; }
+    public virtual Color innateBGColor { get; set; }
 
-    public virtual Color innateBorderColorOverride { get; set; }
+    public virtual Color innateBorderColor { get; set; }
 
     public static InnateTechnique GetInnateTechnique(string name)
     {

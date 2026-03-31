@@ -40,9 +40,9 @@ namespace sorceryFight.Content.CursedTechniques
         public abstract bool Unlocked(SorceryFightPlayer sf);
         public abstract int GetProjectileType();
 
-        public virtual Color selectorBG { get; set; }
+        public virtual Color selectorBGColor { get; set; }
 
-        public virtual Color selectorBorder { get; set; }
+        public virtual Color selectorBorderColor { get; set; }
 
         public virtual string GetStats(SorceryFightPlayer sf)
         {

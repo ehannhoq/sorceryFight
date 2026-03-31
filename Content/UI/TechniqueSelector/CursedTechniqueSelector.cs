@@ -43,32 +43,28 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 Rectangle borderRect = bgRect;
                 borderRect.Inflate(2, 2);
 
-                //We want innateBGColorOverride to let us choose if we want to implement a different color for every Cursed Technique 
-
-
-
+                //We fall back on innateBGColor if there is no selector color in the Cursed Technique
                 Color borderColor;
-                if (sfPlayer.innateTechnique.innateBorderColorOverride != default)
-                    borderColor = sfPlayer.innateTechnique.innateBorderColorOverride;
+                if (sfPlayer.innateTechnique.CursedTechniques[id].selectorBorderColor != default)
+                    borderColor = sfPlayer.innateTechnique.CursedTechniques[id].selectorBorderColor;
                 else
-                    borderColor = sfPlayer.innateTechnique.CursedTechniques[id].selectorBorder;
+                    borderColor = sfPlayer.innateTechnique.innateBorderColor;
+
+                Color bgColor;
+                if (sfPlayer.innateTechnique.CursedTechniques[id].selectorBGColor != default)
+                    bgColor = sfPlayer.innateTechnique.CursedTechniques[id].selectorBGColor;
+                else
+                    bgColor = sfPlayer.innateTechnique.innateBGColor;
 
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X, bgRect.Y - 2, bgRect.Width, 2), borderColor);
                 // Bottom border
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X, bgRect.Bottom, bgRect.Width, 2), borderColor);
-                // Left border — first button only
+                // Left border
 
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X - 2, bgRect.Y - 2, 2, bgRect.Height + 4), borderColor);
-                // Right border — last button only
+                // Right border
 
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.Right, bgRect.Y - 2, 2, bgRect.Height + 4), borderColor);
-
-
-                Color bgColor;
-                if (sfPlayer.innateTechnique.innateBGColorOverride != default)
-                    bgColor = sfPlayer.innateTechnique.innateBGColorOverride;
-                else
-                    bgColor = sfPlayer.innateTechnique.CursedTechniques[id].selectorBG;
 
                 //spriteBatch.Draw(TextureAssets.MagicPixel.Value, borderRect, borderColor);
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, bgRect, bgColor);
@@ -95,6 +91,9 @@ namespace sorceryFight.Content.UI.TechniqueSelector
         internal const float DefaultCTSelectorPosX = 46.875f;
         internal const float DefaultCTSelectorPosY = 90.789f;
         private const float MouseDragEpsilon = 0.05f;
+
+        //This button gap is needed because we expand the background behind each button
+        internal const int ButtonGap = 12;
 
         private static Vector2? dragOffset = null;
 
@@ -128,7 +127,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
             if (Elements.Contains(selectorIcon))
             {
-                selectorIcon.Left.Set((selectorIndex * 60f) - 6f, 0f);
+                selectorIcon.Left.Set((selectorIndex * (60f + ButtonGap)) - 6f, 0f);
                 selectorIcon.Top.Set(-6f, 0f);
             }
 
@@ -235,7 +234,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
                 if (sfPlayer.innateTechnique.CursedTechniques[i].Unlocked(sfPlayer))
                 {
-                    ctIcon.Left.Set(unlockedTechniques * ctIcon.texture.Width, 0f);
+                    ctIcon.Left.Set(unlockedTechniques * (ctIcon.texture.Width + ButtonGap), 0f);
                     ctIcon.Top.Set(0f, 0f);
                     Append(ctIcon);
                     unlockedTechniques++;
@@ -243,7 +242,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 }
             }
 
-            Width.Set(unlockedTechniques * 60f, 0f);
+            Width.Set(unlockedTechniques * 60f + (unlockedTechniques - 1) * ButtonGap, 0f);
             Height.Set(60f, 0f);
             Recalculate();
 
