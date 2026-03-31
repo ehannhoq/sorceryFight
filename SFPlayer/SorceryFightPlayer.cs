@@ -175,6 +175,11 @@ namespace sorceryFight.SFPlayer
         {
             if (innateTechnique == null || Main.dedServ) return;
 
+            if (innateTechnique.Name == "StarRage")
+                maxStarEnergy = 100;
+            else
+                maxStarEnergy = 0;
+
             if (preventDeath && deathPosition != Vector2.Zero && Player.position != deathPosition)
             {
                 Player.position = deathPosition;
@@ -196,8 +201,8 @@ namespace sorceryFight.SFPlayer
             additionalRCTHealPerSecond = 0;
 
 
-             bloodEnergyRegenPerSecond = calculateBaseBERegenRate();
-             maxBloodEnergy = calculateBaseMaxBE();
+            bloodEnergyRegenPerSecond = calculateBaseBERegenRate();
+            maxBloodEnergy = calculateBaseMaxBE();
 
 
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
