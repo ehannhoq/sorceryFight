@@ -4,11 +4,22 @@ InnateTechniques: {
 	PrivatePureLoveTrain.DisplayName: Private Pure Love Train
 	Vessel.DisplayName: Vessel
 	HeavenlyRestriction.DisplayName: Heavenly Restriction
+	BloodManipulation.DisplayName: Blood Manipulation
+	StarRage.DisplayName: Star Rage
 }
 
 UnlockedRCT: {
 	GeneralMessage: At the brink of death, you understand the nature of the Reverse Cursed Technique.
 	KeyBindMessage: ": Hold down to use your cursed energy to heal yourself!"
+}
+
+SukunaRevive: {
+	0: let's use this open space!
+	1: I'm holding this brat hostage!
+	2: having trouble switching back?!
+	3: show me what you've got.
+	4: that brat...is such a dumbass!
+	5: IT'LL BE A MASSACRE!
 }
 
 LeftItAllBehind.GeneralMessage: At the brink of death, you lose total connection to cursed energy. You feel awakened again.
@@ -19,6 +30,8 @@ InnateTechniqueUnlocker: {
 	PrivatePureLoveTrain: You suddenly feel a lot more lucky than before.
 	Vessel: A foreign, ancient soul seems to have been sealed within your body. A soul of pure evil.
 	HeavenlyRestriction: You feel the cursed energy within you vanish into seemingly nothingness.
+	BloodManipulation: You feel the cursed energy within you boil your blood in anticipation
+	StarRage: Your body feels much more dense
 
 	PlayerAttributes: {
 		SixEyes: Your eyes begin to glow radiantly, being able to see the flow of even the faintest of Cursed Energy in the air.

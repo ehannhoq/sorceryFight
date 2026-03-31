@@ -32,7 +32,7 @@ namespace sorceryFight.Content.Items.Consumables
             {
                 SorceryFightPlayer sf = player.SorceryFight();
 
-                if (!sf.innateTechnique.Name.Equals("Shrine") && !sf.innateTechnique.Name.Equals("Vessel")) return false;
+                if (!sf.innateTechnique.Name.Equals("Vessel")) return false;
 
                 if (!sf.sukunasFingers[Id - 1])
                 {

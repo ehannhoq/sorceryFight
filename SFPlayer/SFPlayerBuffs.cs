@@ -36,10 +36,20 @@ namespace sorceryFight.SFPlayer
                 if (Player.HasBuff<BurntTechnique>() || (!beerHat && cursedEnergy < 2))
                 {
                     passiveTechnique.isActive = false;
+                    continue;
+                }
+
+                if (!passiveTechnique.UseCondition(Player))
+                {
+                    passiveTechnique.isActive = false;
+                    //Main.NewText("Technique on cooldonw!");
+                    continue;
                 }
 
                 if (passiveTechnique.isActive)
                 {
+                   //apply / remove should only be called once and all logic should live in update 
+                   //already implemented this way in Garuda
                     passiveTechnique.Apply(Player);
                 }
                 else

@@ -20,7 +20,6 @@ using sorceryFight.Content.UI.Chants;
 public class SorceryFightUI : UIState
 {
     public static Action UpdateTechniqueUI;
-    public CursedEnergyBar ceBar;
     public CursedTechniqueMenu ctMenu;
     public PassiveTechniqueSelector ptMenu;
     public FlowStateBar flowStateBar;
@@ -33,10 +32,21 @@ public class SorceryFightUI : UIState
 
     public override void OnInitialize()
     {
-        LoadCEBar();
+
         elementsToRemove = new List<UIElement>();
         initialized = false;
         flowStateBar = null;
+    }
+
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        //spriteBatch.End();
+        //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
+
+        base.Draw(spriteBatch);
+
+        //spriteBatch.End();
+        //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
     }
 
     public override void Update(GameTime gameTime)
@@ -66,17 +76,13 @@ public class SorceryFightUI : UIState
         if (!initialized)
         {
             initialized = true;
+
             CursedTechniqueSelector ctSelector = new CursedTechniqueSelector();
             Append(ctSelector);
 
             PassiveTechniqueSelector ptSelector = new PassiveTechniqueSelector();
             Append(ptSelector);
-
-            LoadCEBar();
-            Append(ceBar);
         }
-
-        ceBar.ceBar.fillPercentage = player.cursedEnergy / player.maxCursedEnergy;
 
         if (SFKeybinds.OpenTechniqueUI.JustPressed)
         {
@@ -113,8 +119,9 @@ public class SorceryFightUI : UIState
 
         if (Elements.Contains(flowStateBar))
         {
-            flowStateBar.Left.Set(ceBar.Left.Pixels - 10, 0f);
-            flowStateBar.Top.Set(ceBar.Top.Pixels + 45, 0f);
+            //fix this
+            //flowStateBar.Left.Set(ceBar.Left.Pixels - 10, 0f);
+            //flowStateBar.Top.Set(ceBar.Top.Pixels + 45, 0f);
         }
     }
 
@@ -153,19 +160,6 @@ public class SorceryFightUI : UIState
     {
         BlackFlashWindow blackFlashWindow = new BlackFlashWindow(lowerBound, upperBound);
         Append(blackFlashWindow);
-    }
-
-    public void LoadCEBar()
-    {
-        if (Main.dedServ) return;
-
-        string borderBarPath = "sorceryFight/Content/UI/CursedEnergyBar/CursedEnergyBarBorder";
-        string fillBarPath = "sorceryFight/Content/UI/CursedEnergyBar/CursedEnergyBarFill";
-
-        var borderTexture = ModContent.Request<Texture2D>(borderBarPath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-        var barTexture = ModContent.Request<Texture2D>(fillBarPath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-        ceBar = new CursedEnergyBar(borderTexture, barTexture);
     }
 
     public static bool MouseHovering(UIElement ui, Texture2D texture)

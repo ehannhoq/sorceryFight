@@ -4,6 +4,7 @@ using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
+using Microsoft.Xna.Framework;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -11,6 +12,10 @@ namespace sorceryFight.Content.InnateTechniques
     {
         public override string Name => "PrivatePureLoveTrain";
         public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.PrivatePureLoveTrain.DisplayName");
+
+        public override Color innateBGColor => new Color(149, 81, 157, 70);
+
+        public override Color innateBorderColor => new Color(0, 0, 0, 128);
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
 

@@ -127,7 +127,7 @@ WorldCuttingSlash: {
 	DisplayName: The Slash that Cuts the World
 	Description:
 		'''
-		Instead at aiming a Dismantle at a target,
+		Instead of aiming a Dismantle at a target,
 		the user instead targets the entire world.
 		This powerful slash cuts through everything
 		and anything.
@@ -142,7 +142,7 @@ SoulDismantle: {
 		A devastating slash that targets the soul,
 		ignoring any and all defense.
 		'''
-	LockedDescription: Consume atleast 15 of Ryomen Sukuna's Fingers.
+	LockedDescription: Consume at least 15 of Ryomen Sukuna's Fingers.
 }
 
 ChainDismantle: {
@@ -150,21 +150,21 @@ ChainDismantle: {
 	Description:
 		'''
 		A slash attack that chains onto any other
-		enemies within a radiusupon first successful 
+		enemies within a radius upon first successful 
 		hit. Also ignores defense.
 		'''
-	LockedDescription: Consome atleast 17 of Ryomen Sukuna's Fingers.
+	LockedDescription: Consome at least 17 of Ryomen Sukuna's Fingers.
 }
 
 PiercingBlood: {
 	DisplayName: Piercing Blood
 	Description:
 		'''
-		Convergint your blood into a single point,
+		Converging your blood into a single point,
 		you shoot a concetrated beam of blood; piercing
 		through anything.
 		'''
-	LockedDescription: Consume atleast 19 of Ryomen Sukuna's Fingers.
+	LockedDescription: Consume at least 6 of Ryomen Sukuna's Fingers (Vessel) or defeat Cryogen (Blood).
 }
 
 PachinkoBalls: {
@@ -262,4 +262,98 @@ LightspeedBarrage: {
 		them as well.
 		'''
 	LockedDescription: Defeat the Sentinels of the Devourer.
+}
+
+SlicingExorcism: {
+	DisplayName: Slicing Exorcism
+	Description:
+		'''
+		By compressing blood into a sphere then flattening it
+		you create a powerful slicing disk that carves through flesh like butter
+		'''
+	LockedDescription: Defeat the King of Slimes
+}
+
+UnlimitedPiercingBlood: {
+	DisplayName: Unlimited Piercing Blood
+	Description:
+		'''
+		Shoot a beam of Unlimited Piercing Blood that spawns mini Piercing Bloods
+		These Mini Piercing Bloods are created for every enemy poisoned by your blood
+		The more of them there are, the more mini beams spawn
+		'''
+	LockedDescription: Defeat the Old duke
+}
+
+BloodDaggerStorm: {
+	DisplayName: Blood Dagger Storm
+	Description:
+		'''
+		By constantly compressing blood into daggers and firing them with tiny lines of blood attached
+		they can be redirected mid air towards your cursor, seeking out enemies as they get closer
+		'''
+	LockedDescription: Consume at least 10 of Ryomen Sukuna's Fingers (Vessel) or defeat the Empress of Light (Blood).
+}
+
+SelfBloodBlade: {
+	DisplayName: Blood Blade
+	Description:
+		'''
+		Create a spinning blade of blood infront of you,
+		it can be rotated 360 degrees around you
+		'''
+	LockedDescription: Defeat The Slime God
+}
+
+SuperNova: {
+	DisplayName: Super Nova
+	Description:
+		'''
+		Place a sphere of compressed blood at your mouse position then
+		wait for it to explode like a shotgun blast in two seconds
+		'''
+	LockedDescription: Defeat Astrum Deus
+}
+
+GarudaKick: {
+	DisplayName: Garuda Kick
+	Description: Kick Garuda
+	LockedDescription: Defeat the one who guards the Moon.
+}
+
+StarChannel: {
+	DisplayName: Star Channel
+	Description:
+		'''
+		Hold down to actively charge up star power.
+		If have Garuda active and your cursor passes by 
+		an enemy, he will trap that enemy.
+		After Unlocking Your domain you can hold down this key for ten seconds
+		to create a black hole at Garuda's position, it doesn't need to stay on the enemy
+		'''
+	LockedDescription: Defeat the one who guards the Moon.
+}
+
+MassPunch: {
+	DisplayName: Mass Punch
+	Description: Swing a weighted fist accross your body
+	LockedDescription: Defeat the one who guards the Moon.
+}
+
+GarudaWhip: {
+	DisplayName: Garuda Whip
+	Description: Whip Garuda
+	LockedDescription: Defeat the one who guards the Moon.
+}
+
+MassKick: {
+	DisplayName: Mass Kick
+	Description: Swing a weighted kick upwards
+	LockedDescription: Defeat the one who guards the Moon.
+}
+
+StarRush: {
+	DisplayName: Star Rush
+	Description: Charge at the cursor, do massive damage and stun the first enemy hit
+	LockedDescription: Defeat the one who guards the Moon.
 }

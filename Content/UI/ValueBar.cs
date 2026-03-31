@@ -30,8 +30,7 @@ public class ValueBar : UIElement
         base.DrawSelf(spriteBatch);
         CalculatedStyle dimensions = GetDimensions();
 
-        if (fillPercentage > 1f)
-            fillPercentage = 1;
+        fillPercentage = Math.Clamp(fillPercentage, 0.1f, 1f);
 
         Rectangle bar;
 

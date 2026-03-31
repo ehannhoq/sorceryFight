@@ -4,10 +4,12 @@ using sorceryFight.Content.Buffs;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.CursedTechniques.BloodManipulation;
 using sorceryFight.Content.CursedTechniques.Vessel;
+using sorceryFight.Content.Buffs.BloodManipulation;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.SFPlayer;
 using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -15,15 +17,22 @@ namespace sorceryFight.Content.InnateTechniques
     {
         public override string Name => "Vessel";
         public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.Vessel.DisplayName");
+
+        public override Color innateBGColor => new Color(236, 171, 162, 70);
+
+        public override Color innateBorderColor => new Color(64, 76, 140, 128);
+
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
+            new FlowingRedScaleBuff(),
+            new FlowingRedScaleStackBuff()
         };
 
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
             new SoulDismantle(),
             new ChainDismantle(),
-            new PiercingBlood()
+            new PiercingBlood(),
         };
 
         public override PlayerDomainExpansion DomainExpansion { get; } = new Home();

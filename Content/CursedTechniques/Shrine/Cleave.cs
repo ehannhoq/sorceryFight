@@ -47,20 +47,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 + $"Cost: {Math.Round(CalculateTrueCost(sf), 2)} CE\n";
         }
 
-        public override float CalculateTrueDamage(SorceryFightPlayer sf)
-        {
-            return base.CalculateTrueDamage(sf) + (0.01f * (sf.sukunasFingerConsumed / 20f));
-        }
-
-        public override float CalculateTrueCost(SorceryFightPlayer sf)
-        {
-            float finalCost = Cost - (Cost * (sf.numberBossesDefeated / 100f));
-            finalCost += sf.maxCursedEnergy * 0.05f;
-            finalCost *= 1 - sf.ctCostReduction;
-            finalCost *= 1 - (0.01f * sf.sukunasFingerConsumed);
-            return finalCost;
-        }
-
         public override int UseTechnique(SorceryFightPlayer sf)
         {
             Player player = sf.Player;

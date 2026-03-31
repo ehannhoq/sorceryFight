@@ -21,7 +21,17 @@ Mods: {
 			ChakiraResonantSlash.DisplayName: Chakira Resonant Slash
 			ChakiraResonantHoldout.DisplayName: Chakira Resonant Holdout
 			ChakiraResonantCharge.DisplayName: Chakira Resonant Charge
+			ExampleBlackRopeSlash.DisplayName: Example Black Rope Slash
+			BlackRopeWhip.DisplayName: Black Rope Whip
+			UnlimitedPiercingBloodProjectile.DisplayName: Unlimited Piercing Blood Projectile
+			SuperNovaShard.DisplayName: Super Nova Shard
+			GarudaBody.DisplayName: Garuda Body
+			GarudaHead.DisplayName: Garuda Head
+			GarudaTail.DisplayName: Garuda Tail
+			BloodDaggerStormProjectile.DisplayName: Blood Dagger Storm Projectile
+			BlackholeProjectile.DisplayName: Blackhole Projectile
 			ChakiraResonantBeam.DisplayName: Chakira Resonant Beam
+			GarudaWhipProjectile.DisplayName: Garuda Whip Projectile
 		}
 
 		Configs: {
@@ -35,6 +45,129 @@ Mods: {
 
 				DisableImpactFrames: {
 					Label: Disable Impact Frames
+					Tooltip: ""
+				}
+
+				StarMeter: {
+					Label: Star Meter
+					Tooltip: ""
+				}
+
+				MeterPosLock: {
+					Label: Meter Pos Lock
+					Tooltip: ""
+				}
+
+				StarMeterPosX: {
+					Label: Star Meter Pos X
+					Tooltip: ""
+				}
+
+				StarMeterPosY: {
+					Label: Star Meter Pos Y
+					Tooltip: ""
+				}
+
+				StarMeterTransparency: {
+					Label: Star Meter Transparency
+					Tooltip: ""
+				}
+
+				CursedEnergyBar: {
+					Label: Cursed Energy Bar
+					Tooltip: ""
+				}
+
+				CursedEnergyBarPosLock: {
+					Label: Cursed Energy Bar Pos Lock
+					Tooltip: ""
+				}
+
+				CursedEnergyBarPosX: {
+					Label: Cursed Energy Bar Pos X
+					Tooltip: ""
+				}
+
+				CursedEnergyBarPosY: {
+					Label: Cursed Energy Bar Pos Y
+					Tooltip: ""
+				}
+
+				CursedEnergyBarTransparency: {
+					Label: Cursed Energy Bar Transparency
+					Tooltip: ""
+				}
+
+				BloodEnergyBar: {
+					Label: Blood Energy Bar
+					Tooltip: ""
+				}
+
+				BloodEnergyBarPosLock: {
+					Label: Blood Energy Bar Pos Lock
+					Tooltip: ""
+				}
+
+				BloodEnergyBarPosX: {
+					Label: Blood Energy Bar Pos X
+					Tooltip: ""
+				}
+
+				BloodEnergyBarPosY: {
+					Label: Blood Energy Bar Pos Y
+					Tooltip: ""
+				}
+
+				BloodEnergyBarTransparency: {
+					Label: Blood Energy Bar Transparency
+					Tooltip: ""
+				}
+
+				StarMeterPosLock: {
+					Label: Star Meter Pos Lock
+					Tooltip: ""
+				}
+
+				Headers: {
+					BloodEnergyBar: Blood Energy Bar Header
+					CursedTechniqueSelector: Cursed Technique Selector Header
+					PassiveTechniqueSelector: Passive Technique Selector Header
+					CursedEnergyBar: Cursed Energy Bar Header
+					StarEnergyBar: Star Energy Bar Header
+				}
+
+				BloodEnergyBarScale: {
+					Label: Blood Energy Bar Scale
+					Tooltip: Adjusts the size of the Blood Energy Bar. Default is 1.0
+				}
+
+				CTSelectorPosX: {
+					Label: Cursed Technique Selector X Position
+					Tooltip: ""
+				}
+
+				CTSelectorPosY: {
+					Label: Cursed Technique Selector Y Position
+					Tooltip: ""
+				}
+
+				CTSelectorPosLock: {
+					Label: Lock Cursed Technique Selector Position
+					Tooltip: ""
+				}
+
+				PTSelectorPosX: {
+					Label: Passive Technique Selector X Position
+					Tooltip: ""
+				}
+
+				PTSelectorPosY: {
+					Label: Passive Technique Selector Y Position
+					Tooltip: ""
+				}
+
+				PTSelectorPosLock: {
+					Label: Lock Passive Technique Selector Position
 					Tooltip: ""
 				}
 			}
@@ -99,6 +232,21 @@ Mods: {
 			BowieKnife: {
 				Tooltip: ""
 				DisplayName: Bowie Knife
+			}
+
+			MegumiSword: {
+				DisplayName: Megumi Sword
+				Tooltip: ""
+			}
+
+			MeiMeiAxe: {
+				DisplayName: Mei Mei Axe
+				Tooltip: ""
+			}
+
+			MegumiSwordShibuya: {
+				Tooltip: ""
+				DisplayName: Megumi Sword Shibuya
 			}
 		}
 	}

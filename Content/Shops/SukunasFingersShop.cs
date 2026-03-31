@@ -1,6 +1,7 @@
 using CalamityMod;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.Items.Consumables.SukunasFinger;
+using sorceryFight.Content.Items.Consumables.DeathPainting;
 using sorceryFight.Content.Items.Weapons.Melee;
 using Terraria;
 using Terraria.ID;
@@ -27,7 +28,8 @@ namespace sorceryFight.Content.Shops
             Condition downedSignus = CalamityConditions.DownedStormWeaver;
             Condition downedPolterghast = CalamityConditions.DownedPolterghast;
             Condition downedDoG = CalamityConditions.DownedStormWeaver;
-            
+            Condition downedYharon = CalamityConditions.DownedYharon;
+
             AddItem(ModContent.ItemType<SukunasFingerI>(), Item.buyPrice(silver: 50), Condition.DownedEyeOfCthulhu);
             AddItem(ModContent.ItemType<SukunasFingerII>(), Item.buyPrice(gold: 1), downedHiveMindOrPerforator);
             AddItem(ModContent.ItemType<SukunasFingerIII>(), Item.buyPrice(gold: 1, silver: 50), Condition.DownedSkeletron);
@@ -48,6 +50,17 @@ namespace sorceryFight.Content.Shops
             AddItem(ModContent.ItemType<SukunasFingerXVIII>(), Item.buyPrice(gold: 59), downedSignus);
             AddItem(ModContent.ItemType<SukunasFingerXIX>(), Item.buyPrice(gold: 68), downedPolterghast);
             AddItem(ModContent.ItemType<SukunasFingerXX>(), Item.buyPrice(gold: 75), downedDoG);
+
+            AddItem(ModContent.ItemType<DeathPaintingOne>(), Item.buyPrice(silver: 50), Condition.DownedEyeOfCthulhu);
+            AddItem(ModContent.ItemType<DeathPaintingTwo>(), Item.buyPrice(gold: 1, silver: 50), Condition.DownedSkeletron);
+            AddItem(ModContent.ItemType<DeathPaintingThree>(), Item.buyPrice(gold: 2), Condition.Hardmode);
+            AddItem(ModContent.ItemType<DeathPaintingFour>(), Item.buyPrice(gold: 5), Condition.DownedPlantera);
+            AddItem(ModContent.ItemType<DeathPaintingFive>(), Item.buyPrice(gold: 28), Condition.DownedMoonLord);
+            AddItem(ModContent.ItemType<DeathPaintingSix>(), Item.buyPrice(gold: 42), downedProvidence);;
+            AddItem(ModContent.ItemType<DeathPaintingSeven>(), Item.buyPrice(gold: 75), downedDoG);
+            AddItem(ModContent.ItemType<DeathPaintingEight>(), Item.buyPrice(gold: 4), downedYharon);
+
+
         }
     }
 }

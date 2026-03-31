@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using System.IO;
 using System;
 using sorceryFight.Content.InnateTechniques;
+using Microsoft.Xna.Framework;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -27,6 +28,10 @@ public abstract class InnateTechnique()
     public abstract List<CursedTechnique> CursedTechniques { get; }
     public abstract PlayerDomainExpansion DomainExpansion { get; }
 
+    public virtual Color innateBGColor { get; set; }
+
+    public virtual Color innateBorderColor { get; set; }
+
     public static InnateTechnique GetInnateTechnique(string name)
     {
         switch (name)
@@ -39,6 +44,10 @@ public abstract class InnateTechnique()
                 return new VesselTechnique();
             case "PrivatePureLoveTrain":
                 return new PrivatePureLoveTrainTechnique();
+            case "BloodManipulation":
+                return new BloodManipulationTechnique();
+            case "StarRage":
+                return new StarRageTechnique();
             case "HeavenlyRestriction":
                 return new HeavenlyRestriction();
         }
@@ -55,6 +64,8 @@ public abstract class InnateTechnique()
                     new LimitlessTechnique(),
                     new ShrineTechnique(),
                     new VesselTechnique(),
+                    new BloodManipulationTechnique(),
+                    new StarRageTechnique(),
                     new PrivatePureLoveTrainTechnique(),
                     new HeavenlyRestriction()
                 };

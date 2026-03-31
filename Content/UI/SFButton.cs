@@ -30,7 +30,7 @@ namespace sorceryFight.Content.UI
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            base.DrawSelf(spriteBatch);
+            //base.DrawSelf(spriteBatch);
 
 
             CalculatedStyle dimensions = GetDimensions();
