@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 using sorceryFight.Content.Buffs.Limitless;
 using sorceryFight.Content.Buffs.StarRage;
 using sorceryFight.Content.CursedTechniques.BloodManipulation;
+using Microsoft.Xna.Framework;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -18,6 +19,11 @@ namespace sorceryFight.Content.InnateTechniques
     {
         public override string Name => "StarRage";
         public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.StarRage.DisplayName");
+
+        public override Color innateBGColor => new Color(20, 5, 5, 220);
+
+        public override Color innateBorderColor => new Color(180, 20, 20, 200);
+
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
             new SummonGarudaBuff(),

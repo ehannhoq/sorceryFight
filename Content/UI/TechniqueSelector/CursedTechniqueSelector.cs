@@ -73,9 +73,16 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                     ? Color.White
                     : Color.Gray;
 
-                spriteBatch.Draw(texture, new Vector2(dims.X, dims.Y), iconColor);
+                //spriteBatch.End();
+                //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
+
+                //spriteBatch.Draw(texture, new Vector2(dims.X, dims.Y), iconColor);
 
                 base.DrawSelf(spriteBatch);
+
+                //spriteBatch.End();
+                //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
+
             }
 
             public override void OnClick()

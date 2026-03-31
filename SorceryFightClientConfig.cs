@@ -45,6 +45,7 @@ namespace sorceryFight
         #endregion
 
         #region Energy Bars
+        [Header("CursedEnergyBar")]
         [BackgroundColor(54, 192, 220, 192)]
         [DefaultValue(true)]
         public bool CursedEnergyBar { get; set; }
@@ -105,6 +106,7 @@ namespace sorceryFight
         [DefaultValue(1f)]
         public float BloodEnergyBarTransparency { get; set; }
 
+        [Header("StarEnergyBar")]
         [BackgroundColor(128, 0, 192, 192)]
         [DefaultValue(true)]
         public bool StarMeter { get; set; }
