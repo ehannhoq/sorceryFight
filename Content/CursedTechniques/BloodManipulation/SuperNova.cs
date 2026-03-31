@@ -26,13 +26,13 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SuperNova.LockedDescription");
         public override float Cost => 40f;
 
-        public override float BloodCost => 150f;
+        public override float BloodCost => 100f;
 
         public override Color textColor => new Color(255, 0, 0);
         public override bool DisplayNameInGame => true;
 
         public override int Damage => 30;
-        public override int MasteryDamageMultiplier => 50;
+        public override int MasteryDamageMultiplier => 100;
 
         public override float Speed => 25f;
         public override float LifeTime => 120f;
@@ -93,6 +93,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Projectile.penetrate = -1;
             animScale = 1.25f;
             Projectile.timeLeft = (int)LifeTime;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 30;
         }
         public override void AI()
         {

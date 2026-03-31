@@ -34,7 +34,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override Color textColor => new Color(132, 4, 4);
         public override bool DisplayNameInGame => true;
         public override int Damage => 400;
-        public override int MasteryDamageMultiplier => 18;
+        public override int MasteryDamageMultiplier => 24;
         public override float Speed => 0f;
 
         //Lifetime is made useless but must be implmented 

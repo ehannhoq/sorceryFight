@@ -84,8 +84,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Projectile.height = 188;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
-            //Projectile.usesLocalNPCImmunity = true;
-            //Projectile.localNPCHitCooldown = -1;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 30;
             animScale = 2f;
         }
 

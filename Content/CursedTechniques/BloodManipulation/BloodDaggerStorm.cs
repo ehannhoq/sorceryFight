@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.Build.Tasks;
+using Microsoft.Xna.Framework;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;
@@ -82,7 +83,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                             player.Center,
                             velocity,
                             ModContent.ProjectileType<BloodDaggerStormProjectile>(),
-                            Damage,
+                            (int)CalculateTrueDamage(sf),
                             0f,
                             player.whoAmI,
                             ai1: -1f
