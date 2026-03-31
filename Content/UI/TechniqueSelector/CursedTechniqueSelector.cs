@@ -35,15 +35,15 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
             protected override void DrawSelf(SpriteBatch spriteBatch)
             {
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
+                //spriteBatch.End();
+                //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
                 CalculatedStyle dims = GetDimensions();
                 Rectangle bgRect = dims.ToRectangle();
                 bgRect.Inflate(4, 4);
                 Rectangle borderRect = bgRect;
                 borderRect.Inflate(2, 2);
 
-                //We fall back on innateBGColor if there is no selector color in the Cursed Technique
+                //fall back on innateBGColor if there is no selector color in the Cursed Technique
                 Color borderColor;
                 if (sfPlayer.innateTechnique.CursedTechniques[id].selectorBorderColor != default)
                     borderColor = sfPlayer.innateTechnique.CursedTechniques[id].selectorBorderColor;
@@ -57,16 +57,17 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                     bgColor = sfPlayer.innateTechnique.innateBGColor;
 
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X, bgRect.Y - 2, bgRect.Width, 2), borderColor);
-                // Bottom border
+                // bottom border
+
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X, bgRect.Bottom, bgRect.Width, 2), borderColor);
-                // Left border
+                // left border
 
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X - 2, bgRect.Y - 2, 2, bgRect.Height + 4), borderColor);
-                // Right border
+                // right border
 
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.Right, bgRect.Y - 2, 2, bgRect.Height + 4), borderColor);
+                // top border
 
-                //spriteBatch.Draw(TextureAssets.MagicPixel.Value, borderRect, borderColor);
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, bgRect, bgColor);
 
                 //rewrite this later
@@ -77,8 +78,8 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 spriteBatch.Draw(texture, new Vector2(dims.X, dims.Y), iconColor);
 
                 base.DrawSelf(spriteBatch);
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
+                //spriteBatch.End();
+                //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
             }
 
             public override void OnClick()

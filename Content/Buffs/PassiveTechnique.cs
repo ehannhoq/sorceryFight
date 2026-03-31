@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs.PlayerAttributes;
 using sorceryFight.SFPlayer;
 using Terraria;
@@ -16,6 +17,10 @@ namespace sorceryFight.Content.Buffs
         public abstract float CostPerSecond { get; set; }
 
         public virtual float BloodRegenPerSecond { get; set; }
+
+        public virtual Color selectorBGColor { get; set; }
+        public virtual Color selectorBorderColor { get; set; }
+
         public abstract bool Unlocked(SorceryFightPlayer sf);
 
         public override void SetStaticDefaults()

@@ -131,6 +131,7 @@ Mods: {
 				Headers: {
 					BloodEnergyBar: Blood Energy Bar Header
 					CursedTechniqueSelector: Cursed Technique Selector Header
+					PassiveTechniqueSelector: Passive Technique Selector Header
 				}
 
 				BloodEnergyBarScale: {
@@ -150,6 +151,21 @@ Mods: {
 
 				CTSelectorPosLock: {
 					Label: Lock Cursed Technique Selector Position
+					Tooltip: ""
+				}
+
+				PTSelectorPosX: {
+					Label: Passive Technique Selector X Position
+					Tooltip: ""
+				}
+
+				PTSelectorPosY: {
+					Label: Passive Technique Selector Y Position
+					Tooltip: ""
+				}
+
+				PTSelectorPosLock: {
+					Label: Lock Passive Technique Selector Position
 					Tooltip: ""
 				}
 			}

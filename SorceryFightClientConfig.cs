@@ -29,6 +29,19 @@ namespace sorceryFight
         [Label("Lock Cursed Technique Selector Position")]
         [DefaultValue(false)]
         public bool CTSelectorPosLock { get; set; } = false;
+
+        [Header("PassiveTechniqueSelector")]
+        [Label("Passive Technique Selector X Position")]
+        [DefaultValue(9.114583f)]
+        public float PTSelectorPosX { get; set; } = 9.114583f;
+
+        [Label("Passive Technique Selector Y Position")]
+        [DefaultValue(50f)]
+        public float PTSelectorPosY { get; set; } = 50f;
+
+        [Label("Lock Passive Technique Selector Position")]
+        [DefaultValue(false)]
+        public bool PTSelectorPosLock { get; set; } = false;
         #endregion
 
         #region Energy Bars
