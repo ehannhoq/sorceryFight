@@ -6,3 +6,6 @@ obj
 Content/Shaders/*
 !Content/Shaders/*.fx
 !Content/Shaders/*.xnb
+
+# Exclude any helper python scripts (mainly file renaming for multi-png animations and png trimming)
+*.py
