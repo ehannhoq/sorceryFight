@@ -35,8 +35,6 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
             protected override void DrawSelf(SpriteBatch spriteBatch)
             {
-                //spriteBatch.End();
-                //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
                 CalculatedStyle dims = GetDimensions();
                 Rectangle bgRect = dims.ToRectangle();
                 bgRect.Inflate(4, 4);
@@ -75,11 +73,9 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                     ? Color.White
                     : Color.Gray;
 
-                spriteBatch.Draw(texture, new Vector2(dims.X, dims.Y), iconColor);
+                //spriteBatch.Draw(texture, new Vector2(dims.X, dims.Y), new Color(0,0,0,255));
 
                 base.DrawSelf(spriteBatch);
-                //spriteBatch.End();
-                //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
             }
 
             public override void OnClick()
