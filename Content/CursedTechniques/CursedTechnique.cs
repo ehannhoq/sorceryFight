@@ -42,6 +42,8 @@ namespace sorceryFight.Content.CursedTechniques
 
         public virtual Color selectorBG { get; set; }
 
+        public virtual Color selectorBorder { get; set; }
+
         public virtual string GetStats(SorceryFightPlayer sf)
         {
             string stats = $"Damage: {Math.Round(CalculateTrueDamage(sf), 2)}\n"

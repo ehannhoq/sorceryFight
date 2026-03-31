@@ -30,6 +30,8 @@ public abstract class InnateTechnique()
 
     public virtual Color innateBGColorOverride { get; set; }
 
+    public virtual Color innateBorderColorOverride { get; set; }
+
     public static InnateTechnique GetInnateTechnique(string name)
     {
         switch (name)

@@ -40,14 +40,37 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 CalculatedStyle dims = GetDimensions();
                 Rectangle bgRect = dims.ToRectangle();
                 bgRect.Inflate(4, 4);
+                Rectangle borderRect = bgRect;
+                borderRect.Inflate(2, 2);
 
                 //We want innateBGColorOverride to let us choose if we want to implement a different color for every Cursed Technique 
+
+
+
+                Color borderColor;
+                if (sfPlayer.innateTechnique.innateBorderColorOverride != default)
+                    borderColor = sfPlayer.innateTechnique.innateBorderColorOverride;
+                else
+                    borderColor = sfPlayer.innateTechnique.CursedTechniques[id].selectorBorder;
+
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X, bgRect.Y - 2, bgRect.Width, 2), borderColor);
+                // Bottom border
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X, bgRect.Bottom, bgRect.Width, 2), borderColor);
+                // Left border — first button only
+
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X - 2, bgRect.Y - 2, 2, bgRect.Height + 4), borderColor);
+                // Right border — last button only
+
+                spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.Right, bgRect.Y - 2, 2, bgRect.Height + 4), borderColor);
+
+
                 Color bgColor;
                 if (sfPlayer.innateTechnique.innateBGColorOverride != default)
                     bgColor = sfPlayer.innateTechnique.innateBGColorOverride;
                 else
                     bgColor = sfPlayer.innateTechnique.CursedTechniques[id].selectorBG;
 
+                //spriteBatch.Draw(TextureAssets.MagicPixel.Value, borderRect, borderColor);
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, bgRect, bgColor);
 
                 //rewrite this later
