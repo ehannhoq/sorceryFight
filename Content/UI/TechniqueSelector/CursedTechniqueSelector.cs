@@ -73,7 +73,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                     ? Color.White
                     : Color.Gray;
 
-                //spriteBatch.Draw(texture, new Vector2(dims.X, dims.Y), new Color(0,0,0,255));
+                spriteBatch.Draw(texture, new Vector2(dims.X, dims.Y), iconColor);
 
                 base.DrawSelf(spriteBatch);
             }

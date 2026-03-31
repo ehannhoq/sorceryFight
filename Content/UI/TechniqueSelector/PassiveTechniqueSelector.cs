@@ -33,8 +33,6 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
             protected override void DrawSelf(SpriteBatch spriteBatch)
             {
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
                 CalculatedStyle dims = GetDimensions();
                 Rectangle bgRect = dims.ToRectangle();
                 bgRect.Inflate(4, 4);
@@ -71,15 +69,10 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, bgRect, bgColor);
 
-
                 base.DrawSelf(spriteBatch);
 
                 if (sfPlayer.innateTechnique.PassiveTechniques[id].isActive)
                     spriteBatch.Draw(TextureAssets.MagicPixel.Value, dims.ToRectangle(), new Color(0, 0, 0, 150));
-
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
-
             }
 
 
