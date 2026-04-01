@@ -13,16 +13,12 @@ namespace sorceryFight.Content
         private static float GameSpeed = 1.0f;
         public override void Load()
         {
-            On_Main.DoUpdate += DoUpdate;
+            // On_Main.DoUpdate += DoUpdate;
         }
 
         public override void PostUpdateEverything()
         {
             GameSpeed = 1.0f;
-            //if (SFKeybinds.Test.Current)
-            //{
-            //    GameSpeed = 0.5f;
-            //}
         }
 
         private void DoUpdate(On_Main.orig_DoUpdate orig, Main self, ref GameTime gameTime)
