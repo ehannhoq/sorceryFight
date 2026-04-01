@@ -37,7 +37,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         {
             if (sf.innateTechnique.Name == "Vessel")
             {
-                return sf.sukunasFingerConsumed >= 10;
+                return sf.sukunasFingerConsumed >= 11;
             }   
             else
             {

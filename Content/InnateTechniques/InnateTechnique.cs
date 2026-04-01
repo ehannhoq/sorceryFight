@@ -50,6 +50,8 @@ public abstract class InnateTechnique()
                 return new StarRageTechnique();
             case "HeavenlyRestriction":
                 return new HeavenlyRestriction();
+            case "IceFormation":
+                return new IceFormationTechnique();
         }
 
         return null;
@@ -67,7 +69,8 @@ public abstract class InnateTechnique()
                     new BloodManipulationTechnique(),
                     new StarRageTechnique(),
                     new PrivatePureLoveTrainTechnique(),
-                    new HeavenlyRestriction()
+                    new HeavenlyRestriction(),
+                    new IceFormationTechnique()
                 };
         }
     }

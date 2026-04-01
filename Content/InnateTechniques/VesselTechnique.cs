@@ -18,7 +18,7 @@ namespace sorceryFight.Content.InnateTechniques
         public override string Name => "Vessel";
         public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.Vessel.DisplayName");
 
-        public override Color innateBGColor => new Color(236, 171, 162, 70);
+        public override Color innateBGColor => new Color(236, 171, 162, 100);
 
         public override Color innateBorderColor => new Color(64, 76, 140, 128);
 
@@ -31,8 +31,10 @@ namespace sorceryFight.Content.InnateTechniques
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
             new SoulDismantle(),
-            new ChainDismantle(),
             new PiercingBlood(),
+            new ChainDismantle(),
+            new BloodDaggerStorm(),
+            new LineDevestation()
         };
 
         public override PlayerDomainExpansion DomainExpansion { get; } = new Home();

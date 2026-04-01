@@ -35,7 +35,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         }
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.sukunasFingerConsumed >= 15;
+            return sf.sukunasFingerConsumed >= 3;
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)

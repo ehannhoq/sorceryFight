@@ -18,8 +18,8 @@ namespace sorceryFight.Content.InnateTechniques
         public override string Name => "BloodManipulation";
         public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.BloodManipulation.DisplayName");
 
-        public override Color innateBGColor => new Color(205, 205, 205, 70);
-
+        //public override Color innateBGColor => new Color(205, 205, 205, 70);
+        public override Color innateBGColor => new Color(156, 14, 134, 110);
         public override Color innateBorderColor => new Color(120, 40, 160, 128);
 
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>

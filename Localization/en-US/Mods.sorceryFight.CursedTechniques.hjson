@@ -142,7 +142,7 @@ SoulDismantle: {
 		A devastating slash that targets the soul,
 		ignoring any and all defense.
 		'''
-	LockedDescription: Consume at least 15 of Ryomen Sukuna's Fingers.
+	LockedDescription: Consume at least 3 of Ryomen Sukuna's Fingers.
 }
 
 ChainDismantle: {
@@ -153,7 +153,7 @@ ChainDismantle: {
 		enemies within a radius upon first successful 
 		hit. Also ignores defense.
 		'''
-	LockedDescription: Consome at least 17 of Ryomen Sukuna's Fingers.
+	LockedDescription: Consome at 9 least of Ryomen Sukuna's Fingers.
 }
 
 PiercingBlood: {
@@ -292,7 +292,7 @@ BloodDaggerStorm: {
 		By constantly compressing blood into daggers and firing them with tiny lines of blood attached
 		they can be redirected mid air towards your cursor, seeking out enemies as they get closer
 		'''
-	LockedDescription: Consume at least 10 of Ryomen Sukuna's Fingers (Vessel) or defeat the Empress of Light (Blood).
+	LockedDescription: Consume at least 11 of Ryomen Sukuna's Fingers (Vessel) or defeat the Empress of Light (Blood).
 }
 
 SelfBloodBlade: {
@@ -356,4 +356,14 @@ StarRush: {
 	DisplayName: Star Rush
 	Description: Charge at the cursor, do massive damage and stun the first enemy hit
 	LockedDescription: Defeat the one who guards the Moon.
+}
+
+LineDevestation: {
+	DisplayName: Line of Devestation
+	Description:
+		'''
+		A devastating slash rides on the air,
+		When it impacts an enemy it will create a large detonation
+		'''
+	LockedDescription: Consume at least 15 of Ryomen Sukuna's Fingers.
 }

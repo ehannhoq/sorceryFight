@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using CalamityMod.NPCs.NormalNPCs;
-using Humanizer;
+using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
@@ -15,37 +12,36 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.CursedTechniques.Vessel
 {
-    public class ChainDismantle : CursedTechnique
+    public class LineDevestation : CursedTechnique
     {
-        public static readonly int FRAME_COUNT = 6;
+        public static readonly int FRAME_COUNT = 8;
         public static readonly int TICKS_PER_FRAME = 2;
         public static Texture2D texture;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.ChainDismantle.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.ChainDismantle.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.ChainDismantle.LockedDescription");
-        public override float Cost => 350f;
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.LineDevestation.DisplayName");
+        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.LineDevestation.Description");
+        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.LineDevestation.LockedDescription");
+        public override float Cost => 200f;
         public override Color textColor => new Color(120, 21, 8);
         public override bool DisplayNameInGame => false;
         public override int Damage => 60;
-        public override int MasteryDamageMultiplier => 50;
+        public override int MasteryDamageMultiplier => 40;
         public override float Speed => 0f;
-        public override float LifeTime => 18f;
-
+        public override float LifeTime => 22f;
         List<int> hasHit;
-        ref float isBarrage => ref Projectile.ai[2];
+        ref float spawnedFromDE => ref Projectile.ai[2];
         public override int GetProjectileType()
         {
-            return ModContent.ProjectileType<ChainDismantle>();
+            return ModContent.ProjectileType<LineDevestation>();
         }
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.sukunasFingerConsumed >= 8;
+            return sf.sukunasFingerConsumed >= 15;
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)
         {
             Player player = sf.Player;
-
+            
             if (player.whoAmI == Main.myPlayer)
             {
                 Vector2 playerPos = player.MountedCenter;
@@ -54,9 +50,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                 var entitySource = player.GetSource_FromThis();
                 sf.cursedEnergy -= CalculateTrueCost(sf);
 
-                int index = Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), 1, 0, player.whoAmI);
-                Main.projectile[index].ai[2] = 0f;
-                return index;
+                return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), 1, 0, player.whoAmI);
             }
             return -1;
         }
@@ -66,7 +60,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             Main.projFrames[Projectile.type] = FRAME_COUNT;
 
             if (Main.dedServ) return;
-            texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Vessel/ChainDismantle", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Vessel/LineDevestation", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
         public override void SetDefaults()
         {
@@ -84,31 +78,9 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             {
                 modifiers.FinalDamage.Flat = CalculateTrueDamage(Main.player[Projectile.owner].SorceryFight());
                 hasHit.Add(Projectile.whoAmI);
-
-                if (isBarrage == 0)
-                {
-                    foreach (NPC npc in Main.ActiveNPCs)
-                    {
-                        if (npc.friendly || npc.type == NPCID.TargetDummy || npc.type == ModContent.NPCType<SuperDummyNPC>() || npc.whoAmI == target.whoAmI) continue;
-                        float dist = Vector2.Distance(npc.Center, target.Center);
-                        if (dist < 250f)
-                        {
-                            Player player = Main.player[Projectile.owner];
-                            SorceryFightPlayer sf = player.SorceryFight();
-
-                            Vector2 playerPos = player.MountedCenter;
-                            Vector2 mousePos = Main.MouseWorld;
-                            Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * Speed;
-                            var entitySource = player.GetSource_FromThis();
-
-                            int index = Projectile.NewProjectile(entitySource, npc.Center, dir, GetProjectileType(), 1, 0, player.whoAmI);
-                            Main.projectile[index].ai[2] = 1f;
-                        }
-                    }
-                }
             }
-
-            else
+            
+            else 
                 Projectile.damage = 0;
 
             base.ModifyHitNPC(target, ref modifiers);
@@ -133,10 +105,9 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                 }
             }
 
-            Player player = Main.player[Projectile.owner];
-
-            if (isBarrage == 0)
+            if (spawnedFromDE == 0)
             {
+                Player player = Main.player[Projectile.owner];
                 Vector2 playerRotatedPoint = player.RotatedRelativePoint(player.MountedCenter, true);
                 float velocityAngle = Projectile.velocity.ToRotation();
                 float offset = 130f * Projectile.scale;
@@ -149,9 +120,10 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             if (Projectile.ai[0] == 1)
             {
                 Projectile.ai[1] = Main.rand.NextFloat(0, MathHelper.TwoPi);
-                SoundEngine.PlaySound(SorceryFightSounds.CleaveSwing with { Volume = 5f }, player.Center);
+                SoundEngine.PlaySound(SorceryFightSounds.CleaveSwing with { Volume = 5f }, Projectile.Center);
                 SoundEngine.PlaySound(SorceryFightSounds.SoulDismantle, Projectile.Center);
             }
+            
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -165,7 +137,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             float velocityAngle = Projectile.velocity.ToRotation();
             Projectile.rotation = velocityAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, -32).RotatedBy(Projectile.rotation), sourceRectangle, Color.White, Projectile.rotation + Projectile.ai[1], projOrigin, 1.5f, SpriteEffects.None, 0f);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, -32).RotatedBy(Projectile.rotation), sourceRectangle, Color.White, Projectile.rotation + Projectile.ai[1], projOrigin, 2f, SpriteEffects.None, 0f);
             return false;
         }
     }
