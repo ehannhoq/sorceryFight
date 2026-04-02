@@ -55,6 +55,9 @@ namespace sorceryFight.Content.CursedTechniques
             if (BloodCostPerSecond > 0)
                 stats += $"Blood Cost Per Second: {BloodCostPerSecond}\n";
 
+            if (StarCost > 0)
+                stats += $"Mass Overcharge Cost: {StarCost}\n";
+
             return stats;
         }
         public virtual float CalculateTrueDamage(SorceryFightPlayer sf)

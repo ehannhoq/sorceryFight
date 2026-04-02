@@ -26,8 +26,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.MassKick.LockedDescription");
         public override float Cost => 40f;
 
-        public override float BloodCost => 20f;
-
         public override Color textColor => new Color(255, 0, 0);
         public override bool DisplayNameInGame => true;
 
@@ -51,9 +49,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                 var entitySource = player.GetSource_FromThis();
 
                 sf.cursedEnergy -= CalculateTrueCost(sf);
-
-                if (BloodCost > 0)
-                    sf.bloodEnergy -= BloodCost;
 
                 if (DisplayNameInGame)
                 {

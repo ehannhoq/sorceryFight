@@ -18,6 +18,7 @@ using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
 using sorceryFight.Content.Buffs.CursedEnergyTraits;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Terraria.Localization;
 
 
 namespace sorceryFight.SFPlayer
@@ -277,8 +278,13 @@ namespace sorceryFight.SFPlayer
             if (bloodEnergy < 0)
             {
                 AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
-                bloodEnergy = 0.2f;
-                Player.Hurt(PlayerDeathReason.ByCustomReason($"{Player.name} overexerted their blood energy."), (int)(Math.Abs(bloodEnergy)) , 0, false, false);
+                Player.Hurt(PlayerDeathReason.ByCustomReason($"{Player.name} overexerted their blood energy."), (int)(Math.Abs(bloodEnergy)) , 0, false, false, default, default, 9999);
+                bloodEnergy = 0;
+            }
+
+            if (starEnergy < 0)
+            {
+                starEnergy = 0;
             }
 
             if (cursedEnergy < 0)
@@ -308,6 +314,7 @@ namespace sorceryFight.SFPlayer
             blackFlashTime = 30;
 
             bloodEnergyUsagePerSecond = 0f;
+
             starEnergyRegenPerSecond = 0f;
 
             if (disabledRegen)
