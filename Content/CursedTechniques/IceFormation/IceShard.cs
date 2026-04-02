@@ -25,8 +25,6 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SlicingExorcism.LockedDescription");
         public override float Cost => 20f;
 
-        public override float BloodCost => 20f;
-
         public override Color textColor => new Color(255, 0, 0);
         public override bool DisplayNameInGame => true;
 
@@ -130,7 +128,7 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
             SpriteBatch spriteBatch = Main.spriteBatch;
 
             if (texture == null && !Main.dedServ)
-                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/IceShard").Value;
+                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/IceFormation/IceShard").Value;
 
 
             int frameHeight = texture.Height / FRAME_COUNT;
@@ -147,8 +145,6 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
-            int paintingCount = Main.player[Projectile.owner].SorceryFight().deathPaintings.Count(p => p);
-            target.AddBuff(ModContent.BuffType<BloodPoison>(), paintingCount * 60);
 
             for (int i = 0; i < 6; i++)
             {

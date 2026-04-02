@@ -1,11 +1,13 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Particles;
 using sorceryFight.SFPlayer;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -14,8 +16,8 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
 {
     public class LineDevestation : CursedTechnique
     {
-        public static readonly int FRAME_COUNT = 8;
-        public static readonly int TICKS_PER_FRAME = 2;
+        public static readonly int FRAME_COUNT = 1;
+        public static readonly int TICKS_PER_FRAME = 1;
         public static Texture2D texture;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.LineDevestation.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.LineDevestation.Description");
@@ -25,10 +27,14 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public override bool DisplayNameInGame => false;
         public override int Damage => 60;
         public override int MasteryDamageMultiplier => 40;
-        public override float Speed => 0f;
-        public override float LifeTime => 22f;
-        List<int> hasHit;
-        ref float spawnedFromDE => ref Projectile.ai[2];
+        public override float Speed => 12f;
+        public override float LifeTime => 180f;
+
+        public bool animating;
+        public float animScale;
+
+        private List<Vector2> dotPositions = new List<Vector2>();
+        private bool initialized = false;
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<LineDevestation>();
@@ -38,107 +44,131 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             return sf.sukunasFingerConsumed >= 15;
         }
 
-        public override int UseTechnique(SorceryFightPlayer sf)
-        {
-            Player player = sf.Player;
-            
-            if (player.whoAmI == Main.myPlayer)
-            {
-                Vector2 playerPos = player.MountedCenter;
-                Vector2 mousePos = Main.MouseWorld;
-                Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * Speed;
-                var entitySource = player.GetSource_FromThis();
-                sf.cursedEnergy -= CalculateTrueCost(sf);
-
-                return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), 1, 0, player.whoAmI);
-            }
-            return -1;
-        }
-
-        public override void SetStaticDefaults()
-        {
-            Main.projFrames[Projectile.type] = FRAME_COUNT;
-
-            if (Main.dedServ) return;
-            texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Vessel/LineDevestation", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-        }
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 170;
-            Projectile.height = 140;
-            Projectile.friendly = true;
-            Projectile.tileCollide = false;
-            hasHit = new List<int>();
+            Projectile.width = 65;
+            Projectile.height = 65;
+            Projectile.tileCollide = true;
+            animating = false;
+            Projectile.penetrate = -1;
+            animScale = 1.25f;
         }
-
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
-        {
-            if (!hasHit.Contains(Projectile.whoAmI))
-            {
-                modifiers.FinalDamage.Flat = CalculateTrueDamage(Main.player[Projectile.owner].SorceryFight());
-                hasHit.Add(Projectile.whoAmI);
-            }
-            
-            else 
-                Projectile.damage = 0;
-
-            base.ModifyHitNPC(target, ref modifiers);
-        }
-
         public override void AI()
         {
-            Projectile.ai[0]++;
+            Projectile.rotation = Projectile.velocity.ToRotation();
+            Projectile.ai[0] += 1;
+            float beginAnimTime = 30f;
 
-            if (Projectile.ai[0] >= LifeTime)
-            {
+            if (Projectile.ai[0] > LifeTime + beginAnimTime)
                 Projectile.Kill();
-            }
 
-            if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
+            if (Projectile.ai[0] < beginAnimTime)
             {
-                Projectile.frameCounter = 0;
-
-                if (Projectile.frame++ >= FRAME_COUNT - 1)
+                if (!animating)
                 {
-                    Projectile.frame = 0;
+                    animating = true;
+                    SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
                 }
+                return;
             }
 
-            if (spawnedFromDE == 0)
+            if (animating)
             {
-                Player player = Main.player[Projectile.owner];
-                Vector2 playerRotatedPoint = player.RotatedRelativePoint(player.MountedCenter, true);
-                float velocityAngle = Projectile.velocity.ToRotation();
-                float offset = 130f * Projectile.scale;
-
-                Projectile.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
-                Projectile.Center = playerRotatedPoint + velocityAngle.ToRotationVector2() * offset;
-                Projectile.rotation = velocityAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
+                Projectile.tileCollide = true;
+                animating = false;
             }
 
-            if (Projectile.ai[0] == 1)
+            // Run once after the anim delay
+            if (!initialized)
             {
-                Projectile.ai[1] = Main.rand.NextFloat(0, MathHelper.TwoPi);
-                SoundEngine.PlaySound(SorceryFightSounds.CleaveSwing with { Volume = 5f }, Projectile.Center);
-                SoundEngine.PlaySound(SorceryFightSounds.SoulDismantle, Projectile.Center);
+                initialized = true;
+
+                Projectile.localAI[0] = Projectile.Center.X;
+                Projectile.localAI[1] = Projectile.Center.Y;
+
+                Vector2 spawnPos = Projectile.Center;
+                Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
+
+                float maxLength = 3000f;
+                float dotSpacing = 40f;
+
+                float forwardLength = GetRayLength(spawnPos, direction, maxLength);
+                float backwardLength = GetRayLength(spawnPos, -direction, maxLength);
+
+                int forwardCount = (int)(forwardLength / dotSpacing);
+                int backwardCount = (int)(backwardLength / dotSpacing);
+
+                for (int i = -backwardCount; i <= forwardCount; i++)
+                    dotPositions.Add(spawnPos + direction * (dotSpacing * i));
             }
-            
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
-            int frameHeight = texture.Height / FRAME_COUNT;
-            int frameY = Projectile.frame * frameHeight;
+            SpriteBatch spriteBatch = Main.spriteBatch;
 
-            Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
-            Vector2 projOrigin = sourceRectangle.Size() * 0.5f;
+            if (texture == null && !Main.dedServ)
+                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Vessel/LineDevestation").Value;
 
-            float velocityAngle = Projectile.velocity.ToRotation();
-            Projectile.rotation = velocityAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
+            Texture2D dot = TextureAssets.MagicPixel.Value;
+            Rectangle dotSourceRect = new Rectangle(0, 0, 1, 1);
 
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, -32).RotatedBy(Projectile.rotation), sourceRectangle, Color.White, Projectile.rotation + Projectile.ai[1], projOrigin, 2f, SpriteEffects.None, 0f);
+            //this code is here because it doesn't work without it for whatever reason, artifacts to the bottom of the screen
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+            foreach (Vector2 dotPos in dotPositions)
+            {
+                Vector2 screenPos = dotPos - Main.screenPosition;
+                if (screenPos.X < -50 || screenPos.X > Main.screenWidth + 50 ||
+                    screenPos.Y < -50 || screenPos.Y > Main.screenHeight + 50)
+                    continue;
+
+                int dotWidth = 16;  // line length
+                int dotHeight = 4;  // line thickness
+
+                Rectangle destination = new Rectangle(
+                    (int)screenPos.X - dotWidth / 2,
+                    (int)screenPos.Y - dotHeight / 2,
+                    dotWidth,
+                    dotHeight
+                );
+
+
+                spriteBatch.Draw(dot, screenPos, dotSourceRect, Color.White * 0.85f, Projectile.rotation, new Vector2(dotWidth / 2f, dotHeight / 2f), new Vector2(dotWidth, dotHeight), SpriteEffects.None, 0f);
+            }
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.AnisotropicClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+            Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
+
             return false;
+        }
+
+        private static float GetRayLength(Vector2 start, Vector2 direction, float maxLength, float step = 8f)
+        {
+            for (float dist = 0; dist < maxLength; dist += step)
+            {
+                Vector2 checkPos = start + direction * dist;
+                int tileX = (int)(checkPos.X / 16f);
+                int tileY = (int)(checkPos.Y / 16f);
+
+                if (!WorldGen.InWorld(tileX, tileY)) return dist;
+
+                Tile tile = Main.tile[tileX, tileY];
+                if (tile != null && tile.HasTile && Main.tileSolid[tile.TileType])
+                    return dist;
+            }
+            return maxLength;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+
         }
     }
 }

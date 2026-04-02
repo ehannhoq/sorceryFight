@@ -17,8 +17,8 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
     public class GarudaKick : CursedTechnique
     {
 
-        public static readonly int FRAME_COUNT = 8;
-        public static readonly int TICKS_PER_FRAME = 5;
+        public static readonly int FRAME_COUNT = 1;
+        public static readonly int TICKS_PER_FRAME = 1;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.GarudaKick.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.GarudaKick.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.GarudaKick.LockedDescription");
@@ -42,8 +42,8 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
         public static Texture2D texture;
 
-        public bool animating;
-        public float animScale;
+    public bool animating;
+    public float animScale;
 
 
         public override void SetStaticDefaults()
@@ -73,7 +73,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         }
         public override void AI()
         {
-            Projectile.rotation = Projectile.velocity.ToRotation();
+            Projectile.rotation += MathHelper.ToRadians(10f);
             Projectile.ai[0] += 1;
             float beginAnimTime = 30f;
             Player player = Main.player[Projectile.owner];
@@ -83,40 +83,27 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                 Projectile.Kill();
             }
 
-            if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
-            {
-                Projectile.frameCounter = 0;
-
-                if (Projectile.frame++ >= FRAME_COUNT - 1)
-                {
-                    Projectile.frame = 0;
-                }
-            }
-
             if (Projectile.ai[0] < beginAnimTime)
             {
                 if (!animating)
                 {
-                    Projectile.Center += new Vector2(0, -30);
+                    Projectile.Center += new Vector2(0, 30);
                     animating = true;
                     SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
                 }
 
-                //Code that was for expanding the spread of the particles based on height of shooting, but rotating the projectile itself looked better 
-                //float verticalness = 1f - Math.Abs(Projectile.velocity.SafeNormalize(Vector2.Zero).X);
-                //float spreadWidth = MathHelper.Lerp(8f, 60f, verticalness);
-                //Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(30f, 120f);
-                //Vector2 perpendicular = Projectile.velocity.RotatedBy(MathHelper.PiOver2).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(-spreadWidth, spreadWidth);
-                //Vector2 particleOffset = Projectile.Center + behindOffset + perpendicular;
-                //Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                //LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 20, 1f, textColor);
-                //GeneralParticleHandler.SpawnParticle(particle);
-
-                Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(10f, 40f);
-                Vector2 particleOffset = Projectile.Center + behindOffset;
-                Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 20, 1f, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
+                Dust dust = Dust.NewDustDirect(
+                    Projectile.Center - new Vector2(4, 4),
+                    8, 8,
+                    DustID.Smoke,
+                    -Projectile.velocity.X * 0.3f,
+                    -Projectile.velocity.Y * 0.3f,
+                    150,
+                    new Color(180, 180, 180),
+                    Main.rand.NextFloat(0.8f, 1.4f)
+                );
+                dust.noGravity = true;
+                dust.fadeIn = 0.5f;
                 return;
             }
 
@@ -125,7 +112,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                 Projectile.tileCollide = true;
                 animating = false;
             }
-
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -135,14 +121,9 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             if (texture == null && !Main.dedServ)
                 texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/StarRage/GarudaKick").Value;
 
+            Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 
-            int frameHeight = texture.Height / FRAME_COUNT;
-            int frameY = Projectile.frame * frameHeight;
-
-            Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
-
-            Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
-            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
 
             return false;
         }
@@ -150,9 +131,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
-            Projectile.penetrate = 0;
-
-            target.AddBuff(BuffID.Poisoned, 300);
 
             for (int i = 0; i < 6; i++)
             {

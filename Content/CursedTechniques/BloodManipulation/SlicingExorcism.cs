@@ -94,7 +94,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             {
                 if (!animating)
                 {
-                    Projectile.Center += new Vector2(0, -30);
+                    Projectile.Center += new Vector2(0, 0);
                     animating = true;
                     SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
                 }
