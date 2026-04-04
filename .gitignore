@@ -9,3 +9,6 @@ Content/Shaders/*
 
 # Exclude any helper python scripts (mainly file renaming for multi-png animations and png trimming)
 *.py
+
+# Exclude any fx compiler that is present.
+*.cd

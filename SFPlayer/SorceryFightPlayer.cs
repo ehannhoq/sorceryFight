@@ -154,7 +154,6 @@ namespace sorceryFight.SFPlayer
         public float starEnergy;
         public float maxStarEnergy;
         public float starEnergyRegenPerSecond;
-        public float starEnergyUsagePerSecond;
         public bool summonGaruda;
         public NPC garudaCurrentTarget;
         #endregion
@@ -241,11 +240,6 @@ namespace sorceryFight.SFPlayer
             if (bloodEnergy > 0)
             {
                 bloodEnergy -= SFUtils.RateSecondsToTicks(bloodEnergyUsagePerSecond);
-            }
-
-            if(starEnergy > 0)
-            {
-                starEnergy -= SFUtils.RateSecondsToTicks(starEnergyUsagePerSecond);
             }
 
             bool disabledRegen = disableRegenFromBuffs || disableRegenFromProjectiles || disableRegenFromDE;

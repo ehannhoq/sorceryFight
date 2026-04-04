@@ -114,7 +114,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             Texture2D dot = TextureAssets.MagicPixel.Value;
             Rectangle dotSourceRect = new Rectangle(0, 0, 1, 1);
 
-            //this code is here because it doesn't work without it for whatever reason, artifacts to the bottom of the screen
+            //this restart code is here because it doesn't work without it for whatever reason, artifacts to the bottom of the screen
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
