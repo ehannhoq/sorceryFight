@@ -12,3 +12,6 @@ Content/Shaders/*
 
 # Exclude any fx compiler that is present.
 *.cd
+
+# anti calude text
+.claude

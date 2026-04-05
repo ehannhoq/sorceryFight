@@ -32,6 +32,7 @@ Mods: {
 			BlackholeProjectile.DisplayName: Blackhole Projectile
 			ChakiraResonantBeam.DisplayName: Chakira Resonant Beam
 			GarudaWhipProjectile.DisplayName: Garuda Whip Projectile
+			RoundDeerBolt.DisplayName: Round Deer Bolt
 		}
 
 		Configs: {
