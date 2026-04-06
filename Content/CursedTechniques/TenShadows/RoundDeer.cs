@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.CursedTechniques.TenShadows
 {
-    public class RoundDeer : CursedTechniqueSentry
+    public class RoundDeer : CursedTechniqueSummon
     {
         public static Texture2D spawnTexture;
         public static Texture2D texture;
@@ -36,7 +36,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         public override float DetectionRange => 800f;
 
         public override bool SentryTileCollide => true;
-        public override bool FollowsPlayer => false;
+        //public override bool FollowsPlayer => false;
 
         private const float HEAL_RADIUS = 300f;
         private const int HEAL_AMOUNT = 100;
@@ -67,13 +67,14 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
             Main.projFrames[Type] = FRAME_COUNT;
         }
 
-        public override void SentrySetDefaults()
+        public override void SummonSetDefaults()
         {
             Projectile.width = 40;
             Projectile.height = 50;
         }
-        public override void SentryAI(Player owner, SorceryFightPlayer sf)
+        public override void SummonAI()
         {
+
             if (!spawnAnimDone)
             {
                 spawnFrameCounter++;
@@ -87,7 +88,8 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
                 return;
             }
 
-            Projectile.spriteDirection = (owner.Center.X > Projectile.Center.X) ? 1 : -1;
+            //change owner to our identifiers
+            Projectile.spriteDirection = (Owner.Center.X > Projectile.Center.X) ? 1 : -1;
 
             AnimateFrames(FRAME_COUNT, TICKS_PER_FRAME);
 
@@ -105,10 +107,10 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
                 }
             }
 
-            SentryState++;
-            if (SentryState >= HEAL_COOLDOWN && Projectile.owner == Main.myPlayer)
+            SummonState++;
+            if (SummonState >= HEAL_COOLDOWN && Projectile.owner == Main.myPlayer)
             {
-                SentryState = 0f;
+                SummonState = 0f;
 
                 for (int i = 0; i < Main.maxPlayers; i++)
                 {

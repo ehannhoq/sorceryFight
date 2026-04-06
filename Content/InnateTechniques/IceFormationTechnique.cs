@@ -30,10 +30,12 @@ namespace sorceryFight.Content.InnateTechniques
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
             new IceShard(),
-            new RoundDeer()
+            new IceicleHail(),
+            new RoundDeer(),
+            new Nue()
         };
 
-        public override PlayerDomainExpansion DomainExpansion { get; } = new StarCastle();
+        public override PlayerDomainExpansion DomainExpansion { get; } = new HeavensRime();
 
 
     }
