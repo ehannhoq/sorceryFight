@@ -42,6 +42,12 @@ namespace sorceryFight.Content.CursedTechniques
         //  CONFIGURATION — Override these in subclasses
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+
+        //Cleans up the minions if state switches
+        //Important to set in sub classes unless it's a multi tech summon
+        public virtual string ParentInnateName => null;
+
+
         /// <summary>
         /// Determines the movement style. Default Sentry.
         /// </summary>
@@ -210,6 +216,20 @@ namespace sorceryFight.Content.CursedTechniques
 
             // Die if owner is dead or disconnected
             if (!Owner.active || Owner.dead)
+            {
+                Projectile.Kill();
+                return;
+            }
+
+            //Kill all minions when tech is null
+            if (SFOwner?.innateTechnique?.Name == null)
+            {
+                Projectile.Kill();
+                return;
+            }
+
+            //Kill minion if tech changes
+            if (SFOwner.innateTechnique.Name != ParentInnateName)
             {
                 Projectile.Kill();
                 return;

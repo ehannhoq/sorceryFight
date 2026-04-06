@@ -34,6 +34,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         public override float Speed => 12f;
         public override float LifeTime => 0f;
         public override float DetectionRange => 800f;
+        public override string ParentInnateName => "TenShadows";
 
         public override bool SentryTileCollide => true;
         //public override bool FollowsPlayer => false;

@@ -78,6 +78,9 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 case "IceFormation":
                     DrawIceFormation(center, player);
                     break;
+                case "TenShadows":
+                    DrawTenShadows(center, player);
+                    break;
                 case "PrivatePureLoveTrain":
                     DrawPPLT(center, player);
                     break;
@@ -541,8 +544,55 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 }
 
             }
+        }
+
+        void DrawTenShadows(Vector2 _, SorceryFightPlayer player)
+        {
+            List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
+            List<PassiveTechnique> passiveTechniques = player.innateTechnique.PassiveTechniques;
+
+            float iconSize = 30;
+            int originIconCount = 1;
+            float distance = 70f;
+
+            Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
 
 
+            for (int i = 0; i < cursedTechniques.Count + passiveTechniques.Count; i++)
+            {
+                if (i >= cursedTechniques.Count)
+                {
+                    int j = i - cursedTechniques.Count;
+                    PassiveTechnique pt = passiveTechniques[j];
+                    string ptTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/TenShadows/p{j}";
+                    Texture2D ptTexture = ModContent.Request<Texture2D>(ptTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+                    bool ptUnlocked = pt.Unlocked(player);
+                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.LockedDescription}";
+
+                    TechniqueIcon ptIcon = new TechniqueIcon(ptTexture, ptUnlocked, ptHoverText);
+                    ptIcon.Left.Set(originPositions[i].X, 0f);
+                    ptIcon.Top.Set(originPositions[i].Y, 0f);
+                    Append(ptIcon);
+                    techniqueIcons.Add(ptIcon);
+                }
+                else
+                {
+                    CursedTechnique ct = cursedTechniques[i];
+                    string ctTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/TenShadows/c{i}";
+                    Texture2D ctTexture = ModContent.Request<Texture2D>(ctTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+                    bool ctUnlocked = ct.Unlocked(player);
+                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+
+                    TechniqueIcon ctIcon = new TechniqueIcon(ctTexture, ctUnlocked, ctHoverText);
+                    ctIcon.Left.Set(originPositions[i].X, 0f);
+                    ctIcon.Top.Set(originPositions[i].Y, 0f);
+                    Append(ctIcon);
+                    techniqueIcons.Add(ctIcon);
+                }
+
+            }
         }
 
         void DrawPPLT(Vector2 _, SorceryFightPlayer player)

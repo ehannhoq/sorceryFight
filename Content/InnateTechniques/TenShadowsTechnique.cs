@@ -13,10 +13,10 @@ using sorceryFight.Content.CursedTechniques.TenShadows;
 
 namespace sorceryFight.Content.InnateTechniques
 {
-    public class IceFormationTechnique : InnateTechnique
+    public class TenShadowsTechnique : InnateTechnique
     {
-        public override string Name => "IceFormation";
-        public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.IceFormation.DisplayName");
+        public override string Name => "TenShadows";
+        public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.TenShadows.DisplayName");
 
         public override Color innateBGColor => new Color(11, 13, 30, 70);
 
@@ -29,8 +29,8 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
-            new IceShard(),
-            new IcicleHail()
+            new RoundDeer(),
+            new Nue()
         };
 
         public override PlayerDomainExpansion DomainExpansion { get; } = new HeavensRime();

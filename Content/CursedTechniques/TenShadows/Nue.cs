@@ -34,6 +34,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         public override float Speed => 10f;
         public override float LifeTime => 0f;
         public override float DetectionRange => 900f;
+        public override string ParentInnateName => "TenShadows";
 
         private const int FRAME_COUNT = 8;
         private const int TICKS_PER_FRAME = 5;
