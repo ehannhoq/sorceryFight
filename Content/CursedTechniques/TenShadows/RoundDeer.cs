@@ -55,7 +55,6 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         public override string GetStats(SorceryFightPlayer sf)
         {
             string stats = base.GetStats(sf);
-            stats += $"CE Drain: {CEDrainPerSecond}/sec\n";
             stats += $"Detection: {DetectionRange / 16f:F0} tiles\n";
             stats += "Toggle: Press to summon/dismiss\n";
             return stats;

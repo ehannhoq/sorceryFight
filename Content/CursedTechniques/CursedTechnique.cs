@@ -167,13 +167,13 @@ namespace sorceryFight.Content.CursedTechniques
 
             if (CursedCostPerSecond > 0)
                 sf.cursedEnergy -= (CursedCostPerSecond / 60);
-            else
-                Projectile.Kill();
+                if(sf.cursedEnergy < 0)
+                    Projectile.Kill();
 
             if (BloodCostPerSecond > 0)
-                sf.bloodEnergy -= (BloodCostPerSecond / 60); 
-            else
-                Projectile.Kill();
+                sf.bloodEnergy -= (BloodCostPerSecond / 60);
+                if (sf.bloodEnergy < 0)
+                    Projectile.Kill();
         }
 
         public virtual bool UseCondition(SorceryFightPlayer sf)

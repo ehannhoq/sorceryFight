@@ -30,7 +30,7 @@ namespace sorceryFight.Content.InnateTechniques
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
             new IceShard(),
-            new IceicleHail(),
+            new IcicleHail(),
             new RoundDeer(),
             new Nue()
         };

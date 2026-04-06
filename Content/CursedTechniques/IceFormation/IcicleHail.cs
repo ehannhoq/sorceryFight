@@ -15,7 +15,7 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.CursedTechniques.IceFormation
 {
-    public class IceicleHail : CursedTechnique
+    public class IcicleHail : CursedTechnique
     {
 
         public static readonly int FRAME_COUNT = 4;
@@ -52,7 +52,7 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
 
         public override int GetProjectileType()
         {
-            return ModContent.ProjectileType<IceicleHail>();
+            return ModContent.ProjectileType<IcicleHail>();
         }
 
 
