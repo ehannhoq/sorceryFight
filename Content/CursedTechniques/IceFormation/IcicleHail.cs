@@ -1,12 +1,13 @@
 using CalamityMod.Particles;
 using CalamityMod.Sounds;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
+using sorceryFight.Content.CursedTechniques.BloodManipulation;
 using sorceryFight.Content.Particles;
 using sorceryFight.SFPlayer;
 using System;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -17,37 +18,31 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
 {
     public class IcicleHail : CursedTechnique
     {
-
-        public static readonly int FRAME_COUNT = 4;
-        public static readonly int TICKS_PER_FRAME = 8;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.SlicingExorcism.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SlicingExorcism.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SlicingExorcism.LockedDescription");
-        public override float Cost => 20f;
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.IcicleHail.DisplayName");
+        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.IcicleHail.Description");
+        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.IcicleHail.LockedDescription");
 
         public override Color textColor => new Color(255, 0, 0);
         public override bool DisplayNameInGame => true;
 
-        public override int Damage => 18;
+        public override float Cost => 0f;
+        public override int Damage => 100;
         public override int MasteryDamageMultiplier => 50;
 
-        public override float Speed => 25f;
+        private bool keyHeld = false;
+
+        public override float CursedCostPerSecond => 20f;
+
+        public override float Speed => 0f;
         public override float LifeTime => 300f;
+
+        private float spawnTimer = 0;
+
+
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.KingSlime);
-        }
+            return sf.HasDefeatedBoss(NPCID.HallowBoss);
 
-
-        public static Texture2D texture;
-
-        public bool animating;
-        public float animScale;
-
-
-        public override void SetStaticDefaults()
-        {
-            Main.projFrames[Projectile.type] = FRAME_COUNT;
         }
 
         public override int GetProjectileType()
@@ -56,104 +51,54 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
         }
 
 
-        public override void SetDefaults()
+        public override bool PreDraw(ref Color lightColor)
         {
-            base.SetDefaults();
-            Projectile.width = 35;
-            Projectile.height = 15;
-            Projectile.tileCollide = true;
-            animating = false;
-            Projectile.penetrate = -1;
-            animScale = 1.25f;
+            return false;
         }
         public override void AI()
         {
-            Projectile.rotation = Projectile.velocity.ToRotation();
-            Projectile.ai[0] += 1;
-            float beginAnimTime = 30f;
-            Player player = Main.player[Projectile.owner];
+            keyHeld = SFKeybinds.UseTechnique.Current;
+            //Mod.Logger.Info("AI running");
 
-            if (Projectile.ai[0] > LifeTime + beginAnimTime)
+            if (Main.myPlayer == Projectile.owner)
             {
-                Projectile.Kill();
-            }
-
-            if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
-            {
-                Projectile.frameCounter = 0;
-
-                if (Projectile.frame++ >= FRAME_COUNT - 1)
+                if (keyHeld)
                 {
-                    Projectile.frame = 0;
+                    spawnTimer++;
+
+                    SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
+                    ActiveDrain(sf);
+
+                    if (spawnTimer >= 5f)
+                    {
+                        spawnTimer = 0f;
+                        Player player = Main.player[Projectile.owner];
+
+
+                        //spawn swords from the sky
+                        float randomX = Main.rand.NextFloat(-300f, 300f);
+                        Vector2 spawnPosition = new Vector2(player.Center.X + randomX, player.Center.Y - 800f);
+
+                        Vector2 targetPosition = Main.MouseWorld + new Vector2(Main.rand.NextFloat(-70f, 70f), 0f);
+                        Vector2 velocity = (targetPosition - spawnPosition).SafeNormalize(Vector2.Zero) * 40f;
+
+                        Projectile.NewProjectile(
+                            player.GetSource_FromThis(),
+                            spawnPosition,
+                            velocity,
+                            ModContent.ProjectileType<IcicleHailProjectile>(),
+                            Damage,
+                            0f,
+                            player.whoAmI
+                        );
+                    }
+
+                }
+                else
+                {
+                    Projectile.Kill();
                 }
             }
-
-            if (Projectile.ai[0] < beginAnimTime)
-            {
-                if (!animating)
-                {
-                    Projectile.Center += new Vector2(0, -30);
-                    animating = true;
-                    SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
-                }
-
-                //Code that was for expanding the spread of the particles based on height of shooting, but rotating the projectile itself looked better 
-                //float verticalness = 1f - Math.Abs(Projectile.velocity.SafeNormalize(Vector2.Zero).X);
-                //float spreadWidth = MathHelper.Lerp(8f, 60f, verticalness);
-                //Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(30f, 120f);
-                //Vector2 perpendicular = Projectile.velocity.RotatedBy(MathHelper.PiOver2).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(-spreadWidth, spreadWidth);
-                //Vector2 particleOffset = Projectile.Center + behindOffset + perpendicular;
-                //Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                //LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 20, 1f, textColor);
-                //GeneralParticleHandler.SpawnParticle(particle);
-
-                Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(10f, 40f);
-                Vector2 particleOffset = Projectile.Center + behindOffset;
-                Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 20, 1f, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
-                return;
-            }
-
-            if (animating)
-            {
-                Projectile.tileCollide = true;
-                animating = false;
-            }
-
         }
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-            SpriteBatch spriteBatch = Main.spriteBatch;
-
-            if (texture == null && !Main.dedServ)
-                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/IceFormation/IcicleHail").Value;
-
-
-            int frameHeight = texture.Height / FRAME_COUNT;
-            int frameY = Projectile.frame * frameHeight;
-
-            Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
-
-            Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
-            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
-
-            return false;
-        }
-
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            base.OnHitNPC(target, hit, damageDone);
-
-            for (int i = 0; i < 6; i++)
-            {
-                Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
-
-                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
-            }
-        }
-
     }
 }
