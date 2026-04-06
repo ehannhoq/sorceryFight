@@ -26,7 +26,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.RoundDeer.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.RoundDeer.LockedDescription");
         public override float Cost => 35f;
-        public override float CEDrainPerSecond => 2f;
+        public override float CursedCostPerSecond => 2f;
         public override Color textColor => new Color(120, 40, 200);
         public override bool DisplayNameInGame => true;
         public override int Damage => 22;

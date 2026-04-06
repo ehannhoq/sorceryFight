@@ -29,7 +29,11 @@ namespace sorceryFight.Content.CursedTechniques
 
         public virtual float BloodCost { get; } = 0;
 
+
+        public virtual float CursedCostPerSecond { get; } = 0;
         public virtual float BloodCostPerSecond { get; } = 0;
+        
+        
         public virtual float StarCost { get; } = 0;
         public abstract Color textColor { get; }
         public abstract bool DisplayNameInGame { get; }
@@ -48,6 +52,9 @@ namespace sorceryFight.Content.CursedTechniques
         {
             string stats = $"Damage: {Math.Round(CalculateTrueDamage(sf), 2)}\n"
                 + $"Cost: {Math.Round(CalculateTrueCost(sf), 2)} CE\n";
+
+            if (CursedCostPerSecond > 0)
+                stats += $"Cursed Energy Cost Per Second: {CursedCostPerSecond}\n";
 
             if (BloodCost > 0)
                 stats += $"Blood Cost: {BloodCost}\n";
@@ -153,6 +160,20 @@ namespace sorceryFight.Content.CursedTechniques
                 Main.player[Projectile.owner].SorceryFight().disableRegenFromProjectiles = false;
             }
             base.OnKill(timeLeft);
+        }
+
+        public virtual void ActiveDrain(SorceryFightPlayer sf)
+        {
+
+            if (CursedCostPerSecond > 0)
+                sf.cursedEnergy -= (CursedCostPerSecond / 60);
+            else
+                Projectile.Kill();
+
+            if (BloodCostPerSecond > 0)
+                sf.bloodEnergy -= (BloodCostPerSecond / 60); 
+            else
+                Projectile.Kill();
         }
 
         public virtual bool UseCondition(SorceryFightPlayer sf)

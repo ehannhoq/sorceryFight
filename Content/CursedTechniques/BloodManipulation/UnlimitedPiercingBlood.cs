@@ -159,7 +159,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             if (keyHeld)
             {
                 SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
-                sf.bloodEnergyUsagePerSecond += BloodCostPerSecond;
+                ActiveDrain(sf);
             }
 
             if (!keyHeld)

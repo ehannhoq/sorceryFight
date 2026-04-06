@@ -26,7 +26,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
 
         // ── Stats ─────────────────────────────────────────────────────
         public override float Cost => 40f;
-        public override float CEDrainPerSecond => 1.5f;
+        public override float CursedCostPerSecond => 2f;
         public override Color textColor => new Color(80, 180, 255);
         public override bool DisplayNameInGame => true;
         public override int Damage => 18;
@@ -61,7 +61,6 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         public override string GetStats(SorceryFightPlayer sf)
         {
             string stats = base.GetStats(sf);
-            stats += $"CE Drain: {CEDrainPerSecond}/sec\n";
             stats += "Toggle: Press to summon/dismiss\n";
             return stats;
         }

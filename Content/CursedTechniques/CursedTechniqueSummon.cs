@@ -59,11 +59,6 @@ namespace sorceryFight.Content.CursedTechniques
         /// </summary>
         public virtual float MinDetectionRange => 960f;
 
-        /// <summary>
-        /// CE drained per second while active. 0 = no drain. Default 0.
-        /// </summary>
-        public virtual float CEDrainPerSecond => 0f;
-
         // ── Sentry-Specific ───────────────────────────────────────────
 
         /// <summary>
@@ -156,7 +151,6 @@ namespace sorceryFight.Content.CursedTechniques
             if (Style != SummonStyle.Sentry)
             {
                 Main.projPet[Type] = true;
-                ProjectileID.Sets.MinionSacrificable[Type] = true;
                 ProjectileID.Sets.DrawScreenCheckFluff[Type] = (int)DetectionRange;
             }
         }
@@ -222,17 +216,9 @@ namespace sorceryFight.Content.CursedTechniques
             }
 
             // CE drain
-            if (CEDrainPerSecond > 0f && Projectile.owner == Main.myPlayer)
+            if (Projectile.owner == Main.myPlayer)
             {
-                float drainPerTick = CEDrainPerSecond / 60f;
-                SFOwner.cursedEnergy -= drainPerTick;
-
-                if (SFOwner.cursedEnergy <= 0f)
-                {
-                    SFOwner.cursedEnergy = 0f;
-                    Projectile.Kill();
-                    return;
-                }
+                ActiveDrain(SFOwner);
             }
 
             // Style-specific base behavior
