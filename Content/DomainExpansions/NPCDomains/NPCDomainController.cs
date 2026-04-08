@@ -22,7 +22,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
             return npc.type switch
             {
                 NPCID.CultistBoss => new PhantasmicLabyrinth(),
-                // NPCID.HallowBoss => new FieldOfHallowedButterflies(),
+                NPCID.HallowBoss => new FieldOfHallowedButterflies(),
                 _ => null
             };
         }
@@ -116,7 +116,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
                     npc.immortal = true;
                 }
 
-                if (domainController.domainTimer == 120)
+                if (domainController.domainTimer == 150)
                 {
                     DomainExpansionController.ExpandDomain(npc.whoAmI, npc.GetDomain());
                     playerCastedDomain = false;
@@ -147,8 +147,8 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
             Dictionary<int, string> bossNameMap = new()
             {
                 { NPCID.CultistBoss, "LunaticCultist" },
-                // { NPCID.HallowBoss, "EmpressOfLight" },
-                // { ModContent.NPCType<SupremeCalamitas>(), "SupremeCalamitas" },
+                { NPCID.HallowBoss, "EmpressOfLight" },
+                { ModContent.NPCType<SupremeCalamitas>(), "SupremeCalamitas" },
             };
 
             if (bossNameMap.TryGetValue(npc.type, out string npcName))
