@@ -32,7 +32,15 @@ namespace sorceryFight.Content.Buffs.Vessel
                 sfPlayer.innateTechnique = new ShrineTechnique();
                 rctTracker[player.whoAmI] = sfPlayer.unlockedRCT;
                 SorceryFightUI.UpdateTechniqueUI.Invoke();
+                int index = player.FindBuffIndex(ModContent.BuffType<BrainDamage>());
+                if (index != -1)
+                {
+                    player.DelBuff(index);
+                }
             }
+
+            //Make the player hostile to other players
+            player.hostile = true;
 
             if (player.statLife > (int)(player.statLifeMax2 * 0.5f))
             {

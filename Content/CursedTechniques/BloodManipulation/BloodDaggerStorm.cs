@@ -1,4 +1,5 @@
-﻿using Microsoft.Build.Tasks;
+﻿using CalamityMod.Projectiles.Enemy;
+using Microsoft.Build.Tasks;
 using Microsoft.Xna.Framework;
 using sorceryFight.SFPlayer;
 using Terraria;
@@ -66,7 +67,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                         spawnTimer++;
 
                         SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
-                        sf.bloodEnergyUsagePerSecond += BloodCostPerSecond;
+                        ActiveDrain(sf);
 
                     if (spawnTimer >= 10f)
                         {

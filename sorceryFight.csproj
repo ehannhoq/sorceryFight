@@ -11,8 +11,6 @@
 
 	<!-- References -->
 	<ItemGroup>
-	  <Reference Include="CalamityMod">
-	    <HintPath>..\..\ModReader\CalamityMod\CalamityMod.dll</HintPath>
-	  </Reference>
+	  <ProjectReference Include="..\CalamityModPublic\CalamityMod.csproj" />
 	</ItemGroup>
 </Project>

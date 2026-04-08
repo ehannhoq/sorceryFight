@@ -9,6 +9,7 @@ using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.SFPlayer;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using sorceryFight.Content.CursedTechniques.TenShadows;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -28,10 +29,11 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
-            new IceShard()
+            new IceShard(),
+            new IcicleHail()
         };
 
-        public override PlayerDomainExpansion DomainExpansion { get; } = new StarCastle();
+        public override PlayerDomainExpansion DomainExpansion { get; } = new HeavensRime();
 
 
     }

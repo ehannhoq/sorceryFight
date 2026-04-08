@@ -89,7 +89,6 @@ namespace sorceryFight.Content.Items.Accessories
             recipe.AddIngredient(ModContent.ItemType<EssenceofHavoc>(), 3);
             recipe.AddIngredient(ItemID.SoulofNight, 3);
             recipe.AddIngredient(ModContent.ItemType<InfusedCursedFragment>(), 5);
-            recipe.AddIngredient(ModContent.ItemType<SukunasSkull>(), 1);
             // recipe.AddIngredient(ModContent.ItemType<CursedDust>(), 2);
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.Register();

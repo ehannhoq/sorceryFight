@@ -35,7 +35,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
                 Texture2D whiteTexture = TextureAssets.MagicPixel.Value;
                 Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
 
-                spriteBatch.Draw(whiteTexture, screenRectangle, new Color(255, 255, 255, bgFade));
+                spriteBatch.Draw(whiteTexture, screenRectangle, Color.Black);
             },
             () => spriteBatch.Draw(BaseTexture, center - Main.screenPosition, new Rectangle(0, 0, BaseTexture.Width, BaseTexture.Height), Color.White, 0f, new Rectangle(0, 0, BaseTexture.Width, BaseTexture.Height).Size() * 0.5f, 2f, SpriteEffects.None, 0f)
             );

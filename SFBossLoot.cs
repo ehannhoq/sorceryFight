@@ -230,7 +230,7 @@ namespace sorceryFight
             };
 
             npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, emblems));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SukunasSkull>(), 10, 1, 1));
+            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SukunasSkull>(), 10, 1, 1));
         }
 
 
