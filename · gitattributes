@@ -42,6 +42,10 @@ Dockerfile   text eol=lf
 Makefile     text eol=lf
 LICENSE      text eol=lf
  
+# Terraria / XNA content and shaders
+*.xnb        binary
+*.fx         binary
+
 # Denote binary files that should not be modified
 *.png        binary
 *.jpg        binary
