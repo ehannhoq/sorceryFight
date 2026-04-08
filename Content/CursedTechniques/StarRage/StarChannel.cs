@@ -95,7 +95,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                     //add star power
                     sf.starEnergyRegenPerSecond += starRegen;
                     //check if star energy is going to be full, if it is, play sound effect
-                    if (!hasPlayedSound && sf.maxStarEnergy < sf.starEnergy + SFUtils.RateSecondsToTicks(sf.starEnergyRegenPerSecond))
+                    if (!hasPlayedSound && sf.maxStarEnergy < sf.starEnergy + SFUtils.RateSecondsToTicks(sf.starEnergyRegenPerSecond - sf.starEnergyUsagePerSecond))
                     {
                         SoundEngine.PlaySound(SorceryFightSounds.PachinkoBallCollision, Projectile.Center);
                         hasPlayedSound = true;

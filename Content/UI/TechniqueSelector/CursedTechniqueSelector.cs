@@ -271,8 +271,6 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             }
 
             Recalculate();
-
-            SorceryFightUI.UpdateTechniqueUI += ReloadUI;
         }
 
         bool HoveringOverUI()

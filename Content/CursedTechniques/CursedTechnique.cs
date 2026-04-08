@@ -29,11 +29,7 @@ namespace sorceryFight.Content.CursedTechniques
 
         public virtual float BloodCost { get; } = 0;
 
-
-        public virtual float CursedCostPerSecond { get; } = 0;
         public virtual float BloodCostPerSecond { get; } = 0;
-        
-        
         public virtual float StarCost { get; } = 0;
         public abstract Color textColor { get; }
         public abstract bool DisplayNameInGame { get; }
@@ -53,9 +49,6 @@ namespace sorceryFight.Content.CursedTechniques
             string stats = $"Damage: {Math.Round(CalculateTrueDamage(sf), 2)}\n"
                 + $"Cost: {Math.Round(CalculateTrueCost(sf), 2)} CE\n";
 
-            if (CursedCostPerSecond > 0)
-                stats += $"Cursed Energy Cost Per Second: {CursedCostPerSecond}\n";
-
             if (BloodCost > 0)
                 stats += $"Blood Cost: {BloodCost}\n";
 
@@ -68,7 +61,7 @@ namespace sorceryFight.Content.CursedTechniques
             return stats;
         }
         public virtual float CalculateTrueDamage(SorceryFightPlayer sf)
-        {
+        { 
             int baseDamage = Damage + (sf.bossesDefeated.Count * MasteryDamageMultiplier);
             int finalDamage = (int)sf.Player.GetTotalDamage(CursedTechniqueDamageClass.Instance).ApplyTo(baseDamage);
             return finalDamage;
@@ -102,7 +95,7 @@ namespace sorceryFight.Content.CursedTechniques
         public virtual int UseTechnique(SorceryFightPlayer sf)
         {
             Player player = sf.Player;
-
+            
             if (player.whoAmI == Main.myPlayer)
             {
                 Vector2 playerPos = player.MountedCenter;
@@ -160,20 +153,6 @@ namespace sorceryFight.Content.CursedTechniques
                 Main.player[Projectile.owner].SorceryFight().disableRegenFromProjectiles = false;
             }
             base.OnKill(timeLeft);
-        }
-
-        public virtual void ActiveDrain(SorceryFightPlayer sf)
-        {
-
-            if (CursedCostPerSecond > 0)
-                sf.cursedEnergy -= (CursedCostPerSecond / 60);
-                if(sf.cursedEnergy < 0)
-                    Projectile.Kill();
-
-            if (BloodCostPerSecond > 0)
-                sf.bloodEnergy -= (BloodCostPerSecond / 60);
-                if (sf.bloodEnergy < 0)
-                    Projectile.Kill();
         }
 
         public virtual bool UseCondition(SorceryFightPlayer sf)
