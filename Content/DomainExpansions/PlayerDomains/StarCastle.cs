@@ -1,12 +1,10 @@
+using System;
+using System.Collections.Generic;
 using CalamityMod.NPCs.DevourerofGods;
 using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
 using sorceryFight.SFPlayer;
-using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -143,8 +141,8 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
                     int roll = Main.rand.Next(colors.Count);
                     Color color = colors[roll];
 
-                    LinearParticle particle = new LinearParticle(center, velocity, color, false, 1, 3, 180);
-                    ParticleController.SpawnParticle(particle);
+                    LineParticle particle = new LineParticle(center, velocity, false, 180, 3, color);
+                    GeneralParticleHandler.SpawnParticle(particle);
                 }
             }
 

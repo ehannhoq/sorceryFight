@@ -34,8 +34,7 @@ namespace sorceryFight.Content.InnateTechniques
             new PiercingBlood(),
             new ChainDismantle(),
             new BloodDaggerStorm(),
-            new LineDevestation(),
-            new FullIncarnationKOC()
+            new LineDevestation()
         };
 
         public override PlayerDomainExpansion DomainExpansion { get; } = new Home();

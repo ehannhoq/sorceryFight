@@ -144,7 +144,7 @@ namespace sorceryFight
         {
             if (item.type != ItemID.WallOfFleshBossBag) return;
 
-            //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SukunasSkull>(), 10, 1, 1));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SukunasSkull>(), 10, 1, 1));
 
             List<IItemDropRule> rules = itemLoot.Get(true);
 
