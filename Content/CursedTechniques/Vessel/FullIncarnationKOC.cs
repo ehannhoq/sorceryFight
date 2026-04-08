@@ -41,7 +41,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         {
             if (Projectile.owner == Main.myPlayer)
             {
-                Main.player[Projectile.owner].AddBuff(ModContent.BuffType<KingOfCursesBuff>(), 9999);
+                Main.player[Projectile.owner].AddBuff(ModContent.BuffType<KingOfCursesBuff>(), 9999999);
             }
 
             Projectile.Kill();
