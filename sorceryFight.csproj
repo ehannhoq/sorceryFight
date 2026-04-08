@@ -9,8 +9,10 @@
 	</PropertyGroup>
 
 
-	<!-- References -->
 	<ItemGroup>
-	  <ProjectReference Include="..\CalamityModPublic\CalamityMod.csproj" />
+		<Reference Include="CalamityMod">
+			<HintPath>..\..\tModLoader\ModReader\CalamityMod\CalamityMod.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
 	</ItemGroup>
 </Project>
