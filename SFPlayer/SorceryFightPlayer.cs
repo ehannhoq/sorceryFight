@@ -116,6 +116,8 @@ namespace sorceryFight.SFPlayer
         public bool[] deathPaintings;
         public int deathPaintingsConsumed => deathPaintings.Count(x => x);
 
+        public bool sukunasSkull;
+
         #endregion
 
         #region RCT

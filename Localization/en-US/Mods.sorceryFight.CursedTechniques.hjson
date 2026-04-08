@@ -368,6 +368,16 @@ LineDevestation: {
 	LockedDescription: Consume at least 15 of Ryomen Sukuna's Fingers.
 }
 
+FullIncarnationKOC: {
+	DisplayName: Full Incarnation King of Curses
+	Description:
+		'''
+		After consuming enough you now have the ability to take form at will.
+		The only way back from this transformation is death
+		'''
+	LockedDescription: Consume the skull of Ryomen Sukuna, guarded by Supreme Calamitas
+}
+
 RoundDeer: {
 	DisplayName: Round Deer
 	Description: Spawn a Deer sentry that heals any player in its radius

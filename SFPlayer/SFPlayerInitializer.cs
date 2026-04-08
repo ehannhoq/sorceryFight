@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MonoMod.Cil;
 using sorceryFight.Content.InnateTechniques;
+using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.Quests;
 using Terraria;
 using Terraria.ModLoader;
@@ -63,6 +64,7 @@ namespace sorceryFight.SFPlayer
             challengersEye = false;
             uniqueBodyStructure = false;
             blessedByBlackFlash = false;
+            sukunasSkull = false;
 
             explosiveCursedEnergy = false;
             sharpCursedEnergy = false;
@@ -138,6 +140,7 @@ namespace sorceryFight.SFPlayer
             generalBooleans.AddWithCondition("explosiveCursedEnergy", explosiveCursedEnergy);
             generalBooleans.AddWithCondition("sharpCursedEnergy", sharpCursedEnergy);
             generalBooleans.AddWithCondition("overflowingEnergy", overflowingEnergy);
+            generalBooleans.AddWithCondition("sukunasSkull", sukunasSkull);
             tag["generalBooleans"] = generalBooleans;
 
             tag["sixEyesLevel"] = sixEyesLevel;
@@ -215,6 +218,7 @@ namespace sorceryFight.SFPlayer
             explosiveCursedEnergy = generalBooleans.Contains("explosiveCursedEnergy");
             sharpCursedEnergy = generalBooleans.Contains("sharpCursedEnergy");
             overflowingEnergy = generalBooleans.Contains("overflowingEnergy");
+            sukunasSkull = generalBooleans.Contains("sukunasSkull");
 
             maxCursedEnergy = calculateBaseMaxCE();
             cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
