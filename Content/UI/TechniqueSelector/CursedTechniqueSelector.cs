@@ -49,10 +49,18 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                     borderColor = sfPlayer.innateTechnique.innateBorderColor;
 
                 Color bgColor;
-                if (sfPlayer.innateTechnique.CursedTechniques[id].selectorBGColor != default)
-                    bgColor = sfPlayer.innateTechnique.CursedTechniques[id].selectorBGColor;
+                if (ModContent.GetInstance<ClientConfig>().AllUIBackgroundsGrayToggle)
+                {
+                    bgColor = new Color(120, 120, 120, 70);
+                    borderColor = new Color(0, 0, 0, 128);
+                }
                 else
-                    bgColor = sfPlayer.innateTechnique.innateBGColor;
+                {
+                    if (sfPlayer.innateTechnique.CursedTechniques[id].selectorBGColor != default)
+                        bgColor = sfPlayer.innateTechnique.CursedTechniques[id].selectorBGColor;
+                    else
+                        bgColor = sfPlayer.innateTechnique.innateBGColor;
+                }
 
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X, bgRect.Y - 2, bgRect.Width, 2), borderColor);
                 // bottom border
@@ -97,8 +105,8 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             }
         }
 
-        internal const float DefaultCTSelectorPosX = 46.875f;
-        internal const float DefaultCTSelectorPosY = 90.789f;
+        internal const float DefaultCTSelectorPosX = 78.984375f;
+        internal const float DefaultCTSelectorPosY = 90.519971f;
         private const float MouseDragEpsilon = 0.05f;
 
         //This button gap is needed because we expand the background behind each button

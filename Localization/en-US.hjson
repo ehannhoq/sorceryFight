@@ -170,6 +170,31 @@ Mods: {
 					Label: Lock Passive Technique Selector Position
 					Tooltip: ""
 				}
+
+				AllUIBackgroundsGreyToggle: {
+					Label: All U I Backgrounds Grey Toggle
+					Tooltip: ""
+				}
+
+				CTSelectorScale: {
+					Label: Cursed Technique Selector Scale
+					Tooltip: ""
+				}
+
+				PTSelectorScale: {
+					Label: Passive Technique Selector Scale
+					Tooltip: ""
+				}
+
+				UICustomScale: {
+					Label: UI Scale
+					Tooltip: ""
+				}
+
+				AllUIBackgroundsGrayToggle: {
+					Label: All U I Backgrounds Gray Toggle
+					Tooltip: ""
+				}
 			}
 
 			SorceryFightServerConfig: {

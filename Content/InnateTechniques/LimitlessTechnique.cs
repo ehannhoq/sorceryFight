@@ -14,7 +14,7 @@ namespace sorceryFight.Content.InnateTechniques
         public override string Name => "Limitless";
         public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.Limitless.DisplayName");
 
-        public override Color innateBGColor => new Color(150, 219, 235, 70);
+        public override Color innateBGColor => new Color(150, 219, 235, 85);
 
         public override Color innateBorderColor => new Color(0, 0, 0, 128);
 
