@@ -9,10 +9,10 @@
 	</PropertyGroup>
 
 
-	<!-- References -->
 	<ItemGroup>
-	  <Reference Include="CalamityMod">
-	    <HintPath>..\..\ModReader\CalamityMod\CalamityMod.dll</HintPath>
-	  </Reference>
+		<Reference Include="CalamityMod">
+			<HintPath>..\..\tModLoader\ModReader\CalamityMod\CalamityMod.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
 	</ItemGroup>
 </Project>
