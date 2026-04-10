@@ -41,12 +41,6 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
         public override void Apply(Player player)
         {
             player.AddBuff(ModContent.BuffType<InorganicPerception>(), 2);
-
-            foreach (var technique in player.SorceryFight().innateTechnique.PassiveTechniques)
-            {
-                if (technique.isAura && technique != this)
-                    technique.isActive = false;
-            }
         }
 
         public override void Remove(Player player)

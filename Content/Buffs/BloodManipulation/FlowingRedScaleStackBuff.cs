@@ -52,12 +52,6 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
             player.AddBuff(ModContent.BuffType<FlowingRedScaleStackBuff>(), 2);
             SorceryFightPlayer sfPlayer = player.SorceryFight();
 
-            foreach (var technique in player.SorceryFight().innateTechnique.PassiveTechniques)
-            {
-                if (technique.isAura && technique != this)
-                    technique.isActive = false;
-            }
-
             if (auraIndices == null)
                 auraIndices = new Dictionary<int, int>();
 

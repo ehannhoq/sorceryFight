@@ -39,12 +39,6 @@ namespace sorceryFight.Content.Buffs.Shrine
             player.AddBuff(ModContent.BuffType<DomainAmplificationBuff>(), 2);
             SorceryFightPlayer sfPlayer = player.SorceryFight();
 
-            foreach (var technique in player.SorceryFight().innateTechnique.PassiveTechniques)
-            {
-                if (technique.isAura && technique != this)
-                    technique.isActive = false;
-            }
-
             sfPlayer.domainAmp = true;
 
 

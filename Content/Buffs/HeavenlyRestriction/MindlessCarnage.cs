@@ -48,12 +48,6 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
         {
             player.AddBuff(ModContent.BuffType<MindlessCarnage>(), 2);
 
-            foreach (var technique in player.SorceryFight().innateTechnique.PassiveTechniques)
-            {
-                if (technique.isAura && technique != this)
-                    technique.isActive = false;
-            }
-
             if (Main.myPlayer != player.whoAmI) return;
 
             if (!Filters.Scene["SF:MindlessBarrage"].IsActive())

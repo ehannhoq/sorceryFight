@@ -48,8 +48,6 @@ namespace sorceryFight.SFPlayer
 
                 if (passiveTechnique.isActive)
                 {
-                   //apply / remove should only be called once and all logic should live in update 
-                   //already implemented this way in Garuda
                     passiveTechnique.Apply(Player);
                 }
                 else

@@ -47,12 +47,6 @@ namespace sorceryFight.Content.Buffs.Shrine
 
             SorceryFightPlayer sfPlayer = player.SorceryFight();
 
-            foreach (var technique in player.SorceryFight().innateTechnique.PassiveTechniques)
-            {
-                if (technique.isAura && technique != this)
-                    technique.isActive = false;
-            }
-
             sfPlayer.hollowWickerBasket = true;
 
             if (auraIndices == null)

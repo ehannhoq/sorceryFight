@@ -44,13 +44,6 @@ namespace sorceryFight.Content.Buffs.Limitless
         {
             player.AddBuff(ModContent.BuffType<FallingBlossomEmotionBuff>(), 2);
 
-
-            foreach (var technique in player.SorceryFight().innateTechnique.PassiveTechniques)
-            {
-                if (technique.isAura && technique != this)
-                    technique.isActive = false;
-            }
-
             if (auraIndices == null)
                 auraIndices = new Dictionary<int, int>();
 
