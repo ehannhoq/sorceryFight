@@ -32,19 +32,10 @@ Mods: {
 			BlackholeProjectile.DisplayName: Blackhole Projectile
 			ChakiraResonantBeam.DisplayName: Chakira Resonant Beam
 			GarudaWhipProjectile.DisplayName: Garuda Whip Projectile
-<<<<<<< HEAD
-<<<<<<< HEAD
 			CakeBlastProjectile.DisplayName: Cake Blast Projectile
-=======
 			RoundDeerBolt.DisplayName: Round Deer Bolt
 			NueLightning.DisplayName: Nue Lightning
 			IcicleHailProjectile.DisplayName: Icicle Hail Projectile
->>>>>>> parent of f331ab1 (Revert "Merging Ten Shadows start code + Ice + Vessel but now with better EOL")
-=======
-			RoundDeerBolt.DisplayName: Round Deer Bolt
-			NueLightning.DisplayName: Nue Lightning
-			IcicleHailProjectile.DisplayName: Icicle Hail Projectile
->>>>>>> parent of 19cc20e (Revert pull request with bad EOL)
 		}
 
 		Configs: {
