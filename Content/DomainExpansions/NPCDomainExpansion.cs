@@ -52,6 +52,7 @@ namespace sorceryFight.Content.DomainExpansions
                         float distance = Vector2.DistanceSquared(player.Center, this.center);
                         if (distance < SureHitRange.Squared())
                         {
+                            player.wingTime = player.wingTimeMax;
                             SureHitEffect(player);
                         }
                     }
