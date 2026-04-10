@@ -346,7 +346,7 @@ public static class SFUtils
                 break;
             }
         }
-        
+
         return typeName[index..];
     }
 
@@ -362,6 +362,30 @@ public static class SFUtils
         return projectile.ModProjectile as T;
     }
 
+    public static Vector2 GetIntersectingVelocity(Vector2 startingPosA, Vector2 startingPosB, Vector2 velocityA, float speedB)
+    {
+        Vector2 relPos = startingPosA - startingPosB;
+
+        float a = Vector2.Dot(velocityA, velocityA) - (speedB * speedB);
+        float b = 2f * Vector2.Dot(relPos, velocityA);
+        float c = Vector2.Dot(relPos, relPos);
+
+        float discriminant = (b * b) - (4f * a * c);
+
+        if (discriminant < 0f)
+            return (startingPosA - startingPosB).SafeNormalize(Vector2.UnitX);
+
+        float t = (-b - MathF.Sqrt(discriminant)) / (2f * a);
+
+        if (t < 0f)
+            t = (-b + MathF.Sqrt(discriminant)) / (2f * a);
+
+        if (t < 0f)
+            return (startingPosA - startingPosB).SafeNormalize(Vector2.UnitX);
+
+        Vector2 interceptPoint = startingPosA + velocityA * t;
+        return (interceptPoint - startingPosB).SafeNormalize(Vector2.UnitX) * speedB;
+    }
 
 }
 
