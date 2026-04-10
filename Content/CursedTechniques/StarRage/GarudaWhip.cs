@@ -58,6 +58,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             if (player.whoAmI != Main.myPlayer) return -1;
 
             sf.cursedEnergy -= CalculateTrueCost(sf);
+            sf.starEnergy -= StarCost;
 
             if (DisplayNameInGame)
             {

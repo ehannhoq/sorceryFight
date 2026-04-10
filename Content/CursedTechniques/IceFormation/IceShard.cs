@@ -18,8 +18,8 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
     public class IceShard : CursedTechnique
     {
 
-        public static readonly int FRAME_COUNT = 8;
-        public static readonly int TICKS_PER_FRAME = 5;
+        public static readonly int FRAME_COUNT = 4;
+        public static readonly int TICKS_PER_FRAME = 8;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.SlicingExorcism.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SlicingExorcism.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SlicingExorcism.LockedDescription");

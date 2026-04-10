@@ -26,18 +26,18 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             lockedTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/LockedIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
 
-        //public void DrawLines()
-        //{
-        //    CursedTechniqueMenu ctMenu = (CursedTechniqueMenu)Parent.Parent;
-        //    Color finalColor = unlocked ? Color.White : Color.Gray;
-        //    foreach (SpecialUIElement parent in parents)
-        //    {
-        //        Vector2 thisCenter = new Vector2(ctMenu.Left.Pixels + Left.Pixels + (texture.Width / 2), ctMenu.Top.Pixels + Top.Pixels + (texture.Height / 2));
-        //        Vector2 parentCenter = new Vector2(ctMenu.Left.Pixels + parent.Left.Pixels + (parent.texture.Width / 2), ctMenu.Top.Pixels + parent.Top.Pixels + (parent.texture.Height / 2));
+        public void DrawLines()
+        {
+            CursedTechniqueMenu ctMenu = (CursedTechniqueMenu)Parent.Parent;
+            Color finalColor = unlocked ? Color.White : Color.Gray;
+            foreach (SpecialUIElement parent in parents)
+            {
+                Vector2 thisCenter = new Vector2(ctMenu.Left.Pixels + Left.Pixels + (texture.Width / 2), ctMenu.Top.Pixels + Top.Pixels + (texture.Height / 2));
+                Vector2 parentCenter = new Vector2(ctMenu.Left.Pixels + parent.Left.Pixels + (parent.texture.Width / 2), ctMenu.Top.Pixels + parent.Top.Pixels + (parent.texture.Height / 2));
 
-        //        Main.spriteBatch.DrawLineUI(thisCenter, parentCenter, finalColor, 3f);
-        //    }
-        //}
+                Main.spriteBatch.DrawLineUI(thisCenter, parentCenter, finalColor, 3f);
+            }
+        }
 
         public void DrawIcon()
         {
