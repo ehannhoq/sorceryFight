@@ -16,7 +16,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public static Texture2D texture;
         public static Texture2D textureBlood;
         public static readonly int FRAME_COUNT = 6;
-        public static readonly int TICKS_PER_FRAME = 20;
+        public static readonly int TICKS_PER_FRAME = 4;
 
         private static float animScale = 10f; 
 
@@ -67,7 +67,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                 if (Projectile.ai[2] > 0f)
                 {
                     if (textureBlood == null)
-                        textureBlood = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Vessel/LineDevastationProjectileBlood", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                        textureBlood = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Vessel/LineDevestationProjectileBlood", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 }
                 else
                 {
@@ -79,12 +79,12 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             Texture2D activeTex = Projectile.ai[2] > 0f ? textureBlood : texture;
 
             float alpha = 1f - (float)Projectile.alpha / 255f;
-            int frameHeight = texture.Height / FRAME_COUNT;
+            int frameHeight = activeTex.Height / FRAME_COUNT;
             int frameY = Projectile.frame * frameHeight;
-            Rectangle sourceRect = new Rectangle(0, frameY, texture.Width, frameHeight);
-            Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
+            Rectangle sourceRect = new Rectangle(0, frameY, activeTex.Width, frameHeight);
+            Vector2 origin = new Vector2(activeTex.Width / 2, frameHeight / 2);
 
-            Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRect, Color.White * alpha, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(activeTex, Projectile.Center - Main.screenPosition, sourceRect, Color.White * alpha, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
 
             return false;
         }
