@@ -34,6 +34,8 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public bool animating;
         public float animScale;
 
+        public int childDamage = 1000;
+
         private List<Vector2> dotPositions = new List<Vector2>();
         private bool initialized = false;
         public override int GetProjectileType()
@@ -52,7 +54,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             Projectile.height = 65;
             Projectile.tileCollide = true;
             animating = false;
-            Projectile.penetrate = -1;
+            Projectile.penetrate = 1;
             animScale = 1.25f;
         }
         public override void AI()
@@ -179,6 +181,25 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         {
             base.OnHitNPC(target, hit, damageDone);
 
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            if (Main.netMode == NetmodeID.MultiplayerClient) return;
+
+            Vector2 center = Projectile.Center;
+
+            Projectile.NewProjectile(
+                Projectile.GetSource_Death(),
+                center,
+                Vector2.Zero,
+                ModContent.ProjectileType<LineDevestationProjectile>(),
+                childDamage,
+                Projectile.knockBack,
+                Projectile.owner,
+                1f,
+                0f
+            );
         }
     }
 }

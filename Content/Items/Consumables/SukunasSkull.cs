@@ -37,9 +37,13 @@ namespace sorceryFight.Content.Items.Consumables
         {
             if (player.whoAmI == Main.myPlayer)
             {
-                //SoundEngine.PlaySound(SoundID.Item4);
                 SorceryFightPlayer sf = player.SorceryFight();
+                if (!sf.innateTechnique.Name.Equals("Vessel")) return false;
+
+                //SoundEngine.PlaySound(SoundID.Item4);
+
                 sf.sukunasSkull = true;
+                SorceryFightUI.UpdateTechniqueUI.Invoke();
             }
             return true;
         }

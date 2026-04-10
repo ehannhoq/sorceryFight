@@ -36,6 +36,7 @@ Mods: {
 			RoundDeerBolt.DisplayName: Round Deer Bolt
 			NueLightning.DisplayName: Nue Lightning
 			IcicleHailProjectile.DisplayName: Icicle Hail Projectile
+			LineDevestationProjectile.DisplayName: Line Devestation Projectile
 		}
 
 		Configs: {
