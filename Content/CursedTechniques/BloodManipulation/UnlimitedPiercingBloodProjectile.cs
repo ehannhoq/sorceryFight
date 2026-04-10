@@ -85,7 +85,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             SpriteBatch spriteBatch = Main.spriteBatch;
 
             if (texture == null && !Main.dedServ)
-                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/PiercingBloodCollision").Value;
+                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/UnlimitedPiercingBloodProjectile").Value;
 
 
             int frameHeight = texture.Height / FRAME_COUNT;
