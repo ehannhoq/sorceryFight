@@ -125,7 +125,7 @@ namespace sorceryFight.SFPlayer
                     {
                         PreventDeath();
                         int messageIndex = Main.rand.Next(6);
-                        ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText("Mods.sorceryFight.Misc.SukunaRevive." + messageIndex), Color.Green, Player.whoAmI);
+                        ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText("Mods.sorceryFight.Misc.SukunaRevive." + messageIndex), new Color(220,40,40), Player.whoAmI);
 
                         Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(15 + (sukunasFingerConsumed * 2.25f)));
                     }

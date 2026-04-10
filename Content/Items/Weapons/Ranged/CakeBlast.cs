@@ -26,9 +26,8 @@ namespace sorceryFight.Content.Items.Weapons.Ranged
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.damage = 400;
+            Item.damage = 120;
             Item.DamageType = CursedTechniqueDamageClass.Instance;
-            Item.mana = 10;
             Item.shoot = ModContent.ProjectileType<CakeBlastProjectile>();
             Item.shootSpeed = 0f;
             Item.noMelee = true;

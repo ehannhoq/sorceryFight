@@ -23,10 +23,10 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.LineDevestation.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.LineDevestation.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.LineDevestation.LockedDescription");
-        public override float Cost => 200f;
+        public override float Cost => 400f;
         public override Color textColor => new Color(120, 21, 8);
         public override bool DisplayNameInGame => false;
-        public override int Damage => 60;
+        public override int Damage => 3000;
         public override int MasteryDamageMultiplier => 40;
         public override float Speed => 12f;
         public override float LifeTime => 180f;
@@ -34,7 +34,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public bool animating;
         public float animScale;
 
-        public int childDamage = 1000;
+        public int childDamage = 10000;
 
         private List<Vector2> dotPositions = new List<Vector2>();
         private bool initialized = false;
@@ -180,6 +180,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
+            Projectile.Kill();
 
         }
 
@@ -188,6 +189,27 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             if (Main.netMode == NetmodeID.MultiplayerClient) return;
 
             Vector2 center = Projectile.Center;
+
+            Player player = Main.player[Projectile.owner];
+            SorceryFightPlayer sf = player.SorceryFight();
+
+            //20% of max is buffer incase weird stuff
+            //fix this to not be a binary flag instead assign directly
+            float bloodFlag;
+            if (sf.bloodEnergy >= .8f * sf.maxBloodEnergy)
+            {
+                bloodFlag = 1f;
+                sf.bloodEnergy = 0.5f * sf.bloodEnergy;
+            }
+            else
+            {
+                bloodFlag = 0f;
+            }
+
+            if (bloodFlag > 0f)
+            {
+                childDamage = 3 * childDamage;
+            }
 
             Projectile.NewProjectile(
                 Projectile.GetSource_Death(),
@@ -198,7 +220,8 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                 Projectile.knockBack,
                 Projectile.owner,
                 1f,
-                0f
+                0f,
+                bloodFlag // This determines if blood slash or no ai[2]
             );
         }
     }

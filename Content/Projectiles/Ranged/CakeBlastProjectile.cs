@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.SFPlayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,6 +84,8 @@ namespace sorceryFight.Content.Projectiles.Ranged
 
             if (Main.myPlayer == Projectile.owner)
             {
+                SorceryFightPlayer sf = player.SorceryFight();
+                sf.cursedEnergyUsagePerSecond += 40f;
                 float beamLength = 0f;
                 Vector2 direction = Projectile.rotation.ToRotationVector2();
                 for (float i = 0f; i < MAX_LENGTH; i += STEP_SIZE)

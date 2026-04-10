@@ -80,6 +80,8 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
+            modifiers.DefenseEffectiveness *= 0;
+
             if (!hasHit.Contains(Projectile.whoAmI))
             {
                 modifiers.FinalDamage.Flat = CalculateTrueDamage(Main.player[Projectile.owner].SorceryFight());
