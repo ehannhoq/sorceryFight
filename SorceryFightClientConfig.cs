@@ -11,33 +11,39 @@ namespace sorceryFight
 
         [DefaultValue(true)]
         public bool BlackFlashScreenEffects { get; set; }
+        
         [DefaultValue(false)]
         public bool DisableImpactFrames { get; set; }
+        
+        [DefaultValue(false)]
+        public bool AllUIBackgroundsGrayToggle { get; set; }
 
         #region CursedTechniqueSelector
         [Header("CursedTechniqueSelector")]
-        [Label("Cursed Technique Selector X Position")]
+        [Label("Cursed Technique Selector Horizontal Position (% of screen width")]
         [Range(0f, 100f)]
         [DefaultValue(CursedTechniqueSelector.DefaultCTSelectorPosX)]
-        public float CTSelectorPosX { get; set; } = 46.875f;
+        public float CTSelectorPosX { get; set; }
 
-        [Label("Cursed Technique Selector Y Position")]
+        [Label("Cursed Technique Selector Vertical Position (% of screen height)")]
         [Range(0f, 100f)]
-        [DefaultValue(CursedTechniqueSelector.DefaultCTSelectorPosX)]
-        public float CTSelectorPosY { get; set; } = 90.789f;
+        [DefaultValue(CursedTechniqueSelector.DefaultCTSelectorPosY)]
+        public float CTSelectorPosY { get; set; }
 
         [Label("Lock Cursed Technique Selector Position")]
         [DefaultValue(false)]
         public bool CTSelectorPosLock { get; set; } = false;
 
         [Header("PassiveTechniqueSelector")]
-        [Label("Passive Technique Selector X Position")]
-        [DefaultValue(9.114583f)]
-        public float PTSelectorPosX { get; set; } = 9.114583f;
+        [Label("Passive Technique Selector Horizontal Position (% of screen width")]
+        [Range(0f, 100f)]
+        [DefaultValue(PassiveTechniqueSelector.DefaultPTSelectorPosX)]
+        public float PTSelectorPosX { get; set; }
 
-        [Label("Passive Technique Selector Y Position")]
-        [DefaultValue(50f)]
-        public float PTSelectorPosY { get; set; } = 50f;
+        [Label("Passive Technique Selector Vertical Position (% of screen height)")]
+        [Range(0f, 100f)]
+        [DefaultValue(PassiveTechniqueSelector.DefaultPTSelectorPosY)]
+        public float PTSelectorPosY { get; set; }
 
         [Label("Lock Passive Technique Selector Position")]
         [DefaultValue(false)]
@@ -76,13 +82,6 @@ namespace sorceryFight
         [BackgroundColor(192, 54, 64, 192)]
         [DefaultValue(true)]
         public bool BloodEnergyBar { get; set; }
-
-        [Label("Blood Energy Bar Scale")]
-        [Tooltip("Adjusts the size of the Blood Energy Bar. Default is 1.0")]
-        [Range(0.5f, 3.0f)]
-        [Increment(0.05f)]
-        [DefaultValue(1f)]
-        public float BloodEnergyBarScale { get; set; } = 1f;
 
         [BackgroundColor(192, 54, 64, 192)]
         [DefaultValue(true)]

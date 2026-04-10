@@ -46,11 +46,18 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                     borderColor = sfPlayer.innateTechnique.innateBorderColor;
 
                 Color bgColor;
-                if (sfPlayer.innateTechnique.PassiveTechniques[id].selectorBGColor != default)
-                    bgColor = sfPlayer.innateTechnique.PassiveTechniques[id].selectorBGColor;
+                if (ModContent.GetInstance<ClientConfig>().AllUIBackgroundsGrayToggle)
+                {
+                    bgColor = new Color(120, 120, 120, 70);
+                    borderColor = new Color(0, 0, 0, 128);
+                }
                 else
-                    bgColor = sfPlayer.innateTechnique.innateBGColor;
-
+                {
+                    if (sfPlayer.innateTechnique.PassiveTechniques[id].selectorBGColor != default)
+                        bgColor = sfPlayer.innateTechnique.PassiveTechniques[id].selectorBGColor;
+                    else
+                        bgColor = sfPlayer.innateTechnique.innateBGColor;
+                }
                 //darken the background when the technique is active
                 if (sfPlayer.innateTechnique.PassiveTechniques[id].isActive)
                     bgColor = new Color((int)(bgColor.R * 0.8f), (int)(bgColor.G * 0.8f), (int)(bgColor.B * 0.8f), bgColor.A);
@@ -83,8 +90,8 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 SoundEngine.PlaySound(SoundID.Mech with { Volume = 1f });
             }
         }
-        internal const float DefaultPTSelectorPosX = 9.114583f;
-        internal const float DefaultPTSelectorPosY = 50f;
+        internal const float DefaultPTSelectorPosX = 94.375111f;
+        internal const float DefaultPTSelectorPosY = 67.538124f;
         private const float MouseDragEpsilon = 0.05f;
         internal const int ButtonGap = 12;
         private static Vector2? dragOffset = null;

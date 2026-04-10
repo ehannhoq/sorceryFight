@@ -10,8 +10,22 @@ Content/Shaders/*
 # Exclude any helper python scripts (mainly file renaming for multi-png animations and png trimming)
 *.py
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+.claude
+
+ClassDiagram1.cd
+=======
+=======
+>>>>>>> parent of 19cc20e (Revert pull request with bad EOL)
 # Exclude any fx compiler that is present.
 *.cd
 
 # anti calude text
+<<<<<<< HEAD
 .claude
+>>>>>>> parent of f331ab1 (Revert "Merging Ten Shadows start code + Ice + Vessel but now with better EOL")
+=======
+.claude
+>>>>>>> parent of 19cc20e (Revert pull request with bad EOL)

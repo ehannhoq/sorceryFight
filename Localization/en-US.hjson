@@ -32,6 +32,7 @@ Mods: {
 			BlackholeProjectile.DisplayName: Blackhole Projectile
 			ChakiraResonantBeam.DisplayName: Chakira Resonant Beam
 			GarudaWhipProjectile.DisplayName: Garuda Whip Projectile
+			CakeBlastProjectile.DisplayName: Cake Blast Projectile
 			RoundDeerBolt.DisplayName: Round Deer Bolt
 			NueLightning.DisplayName: Nue Lightning
 			IcicleHailProjectile.DisplayName: Icicle Hail Projectile
@@ -171,6 +172,31 @@ Mods: {
 
 				PTSelectorPosLock: {
 					Label: Lock Passive Technique Selector Position
+					Tooltip: ""
+				}
+
+				AllUIBackgroundsGreyToggle: {
+					Label: All U I Backgrounds Grey Toggle
+					Tooltip: ""
+				}
+
+				CTSelectorScale: {
+					Label: Cursed Technique Selector Scale
+					Tooltip: ""
+				}
+
+				PTSelectorScale: {
+					Label: Passive Technique Selector Scale
+					Tooltip: ""
+				}
+
+				UICustomScale: {
+					Label: UI Scale
+					Tooltip: ""
+				}
+
+				AllUIBackgroundsGrayToggle: {
+					Label: All U I Backgrounds Gray Toggle
 					Tooltip: ""
 				}
 			}

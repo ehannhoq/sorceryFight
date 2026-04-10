@@ -20,6 +20,7 @@ or leave a comment, though it will be less likely to be seen.
 
 Development Team:
 ehann, Developer
+Kuroka, Developer
 prowler, Developer
 rend, Developer
 Ryomen, Developer
@@ -29,3 +30,5 @@ Sicko, Sprite Artist
 TheRealCriky, Sprite Artist
 
 The creators of this mod does not own the rights to the content that is from Jujutsu Kaisen. All rights belong to the owner. No Copyright Infringement intended.
+
+Credit to D.Meletis for music used in the mod for Domain Expansions: https://www.youtube.com/channel/UCulcYduuvOPu_GVvSfn5R9w
