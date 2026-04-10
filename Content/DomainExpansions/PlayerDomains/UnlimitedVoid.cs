@@ -168,8 +168,18 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
                 return false;
             if (npc.type == NPCID.MoonLordHead)
                 return false;
-
             if (npc.type == NPCID.MoonLordCore)
+                return false;
+
+            if (npc.type == NPCID.CultistArcherBlue)
+                return false;
+            if (npc.type == NPCID.CultistArcherWhite)
+                return false;
+            if (npc.type == NPCID.CultistDevote)
+                return false;
+            if (npc.type == NPCID.CultistTablet)
+                return false;
+            if (npc.type == NPCID.CultistArcherWhite)
                 return false;
 
             return true;
