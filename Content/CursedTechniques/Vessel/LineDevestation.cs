@@ -186,7 +186,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
 
         public override void OnKill(int timeLeft)
         {
-            if (Main.netMode == NetmodeID.MultiplayerClient) return;
+            if (Projectile.owner != Main.myPlayer) return;
 
             Vector2 center = Projectile.Center;
 
