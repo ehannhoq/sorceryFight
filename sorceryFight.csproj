@@ -10,9 +10,8 @@
 
 
 	<ItemGroup>
-		<Reference Include="CalamityMod">
-			<HintPath>..\..\tModLoader\ModReader\CalamityMod\CalamityMod.dll</HintPath>
+		<ProjectReference Include="..\CalamityModPublic\CalamityMod.csproj">
 			<Private>false</Private>
-		</Reference>
+		</ProjectReference>
 	</ItemGroup>
 </Project>
