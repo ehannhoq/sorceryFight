@@ -13,11 +13,11 @@ namespace sorceryFight.SFPlayer
         public int numberBossesDefeated => bossesDefeated.Count;
         public void AddDefeatedBoss(int bossType)
         {
+            if (!bossesDefeated.Contains(bossType))
+                OnNewBossDefeated?.Invoke();
+            
             bossesDefeated.Add(bossType);
             SorceryFightUI.UpdateTechniqueUI?.Invoke();
-
-            if (bossesDefeated.Contains(bossType)) return;
-                OnNewBossDefeated?.Invoke();
 
             if (Main.netMode == NetmodeID.Server)
             {
