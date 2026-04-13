@@ -693,10 +693,10 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             if (techniqueIcons == null || techniqueIcons.Count == 0)
                 return;
 
-            //foreach (TechniqueIcon icon in techniqueIcons)
-            //{
-            //    //icon.DrawLines();
-            //}
+            foreach (TechniqueIcon icon in techniqueIcons)
+            {
+               icon.DrawLines();
+            }
 
             foreach (TechniqueIcon icon in techniqueIcons)
             {
