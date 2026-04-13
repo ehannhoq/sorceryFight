@@ -51,7 +51,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
         {
             if (Main.myPlayer == owner)
             {
-                if (tick % 10 == 0)
+                if (tick % 5 == 0)
                 {
                     var entitySource = Main.LocalPlayer.GetSource_FromThis();
                     Vector2 pos = npc.Center;

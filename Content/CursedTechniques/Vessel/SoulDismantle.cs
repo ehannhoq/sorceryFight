@@ -23,11 +23,10 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public override float Cost => 200f;
         public override Color textColor => new Color(120, 21, 8);
         public override bool DisplayNameInGame => false;
-        public override int Damage => 5;
-        public override int MasteryDamageMultiplier => 5;
+        public override int Damage => 60;
+        public override int MasteryDamageMultiplier => 40;
         public override float Speed => 0f;
         public override float LifeTime => 22f;
-        List<int> hasHit;
         ref float spawnedFromDE => ref Projectile.ai[2];
         public override int GetProjectileType()
         {
@@ -69,7 +68,8 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             Projectile.height = 140;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
-            hasHit = new List<int>();
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
