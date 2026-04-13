@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using sorceryFight.Content.UI.TechniqueSelector;
 using System;
 using System.ComponentModel;
@@ -104,6 +105,22 @@ namespace sorceryFight
         [Range(0f, 1f)]
         [DefaultValue(1f)]
         public float BloodEnergyBarTransparency { get; set; }
+
+        [JsonIgnore]
+        public bool StarMeter = true;
+
+        [JsonIgnore]
+        public bool StarMeterPosLock = true;
+
+        [JsonIgnore]
+        public float StarMeterPosX = StarUI.DefaultStarPosX;
+
+        [JsonIgnore]
+        public float StarMeterPosY = StarUI.DefaultStarPosY;
+
+        [JsonIgnore]
+        public float StarMeterTransparency = 1f;
+
 
         //[Header("StarEnergyBar")]
         //[BackgroundColor(128, 0, 192, 192)]
