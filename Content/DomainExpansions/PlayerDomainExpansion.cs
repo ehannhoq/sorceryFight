@@ -58,7 +58,7 @@ namespace sorceryFight.Content.DomainExpansions
             {
                 foreach (NPC npc in Main.npc)
                 {
-                    if (npc.active && npc.type != NPCID.TargetDummy && npc.type != ModContent.NPCType<SuperDummyNPC>())
+                    if (npc.active && npc.type != NPCID.TargetDummy)
                     {
                         float distance = Vector2.DistanceSquared(npc.Center, this.center);
                         if (distance < SureHitRange.Squared())
