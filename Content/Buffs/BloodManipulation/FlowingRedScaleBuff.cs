@@ -89,7 +89,7 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
         {
             if (sf.innateTechnique.Name == "Vessel")
             {
-                return sf.sukunasFingerConsumed >= 3;
+                return sf.sukunasFingerConsumed >= 10;
             }
             else
             {
