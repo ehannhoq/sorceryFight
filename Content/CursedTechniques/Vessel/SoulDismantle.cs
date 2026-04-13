@@ -23,8 +23,8 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public override float Cost => 200f;
         public override Color textColor => new Color(120, 21, 8);
         public override bool DisplayNameInGame => false;
-        public override int Damage => 60;
-        public override int MasteryDamageMultiplier => 40;
+        public override int Damage => 5;
+        public override int MasteryDamageMultiplier => 5;
         public override float Speed => 0f;
         public override float LifeTime => 22f;
         List<int> hasHit;
