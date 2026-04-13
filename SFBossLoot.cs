@@ -144,7 +144,9 @@ namespace sorceryFight
 
                 { ModContent.NPCType<Polterghast>(), ModContent.ItemType<SukunasFingerXIX>() },
 
-                { ModContent.NPCType<DevourerofGodsHead>(), ModContent.ItemType<SukunasFingerXX>() }
+                { ModContent.NPCType<DevourerofGodsHead>(), ModContent.ItemType<SukunasFingerXX>() },
+
+                { ModContent.NPCType<SupremeCalamitas>(), ModContent.ItemType<SukunasSkull>() }
             };
 
             if (npcLootMap.TryGetValue(npc.type, out int itemID))

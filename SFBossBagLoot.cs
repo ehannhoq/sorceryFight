@@ -102,7 +102,9 @@ namespace sorceryFight
 
                 { ModContent.ItemType<PolterghastBag>(), ModContent.ItemType<SukunasFingerXIX>() },
 
-                { ModContent.ItemType<DevourerofGodsBag>(), ModContent.ItemType<SukunasFingerXX>() }
+                { ModContent.ItemType<DevourerofGodsBag>(), ModContent.ItemType<SukunasFingerXX>() },
+
+                { ModContent.ItemType<CalamitasCoffer>(), ModContent.ItemType<SukunasSkull>() }
             };
 
             if (itemLootMap.TryGetValue(item.type, out var loot))
