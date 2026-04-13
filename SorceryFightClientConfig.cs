@@ -105,32 +105,32 @@ namespace sorceryFight
         [DefaultValue(1f)]
         public float BloodEnergyBarTransparency { get; set; }
 
-        [Header("StarEnergyBar")]
-        [BackgroundColor(128, 0, 192, 192)]
-        [DefaultValue(true)]
-        public bool StarMeter { get; set; }
+        //[Header("StarEnergyBar")]
+        //[BackgroundColor(128, 0, 192, 192)]
+        //[DefaultValue(true)]
+        //public bool StarMeter { get; set; }
 
-        [BackgroundColor(128, 0, 192, 192)]
-        [DefaultValue(true)]
-        public bool StarMeterPosLock { get; set; }
+        //[BackgroundColor(128, 0, 192, 192)]
+        //[DefaultValue(true)]
+        //public bool StarMeterPosLock { get; set; }
 
-        [BackgroundColor(128, 0, 192, 192)]
-        [SliderColor(224, 165, 56, 128)]
-        [Range(0f, 100f)]
-        [DefaultValue(StarUI.DefaultStarPosX)]
-        public float StarMeterPosX { get; set; }
+        //[BackgroundColor(128, 0, 192, 192)]
+        //[SliderColor(224, 165, 56, 128)]
+        //[Range(0f, 100f)]
+        //[DefaultValue(StarUI.DefaultStarPosX)]
+        //public float StarMeterPosX { get; set; }
 
-        [BackgroundColor(128, 0, 192, 192)]
-        [SliderColor(224, 165, 56, 128)]
-        [Range(0f, 100f)]
-        [DefaultValue(StarUI.DefaultStarPosY)]
-        public float StarMeterPosY { get; set; }
+        //[BackgroundColor(128, 0, 192, 192)]
+        //[SliderColor(224, 165, 56, 128)]
+        //[Range(0f, 100f)]
+        //[DefaultValue(StarUI.DefaultStarPosY)]
+        //public float StarMeterPosY { get; set; }
 
-        [BackgroundColor(128, 0, 192, 192)]
-        [SliderColor(224, 165, 56, 128)]
-        [Range(0f, 1f)]
-        [DefaultValue(1f)]
-        public float StarMeterTransparency { get; set; }
+        //[BackgroundColor(128, 0, 192, 192)]
+        //[SliderColor(224, 165, 56, 128)]
+        //[Range(0f, 1f)]
+        //[DefaultValue(1f)]
+        //public float StarMeterTransparency { get; set; }
         #endregion
 
     }
