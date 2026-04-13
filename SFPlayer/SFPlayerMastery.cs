@@ -9,15 +9,15 @@ namespace sorceryFight.SFPlayer
     public partial class SorceryFightPlayer : ModPlayer
     {
         public static Action OnNewBossDefeated;
-        public List<int> bossesDefeated;
+        public HashSet<int> bossesDefeated;
         public int numberBossesDefeated => bossesDefeated.Count;
         public void AddDefeatedBoss(int bossType)
         {
-            if (bossesDefeated.Contains(bossType)) return;
-
             bossesDefeated.Add(bossType);
             SorceryFightUI.UpdateTechniqueUI?.Invoke();
-            OnNewBossDefeated?.Invoke();
+
+            if (bossesDefeated.Contains(bossType)) return;
+                OnNewBossDefeated?.Invoke();
 
             if (Main.netMode == NetmodeID.Server)
             {

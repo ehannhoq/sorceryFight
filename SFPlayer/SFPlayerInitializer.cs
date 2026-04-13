@@ -32,7 +32,7 @@ namespace sorceryFight.SFPlayer
             bloodEnergyRegenPerSecond = 1f;
             bloodEnergyUsagePerSecond = 0f;
 
-            bossesDefeated = new List<int>();
+            bossesDefeated = new HashSet<int>();
 
             cursedSkull = false;
             cursedMechanicalSoul = false;
@@ -108,7 +108,7 @@ namespace sorceryFight.SFPlayer
 
             tag["bloodEnergy"] = bloodEnergy;
 
-            tag["bossesDefeated"] = bossesDefeated;
+            tag["bossesDefeated"] = bossesDefeated.ToList();
 
             tag["ctSelector"] = new List<float> { CTSelectorPos.X, CTSelectorPos.Y };
 
@@ -185,7 +185,7 @@ namespace sorceryFight.SFPlayer
 
             cursedEnergy = tag.ContainsKey("cursedEnergy") ? tag.GetFloat("cursedEnergy") : 1f;
             var defeatedBosses = tag.ContainsKey("bossesDefeated") ? tag.GetList<int>("bossesDefeated") : new List<int>();
-            bossesDefeated = defeatedBosses as List<int>;
+            bossesDefeated = defeatedBosses.ToHashSet();
 
             CTSelectorPos = tag.ContainsKey("ctSelector")
             ? new Microsoft.Xna.Framework.Vector2(tag.Get<List<float>>("ctSelector")[0], tag.Get<List<float>>("ctSelector")[1])
