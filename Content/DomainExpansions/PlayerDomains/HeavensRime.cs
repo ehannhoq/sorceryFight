@@ -1,10 +1,14 @@
 using CalamityMod.NPCs.DevourerofGods;
+using CalamityMod.NPCs.OldDuke;
+using CalamityMod.NPCs.Yharon;
 using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.CursedTechniques.IceFormation;
 using sorceryFight.Content.Particles;
 using sorceryFight.Content.Particles.UIParticles;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -12,12 +16,51 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static sorceryFight.Utilities.ProjectilePool;
 
 namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 {
     public class HeavensRime : PlayerDomainExpansion
     {
-        public static Dictionary<int, float[]> frozenNPCs = new Dictionary<int, float[]>();
+
+        public static readonly ProjectilePool Pool = new ProjectilePool();
+
+        //static constructor for setting up the projectile pool
+        static HeavensRime()
+        {
+            Pool.Add(new ProjectileEntry(
+                () => ModContent.ProjectileType<IcicleHailProjectile>(),
+                sf => true,
+                weight: 10,
+                damageMultiplier: 1f
+            ));
+
+            Pool.Add(new ProjectileEntry(
+                () => ProjectileID.Blizzard,
+                sf => sf.HasDefeatedBoss(NPCID.SkeletronHead),
+                weight: 5,
+                damageMultiplier: 1f
+            ));
+
+            Pool.Add(new ProjectileEntry(
+                () => ProjectileID.FrostWave,
+                sf => sf.HasDefeatedBoss(NPCID.MoonLordCore),
+                weight: 2,
+                damageMultiplier: 1f
+            ));
+
+            if (ModLoader.TryGetMod("CalamityMod", out _))
+            {
+                Pool.Add(new ProjectileEntry(
+                    () => ModContent.ProjectileType<CalamityMod.Projectiles.Summon.EndoBeam>(),
+                    sf => sf.HasDefeatedBoss(ModContent.NPCType<Yharon>()),
+                    weight: 3,
+                    damageMultiplier: 1.5f
+                ));
+            }
+
+        }
+
         public override string InternalName => "HeavensRime";
 
         public override SoundStyle CastSound => SorceryFightSounds.UnlimitedVoid;
@@ -35,20 +78,35 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override void SureHitEffect(NPC npc)
         {
-            if (!frozenNPCs.ContainsKey(npc.whoAmI))
+            if (Main.myPlayer == owner)
             {
-                frozenNPCs.Add(npc.whoAmI, [npc.position.X, npc.position.Y, npc.ai[0], npc.ai[1], npc.ai[2], npc.ai[3]]);
+                if (tick % 2 == 0)
+                {
+                    SorceryFightPlayer sf = Main.player[owner].SorceryFight();
+                    ProjectileEntry entry = Pool.Pick(sf);
+
+                    float angle = Main.rand.NextFloat(MathHelper.TwoPi);
+                    Vector2 spawnPos = this.center + new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)) * SureHitRange;
+
+                    Vector2 velocity = (npc.Center - spawnPos).SafeNormalize(Vector2.Zero) * 40f;
+
+                    int index = Projectile.NewProjectile(
+                        Main.LocalPlayer.GetSource_FromThis(),
+                        spawnPos,
+                        velocity,
+                        entry.GetProjectileType(),
+                        100, //damage
+                        0f,
+                        owner
+                    );
+
+                    if (index >= 0 && index < Main.maxProjectiles)
+                    {
+                        Main.projectile[index].timeLeft = 300;
+                        Main.projectile[index].damage = (int)(Main.projectile[index].damage * entry.DamageMultiplier);
+                    }
+                }
             }
-
-            npc.position = new Vector2(frozenNPCs[npc.whoAmI][0], frozenNPCs[npc.whoAmI][1]);
-
-            if (!AffectedByFrozenAI(npc))
-                return;
-
-            npc.ai[0] = frozenNPCs[npc.whoAmI][2];
-            npc.ai[1] = frozenNPCs[npc.whoAmI][3];
-            npc.ai[2] = frozenNPCs[npc.whoAmI][4];
-            npc.ai[3] = frozenNPCs[npc.whoAmI][5];
         }
 
         public override bool Unlocked(SorceryFightPlayer sf)
@@ -58,21 +116,6 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-
-            //if (tick > 1 && tick < 140)
-            //{
-            //    DrawInnerDomain(() =>
-            //    {
-            //        Main.NewText("1 to 140 ticks");
-            //        Texture2D whiteTexture = TextureAssets.MagicPixel.Value;
-            //        Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
-            //        Color fadeColor = new Color(255f, 255f, 255f, whiteFade);
-
-            //        spriteBatch.Draw(whiteTexture, screenRectangle, fadeColor);
-            //    });
-            //    return;
-            //}
-
 
             DrawInnerDomain(() =>
             {
@@ -84,19 +127,6 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
             },
             () => spriteBatch.Draw(BaseTexture, center - Main.screenPosition, new Rectangle(0, 0, BaseTexture.Width, BaseTexture.Height), Color.White, 0f, new Rectangle(0, 0, BaseTexture.Width, BaseTexture.Height).Size() * 0.5f, 2f, SpriteEffects.None, 0f)
             );
-            
-            //if (tick > 210 && tick < 250)
-            //{
-            //    DrawInnerDomain(() =>
-            //    {
-            //        Main.NewText("210 to 210 ticks");
-            //        Texture2D whiteTexture = TextureAssets.MagicPixel.Value;
-            //        Rectangle screenRectangle = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
-            //        Color fadeColor = new Color(255f, 255f, 255f, whiteFade);
-
-            //        spriteBatch.Draw(whiteTexture, screenRectangle, fadeColor);
-            //    });
-            //}
 
             if (tick > 250)
             {
@@ -146,38 +176,13 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
                 player.Center = center;
             }
 
-            foreach (Projectile proj in Main.ActiveProjectiles)
-            {
-                if (!proj.friendly)
-                {
-                    float distance = Vector2.DistanceSquared(proj.Center, center);
-                    if (distance < SureHitRange.Squared())
-                    {
-                        proj.Kill();
-                    }
-                }
-            }
         }
 
         public override void OnClose()
         {
             tick = 0;
             whiteFade = 0;
-
-            frozenNPCs.Clear();
         }
 
-        private bool AffectedByFrozenAI(NPC npc)
-        {
-            if (npc.type == NPCID.MoonLordHand)
-                return false;
-            if (npc.type == NPCID.MoonLordHead)
-                return false;
-
-            if (npc.type == NPCID.MoonLordCore)
-                return false;
-
-            return true;
-        }
     }
 }
