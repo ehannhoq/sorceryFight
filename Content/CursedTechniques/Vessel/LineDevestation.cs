@@ -119,7 +119,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             SpriteBatch spriteBatch = Main.spriteBatch;
 
             if (texture == null && !Main.dedServ)
-                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Vessel/LineDevestation").Value;
+                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Vessel/LineDevestation", AssetRequestMode.ImmediateLoad).Value;
 
             Texture2D dot = TextureAssets.MagicPixel.Value;
             Rectangle dotSourceRect = new Rectangle(0, 0, 1, 1);
