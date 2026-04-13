@@ -16,6 +16,7 @@ using sorceryFight.Content.UI.Quests.QuestToast;
 using static sorceryFight.Content.UI.Quests.QuestToast.QuestToast;
 using sorceryFight.Content.UI.Quests.QuestMenu;
 using sorceryFight.Content.UI.Chants;
+using sorceryFight.Content.UI.GeneticEditor;
 
 public class SorceryFightUI : UIState
 {
@@ -160,6 +161,12 @@ public class SorceryFightUI : UIState
     {
         BlackFlashWindow blackFlashWindow = new BlackFlashWindow(lowerBound, upperBound);
         Append(blackFlashWindow);
+    }
+
+    public void GeneticEditorUI()
+    {
+        GeneticEditorUI geneticEditorUI = new GeneticEditorUI();
+        Append(geneticEditorUI);
     }
 
     public static bool MouseHovering(UIElement ui, Texture2D texture)

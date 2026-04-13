@@ -1,6 +1,6 @@
-YourTruePotential: {
-	DisplayName: Your True Potential
-	Tooltip: Unleashes your true potential.
+GeneticEditor: {
+	DisplayName: Genetic Editor
+	Tooltip: Edits your genes to however you see fit.
 }
 
 ClearQuests: {
