@@ -1,36 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CalamityMod.NPCs.AquaticScourge;
-using CalamityMod.NPCs.AstrumAureus;
-using CalamityMod.NPCs.AstrumDeus;
-using CalamityMod.NPCs.BrimstoneElemental;
-using CalamityMod.NPCs.Bumblebirb;
-using CalamityMod.NPCs.CalClone;
-using CalamityMod.NPCs.CeaselessVoid;
-using CalamityMod.NPCs.Crabulon;
-using CalamityMod.NPCs.Cryogen;
-using CalamityMod.NPCs.DesertScourge;
-using CalamityMod.NPCs.DevourerofGods;
-using CalamityMod.NPCs.ExoMechs.Apollo;
-using CalamityMod.NPCs.ExoMechs.Ares;
-using CalamityMod.NPCs.ExoMechs.Artemis;
-using CalamityMod.NPCs.ExoMechs.Thanatos;
-using CalamityMod.NPCs.HiveMind;
-using CalamityMod.NPCs.Leviathan;
-using CalamityMod.NPCs.OldDuke;
-using CalamityMod.NPCs.Perforator;
-using CalamityMod.NPCs.PlaguebringerGoliath;
-using CalamityMod.NPCs.Polterghast;
-using CalamityMod.NPCs.ProfanedGuardians;
-using CalamityMod.NPCs.Providence;
-using CalamityMod.NPCs.Ravager;
-using CalamityMod.NPCs.Signus;
-using CalamityMod.NPCs.SlimeGod;
-using CalamityMod.NPCs.StormWeaver;
-using CalamityMod.NPCs.SupremeCalamitas;
-using CalamityMod.NPCs.Yharon;
-using CalamityMod.Projectiles.Magic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -54,56 +24,24 @@ namespace sorceryFight.Content.UI.GeneticEditor
 
         List<int> bosses => new([
             NPCID.KingSlime,
-            ModContent.NPCType<DesertScourgeHead>(),
             NPCID.EyeofCthulhu,
-            ModContent.NPCType<Crabulon>(),
             NPCID.EaterofWorldsHead,
             NPCID.BrainofCthulhu,
-            ModContent.NPCType<HiveMind>(),
-            ModContent.NPCType<PerforatorHive>(),
             NPCID.QueenBee,
             NPCID.SkeletronHead,
             NPCID.Deerclops,
-            ModContent.NPCType<SlimeGodCore>(),
             NPCID.WallofFlesh,
-            ModContent.NPCType<Cryogen>(),
             NPCID.QueenSlimeBoss,
-            ModContent.NPCType<AquaticScourgeHead>(),
             NPCID.Retinazer,
             NPCID.Spazmatism,
             NPCID.TheDestroyer,
             NPCID.SkeletronPrime,
-            ModContent.NPCType<BrimstoneElemental>(),
-            ModContent.NPCType<CalamitasClone>(),
             NPCID.Plantera,
-            ModContent.NPCType<Leviathan>(),
-            ModContent.NPCType<Anahita>(),
             NPCID.Golem,
-            ModContent.NPCType<AstrumAureus>(),
-            ModContent.NPCType<PlaguebringerGoliath>(),
-            ModContent.NPCType<RavagerHead>(),
             NPCID.DukeFishron,
             NPCID.HallowBoss,
             NPCID.CultistBoss,
-            ModContent.NPCType<AstrumDeusHead>(),
             NPCID.MoonLordCore,
-            ModContent.NPCType<Dragonfolly>(),
-            ModContent.NPCType<ProfanedGuardianCommander>(),
-            ModContent.NPCType<ProfanedGuardianHealer>(),
-            ModContent.NPCType<ProfanedGuardianDefender>(),
-            ModContent.NPCType<Providence>(),
-            ModContent.NPCType<StormWeaverHead>(),
-            ModContent.NPCType<CeaselessVoid>(),
-            ModContent.NPCType<Signus>(),
-            ModContent.NPCType<Polterghast>(),
-            ModContent.NPCType<OldDuke>(),
-            ModContent.NPCType<DevourerofGodsHead>(),
-            ModContent.NPCType<Yharon>(),
-            ModContent.NPCType<ThanatosHead>(),
-            ModContent.NPCType<Artemis>(),
-            ModContent.NPCType<AresBody>(),
-            ModContent.NPCType<Apollo>(),
-            ModContent.NPCType<SupremeCalamitas>()
         ]);
 
         public GeneticEditorUI()
@@ -177,33 +115,23 @@ namespace sorceryFight.Content.UI.GeneticEditor
             preBossButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => OnPresetSubmit(0);
             buttons.Add(preBossButton);
             var postSkeletronButton = new UIButton<string>("Post-Skeletron");
-            postSkeletronButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => OnPresetSubmit(10);
+            postSkeletronButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => OnPresetSubmit(6);
             buttons.Add(postSkeletronButton);
             var postWoFButton = new UIButton<string>("Post-Wall of Flesh");
-            postWoFButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => OnPresetSubmit(14);
+            postWoFButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => OnPresetSubmit(8);
             buttons.Add(postWoFButton);
             var postMechButton = new UIButton<string>("Post-Mechanical Bosses");
-            postMechButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => OnPresetSubmit(21);
+            postMechButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => OnPresetSubmit(13);
             buttons.Add(postMechButton);
             var postPlanteraButton = new UIButton<string>("Post-Plantera");
-            postPlanteraButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => OnPresetSubmit(24);
+            postPlanteraButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => OnPresetSubmit(14);
             buttons.Add(postPlanteraButton);
             var postGolemButton = new UIButton<string>("Post-Golem");
-            postGolemButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => OnPresetSubmit(27);
+            postGolemButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => OnPresetSubmit(15);
             buttons.Add(postGolemButton);
             var postMLButton = new UIButton<string>("Post-Moon Lord");
-            postMLButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => OnPresetSubmit(36);
+            postMLButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => OnPresetSubmit(19);
             buttons.Add(postMLButton);
-            var postProvidenceButton = new UIButton<string>("Post-Providence");
-            postProvidenceButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => OnPresetSubmit(41);
-            buttons.Add(postProvidenceButton);
-            var postDoGButton = new UIButton<string>("Post-Devourer Of Gods");
-            postDoGButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => OnPresetSubmit(47);
-            buttons.Add(postDoGButton);
-            var postSCalButton = new UIButton<string>("Post-Supreme Calamitas");
-            postSCalButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => OnPresetSubmit(bosses.Count);
-            buttons.Add(postSCalButton);
-
 
             UIElement presetSide = new();
             presetSide.Width.Set(350f, 0f);
