@@ -8,7 +8,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using CalamityMod.NPCs.Cryogen;
 
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
@@ -61,7 +60,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             }
             else
             {
-                return sf.HasDefeatedBoss(ModContent.NPCType<Cryogen>());
+                // return sf.HasDefeatedBoss(ModContent.NPCType<Cryogen>());
+                return true;
 
             }
         }

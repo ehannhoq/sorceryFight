@@ -9,7 +9,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
-using CalamityMod.NPCs.OldDuke;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
@@ -66,7 +65,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             }
             else
             {
-                return sf.HasDefeatedBoss(ModContent.NPCType<OldDuke>());
+                // return sf.HasDefeatedBoss(ModContent.NPCType<OldDuke>());
+                return true;
             }
         }
 
