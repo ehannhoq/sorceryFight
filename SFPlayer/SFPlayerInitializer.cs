@@ -92,6 +92,8 @@ namespace sorceryFight.SFPlayer
             questData = new();
             currentQuests = new List<Quest>();
             completedQuests = new List<string>();
+
+            mechanicalBossesDefeatedFlags = 0b0000;
         }
         public override void SaveData(TagCompound tag)
         {
@@ -170,6 +172,8 @@ namespace sorceryFight.SFPlayer
             }
             tag["currentQuests"] = currentQuestsData;
             tag["completedQuests"] = completedQuests;
+
+            tag["mechanicalBossesDefeatedFlags"] = mechanicalBossesDefeatedFlags;
         }
 
         public override void LoadData(TagCompound tag)
@@ -252,6 +256,8 @@ namespace sorceryFight.SFPlayer
             }
 
             completedQuests = tag.GetList<string>("completedQuests").ToList();
+
+            mechanicalBossesDefeatedFlags = (byte)(tag.ContainsKey("mechanicalBossesDefeatedFlags") ? tag.GetInt("mechanicalBossesDefeatedFlags") : 0b0000); 
         }
         
         public float calculateBaseMaxCE()
