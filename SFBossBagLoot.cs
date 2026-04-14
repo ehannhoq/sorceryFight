@@ -78,14 +78,16 @@ namespace sorceryFight
                 { ItemID.FairyQueenBossBag, ModContent.ItemType<SukunasFingerXVIII>() },
                 { ItemID.CultistBossBag, ModContent.ItemType<SukunasFingerXIX>() },
                 { ItemID.MoonLordBossBag, ModContent.ItemType<SukunasFingerXX>() },
-
-
-                { ItemID.MoonLordBossBag, ModContent.ItemType<SukunasSkull>() }
             };
 
             if (itemLootMap.TryGetValue(item.type, out var loot))
             {
                 firstTimeRule.OnSuccess(ItemDropRule.Common(loot, 1, 1, 1));
+            }
+
+            if (item.type == ItemID.MoonLordBossBag)
+            {
+                firstTimeRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SukunasSkull>(), 1, 1, 1));
             }
         }
 
