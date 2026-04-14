@@ -11,6 +11,7 @@ using sorceryFight.Content.Buffs.Limitless;
 using sorceryFight.Content.Buffs.Shrine;
 using sorceryFight.SFPlayer;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
@@ -122,11 +123,11 @@ public static class SFUtils
         if (start == end)
             return;
 
-        Texture2D line = ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Line").Value;
+        Texture2D line = TextureAssets.MagicPixel.Value;
         float rotation = (end - start).ToRotation();
-        Vector2 scale = new Vector2(Vector2.Distance(start, end) / line.Width, width);
+        Vector2 scale = new Vector2(Vector2.Distance(start, end) / line.Width, width / line.Height);
 
-        spriteBatch.Draw(line, start, null, color, rotation, line.Size() * Vector2.UnitY * 0.5f, scale, SpriteEffects.None, 0f);
+        spriteBatch.Draw(line, start, null, color, rotation, new Vector2(0f, line.Height * 0.5f), scale, SpriteEffects.None, 0f);
     }
 
 
