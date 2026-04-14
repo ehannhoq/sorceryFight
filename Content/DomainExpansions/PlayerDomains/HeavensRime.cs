@@ -42,6 +42,17 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
                 damageMultiplier: 1f
             ));
 
+            if (ModLoader.TryGetMod("CalamityMod", out _))
+            {
+                Pool.Add(new ProjectileEntry(
+                    () => ModContent.ProjectileType<CalamityMod.Projectiles.Melee.DarkIceZero>(),
+                    sf => sf.HasDefeatedBoss(ModContent.NPCType<Yharon>()),
+                    weight: 3,
+                    damageMultiplier: 1.5f
+                ));
+            }
+
+
             Pool.Add(new ProjectileEntry(
                 () => ProjectileID.FrostWave,
                 sf => sf.HasDefeatedBoss(NPCID.MoonLordCore),
@@ -49,15 +60,18 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
                 damageMultiplier: 1f
             ));
 
+
             if (ModLoader.TryGetMod("CalamityMod", out _))
             {
                 Pool.Add(new ProjectileEntry(
-                    () => ModContent.ProjectileType<CalamityMod.Projectiles.Summon.EndoBeam>(),
+                    () => ModContent.ProjectileType<CalamityMod.Projectiles.Rogue.KelvinCatalystBoomerang>(),
                     sf => sf.HasDefeatedBoss(ModContent.NPCType<Yharon>()),
                     weight: 3,
                     damageMultiplier: 1.5f
                 ));
             }
+
+
 
         }
 

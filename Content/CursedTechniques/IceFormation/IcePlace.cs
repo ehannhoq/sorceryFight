@@ -1,8 +1,10 @@
 ﻿using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Tiles.Ice;
 using sorceryFight.SFPlayer;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -17,15 +19,23 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.IcePlace.Description");
         public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.IcePlace.LockedDescription");
         public override float Cost => 8f;
+        public override float CursedCostPerSecond => 10f;
 
         public override Color textColor => new Color(100, 180, 255);
         public override bool DisplayNameInGame => true;
 
-        public override int Damage => 0;
-        public override int MasteryDamageMultiplier => 0;
+        public override int Damage => 100;
+        public override int MasteryDamageMultiplier => 40;
 
         public override float Speed => 0f;
         public override float LifeTime => 900f; // ice melts in 15 sec
+        
+        //auto placing vars
+        public bool keyHeld;
+        private List<Point> placedTiles = new List<Point>();
+        private int placeCooldown = 0;
+        private static readonly int PLACE_DELAY = 3;
+        
         public override bool Unlocked(SorceryFightPlayer sf)
         {
             return sf.HasDefeatedBoss(NPCID.KingSlime);
@@ -72,50 +82,68 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
 
         public override void AI()
         {
-            // Convert cursor position to tile coordinates
-            int tileX = (int)(Projectile.Center.X / 16f);
-            int tileY = (int)(Projectile.Center.Y / 16f);
+            Player player = Main.player[Projectile.owner];
+            SorceryFightPlayer sf = player.SorceryFight();
 
-            // On first tick, place the ice block
-            if (Projectile.ai[0] == 0f)
+            if (Main.myPlayer == Projectile.owner)
             {
-                Projectile.ai[0] = 1f;
+                keyHeld = SFKeybinds.UseTechnique.Current;
+            }
 
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (!keyHeld || sf.cursedEnergy <= 0)
+            {
+                Projectile.Kill();
+                return;
+            }
+
+            ActiveDrain(sf);
+
+            // Place blocks on a short cooldown
+            if (placeCooldown > 0)
+            {
+                placeCooldown--;
+                return;
+            }
+
+            if (Main.myPlayer == Projectile.owner)
+            {
+                Vector2 mousePos = Main.MouseWorld;
+                int tileX = (int)(mousePos.X / 16f);
+                int tileY = (int)(mousePos.Y / 16f);
+
+                if (!Main.tile[tileX, tileY].HasTile)
                 {
-                    // Only place if the tile is empty
-                    if (!Main.tile[tileX, tileY].HasTile)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        WorldGen.PlaceTile(tileX, tileY, TileID.IceBlock, forced: false, style: 0);
+                        WorldGen.PlaceTile(tileX, tileY, ModContent.TileType<UraumeBlock>(), forced: false, style: 0);
 
                         if (Main.netMode == NetmodeID.Server)
                         {
                             NetMessage.SendTileSquare(-1, tileX, tileY, 1);
                         }
                     }
+
+                    placedTiles.Add(new Point(tileX, tileY));
+
+                    // Spawn frost particles
+                    for (int i = 0; i < 4; i++)
+                    {
+                        Dust dust = Dust.NewDustDirect(
+                            new Vector2(tileX * 16, tileY * 16),
+                            16, 16,
+                            DustID.IceTorch,
+                            Main.rand.NextFloat(-1.5f, 1.5f),
+                            Main.rand.NextFloat(-1.5f, 1.5f),
+                            150,
+                            default,
+                            1f
+                        );
+                        dust.noGravity = true;
+                    }
                 }
 
-                // Spawn some frost particles for visual feedback
-                for (int i = 0; i < 8; i++)
-                {
-                    Dust dust = Dust.NewDustDirect(
-                        Projectile.position,
-                        Projectile.width,
-                        Projectile.height,
-                        DustID.IceTorch,
-                        Main.rand.NextFloat(-2f, 2f),
-                        Main.rand.NextFloat(-2f, 2f),
-                        150,
-                        default,
-                        1.2f
-                    );
-                    dust.noGravity = true;
-                }
+                placeCooldown = PLACE_DELAY;
             }
-
-            // When the projectile dies (timeLeft runs out), the ice gets removed in OnKill
-            // Keep projectile alive but invisible at the tile location
-            Projectile.Center = new Vector2(tileX * 16 + 8, tileY * 16 + 8);
         }
 
         public override void OnKill(int timeLeft)

@@ -105,6 +105,13 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             float dashStart = 0.4f;
             float dashEnd = 0.8f;
 
+            //make animation starting frames faster
+            int ticksThisFrame;
+            if (progress < dashStart)
+                ticksThisFrame = 3;
+            else
+                ticksThisFrame = TICKS_PER_FRAME;
+
             if (progress >= dashStart && progress < dashEnd)
             {
                 float dashProgress = (progress - dashStart) / (dashEnd - dashStart);
@@ -133,7 +140,8 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                 Projectile.Kill();
             }
 
-            if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
+
+            if (Projectile.frameCounter++ >= ticksThisFrame)
             {
                 Projectile.frameCounter = 0;
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using static Terraria.GameContent.Animations.IL_Actions.NPCs;
 
 namespace sorceryFight.Utilities
 {
@@ -49,14 +50,16 @@ namespace sorceryFight.Utilities
             public Func<SorceryFightPlayer, bool> Unlocked;
             public int Weight;
             public float DamageMultiplier;
+            public int Variant;
 
             //type, is unlocked, spawn chance, dmg multiplier
-            public ProjectileEntry(Func<int> getType, Func<SorceryFightPlayer, bool> unlocked, int weight = 1, float damageMultiplier = 1f)
+            public ProjectileEntry(Func<int> getType, Func<SorceryFightPlayer, bool> unlocked, int weight = 1, float damageMultiplier = 1f, int variant = 0)
             {
                 GetProjectileType = getType;
                 Unlocked = unlocked;
                 Weight = weight;
                 DamageMultiplier = damageMultiplier;
+                Variant = variant;
             }
         }
     }
