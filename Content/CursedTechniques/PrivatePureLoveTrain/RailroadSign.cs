@@ -1,6 +1,3 @@
-using CalamityMod.Particles;
-using CalamityMod.Sounds;
-using Microsoft.Build.Graph;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -10,18 +7,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using sorceryFight.SFPlayer;
-using System.Collections.Generic;
 using System;
-using CalamityMod.NPCs.Providence;
-using System.Linq;
-using CalamityMod.Balancing;
-using CalamityMod.Buffs.StatDebuffs;
-using CalamityMod.Graphics.Primitives;
-using CalamityMod.Items.Weapons.Melee;
-using CalamityMod.Projectiles.Healing;
-using Terraria.Graphics.Shaders;
-using static CalamityMod.CalamityUtils;
-using System.ComponentModel;
 
 
 namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
@@ -61,7 +47,8 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         {
             get
             {
-                float swordRotation = InitialRotation + GetSwingOffsetAngle(SwingCompletion) * Projectile.spriteDirection + MathHelper.PiOver4;
+                // float swordRotation = InitialRotation + GetSwingOffsetAngle(SwingCompletion) * Projectile.spriteDirection + MathHelper.PiOver4;
+                float swordRotation = InitialRotation * Projectile.spriteDirection + MathHelper.PiOver4;
                 if (Projectile.spriteDirection == -1)
                     swordRotation += MathHelper.PiOver2;
                 return swordRotation;
@@ -79,15 +66,15 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public static float RecoveryCompletionRatio => 0.84f;
         public float SlashWidthFunction(float completionRatio) => Projectile.scale * 22f;
 
-        public static CurveSegment AnticipationWait => new(EasingType.PolyOut, 0f, -1.67f, 0f);
-        public static CurveSegment Anticipation => new(EasingType.PolyOut, 0.14f, AnticipationWait.EndingHeight, -1.1f, 3);
-        public static CurveSegment Swing => new(EasingType.PolyIn, SwingCompletionRatio, Anticipation.EndingHeight, 6.5f, 5);
-        public static CurveSegment Recovery => new(EasingType.PolyOut, RecoveryCompletionRatio, Swing.EndingHeight, 0.97f, 3);
+        // public static CurveSegment AnticipationWait => new(EasingType.PolyOut, 0f, -1.67f, 0f);
+        // public static CurveSegment Anticipation => new(EasingType.PolyOut, 0.14f, AnticipationWait.EndingHeight, -1.1f, 3);
+        // public static CurveSegment Swing => new(EasingType.PolyIn, SwingCompletionRatio, Anticipation.EndingHeight, 6.5f, 5);
+        // public static CurveSegment Recovery => new(EasingType.PolyOut, RecoveryCompletionRatio, Swing.EndingHeight, 0.97f, 3);
 
-        public static float GetSwingOffsetAngle(float completion) => PiecewiseAnimation(completion, AnticipationWait, Anticipation, Swing, Recovery);
+        // public static float GetSwingOffsetAngle(float completion) => PiecewiseAnimation(completion, AnticipationWait, Anticipation, Swing, Recovery);
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<Providence>());
+            return true;
         }
         public override int GetProjectileType()
         {

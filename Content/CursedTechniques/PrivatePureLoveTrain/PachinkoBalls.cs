@@ -1,5 +1,3 @@
-using CalamityMod.Particles;
-using CalamityMod.Sounds;
 using Microsoft.Build.Graph;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,7 +9,6 @@ using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using System.Collections.Generic;
 using System;
-using CalamityMod.NPCs.DesertScourge;
 
 namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
 {
@@ -33,7 +30,8 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         Dictionary<int, Color> rarity = new Dictionary<int, Color>();
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<DesertScourgeHead>());
+            return true;
+            // return sf.HasDefeatedBoss(ModContent.NPCType<DesertScourgeHead>());
         }
         public override int GetProjectileType()
         {

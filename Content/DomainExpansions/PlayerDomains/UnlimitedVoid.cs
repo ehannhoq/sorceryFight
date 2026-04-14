@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using CalamityMod.NPCs.DevourerofGods;
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.SFPlayer;
@@ -51,7 +48,8 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
+            return true;
+            // return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -115,24 +113,24 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
             if (tick > 140 && tick < 390)
             {
-                for (int i = 0; i < 5; i++)
-                {
-                    Vector2 offsetPos = center + new Vector2(Main.rand.NextFloat(-2000f, 2000f), Main.rand.NextFloat(-2000f, 2000f));
-                    Vector2 velocity = center.DirectionTo(offsetPos) * 80f;
+                // for (int i = 0; i < 5; i++)
+                // {
+                //     Vector2 offsetPos = center + new Vector2(Main.rand.NextFloat(-2000f, 2000f), Main.rand.NextFloat(-2000f, 2000f));
+                //     Vector2 velocity = center.DirectionTo(offsetPos) * 80f;
 
-                    List<Color> colors = [
-                        new Color(91, 91, 245), // blue
-                        new Color(201, 110, 235), // magenta
-                        new Color(79, 121, 219), // cyan
-                        new Color(124, 42, 232), // purple
-                    ];
+                //     List<Color> colors = [
+                //         new Color(91, 91, 245), // blue
+                //         new Color(201, 110, 235), // magenta
+                //         new Color(79, 121, 219), // cyan
+                //         new Color(124, 42, 232), // purple
+                //     ];
 
-                    int roll = Main.rand.Next(colors.Count);
-                    Color color = colors[roll];
+                //     int roll = Main.rand.Next(colors.Count);
+                //     Color color = colors[roll];
 
-                    LineParticle particle = new LineParticle(center, velocity, false, 180, 3, color);
-                    GeneralParticleHandler.SpawnParticle(particle);
-                }
+                //     LineParticle particle = new LineParticle(center, velocity, false, 180, 3, color);
+                //     GeneralParticleHandler.SpawnParticle(particle);
+                // }
             }
 
             if (Main.myPlayer == owner && tick > 1 && tick < 390)

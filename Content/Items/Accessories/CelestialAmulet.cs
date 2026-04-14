@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
-using System.Collections.Generic;
 
 namespace sorceryFight.Content.Items.Accessories
 {

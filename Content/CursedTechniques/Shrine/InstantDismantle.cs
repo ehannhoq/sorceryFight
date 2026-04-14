@@ -1,11 +1,8 @@
-using System;
-using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs.Vessel;
 using sorceryFight.SFPlayer;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;

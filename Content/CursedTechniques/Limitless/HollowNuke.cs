@@ -1,12 +1,8 @@
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless

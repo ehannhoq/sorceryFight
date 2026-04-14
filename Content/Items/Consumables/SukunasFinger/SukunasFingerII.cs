@@ -1,6 +1,3 @@
-using System;
-using sorceryFight.SFPlayer;
-using Terraria;
 using Terraria.Localization;
 
 namespace sorceryFight.Content.Items.Consumables.SukunasFinger

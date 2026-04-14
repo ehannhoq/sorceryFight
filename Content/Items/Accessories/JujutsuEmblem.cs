@@ -2,10 +2,6 @@ using sorceryFight.Rarities;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using sorceryFight.SFPlayer;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 
 namespace sorceryFight.Content.Items.Accessories
 {

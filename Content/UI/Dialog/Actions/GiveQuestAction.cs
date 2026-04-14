@@ -1,8 +1,6 @@
-using sorceryFight.Content.NPCs.TownNPCs;
 using sorceryFight.Content.Quests;
 using sorceryFight.SFPlayer;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace sorceryFight.Content.UI.Dialog.Actions
 {

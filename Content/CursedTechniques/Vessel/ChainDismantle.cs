@@ -1,11 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using CalamityMod.NPCs.NormalNPCs;
-using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
@@ -82,16 +77,16 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             modifiers.DefenseEffectiveness *= 0;
             modifiers.FinalDamage.Flat = CalculateTrueDamage(Main.player[Projectile.owner].SorceryFight());
 
-            if (isBarrage == 0)
-            {
-                foreach (NPC npc in Main.ActiveNPCs)
+                if (isBarrage == 0)
                 {
-                    if (npc.friendly || npc.type == NPCID.TargetDummy || npc.type == ModContent.NPCType<SuperDummyNPC>() || npc.whoAmI == target.whoAmI) continue;
-                    float dist = Vector2.Distance(npc.Center, target.Center);
-                    if (dist < 250f)
+                    foreach (NPC npc in Main.ActiveNPCs)
                     {
-                        Player player = Main.player[Projectile.owner];
-                        SorceryFightPlayer sf = player.SorceryFight();
+                        if (npc.friendly || npc.type == NPCID.TargetDummy || npc.whoAmI == target.whoAmI) continue;
+                        float dist = Vector2.Distance(npc.Center, target.Center);
+                        if (dist < 250f)
+                        {
+                            Player player = Main.player[Projectile.owner];
+                            SorceryFightPlayer sf = player.SorceryFight();
 
                         Vector2 playerPos = player.MountedCenter;
                         Vector2 mousePos = Main.MouseWorld;

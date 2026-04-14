@@ -1,5 +1,3 @@
-using System;
-using CalamityMod.NPCs.DevourerofGods;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.CursedTechniques.Vessel;
@@ -71,7 +69,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
+            return true;
         }
 
         public override void Update()

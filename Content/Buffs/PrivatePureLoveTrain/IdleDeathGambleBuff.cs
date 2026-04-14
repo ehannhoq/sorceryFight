@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using CalamityMod;
-using Microsoft.Xna.Framework;
-using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -20,7 +14,6 @@ namespace sorceryFight.Content.Buffs.PrivatePureLoveTrain
             player.GetDamage(DamageClass.Ranged) *= 1 + multiplier / 20f;
             player.GetDamage(DamageClass.Magic) *= 1 + multiplier / 20f;
             player.GetDamage(DamageClass.Summon) *= 1 + multiplier / 20f;
-            player.GetDamage(RogueDamageClass.Throwing) *= 1 + multiplier / 20f;
             player.statDefense *= 1 + multiplier / 10f;
             player.lifeRegen += multiplier + 1;
 

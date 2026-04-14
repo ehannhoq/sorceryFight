@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using MonoMod.Cil;
 using sorceryFight.Content.InnateTechniques;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.Quests;
-using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -51,8 +49,6 @@ namespace sorceryFight.SFPlayer
 
             yourPotentialSwitch = false;
             usedYourPotentialBefore = false;
-            usedCursedFists = false;
-            npcsHitWithCursedFists = new HashSet<int>();
             idleDeathGambleBuffStrength = 0;
 
             inDomainAnimation = false;

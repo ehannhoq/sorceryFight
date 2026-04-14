@@ -1,13 +1,10 @@
-using CalamityMod;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using sorceryFight.SFPlayer;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Graphics.Effects;
-using System;
 
 namespace sorceryFight.Content.Buffs.HeavenlyRestriction
 {

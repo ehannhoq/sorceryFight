@@ -1,7 +1,3 @@
-using System;
-using CalamityMod;
-using CalamityMod.Particles;
-using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Particles;
@@ -92,12 +88,12 @@ namespace sorceryFight.Content.Projectiles.Melee
                 ParticleController.SpawnParticle(particle);
             }
 
-            for (int i = 0; i < 2; i++)
-            {
-                Vector2 posVariation = new Vector2(Main.rand.NextFloat(-10, 10), Main.rand.NextFloat(-10, 10));
-                SparkleParticle particle = new SparkleParticle(target.Center + posVariation, Vector2.Zero, new Color(109, 38, 115), Color.White, 1f, 10, 0.75f, 0.2f);
-                GeneralParticleHandler.SpawnParticle(particle);
-            }
+            // for (int i = 0; i < 2; i++)
+            // {
+            //     Vector2 posVariation = new Vector2(Main.rand.NextFloat(-10, 10), Main.rand.NextFloat(-10, 10));
+            //     SparkleParticle particle = new SparkleParticle(target.Center + posVariation, Vector2.Zero, new Color(109, 38, 115), Color.White, 1f, 10, 0.75f, 0.2f);
+            //     GeneralParticleHandler.SpawnParticle(particle);
+            // }
         }
     }
 }

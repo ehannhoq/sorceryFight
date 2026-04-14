@@ -1,5 +1,4 @@
-using CalamityMod.Items.Accessories;
-using CalamityMod.Items.TreasureBags;
+using System.Collections.Generic;
 using sorceryFight.Content.Items.Accessories;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.Items.Consumables.DeathPainting;
@@ -13,7 +12,6 @@ using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static CalamityMod.DropHelper;
 
 namespace sorceryFight
 {
@@ -42,15 +40,15 @@ namespace sorceryFight
                 { ItemID.SkeletronBossBag, ModContent.ItemType<CursedSkull>() },
                 { ItemID.SkeletronPrimeBossBag, ModContent.ItemType<CursedMechanicalSoul>() },
                 { ItemID.MoonLordBossBag, ModContent.ItemType<CursedPhantasmalEye>() },
-                { ModContent.ItemType<ProvidenceBag>(), ModContent.ItemType<CursedProfanedShards>() },
+                // { ModContent.ItemType<ProvidenceBag>(), ModContent.ItemType<CursedProfanedShards>() },
 
                 // CE Regen Modifiers
                 { ItemID.EyeOfCthulhuBossBag, ModContent.ItemType<CursedEye>() },
                 { ItemID.WallOfFleshBossBag, ModContent.ItemType<CursedFlesh>() },
                 { ItemID.PlanteraBossBag, ModContent.ItemType<CursedBulb>() },
                 { ItemID.GolemBossBag, ModContent.ItemType<CursedRock>() },
-                { ModContent.ItemType<DragonfollyBag>(), ModContent.ItemType<CursedEffulgentFeather>() },
-                { ModContent.ItemType<SignusBag>(), ModContent.ItemType<CursedRuneOfKos>() },
+                // { ModContent.ItemType<DragonfollyBag>(), ModContent.ItemType<CursedEffulgentFeather>() },
+                // { ModContent.ItemType<SignusBag>(), ModContent.ItemType<CursedRuneOfKos>() },
             };
 
             if (itemLootMap.TryGetValue(item.type, out var loot))
@@ -65,8 +63,8 @@ namespace sorceryFight
             {
                 { ItemID.EyeOfCthulhuBossBag, ModContent.ItemType<SukunasFingerI>() },
 
-                { ModContent.ItemType<HiveMindBag>(), ModContent.ItemType<SukunasFingerII>() },
-                { ModContent.ItemType<PerforatorBag>(), ModContent.ItemType<SukunasFingerII>() },
+                // { ModContent.ItemType<HiveMindBag>(), ModContent.ItemType<SukunasFingerII>() },
+                // { ModContent.ItemType<PerforatorBag>(), ModContent.ItemType<SukunasFingerII>() },
 
                 { ItemID.SkeletronBossBag, ModContent.ItemType<SukunasFingerIII>() },
 
@@ -74,33 +72,33 @@ namespace sorceryFight
 
                 { ItemID.SkeletronPrimeBossBag, ModContent.ItemType<SukunasFingerV>() },
 
-                { ModContent.ItemType<CalamitasCloneBag>(), ModContent.ItemType<SukunasFingerVI>() },
+                // { ModContent.ItemType<CalamitasCloneBag>(), ModContent.ItemType<SukunasFingerVI>() },
 
                 { ItemID.PlanteraBossBag, ModContent.ItemType<SukunasFingerVII>() },
 
-                { ModContent.ItemType<LeviathanBag>(), ModContent.ItemType<SukunasFingerVIII>() },
+                // { ModContent.ItemType<LeviathanBag>(), ModContent.ItemType<SukunasFingerVIII>() },
 
                 { ItemID.GolemBossBag, ModContent.ItemType<SukunasFingerIX>() },
 
-                { ModContent.ItemType<RavagerBag>(), ModContent.ItemType<SukunasFingerX>() },
+                // { ModContent.ItemType<RavagerBag>(), ModContent.ItemType<SukunasFingerX>() },
 
                 { ItemID.CultistBossBag, ModContent.ItemType<SukunasFingerXI>() },
 
-                { ModContent.ItemType<AstrumDeusBag>(), ModContent.ItemType<SukunasFingerXII>() },
+                // { ModContent.ItemType<AstrumDeusBag>(), ModContent.ItemType<SukunasFingerXII>() },
 
                 { ItemID.MoonLordBossBag, ModContent.ItemType<SukunasFingerXIII>() },
 
-                { ModContent.ItemType<DragonfollyBag>(), ModContent.ItemType<SukunasFingerXIV>() },
+                // { ModContent.ItemType<DragonfollyBag>(), ModContent.ItemType<SukunasFingerXIV>() },
 
-                { ModContent.ItemType<ProvidenceBag>(), ModContent.ItemType<SukunasFingerXV>() },
+                // { ModContent.ItemType<ProvidenceBag>(), ModContent.ItemType<SukunasFingerXV>() },
 
-                { ModContent.ItemType<CeaselessVoidBag>(), ModContent.ItemType<SukunasFingerXVI>() },
+                // { ModContent.ItemType<CeaselessVoidBag>(), ModContent.ItemType<SukunasFingerXVI>() },
 
-                { ModContent.ItemType<StormWeaverBag>(), ModContent.ItemType<SukunasFingerXVII>() },
+                // { ModContent.ItemType<StormWeaverBag>(), ModContent.ItemType<SukunasFingerXVII>() },
 
-                { ModContent.ItemType<SignusBag>(), ModContent.ItemType<SukunasFingerXVIII>() },
+                // { ModContent.ItemType<SignusBag>(), ModContent.ItemType<SukunasFingerXVIII>() },
 
-                { ModContent.ItemType<PolterghastBag>(), ModContent.ItemType<SukunasFingerXIX>() },
+                // { ModContent.ItemType<PolterghastBag>(), ModContent.ItemType<SukunasFingerXIX>() },
 
                 { ModContent.ItemType<DevourerofGodsBag>(), ModContent.ItemType<SukunasFingerXX>() },
 
@@ -146,30 +144,30 @@ namespace sorceryFight
         {
             if (item.type != ItemID.WallOfFleshBossBag) return;
 
-            //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SukunasSkull>(), 10, 1, 1));
+            // itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SukunasSkull>(), 10, 1, 1));
 
-            List<IItemDropRule> rules = itemLoot.Get(true);
+            // List<IItemDropRule> rules = itemLoot.Get(true);
 
-            rules.RemoveAll(rule =>
-            {
-                if (rule is AllOptionsAtOnceWithPityDropRule itemRule)
-                {
-                    foreach (var weightedItemStack in itemRule.stacks.ToArray())
-                    {
-                        int itemID = SFUtils.GetInternalFieldFromCalamity<int>(
-                            "CalamityMod.WeightedItemStack",
-                            "itemID",
-                            weightedItemStack
-                        ); // on my soul fuck calamity mod
+            // rules.RemoveAll(rule =>
+            // {
+            //     if (rule is AllOptionsAtOnceWithPityDropRule itemRule)
+            //     {
+            //         foreach (var weightedItemStack in itemRule.stacks.ToArray())
+            //         {
+            //             int itemID = SFUtils.GetInternalFieldFromCalamity<int>(
+            //                 "CalamityMod.WeightedItemStack",
+            //                 "itemID",
+            //                 weightedItemStack
+            //             ); // on my soul fuck calamity mod
 
-                        if (itemID == ItemID.WarriorEmblem)
-                        {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            });
+            //             if (itemID == ItemID.WarriorEmblem)
+            //             {
+            //                 return true;
+            //             }
+            //         }
+            //     }
+            //     return false;
+            // });
 
             int[] emblems = new int[]
             {
@@ -177,7 +175,7 @@ namespace sorceryFight
                         ItemID.RangerEmblem,
                         ItemID.SorcererEmblem,
                         ItemID.SummonerEmblem,
-                        ModContent.ItemType<RogueEmblem>(),
+                        // ModContent.ItemType<RogueEmblem>(),
                         ModContent.ItemType<JujutsuEmblem>()
             };
 

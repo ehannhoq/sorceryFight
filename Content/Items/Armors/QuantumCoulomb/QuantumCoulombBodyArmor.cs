@@ -1,8 +1,6 @@
-using System;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;
-using Terraria.Initializers;
 using Terraria.Localization;
 using Terraria.ModLoader;
 

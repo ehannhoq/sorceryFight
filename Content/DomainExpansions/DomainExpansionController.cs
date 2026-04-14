@@ -10,7 +10,6 @@ using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
 

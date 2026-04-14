@@ -1,10 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Composition.Hosting.Core;
-using System.Security.Cryptography.X509Certificates;
-using CalamityMod.NPCs.DevourerofGods;
-using CalamityMod.NPCs.Providence;
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;

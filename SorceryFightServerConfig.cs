@@ -1,6 +1,4 @@
-using System;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using Terraria.ModLoader.Config;
 
 namespace sorceryFight

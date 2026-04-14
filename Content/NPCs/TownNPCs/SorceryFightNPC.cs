@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Quests;
 using sorceryFight.Content.UI;
