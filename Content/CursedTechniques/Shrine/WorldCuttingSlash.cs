@@ -45,7 +45,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         }
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
+            return sf.HasDefeatedBoss(NPCID.MoonLordCore) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
         }
 
         public override void SetStaticDefaults()

@@ -5,6 +5,7 @@ using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.DomainExpansions.PlayerDomains
@@ -69,7 +70,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return true;
+            return sf.HasDefeatedBoss(NPCID.Golem);
         }
 
         public override void Update()

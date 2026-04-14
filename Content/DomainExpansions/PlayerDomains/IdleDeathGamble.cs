@@ -19,10 +19,10 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
         {
             string desc = SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.Description");
             desc += "\n";
-            // if (player.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()))
-            // {
-            //     desc += SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.TierIII");
-            // }
+            if (player.HasDefeatedBoss(NPCID.Golem))
+            {
+                desc += SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.TierIII");
+            }
             if (player.unlockedRCT)
             {
                 desc += SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.TierII");

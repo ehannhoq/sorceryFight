@@ -118,7 +118,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.CultistBoss);
+            return sf.defeatedMechBossOne;
         }
 
         public override void SureHitEffect(NPC npc)
