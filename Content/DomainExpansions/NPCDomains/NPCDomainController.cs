@@ -147,7 +147,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
             {
                 { NPCID.CultistBoss, "LunaticCultist" },
                 { NPCID.HallowBoss, "EmpressOfLight" },
-                { ModContent.NPCType<SupremeCalamitas>(), "SupremeCalamitas" },
+                // { ModContent.NPCType<SupremeCalamitas>(), "SupremeCalamitas" },
             };
 
             if (bossNameMap.TryGetValue(npc.type, out string npcName))
