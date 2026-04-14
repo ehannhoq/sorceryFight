@@ -5,9 +5,6 @@ using sorceryFight.Content.Items.Consumables.DeathPainting;
 using sorceryFight.Content.Items.Consumables.SukunasFinger;
 using sorceryFight.Content.Items.Materials;
 using sorceryFight.Content.Items.Weapons.Melee;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -40,15 +37,12 @@ namespace sorceryFight
                 { ItemID.SkeletronBossBag, ModContent.ItemType<CursedSkull>() },
                 { ItemID.SkeletronPrimeBossBag, ModContent.ItemType<CursedMechanicalSoul>() },
                 { ItemID.MoonLordBossBag, ModContent.ItemType<CursedPhantasmalEye>() },
-                // { ModContent.ItemType<ProvidenceBag>(), ModContent.ItemType<CursedProfanedShards>() },
 
                 // CE Regen Modifiers
                 { ItemID.EyeOfCthulhuBossBag, ModContent.ItemType<CursedEye>() },
                 { ItemID.WallOfFleshBossBag, ModContent.ItemType<CursedFlesh>() },
                 { ItemID.PlanteraBossBag, ModContent.ItemType<CursedBulb>() },
                 { ItemID.GolemBossBag, ModContent.ItemType<CursedRock>() },
-                // { ModContent.ItemType<DragonfollyBag>(), ModContent.ItemType<CursedEffulgentFeather>() },
-                // { ModContent.ItemType<SignusBag>(), ModContent.ItemType<CursedRuneOfKos>() },
             };
 
             if (itemLootMap.TryGetValue(item.type, out var loot))
@@ -61,48 +55,32 @@ namespace sorceryFight
         {
             Dictionary<int, int> itemLootMap = new()
             {
-                { ItemID.EyeOfCthulhuBossBag, ModContent.ItemType<SukunasFingerI>() },
+                { ItemID.KingSlimeBossBag, ModContent.ItemType<SukunasFingerI>() },
+                { ItemID.EyeOfCthulhuBossBag, ModContent.ItemType<SukunasFingerII>() },
 
-                // { ModContent.ItemType<HiveMindBag>(), ModContent.ItemType<SukunasFingerII>() },
-                // { ModContent.ItemType<PerforatorBag>(), ModContent.ItemType<SukunasFingerII>() },
+                { ItemID.EaterOfWorldsBossBag, ModContent.ItemType<SukunasFingerIII>() },
+                { ItemID.BrainOfCthulhuBossBag, ModContent.ItemType<SukunasFingerIII>() },
 
-                { ItemID.SkeletronBossBag, ModContent.ItemType<SukunasFingerIII>() },
+                { ItemID.QueenBeeBossBag, ModContent.ItemType<SukunasFingerIV>() },
+                { ItemID.SkeletronBossBag, ModContent.ItemType<SukunasFingerV>() },
+                { ItemID.DeerclopsBossBag, ModContent.ItemType<SukunasFingerVI>() },
+                { ItemID.WallOfFleshBossBag, ModContent.ItemType<SukunasFingerVII>() },
+                // Sukuna's Finger VIII is dropped by the Finger Bearer I.
+                { ItemID.QueenSlimeBossBag, ModContent.ItemType<SukunasFingerIX>() },
+                { ItemID.TwinsBossBag, ModContent.ItemType<SukunasFingerX>() },
+                { ItemID.DestroyerBossBag, ModContent.ItemType<SukunasFingerXI>() },
+                { ItemID.SkeletronPrimeBossBag, ModContent.ItemType<SukunasFingerXII>() },
+                { ItemID.PlanteraBossBag, ModContent.ItemType<SukunasFingerXIII>() },
+                // Sukuna's Finger XIV is dropped by the Ice Queen.
+                // Sukuna's Finger XV is dropped by the Pumpking.
+                // Sukuna's Finger XVI is dropped by Finger Bearer II.
+                { ItemID.FishronBossBag, ModContent.ItemType<SukunasFingerXVII>() },
+                { ItemID.FairyQueenBossBag, ModContent.ItemType<SukunasFingerXVIII>() },
+                { ItemID.CultistBossBag, ModContent.ItemType<SukunasFingerXIX>() },
+                { ItemID.MoonLordBossBag, ModContent.ItemType<SukunasFingerXX>() },
 
-                { ItemID.WallOfFleshBossBag, ModContent.ItemType<SukunasFingerIV>() },
 
-                { ItemID.SkeletronPrimeBossBag, ModContent.ItemType<SukunasFingerV>() },
-
-                // { ModContent.ItemType<CalamitasCloneBag>(), ModContent.ItemType<SukunasFingerVI>() },
-
-                { ItemID.PlanteraBossBag, ModContent.ItemType<SukunasFingerVII>() },
-
-                // { ModContent.ItemType<LeviathanBag>(), ModContent.ItemType<SukunasFingerVIII>() },
-
-                { ItemID.GolemBossBag, ModContent.ItemType<SukunasFingerIX>() },
-
-                // { ModContent.ItemType<RavagerBag>(), ModContent.ItemType<SukunasFingerX>() },
-
-                { ItemID.CultistBossBag, ModContent.ItemType<SukunasFingerXI>() },
-
-                // { ModContent.ItemType<AstrumDeusBag>(), ModContent.ItemType<SukunasFingerXII>() },
-
-                { ItemID.MoonLordBossBag, ModContent.ItemType<SukunasFingerXIII>() },
-
-                // { ModContent.ItemType<DragonfollyBag>(), ModContent.ItemType<SukunasFingerXIV>() },
-
-                // { ModContent.ItemType<ProvidenceBag>(), ModContent.ItemType<SukunasFingerXV>() },
-
-                // { ModContent.ItemType<CeaselessVoidBag>(), ModContent.ItemType<SukunasFingerXVI>() },
-
-                // { ModContent.ItemType<StormWeaverBag>(), ModContent.ItemType<SukunasFingerXVII>() },
-
-                // { ModContent.ItemType<SignusBag>(), ModContent.ItemType<SukunasFingerXVIII>() },
-
-                // { ModContent.ItemType<PolterghastBag>(), ModContent.ItemType<SukunasFingerXIX>() },
-
-                { ModContent.ItemType<DevourerofGodsBag>(), ModContent.ItemType<SukunasFingerXX>() },
-
-                { ModContent.ItemType<CalamitasCoffer>(), ModContent.ItemType<SukunasSkull>() }
+                { ItemID.MoonLordBossBag, ModContent.ItemType<SukunasSkull>() }
             };
 
             if (itemLootMap.TryGetValue(item.type, out var loot))
@@ -115,14 +93,14 @@ namespace sorceryFight
         {
             Dictionary<int, int> itemLootMap = new()
              {
-                { ItemID.EyeOfCthulhuBossBag, ModContent.ItemType<DeathPaintingOne>() },
-                { ItemID.SkeletronBossBag, ModContent.ItemType<DeathPaintingTwo>() },
-                { ItemID.WallOfFleshBossBag, ModContent.ItemType<DeathPaintingThree>() },
-                { ItemID.PlanteraBossBag, ModContent.ItemType<DeathPaintingFour>() },
-                { ItemID.MoonLordBossBag, ModContent.ItemType<DeathPaintingFive>() },
-                { ModContent.ItemType<ProvidenceBag>(), ModContent.ItemType<DeathPaintingSix>() },
-                { ModContent.ItemType<DevourerofGodsBag>(), ModContent.ItemType<DeathPaintingSeven>() },
-                { ModContent.ItemType<YharonBag>(), ModContent.ItemType<DeathPaintingEight>() }
+                { ItemID.KingSlimeBossBag, ModContent.ItemType<DeathPaintingOne>() },
+                { ItemID.EyeOfCthulhuBossBag, ModContent.ItemType<DeathPaintingTwo>() },
+                { ItemID.SkeletronBossBag, ModContent.ItemType<DeathPaintingThree>() },
+                { ItemID.WallOfFleshBossBag, ModContent.ItemType<DeathPaintingFour>() },
+                { ItemID.TheDestroyer, ModContent.ItemType<DeathPaintingFive>() },
+                { ItemID.PlanteraBossBag, ModContent.ItemType<DeathPaintingSix>() },
+                { ItemID.GolemBossBag, ModContent.ItemType<DeathPaintingSeven>() },
+                { ItemID.MoonLordBossBag, ModContent.ItemType<DeathPaintingEight>() },
             };
 
             if (itemLootMap.TryGetValue(item.type, out var loot))
@@ -144,40 +122,14 @@ namespace sorceryFight
         {
             if (item.type != ItemID.WallOfFleshBossBag) return;
 
-            // itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SukunasSkull>(), 10, 1, 1));
-
-            // List<IItemDropRule> rules = itemLoot.Get(true);
-
-            // rules.RemoveAll(rule =>
-            // {
-            //     if (rule is AllOptionsAtOnceWithPityDropRule itemRule)
-            //     {
-            //         foreach (var weightedItemStack in itemRule.stacks.ToArray())
-            //         {
-            //             int itemID = SFUtils.GetInternalFieldFromCalamity<int>(
-            //                 "CalamityMod.WeightedItemStack",
-            //                 "itemID",
-            //                 weightedItemStack
-            //             ); // on my soul fuck calamity mod
-
-            //             if (itemID == ItemID.WarriorEmblem)
-            //             {
-            //                 return true;
-            //             }
-            //         }
-            //     }
-            //     return false;
-            // });
-
-            int[] emblems = new int[]
-            {
+            int[] emblems =
+            [
                         ItemID.WarriorEmblem,
                         ItemID.RangerEmblem,
                         ItemID.SorcererEmblem,
                         ItemID.SummonerEmblem,
-                        // ModContent.ItemType<RogueEmblem>(),
                         ModContent.ItemType<JujutsuEmblem>()
-            };
+            ];
 
             itemLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, emblems));
         }

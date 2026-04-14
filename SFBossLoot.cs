@@ -26,6 +26,9 @@ namespace sorceryFight
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GeneticReroll>(), 4, 1, 1));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CursedEnergyCoin>(), 4, 1, 1));
 
+            if (npc.type == NPCID.CultistBoss)
+                npcLoot.Add(ItemDropRule.BossBag(ItemID.CultistBossBag));
+
             LeadingConditionRule nonExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
             npcLoot.Add(nonExpertRule);
 
@@ -36,7 +39,6 @@ namespace sorceryFight
             MoonLordDrops(ref npc, ref npcLoot, ref nonExpertRule);
             WallOfFleshDrops(ref npc, ref npcLoot, ref nonExpertRule);
             CursedEnergyPotions(ref npc, ref npcLoot, ref nonExpertRule);
-
         }
 
         // Non-Expert only
@@ -51,15 +53,12 @@ namespace sorceryFight
                 { NPCID.SkeletronHead, ModContent.ItemType<CursedSkull>() },
                 { NPCID.SkeletronPrime, ModContent.ItemType<CursedMechanicalSoul>() },
                 { NPCID.MoonLordCore, ModContent.ItemType<CursedPhantasmalEye>() },
-                // { ModContent.NPCType<Providence>(), ModContent.ItemType<CursedProfanedShards>() },
 
                 // CE Regen Modifiers
                 { NPCID.EyeofCthulhu, ModContent.ItemType<CursedEye>() },
                 { NPCID.WallofFlesh, ModContent.ItemType<CursedFlesh>() },
                 { NPCID.Plantera, ModContent.ItemType<CursedBulb>() },
                 { NPCID.Golem, ModContent.ItemType<CursedRock>() },
-                // { ModContent.NPCType<Dragonfolly>(), ModContent.ItemType<CursedEffulgentFeather>() },
-                // { ModContent.NPCType<Signus>(), ModContent.ItemType<CursedRuneOfKos>() },
             };
 
             if (npcLootMap.TryGetValue(npc.type, out int itemID))
@@ -76,54 +75,47 @@ namespace sorceryFight
 
             Dictionary<int, int> npcLootMap = new()
             {
-                { NPCID.EyeofCthulhu, ModContent.ItemType<SukunasFingerI>() },
+                { NPCID.KingSlime, ModContent.ItemType<SukunasFingerI>() },
+                { NPCID.EyeofCthulhu, ModContent.ItemType<SukunasFingerII>() },
 
-                // { ModContent.NPCType<HiveMind>(), ModContent.ItemType<SukunasFingerII>() },
-                // { ModContent.NPCType<PerforatorHive>(), ModContent.ItemType<SukunasFingerII>() },
+                { NPCID.EaterofWorldsHead, ModContent.ItemType<SukunasFingerIII>() },
+                { NPCID.BrainofCthulhu, ModContent.ItemType<SukunasFingerIII>() },
 
-                { NPCID.SkeletronHead, ModContent.ItemType<SukunasFingerIII>() },
-
-                { NPCID.WallofFlesh, ModContent.ItemType<SukunasFingerIV>() },
-
-                { NPCID.SkeletronPrime, ModContent.ItemType<SukunasFingerV>() },
-
-                // { ModContent.NPCType<CalamitasClone>(), ModContent.ItemType<SukunasFingerVI>() },
-
-                { NPCID.Plantera, ModContent.ItemType<SukunasFingerVII>() },
-
-                // { ModContent.NPCType<Anahita>(), ModContent.ItemType<SukunasFingerVIII>() },
-
-                { NPCID.Golem, ModContent.ItemType<SukunasFingerIX>() },
-
-                // { ModContent.NPCType<RavagerBody>(), ModContent.ItemType<SukunasFingerX>() },
-
-                { NPCID.CultistBoss, ModContent.ItemType<SukunasFingerXI>() },
-
-                // { ModContent.NPCType<AstrumDeusHead>(), ModContent.ItemType<SukunasFingerXII>() },
-
-                { NPCID.MoonLordCore, ModContent.ItemType<SukunasFingerXIII>() },
-
-                // { ModContent.NPCType<Dragonfolly>(), ModContent.ItemType<SukunasFingerXIV>() },
-
-                // { ModContent.NPCType<Providence>(), ModContent.ItemType<SukunasFingerXV>() },
-
-                // { ModContent.NPCType<CeaselessVoid>(), ModContent.ItemType<SukunasFingerXVI>() },
-
-                // { ModContent.NPCType<StormWeaverHead>(), ModContent.ItemType<SukunasFingerXVII>() },
-
-                // { ModContent.NPCType<Signus>(), ModContent.ItemType<SukunasFingerXVIII>() },
-
-                // { ModContent.NPCType<Polterghast>(), ModContent.ItemType<SukunasFingerXIX>() },
-
-                { ModContent.NPCType<DevourerofGodsHead>(), ModContent.ItemType<SukunasFingerXX>() },
-
-                { ModContent.NPCType<SupremeCalamitas>(), ModContent.ItemType<SukunasSkull>() }
+                { NPCID.QueenBee, ModContent.ItemType<SukunasFingerIV>() },
+                { NPCID.SkeletronHead, ModContent.ItemType<SukunasFingerV>() },
+                { NPCID.Deerclops, ModContent.ItemType<SukunasFingerVI>() },
+                { NPCID.WallofFlesh, ModContent.ItemType<SukunasFingerVII>() },
+                // Sukuna's Finger VIII is dropped by Finger Bearer I.
+                { NPCID.QueenSlimeBoss, ModContent.ItemType<SukunasFingerIX>() },
+                // Sukuna's Finger X is dropped by the Twins; Handled below.
+                { NPCID.TheDestroyer, ModContent.ItemType<SukunasFingerXI>() },
+                { NPCID.SkeletronPrime, ModContent.ItemType<SukunasFingerXII>() },
+                { NPCID.Plantera, ModContent.ItemType<SukunasFingerXIII>() },
+                // Sukuna's Finger XIV is dropped by the Ice Queen; Handled below.
+                // Sukuna's Finger XV is dropped by the Pumpking; Handled below.
+                // Sukuna's Finger XVI is dropped by Finger Bearer II.
+                { NPCID.DukeFishron, ModContent.ItemType<SukunasFingerXVII>() },
+                { NPCID.HallowBoss, ModContent.ItemType<SukunasFingerXVIII>() },
+                { NPCID.CultistBoss, ModContent.ItemType<SukunasFingerXIX>() },
+                { NPCID.MoonLordCore, ModContent.ItemType<SukunasFingerXX>() },
             };
 
-            if (npcLootMap.TryGetValue(npc.type, out int itemID))
+            Dictionary<int, int> expertInclusiveLootMap = new()
             {
-                firstTimeRule.OnSuccess(ItemDropRule.Common(itemID));
+                { NPCID.IceQueen, ModContent.ItemType<SukunasFingerXIV>() },
+                { NPCID.Pumpking, ModContent.ItemType<SukunasFingerXV>() }
+            };
+
+            if (npc.type == NPCID.Retinazer || npc.type == NPCID.Spazmatism)
+            {
+                firstTimeRule.Add(ItemDropRule.ByCondition(new Conditions.MissingTwin(), ModContent.ItemType<SukunasFingerX>()));
             }
+
+            if (npcLootMap.TryGetValue(npc.type, out int itemID))
+                firstTimeRule.OnSuccess(ItemDropRule.Common(itemID));
+
+            if (expertInclusiveLootMap.TryGetValue(npc.type, out int itemID2))
+                npcLoot.Add(ItemDropRule.Common(itemID2));
         }
 
         private void DeathPaintings(ref NPC npc, ref NPCLoot npcLoot, ref LeadingConditionRule nonExpertRule)
@@ -133,14 +125,15 @@ namespace sorceryFight
 
             Dictionary<int, int> npcLootMap = new()
             {
-                { NPCID.EyeofCthulhu, ModContent.ItemType<DeathPaintingOne>() },
-                { NPCID.SkeletronHead, ModContent.ItemType<DeathPaintingTwo>() },
-                { NPCID.WallofFlesh, ModContent.ItemType<DeathPaintingThree>() },
-                { NPCID.Plantera, ModContent.ItemType<DeathPaintingFour>() },
-                { NPCID.MoonLordCore, ModContent.ItemType<DeathPaintingFive>() },
-                { ModContent.NPCType<Providence>(), ModContent.ItemType<DeathPaintingSix>() },
-                { ModContent.NPCType<DevourerofGodsHead>(), ModContent.ItemType<DeathPaintingSeven>() },
-                { ModContent.NPCType<Yharon>(), ModContent.ItemType<DeathPaintingEight>() }
+                { NPCID.KingSlime, ModContent.ItemType<DeathPaintingOne>() },
+                { NPCID.EyeofCthulhu, ModContent.ItemType<DeathPaintingTwo>() },
+                { NPCID.SkeletronHead, ModContent.ItemType<DeathPaintingThree>() },
+                { NPCID.WallofFlesh, ModContent.ItemType<DeathPaintingFour>() },
+                { NPCID.TheDestroyer, ModContent.ItemType<DeathPaintingFive>() },
+                { NPCID.Plantera, ModContent.ItemType<DeathPaintingSix>() },
+                { NPCID.Golem, ModContent.ItemType<DeathPaintingSeven>() },
+                { NPCID.MoonLordCore, ModContent.ItemType<DeathPaintingEight>() },
+
             };
 
             if (npcLootMap.TryGetValue(npc.type, out int itemID))
@@ -169,41 +162,16 @@ namespace sorceryFight
         {
             if (npc.type != NPCID.WallofFlesh) return;
 
-            // List<IItemDropRule> rules = npcLoot.Get(true);
-
-            // rules.RemoveAll(rule =>
-            // {
-            //     if (rule is AllOptionsAtOnceWithPityDropRule itemRule)
-            //     {
-            //         foreach (var weightedItemStack in itemRule.stacks.ToArray())
-            //         {
-            //             int itemID = SFUtils.GetInternalFieldFromCalamity<int>(
-            //                 "CalamityMod.WeightedItemStack",
-            //                 "itemID",
-            //                 weightedItemStack
-            //             );
-
-            //             if (itemID == ItemID.WarriorEmblem)
-            //             {
-            //                 return true;
-            //             }
-            //         }
-            //     }
-            //     return false;
-            // });
-
-            int[] emblems = new int[]
-            {
+            int[] emblems =
+            [
                         ItemID.WarriorEmblem,
                         ItemID.RangerEmblem,
                         ItemID.SorcererEmblem,
                         ItemID.SummonerEmblem,
-                        // ModContent.ItemType<RogueEmblem>(),
                         ModContent.ItemType<JujutsuEmblem>()
-            };
+            ];
 
             npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, emblems));
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SukunasSkull>(), 10, 1, 1));
         }
 
 
@@ -222,11 +190,6 @@ namespace sorceryFight
                 { NPCID.SkeletronHead, soda },
                 { NPCID.QueenBee, soda },
                 { NPCID.WallofFlesh, soda },
-
-                // { ModContent.NPCType<PerforatorHive>(), soda },
-                // { ModContent.NPCType<HiveMind>(), soda },
-                // { ModContent.NPCType<EbonianPaladin>(), soda },
-                // { ModContent.NPCType<CrimulanPaladin>(), soda }
             };
             drops.Add(sodaMap);
             // Cursed Energy Tall
@@ -239,11 +202,6 @@ namespace sorceryFight
                 { NPCID.TheDestroyer, tall },
                 { NPCID.SkeletronPrime, tall },
                 { NPCID.Plantera, tall },
-
-                // { ModContent.NPCType<Cryogen>(), tall },
-                // { ModContent.NPCType<AquaticScourgeHead>(), tall },
-                // { ModContent.NPCType<BrimstoneElemental>(), tall },
-                // { ModContent.NPCType<CalamitasClone>(), tall },
             };
             drops.Add(tallMap);
 
@@ -255,11 +213,6 @@ namespace sorceryFight
                 { NPCID.HallowBoss, mug },
                 { NPCID.DukeFishron, mug },
                 { NPCID.CultistBoss, mug },
-                // { ModContent.NPCType<Anahita>(), tall },
-                // { ModContent.NPCType<Leviathan>(), tall },
-                // { ModContent.NPCType<AstrumAureus>(), tall },
-                // { ModContent.NPCType<PlaguebringerGoliath>(), tall },
-                // { ModContent.NPCType<RavagerHead>(), tall },
             };
             drops.Add(mugMap);
 
@@ -268,32 +221,8 @@ namespace sorceryFight
             Dictionary<int, int> twoMap = new()
             {
                 { NPCID.MoonLordCore, two },
-                // { ModContent.NPCType<ProfanedGuardianHealer>(), two },
-                // { ModContent.NPCType<ProfanedGuardianDefender>(), two },
-                // { ModContent.NPCType<ProfanedGuardianCommander>(), two },
-                // { ModContent.NPCType<Dragonfolly>(), two },
-                // { ModContent.NPCType<Providence>(), two },
-                // { ModContent.NPCType<StormWeaverHead>(), two },
-                // { ModContent.NPCType<CeaselessVoid>(), two },
-                // { ModContent.NPCType<Signus>(), two },
-                // { ModContent.NPCType<Polterghast>(), two },
-                // { ModContent.NPCType<OldDuke>(), two }
             };
             drops.Add(twoMap);
-
-            // Cursed Energy Five Gallon
-            int five = ModContent.ItemType<CursedEnergyFiveGallon>();
-            Dictionary<int, int> fiveMap = new()
-            {
-                // { ModContent.NPCType<DevourerofGodsHead>(), five },
-                // { ModContent.NPCType<Yharon>(), five },
-                // { ModContent.NPCType<Artemis>(), five },
-                // { ModContent.NPCType<Apollo>(), five },
-                // { ModContent.NPCType<AresBody>(), five },
-                // { ModContent.NPCType<ThanatosHead>(), five },
-                // { ModContent.NPCType<SupremeCalamitas>(), five }
-            };
-            drops.Add(fiveMap);
 
             foreach (Dictionary<int, int> map in drops)
             {
