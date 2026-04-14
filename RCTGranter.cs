@@ -7,10 +7,10 @@ namespace sorceryFight.Content
 {
     public class RCTGranter : ModSystem
     {
-        private int moonLordIndex = -1;
+        private int planteraIndex = -1;
         public override void PreUpdatePlayers()
         {
-            if (!CheckMoonLord()) return;
+            if (!CheckPlantera()) return;
 
             foreach (Player player in Main.player)
             {
@@ -32,24 +32,24 @@ namespace sorceryFight.Content
             }
         }
 
-        public bool CheckMoonLord()
+        public bool CheckPlantera()
         {
-            int moonLordType = NPCID.MoonLordHead;
-            if (moonLordIndex >= 0 && Main.npc[moonLordIndex].active && Main.npc[moonLordIndex].type == moonLordType)
+            int planteraType = NPCID.Plantera;
+            if (planteraIndex >= 0 && Main.npc[planteraIndex].active && Main.npc[planteraIndex].type == planteraType)
                 return true;
 
 
-            moonLordIndex = -1;
+            planteraIndex = -1;
             foreach (NPC n in Main.ActiveNPCs)
             {
-                if (n.type == moonLordType)
+                if (n.type == planteraType)
                 {
-                    moonLordIndex = n.whoAmI;
+                    planteraIndex = n.whoAmI;
                     break;
                 }
             }
             
-            return moonLordIndex != -1;
+            return planteraIndex != -1;
         }
     }
 }
