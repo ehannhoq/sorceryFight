@@ -234,7 +234,7 @@ namespace sorceryFight.SFPlayer
             }
 
             maxBloodEnergy = calculateBaseMaxBE();
-             bloodEnergyRegenPerSecond = calculateBaseBERegenRate();
+            bloodEnergyRegenPerSecond = calculateBaseBERegenRate();
 
 
             if (innateTechnique != null)
@@ -257,9 +257,9 @@ namespace sorceryFight.SFPlayer
 
             completedQuests = tag.GetList<string>("completedQuests").ToList();
 
-            mechanicalBossesDefeatedFlags = (byte)(tag.ContainsKey("mechanicalBossesDefeatedFlags") ? tag.GetInt("mechanicalBossesDefeatedFlags") : 0b0000); 
+            mechanicalBossesDefeatedFlags = tag.ContainsKey("mechanicalBossesDefeatedFlags") ? tag.GetByte("mechanicalBossesDefeatedFlags") : (byte)0b0000;
         }
-        
+
         public float calculateBaseMaxCE()
         {
             float baseCost = 100f;
