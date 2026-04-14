@@ -7,6 +7,8 @@ using sorceryFight.Content.Buffs.Vessel;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.Content.Items.Accessories;
+using sorceryFight.Content.Particles;
+using sorceryFight.Content.Particles.UIParticles;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
@@ -228,16 +230,16 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         {
             SoundEngine.PlaySound(SorceryFightSounds.DivineFlameExplosion, Projectile.Center);
 
-            // for (int i = 0; i < 20; i++)
-            // {
-            //     Vector2 vel = new Vector2(Main.rand.NextFloat(-50f, 50f), Main.rand.NextFloat(-50f, 50f));
-            //     LineParticle particle = new LineParticle(Projectile.Center, vel, false, 120, 5f, textColor);
-            //     GeneralParticleHandler.SpawnParticle(particle);
+            for (int i = 0; i < 20; i++)
+            {
+                Vector2 vel = new Vector2(Main.rand.NextFloat(-50f, 50f), Main.rand.NextFloat(-50f, 50f));
+                LinearParticle particle = new LinearParticle(Projectile.Center, vel, textColor, false, 0.9f, 5f, 120);
+                ParticleController.SpawnParticle(particle);
 
-            //     Vector2 vel2 = new Vector2(Main.rand.NextFloat(-25f, 25f), Main.rand.NextFloat(-25f, 25f));
-            //     LineParticle particle2 = new LineParticle(Projectile.Center, vel2, false, 120, 1f, new Color(textColor.R + 10, textColor.G + 10, textColor.B + 10));
-            //     GeneralParticleHandler.SpawnParticle(particle2);
-            // }
+                Vector2 vel2 = new Vector2(Main.rand.NextFloat(-25f, 25f), Main.rand.NextFloat(-25f, 25f));
+                LinearParticle particle2 = new LinearParticle(Projectile.Center, vel2, new Color(textColor.R + 10, textColor.G + 10, textColor.B + 10), false, 0.9f, 1f, 120);
+                ParticleController.SpawnParticle(particle2);
+            }
 
             foreach (NPC npc in Main.ActiveNPCs)
             {

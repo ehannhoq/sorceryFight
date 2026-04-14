@@ -1,6 +1,4 @@
-﻿using CalamityMod.Particles;
-using CalamityMod.Sounds;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Particles;
@@ -8,6 +6,7 @@ using System.Linq;
 using System;
 using Terraria;
 using Terraria.ModLoader;
+using sorceryFight.Content.Particles.UIParticles;
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
@@ -79,10 +78,9 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(10f, 40f);
             Vector2 particleOffset = Projectile.Center + behindOffset;
             Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-            LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 20, 1f, textColor);
-            GeneralParticleHandler.SpawnParticle(particle);
+            LinearParticle particle = new LinearParticle(particleOffset, particleVelocity * 3, textColor, false, 0.9f, 1f, 20);
+            ParticleController.SpawnParticle(particle);
             return;
-
         }
 
         int FindTarget()

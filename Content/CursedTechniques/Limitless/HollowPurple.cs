@@ -248,13 +248,13 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {
             base.OnHitNPC(target, hit, damageDone);
 
-            // for (int i = 0; i < 20; i++)
-            // {
-            //     Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 7), Main.rand.NextFloat(-7, 7));
+            for (int i = 0; i < 20; i++)
+            {
+                Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 7), Main.rand.NextFloat(-7, 7));
 
-            //     LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
-            //     GeneralParticleHandler.SpawnParticle(particle);
-            // }
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, textColor, false, 0.9f, 1, 30);
+                ParticleController.SpawnParticle(particle);
+            }
         }
     }
 }

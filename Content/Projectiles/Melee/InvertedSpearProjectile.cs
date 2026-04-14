@@ -173,15 +173,15 @@ namespace sorceryFight.Content.Projectiles.Melee
             //     GeneralParticleHandler.SpawnParticle(particle);
             // }
 
-            // for (int i = 0; i < 2; i++)
-            // {
-            //     Vector2 veloVariation = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
-            //     int colVariation = Main.rand.Next(-38, 100);
-            //     float scale = Main.rand.NextFloat(1f, 1.25f);
-            //     float scalar = Main.rand.NextFloat(5f, 15f);
-            //     LineParticle particle = new LineParticle(target.Center, (Projectile.velocity * scalar) + veloVariation, false, 30, scale, new Color(225 + colVariation, 242 + colVariation, 97 + colVariation));
-            //     GeneralParticleHandler.SpawnParticle(particle);
-            // }
+            for (int i = 0; i < 2; i++)
+            {
+                Vector2 veloVariation = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
+                int colVariation = Main.rand.Next(-38, 100);
+                float scale = Main.rand.NextFloat(1f, 1.25f);
+                float scalar = Main.rand.NextFloat(5f, 15f);
+                LinearParticle particle = new LinearParticle(target.Center, (Projectile.velocity * scalar) + veloVariation, new Color(225 + colVariation, 242 + colVariation, 97 + colVariation), false, 1f, scale, 30);
+                ParticleController.SpawnParticle(particle);
+            }
 
             // for (int i = 0; i < 2; i++)
             // {

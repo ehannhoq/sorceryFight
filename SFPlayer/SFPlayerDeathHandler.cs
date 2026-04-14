@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs.Vessel;
+using sorceryFight.Content.Particles;
+using sorceryFight.Content.Particles.UIParticles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -48,13 +50,13 @@ namespace sorceryFight.SFPlayer
             }
 
             int numParticles = rctTimer / 90;
-            // for (int i = 0; i <= numParticles; i++)
-            // {
-            //     Vector2 particlePosition = Player.Center + new Vector2(Main.rand.NextFloat(-100f, 100f), Main.rand.NextFloat(-100f, 100f));
-            //     Vector2 particleVelocity = particlePosition.DirectionTo(Player.Center) * 3;
-            //     LineParticle particle = new LineParticle(particlePosition, particleVelocity, false, 30, 0.5f, Color.Wheat);
-            //     GeneralParticleHandler.SpawnParticle(particle);
-            // }
+            for (int i = 0; i <= numParticles; i++)
+            {
+                Vector2 particlePosition = Player.Center + new Vector2(Main.rand.NextFloat(-100f, 100f), Main.rand.NextFloat(-100f, 100f));
+                Vector2 particleVelocity = particlePosition.DirectionTo(Player.Center) * 3;
+                LinearParticle particle = new LinearParticle(particlePosition, particleVelocity, Color.Wheat, false, 0.9f, 0.5f, 30);
+                ParticleController.SpawnParticle(particle);
+            }
 
 
             if (rctTimer >= 300)
@@ -77,13 +79,13 @@ namespace sorceryFight.SFPlayer
 
                 SorceryFightUI.UpdateTechniqueUI.Invoke();
 
-                // for (int i = 0; i < 100; i++)
-                // {
-                //     Vector2 particleOffsetPosition = Player.Center + new Vector2(Main.rand.NextFloat(-200f, 200f), Main.rand.NextFloat(-200f, 200f));
-                //     Vector2 particleVelocity = Player.Center.DirectionTo(particleOffsetPosition) * 6;
-                //     LineParticle particle = new LineParticle(Player.Center, particleVelocity, false, 90, 2f, Color.Wheat);
-                //     GeneralParticleHandler.SpawnParticle(particle);
-                // }
+                for (int i = 0; i < 100; i++)
+                {
+                    Vector2 particleOffsetPosition = Player.Center + new Vector2(Main.rand.NextFloat(-200f, 200f), Main.rand.NextFloat(-200f, 200f));
+                    Vector2 particleVelocity = Player.Center.DirectionTo(particleOffsetPosition) * 6;
+                    LinearParticle particle = new LinearParticle(Player.Center, particleVelocity, Color.Wheat, false, 0.9f, 2f, 90);
+                    ParticleController.SpawnParticle(particle);
+                }
             }
         }
 

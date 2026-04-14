@@ -1,6 +1,8 @@
 using System;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs;
+using sorceryFight.Content.Particles;
+using sorceryFight.Content.Particles.UIParticles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
@@ -64,14 +66,14 @@ namespace sorceryFight.SFPlayer
 
             Vector2 direction = Player.Center.DirectionTo(target.Center) * 30f;
 
-            // for (int i = 0; i < 15; i++)
-            // {
-            //     Vector2 variation = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
-            //     LineParticle redParticle = new LineParticle(target.Center, direction + variation, false, 60, 6f, Color.Red);
-            //     LineParticle blackParticle = new LineParticle(target.Center, direction + variation, false, 60, 5f, Color.White);
-            //     GeneralParticleHandler.SpawnParticle(redParticle);
-            //     GeneralParticleHandler.SpawnParticle(blackParticle);
-            // }
+            for (int i = 0; i < 15; i++)
+            {
+                Vector2 variation = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
+                LinearParticle redParticle = new LinearParticle(target.Center, direction + variation, Color.Red, false, 0.9f, 6f, 60);
+                LinearParticle blackParticle = new LinearParticle(target.Center, direction + variation, Color.White, false, 0.9f, 5f, 60);
+                ParticleController.SpawnParticle(redParticle);
+                ParticleController.SpawnParticle(blackParticle);
+            }
 
             if (!infinity && !hollowWickerBasket)
             {
