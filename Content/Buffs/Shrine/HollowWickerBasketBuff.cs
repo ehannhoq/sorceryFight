@@ -132,10 +132,10 @@ namespace sorceryFight.Content.Buffs.Shrine
             }
 
             int multiplier = 1;
-            // if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
-            // {
-            //     multiplier = 3;
-            // }
+            if (AreThereAnyDamnBosses.BossActive)
+            {
+                multiplier = 3;
+            }
 
             CostPerSecond = 50f;
             CostPerSecond += accumulativeDamage * 3f * multiplier;
