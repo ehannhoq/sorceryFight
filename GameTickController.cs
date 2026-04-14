@@ -1,9 +1,6 @@
 using System;
-using CalamityMod.World.Planets;
 using Microsoft.Xna.Framework;
-using sorceryFight.SFPlayer;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content
