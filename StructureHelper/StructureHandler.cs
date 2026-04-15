@@ -106,7 +106,7 @@ namespace sorceryFight.StructureHelper
         {
             if (template == null)
             {
-                ModContent.GetInstance<SorceryFight>().Logger.Error("Structure template is null!");
+                SorceryFight.Log.Error("Structure template is null!");
                 return;
             }
 

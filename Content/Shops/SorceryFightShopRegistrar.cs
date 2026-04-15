@@ -13,7 +13,7 @@ namespace sorceryFight.Content.Shops
         public override void PostSetupContent()
         {
             LoadedShops = new();
-            foreach (var type in AssemblyManager.GetLoadableTypes(ModContent.GetInstance<SorceryFight>().Code))
+            foreach (var type in AssemblyManager.GetLoadableTypes(SorceryFight.Instance.Code))
             {
                 if (type.IsAbstract || !typeof(SorceryFightShop).IsAssignableFrom(type))
                     continue;

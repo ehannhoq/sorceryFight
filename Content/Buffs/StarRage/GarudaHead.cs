@@ -125,12 +125,12 @@ namespace sorceryFight.Content.Buffs.StarRage
             {
                 if (projectile.type == ModContent.ProjectileType<GarudaBody>() && projectile.owner == Projectile.owner && projectile.active && !segments.ContainsKey(projectile.ModProjectile<GarudaBody>().segmentIndex))
                 {
-                    ModContent.GetInstance<SorceryFight>().Logger.Info($"Adding body segment with index: {projectile.ModProjectile<GarudaBody>().segmentIndex}, total so far: {segments.Count}");
+                    SorceryFight.Log.Info($"Adding body segment with index: {projectile.ModProjectile<GarudaBody>().segmentIndex}, total so far: {segments.Count}");
                     segments.Add(projectile.ModProjectile<GarudaBody>().segmentIndex, projectile);
                 }
                 if (projectile.type == ModContent.ProjectileType<GarudaTail>() && projectile.owner == Projectile.owner && projectile.active && !segments.ContainsKey(projectile.ModProjectile<GarudaTail>().segmentIndex))
                 {
-                    ModContent.GetInstance<SorceryFight>().Logger.Info($"Adding tail segment with index: {projectile.ModProjectile<GarudaTail>().segmentIndex}");
+                    SorceryFight.Log.Info($"Adding tail segment with index: {projectile.ModProjectile<GarudaTail>().segmentIndex}");
                     segments.Add(projectile.ModProjectile<GarudaTail>().segmentIndex, projectile);
                 }
             }
@@ -138,7 +138,7 @@ namespace sorceryFight.Content.Buffs.StarRage
             {
                 if (i < segments.Count)
                 {
-                    ModContent.GetInstance<SorceryFight>().Logger.Info("This is what segment is moving:" + i);
+                    SorceryFight.Log.Info("This is what segment is moving:" + i);
                     if (segments.ContainsKey(i))
                         segments[i].ModProjectile<GarudaBody>().SegmentMove();
                 }

@@ -344,7 +344,7 @@ namespace sorceryFight.SFPlayer
 
             if (SFKeybinds.UseTechnique.JustPressed)
             {
-                //ModContent.GetInstance<SorceryFight>().Logger.Info("Keybing Just Pressed" + SFKeybinds.UseTechnique.JustPressed + "Is: " + disableCurseTechniques);
+                //SorceryFight.Log.Info("Keybing Just Pressed" + SFKeybinds.UseTechnique.JustPressed + "Is: " + disableCurseTechniques);
 
                 if (!disableCurseTechniques || uniqueBodyStructure)
                     ShootTechnique();
@@ -557,7 +557,7 @@ namespace sorceryFight.SFPlayer
 
                         if (Main.netMode == NetmodeID.MultiplayerClient)
                         {
-                            ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
+                            ModPacket packet = SorceryFight.Instance.GetPacket();
                             packet.Write((byte)MessageType.PlayerCastingDomain);
                             packet.Write(Player.whoAmI);
                             packet.Send();

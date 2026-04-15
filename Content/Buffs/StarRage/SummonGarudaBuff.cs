@@ -66,7 +66,7 @@ namespace sorceryFight.Content.Buffs.StarRage
         public static void SummonGaruda(int headType, int bodyType, int tailType, Vector2 spawnPos, Player player, IEntitySource source, int damage, float knockback)
         {
 
-            ModContent.GetInstance<SorceryFight>().Logger.Info($"ASummoning Garuda");
+            SorceryFight.Log.Info($"ASummoning Garuda");
 
 
             var head = Projectile.NewProjectileDirect(source, spawnPos, player.DirectionTo(Main.MouseWorld) * 3, headType, damage, knockback, player.whoAmI);

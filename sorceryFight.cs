@@ -1,3 +1,4 @@
+using log4net;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
 using sorceryFight.SFPlayer;
@@ -19,18 +20,16 @@ namespace sorceryFight
 	}
 	public class SorceryFight : Mod
 	{
-		private static List<string> DevModeNames =
+
+        internal static SorceryFight Instance => _Instance ??= ModContent.GetInstance<SorceryFight>();
+        private static SorceryFight _Instance;
+        internal static ILog Log => Instance.Logger;
+
+        private static List<string> DevModeNames =
 		[
 			"The Honored One",
 			"ehann",
 			"gooloohoodoo",
-			"gooloohoodoo1",
-			"gooloohoodoo2",
-			"gooloohoodoo3",
-			"gooloohoodoo4",
-			"gooloohoodoo5",
-			"gooloohoodoo6",
-			"gooloohoodoo7",
 			"TheRealCriky",
 			"prowler",
 			"rend",
@@ -62,7 +61,7 @@ namespace sorceryFight
 			}
 		}
 
-		public override void Unload()
+        public override void Unload()
 		{
 			totalBosses = 0;
 		}
