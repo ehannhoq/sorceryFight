@@ -12,6 +12,8 @@ namespace sorceryFight
 {
     public class SorceryFightNetcode : ModSystem
     {
+        // this is almost entirely just a copy of Calamity's netcode system with heavy augmentation for domains planned
+
         private static List<SorceryFightPacket> _PacketHandlers = [];
 
         internal static ushort RegisterHandler(SorceryFightPacket handler)
@@ -59,18 +61,18 @@ namespace sorceryFight
                     // Throw an exception now instead of allowing the network stream to corrupt.
                     //
 
-                    SorceryFightMod.Log.Error($"Failed to parse Calamity packet: No Calamity packet exists with ID {netID}.");
-                    throw new Exception("Failed to parse Calamity packet: Invalid Calamity packet ID.");
+                    SorceryFightMod.Log.Error($"Failed to parse SorceryFight packet: No Calamity packet exists with ID {netID}.");
+                    throw new Exception("Failed to parse SorceryFight packet: Invalid Calamity packet ID.");
                 }
             }
             catch (Exception e)
             {
                 if (e is EndOfStreamException eose)
-                    SorceryFightMod.Log.Error("Failed to parse Calamity packet: Packet was too short, missing data, or otherwise corrupt.", eose);
+                    SorceryFightMod.Log.Error("Failed to parse SorceryFight packet: Packet was too short, missing data, or otherwise corrupt.", eose);
                 else if (e is ObjectDisposedException ode)
-                    SorceryFightMod.Log.Error("Failed to parse Calamity packet: Packet reader disposed or destroyed.", ode);
+                    SorceryFightMod.Log.Error("Failed to parse SorceryFight packet: Packet reader disposed or destroyed.", ode);
                 else if (e is IOException ioe)
-                    SorceryFightMod.Log.Error("Failed to parse Calamity packet: An unknown I/O error occurred.", ioe);
+                    SorceryFightMod.Log.Error("Failed to parse SorceryFight packet: An unknown I/O error occurred.", ioe);
                 else
                     throw; // this either will crash the game or be caught by TML's packet policing
             }
