@@ -10,6 +10,7 @@ using sorceryFight.Content.CursedTechniques.Limitless;
 using sorceryFight.Content.InnateTechniques;
 using sorceryFight.Content.UI.InnateTechniqueSelector;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;

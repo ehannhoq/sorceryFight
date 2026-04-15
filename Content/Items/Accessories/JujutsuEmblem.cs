@@ -6,6 +6,7 @@ using sorceryFight.SFPlayer;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Items.Accessories
 {

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs.PrivatePureLoveTrain;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;

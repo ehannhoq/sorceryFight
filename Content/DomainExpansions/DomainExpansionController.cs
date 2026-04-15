@@ -8,6 +8,7 @@ using sorceryFight.Content.Buffs;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Graphics.CameraModifiers;

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Particles;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using System;
 using System.Collections.Generic;
 using Terraria;

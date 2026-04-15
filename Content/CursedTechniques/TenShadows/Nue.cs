@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using System;
 using Terraria;
 using Terraria.Audio;

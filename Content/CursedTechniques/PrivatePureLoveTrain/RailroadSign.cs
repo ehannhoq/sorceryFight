@@ -22,6 +22,7 @@ using CalamityMod.Projectiles.Healing;
 using Terraria.Graphics.Shaders;
 using static CalamityMod.CalamityUtils;
 using System.ComponentModel;
+using sorceryFight.Utilities;
 
 
 namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain

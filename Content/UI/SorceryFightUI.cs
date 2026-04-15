@@ -16,6 +16,7 @@ using sorceryFight.Content.UI.Quests.QuestToast;
 using static sorceryFight.Content.UI.Quests.QuestToast.QuestToast;
 using sorceryFight.Content.UI.Quests.QuestMenu;
 using sorceryFight.Content.UI.Chants;
+using sorceryFight.Utilities;
 
 public class SorceryFightUI : UIState
 {

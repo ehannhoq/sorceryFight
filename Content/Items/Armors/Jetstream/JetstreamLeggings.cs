@@ -1,6 +1,7 @@
 using CalamityMod.Items.Armor.Bloodflare;
 using CalamityMod.Items.Materials;
 using CalamityMod.Tiles.Furniture.CraftingStations;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;

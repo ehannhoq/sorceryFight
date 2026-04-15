@@ -5,6 +5,7 @@ using MonoMod.Cil;
 using sorceryFight.Content.InnateTechniques;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.Quests;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;

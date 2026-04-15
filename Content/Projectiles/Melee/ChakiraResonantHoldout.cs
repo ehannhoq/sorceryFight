@@ -10,6 +10,7 @@ using sorceryFight.Content.Particles;
 using sorceryFight.Content.Particles.UIParticles;
 using sorceryFight.Content.Projectiles;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

@@ -7,6 +7,7 @@ using ReLogic.Graphics;
 using sorceryFight.Content.Projectiles.Melee;
 using sorceryFight.Content.Rarities;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

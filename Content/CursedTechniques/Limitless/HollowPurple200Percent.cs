@@ -13,6 +13,7 @@ using CalamityMod.NPCs.DevourerofGods;
 using System;
 using sorceryFight.Content.Items.Accessories;
 using Terraria.DataStructures;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {

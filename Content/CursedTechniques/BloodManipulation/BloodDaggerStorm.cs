@@ -2,6 +2,7 @@
 using Microsoft.Build.Tasks;
 using Microsoft.Xna.Framework;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;

@@ -34,6 +34,7 @@ using sorceryFight.Content.Items.Consumables.SukunasFinger;
 using sorceryFight.Content.Items.Materials;
 using sorceryFight.Content.Items.Novelty;
 using sorceryFight.Content.Items.Weapons.Melee;
+using sorceryFight.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

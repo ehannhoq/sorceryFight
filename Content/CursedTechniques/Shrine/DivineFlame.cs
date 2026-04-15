@@ -12,6 +12,7 @@ using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.Content.Items.Accessories;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Graphics.Effects;

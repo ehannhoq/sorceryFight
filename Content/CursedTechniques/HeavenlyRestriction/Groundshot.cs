@@ -3,6 +3,7 @@ using CalamityMod.Items.Weapons.Melee;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Steamworks;
 using Terraria;
 using Terraria.Audio;

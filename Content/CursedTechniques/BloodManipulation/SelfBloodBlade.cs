@@ -10,6 +10,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using CalamityMod.NPCs.SlimeGod;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {

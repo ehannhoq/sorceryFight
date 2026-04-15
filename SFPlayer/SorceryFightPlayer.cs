@@ -19,6 +19,7 @@ using sorceryFight.Content.DomainExpansions.NPCDomains;
 using sorceryFight.Content.Buffs.CursedEnergyTraits;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Terraria.Localization;
+using sorceryFight.Utilities;
 
 
 namespace sorceryFight.SFPlayer

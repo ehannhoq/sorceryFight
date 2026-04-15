@@ -5,6 +5,7 @@ using System.Linq;
 using CalamityMod.Items.Placeables.FurnitureProfaned;
 using CalamityMod.Tiles.FurnitureProfaned;
 using Microsoft.Xna.Framework;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

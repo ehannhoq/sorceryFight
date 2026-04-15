@@ -9,6 +9,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using sorceryFight.Content.Items.Materials;
 using CalamityMod.Items.Materials;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Items.Accessories
 {

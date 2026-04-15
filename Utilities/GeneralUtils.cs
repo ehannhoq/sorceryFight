@@ -17,9 +17,9 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace sorceryFight;
+namespace sorceryFight
 
-public static class SFUtils
+public static partial class SFUtils
 {
     /// <summary>
     /// THANK YOU CALAMITY MOD SOURCE CODE FOR THIS !!
@@ -101,12 +101,6 @@ public static class SFUtils
     {
         return Language.GetTextValue(key).Split('\n').ToList();
     }
-
-    public static NetworkText GetNetworkText(string key)
-    {
-        return NetworkText.FromKey(key);
-    }
-
 
     // seemingly completely useless and requires calamity mod
     /// <summary>

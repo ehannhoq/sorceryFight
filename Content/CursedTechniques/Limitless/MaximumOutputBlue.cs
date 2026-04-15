@@ -8,6 +8,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {

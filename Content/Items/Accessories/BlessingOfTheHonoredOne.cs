@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Terraria.ID;
 using CalamityMod.Items.Materials;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Items.Accessories
 {

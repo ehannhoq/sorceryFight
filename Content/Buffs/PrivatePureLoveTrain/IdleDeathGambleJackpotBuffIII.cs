@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using sorceryFight.Rarities;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ModLoader;
 

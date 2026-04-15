@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using System.Collections.Generic;
 using Terraria.ID;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Items.Accessories
 {

@@ -12,6 +12,7 @@ using sorceryFight.Content.InnateTechniques;
 using Terraria.GameContent;
 using sorceryFight.Content.Particles;
 using sorceryFight.Content.Particles.UIParticles;
+using sorceryFight.Utilities;
 
 
 namespace sorceryFight.Content.DomainExpansions

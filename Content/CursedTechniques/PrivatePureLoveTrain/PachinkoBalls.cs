@@ -12,6 +12,7 @@ using sorceryFight.SFPlayer;
 using System.Collections.Generic;
 using System;
 using CalamityMod.NPCs.DesertScourge;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
 {

@@ -8,6 +8,7 @@ using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.UI;
 using sorceryFight.Content.UI.Dialog;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

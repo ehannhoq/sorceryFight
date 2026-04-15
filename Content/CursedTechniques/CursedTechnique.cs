@@ -8,6 +8,7 @@ using System.IO;
 using CalamityMod;
 using sorceryFight.Content.Items.Accessories;
 using sorceryFight.Content.Buffs.PlayerAttributes;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.CursedTechniques
 {

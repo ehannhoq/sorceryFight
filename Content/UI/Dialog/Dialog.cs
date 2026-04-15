@@ -6,6 +6,7 @@ using System.Text;
 using Newtonsoft.Json;
 using sorceryFight.Content.UI.Dialog.Actions;
 using sorceryFight.Content.UI.Dialog.Conditions;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;

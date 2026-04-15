@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Items.Materials
 {

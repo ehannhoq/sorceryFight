@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using System;
 using System.IO;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.CursedTechniques
 {

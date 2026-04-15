@@ -10,6 +10,7 @@ using sorceryFight.SFPlayer;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.CursedTechniques.TenShadows;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.InnateTechniques
 {

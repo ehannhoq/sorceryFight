@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Graphics.Effects;
 using System;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Buffs.HeavenlyRestriction
 {

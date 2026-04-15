@@ -10,6 +10,7 @@ using sorceryFight.SFPlayer;
 using Terraria.ModLoader;
 using sorceryFight.Content.Buffs.Limitless;
 using Microsoft.Xna.Framework;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.InnateTechniques
 {

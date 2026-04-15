@@ -8,6 +8,7 @@ using sorceryFight.SFPlayer;
 using sorceryFight.Content.CursedTechniques.HeavenlyRestriction;
 using Terraria;
 using Terraria.ModLoader;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.InnateTechniques
 {

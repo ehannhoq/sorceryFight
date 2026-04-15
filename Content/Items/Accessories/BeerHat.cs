@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using sorceryFight.Content.Items.Consumables;
 using Terraria.ID;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Items.Accessories
 {

@@ -1,6 +1,7 @@
 using CalamityMod;
 using Microsoft.Xna.Framework;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Animations;

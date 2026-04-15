@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Particles;
 using sorceryFight.Content.Particles.UIParticles;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ModLoader;
 

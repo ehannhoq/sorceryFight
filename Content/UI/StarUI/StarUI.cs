@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using sorceryFight;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using System;
 using System.Collections.Generic;
 using Terraria;

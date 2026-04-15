@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using CalamityMod.NPCs.Leviathan;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Buffs.BloodManipulation
 {

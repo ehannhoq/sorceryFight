@@ -7,6 +7,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using sorceryFight.Content.Buffs.Vessel;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Buffs.Shrine
 {

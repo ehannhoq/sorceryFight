@@ -12,6 +12,7 @@ using sorceryFight.Content.Buffs.Limitless;
 using sorceryFight.Content.Buffs.StarRage;
 using sorceryFight.Content.CursedTechniques.BloodManipulation;
 using Microsoft.Xna.Framework;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.InnateTechniques
 {
