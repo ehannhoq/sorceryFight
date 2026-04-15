@@ -1,4 +1,4 @@
-﻿using CalamityMod.CalPlayer;
+﻿using sorceryFight.SFPlayer;
 using Microsoft.Xna.Framework;
 using System;
 using System.IO;
@@ -93,7 +93,7 @@ namespace sorceryFight
             writer.Write(whoAmI);
         }
 
-        public static CalamityPlayer ReadCalamityPlayer(this BinaryReader reader, bool nullOnInactive = true) => ReadPlayer(reader, nullOnInactive)?.Calamity() ?? null;
+        public static SorceryFightPlayer ReadCalamityPlayer(this BinaryReader reader, bool nullOnInactive = true) => ReadPlayer(reader, nullOnInactive)?.SorceryFight() ?? null;
         public static Player ReadPlayer(this BinaryReader reader, bool nullOnInactive = true)
         {
             int index = reader.ReadByte();
