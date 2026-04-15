@@ -211,45 +211,45 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public override bool PreDraw(ref Color lightColor)
         {
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(
-                SpriteSortMode.Immediate,
-                BlendState.NonPremultiplied,
-                SamplerState.LinearClamp,
-                DepthStencilState.None,
-                RasterizerState.CullNone,
-                null,
-                Main.GameViewMatrix.ZoomMatrix
-            );
+            //Main.spriteBatch.End();
+            //Main.spriteBatch.Begin(
+            //    SpriteSortMode.Immediate,
+            //    BlendState.NonPremultiplied,
+            //    SamplerState.LinearClamp,
+            //    DepthStencilState.None,
+            //    RasterizerState.CullNone,
+            //    null,
+            //    Main.GameViewMatrix.ZoomMatrix
+            //);
 
-            Rectangle impactSrc = new Rectangle(0, 0, impactRing.Width, impactRing.Height);
+            //Rectangle impactSrc = new Rectangle(0, 0, impactRing.Width, impactRing.Height);
 
-            float impactScale = MathF.Sqrt(1 - MathF.Pow((tick / 60) - 1, 2)) * Projectile.velocity.Length() / 5f;
-            float impactOpacity = MathF.Sqrt(1 - MathF.Pow(tick / 60, 2));
+            //float impactScale = MathF.Sqrt(1 - MathF.Pow((tick / 60) - 1, 2)) * Projectile.velocity.Length() / 5f;
+            //float impactOpacity = MathF.Sqrt(1 - MathF.Pow(tick / 60, 2));
 
-            impactOpacity = Math.Clamp(impactOpacity, 0f, 1f);
+            //impactOpacity = Math.Clamp(impactOpacity, 0f, 1f);
 
-            Main.EntitySpriteDraw(impactRing, startPos - Main.screenPosition, impactSrc, Color.White * impactOpacity, startVel.ToRotation(), impactSrc.Size() * 0.5f, impactScale, SpriteEffects.None);
+            //Main.EntitySpriteDraw(impactRing, startPos - Main.screenPosition, impactSrc, Color.White * impactOpacity, startVel.ToRotation(), impactSrc.Size() * 0.5f, impactScale, SpriteEffects.None);
 
-            foreach (var kvp in impactPositions)
-            {
-                var tick = kvp.Value;
-                var position = kvp.Key;
+            //foreach (var kvp in impactPositions)
+            //{
+            //    var tick = kvp.Value;
+            //    var position = kvp.Key;
 
-                Rectangle impactCircleSrc = new Rectangle(0, 0, impactCircle.Width, impactCircle.Height);
+            //    Rectangle impactCircleSrc = new Rectangle(0, 0, impactCircle.Width, impactCircle.Height);
 
-                float t = Math.Clamp(tick / 30f, 0f, 1f);
+            //    float t = Math.Clamp(tick / 30f, 0f, 1f);
 
-                float impactCircleOpacity = MathF.Sqrt(1f - t * t);
+            //    float impactCircleOpacity = MathF.Sqrt(1f - t * t);
 
-                float scaleT = Math.Clamp(1f - MathF.Pow(t - 1f, 2f), 0f, 1f);
-                float impactCircleScale = MathF.Sqrt(scaleT) * 2.5f;
+            //    float scaleT = Math.Clamp(1f - MathF.Pow(t - 1f, 2f), 0f, 1f);
+            //    float impactCircleScale = MathF.Sqrt(scaleT) * 2.5f;
 
-                Main.EntitySpriteDraw(impactCircle, position - Main.screenPosition, impactCircleSrc, Color.White * impactCircleOpacity, 0f, impactCircleSrc.Size() * 0.5f, impactCircleScale, SpriteEffects.None);
-            }
+            //    Main.EntitySpriteDraw(impactCircle, position - Main.screenPosition, impactCircleSrc, Color.White * impactCircleOpacity, 0f, impactCircleSrc.Size() * 0.5f, impactCircleScale, SpriteEffects.None);
+            //}
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin();
+            //Main.spriteBatch.End();
+            //Main.spriteBatch.Begin();
 
             return false;
         }
