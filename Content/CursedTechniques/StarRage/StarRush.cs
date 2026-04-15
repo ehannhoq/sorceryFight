@@ -57,7 +57,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public override float CalculateTrueCost(SorceryFightPlayer sf)
         {
             float speedDiff = maxSpeed - minSpeed;
-            float trueSpeed = sf.unlockedRCT ? ((float)sf.numberBossesDefeated / SorceryFight.totalBosses * speedDiff) + minSpeed : (sf.numberBossesDefeated / (SorceryFight.totalBosses / 1.5f) * speedDiff) + minSpeed;
+            float trueSpeed = sf.unlockedRCT ? ((float)sf.numberBossesDefeated / SorceryFightMod.totalBosses * speedDiff) + minSpeed : (sf.numberBossesDefeated / (SorceryFightMod.totalBosses / 1.5f) * speedDiff) + minSpeed;
 
             float adjustedCost = Cost * trueSpeed;
             float finalCost = adjustedCost - (adjustedCost * (sf.bossesDefeated.Count / 100f));
@@ -95,7 +95,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             startVel = Projectile.velocity;
 
             float speedDiff = maxSpeed - minSpeed;
-            float trueSpeed = ((float)sfPlayer.numberBossesDefeated / SorceryFight.totalBosses * speedDiff) + minSpeed;
+            float trueSpeed = ((float)sfPlayer.numberBossesDefeated / SorceryFightMod.totalBosses * speedDiff) + minSpeed;
             float playerSpeedMultiplier = player.moveSpeed / 2.5f;
             trueSpeed *= playerSpeedMultiplier > 1 ? playerSpeedMultiplier : 1f;
             trueSpeed *= sfPlayer.unlockedRCT ? 1.5f : 1f;

@@ -20,7 +20,7 @@ namespace sorceryFight.Content.Buffs.PlayerAttributes
 
         public override bool RightClick(int buffIndex)
         {
-            if (SorceryFight.IsDevMode())
+            if (SorceryFightMod.IsDevMode())
             {
                 Main.LocalPlayer.SorceryFight().uniqueBodyStructure = false;
                 return true;

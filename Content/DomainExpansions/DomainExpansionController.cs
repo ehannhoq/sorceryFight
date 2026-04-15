@@ -190,7 +190,7 @@ namespace sorceryFight.Content.DomainExpansions
 
                 if (Main.netMode == NetmodeID.MultiplayerClient && Main.myPlayer == whoAmI)
                 {
-                    ModPacket packet = SorceryFight.Instance.GetPacket();
+                    ModPacket packet = SorceryFightMod.Instance.GetPacket();
                     packet.Write((byte)MessageType.SyncDomain);
                     packet.Write(whoAmI);
                     packet.Write((byte)DomainNetMessage.ExpandDomain);
@@ -253,7 +253,7 @@ namespace sorceryFight.Content.DomainExpansions
 
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
-                        ModPacket packet = SorceryFight.Instance.GetPacket();
+                        ModPacket packet = SorceryFightMod.Instance.GetPacket();
                         packet.Write((byte)MessageType.SyncDomain);
                         packet.Write(de.owner);
                         packet.Write((byte)DomainNetMessage.CloseDomain);

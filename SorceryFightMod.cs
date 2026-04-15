@@ -18,11 +18,11 @@ namespace sorceryFight
 		PlayerCastingDomain,
 		KilledNPC
 	}
-	public class SorceryFight : Mod
+	public class SorceryFightMod : Mod
 	{
 
-        internal static SorceryFight Instance => _Instance ??= ModContent.GetInstance<SorceryFight>();
-        private static SorceryFight _Instance;
+        internal static SorceryFightMod Instance => _Instance ??= ModContent.GetInstance<SorceryFightMod>();
+        private static SorceryFightMod _Instance;
         internal static ILog Log => Instance.Logger;
 
         private static List<string> DevModeNames =

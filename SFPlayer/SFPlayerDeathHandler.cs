@@ -120,7 +120,7 @@ namespace sorceryFight.SFPlayer
 
                 else if (innateTechnique.Name == "Vessel")
                 {
-                    int chance = SorceryFight.IsDevMode() ? 100 : 15 + (int)(sukunasFingerConsumed * 3);
+                    int chance = SorceryFightMod.IsDevMode() ? 100 : 15 + (int)(sukunasFingerConsumed * 3);
                     if (SFUtils.Roll(chance))
                     {
                         PreventDeath();

@@ -73,7 +73,7 @@ namespace sorceryFight.Content.Quests
 
         public static Quest QuestBuilder(string typeName)
         {
-            foreach (var type in AssemblyManager.GetLoadableTypes(SorceryFight.Instance.Code))
+            foreach (var type in AssemblyManager.GetLoadableTypes(SorceryFightMod.Instance.Code))
             {
                 if (type.IsAbstract || !typeof(Quest).IsAssignableFrom(type))
                     continue;

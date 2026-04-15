@@ -62,7 +62,7 @@ namespace sorceryFight.Content.Buffs.Limitless
             }
 
             player.SorceryFight().disableCurseTechniques = true;
-            SorceryFight.Log.Info("DISABLED CURSE TECHNIES: " + player.SorceryFight().disableCurseTechniques);
+            SorceryFightMod.Log.Info("DISABLED CURSE TECHNIES: " + player.SorceryFight().disableCurseTechniques);
         }
 
         public override void Remove(Player player)

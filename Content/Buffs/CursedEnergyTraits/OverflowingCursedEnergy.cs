@@ -28,7 +28,7 @@ namespace sorceryFight.Content.Buffs.CursedEnergyTraits
 
         public override bool RightClick(int buffIndex)
         {
-            if (SorceryFight.IsDevMode())
+            if (SorceryFightMod.IsDevMode())
             {
                 Main.LocalPlayer.SorceryFight().overflowingEnergy = false;
                 return true;
