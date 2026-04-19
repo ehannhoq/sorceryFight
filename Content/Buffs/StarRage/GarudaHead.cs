@@ -59,8 +59,7 @@ namespace sorceryFight.Content.Buffs.StarRage
                 }
             }
             Projectile.ai[0]++;
-            // Hover to the left because evil is not right or something
-            // What does this mean? ??
+
             Vector2 idealPos = new Vector2(player.Center.X - 200, player.Center.Y - 50);
             float distanceFromOwner = Projectile.Distance(idealPos);
 

@@ -72,6 +72,18 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         {
             base.SetStaticDefaults();
             Main.projFrames[Type] = FRAME_COUNT;
+
+            if (!Main.dedServ)
+            {
+                texture = ModContent.Request<Texture2D>(
+                    "sorceryFight/Content/CursedTechniques/TenShadows/Nue",
+                    AssetRequestMode.ImmediateLoad).Value;
+
+                flyTexture = ModContent.Request<Texture2D>(
+                    "sorceryFight/Content/CursedTechniques/TenShadows/NueFly",
+                    AssetRequestMode.ImmediateLoad).Value;
+            }
+
         }
 
         public override void SummonSetDefaults()
@@ -83,6 +95,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         // ── AI ────────────────────────────────────────────────────────
         public override void SummonAI()
         {
+            SorceryFightMod.Log.Info($"Nue AI ticking on netMode={Main.netMode} owner={Projectile.owner} myPlayer={Main.myPlayer}");
 
             bool returning = ShouldReturnToOwner();
 
@@ -106,7 +119,10 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
             else if (MathF.Abs(Projectile.velocity.X) > 0.5f)
                 Projectile.spriteDirection = MathF.Sign(Projectile.velocity.X);
 
-            Lighting.AddLight(Projectile.Center, new Vector3(0.2f, 0.5f, 0.7f));
+            if (Projectile.owner == Main.myPlayer)
+                Lighting.AddLight(Projectile.Center, new Vector3(2f, 0f, 0f)); // bright red = owner client
+            else
+                Lighting.AddLight(Projectile.Center, new Vector3(0f, 2f, 0f)); // bright green = other client
         }
 
         private void AttackTarget()
@@ -141,28 +157,26 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
-            SpriteEffects flip = Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            SpriteEffects flip = Projectile.spriteDirection == -1
+                ? SpriteEffects.FlipHorizontally
+                : SpriteEffects.None;
 
+            SorceryFightMod.Log.Info($"frame={Projectile.frame} spriteDirection={Projectile.spriteDirection} IsMoving={IsMoving} Target={Target?.TypeName ?? "null"} owner={Projectile.owner} myPlayer={Main.myPlayer}");
+            
             if (IsMoving)
             {
-                if (flyTexture == null && !Main.dedServ)
-                    flyTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/TenShadows/NueFly", AssetRequestMode.ImmediateLoad).Value;
-
                 Vector2 origin = new Vector2(flyTexture.Width / 2, flyTexture.Height / 2);
-
-                spriteBatch.Draw(flyTexture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, origin, Projectile.scale, flip, 0f);
+                spriteBatch.Draw(flyTexture, Projectile.Center - Main.screenPosition,
+                    null, lightColor, Projectile.rotation, origin, Projectile.scale, flip, 0f);
             }
             else
             {
-                if (texture == null && !Main.dedServ)
-                    texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/TenShadows/Nue", AssetRequestMode.ImmediateLoad).Value;
-
                 int frameHeight = texture.Height / FRAME_COUNT;
-                int frameY = Projectile.frame * frameHeight;
+                Rectangle sourceRectangle = new Rectangle(0, Projectile.frame * frameHeight,
+                    texture.Width, frameHeight);
                 Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
-                Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
-
-                spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, Projectile.scale, flip, 0f);
+                spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition,
+                    sourceRectangle, lightColor, Projectile.rotation, origin, Projectile.scale, flip, 0f);
             }
 
             return false;
