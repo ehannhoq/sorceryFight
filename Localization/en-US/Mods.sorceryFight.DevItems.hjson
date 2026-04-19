@@ -1,0 +1,9 @@
+GeneticEditor: {
+	DisplayName: Genetic Editor
+	Tooltip: Edits your genes to however you see fit.
+}
+
+ClearQuests: {
+	DisplayName: Kasane Teto ?!
+	Tooltip: Removes all completed and current quests.
+}

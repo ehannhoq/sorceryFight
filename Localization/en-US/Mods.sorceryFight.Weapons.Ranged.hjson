@@ -1,0 +1,9 @@
+CakeBlast: {
+	DisplayName: OverchargedCake
+	Tooltip:
+		'''
+		[c/FF59C8:A horse walks into a bar and says to the bartender, 'hay'. The bartender says 'right away sir']
+		[c/FF59C8:Converts Cursed Energy into the highest cake output at 40 CE/s]
+		[c/FF59C8:Dedicated to Stelle and Jogoat]
+		'''
+}

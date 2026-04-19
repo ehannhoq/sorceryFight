@@ -1,0 +1,387 @@
+AmplificationBlue: {
+	DisplayName: Cursed Technique Amplification: Blue
+	Description:
+		'''
+		By pouring amplified cursed energy
+		into the Limitless technique, space
+		converges into a single point, creating
+		a powerful, attractive force.
+		'''
+	LockedDescription: Defeat the one who guards the Dungeon.
+}
+
+MaximumOutputBlue: {
+	DisplayName: Maximum Output: Blue
+	Description:
+		'''
+		The mastered version of Blue, the 
+		projectile generates an even stronger 
+		gravitational field, and crushes
+		enemies instantly upon impact.
+		'''
+	LockedDescription: Defeat the mechanical recreation of Cthulu's skeleton.
+}
+
+ReversalRed: {
+	DisplayName: Cursed Technique Reversal: Red
+	Description:
+		'''
+		Powered by positive cursed energy
+		produced from reversed cursed technique,
+		Red brings the divergence of infinity
+		into reality, creating a strong
+		repelling force. The CE output is twice
+		as much as the amplified Limitless.
+		'''
+	LockedDescription:
+		'''
+		Be at the brink of death at the hands
+		of the queen of the jungle.
+		'''
+}
+
+MaximumOutputRed: {
+	DisplayName: Maximum Output: Red
+	Description:
+		'''
+		The mastered version of Red. The projectile
+		pierces through enemies, dealing immense contact
+		damage.
+		'''
+	LockedDescription:
+		'''
+		Defeat the Goddess who slew a dragon and
+		gorged Herself in its auric soul of Flame.
+		'''
+}
+
+HollowPurple: {
+	DisplayName: Hollow Technique: Purple
+	Description:
+		'''
+		By smashing both infinities, convergence
+		and divergence, an imaginary mass is formed.
+		The CE output far surpasses of Blue and Red.
+		'''
+	LockedDescription: Defeat the Sentinels of the Devourer.
+}
+
+HollowPurple200Percent: {
+	DisplayName: 200% Hollow Technqiue: Purple
+	Description:
+		'''
+		By chanting the incantation and at the 
+		cost of burning out your Cursed Technique,
+		the CE output doubles.
+		'''
+	LockedDescription: Defeat the Devourer of Gods.
+}
+
+Dismantle: {
+	DisplayName: Dismantle
+	Description:
+		'''
+		The default shashing technique of Shrine,
+		it fires a slash towards the user's cursor.
+		'''
+	LockedDescription:
+		'''
+		Defeat the piece of Cthulhu that was
+		ripped out from him centuries ago.
+		'''
+}
+
+Cleave: {
+	DisplayName: Cleave
+	Description:
+		'''
+		Cleave is a slashing technique that adjusts
+		its power based off of the target's current
+		health.
+		'''
+	LockedDescription: Defeat the one who guards the Dungeon.
+}
+
+InstantDismantle: {
+	DisplayName: Instantaneous Dismantle
+	Description: Slashes near instantly at the user's cursor.
+	LockedDescription: Defeat the mechanical recreation of Cthulu's skeleton.
+}
+
+DivineFlame: {
+	DisplayName: Divine Flame
+	Description:
+		'''
+		Flames hotter than hell take shape into an
+		arrow, in which launches and deals a massive
+		amount of damage despite its slow speed.
+		'''
+	LockedDescription:
+		'''
+		Defeat the Goddess who slew a dragon and
+		gorged Herself in its auric soul of Flame.
+		'''
+}
+
+WorldCuttingSlash: {
+	DisplayName: The Slash that Cuts the World
+	Description:
+		'''
+		Instead of aiming a Dismantle at a target,
+		the user instead targets the entire world.
+		This powerful slash cuts through everything
+		and anything.
+		'''
+	LockedDescription: Defeat the Devourer of Gods.
+}
+
+SoulDismantle: {
+	DisplayName: Dismantle
+	Description:
+		'''
+		A devastating slash that targets the soul,
+		ignoring any and all defense.
+		'''
+	LockedDescription: Consume at least 3 of Ryomen Sukuna's Fingers.
+}
+
+ChainDismantle: {
+	DisplayName: Chain Dismantle
+	Description:
+		'''
+		A slash attack that chains onto any other
+		enemies within a radius upon first successful 
+		hit. Also ignores defense.
+		'''
+	LockedDescription: Consome at 9 least of Ryomen Sukuna's Fingers.
+}
+
+PiercingBlood: {
+	DisplayName: Piercing Blood
+	Description:
+		'''
+		Converging your blood into a single point,
+		you shoot a concetrated beam of blood; piercing
+		through anything.
+		'''
+	LockedDescription: Consume at least 6 of Ryomen Sukuna's Fingers (Vessel) or defeat Cryogen (Blood).
+}
+
+PachinkoBalls: {
+	DisplayName: Pachinko Ball
+	Description:
+		'''
+		Shoot a pachinko ball that ricochets off of
+		up to five enemies.
+		'''
+	LockedDescription: Defeat the sea serpent that scourges the desert.
+}
+
+HakarisDoor: {
+	DisplayName: Train Doors
+	Description:
+		'''
+		Summon a pair of train doors that shut on 
+		enemies, crushing them.
+		'''
+	LockedDescription: Defeat the one who guards the Dungeon.
+}
+
+PassingThrough: {
+	DisplayName: Passing Through!
+	Description:
+		'''
+		Summon a subway cart that rams through 
+		your cursor.
+		'''
+	LockedDescription: Defeat the mechanical recreation of Cthulu's skull.
+}
+
+CargoCrate: {
+	DisplayName: Cargo Crate
+	Description:
+		'''
+		Launches a cargo crate filled with
+		sharp cursed energy.
+		'''
+	LockedDescription: Defeat the crazed cultist leader at the entrance of the dungeon.
+}
+
+RailroadSign: {
+	DisplayName: Railroad Sign
+	Description: Swing a railroad sign.
+	LockedDescription:
+		'''
+		Defeat the Goddess who slew a dragon and
+		gorged Herself in its auric soul of Flame.
+		'''
+}
+
+Groundshot: {
+	DisplayName: Groundshot
+	Description:
+		'''
+		Stomp the ground with incredible force,
+		with a boulder propelling forward. Then
+		punch it towards your cursor with incredibl
+		force.
+		'''
+	LockedDescription:
+		'''
+		Defeat the piece of Cthulhu that was
+		ripped out from him centuries ago.
+		'''
+}
+
+RamCharge: {
+	DisplayName: Ram Charge
+	Description:
+		'''
+		Dash towards your cursor, dealing damage to
+		anything in your path.
+		'''
+	LockedDescription: Defeat the one who guards the Dungeon.
+}
+
+FlashStep: {
+	DisplayName: FlashStep
+	Description:
+		'''
+		Immedietely teleport to your cursor. Has max range of tiles,
+		which increases with mastery.
+		'''
+	LockedDescription: Defeat the mechanical recreation of Cthulu's skull.
+}
+
+LightspeedBarrage: {
+	DisplayName: Lightspeed Barrage
+	Description:
+		'''
+		Auto-dash to the nearest enemy. If there 
+		are any more nearby enemies, auto-dash to 
+		them as well.
+		'''
+	LockedDescription: Defeat the Sentinels of the Devourer.
+}
+
+SlicingExorcism: {
+	DisplayName: Slicing Exorcism
+	Description:
+		'''
+		By compressing blood into a sphere then flattening it
+		you create a powerful slicing disk that carves through flesh like butter
+		'''
+	LockedDescription: Defeat the King of Slimes
+}
+
+UnlimitedPiercingBlood: {
+	DisplayName: Unlimited Piercing Blood
+	Description:
+		'''
+		Shoot a beam of Unlimited Piercing Blood that spawns mini Piercing Bloods
+		These Mini Piercing Bloods are created for every enemy poisoned by your blood
+		The more of them there are, the more mini beams spawn
+		'''
+	LockedDescription: Defeat the Old duke
+}
+
+BloodDaggerStorm: {
+	DisplayName: Blood Dagger Storm
+	Description:
+		'''
+		By constantly compressing blood into daggers and firing them with tiny lines of blood attached
+		they can be redirected mid air towards your cursor, seeking out enemies as they get closer
+		'''
+	LockedDescription: Consume at least 11 of Ryomen Sukuna's Fingers (Vessel) or defeat the Empress of Light (Blood).
+}
+
+SelfBloodBlade: {
+	DisplayName: Blood Blade
+	Description:
+		'''
+		Create a spinning blade of blood infront of you,
+		it can be rotated 360 degrees around you
+		'''
+	LockedDescription: Defeat The Slime God
+}
+
+SuperNova: {
+	DisplayName: Super Nova
+	Description:
+		'''
+		Place a sphere of compressed blood at your mouse position then
+		wait for it to explode like a shotgun blast in two seconds
+		'''
+	LockedDescription: Defeat Astrum Deus
+}
+
+GarudaKick: {
+	DisplayName: Garuda Kick
+	Description: Kick Garuda
+	LockedDescription: Defeat the one who guards the Moon.
+}
+
+StarChannel: {
+	DisplayName: Star Channel
+	Description:
+		'''
+		Hold down to actively charge up star power.
+		If have Garuda active and your cursor passes by 
+		an enemy, he will trap that enemy.
+		After Unlocking Your domain you can hold down this key for ten seconds
+		to create a black hole at Garuda's position, it doesn't need to stay on the enemy
+		'''
+	LockedDescription: Defeat the one who guards the Moon.
+}
+
+MassPunch: {
+	DisplayName: Mass Punch
+	Description: Swing a weighted fist accross your body
+	LockedDescription: Defeat the one who guards the Moon.
+}
+
+GarudaWhip: {
+	DisplayName: Garuda Whip
+	Description: Whip Garuda
+	LockedDescription: Defeat the one who guards the Moon.
+}
+
+MassKick: {
+	DisplayName: Mass Kick
+	Description: Swing a weighted kick upwards
+	LockedDescription: Defeat the one who guards the Moon.
+}
+
+StarRush: {
+	DisplayName: Star Rush
+	Description: Charge at the cursor, do massive damage and stun the first enemy hit
+	LockedDescription: Defeat the one who guards the Moon.
+}
+
+LineDevestation: {
+	DisplayName: Line of Devastation
+	Description:
+		'''
+		A devastating slash cuts the air, detonating on impact with anything,
+		This detonation will cut everything around it. It can be futher enhanced
+		by having maximum blood, at which point the slash will consume half of it and
+		explode with blood dealing triple damage.
+		'''
+	LockedDescription: Consume at least 15 of Ryomen Sukuna's Fingers.
+}
+
+FullIncarnationKOC: {
+	DisplayName: Full Incarnation King of Curses
+	Description:
+		'''
+		After consuming enough you now have the ability to take form at will.
+		The only way back from this transformation is death
+		'''
+	LockedDescription: Consume the skull of Ryomen Sukuna, guarded by Supreme Calamitas
+}
+
+RoundDeer: {
+	DisplayName: Round Deer
+	Description: Spawn a Deer sentry that heals any player in its radius
+	LockedDescription: Defeat the Deer
+}

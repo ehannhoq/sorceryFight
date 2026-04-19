@@ -1,0 +1,87 @@
+using System.Collections.Generic;
+using sorceryFight.Content.InnateTechniques;
+using sorceryFight.SFPlayer;
+using Terraria;
+using Terraria.ModLoader;
+
+namespace sorceryFight.Content.Buffs.Vessel
+{
+    public class KingOfCursesBuff : ModBuff
+    {
+        private static Dictionary<int, bool> rctTracker = new Dictionary<int, bool>();
+        public override void SetStaticDefaults()
+        {
+            Main.persistentBuff[Type] = true;
+        }
+
+        public override void Update(Player player, ref int buffIndex)
+        {
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
+
+            // if the player tries to use your potential with the buff on it will break the code
+            if(sfPlayer.innateTechnique == null)
+            {
+                player.DelBuff(buffIndex);
+                return;
+            }
+
+            if (sfPlayer.innateTechnique.Name.Equals("Vessel"))
+            {
+                sfPlayer.innateTechnique = new ShrineTechnique();
+                rctTracker[player.whoAmI] = sfPlayer.unlockedRCT;
+                SorceryFightUI.UpdateTechniqueUI.Invoke();
+                int index = player.FindBuffIndex(ModContent.BuffType<BrainDamage>());
+                if (index != -1)
+                {
+                    player.DelBuff(index);
+                }
+            }
+
+            //Make the player hostile to other players
+            player.hostile = true;
+
+            if (player.statLife > (int)(player.statLifeMax2 * 0.5f))
+            {
+                player.statLife = (int)(player.statLifeMax2 * 0.5f);
+            }
+
+            sfPlayer.maxCursedEnergyFromOtherSources += 1500;
+            sfPlayer.cursedEnergyRegenFromOtherSources += 100;
+            sfPlayer.unlockedRCT = true;
+
+            if (player.buffTime[buffIndex] < 1)
+            {
+                foreach (PassiveTechnique pt in sfPlayer.innateTechnique.PassiveTechniques)
+                {
+                    pt.isActive = false;
+                }
+
+                sfPlayer.selectedTechnique = null;
+
+                sfPlayer.innateTechnique = new VesselTechnique();
+                if (rctTracker.TryGetValue(player.whoAmI, out bool hasRCT))
+                {
+                    sfPlayer.unlockedRCT = hasRCT;
+                    rctTracker.Remove(player.whoAmI);
+                }
+
+                sfPlayer.hollowWickerBasket = false;
+                sfPlayer.domainAmp = false;
+
+                SorceryFightUI.UpdateTechniqueUI.Invoke();
+            }
+        }
+
+        public override bool RightClick(int buffIndex)
+        {
+            Main.NewText("You Can't Get rid of me like that Brat!");
+            return false;
+        }
+
+        public override bool ReApply(Player player, int time, int buffIndex)
+        {
+            player.buffTime[buffIndex] = 2;
+            return true;
+        }
+    }
+}

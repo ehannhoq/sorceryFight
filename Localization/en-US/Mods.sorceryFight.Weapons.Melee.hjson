@@ -1,0 +1,55 @@
+BlackRope: {
+	DisplayName: Black Rope
+	Tooltip: A Rope that nullifies stuff
+}
+
+CrikySword: {
+	DisplayName: Subatomic Particle Splitter
+	Tooltip:
+		'''
+		A blade that splits through the subatomic particles that make up atoms.
+		[c/6D2673:Dedicated to TheRealCriky]
+		'''
+}
+
+InvertedSpear: {
+	DisplayName: Inverted Spear of Heaven
+	Tooltip:
+		'''
+		Imbued with a foreign cursed technique, it's blade can nullify any cursed
+		technique.
+		[c/E0DA5A:Right click to toggle to a swinging charge up, which upon]
+		[c/E0DA5A:releasing throws out the spear for an undefined distance.]
+		'''
+}
+
+ObliviousSword: {
+	DisplayName: The Resonant
+	Tooltip:
+		'''
+		[c/EBE3B2:An ancient blade of unknown origins. Said to scale its own strength to its wielder's strength]
+		Bosses slain: [BOSSES]
+		Increased damage: [DAMAGE]
+		Increased crit chance: [CRIT]%
+		[c/808080:'The wielder of this sword fought the flames of Jungle terror to prevail.]
+		[c/808080:The gods granted him this sword to mark his achievement. It is said that]
+		[c/808080:this sword will bring Oblivion to those who are Oblivious to its power.']
+		[c/6D2673:Dedicated to ObliviousOblivion]
+		'''
+}
+
+ChakiraResonant: {
+	DisplayName: The Chakira Resonant
+	Tooltip:
+		'''
+		[c/EBE3B2:An ancient blade of unknown origins. Said to scale its own strength to its wielder's strength]
+		[c/EBE3B2:Holding RMB charges cursed energy into the blade, building up into a massive charged attack]
+		Bosses slain: [BOSSES]
+		Increased damage: [DAMAGE]
+		Increased crit chance: [CRIT]%
+		[c/808080:'The wielder of this sword fought the flames of Jungle terror to prevail.]
+		[c/808080:The gods granted him this sword to mark his achievement. It is said that]
+		[c/808080:this sword will bring Oblivion to those who are Oblivious to its power.']
+		[c/6D2673:Dedicated to ObliviousOblivion]
+		'''
+}

@@ -1,0 +1,42 @@
+using System.Collections.Generic;
+using sorceryFight.Content.CursedTechniques;
+using sorceryFight.Content.CursedTechniques.Limitless;
+using sorceryFight.Content.DomainExpansions;
+using sorceryFight.Content.Buffs;
+using sorceryFight.Content.Buffs.Limitless;
+using sorceryFight.Content.DomainExpansions.PlayerDomains;
+using Microsoft.Xna.Framework;
+
+namespace sorceryFight.Content.InnateTechniques
+{
+    public class LimitlessTechnique : InnateTechnique
+    {
+        public override string Name => "Limitless";
+        public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.Limitless.DisplayName");
+
+        public override Color innateBGColor => new Color(150, 219, 235, 85);
+
+        public override Color innateBorderColor => new Color(0, 0, 0, 128);
+
+        public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
+        {
+            new InfinityBuff(),
+            new AmplifiedAuraBuff(),
+            new MaximumAmplifiedAuraBuff(),
+            new FallingBlossomEmotionBuff()
+        };
+        public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
+        {
+            new AmplificationBlue(),
+            new MaximumOutputBlue(),
+
+            new ReversalRed(),
+            new MaximumOutputRed(),
+        
+            new HollowPurple(),
+            new HollowPurple200Percent()
+        };
+
+        public override PlayerDomainExpansion DomainExpansion => new UnlimitedVoid();
+    }
+}

@@ -1,0 +1,45 @@
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.DataStructures;
+using Terraria.Audio;
+using sorceryFight.SFPlayer;
+using Terraria.Localization;
+
+namespace sorceryFight.Content.Items.Consumables
+{
+    public class CursedProfanedShards : ModItem
+    {
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.CursedProfanedShards.DisplayName");
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Consumables.CursedProfanedShards.Tooltip");
+        public override void SetStaticDefaults()
+        {
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 8));
+        }
+        public override void SetDefaults()
+        {
+            Item.consumable = true;
+            Item.maxStack = 1;
+            Item.useTime = 20;
+            Item.useAnimation = 20;
+            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.rare = ItemRarityID.Master;
+        }
+
+        public override bool CanUseItem(Player player)
+        {
+            return !player.SorceryFight().heavenlyRestriction;
+        }
+
+        public override bool? UseItem(Player player)
+        {
+            if (player.whoAmI == Main.myPlayer)
+            {
+                SoundEngine.PlaySound(SoundID.Item4);
+                SorceryFightPlayer sf = player.SorceryFight();
+                sf.cursedProfaneShards = true;
+            }
+            return true;
+        }
+    }
+}

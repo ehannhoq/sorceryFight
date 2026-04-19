@@ -1,0 +1,322 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Buffs;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using sorceryFight.SFPlayer;
+using System;
+using sorceryFight.Content.Items.Accessories;
+using Terraria.DataStructures;
+using sorceryFight.Content.Particles;
+using sorceryFight.Content.Particles.UIParticles;
+
+namespace sorceryFight.Content.CursedTechniques.Limitless
+{
+    public class HollowPurple200Percent : CursedTechnique
+    {
+        public static readonly int FRAME_COUNT = 4;
+        public static readonly int TICKS_PER_FRAME = 5;
+
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.DisplayName");
+        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.Description");
+        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.LockedDescription");
+        public override float Cost { get; } = 1100f;
+        public override Color textColor { get; } = new Color(235, 117, 233);
+        public override bool DisplayNameInGame { get; } = false;
+
+
+        public override int Damage => 50000;
+        public override int MasteryDamageMultiplier => 200;
+        public override float Speed { get; } = 50f;
+        public override float LifeTime { get; } = 500f;
+        public override bool Unlocked(SorceryFightPlayer sf)
+        {
+            return true;
+            // return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
+        }
+
+        public static Texture2D texture;
+        public static Texture2D flashTexture;
+
+        public bool animating;
+        public float animScale;
+        public Rectangle hitbox;
+        public Vector2 blueOffset;
+        public Vector2 redOffset;
+        public int incantationsIndex;
+        public List<string> incantations;
+
+        public override int GetProjectileType()
+        {
+            return ModContent.ProjectileType<HollowPurple200Percent>();
+        }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Projectile.width = 250;
+            Projectile.height = 250;
+            animating = false;
+            animScale = 2.5f;
+            hitbox = Projectile.Hitbox;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+
+            blueOffset = new Vector2(-60f, -20f);
+            redOffset = new Vector2(60f, -20f);
+            incantationsIndex = 0;
+            incantations = new List<string>()
+            {
+                "Nine Ropes.",
+                "Polarized Light.",
+                "Crow and Declaration.",
+                "Between Front and Back.",
+            };
+        }
+
+        public override void AI()
+        {
+            Projectile.ai[0] += 1;
+            Player player = Main.player[Projectile.owner];
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
+
+            float multiplier = sfPlayer.cursedOfuda ? CursedOfuda.cursedTechniqueCastTimeDecrease : 1f;
+
+            float textTime = 90f * multiplier;
+            float bufferTime = 20f * multiplier;
+
+            float blueCastTime = 90f * multiplier;
+            float redCastTime = 180f * multiplier;
+            float collisionStartTime = 290f * multiplier + bufferTime;
+            float totalCastTime = 320f * multiplier + bufferTime * 3f;
+
+            if (Projectile.ai[0] > LifeTime + totalCastTime)
+            {
+                Projectile.Kill();
+            }
+
+            if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
+            {
+                Projectile.frameCounter = 0;
+
+                if (Projectile.frame++ >= FRAME_COUNT - 1)
+                {
+                    Projectile.frame = 0;
+                }
+            }
+
+            if (Projectile.ai[0] < (int)totalCastTime)
+            {
+                if (!animating)
+                {
+                    animating = true;
+                    Projectile.velocity = Vector2.Zero;
+                    player.SorceryFight().disableRegenFromProjectiles = true;
+                    player.SorceryFight().sfUI.InitializeChant(incantations, (int)(textTime * multiplier), (int)bufferTime, new UI.Chants.ChantTextStyle(
+                        textColor: new Color(216, 157, 237, 255),
+                        text2Color: new Color(176, 76, 212, 255),
+                        borderWidth: 2.0f,
+                        borderColor: new Color(82, 41, 107, 255),
+                        border2Color: new Color(19, 17, 79, 255),
+                        glowRadius: 3.0f,
+                        glowColor: new Color(203, 165, 232, 255)
+                    ));
+                }
+
+                animScale = 0f;
+                Projectile.damage = 0;
+                Projectile.Hitbox = new Rectangle(0, 0, 0, 0);
+                Projectile.Center = player.Center + new Vector2(0f, -30f);
+
+                // if ((int)Projectile.ai[0] % (int)textTime == 1 && incantationsIndex < incantations.Count)
+                // {
+                //     int index = CombatText.NewText(player.getRect(), textColor, incantations[incantationsIndex], true, false);
+                //     Main.combatText[index].lifeTime = sfPlayer.cursedOfuda ? (int)(60 * CursedOfuda.cursedTechniqueCastTimeDecrease) : 60;
+
+                //     if (incantationsIndex < incantations.Count)
+                //         incantationsIndex++;
+                // }
+
+
+                Vector2 bluePosition = player.Center + blueOffset;
+                Vector2 redPosition = player.Center + redOffset;
+
+                if (Projectile.ai[0] == (int)blueCastTime)
+                {
+                    if (Main.myPlayer == Projectile.owner)
+                    {
+                        int index = Projectile.NewProjectile(Projectile.GetSource_FromThis(), bluePosition, Vector2.Zero, ModContent.ProjectileType<AmplificationBlue>(), 0, 0f, Projectile.owner, default, 1);
+                        if (index >= 0)
+                            Projectile.ai[1] = index;
+
+                        Projectile.netUpdate = true;
+                    }
+                }
+
+
+                if (Projectile.ai[0] == (int)redCastTime)
+                {
+                    if (Main.myPlayer == Projectile.owner)
+                    {
+                        int index = Projectile.NewProjectile(Projectile.GetSource_FromThis(), redPosition, Vector2.Zero, ModContent.ProjectileType<MaximumOutputRed>(), 0, 0f, Projectile.owner, default, 1);
+                        if (index >= 0)
+                            Projectile.ai[2] = index;
+
+                        Projectile.netUpdate = true;
+                    }
+                }
+
+                Projectile blue = Main.projectile[(int)Projectile.ai[1]];
+                Projectile red = Main.projectile[(int)Projectile.ai[2]];
+
+                if (Projectile.ai[0] >= (int)blueCastTime && blue.type == ModContent.ProjectileType<AmplificationBlue>())
+                {
+                    blue.Center = bluePosition;
+
+                    Vector2 particleOffsetPosition = bluePosition + new Vector2(Main.rand.NextFloat(-20f, 20f), Main.rand.NextFloat(-20f, 20f));
+                    Vector2 particleVelocity = particleOffsetPosition.DirectionTo(player.Center + new Vector2(0f, -20f)) * 2;
+                    LinearParticle particle = new LinearParticle(particleOffsetPosition, particleVelocity, new Color(108, 158, 240), false, 0.9f, 1, 30);
+                    ParticleController.SpawnParticle(particle);
+                }
+
+                if (Projectile.ai[0] >= (int)redCastTime && red.type == ModContent.ProjectileType<MaximumOutputRed>())
+                {
+                    red.Center = redPosition;
+
+                    Vector2 particleOffsetPosition = redPosition + new Vector2(Main.rand.NextFloat(-20f, 20f), Main.rand.NextFloat(-20f, 20f));
+                    Vector2 particleVelocity = particleOffsetPosition.DirectionTo(player.Center + new Vector2(0f, -20f)) * 2;
+                    LinearParticle particle = new LinearParticle(particleOffsetPosition, particleVelocity, new Color(224, 74, 74), false, 0.9f, 1, 30);
+                    ParticleController.SpawnParticle(particle);
+                }
+                if (Projectile.ai[0] == (int)collisionStartTime - 50)
+                    SoundEngine.PlaySound(SorceryFightSounds.CommonWoosh, Projectile.Center);
+
+                if (Projectile.ai[0] >= (int)collisionStartTime)
+                {
+
+                    float timeLeft = (int)totalCastTime - Projectile.ai[0];
+
+                    this.blueOffset.X += Math.Abs(this.blueOffset.X) / timeLeft;
+                    this.redOffset.X -= Math.Abs(this.redOffset.X) / timeLeft;
+
+                    if (blueOffset.X >= redOffset.X)
+                    {
+                        for (int i = 0; i < 30; i++)
+                        {
+                            // Vector2 offsetParticlePosition = Projectile.Center + new Vector2(Main.rand.NextFloat(-300, 300), Main.rand.NextFloat(-300, 300));
+                            // Vector2 offsetParticleVelocity = Projectile.Center.DirectionTo(offsetParticlePosition) * 10;
+
+                            // AltSparkParticle particle = new AltSparkParticle(Projectile.Center, offsetParticleVelocity, false, 45, 1.5f, Color.White);
+                            // GeneralParticleHandler.SpawnParticle(particle);
+                        }
+
+                        Projectile.ai[0] = (int)totalCastTime;
+                    }
+                }
+
+                return;
+            }
+
+            if (animating)
+            {
+                animating = false;
+                animScale = 2.5f;
+                Projectile.damage = (int)CalculateTrueDamage(player.SorceryFight());
+                Projectile.Hitbox = hitbox;
+                Projectile.timeLeft = (int)LifeTime;
+                Main.projectile[(int)Projectile.ai[1]].Kill();
+                Main.projectile[(int)Projectile.ai[2]].Kill();
+                Projectile.Center = player.Center + new Vector2(0f, -40f);
+                SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleSnap, Projectile.Center);
+                player.SorceryFight().disableRegenFromProjectiles = false;
+                int index = CombatText.NewText(player.getRect(), textColor, "Hollow Technique: 200% Hollow Purple.");
+                Main.combatText[index].lifeTime = 180;
+
+                CameraController.CameraShake(30, 75, 10);
+                ImpactFrameController.ImpactFrame(textColor, 8);
+
+                if (Main.myPlayer == Projectile.owner)
+                {
+                    Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
+                    player.SorceryFight().AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), 5);
+                    Projectile.netUpdate = true;
+                }
+            }
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+
+            for (int i = 0; i < 40; i++)
+            {
+                Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 7), Main.rand.NextFloat(-7, 7));
+
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, textColor, false, 0.9f, 1, 30);
+                ParticleController.SpawnParticle(particle);
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            SpriteBatch spriteBatch = Main.spriteBatch;
+
+            if (texture == null && !Main.dedServ)
+                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/HollowPurple200Percent", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+
+            if (flashTexture == null && !Main.dedServ)
+                flashTexture = ModContent.Request<Texture2D>("sorceryFight/Content/Projectiles/VFX/HollowPurpleFlash", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+
+            int frameHeight = texture.Height / FRAME_COUNT;
+            int frameY = Projectile.frame * frameHeight;
+
+            Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
+
+            Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
+
+            float multiplier = Main.player[Projectile.owner].SorceryFight().cursedOfuda ? CursedOfuda.cursedTechniqueCastTimeDecrease : 1f;
+            float bufferTime = 20f * multiplier;
+            float collisionStartTime = 290f * multiplier + bufferTime;
+            float totalCastTime = 320f * multiplier + bufferTime * 3f;
+
+            if (Projectile.ai[0] > collisionStartTime && Projectile.ai[0] < totalCastTime)
+            {
+                float progress = (Projectile.ai[0] - collisionStartTime) / (totalCastTime - collisionStartTime);
+                Rectangle flashSource = new Rectangle(0, 0, flashTexture.Width, flashTexture.Height);
+
+                spriteBatch.End();
+                spriteBatch.Begin(
+                    SpriteSortMode.Immediate,
+                    BlendState.NonPremultiplied,
+                    SamplerState.LinearClamp,
+                    DepthStencilState.None,
+                    RasterizerState.CullNone,
+                    null,
+                    Main.GameViewMatrix.ZoomMatrix
+                );
+
+                spriteBatch.Draw(flashTexture, Projectile.Center - Main.screenPosition, flashSource, new Color(255, 255, 255, (int)(255 * progress)), 0.0f, flashSource.Size() * 0.5f, 4.0f, SpriteEffects.None, 0f);
+
+
+                spriteBatch.End();
+                spriteBatch.Begin(
+                    SpriteSortMode.Deferred,
+                    BlendState.AlphaBlend,
+                    SamplerState.LinearClamp,
+                    DepthStencilState.None,
+                    RasterizerState.CullNone,
+                    null,
+                    Main.GameViewMatrix.TransformationMatrix
+                );
+            }
+
+            return false;
+        }
+    }
+}

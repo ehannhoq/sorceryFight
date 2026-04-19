@@ -1,0 +1,714 @@
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using sorceryFight.Content.CursedTechniques;
+using sorceryFight.Content.Buffs;
+using Terraria;
+using Terraria.ModLoader;
+using Terraria.DataStructures;
+using sorceryFight.Content.Buffs.PlayerAttributes;
+using Terraria.Chat;
+using Terraria.ID;
+using System;
+using sorceryFight.Content.Buffs.Vessel;    
+using sorceryFight.Content.Items.Consumables;
+using sorceryFight.Content.DomainExpansions;
+using System.Linq;
+using sorceryFight.Content.DomainExpansions.PlayerDomains;
+using sorceryFight.Content.DomainExpansions.NPCDomains;
+using sorceryFight.Content.Buffs.CursedEnergyTraits;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Terraria.Localization;
+
+
+namespace sorceryFight.SFPlayer
+{
+    public partial class SorceryFightPlayer : ModPlayer
+    {
+        #region Global Variables
+        public static readonly float DefaultBurntTechniqueDuration = 30;
+        public static readonly float DefaultBrainDamageDuration = 120;
+
+        public bool disableRegenFromProjectiles;
+        public bool disableRegenFromBuffs;
+        public bool disableRegenFromDE;
+        public bool disableCurseTechniques;
+        public float ctCostReduction;
+        #endregion
+
+        #region Global Cursed Technique Stuff
+        public InnateTechnique innateTechnique;
+        public CursedTechnique selectedTechnique;
+        public float cursedEnergy;
+        public float bloodEnergy;
+        public float maxCursedEnergy { get; private set; }
+        public float cursedEnergyRegenPerSecond;
+        public float cursedEnergyUsagePerSecond;
+
+        public float maxBloodEnergy { get; private set; }
+        public float bloodEnergyRegenPerSecond;
+        public float bloodEnergyUsagePerSecond;
+
+
+        #endregion
+
+        #region Max Cursed Energy Modifiers
+        public bool cursedSkull;
+        public bool cursedMechanicalSoul;
+        public bool cursedPhantasmalEye;
+        public bool cursedProfaneShards;
+        public float maxCursedEnergyFromOtherSources;
+        #endregion
+
+        #region Cursed Energy Regen Modifiers
+        public bool cursedEye;
+        public bool cursedFlesh;
+        public bool cursedBulb;
+        public bool cursedMask;
+        public bool cursedEffulgentFeather;
+        public bool cursedRuneOfKos;
+        public float cursedEnergyRegenFromOtherSources;
+
+        #endregion
+
+        #region One-off Variables
+        public bool yourPotentialSwitch;
+        public bool usedYourPotentialBefore;
+        public int idleDeathGambleBuffStrength;
+        public SorceryFightUI sfUI;
+        #endregion
+
+        #region Domain
+        public bool UnlockedSimpleDomain => new SimpleDomainFloating().Unlocked(this);
+        public bool UnlockedDomainExpansion => innateTechnique.DomainExpansion.Unlocked(this);
+        public bool inDomainAnimation;
+        public int domainTimer;
+        public int chargeTimer;
+        public bool HasActiveDomain => DomainExpansionController.ActiveDomains.Any(d => d is PlayerDomainExpansion && d is not ISimpleDomain && d.owner == Player.whoAmI);
+        public bool fallingBlossomEmotion;
+        public bool inSimpleDomain;
+        public bool immuneToDomains => fallingBlossomEmotion || hollowWickerBasket || inSimpleDomain || heavenlyRestriction;
+        #endregion
+
+        #region Player Attributes
+        public short sixEyesLevel;
+        public bool AwakenedSixEyes => sixEyesLevel == 1;
+        public bool SixEyes => sixEyesLevel == 2;
+        public bool TrueSixEyes => sixEyesLevel == 3;
+        public bool HasSixEyes { get { return sixEyesLevel > 0; } }
+        public bool challengersEye;
+        public bool uniqueBodyStructure;
+        public bool blessedByBlackFlash;
+        #endregion
+
+        #region Cursed Energy Traits
+        public bool explosiveCursedEnergy;
+        public bool sharpCursedEnergy;
+        public bool overflowingEnergy;
+        #endregion
+
+        #region Shrine/Vessel Specific Variables
+        public bool[] sukunasFingers;
+        public int sukunasFingerConsumed => sukunasFingers.Count(x => x);
+
+        public bool[] deathPaintings;
+        public int deathPaintingsConsumed => deathPaintings.Count(x => x);
+
+        public bool sukunasSkull;
+
+        #endregion
+
+        #region RCT
+        public bool unlockedRCT;
+        public int rctAuraIndex;
+        public int rctBaseHealPerSecond { get; private set; }
+        public int additionalRCTHealPerSecond;
+        public float rctEfficiency;
+        #endregion
+
+        #region Black Flash
+        public int blackFlashDamageMultiplier { get; private set; }
+        public int blackFlashTime;
+        public int blackFlashTimeLeft;
+        public int blackFlashCounter;
+        public int lowerWindowTime;
+        public int blackFlashWindowTime;
+        public float additionalBlackFlashDamageMultiplier;
+        public int upperWindowTime => lowerWindowTime + blackFlashWindowTime;
+        #endregion
+
+        #region UI Positions
+        public Vector2 CTSelectorPos;
+        public Vector2 PTSelectorPos;
+        public Vector2 CEBarPos;
+        public Vector2 BEBarPos;
+        #endregion
+
+        public bool noInnateDomain;
+
+        #region HeavenlyRestriction
+        public bool heavenlyRestriction;
+        #endregion
+
+        #region StarRage
+        public float starEnergy;
+        public float maxStarEnergy;
+        public float starEnergyRegenPerSecond;
+        public bool summonGaruda;
+        public NPC garudaCurrentTarget;
+        #endregion
+
+
+        public override void UpdateEquips()
+        {
+            if (innateTechnique == null) return;
+            innateTechnique.UpdateEquips(this);
+        }
+
+        public override void UpdateLifeRegen()
+        {
+            if (innateTechnique == null) return;
+            innateTechnique.UpdateLifeRegen(this);
+        }
+
+        public override void PreUpdate()
+        {
+            if (innateTechnique == null || Main.dedServ) return;
+
+            if (innateTechnique.Name == "StarRage")
+                maxStarEnergy = 100f;
+            else
+                maxStarEnergy = 0;
+
+            if (preventDeath && deathPosition != Vector2.Zero && Player.position != deathPosition)
+            {
+                Player.position = deathPosition;
+                preventDeath = false;
+            }
+
+            innateTechnique.PreUpdate(this);
+            RCTAnimation();
+            AttributeIcons();
+            Keybinds();
+
+            cursedEnergyRegenPerSecond = 0f;
+            bloodEnergyRegenPerSecond = 0f;
+            maxCursedEnergy = 0f;
+            ctCostReduction = 0f;
+            additionalBlackFlashDamageMultiplier = 0f;
+            blackFlashWindowTime = 1;
+            rctEfficiency = 0.0f;
+            additionalRCTHealPerSecond = 0;
+
+
+            bloodEnergyRegenPerSecond = calculateBaseBERegenRate();
+            maxBloodEnergy = calculateBaseMaxBE();
+
+
+            cursedEnergyRegenPerSecond = calculateBaseCERegenRate();
+            maxCursedEnergy = calculateBaseMaxCE();
+
+
+
+            if (heavenlyRestriction) return;
+
+            if (blackFlashTimeLeft != 0)
+            {
+                if (blackFlashTimeLeft > 0)
+                    blackFlashTimeLeft--;
+                else if (blackFlashTimeLeft < 0)
+                    blackFlashTimeLeft++;
+
+                if (blackFlashTimeLeft == 1)
+                {
+                    ResetBlackFlashState();
+                }
+            }
+        }
+
+        private int TEMP_disabledRegenTimer = 0;
+        public override void PostUpdate()
+        {
+            cursedEnergyRegenPerSecond += cursedEnergyRegenFromOtherSources;
+            maxCursedEnergy += maxCursedEnergyFromOtherSources;
+
+            if (cursedEnergy > 0)
+            {
+                cursedEnergy -= SFUtils.RateSecondsToTicks(cursedEnergyUsagePerSecond);
+            }
+
+            if (bloodEnergy > 0)
+            {
+                bloodEnergy -= SFUtils.RateSecondsToTicks(bloodEnergyUsagePerSecond);
+            }
+
+            bool disabledRegen = disableRegenFromBuffs || disableRegenFromProjectiles || disableRegenFromDE;
+
+            if (cursedEnergy < maxCursedEnergy && !disabledRegen)
+            {
+                cursedEnergy += SFUtils.RateSecondsToTicks(cursedEnergyRegenPerSecond);
+            }
+
+            if (bloodEnergy < maxBloodEnergy)
+            {
+                bloodEnergy += SFUtils.RateSecondsToTicks(bloodEnergyRegenPerSecond);
+            }
+
+            if (starEnergy < maxStarEnergy)
+            {
+                starEnergy += SFUtils.RateSecondsToTicks(starEnergyRegenPerSecond);
+            }
+
+            if (cursedEnergy > maxCursedEnergy)
+            {
+                cursedEnergy = maxCursedEnergy;
+            }
+
+            if (bloodEnergy > maxBloodEnergy)
+            {
+                bloodEnergy = maxBloodEnergy;
+            }
+
+            if (bloodEnergy < 0)
+            {
+                AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
+                Player.Hurt(PlayerDeathReason.ByCustomReason($"{Player.name} overexerted their blood energy."), (int)(Math.Abs(bloodEnergy)) , 0, false, false, default, default, 9999);
+                bloodEnergy = 0;
+            }
+
+            if (starEnergy < 0)
+            {
+                starEnergy = 0;
+            }
+
+            if (cursedEnergy < 0)
+            {
+                cursedEnergy = 0;
+
+                if (beerHat)
+                {
+                    if (!BeerHatRecoverCE())
+                        AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
+                }
+                else
+                {
+                    if (heavenlyRestriction)
+                        Player.AddBuff(ModContent.BuffType<Exhaustion>(), SFUtils.BuffSecondsToTicks(DefaultBurntTechniqueDuration));
+                    else
+                        AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
+                }
+            }
+
+
+            cursedEnergyUsagePerSecond = 0f;
+            cursedEnergyRegenFromOtherSources = 0f;
+            maxCursedEnergyFromOtherSources = 0f;
+            disableRegenFromBuffs = false;
+            disableCurseTechniques = false;
+            blackFlashTime = 30;
+
+            bloodEnergyUsagePerSecond = 0f;
+
+            starEnergyRegenPerSecond = 0f;
+
+            if (disabledRegen)
+            {
+                TEMP_disabledRegenTimer++;
+                if (TEMP_disabledRegenTimer >= 300)
+                {
+                    disableRegenFromBuffs = false;
+                    disableRegenFromProjectiles = false;
+                    disableRegenFromDE = false;
+                    TEMP_disabledRegenTimer = 0;
+                }
+            }
+
+            CheckQuests();
+        }
+
+
+        public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
+        {
+            return [
+                ModContent.GetModItem(ModContent.ItemType<YourPotential>()).Item
+            ];
+        }
+
+
+        void Keybinds()
+        {
+            if (Player.dead) return;
+
+
+            if (SFKeybinds.UseTechnique.JustPressed)
+            {
+                //ModContent.GetInstance<SorceryFight>().Logger.Info("Keybing Just Pressed" + SFKeybinds.UseTechnique.JustPressed + "Is: " + disableCurseTechniques);
+
+                if (!disableCurseTechniques || uniqueBodyStructure)
+                    ShootTechnique();
+            }
+
+            //seeing when just released creates problem with blood manip constant fire techs
+            //if (SFKeybinds.UseTechnique.Current)
+            //{
+            //    chargeTimer++;
+            //}
+
+            //if (SFKeybinds.UseTechnique.JustReleased)
+            //{
+            //    ShootTechnique(chargeTimer);
+            //}
+
+
+            if (heavenlyRestriction) return;
+
+
+            if (SFKeybinds.UseRCT.Current)
+                UseRCT();
+
+
+            if (SFKeybinds.UseRCT.JustReleased)
+                if (rctAuraIndex != -1)
+                {
+                    Main.projectile[rctAuraIndex].Kill();
+                    rctAuraIndex = -1;
+                }
+
+            if (SFKeybinds.DomainExpansion.Current && noInnateDomain == false)
+            {
+                domainTimer++;
+                if (HasActiveDomain)
+                    domainTimer = 1;
+
+                if (UnlockedDomainExpansion)
+                {
+                    float zoom = 1.3f * (MathF.Log10(domainTimer + 1f) + 0.22f);
+
+                    CameraController.SetCameraZoom(zoom);
+                }
+            }
+            else if (domainTimer != 0)
+            {
+                if (domainTimer < 20)
+                {
+                    if (HasActiveDomain)
+                        CloseDomainExpansion();
+                    else
+                    {
+                        ToggleSimpleDomain();
+                    }
+                }
+                else if (UnlockedDomainExpansion)
+                {
+                    if (DomainExpansionController.ActiveDomains.TryGet(d => d is ISimpleDomain && d.owner == Player.whoAmI, out DomainExpansion de))
+                    {
+                        DomainExpansionController.CloseDomain(de.id);
+                    }
+
+                    ExpandDomainExpansion();
+                }
+
+                domainTimer = 0;
+                CameraController.ResetCameraZoom();
+            }
+
+            if(SFKeybinds.DomainExpansion.JustReleased && noInnateDomain == true)
+            {
+                ToggleSimpleDomain();
+            }
+
+
+            if (SFKeybinds.AttemptBlackFlash.JustPressed && blackFlashTimeLeft == 0)
+            {
+                blackFlashTimeLeft = blackFlashTime;
+
+                int variation = pictureLocket ? Main.rand.Next(-3, 2) : Main.rand.Next(-5, 4);
+
+                lowerWindowTime = innateTechnique.Name == "Vessel" ? 14 - blackFlashCounter / 2 + variation : 15 - blackFlashCounter / 2 + variation;
+                sfUI.BlackFlashWindow(lowerWindowTime, lowerWindowTime + blackFlashWindowTime);
+            }
+
+            if (SFKeybinds.ConsumeCursedEnergyPotion.JustPressed)
+                if (cursedEnergy < maxCursedEnergy)
+                    BeerHatRecoverCE();
+        }
+
+
+        public void ShootTechnique()
+        {
+            if (selectedTechnique == null || disableRegenFromProjectiles)
+            {
+                return;
+            }
+
+            if (!selectedTechnique.UseCondition(this))
+            {
+                return;
+            }
+
+            if (Player.HasBuff<BurntTechnique>())
+            {
+                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
+                Main.combatText[index].lifeTime = 180;
+                return;
+            }
+
+            if (Player.HasBuff<Exhaustion>())
+            {
+                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your body is exhausted!");
+                Main.combatText[index].lifeTime = 180;
+                return;
+            }
+
+            if (cursedEnergy < selectedTechnique.CalculateTrueCost(this))
+            {
+                if (beerHat)
+                {
+                    BeerHatRecoverCE(minRecover: selectedTechnique.CalculateTrueCost(this));
+                }
+
+                bool successfullyRecoveredCe = cursedEnergy >= selectedTechnique.CalculateTrueCost(this);
+
+                if (!successfullyRecoveredCe)
+                {
+                    if (heavenlyRestriction)
+                        Player.AddBuff(ModContent.BuffType<Exhaustion>(), SFUtils.BuffSecondsToTicks(DefaultBurntTechniqueDuration));
+                    else
+                        AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
+                    return;
+                }
+            }
+
+            selectedTechnique.UseTechnique(this);
+        }
+
+
+        void UseRCT()
+        {
+            if (!unlockedRCT)
+            {
+                return;
+            }
+
+            if (Player.HasBuff<BurntTechnique>())
+            {
+                return;
+            }
+
+            if (Player.statLife >= Player.statLifeMax2)
+            {
+                return;
+            }
+
+            if (Main.myPlayer == Player.whoAmI && rctAuraIndex == -1)
+            {
+                IEntitySource source = Player.GetSource_FromThis();
+                rctAuraIndex = Projectile.NewProjectile(source, Player.Center, Vector2.Zero, ModContent.ProjectileType<ReverseCursedTechniqueAuraProjectile>(), 0, 0, Player.whoAmI);
+            }
+
+            int totalHealing = (int)SFUtils.RateSecondsToTicks(rctBaseHealPerSecond + additionalRCTHealPerSecond);
+            float ceCost = (totalHealing * 5) * (1 - rctEfficiency);
+
+            Player.Heal(totalHealing);
+            cursedEnergy -= ceCost;
+        }
+
+
+        void ExpandDomainExpansion()
+        {
+            if (Player.whoAmI == Main.myPlayer)
+            {
+                if (Player.HasBuff<BrainDamage>())
+                {
+                    int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You can't use this right now!");
+                    Main.combatText[index].lifeTime = 60;
+                    return;
+                }
+
+                CameraController.ResetCameraZoom();
+
+                foreach (NPC npc in Main.ActiveNPCs)
+                {
+                    if (npc.GetDomain() != null)
+                    {
+                        NPCDomainController.playerCastedDomain = true;
+
+                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                        {
+                            ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
+                            packet.Write((byte)MessageType.PlayerCastingDomain);
+                            packet.Write(Player.whoAmI);
+                            packet.Send();
+                        }
+                    }
+                }
+
+                if (!inDomainAnimation)
+                {
+                    inDomainAnimation = true;
+
+                    int index = CombatText.NewText(Player.getRect(), Color.White, "Domain Expansion:");
+                    Main.combatText[index].lifeTime = 60;
+
+                    TaskScheduler.Instance.AddDelayedTask(() =>
+                    {
+                        int index = CombatText.NewText(Player.getRect(), Color.White, innateTechnique.DomainExpansion.DisplayName);
+                        Main.combatText[index].lifeTime = 60;
+                    }, 60);
+
+                    TaskScheduler.Instance.AddDelayedTask(() =>
+                    {
+                        DomainExpansionController.ExpandDomain(Player.whoAmI, innateTechnique.DomainExpansion);
+                        inDomainAnimation = false;
+                    }, 120);
+                }
+            }
+        }
+
+
+        void CloseDomainExpansion()
+        {
+            if (DomainExpansionController.ActiveDomains.TryGet(d => d is PlayerDomainExpansion && d.owner == Player.whoAmI, out DomainExpansion de))
+            {
+                DomainExpansionController.CloseDomain(de.id);
+            }
+        }
+
+        void ToggleSimpleDomain()
+        {
+            if (DomainExpansionController.ActiveDomains.TryGet(d => d is ISimpleDomain && d.owner == Player.whoAmI, out DomainExpansion de))
+            {
+                DomainExpansionController.CloseDomain(de.id);
+                return;
+            }
+
+            if (Main.myPlayer == Player.whoAmI)
+            {
+                int index;
+                if (!UnlockedSimpleDomain)
+                {
+                    index = CombatText.NewText(Player.getRect(), Color.DarkRed, "You haven't unlocked this yet!");
+                    Main.combatText[index].lifeTime = 60;
+                    return;
+                }
+
+
+                if (Player.HasBuff<BurntTechnique>())
+                {
+                    index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
+                    Main.combatText[index].lifeTime = 180;
+                    return;
+                }
+
+                DomainExpansionController.ExpandDomain(Player.whoAmI, new SimpleDomainFloating());
+                index = CombatText.NewText(Player.getRect(), Color.LightCyan, "New Shadow Style: Simple Domain");
+                Main.combatText[index].lifeTime = 60;
+
+            }
+        }
+
+        public void RollForPlayerAttributes(bool isReroll = false)
+        {
+            bool successfulRoll = false;
+            if (SFUtils.Roll(SFConstants.SixEyesPercent) && sixEyesLevel == 0 && !challengersEye)
+            {
+                sixEyesLevel = 1;
+                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.SixEyes"), Color.Khaki, Player.whoAmI);
+                successfulRoll = true;
+            }
+
+            if (SFUtils.Roll(SFConstants.UniqueBodyStructurePercent) && !uniqueBodyStructure)
+            {
+                uniqueBodyStructure = true;
+                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.UniqueBodyStructure"), Color.Khaki, Player.whoAmI);
+                successfulRoll = true;
+            }
+
+            if (SFUtils.Roll(SFConstants.BlessedByBlackSparksPercent) && !blessedByBlackFlash)
+            {
+                blessedByBlackFlash = true;
+                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.BlessedByBlackSparks"), Color.Khaki, Player.whoAmI);
+                successfulRoll = true;
+            }
+
+            if (isReroll && !successfulRoll)
+            {
+                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.PlayerAttributes.FailedReroll"), Color.Khaki, Player.whoAmI);
+            }
+        }
+
+        public void RollForCursedEnergyTraits(bool isReroll = false)
+        {
+            bool successfulRoll = false;
+            if (SFUtils.Roll(SFConstants.ExplosiveCursedEnergyPercent) && !explosiveCursedEnergy)
+            {
+                explosiveCursedEnergy = true;
+
+                sharpCursedEnergy = false;
+                overflowingEnergy = false;
+
+                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.CursedEnergyTraits.ExplosiveCursedEnergy"), Color.Khaki, Player.whoAmI);
+                successfulRoll = true;
+            }
+            else if (SFUtils.Roll(SFConstants.SharpCursedEnergyPercent) && !sharpCursedEnergy)
+            {
+                sharpCursedEnergy = true;
+
+                explosiveCursedEnergy = false;
+                overflowingEnergy = false;
+
+                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.CursedEnergyTraits.SharpCursedEnergy"), Color.Khaki, Player.whoAmI);
+                successfulRoll = true;
+            }
+            else if (SFUtils.Roll(SFConstants.OverflowingEnergyPercent) && !overflowingEnergy)
+            {
+                overflowingEnergy = true;
+
+                explosiveCursedEnergy = false;
+                sharpCursedEnergy = false;
+
+                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.CursedEnergyTraits.OverflowingEnergy"), Color.Khaki, Player.whoAmI);
+                successfulRoll = true;
+            }
+
+            if (isReroll && !successfulRoll)
+            {
+                ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.CursedEnergyTraits.FailedReroll"), Color.Khaki, Player.whoAmI);
+            }
+        }
+
+
+
+        void AttributeIcons()
+        {
+            if (challengersEye)
+                Player.AddBuff(ModContent.BuffType<ChallengersEyeBuff>(), 2);
+            else if (AwakenedSixEyes)
+                Player.AddBuff(ModContent.BuffType<AwakenedSixEyesBuff>(), 2);
+            else if (SixEyes)
+                Player.AddBuff(ModContent.BuffType<SixEyesBuff>(), 2);
+            else if (TrueSixEyes)
+                Player.AddBuff(ModContent.BuffType<TrueSixEyesBuff>(), 2);
+
+            if (uniqueBodyStructure)
+                Player.AddBuff(ModContent.BuffType<UniqueBodyStructureBuff>(), 2);
+
+            if (blessedByBlackFlash)
+                Player.AddBuff(ModContent.BuffType<BlessedByBlackSparksBuff>(), 2);
+
+            if (innateTechnique.Name == "Vessel")
+                Player.AddBuff(ModContent.BuffType<SukunasVesselBuff>(), 2);
+
+            if (explosiveCursedEnergy)
+                Player.AddBuff(ModContent.BuffType<ExplosiveCursedEnergy>(), 2);
+
+            if (sharpCursedEnergy)
+                Player.AddBuff(ModContent.BuffType<SharpCursedEnergy>(), 2);
+
+            if (overflowingEnergy)
+                Player.AddBuff(ModContent.BuffType<OverflowingCursedEnergy>(), 2);
+
+            if (blackFlashCounter > 0)
+                Player.AddBuff(ModContent.BuffType<FlowState>(), 2);
+        }
+    }
+}

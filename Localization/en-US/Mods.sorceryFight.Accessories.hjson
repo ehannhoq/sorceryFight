@@ -1,0 +1,88 @@
+CelestialAmulet: {
+	DisplayName: Lunar Amulet
+	Tooltip:
+		'''
+		{0}% decreased Burnt Technique duration
+		{1}% increased cursed technique damage 
+		[c/A4ECED:"Forged with the ambient cursed energy of the Moon."]
+		'''
+}
+
+PictureLocket: {
+	DisplayName: Picture Locket
+	Tooltip:
+		'''
+		Makes the Black Flash success window closer to the center.
+		[c/EBF567:"Takada-Chaaaaaan!!!~"]
+		'''
+}
+
+CursedOfuda: {
+	DisplayName: Cursed Ofuda
+	Tooltip:
+		'''
+		{0}% decreased cursed technique cost
+		{1}% decreased in cursed technique cast time		
+		[c/A2F794:"A talisman of efficiency!"]
+		'''
+}
+
+CurseOfHavok: {
+	DisplayName: Curse of Havok
+	Tooltip:
+		'''
+		{0}% increased Shrine cursed technique damage
+		{1}% increased other cursed technique damage
+		[c/B52518:"The essense of the King of Curses burns within you..."]
+		'''
+}
+
+BlessingOfTheHonoredOne: {
+	DisplayName: The Honored One's Blessing
+	Tooltip:
+		'''
+		{0}% increased Limitless cursed technique damage
+		{1}% increased other cursed technique damage
+		[c/9FC6ED:"A blessing from the Strongest of today."]
+		'''
+}
+
+CursedBlindfold: {
+	DisplayName: Pitch-Black Blindfold
+	Tooltip:
+		'''
+		{0}% increased Limitless cursed technique damage 
+		{1}% increased other cursed technqiue damage
+		+{2} max cursed energy, +{3} CE/s regen
+		Can only be equipped if you have [c/99d6f2:Six Eyes].
+		[c/30475e:"Cover those baby-blues!"]
+		'''
+}
+
+JujutsuEmblem: {
+	DisplayName: Jujutsu Emblem
+	Tooltip: "{0}% increased cursed technique damage"
+}
+
+ClawsOfCalamity: {
+	DisplayName: Claws of Calamity
+	Tooltip:
+		'''
+		{0}% increased cursed technique damage
+		{1}% increased black flash damage
+		'''
+}
+
+BeerHat: {
+	DisplayName: Drinking Helmet
+	Tooltip: Enables auto-consumption of Cursed Energy potions
+}
+
+ReverseCharm: {
+	DisplayName: Reverse Charm
+	Tooltip:
+		'''
+		+{0} HP/s healed while using RCT
+		{1}% increased RCT efficiency
+		'''
+}

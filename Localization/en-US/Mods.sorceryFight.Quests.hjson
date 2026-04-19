@@ -1,0 +1,24 @@
+QuestToast: {
+	NewQuest: New Quest!
+	CompletedQuest: Quest Completed!
+}
+
+RCTQuestI: {
+	DisplayName: The Art of the Reverse Cursed Technique
+	Description: Heal 200 HP using just the Reverse Cursed Technique.
+}
+
+SixEyesQuestI: {
+	DisplayName: Learn to See
+	Description: Defeat 50 enemies using the Pitch-Black Blindfold.
+}
+
+SixEyesQuestII: {
+	DisplayName: Endure the Strain.
+	Description: While under the Strained Six Eyes debuff, defeat the Lunatic Cultist.
+}
+
+BlackFlashQuestI: {
+	DisplayName: The Picture Locket
+	Description: Hit three Black Flashes, and have the Thank You painting in your inventory.
+}

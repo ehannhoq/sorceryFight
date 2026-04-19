@@ -1,0 +1,244 @@
+YourPotential: {
+	DisplayName: Your Potential
+	Tooltip:
+		'''
+		Your potential is yet to
+		be unleashed.
+		'''
+}
+
+GeneticReroll: {
+	DisplayName: Dice of Genetic Reroll
+	Tooltip:
+		'''
+		Has a chance for granting you special player attributes.
+		Six Eyes: 10%
+		Unique Body Structure: 15%.
+		Blessed by the Sparks of Black: 10%.
+		Can grant more than one attribute.
+		'''
+}
+
+CursedEnergyCoin: {
+	DisplayName: Cursed Coin
+	Tooltip:
+		'''
+		Has a chance for granting you a special cursed energy trait.
+		Explosive Cursed Energy: 15%
+		Sharp Cursed Energy: 15%
+		Overflowing Cursed Energy: 15%
+		You can only have one cursed energy trait at a time.
+		'''
+}
+
+CursedBulb: {
+	DisplayName: Cursed Bulb
+	Tooltip:
+		'''
+		Radiating in cursed energy.
+		Increases your Cursed Energy regeneration by 15 CE/s.
+		'''
+}
+
+CursedEffulgentFeather: {
+	DisplayName: Cursed Effulgent Feather
+	Tooltip:
+		'''
+		Radiating in cursed energy.
+		Increases your Cursed Energy regeneration by 25 CE/s.
+		'''
+}
+
+CursedEye: {
+	DisplayName: Cursed Eye
+	Tooltip:
+		'''
+		Radiating in cursed energy.
+		Increases your Cursed Energy regeneration by 4 CE/s.
+		'''
+}
+
+CursedFlesh: {
+	DisplayName: Cursed Flesh
+	Tooltip:
+		'''
+		Radiating in cursed energy.
+		Increases your Cursed Energy regeneration by 10 CE/s.
+		'''
+}
+
+CursedMask: {
+	DisplayName: Cursed Mask
+	Tooltip:
+		'''
+		Radiating in cursed energy.
+		Increases your Cursed Energy regeneration by 25 CE/s.
+		'''
+}
+
+CursedMechanicalSoul: {
+	DisplayName: Cursed Mechanical Soul
+	Tooltip:
+		'''
+		Radiating in cursed energy.
+		Increases your max Cursed Energy by 300.
+		'''
+}
+
+CursedPhantasmalEye: {
+	DisplayName: Cursed Phantasmal Eye
+	Tooltip:
+		'''
+		Radiating in cursed energy.
+		Increases your max Cursed Energy by 500.
+		'''
+}
+
+CursedRuneOfKos: {
+	DisplayName: Cursed Piece of the Void
+	Tooltip:
+		'''
+		Radiating in cursed energy.
+		Increases your Cursed Energy regeneration by 25 CE/s.
+		'''
+}
+
+CursedSkull: {
+	DisplayName: Cursed Skull
+	Tooltip:
+		'''
+		Radiating in cursed energy.
+		Increases your max Cursed Energy by 100.
+		'''
+}
+
+CursedProfanedShards: {
+	DisplayName: Cursed Profaned Shards
+	Tooltip:
+		'''
+		Radiating in cursed energy.
+		Increases your max Cursed Energy by 1000.
+		'''
+}
+
+CursedRock: {
+	DisplayName: Cursed Rock
+	Tooltip:
+		'''
+		Radiating in cursed energy.
+		Increases your Cursed Energy regeneration by 20 CE/s.
+		'''
+}
+
+SukunasFinger: {
+	DisplayName: Ryomen Sukuna's Finger [{0}]
+	Tooltip:
+		'''
+		A highly cursed object; that of belongs to none other than
+		Ryomen Sukuna, the strongest sorcerer-turned-cursed spirit
+		in history.
+		Consuming this finger may not be the best idea, unless
+		you have the capabilities or a vessel...
+		'''
+}
+
+SuspiciouslyWellPerservedEye: {
+	DisplayName: Suspiciously Well Perserved Eye
+	Tooltip:
+		'''
+		Doesn't seem to be of this universe.
+		[c/6D2673:Dedicated to ehann]
+		'''
+}
+
+CursedEnergyDrinks: {
+	Soda: {
+		DisplayName: Cursed Energy Soda
+		Description:
+			'''
+			Restores {0} cursed energy.
+			Not consumable when you have your domain expanded.
+			'''
+	}
+
+	Tall: {
+		DisplayName: Tall Cursed Energy Soda
+		Description:
+			'''
+			Restores {0} cursed energy.
+			Not consumable when you have your domain expanded.
+			'''
+	}
+
+	Mug: {
+		DisplayName: Mug of Cursed Energy
+		Description:
+			'''
+			Restores {0} cursed energy.
+			Not consumable when you have your domain expanded.
+			'''
+	}
+
+	TwoLiter: {
+		DisplayName: 2 Liter Bottle of Cursed Energy
+		Description:
+			'''
+			Restores {0} cursed energy.
+			Not consumable when you have your domain expanded.
+			'''
+	}
+
+	FiveGallon: {
+		DisplayName: 5 Gallon Jug of Cursed Energy
+		Description:
+			'''
+			Restores {0} cursed energy.
+			Not consumable when you have your domain expanded.
+			'''
+	}
+}
+
+DeathPaintingOne: {
+	DisplayName: Death Painting Sho-oso
+	Description: Consume to increase Blood regeneration rate by 5 BE/s.
+}
+
+DeathPaintingTwo: {
+	DisplayName: Death Painting Shoso
+	Description: Consume to increase Blood capacity by 100 BE.
+}
+
+DeathPaintingThree: {
+	DisplayName: Death Painting Tanso
+	Description: Consume to increase Blood capacity by 200 BE.
+}
+
+DeathPaintingFour: {
+	DisplayName: Death Painting Eso
+	Description: Consume to increase Blood capacity by 300 BE.
+}
+
+DeathPaintingFive: {
+	DisplayName: Death Painting Kechizu
+	Description: Consume to increase Blood regeneration rate by 10 BE/s.
+}
+
+DeathPaintingSix: {
+	DisplayName: Death Painting Kotsuso
+	Description: Consume to increase Blood capacity by 400 BE.
+}
+
+DeathPaintingSeven: {
+	DisplayName: Death Painting Noranso
+	Description: Consume to increase Blood capacity by 500 BE.
+}
+
+DeathPaintingEight: {
+	DisplayName: Death Painting Sanso
+	Description: Consume to increase Blood regeneration rate by 20 BE/s.
+}
+
+SukunasSkull: {
+	DisplayName: Sukunas's Skull
+	Description: The very skull of the once incarnate King of Curses, [C/8A0606:Ryomen Sukuna.]
+}

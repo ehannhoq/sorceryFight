@@ -1,0 +1,10 @@
+using Terraria.Localization;
+
+namespace sorceryFight.Content.Items.Consumables.SukunasFinger
+{
+    public class SukunasFingerIV : SukunasFingerBase
+    {
+        public override int Id => 4;
+        public override LocalizedText DisplayName => base.DisplayName.WithFormatArgs(Id);
+    }
+}

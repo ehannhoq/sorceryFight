@@ -1,0 +1,315 @@
+PlayerAttributes: {
+	AwakenedSixEyes: {
+		DisplayName: Awakened Six Eyes
+		Description:
+			'''
+			Reduces the cost of Cursed Techniques by {0}%
+			Grants permanent Dangersense
+			'''
+	}
+
+	SixEyes: {
+		DisplayName: Six Eyes
+		Description:
+			'''
+			Reduces the cost of Cursed Techniques by {0}%
+			Grants permanent Dangersense
+			Grants permanent Night Owl
+			'''
+	}
+
+	TrueSixEyes: {
+		DisplayName: True Six Eyes
+		Description:
+			'''
+			Reduces the cost of Cursed Techniques by {0}%
+			Grants permanent Dangersense
+			Grants permanent Night Owl
+			Grants permanent Spelunker
+			Grants permanent Hunter
+			'''
+	}
+
+	ChallengersEye: {
+		DisplayName: The Last Challenger's Eye
+		Description:
+			'''
+			Reduces the cost of Cursed Techniques by {0}%.
+			[c/6D2673:Dedicated to ehann]
+			'''
+	}
+
+	UniqueBodyStructure: {
+		DisplayName: Unique Body Structure
+		Description:
+			'''
+			Reduces the cost of Passive Techniques by {0}%.
+			Allows the user to use Cursed Techniques while having Passive Techniques active.
+			'''
+	}
+
+	SukunasVessel: {
+		DisplayName: Vessel
+		Description: You've become a vessel for a powerful and ancient soul.
+	}
+
+	BlessedByBlackSparksBuff: {
+		DisplayName: Blessed by the Sparks of Black
+		Description:
+			'''
+			+{0}x increased Black Flash damage.
+			{1} increased Black Flash landing frame.
+			'''
+	}
+}
+
+CursedEnergyTraits: {
+	ExplosiveCursedEnergy: {
+		DisplayName: Explosive Cursed Energy
+		Description:
+			'''
+			{0}% increased cursed technique damage
+			{1}% increased cursed technique cost
+			'''
+	}
+
+	OverflowingCursedEnergy: {
+		DisplayName: Overflowing Cursed Energy
+		Description: "{0}% increased max cursed energy, +{1} CE/s regen"
+	}
+
+	SharpCursedEnergy: {
+		DisplayName: Sharp Cursed Energy
+		Description:
+			'''
+			{0}% increased cursed technique damage
+			{1}% chance for cursed techniques to inflict Bleeding
+			'''
+	}
+}
+
+BurntTechnique: {
+	DisplayName: Burnt Technique
+	Description:
+		'''
+		Your Innate Technique has been exhuasted!
+		You won't be able to use any cursed techniques.
+		'''
+}
+
+Exhaustion: {
+	DisplayName: Exhaustion
+	Description:
+		'''
+		You're too exhausted!
+		You won't be able to use any abilities.
+		'''
+}
+
+Infinity: {
+	DisplayName: Infinity
+	Description:
+		'''
+		Infinity is the convergence of an 
+		immeasurable series, anything that
+		approaches the infinity slows down 
+		and never reaches you.
+		'''
+	LockedDescription:
+		'''
+		Defeat the piece of Cthulhu that was
+		ripped out from him centuries ago.
+		'''
+}
+
+AmplifiedAuraBuff: {
+	DisplayName: Amplified Aura
+	Description:
+		'''
+		Covering yourself in a shroud of 
+		the amplified Limitless, you gain 
+		an increase in speed and damage.
+		'''
+	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
+}
+
+MaximumAmplifiedAuraBuff: {
+	DisplayName: Maximum Output: Amplified Aura
+	Description:
+		'''
+		Covering yourself in a shroud
+		of the amplified Limitless using
+		maximum cursed energy output,
+		you gain a major increase in
+		speed and damage.
+		'''
+	LockedDescription: Defeat the stone-faced ritualistic idol of the Lihzahrd tribe.
+}
+
+FallingBlossomEmotionBuff: {
+	DisplayName: Falling Blossom Emotion
+	Description:
+		'''
+		An anti-domain technique passed down
+		among the Big Three clans.
+		'''
+	LockedDescription: Defeat the crazed cultist leader at the entrance of the dungeon.
+}
+
+DomainAmplificationBuff: {
+	DisplayName: Domain Amplification
+	Description:
+		'''
+		A simple technique that casts
+		a barrier around the user, 
+		nullifying partial damage taken.
+		'''
+	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
+}
+
+HollowWickerBasketBuff: {
+	DisplayName: Hollow Wicker Basket
+	Description:
+		'''
+		An ancient technique. It shrouds
+		the user in a basket of Cursed
+		Energy, nullifying any damage taken.
+		'''
+	LockedDescription: Defeat the stone-faced ritualistic idol of the Lihzahrd tribe.
+}
+
+MindlessCarnage: {
+	DisplayName: Mindless Carnage
+	Description:
+		'''
+		Your mind goes blank, eyes go gray.
+		Damage and speed scales to the strongest
+		enemy near you.
+		Stamina drain also increases the stronger
+		the enemy.
+		'''
+	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
+}
+
+FlowingRedScaleBuff: {
+	DisplayName: Flowing Red Scale
+	Description:
+		'''
+		An ancient technique. It pumps blood
+		actively through the user's body, increasing
+		defense and reducing incoming damage taken.
+		'''
+	LockedDescription: Consume 3 of Sukuna's Fingers (Vessel) or defeat Perforator / HiveMind (Blood)
+}
+
+FlowingRedScaleStackBuff: {
+	DisplayName: Flowing Red Scale Stack
+	Description:
+		'''
+		An Improved technique. It pumps blood
+		actively through the user's body, further increasing
+		defense and reducing incoming damage taken.
+		'''
+	LockedDescription: Consume 10 of Sukuna's Fingers (Vessel) or defeat Leviathan (Blood)
+}
+
+SummonGarudaBuff: {
+	DisplayName: Garuda
+	Description: Summon Garuda
+	LockedDescription: Defeat Golem
+}
+
+InorganicPerception: {
+	DisplayName: Inorganic Perception
+	Description: placeholder
+	LockedDescription: Defeat the stone-faced ritualistic idol of the Lihzahrd tribe.
+}
+
+IdleDeathGambleJackpotBuffI: {
+	DisplayName: Jackpot
+	Description: You've hit the jackpot. You now have larger CE reserves.
+}
+
+IdleDeathGambleJackpotBuffII: {
+	DisplayName: Jackpot
+	Description:
+		'''
+		You've hit the jackpot. You now have even larger CE reserves,
+		so much so that its automatically performing RCT.
+		'''
+}
+
+IdleDeathGambleJackpotBuffIII: {
+	DisplayName: Jackpot
+	Description: You've hit the jackpot. You now have near infinite Cursed Energy and RCT.
+}
+
+IdleDeathGambleBuff: {
+	DisplayName: Nice Try!
+	Description:
+		'''
+		You didn't get a jackpot this time, 
+		instead you get a small buff based 
+		on the highest number you rolled!
+		'''
+}
+
+FlowState: {
+	DisplayName: Flow State
+	Description:
+		'''
+		You've entered a flow state.
+		Fill up your Black Flash meter
+		to deal a massive increase in 
+		damage on your last hit.
+		'''
+}
+
+KingOfCursesBuff: {
+	DisplayName: King Of Curses Mode
+	Description: Give me your body, kid.
+}
+
+BrainDamage: {
+	DisplayName: Brain Damage
+	Description: You are not able to expand your domain!
+}
+
+StrainedSixEyes: {
+	DisplayName: Strained Six Eyes
+	Description:
+		'''
+		{0}% reduced max Cursed Energy.
+		{1}/s Cursed Energy drain.
+		'''
+}
+
+CursedEnergySickness: {
+	DisplayName: Cursed Energy Sickness
+	Description: Cursed Technique damage reduced by {0}%.
+}
+
+Bloodshed: {
+	DisplayName: Bloodshed
+	Description:
+		'''
+		{0}% increased true melee damage
+		{1}% increased movement speed
+		+{2} defense
+		'''
+}
+
+BloodshedCooldown: {
+	DisplayName: Bloodshed Cooldown
+	Description: ""
+}
+
+BloodPoison: {
+	DisplayName: Blood Poison
+	Description: Mods.sorceryFight.Buffs.BloodPoison.Description
+}
+
+GarudaCooldown: {
+	DisplayName: Garuda Cooldown
+	Description: Mods.sorceryFight.Buffs.GarudaCooldown.Description
+}

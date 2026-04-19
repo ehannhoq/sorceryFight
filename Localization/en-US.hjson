@@ -1,0 +1,287 @@
+Mods: {
+	sorceryFight: {
+		Projectiles: {
+			AmplifiedAuraProjectile.DisplayName: Amplified Aura Projectile
+			MaximumAmplifiedAuraProjectile.DisplayName: Maximum Amplified Aura Projectile
+			ReverseCursedTechniqueAuraProjectile.DisplayName: Reverse Cursed Technique Aura Projectile
+			DomainAmplificationProjectile.DisplayName: Domain Amplification Projectile
+			HollowWickerBasketProjectile.DisplayName: Hollow Wicker Basket Projectile
+			IdleDeathGambleJackpotProjectile.DisplayName: Idle Death Gamble Jackpot Projectile
+			CrikySwordSlash.DisplayName: Criky Sword Slash
+			InvertedSpearSlash.DisplayName: Inverted Spear Slash
+			ObliviousSwordSlash.DisplayName: Oblivious Sword Slash
+			ObliviousSwordProjectile.DisplayName: Oblivious Sword Projectile
+			FallingBlossomEmotionProjectile.DisplayName: Falling Blossom Emotion Projectile
+			FingerBearerBall.DisplayName: Finger Bearer Ball
+			IdleDeathGambleJackpotProjectileIII.DisplayName: Idle Death Gamble Jackpot Projectile I I I
+			InvertedSpearCharge.DisplayName: Inverted Spear Charge
+			CleaveMS.DisplayName: Cleave M S
+			HollowPurpleCollision.DisplayName: Hollow Purple Collision
+			InvertedSpearProjectile.DisplayName: Inverted Spear Projectile
+			ChakiraResonantSlash.DisplayName: Chakira Resonant Slash
+			ChakiraResonantHoldout.DisplayName: Chakira Resonant Holdout
+			ChakiraResonantCharge.DisplayName: Chakira Resonant Charge
+			ExampleBlackRopeSlash.DisplayName: Example Black Rope Slash
+			BlackRopeWhip.DisplayName: Black Rope Whip
+			UnlimitedPiercingBloodProjectile.DisplayName: Unlimited Piercing Blood Projectile
+			SuperNovaShard.DisplayName: Super Nova Shard
+			GarudaBody.DisplayName: Garuda Body
+			GarudaHead.DisplayName: Garuda Head
+			GarudaTail.DisplayName: Garuda Tail
+			BloodDaggerStormProjectile.DisplayName: Blood Dagger Storm Projectile
+			BlackholeProjectile.DisplayName: Blackhole Projectile
+			ChakiraResonantBeam.DisplayName: Chakira Resonant Beam
+			GarudaWhipProjectile.DisplayName: Garuda Whip Projectile
+			CakeBlastProjectile.DisplayName: Cake Blast Projectile
+			RoundDeerBolt.DisplayName: Round Deer Bolt
+			NueLightning.DisplayName: Nue Lightning
+			IcicleHailProjectile.DisplayName: Icicle Hail Projectile
+			LineDevestationProjectile.DisplayName: Line Devestation Projectile
+			RabbitShardscape.DisplayName: Rabbit Shardscape
+			RabbitShardscape_Indicator.DisplayName: Rabbit Shardscape_ Indicator
+			RabbitMoonlord.DisplayName: Rabbit Moonlord
+			RabbitLaser.DisplayName: Rabbit Laser
+		}
+
+		Configs: {
+			ClientConfig: {
+				DisplayName: Client Config
+
+				BlackFlashScreenEffects: {
+					Label: Black Flash Screen Effects
+					Tooltip: Toggle the screen flashing when landing a Black Flash.
+				}
+
+				DisableImpactFrames: {
+					Label: Disable Impact Frames
+					Tooltip: ""
+				}
+
+				StarMeter: {
+					Label: Star Meter
+					Tooltip: ""
+				}
+
+				MeterPosLock: {
+					Label: Meter Pos Lock
+					Tooltip: ""
+				}
+
+				StarMeterPosX: {
+					Label: Star Meter Pos X
+					Tooltip: ""
+				}
+
+				StarMeterPosY: {
+					Label: Star Meter Pos Y
+					Tooltip: ""
+				}
+
+				StarMeterTransparency: {
+					Label: Star Meter Transparency
+					Tooltip: ""
+				}
+
+				CursedEnergyBar: {
+					Label: Cursed Energy Bar
+					Tooltip: ""
+				}
+
+				CursedEnergyBarPosLock: {
+					Label: Cursed Energy Bar Pos Lock
+					Tooltip: ""
+				}
+
+				CursedEnergyBarPosX: {
+					Label: Cursed Energy Bar Pos X
+					Tooltip: ""
+				}
+
+				CursedEnergyBarPosY: {
+					Label: Cursed Energy Bar Pos Y
+					Tooltip: ""
+				}
+
+				CursedEnergyBarTransparency: {
+					Label: Cursed Energy Bar Transparency
+					Tooltip: ""
+				}
+
+				BloodEnergyBar: {
+					Label: Blood Energy Bar
+					Tooltip: ""
+				}
+
+				BloodEnergyBarPosLock: {
+					Label: Blood Energy Bar Pos Lock
+					Tooltip: ""
+				}
+
+				BloodEnergyBarPosX: {
+					Label: Blood Energy Bar Pos X
+					Tooltip: ""
+				}
+
+				BloodEnergyBarPosY: {
+					Label: Blood Energy Bar Pos Y
+					Tooltip: ""
+				}
+
+				BloodEnergyBarTransparency: {
+					Label: Blood Energy Bar Transparency
+					Tooltip: ""
+				}
+
+				StarMeterPosLock: {
+					Label: Star Meter Pos Lock
+					Tooltip: ""
+				}
+
+				Headers: {
+					BloodEnergyBar: Blood Energy Bar Header
+					CursedTechniqueSelector: Cursed Technique Selector Header
+					PassiveTechniqueSelector: Passive Technique Selector Header
+					CursedEnergyBar: Cursed Energy Bar Header
+					StarEnergyBar: Star Energy Bar Header
+				}
+
+				BloodEnergyBarScale: {
+					Label: Blood Energy Bar Scale
+					Tooltip: Adjusts the size of the Blood Energy Bar. Default is 1.0
+				}
+
+				CTSelectorPosX: {
+					Label: Cursed Technique Selector X Position
+					Tooltip: ""
+				}
+
+				CTSelectorPosY: {
+					Label: Cursed Technique Selector Y Position
+					Tooltip: ""
+				}
+
+				CTSelectorPosLock: {
+					Label: Lock Cursed Technique Selector Position
+					Tooltip: ""
+				}
+
+				PTSelectorPosX: {
+					Label: Passive Technique Selector X Position
+					Tooltip: ""
+				}
+
+				PTSelectorPosY: {
+					Label: Passive Technique Selector Y Position
+					Tooltip: ""
+				}
+
+				PTSelectorPosLock: {
+					Label: Lock Passive Technique Selector Position
+					Tooltip: ""
+				}
+
+				AllUIBackgroundsGreyToggle: {
+					Label: All U I Backgrounds Grey Toggle
+					Tooltip: ""
+				}
+
+				CTSelectorScale: {
+					Label: Cursed Technique Selector Scale
+					Tooltip: ""
+				}
+
+				PTSelectorScale: {
+					Label: Passive Technique Selector Scale
+					Tooltip: ""
+				}
+
+				UICustomScale: {
+					Label: UI Scale
+					Tooltip: ""
+				}
+
+				AllUIBackgroundsGrayToggle: {
+					Label: All U I Backgrounds Gray Toggle
+					Tooltip: ""
+				}
+			}
+
+			SorceryFightServerConfig: {
+				DisplayName: Sorcery Fight Server Config
+
+				LoreAccurateBlackFlash: {
+					Label: Lore Accurate Black Flash
+					Tooltip: Toggles the damage output of a successful blackflash. Lore accurate Black Flashes deal squared damage, compared to the normal 3x damage.
+				}
+
+				HollowNukeDamagesFriendlyNPCs: {
+					Label: Hollow Nuke Damages Friendly NPCs
+					Tooltip: Toggles whether a Hollow Nuke deals damage to friendly/town NPCs.
+				}
+			}
+
+			ServerConfig: {
+				DisplayName: Server Config
+
+				LoreAccurateBlackFlash: {
+					Label: Lore Accurate Black Flash
+					Tooltip: ""
+				}
+
+				HollowNukeDamagesFriendlyNPCs: {
+					Label: Hollow Nuke Damages Friendly N P Cs
+					Tooltip: ""
+				}
+			}
+		}
+
+		DamageClasses.CursedTechniqueDamageClass.DisplayName: cursed damage
+
+		Items: {
+			OSTDebug: {
+				DisplayName: O S T Debug
+				Tooltip: ""
+			}
+
+			StructureWand: {
+				DisplayName: Structure Wand
+				Tooltip: ""
+			}
+
+			IgnoreTileItem: {
+				DisplayName: Ignore Tile Item
+				Tooltip: ""
+			}
+
+			EnshroudedOneStatueItem: {
+				DisplayName: Enshrouded One Statue Item
+				Tooltip: ""
+			}
+
+			LastChallengerStatueItem: {
+				DisplayName: Last Challenger Statue Item
+				Tooltip: ""
+			}
+
+			BowieKnife: {
+				Tooltip: ""
+				DisplayName: Bowie Knife
+			}
+
+			MegumiSword: {
+				DisplayName: Megumi Sword
+				Tooltip: ""
+			}
+
+			MeiMeiAxe: {
+				DisplayName: Mei Mei Axe
+				Tooltip: ""
+			}
+
+			MegumiSwordShibuya: {
+				Tooltip: ""
+				DisplayName: Megumi Sword Shibuya
+			}
+		}
+	}
+}

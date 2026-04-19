@@ -1,0 +1,74 @@
+UnlimitedVoid: {
+	DisplayName: Unlimited Void
+	Description:
+		'''
+		Anything caught in the sure-hit will flood
+		their brain with information, rendering
+		them unable to move or think.
+		'''
+	LockedDescription: Defeat the Devourer of Gods.
+}
+
+MalevolentShrine: {
+	DisplayName: Malevolent Shrine
+	Description:
+		'''
+		A Domain Expansion with no barrier; anything
+		near the caster will be constantly striken
+		down by Dismantles and Cleaves. There is
+		no range on this domain.
+		'''
+	LockedDescription: Defeat the Devourer of Gods.
+}
+
+StarCastle: {
+	DisplayName: Star Castle
+	Description:
+		'''
+		A Domain Expansion with no barrier; anything
+		near the caster will be constantly striken
+		down by Dismantles and Cleaves. There is
+		no range on this domain.
+		'''
+	LockedDescription: Defeat the Devourer of Gods.
+}
+
+Home: {
+	DisplayName: Hometown
+	Description:
+		'''
+		A cousin of Malevolent Shrine; except confined
+		within its barrier, and striking enemies at their
+		soul, ignoring defense.
+		'''
+	LockedDescription:
+		'''
+		Defeat the Devourer of Gods, as well as consume
+		20 of Ryomen Sukuna's fingers.
+		'''
+}
+
+IdleDeathGamble: {
+	DisplayName: Idle Death Gamble
+	Description:
+		'''
+		A Domain Expansion of luck; inspired by the
+		classic pachinko machine. Try to match three
+		symbols and get the jackpot.
+		'''
+	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
+	TierI: "[TIER I] Boosts CE reserves and CE regeneration."
+	TierII:
+		'''
+		[TIER II] Greatly boosts CE reserves and CE regeneration,
+		so much so that its starting to automatically perform RCT.
+		'''
+	TierIII:
+		'''
+		[TIER III] Massively boosts CE reserves and CE regeneration.
+		The automatic RCT performs much faster.
+		'''
+}
+
+PhantasmicLabyrinth.DisplayName: Phantasmic Labyrinth
+AshenedPillarsOfCalamity.DisplayName: Ashened Pillars of Calamity
