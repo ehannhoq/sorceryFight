@@ -95,6 +95,8 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         // ── AI ────────────────────────────────────────────────────────
         public override void SummonAI()
         {
+            base.SummonAI();
+
             SorceryFightMod.Log.Info($"Nue AI ticking on netMode={Main.netMode} owner={Projectile.owner} myPlayer={Main.myPlayer}");
 
             bool returning = ShouldReturnToOwner();

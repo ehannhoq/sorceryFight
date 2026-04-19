@@ -162,43 +162,66 @@ namespace sorceryFight.Content.CursedTechniques
             }
         }
 
+        //public override void SetDefaults()
+        //{
+        //    base.SetDefaults();
+
+        //    Projectile.width = 50;
+        //    Projectile.height = 50;
+        //    Projectile.friendly = true;
+        //    Projectile.ignoreWater = true;
+        //    Projectile.penetrate = -1;
+        //    Projectile.netImportant = true;
+        //    Projectile.timeLeft = Projectile.SentryLifeTime;
+        //    Projectile.DamageType = CursedTechniqueDamageClass.Instance;
+
+        //    switch (Style)
+        //    {
+        //        case SummonStyle.Sentry:
+        //            Projectile.sentry = true;
+        //            Projectile.tileCollide = SentryTileCollide;
+        //            break;
+
+        //        case SummonStyle.FlyingMinion:
+        //            Projectile.minion = true;
+        //            Projectile.minionSlots = 0f;
+        //            Projectile.tileCollide = false;
+        //            Projectile.usesLocalNPCImmunity = true;
+        //            break;
+
+        //        case SummonStyle.GroundedMinion:
+        //            Projectile.minion = true;
+        //            Projectile.minionSlots = 0f;
+        //            Projectile.tileCollide = true;
+        //            Projectile.usesLocalNPCImmunity = true;
+        //            break;
+        //    }
+
+        //    SummonSetDefaults();
+        //}
+
         public override void SetDefaults()
         {
-            base.SetDefaults();
+            // Skip base.SetDefaults() entirely
+            // base.SetDefaults();
 
             Projectile.width = 50;
             Projectile.height = 50;
             Projectile.friendly = true;
-            Projectile.ignoreWater = true;
             Projectile.penetrate = -1;
-            Projectile.netImportant = true;
-            Projectile.timeLeft = Projectile.SentryLifeTime;
-            Projectile.DamageType = CursedTechniqueDamageClass.Instance;
+            Projectile.timeLeft = 3600;
 
-            switch (Style)
-            {
-                case SummonStyle.Sentry:
-                    Projectile.sentry = true;
-                    Projectile.tileCollide = SentryTileCollide;
-                    break;
+            // Comment out everything else
+            // Projectile.ignoreWater = true;
+            // Projectile.netImportant = true;
+            // Projectile.DamageType = CursedTechniqueDamageClass.Instance;
 
-                case SummonStyle.FlyingMinion:
-                    Projectile.minion = true;
-                    Projectile.minionSlots = 0f;
-                    Projectile.tileCollide = false;
-                    Projectile.usesLocalNPCImmunity = true;
-                    break;
+            // Comment out the style switch entirely
+            // switch (Style) { ... }
 
-                case SummonStyle.GroundedMinion:
-                    Projectile.minion = true;
-                    Projectile.minionSlots = 0f;
-                    Projectile.tileCollide = true;
-                    Projectile.usesLocalNPCImmunity = true;
-                    break;
-            }
-
-            SummonSetDefaults();
+            // SummonSetDefaults();
         }
+
 
         /// <summary>
         /// Override this to set summon-specific defaults (width, height, etc.)
@@ -210,68 +233,87 @@ namespace sorceryFight.Content.CursedTechniques
         //  AI LOOP
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+
         public override void AI()
         {
             Owner = Main.player[Projectile.owner];
             SFOwner = Owner.SorceryFight();
 
-            // Die if owner is dead or disconnected
-            if (!Owner.active || Owner.dead)
-            {
-                Projectile.Kill();
-                return;
-            }
-
-            //Kill all minions when tech is null
-            if (SFOwner?.innateTechnique?.Name == null)
-            {
-                Projectile.Kill();
-                return;
-            }
-
-            //Kill minion if tech changes
-            if (SFOwner.innateTechnique.Name != ParentInnateName)
-            {
-                Projectile.Kill();
-                return;
-            }
-
-            // CE drain
-            if (Projectile.owner == Main.myPlayer)
-            {
-                ActiveDrain(SFOwner);
-            }
-
-            // Style-specific base behavior
-            switch (Style)
-            {
-                case SummonStyle.Sentry:
-                    RunSentryBase();
-                    break;
-
-                case SummonStyle.FlyingMinion:
-                    Projectile.localNPCHitCooldown = IFrames * Projectile.MaxUpdates;
-                    SetTarget();
-                    break;
-
-                case SummonStyle.GroundedMinion:
-                    Projectile.localNPCHitCooldown = IFrames * Projectile.MaxUpdates;
-                    SetTarget();
-                    ApplyGravity();
-                    break;
-            }
+            // Comment all kill conditions
+            // if (!Owner.active || Owner.dead) { Projectile.Kill(); return; }
+            // if (SFOwner?.innateTechnique?.Name == null) { Projectile.Kill(); return; }
 
             SummonTimer++;
-
-            // Delegate to subclass
             SummonAI();
         }
+
+        //public override void AI()
+        //{
+        //    Owner = Main.player[Projectile.owner];
+        //    SFOwner = Owner.SorceryFight();
+
+        //    // Die if owner is dead or disconnected
+        //    if (!Owner.active || Owner.dead)
+        //    {
+        //        Projectile.Kill();
+        //        return;
+        //    }
+
+        //    //Kill all minions when tech is null
+        //    if (SFOwner?.innateTechnique?.Name == null)
+        //    {
+        //        Projectile.Kill();
+        //        return;
+        //    }
+
+        //    //Kill minion if tech changes
+        //    //commented out to test multiplayer syncing
+        //    //SHOULD BE RENABLED
+        //    //if (SFOwner.innateTechnique.Name != ParentInnateName)
+        //    //{
+        //    //    Projectile.Kill();
+        //    //    return;
+        //    //}
+
+        //    // CE drain
+        //    if (Projectile.owner == Main.myPlayer)
+        //    {
+        //        ActiveDrain(SFOwner);
+        //    }
+
+        //    // Style-specific base behavior
+        //    switch (Style)
+        //    {
+        //        case SummonStyle.Sentry:
+        //            RunSentryBase();
+        //            break;
+
+        //        case SummonStyle.FlyingMinion:
+        //            Projectile.localNPCHitCooldown = IFrames * Projectile.MaxUpdates;
+        //            SetTarget();
+        //            break;
+
+        //        case SummonStyle.GroundedMinion:
+        //            Projectile.localNPCHitCooldown = IFrames * Projectile.MaxUpdates;
+        //            SetTarget();
+        //            ApplyGravity();
+        //            break;
+        //    }
+
+        //    SummonTimer++;
+
+        //    // Delegate to subclass
+        //    SummonAI();
+        //}
 
         /// <summary>
         /// Override this with your summon's actual behavior.
         /// Called every tick after base logic (gravity, targeting, etc.) runs.
         /// </summary>
-        public virtual void SummonAI() { }
+        public virtual void SummonAI() {
+            if (SummonTimer == 1f)
+                Main.NewText($"Summon AI running netMode={Main.netMode} owner={Projectile.owner} myPlayer={Main.myPlayer}");
+        }
 
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         //  STYLE-SPECIFIC BASE BEHAVIOR
@@ -307,6 +349,8 @@ namespace sorceryFight.Content.CursedTechniques
         public override int UseTechnique(SorceryFightPlayer sf)
         {
             Player player = sf.Player;
+
+            Main.NewText($"SUMMONING owner={sf.Player} myPlayer={Main.myPlayer}");
 
             SorceryFightMod.Log.Info("Summoning Stuff befpre");
 

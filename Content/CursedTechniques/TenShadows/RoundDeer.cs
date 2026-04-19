@@ -75,6 +75,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         }
         public override void SummonAI()
         {
+            base.SummonAI();
 
             if (!spawnAnimDone)
             {

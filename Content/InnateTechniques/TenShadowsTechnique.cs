@@ -30,7 +30,8 @@ namespace sorceryFight.Content.InnateTechniques
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
             new RoundDeer(),
-            new Nue()
+            new Nue(),
+            new MaxElephant()
         };
 
         public override PlayerDomainExpansion DomainExpansion { get; } = new HeavensRime();
