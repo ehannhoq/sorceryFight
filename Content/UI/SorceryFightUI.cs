@@ -15,11 +15,7 @@ using sorceryFight.Content.UI.Quests.QuestToast;
 using static sorceryFight.Content.UI.Quests.QuestToast.QuestToast;
 using sorceryFight.Content.UI.Quests.QuestMenu;
 using sorceryFight.Content.UI.Chants;
-<<<<<<< HEAD
-using sorceryFight.Utilities;
-=======
 using sorceryFight.Content.UI.GeneticEditor;
->>>>>>> origin/v1.4.0
 
 public class SorceryFightUI : UIState
 {

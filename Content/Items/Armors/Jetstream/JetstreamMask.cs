@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-using CalamityMod.Items.Armor.Bloodflare;
-using CalamityMod.Items.Materials;
-using CalamityMod.Tiles.Furniture.CraftingStations;
-using sorceryFight.Utilities;
-=======
->>>>>>> origin/v1.4.0
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;

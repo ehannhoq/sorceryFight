@@ -2,11 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Particles;
 using sorceryFight.Content.Particles.UIParticles;
-<<<<<<< HEAD
-using sorceryFight.Content.Projectiles;
-using sorceryFight.Utilities;
-=======
->>>>>>> origin/v1.4.0
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;

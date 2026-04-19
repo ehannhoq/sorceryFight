@@ -1,11 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
-<<<<<<< HEAD
-using sorceryFight.SFPlayer;
-using sorceryFight.Utilities;
-=======
->>>>>>> origin/v1.4.0
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;

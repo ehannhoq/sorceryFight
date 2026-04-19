@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-using sorceryFight.Utilities;
-using System;
-=======
->>>>>>> origin/v1.4.0
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;

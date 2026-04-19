@@ -1,10 +1,5 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-<<<<<<< HEAD
-using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Utilities;
-=======
->>>>>>> origin/v1.4.0
 using Terraria;
 using Terraria.ModLoader;
 

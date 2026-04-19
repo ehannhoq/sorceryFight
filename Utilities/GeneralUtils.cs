@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
@@ -11,7 +5,14 @@ using sorceryFight.Content.Buffs.Limitless;
 using sorceryFight.Content.Buffs.Shrine;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.SFPlayer;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Reflection;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -348,6 +349,10 @@ namespace sorceryFight
             Vector2 mousePos = Main.MouseWorld;
             projectile.velocity = mousePos - projectile.Center;
             projectile.velocity.Normalize();
+        }
+        public static IItemDropRule Add(this LeadingConditionRule mainRule, IItemDropRule chainedRule, bool hideLootReport = false)
+        {
+            return mainRule.OnSuccess(chainedRule, hideLootReport);
         }
 
         public static T ModProjectile<T>(this Projectile projectile) where T : ModProjectile

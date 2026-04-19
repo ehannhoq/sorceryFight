@@ -5,11 +5,7 @@ using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Buffs.Limitless;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
-<<<<<<< HEAD
-using sorceryFight.Utilities;
-=======
 using Microsoft.Xna.Framework;
->>>>>>> origin/v1.4.0
 
 namespace sorceryFight.Content.InnateTechniques
 {

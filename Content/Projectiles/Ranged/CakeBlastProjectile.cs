@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-<<<<<<< HEAD
-using sorceryFight.Utilities;
-=======
 using sorceryFight.SFPlayer;
->>>>>>> origin/v1.4.0
 using System;
 using System.Collections.Generic;
 using System.Linq;

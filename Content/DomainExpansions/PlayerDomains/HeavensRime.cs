@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-using CalamityMod.NPCs.DevourerofGods;
-using CalamityMod.NPCs.OldDuke;
-using CalamityMod.NPCs.Yharon;
-using CalamityMod.Particles;
-=======
->>>>>>> origin/v1.4.0
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.CursedTechniques.IceFormation;
@@ -45,15 +38,15 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
                 damageMultiplier: 1f
             ));
 
-            if (ModLoader.TryGetMod("CalamityMod", out _))
-            {
-                Pool.Add(new ProjectileEntry(
-                    () => ModContent.ProjectileType<CalamityMod.Projectiles.Melee.DarkIceZero>(),
-                    sf => sf.HasDefeatedBoss(ModContent.NPCType<Yharon>()),
-                    weight: 3,
-                    damageMultiplier: 1.5f
-                ));
-            }
+            //if (ModLoader.TryGetMod("CalamityMod", out _))
+            //{
+            //    Pool.Add(new ProjectileEntry(
+            //        () => ModContent.ProjectileType<CalamityMod.Projectiles.Melee.DarkIceZero>(),
+            //        sf => sf.HasDefeatedBoss(ModContent.NPCType<Yharon>()),
+            //        weight: 3,
+            //        damageMultiplier: 1.5f
+            //    ));
+            //}
 
 
             Pool.Add(new ProjectileEntry(
@@ -64,15 +57,15 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
             ));
 
 
-            if (ModLoader.TryGetMod("CalamityMod", out _))
-            {
-                Pool.Add(new ProjectileEntry(
-                    () => ModContent.ProjectileType<CalamityMod.Projectiles.Rogue.KelvinCatalystBoomerang>(),
-                    sf => sf.HasDefeatedBoss(ModContent.NPCType<Yharon>()),
-                    weight: 3,
-                    damageMultiplier: 1.5f
-                ));
-            }
+            //if (ModLoader.TryGetMod("CalamityMod", out _))
+            //{
+            //    Pool.Add(new ProjectileEntry(
+            //        () => ModContent.ProjectileType<CalamityMod.Projectiles.Rogue.KelvinCatalystBoomerang>(),
+            //        sf => sf.HasDefeatedBoss(ModContent.NPCType<Yharon>()),
+            //        weight: 3,
+            //        damageMultiplier: 1.5f
+            //    ));
+            //}
 
 
 

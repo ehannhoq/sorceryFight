@@ -45,14 +45,8 @@ namespace sorceryFight
 			[
 				"The Honored One",
 				"ehann",
+				"Kuroka",
 				"gooloohoodoo",
-				"gooloohoodoo1",
-				"gooloohoodoo2",
-				"gooloohoodoo3",
-				"gooloohoodoo4",
-				"gooloohoodoo5",
-				"gooloohoodoo6",
-				"gooloohoodoo7",
 				"TheRealCriky",
 				"prowler",
 				"rend",
@@ -81,10 +75,6 @@ namespace sorceryFight
 				}
 			}
 		}
-
-<<<<<<< HEAD:SorceryFightMod.cs
-        public override void Unload()
-=======
 		private void DetermineStrongestBoss()
 		{
 			List<NPC> bosses = new();
@@ -154,7 +144,6 @@ namespace sorceryFight
 		//			break;
 		//	}
 		//}
-		}
 
 		private void HandleBossDefeatedPacket(BinaryReader reader)
 		{
