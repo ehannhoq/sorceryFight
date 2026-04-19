@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using CalamityMod.NPCs.Providence;
-using CalamityMod.NPCs.SupremeCalamitas;
-using Humanizer;
+// using CalamityMod.NPCs.Providence;
+// using CalamityMod.NPCs.SupremeCalamitas;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -16,8 +15,8 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
     {
         public static NPCDomainExpansion GetDomain(this NPC npc)
         {
-            if (npc.type == ModContent.NPCType<SupremeCalamitas>())
-                return new AshenedPillarsOfCalamity();
+            // if (npc.type == ModContent.NPCType<SupremeCalamitas>())
+            //     return new AshenedPillarsOfCalamity();
 
             return npc.type switch
             {
@@ -29,8 +28,8 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
 
         public static int GetBrainRefreshCount(this NPC npc)
         {
-            if (npc.type == ModContent.NPCType<SupremeCalamitas>())
-                return 2; // SCal will soon be able to expand more than one domain. ** AFTER BRAIN DAMAGE REWORK **
+            // if (npc.type == ModContent.NPCType<SupremeCalamitas>())
+            //     return 2; // SCal will soon be able to expand more than one domain. ** AFTER BRAIN DAMAGE REWORK **
 
             return 1;
         }
@@ -148,7 +147,7 @@ namespace sorceryFight.Content.DomainExpansions.NPCDomains
             {
                 { NPCID.CultistBoss, "LunaticCultist" },
                 { NPCID.HallowBoss, "EmpressOfLight" },
-                { ModContent.NPCType<SupremeCalamitas>(), "SupremeCalamitas" },
+                // { ModContent.NPCType<SupremeCalamitas>(), "SupremeCalamitas" },
             };
 
             if (bossNameMap.TryGetValue(npc.type, out string npcName))

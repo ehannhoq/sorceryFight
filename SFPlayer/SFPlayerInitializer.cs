@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using MonoMod.Cil;
 using sorceryFight.Content.InnateTechniques;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.Quests;
-using sorceryFight.Utilities;
-using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
@@ -33,7 +30,7 @@ namespace sorceryFight.SFPlayer
             bloodEnergyRegenPerSecond = 1f;
             bloodEnergyUsagePerSecond = 0f;
 
-            bossesDefeated = new List<int>();
+            bossesDefeated = new HashSet<int>();
 
             cursedSkull = false;
             cursedMechanicalSoul = false;
@@ -52,8 +49,6 @@ namespace sorceryFight.SFPlayer
 
             yourPotentialSwitch = false;
             usedYourPotentialBefore = false;
-            usedCursedFists = false;
-            npcsHitWithCursedFists = new HashSet<int>();
             idleDeathGambleBuffStrength = 0;
 
             inDomainAnimation = false;
@@ -97,6 +92,8 @@ namespace sorceryFight.SFPlayer
             questData = new();
             currentQuests = new List<Quest>();
             completedQuests = new List<string>();
+
+            mechanicalBossesDefeatedFlags = 0b0000;
         }
         public override void SaveData(TagCompound tag)
         {
@@ -109,7 +106,7 @@ namespace sorceryFight.SFPlayer
 
             tag["bloodEnergy"] = bloodEnergy;
 
-            tag["bossesDefeated"] = bossesDefeated;
+            tag["bossesDefeated"] = bossesDefeated.ToList();
 
             tag["ctSelector"] = new List<float> { CTSelectorPos.X, CTSelectorPos.Y };
 
@@ -175,6 +172,8 @@ namespace sorceryFight.SFPlayer
             }
             tag["currentQuests"] = currentQuestsData;
             tag["completedQuests"] = completedQuests;
+
+            tag["mechanicalBossesDefeatedFlags"] = mechanicalBossesDefeatedFlags;
         }
 
         public override void LoadData(TagCompound tag)
@@ -186,7 +185,7 @@ namespace sorceryFight.SFPlayer
 
             cursedEnergy = tag.ContainsKey("cursedEnergy") ? tag.GetFloat("cursedEnergy") : 1f;
             var defeatedBosses = tag.ContainsKey("bossesDefeated") ? tag.GetList<int>("bossesDefeated") : new List<int>();
-            bossesDefeated = defeatedBosses as List<int>;
+            bossesDefeated = defeatedBosses.ToHashSet();
 
             CTSelectorPos = tag.ContainsKey("ctSelector")
             ? new Microsoft.Xna.Framework.Vector2(tag.Get<List<float>>("ctSelector")[0], tag.Get<List<float>>("ctSelector")[1])
@@ -235,7 +234,7 @@ namespace sorceryFight.SFPlayer
             }
 
             maxBloodEnergy = calculateBaseMaxBE();
-             bloodEnergyRegenPerSecond = calculateBaseBERegenRate();
+            bloodEnergyRegenPerSecond = calculateBaseBERegenRate();
 
 
             if (innateTechnique != null)
@@ -257,8 +256,10 @@ namespace sorceryFight.SFPlayer
             }
 
             completedQuests = tag.GetList<string>("completedQuests").ToList();
+
+            mechanicalBossesDefeatedFlags = tag.ContainsKey("mechanicalBossesDefeatedFlags") ? tag.GetByte("mechanicalBossesDefeatedFlags") : (byte)0b0000;
         }
-        
+
         public float calculateBaseMaxCE()
         {
             float baseCost = 100f;

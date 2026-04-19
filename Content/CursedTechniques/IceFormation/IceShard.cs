@@ -1,5 +1,3 @@
-using CalamityMod.Particles;
-using CalamityMod.Sounds;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,7 +10,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using sorceryFight.Utilities;
+using sorceryFight.Content.Particles.UIParticles;
 
 namespace sorceryFight.Content.CursedTechniques.IceFormation
 {
@@ -98,21 +96,21 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
                     SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
                 }
 
-                //Code that was for expanding the spread of the particles based on height of shooting, but rotating the projectile itself looked better 
-                //float verticalness = 1f - Math.Abs(Projectile.velocity.SafeNormalize(Vector2.Zero).X);
-                //float spreadWidth = MathHelper.Lerp(8f, 60f, verticalness);
-                //Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(30f, 120f);
-                //Vector2 perpendicular = Projectile.velocity.RotatedBy(MathHelper.PiOver2).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(-spreadWidth, spreadWidth);
-                //Vector2 particleOffset = Projectile.Center + behindOffset + perpendicular;
-                //Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                //LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 20, 1f, textColor);
-                //GeneralParticleHandler.SpawnParticle(particle);
+                // Code that was for expanding the spread of the particles based on height of shooting, but rotating the projectile itself looked better 
+                // float verticalness = 1f - Math.Abs(Projectile.velocity.SafeNormalize(Vector2.Zero).X);
+                // float spreadWidth = MathHelper.Lerp(8f, 60f, verticalness);
+                // Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(30f, 120f);
+                // Vector2 perpendicular = Projectile.velocity.RotatedBy(MathHelper.PiOver2).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(-spreadWidth, spreadWidth);
+                // Vector2 particleOffset = Projectile.Center + behindOffset + perpendicular;
+                // Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
+                // LinearParticle particle = new LinearParticle(particleOffset, particleVelocity * 3, textColor, false, 0.9f, 1f, 20);
+                // ParticleController.SpawnParticle(particle);
 
                 Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(10f, 40f);
                 Vector2 particleOffset = Projectile.Center + behindOffset;
                 Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 20, 1f, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
+                LinearParticle particle = new LinearParticle(particleOffset, particleVelocity * 3, textColor, false, 0.9f, 1f, 20);
+                ParticleController.SpawnParticle(particle);
                 return;
             }
 
@@ -151,8 +149,8 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
 
-                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, textColor, false, 0.9f, 1f, 30);
+                ParticleController.SpawnParticle(particle);
             }
         }
 

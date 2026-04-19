@@ -1,11 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using CalamityMod.NPCs.NormalNPCs;
-using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using Terraria;
@@ -31,8 +26,6 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public override int MasteryDamageMultiplier => 50;
         public override float Speed => 0f;
         public override float LifeTime => 18f;
-
-        List<int> hasHit;
         ref float isBarrage => ref Projectile.ai[2];
         public override int GetProjectileType()
         {
@@ -76,41 +69,36 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             Projectile.height = 140;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
-            hasHit = new List<int>();
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (!hasHit.Contains(Projectile.whoAmI))
-            {
-                modifiers.FinalDamage.Flat = CalculateTrueDamage(Main.player[Projectile.owner].SorceryFight());
-                hasHit.Add(Projectile.whoAmI);
+            modifiers.DefenseEffectiveness *= 0;
+            modifiers.FinalDamage.Flat = CalculateTrueDamage(Main.player[Projectile.owner].SorceryFight());
 
                 if (isBarrage == 0)
                 {
                     foreach (NPC npc in Main.ActiveNPCs)
                     {
-                        if (npc.friendly || npc.type == NPCID.TargetDummy || npc.type == ModContent.NPCType<SuperDummyNPC>() || npc.whoAmI == target.whoAmI) continue;
+                        if (npc.friendly || npc.type == NPCID.TargetDummy || npc.whoAmI == target.whoAmI) continue;
                         float dist = Vector2.Distance(npc.Center, target.Center);
                         if (dist < 250f)
                         {
                             Player player = Main.player[Projectile.owner];
                             SorceryFightPlayer sf = player.SorceryFight();
 
-                            Vector2 playerPos = player.MountedCenter;
-                            Vector2 mousePos = Main.MouseWorld;
-                            Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * Speed;
-                            var entitySource = player.GetSource_FromThis();
+                        Vector2 playerPos = player.MountedCenter;
+                        Vector2 mousePos = Main.MouseWorld;
+                        Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * Speed;
+                        var entitySource = player.GetSource_FromThis();
 
-                            int index = Projectile.NewProjectile(entitySource, npc.Center, dir, GetProjectileType(), 1, 0, player.whoAmI);
-                            Main.projectile[index].ai[2] = 1f;
-                        }
+                        int index = Projectile.NewProjectile(entitySource, npc.Center, dir, GetProjectileType(), 1, 0, player.whoAmI);
+                        Main.projectile[index].ai[2] = 1f;
                     }
                 }
             }
-
-            else
-                Projectile.damage = 0;
 
             base.ModifyHitNPC(target, ref modifiers);
         }

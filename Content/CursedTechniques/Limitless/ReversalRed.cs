@@ -8,7 +8,6 @@ using sorceryFight.SFPlayer;
 using sorceryFight.Content.Particles;
 using sorceryFight.Content.Particles.UIParticles;
 using Terraria.Audio;
-using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {

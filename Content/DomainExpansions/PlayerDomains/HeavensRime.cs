@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 using CalamityMod.NPCs.DevourerofGods;
 using CalamityMod.NPCs.OldDuke;
 using CalamityMod.NPCs.Yharon;
 using CalamityMod.Particles;
+=======
+>>>>>>> origin/v1.4.0
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.CursedTechniques.IceFormation;
@@ -125,7 +128,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.MoonLordCore);
+            return sf.HasDefeatedBoss(NPCID.Golem);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

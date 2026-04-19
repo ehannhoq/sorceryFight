@@ -1,6 +1,4 @@
 using System;
-using CalamityMod;
-using CalamityMod.Items.Materials;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Projectiles.Melee;
@@ -73,7 +71,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         public override void AddRecipes()
         {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<ShadowspecBar>(), 5);
+            recipe.AddIngredient(ItemID.LunarBar, 5);
             recipe.AddIngredient(ItemID.Katana);
             recipe.Register();
         }

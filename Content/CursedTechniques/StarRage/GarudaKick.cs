@@ -1,9 +1,8 @@
-using CalamityMod.Particles;
-using CalamityMod.Sounds;
 using Microsoft.Build.Graph;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Particles;
+using sorceryFight.Content.Particles.UIParticles;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using System;
@@ -137,8 +136,8 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
 
-                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, textColor, false, 0.9f, 1f, 30);
+                ParticleController.SpawnParticle(particle);
             }
         }
 

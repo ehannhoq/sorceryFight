@@ -1,7 +1,4 @@
-using System;
-using CalamityMod;
 using sorceryFight.SFPlayer;
-using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ModLoader;
 

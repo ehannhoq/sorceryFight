@@ -7,8 +7,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Terraria.ID;
+<<<<<<< HEAD
 using CalamityMod.Items.Materials;
 using sorceryFight.Utilities;
+=======
+>>>>>>> origin/v1.4.0
 
 namespace sorceryFight.Content.Items.Accessories
 {
@@ -84,7 +87,7 @@ namespace sorceryFight.Content.Items.Accessories
         public override void AddRecipes()
         {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<EssenceofEleum>(), 3);
+            // recipe.AddIngredient(ModContent.ItemType<EssenceofEleum>(), 3);
             recipe.AddIngredient(ItemID.SoulofMight, 5);
             recipe.AddIngredient(ItemID.SoulofLight, 3);
             recipe.AddIngredient(ItemID.Ectoplasm, 2);

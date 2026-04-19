@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,18 +14,20 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
     public class LineDevestationProjectile : ModProjectile
     {
         public static Texture2D texture;
-        public static readonly int FRAME_COUNT = 4;
-        public static readonly int TICKS_PER_FRAME = 3;
+        public static Texture2D textureBlood;
+        public static readonly int FRAME_COUNT = 6;
+        public static readonly int TICKS_PER_FRAME = 4;
+
+        private static float animScale = 10f; 
 
         public override void SetDefaults()
         {
-            Projectile.width = 200;
-            Projectile.height = 4;
+            Projectile.width = 500;
+            Projectile.height = 500;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = FRAME_COUNT * TICKS_PER_FRAME;
-            Projectile.damage = 40;
         }
 
         public override void AI()
@@ -38,30 +41,50 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                 if (++Projectile.frame >= FRAME_COUNT)
                     Projectile.frame = FRAME_COUNT - 1; // hold on last frame
             }
+
+            float r = Projectile.ai[1] == 1f ? 1f : 1f;
+            float g = Projectile.ai[1] == 1f ? 0.1f : 1f;
+            float b = Projectile.ai[1] == 1f ? 0.1f : 1f;
+
+            int lightSpacing = 16; // one light per tile
+            for (int x = (int)Projectile.Left.X; x < (int)Projectile.Right.X; x += lightSpacing)
+                for (int y = (int)Projectile.Top.Y; y < (int)Projectile.Bottom.Y; y += lightSpacing)
+                    Lighting.AddLight(new Vector2(x, y), r, g, b);
+
         }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.DefenseEffectiveness *= 0;
+            base.ModifyHitNPC(target, ref modifiers);
+        } 
 
         public override bool PreDraw(ref Color lightColor)
         {
-            if (texture == null && !Main.dedServ)
-                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Vessel/LineDevestationProjectile").Value;
+
+            if (!Main.dedServ)
+            {
+                if (Projectile.ai[2] > 0f)
+                {
+                    if (textureBlood == null)
+                        textureBlood = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Vessel/LineDevestationProjectileBlood", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                }
+                else
+                {
+                    if (texture == null)
+                        texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Vessel/LineDevestationProjectile", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                }
+            }
+
+            Texture2D activeTex = Projectile.ai[2] > 0f ? textureBlood : texture;
 
             float alpha = 1f - (float)Projectile.alpha / 255f;
-            int frameHeight = texture.Height / FRAME_COUNT;
+            int frameHeight = activeTex.Height / FRAME_COUNT;
             int frameY = Projectile.frame * frameHeight;
-            Rectangle sourceRect = new Rectangle(0, frameY, texture.Width, frameHeight);
-            Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
+            Rectangle sourceRect = new Rectangle(0, frameY, activeTex.Width, frameHeight);
+            Vector2 origin = new Vector2(activeTex.Width / 2, frameHeight / 2);
 
-            Main.spriteBatch.Draw(
-                texture,
-                Projectile.Center - Main.screenPosition,
-                sourceRect,
-                Color.White * alpha,
-                Projectile.rotation,
-                origin,
-                1f,
-                SpriteEffects.None,
-                0f
-            );
+            Main.spriteBatch.Draw(activeTex, Projectile.Center - Main.screenPosition, sourceRect, Color.White * alpha, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
 
             return false;
         }

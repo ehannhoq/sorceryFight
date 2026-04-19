@@ -1,14 +1,10 @@
-using CalamityMod;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using sorceryFight.SFPlayer;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Graphics.Effects;
-using System;
-using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Buffs.HeavenlyRestriction
 {
@@ -48,12 +44,6 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
         public override void Apply(Player player)
         {
             player.AddBuff(ModContent.BuffType<MindlessCarnage>(), 2);
-
-            foreach (var technique in player.SorceryFight().innateTechnique.PassiveTechniques)
-            {
-                if (technique.isAura && technique != this)
-                    technique.isActive = false;
-            }
 
             if (Main.myPlayer != player.whoAmI) return;
 

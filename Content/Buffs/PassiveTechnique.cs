@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs.PlayerAttributes;
 using sorceryFight.SFPlayer;
-using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ModLoader;
 

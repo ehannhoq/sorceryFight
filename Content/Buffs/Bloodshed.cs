@@ -1,6 +1,4 @@
-using System;
 using sorceryFight.Content.Items.Armors.Jetstream;
-using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -17,9 +15,6 @@ namespace sorceryFight.Content.Buffs
 
         public override void Update(Player player, ref int buffIndex)
         {
-            CalamityMod.TrueMeleeDamageClass tmInstance = SFUtils.GetInternalFieldFromCalamity<CalamityMod.TrueMeleeDamageClass>("CalamityMod.TrueMeleeDamageClass", "Instance");
-            player.GetDamage(tmInstance) *= 1 + trueMeleeDmg;
-
             player.moveSpeed += movementSpeed;
             player.statDefense += increasedShields;
 

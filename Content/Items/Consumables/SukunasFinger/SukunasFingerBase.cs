@@ -1,5 +1,4 @@
 using sorceryFight.Content.Rarities;
-using sorceryFight.Rarities;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using Terraria;

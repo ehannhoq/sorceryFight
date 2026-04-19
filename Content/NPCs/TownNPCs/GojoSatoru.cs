@@ -1,10 +1,7 @@
-
-using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.CursedTechniques.Limitless;
 using sorceryFight.Content.Quests;
-using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

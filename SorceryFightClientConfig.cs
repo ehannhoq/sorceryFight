@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using sorceryFight.Content.UI.TechniqueSelector;
 using System;
 using System.ComponentModel;
@@ -105,32 +106,48 @@ namespace sorceryFight
         [DefaultValue(1f)]
         public float BloodEnergyBarTransparency { get; set; }
 
-        [Header("StarEnergyBar")]
-        [BackgroundColor(128, 0, 192, 192)]
-        [DefaultValue(true)]
-        public bool StarMeter { get; set; }
+        [JsonIgnore]
+        public bool StarMeter = true;
 
-        [BackgroundColor(128, 0, 192, 192)]
-        [DefaultValue(true)]
-        public bool StarMeterPosLock { get; set; }
+        [JsonIgnore]
+        public bool StarMeterPosLock = true;
 
-        [BackgroundColor(128, 0, 192, 192)]
-        [SliderColor(224, 165, 56, 128)]
-        [Range(0f, 100f)]
-        [DefaultValue(StarUI.DefaultStarPosX)]
-        public float StarMeterPosX { get; set; }
+        [JsonIgnore]
+        public float StarMeterPosX = StarUI.DefaultStarPosX;
 
-        [BackgroundColor(128, 0, 192, 192)]
-        [SliderColor(224, 165, 56, 128)]
-        [Range(0f, 100f)]
-        [DefaultValue(StarUI.DefaultStarPosY)]
-        public float StarMeterPosY { get; set; }
+        [JsonIgnore]
+        public float StarMeterPosY = StarUI.DefaultStarPosY;
 
-        [BackgroundColor(128, 0, 192, 192)]
-        [SliderColor(224, 165, 56, 128)]
-        [Range(0f, 1f)]
-        [DefaultValue(1f)]
-        public float StarMeterTransparency { get; set; }
+        [JsonIgnore]
+        public float StarMeterTransparency = 1f;
+
+
+        //[Header("StarEnergyBar")]
+        //[BackgroundColor(128, 0, 192, 192)]
+        //[DefaultValue(true)]
+        //public bool StarMeter { get; set; }
+
+        //[BackgroundColor(128, 0, 192, 192)]
+        //[DefaultValue(true)]
+        //public bool StarMeterPosLock { get; set; }
+
+        //[BackgroundColor(128, 0, 192, 192)]
+        //[SliderColor(224, 165, 56, 128)]
+        //[Range(0f, 100f)]
+        //[DefaultValue(StarUI.DefaultStarPosX)]
+        //public float StarMeterPosX { get; set; }
+
+        //[BackgroundColor(128, 0, 192, 192)]
+        //[SliderColor(224, 165, 56, 128)]
+        //[Range(0f, 100f)]
+        //[DefaultValue(StarUI.DefaultStarPosY)]
+        //public float StarMeterPosY { get; set; }
+
+        //[BackgroundColor(128, 0, 192, 192)]
+        //[SliderColor(224, 165, 56, 128)]
+        //[Range(0f, 1f)]
+        //[DefaultValue(1f)]
+        //public float StarMeterTransparency { get; set; }
         #endregion
 
     }

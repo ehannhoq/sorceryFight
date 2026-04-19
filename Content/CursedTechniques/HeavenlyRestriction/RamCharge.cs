@@ -1,13 +1,8 @@
 using System;
 using System.Collections.Generic;
-using CalamityMod.Projectiles.Rogue;
-using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.Buffs;
 using sorceryFight.SFPlayer;
-using sorceryFight.Utilities;
-using Steamworks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

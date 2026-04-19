@@ -1,14 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.CursedTechniques;
-using sorceryFight.Content.CursedTechniques.Limitless;
-using sorceryFight.Content.InnateTechniques;
-using sorceryFight.Content.UI.InnateTechniqueSelector;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using Terraria;
@@ -694,10 +690,10 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             if (techniqueIcons == null || techniqueIcons.Count == 0)
                 return;
 
-            //foreach (TechniqueIcon icon in techniqueIcons)
-            //{
-            //    //icon.DrawLines();
-            //}
+            foreach (TechniqueIcon icon in techniqueIcons)
+            {
+               icon.DrawLines();
+            }
 
             foreach (TechniqueIcon icon in techniqueIcons)
             {

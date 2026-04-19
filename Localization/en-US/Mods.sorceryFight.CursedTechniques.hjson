@@ -36,7 +36,7 @@ ReversalRed: {
 	LockedDescription:
 		'''
 		Be at the brink of death at the hands
-		of the lunar god.
+		of the queen of the jungle.
 		'''
 }
 
@@ -359,11 +359,13 @@ StarRush: {
 }
 
 LineDevestation: {
-	DisplayName: Line of Devestation
+	DisplayName: Line of Devastation
 	Description:
 		'''
-		A devastating slash rides on the air,
-		When it impacts an enemy it will create a large detonation
+		A devastating slash cuts the air, detonating on impact with anything,
+		This detonation will cut everything around it. It can be futher enhanced
+		by having maximum blood, at which point the slash will consume half of it and
+		explode with blood dealing triple damage.
 		'''
 	LockedDescription: Consume at least 15 of Ryomen Sukuna's Fingers.
 }

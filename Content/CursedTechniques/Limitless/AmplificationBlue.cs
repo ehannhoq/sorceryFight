@@ -1,6 +1,3 @@
-using CalamityMod.Particles;
-using CalamityMod.Sounds;
-using Microsoft.Build.Graph;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -9,7 +6,8 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
-using sorceryFight.Utilities;
+using sorceryFight.Content.Particles;
+using sorceryFight.Content.Particles.UIParticles;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {
@@ -115,8 +113,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                 Vector2 particleOffset = Projectile.Center + new Vector2(Main.rand.NextFloat(-40f, 40f), Main.rand.NextFloat(-40f, 40f));
                 Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 10, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
+                LinearParticle particle = new LinearParticle(particleOffset, particleVelocity * 3, textColor, false, 0.9f, 1f, 10);
+                ParticleController.SpawnParticle(particle);
 
                 return;
             }
@@ -189,8 +187,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
 
-                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, textColor, false, 0.9f, 1, 30);
+                ParticleController.SpawnParticle(particle);
             }
         }
 

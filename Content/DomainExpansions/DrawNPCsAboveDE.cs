@@ -1,12 +1,11 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
+<<<<<<< HEAD
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Utilities;
+=======
+>>>>>>> origin/v1.4.0
 using Terraria;
-using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.DomainExpansions

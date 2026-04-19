@@ -1,10 +1,12 @@
 using sorceryFight.Rarities;
-using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
+<<<<<<< HEAD
 using Terraria.ID;
 using sorceryFight.Utilities;
+=======
+>>>>>>> origin/v1.4.0
 
 namespace sorceryFight.Content.Items.Materials
 {

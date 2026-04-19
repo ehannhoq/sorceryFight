@@ -1,19 +1,17 @@
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.Bestiary;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
-using CalamityMod.NPCs.DevourerofGods;
 using System;
 using sorceryFight.Content.Items.Accessories;
 using Terraria.DataStructures;
-using sorceryFight.Utilities;
+using sorceryFight.Content.Particles;
+using sorceryFight.Content.Particles.UIParticles;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {
@@ -36,7 +34,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override float LifeTime { get; } = 500f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
+            return true;
+            // return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
         }
 
         public static Texture2D texture;
@@ -179,8 +178,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                     Vector2 particleOffsetPosition = bluePosition + new Vector2(Main.rand.NextFloat(-20f, 20f), Main.rand.NextFloat(-20f, 20f));
                     Vector2 particleVelocity = particleOffsetPosition.DirectionTo(player.Center + new Vector2(0f, -20f)) * 2;
-                    LineParticle particle = new LineParticle(particleOffsetPosition, particleVelocity, false, 30, 0.5f, new Color(108, 158, 240));
-                    GeneralParticleHandler.SpawnParticle(particle);
+                    LinearParticle particle = new LinearParticle(particleOffsetPosition, particleVelocity, new Color(108, 158, 240), false, 0.9f, 1, 30);
+                    ParticleController.SpawnParticle(particle);
                 }
 
                 if (Projectile.ai[0] >= (int)redCastTime && red.type == ModContent.ProjectileType<MaximumOutputRed>())
@@ -189,8 +188,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                     Vector2 particleOffsetPosition = redPosition + new Vector2(Main.rand.NextFloat(-20f, 20f), Main.rand.NextFloat(-20f, 20f));
                     Vector2 particleVelocity = particleOffsetPosition.DirectionTo(player.Center + new Vector2(0f, -20f)) * 2;
-                    LineParticle particle = new LineParticle(particleOffsetPosition, particleVelocity, false, 30, 0.5f, new Color(224, 74, 74));
-                    GeneralParticleHandler.SpawnParticle(particle);
+                    LinearParticle particle = new LinearParticle(particleOffsetPosition, particleVelocity, new Color(224, 74, 74), false, 0.9f, 1, 30);
+                    ParticleController.SpawnParticle(particle);
                 }
                 if (Projectile.ai[0] == (int)collisionStartTime - 50)
                     SoundEngine.PlaySound(SorceryFightSounds.CommonWoosh, Projectile.Center);
@@ -207,11 +206,11 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     {
                         for (int i = 0; i < 30; i++)
                         {
-                            Vector2 offsetParticlePosition = Projectile.Center + new Vector2(Main.rand.NextFloat(-300, 300), Main.rand.NextFloat(-300, 300));
-                            Vector2 offsetParticleVelocity = Projectile.Center.DirectionTo(offsetParticlePosition) * 10;
+                            // Vector2 offsetParticlePosition = Projectile.Center + new Vector2(Main.rand.NextFloat(-300, 300), Main.rand.NextFloat(-300, 300));
+                            // Vector2 offsetParticleVelocity = Projectile.Center.DirectionTo(offsetParticlePosition) * 10;
 
-                            AltSparkParticle particle = new AltSparkParticle(Projectile.Center, offsetParticleVelocity, false, 45, 1.5f, Color.White);
-                            GeneralParticleHandler.SpawnParticle(particle);
+                            // AltSparkParticle particle = new AltSparkParticle(Projectile.Center, offsetParticleVelocity, false, 45, 1.5f, Color.White);
+                            // GeneralParticleHandler.SpawnParticle(particle);
                         }
 
                         Projectile.ai[0] = (int)totalCastTime;
@@ -256,8 +255,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 7), Main.rand.NextFloat(-7, 7));
 
-                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, textColor, false, 0.9f, 1, 30);
+                ParticleController.SpawnParticle(particle);
             }
         }
 

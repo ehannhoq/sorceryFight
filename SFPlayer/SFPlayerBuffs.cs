@@ -1,4 +1,3 @@
-using System;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Utilities;
 using Terraria;
@@ -29,9 +28,6 @@ namespace sorceryFight.SFPlayer
         {
             if (innateTechnique == null) return;
 
-            if (infinity || hollowWickerBasket)
-                Player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>().adrenaline = 0;
-
             foreach (PassiveTechnique passiveTechnique in innateTechnique.PassiveTechniques)
             {
                 if (Player.HasBuff<BurntTechnique>() || (!beerHat && cursedEnergy < 2))
@@ -49,8 +45,6 @@ namespace sorceryFight.SFPlayer
 
                 if (passiveTechnique.isActive)
                 {
-                   //apply / remove should only be called once and all logic should live in update 
-                   //already implemented this way in Garuda
                     passiveTechnique.Apply(Player);
                 }
                 else

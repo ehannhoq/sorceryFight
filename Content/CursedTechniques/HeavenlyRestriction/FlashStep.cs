@@ -1,8 +1,5 @@
 using Microsoft.Xna.Framework;
-using sorceryFight.Content.Buffs;
 using sorceryFight.SFPlayer;
-using sorceryFight.Utilities;
-using Steamworks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

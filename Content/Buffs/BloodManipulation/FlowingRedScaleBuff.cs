@@ -7,11 +7,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using CalamityMod.NPCs.Perforator;
-using CalamityMod.NPCs.HiveMind;
 using sorceryFight.Utilities;
-
-//remove Later
 
 namespace sorceryFight.Content.Buffs.BloodManipulation
 {
@@ -55,12 +51,6 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
             player.AddBuff(ModContent.BuffType<FlowingRedScaleBuff>(), 2);
             SorceryFightPlayer sfPlayer = player.SorceryFight();
 
-            foreach (var technique in player.SorceryFight().innateTechnique.PassiveTechniques)
-            {
-                if (technique.isAura && technique != this)
-                    technique.isActive = false;
-            }
-
             if (auraIndices == null)
                 auraIndices = new Dictionary<int, int>();
 
@@ -96,12 +86,12 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
         {
             if (sf.innateTechnique.Name == "Vessel")
             {
-                return sf.sukunasFingerConsumed >= 3;
+                return sf.sukunasFingerConsumed >= 10;
             }
             else
             {
-                return sf.HasDefeatedBoss(ModContent.NPCType<PerforatorHive>()) || sf.HasDefeatedBoss(ModContent.NPCType<HiveMind>());
-
+                // return sf.HasDefeatedBoss(ModContent.NPCType<PerforatorHive>()) || sf.HasDefeatedBoss(ModContent.NPCType<HiveMind>());
+                return true;
             }
         }
 
@@ -113,26 +103,11 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
             player.statDefense += DefenseAddition;
             
             float multiplier = 1;
-            if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
+            if (AreThereAnyDamnBosses.BossActive)
             {
                 multiplier = BossMultiplier;
             }
-
-            /**
-            if (sfPlayer.unlockedRCT)
-            {
-                CostPerSecond = 10f;
-                CostPerSecond += CostPerSecond * multiplier;
-            }
-            else
-            {
-                CostPerSecond = 0;
-                player.lifeRegen -= 10;
-            }
-
-
-
-            **/
+            
             if (sfPlayer.unlockedRCT)
             {
                 CostPerSecond = 10f;

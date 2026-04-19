@@ -1,17 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
 	<!-- Import tModLoader mod properties -->
 	<Import Project="..\tModLoader.targets" />
-
-	<!-- General -->
-	<PropertyGroup>
-		
-	</PropertyGroup>
-
-
-	<ItemGroup>
-		<ProjectReference Include="..\CalamityModPublic\CalamityMod.csproj">
-			<Private>false</Private>
-		</ProjectReference>
-	</ItemGroup>
 </Project>

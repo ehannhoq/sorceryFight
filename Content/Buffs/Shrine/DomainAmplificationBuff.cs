@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs.Vessel;
 using sorceryFight.SFPlayer;
-using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -39,12 +37,6 @@ namespace sorceryFight.Content.Buffs.Shrine
         {
             player.AddBuff(ModContent.BuffType<DomainAmplificationBuff>(), 2);
             SorceryFightPlayer sfPlayer = player.SorceryFight();
-
-            foreach (var technique in player.SorceryFight().innateTechnique.PassiveTechniques)
-            {
-                if (technique.isAura && technique != this)
-                    technique.isActive = false;
-            }
 
             sfPlayer.domainAmp = true;
 
@@ -120,7 +112,7 @@ namespace sorceryFight.Content.Buffs.Shrine
             }
 
             float multiplier = 1;
-            if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
+            if (AreThereAnyDamnBosses.BossActive)
             {
                 multiplier = 1.5f;
             }

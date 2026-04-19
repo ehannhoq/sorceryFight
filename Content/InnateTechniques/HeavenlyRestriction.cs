@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.Buffs;
@@ -8,7 +7,11 @@ using sorceryFight.SFPlayer;
 using sorceryFight.Content.CursedTechniques.HeavenlyRestriction;
 using Terraria;
 using Terraria.ModLoader;
+<<<<<<< HEAD
 using sorceryFight.Utilities;
+=======
+using Microsoft.Xna.Framework;
+>>>>>>> origin/v1.4.0
 
 namespace sorceryFight.Content.InnateTechniques
 {

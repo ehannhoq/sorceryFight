@@ -1,13 +1,10 @@
-using System;
 using System.Collections.Generic;
-using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -28,7 +25,6 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public override int MasteryDamageMultiplier => 40;
         public override float Speed => 0f;
         public override float LifeTime => 22f;
-        List<int> hasHit;
         ref float spawnedFromDE => ref Projectile.ai[2];
         public override int GetProjectileType()
         {
@@ -70,20 +66,14 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             Projectile.height = 140;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
-            hasHit = new List<int>();
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (!hasHit.Contains(Projectile.whoAmI))
-            {
-                modifiers.FinalDamage.Flat = CalculateTrueDamage(Main.player[Projectile.owner].SorceryFight());
-                hasHit.Add(Projectile.whoAmI);
-            }
-            
-            else 
-                Projectile.damage = 0;
-
+            modifiers.DefenseEffectiveness *= 0;
+            modifiers.FinalDamage.Flat = CalculateTrueDamage(Main.player[Projectile.owner].SorceryFight());
             base.ModifyHitNPC(target, ref modifiers);
         }
 

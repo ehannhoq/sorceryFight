@@ -7,9 +7,8 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria.ID;
-using sorceryFight.Utilities;
+using System.Linq;
 
 namespace sorceryFight.Content.UI.CursedTechniqueMenu
 {

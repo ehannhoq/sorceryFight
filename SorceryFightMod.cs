@@ -1,9 +1,10 @@
 using log4net;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
-using sorceryFight.SFPlayer;
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
+using System.Reflection;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,34 +21,54 @@ namespace sorceryFight
 	}
 	public class SorceryFightMod : Mod
 	{
-
         internal static SorceryFightMod Instance => _Instance ??= ModContent.GetInstance<SorceryFightMod>();
         private static SorceryFightMod _Instance;
         internal static ILog Log => Instance.Logger;
 
-        private static List<string> DevModeNames =
-		[
-			"The Honored One",
-			"ehann",
-			"gooloohoodoo",
-			"TheRealCriky",
-			"prowler",
-			"rend",
-			"KaiTheExaminer",
-			"Ryomen Sukuna",
-			"Kuroka",
-			"Sicko",
-		];
-
-		private static readonly int vanillaBossesCount = 32;
 		public static int totalBosses;
 
+		/// <summary>
+		/// A reflection method allowing to retrieve ModContent.ProjectileTypes at runtime.
+		/// </summary>
+		public static MethodInfo ModContentProjectileType;
+
+		public static NPC strongestBoss;
+
+		private static readonly int vanillaBossesCount = 32;
+		/// <summary>
+		/// Whether or not the player's name is a developer name (grants developer powers).
+		/// </summary>
+		/// <returns></returns>
 		public static bool IsDevMode()
 		{
-			return DevModeNames.Contains(Main.LocalPlayer.name);
+			List<string> devModeNames =
+			[
+				"The Honored One",
+				"ehann",
+				"gooloohoodoo",
+				"gooloohoodoo1",
+				"gooloohoodoo2",
+				"gooloohoodoo3",
+				"gooloohoodoo4",
+				"gooloohoodoo5",
+				"gooloohoodoo6",
+				"gooloohoodoo7",
+				"TheRealCriky",
+				"prowler",
+				"rend",
+				"KaiTheExaminer",
+				"Ryomen"
+			];
+			return devModeNames.Contains(Main.LocalPlayer.name);
+		}
+		public override void PostSetupContent()
+		{
+			ModContentProjectileType = typeof(ModContent).GetMethod("ProjectileType");
+			CountBosses();
+			DetermineStrongestBoss();
 		}
 
-		public override void PostSetupContent()
+		private void CountBosses()
 		{
 			totalBosses = vanillaBossesCount;
 
@@ -61,10 +82,53 @@ namespace sorceryFight
 			}
 		}
 
+<<<<<<< HEAD:SorceryFightMod.cs
         public override void Unload()
+=======
+		private void DetermineStrongestBoss()
+		{
+			List<NPC> bosses = new();
+
+			for (short i = 0; i < NPCID.Count; i++)
+			{
+				NPC npc = ContentSamples.NpcsByNetId[i];
+				if (!npc.boss || npc.dontCountMe) continue;
+
+				bosses.Add(npc);
+			}
+
+			foreach (ModNPC modNPC in ModContent.GetContent<ModNPC>())
+			{
+				NPC npc = ContentSamples.NpcsByNetId[modNPC.Type];
+				if (!npc.boss || npc.dontCountMe) continue;
+
+				bosses.Add(npc);
+			}
+
+			float largestDistance = 0;
+
+			foreach (NPC boss in bosses)
+			{
+				float health = boss.lifeMax;
+				float damage = boss.damage;
+
+				float distance = new Vector2(health, damage).Length();
+				if (distance > largestDistance)
+				{
+					largestDistance = distance;
+					strongestBoss = boss;
+				}
+			}
+
+			Logger.Debug($"Strongest Boss: {strongestBoss.FullName}");
+		}
+
+		public override void Unload()
 		{
 			totalBosses = 0;
+			ModContentProjectileType = null;
 		}
+
 
         public override void HandlePacket(BinaryReader reader, int whoAmI) => SorceryFightNetcode.HandlePacket(this, reader, whoAmI);
 
@@ -90,6 +154,7 @@ namespace sorceryFight
 		//			break;
 		//	}
 		//}
+		}
 
 		private void HandleBossDefeatedPacket(BinaryReader reader)
 		{
@@ -101,7 +166,6 @@ namespace sorceryFight
 				Main.player[targetPlayer].SorceryFight().AddDefeatedBoss(bossType);
 			}
 		}
-
 		private void HandleDomainSyncingPacket(BinaryReader reader)
 		{
 			int whoAmI = reader.ReadInt32();
@@ -144,7 +208,6 @@ namespace sorceryFight
 				packet.Send(-1, whoAmI);
 			}
 		}
-
 		private void HandlePlayerCastingDomainPacket(BinaryReader reader)
 		{
 			int sentFrom = reader.ReadInt32();
@@ -158,7 +221,6 @@ namespace sorceryFight
 				packet.Send(-1, sentFrom);
 			}
 		}
-
 		private void HandleKilledNPCPacket(BinaryReader reader)
 		{
 			int targetPlayer = reader.ReadInt32();

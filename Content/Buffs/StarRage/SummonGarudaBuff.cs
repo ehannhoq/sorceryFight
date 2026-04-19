@@ -1,10 +1,7 @@
-using CalamityMod;
 using Microsoft.Xna.Framework;
 using sorceryFight.SFPlayer;
-using sorceryFight.Utilities;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Animations;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -88,7 +85,7 @@ namespace sorceryFight.Content.Buffs.StarRage
         {
 
             int multiplier = 1;
-            if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
+            if (AreThereAnyDamnBosses.BossActive)
             {
                 multiplier = 3;
             }

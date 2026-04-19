@@ -1,4 +1,3 @@
-using CalamityMod;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
@@ -6,7 +5,6 @@ using sorceryFight.SFPlayer;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
-using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Buffs.Limitless
 {
@@ -44,13 +42,6 @@ namespace sorceryFight.Content.Buffs.Limitless
         public override void Apply(Player player)
         {
             player.AddBuff(ModContent.BuffType<FallingBlossomEmotionBuff>(), 2);
-
-
-            foreach (var technique in player.SorceryFight().innateTechnique.PassiveTechniques)
-            {
-                if (technique.isAura && technique != this)
-                    technique.isActive = false;
-            }
 
             if (auraIndices == null)
                 auraIndices = new Dictionary<int, int>();

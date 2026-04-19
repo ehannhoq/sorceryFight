@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using sorceryFight.Utilities;
@@ -11,18 +11,21 @@ namespace sorceryFight.Content.Particles.UIParticles
     public class ParticleController : ModSystem
     {
         private static Particle[] particles;
-
+        private static int firstFreeIndex;
 
         public override void Load()
         {
-            particles = new Particle[5000];
+            particles = new Particle[1000];
             IL_Main.DoDraw_DrawNPCsOverTiles += DrawUIParticleLayer;
+            firstFreeIndex = 0;
+
         }
 
         public override void Unload()
         {
             particles = null;
             IL_Main.DoDraw_DrawNPCsOverTiles -= DrawUIParticleLayer;
+            firstFreeIndex = 0;
         }
 
         public override void OnWorldUnload()
@@ -31,6 +34,7 @@ namespace sorceryFight.Content.Particles.UIParticles
             {
                 particles[i] = null;
             }
+            firstFreeIndex = 0;
         }
 
         private void DrawUIParticleLayer(ILContext il)
@@ -42,6 +46,9 @@ namespace sorceryFight.Content.Particles.UIParticles
 
             cursor.EmitDelegate(() =>
             {
+                bool anyActive = particles.Any(particle => particle != null);
+                if (!anyActive) return;
+
                 Main.spriteBatch.Begin(
                     SpriteSortMode.Immediate,
                     BlendState.NonPremultiplied,
@@ -65,17 +72,19 @@ namespace sorceryFight.Content.Particles.UIParticles
 
         public override void PostUpdateNPCs()
         {
-            if (Main.GameUpdateCount % 3 == 1) return;
-
             for (int i = 0; i < particles.Length; i++)
             {
-                if (particles[i] == null) continue;
+                Particle particle = particles[i];
 
-                particles[i].Update();
+                if (particle == null) continue;
 
-                if (particles[i].time >= particles[i].lifetime)
+                particle.Update();
+
+                if (particle.time >= particle.lifetime)
                 {
                     particles[i] = null;
+                    if (i < firstFreeIndex)
+                        firstFreeIndex = i;
                 }
             }
         }
@@ -83,7 +92,19 @@ namespace sorceryFight.Content.Particles.UIParticles
         public static void SpawnParticle(Particle particle)
         {
             if (Main.dedServ || Main.gamePaused || particles == null) return;
-                particles.Append(particle);
+
+            for (int i = firstFreeIndex; i < particles.Length; i++)
+            {
+                if (particles[i] != null) continue;
+
+                particles[i] = particle;
+                firstFreeIndex = i + 1;
+
+                if (firstFreeIndex >= particles.Length)
+                    firstFreeIndex = 0;
+                    
+                return;
+            }   
         }
     }
 }

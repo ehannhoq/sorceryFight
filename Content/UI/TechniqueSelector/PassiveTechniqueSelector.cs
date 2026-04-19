@@ -65,7 +65,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X, bgRect.Y - 2, bgRect.Width, 2), borderColor);
                 // bottom border
-                
+
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X, bgRect.Bottom, bgRect.Width, 2), borderColor);
                 // left border
 
@@ -87,7 +87,18 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
             public override void OnClick()
             {
-                sfPlayer.innateTechnique.PassiveTechniques[id].isActive = !sfPlayer.innateTechnique.PassiveTechniques[id].isActive;
+                PassiveTechnique passiveTechnique = sfPlayer.innateTechnique.PassiveTechniques[id];
+                passiveTechnique.isActive = !passiveTechnique.isActive;
+
+                if (passiveTechnique.isAura)
+                {
+                    foreach (PassiveTechnique other in sfPlayer.innateTechnique.PassiveTechniques)
+                    {
+                        if (other.isAura && other != passiveTechnique)
+                            other.isActive = false;
+                    }
+                }
+
                 SoundEngine.PlaySound(SoundID.Mech with { Volume = 1f });
             }
         }

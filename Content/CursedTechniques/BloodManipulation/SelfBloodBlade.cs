@@ -9,8 +9,6 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using CalamityMod.NPCs.SlimeGod;
-using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
@@ -40,7 +38,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         }
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<SlimeGodCore>());
+            return true;
         }
 
         public override string GetStats(SorceryFightPlayer sf)

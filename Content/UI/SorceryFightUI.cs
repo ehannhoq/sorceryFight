@@ -5,7 +5,6 @@ using sorceryFight;
 using sorceryFight.Content.UI.CursedTechniqueMenu;
 using sorceryFight.Content.UI.InnateTechniqueSelector;
 using Terraria;
-using sorceryFight.SFPlayer;
 using Terraria.ModLoader;
 using Terraria.UI;
 using sorceryFight.Content.UI.TechniqueSelector;
@@ -16,7 +15,11 @@ using sorceryFight.Content.UI.Quests.QuestToast;
 using static sorceryFight.Content.UI.Quests.QuestToast.QuestToast;
 using sorceryFight.Content.UI.Quests.QuestMenu;
 using sorceryFight.Content.UI.Chants;
+<<<<<<< HEAD
 using sorceryFight.Utilities;
+=======
+using sorceryFight.Content.UI.GeneticEditor;
+>>>>>>> origin/v1.4.0
 
 public class SorceryFightUI : UIState
 {
@@ -161,6 +164,12 @@ public class SorceryFightUI : UIState
     {
         BlackFlashWindow blackFlashWindow = new BlackFlashWindow(lowerBound, upperBound);
         Append(blackFlashWindow);
+    }
+
+    public void GeneticEditorUI()
+    {
+        GeneticEditorUI geneticEditorUI = new GeneticEditorUI();
+        Append(geneticEditorUI);
     }
 
     public static bool MouseHovering(UIElement ui, Texture2D texture)

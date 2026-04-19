@@ -1,7 +1,4 @@
-
-using System;
 using sorceryFight.Content.Quests;
-using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

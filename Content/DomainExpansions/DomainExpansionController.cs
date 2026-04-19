@@ -11,7 +11,6 @@ using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -322,6 +321,8 @@ namespace sorceryFight.Content.DomainExpansions
 
             if (clashingDomains.Count > 1)
             {
+                SoundEngine.PlaySound(new SoundStyle("sorceryFight/Content/Sounds/DomainExpansions/DomainClash"));
+
                 TaskScheduler.Instance.AddDelayedTask(() =>
                 {
                     foreach (int id in clashingDomains) CloseDomain(id);
@@ -331,6 +332,8 @@ namespace sorceryFight.Content.DomainExpansions
             else if (clashingDomains.Count == 1)
             {
                 ClashingDomains[origin.id] = clashingDomains[0];
+
+                SoundEngine.PlaySound(new SoundStyle("sorceryFight/Content/Sounds/DomainExpansions/DomainClash"));
             }
         }
 

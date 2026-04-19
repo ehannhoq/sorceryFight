@@ -8,8 +8,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Terraria.ID;
 using sorceryFight.Content.Items.Materials;
+<<<<<<< HEAD
 using CalamityMod.Items.Materials;
 using sorceryFight.Utilities;
+=======
+>>>>>>> origin/v1.4.0
 
 namespace sorceryFight.Content.Items.Accessories
 {
@@ -87,7 +90,7 @@ namespace sorceryFight.Content.Items.Accessories
         public override void AddRecipes()
         {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<EssenceofHavoc>(), 3);
+            // recipe.AddIngredient(ModContent.ItemType<EssenceofHavoc>(), 3);
             recipe.AddIngredient(ItemID.SoulofNight, 3);
             recipe.AddIngredient(ModContent.ItemType<InfusedCursedFragment>(), 5);
             // recipe.AddIngredient(ModContent.ItemType<CursedDust>(), 2);

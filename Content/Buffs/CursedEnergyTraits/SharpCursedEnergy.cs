@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 using System;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
+=======
+>>>>>>> origin/v1.4.0
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;

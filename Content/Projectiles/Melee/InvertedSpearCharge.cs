@@ -1,10 +1,13 @@
 using System;
-using System.Linq;
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+<<<<<<< HEAD
 using sorceryFight.Content.Items.Weapons.Melee;
 using sorceryFight.Utilities;
+=======
+using sorceryFight.Content.Particles;
+using sorceryFight.Content.Particles.UIParticles;
+>>>>>>> origin/v1.4.0
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
@@ -143,15 +146,15 @@ namespace sorceryFight.Content.Projectiles.Melee
         {
             SoundEngine.PlaySound(SorceryFightSounds.InvertedSpearOfHeavenImpact, Projectile.Center);
 
-            for (int i = 0; i < 3; i++)
-            {
-                Vector2 veloVariation = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
-                int colVariation = Main.rand.Next(-38, 100);
-                float scale = Main.rand.NextFloat(1f, 1.25f);
-                float scalar = Main.rand.NextFloat(5f, 15f);
-                SparkParticle particle = new SparkParticle(target.Center, (Projectile.velocity * scalar) + veloVariation, false, 30, scale, new Color(225 + colVariation, 242 + colVariation, 97 + colVariation));
-                GeneralParticleHandler.SpawnParticle(particle);
-            }
+            // for (int i = 0; i < 3; i++)
+            // {
+            //     Vector2 veloVariation = new Vector2(Main.rand.NextFloat(-10f, 10f), Main.rand.NextFloat(-10f, 10f));
+            //     int colVariation = Main.rand.Next(-38, 100);
+            //     float scale = Main.rand.NextFloat(1f, 1.25f);
+            //     float scalar = Main.rand.NextFloat(5f, 15f);
+            //     SparkParticle particle = new SparkParticle(target.Center, (Projectile.velocity * scalar) + veloVariation, false, 30, scale, new Color(225 + colVariation, 242 + colVariation, 97 + colVariation));
+            //     GeneralParticleHandler.SpawnParticle(particle);
+            // }
 
             for (int i = 0; i < 2; i++)
             {
@@ -159,16 +162,16 @@ namespace sorceryFight.Content.Projectiles.Melee
                 int colVariation = Main.rand.Next(-38, 100);
                 float scale = Main.rand.NextFloat(1f, 1.25f);
                 float scalar = Main.rand.NextFloat(5f, 15f);
-                LineParticle particle = new LineParticle(target.Center, (Projectile.velocity * scalar) + veloVariation, false, 30, scale, new Color(225 + colVariation, 242 + colVariation, 97 + colVariation));
-                GeneralParticleHandler.SpawnParticle(particle);
+                LinearParticle particle = new LinearParticle(target.Center, (Projectile.velocity * scalar) + veloVariation, new Color(225 + colVariation, 242 + colVariation, 97 + colVariation), false, 0.9f, scale, 30);
+                ParticleController.SpawnParticle(particle);
             }
 
-            for (int i = 0; i < 2; i++)
-            {
-                Vector2 posVariation = new Vector2(Main.rand.NextFloat(-10, 10), Main.rand.NextFloat(-10, 10));
-                SparkleParticle particle = new SparkleParticle(target.Center + posVariation, Vector2.Zero, new Color(225, 242, 97), Color.White, 1f, 10, 0.75f, 0.2f);
-                GeneralParticleHandler.SpawnParticle(particle);
-            }
+            // for (int i = 0; i < 2; i++)
+            // {
+            //     Vector2 posVariation = new Vector2(Main.rand.NextFloat(-10, 10), Main.rand.NextFloat(-10, 10));
+            //     SparkleParticle particle = new SparkleParticle(target.Center + posVariation, Vector2.Zero, new Color(225, 242, 97), Color.White, 1f, 10, 0.75f, 0.2f);
+            //     GeneralParticleHandler.SpawnParticle(particle);
+            // }
         }
 
         public override void OnKill(int timeLeft)

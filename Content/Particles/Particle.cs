@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -39,9 +38,6 @@ namespace sorceryFight.Content.Particles
         {
             position += velocity;
             velocity *= drag;
-
-            // Main.NewText($"Pos: {position} Vel: {velocity} Drag: {drag} Scale: {scale} Color: {color} Lifetime: {lifetime} Rotation: {rotation}");
-
             time++;
         }
 
