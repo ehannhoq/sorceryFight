@@ -1,5 +1,4 @@
-﻿using Microsoft.Build.Graph;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Particles;
 using sorceryFight.SFPlayer;
@@ -7,10 +6,7 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Graphics.Effects;
-using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using static tModPorter.ProgressUpdate;
 
 namespace sorceryFight.Content.CursedTechniques.StarRage
 {
@@ -52,7 +48,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
             //Hits both players and enemies
             Projectile.friendly = true;
-            Projectile.hostile = true;
+            //Projectile.hostile = true;
 
             Projectile.penetrate = -1;
             Projectile.ignoreWater = true;
@@ -62,10 +58,12 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         }
         public override void AI()
         {
+            if (Projectile.ai[0] == 1f)
+                Main.NewText($"Blackhole exists netMode={Main.netMode} owner={Projectile.owner} myPlayer={Main.myPlayer}");
 
             #region Shader Startup
             Projectile.ai[0] += 1;
-            Player player = Main.player[Projectile.owner];
+            //Player player = Main.player[Projectile.owner];
 
             float expandProgress = Math.Clamp(Projectile.ai[0] / expandTime, 0f, 1f);
 
@@ -107,8 +105,9 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             {
                 //add code for drawing sprite of blackhole as a fallback
             }
-
-            Filters.Scene["SF:Blackhole"].GetShader().UseProgress(expandProgress);
+            if (!Main.dedServ){
+                Filters.Scene["SF:Blackhole"].GetShader().UseProgress(expandProgress);
+            }
             #endregion
 
             #region Hitbox

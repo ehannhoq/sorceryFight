@@ -37,6 +37,10 @@ Mods: {
 			NueLightning.DisplayName: Nue Lightning
 			IcicleHailProjectile.DisplayName: Icicle Hail Projectile
 			LineDevestationProjectile.DisplayName: Line Devestation Projectile
+			RabbitLaser.DisplayName: Rabbit Laser
+			RabbitMoonlord.DisplayName: Rabbit Moonlord
+			RabbitShardscape.DisplayName: Rabbit Shardscape
+			RabbitShardscape_Indicator.DisplayName: Rabbit Shardscape_ Indicator
 		}
 
 		Configs: {

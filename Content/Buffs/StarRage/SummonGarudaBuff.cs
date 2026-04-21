@@ -68,10 +68,10 @@ namespace sorceryFight.Content.Buffs.StarRage
 
 
             var head = Projectile.NewProjectileDirect(source, spawnPos, player.DirectionTo(Main.MouseWorld) * 3, headType, damage, knockback, player.whoAmI);
-            var tail = Projectile.NewProjectileDirect(source, spawnPos, Vector2.Zero, tailType, damage, knockback, player.whoAmI);
+            var tail = Projectile.NewProjectileDirect(source, spawnPos, new Vector2(0f, -0.01f), tailType, damage, knockback, player.whoAmI);
             for (var i = 0; i < 20; i++)
             {
-                var body = Projectile.NewProjectileDirect(source, spawnPos, Vector2.Zero, bodyType, damage, knockback, player.whoAmI);
+                var body = Projectile.NewProjectileDirect(source, spawnPos, new Vector2(0f, -0.01f), bodyType, damage, knockback, player.whoAmI);
             }
         }
 
