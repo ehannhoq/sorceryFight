@@ -56,10 +56,10 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             return ModContent.ProjectileType<GarudaKick>();
         }
 
-        public override bool UseCondition(SorceryFightPlayer sf)
-        {
-            return !sf.summonGaruda;
-        }
+        //public override bool UseCondition(SorceryFightPlayer sf)
+        //{
+        //    return !sf.summonGaruda;
+        //}
 
         public override void SetDefaults()
         {
@@ -139,6 +139,48 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                 LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, textColor, false, 0.9f, 1f, 30);
                 ParticleController.SpawnParticle(particle);
             }
+        }
+
+        public override int UseTechnique(SorceryFightPlayer sf)
+        {
+            Player player = sf.Player;
+
+            if (player.whoAmI == Main.myPlayer)
+            {
+                Vector2 playerPos = player.MountedCenter;
+                Vector2 mousePos = Main.MouseWorld;
+                Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * Speed;
+                var entitySource = player.GetSource_FromThis();
+
+                sf.cursedEnergy -= CalculateTrueCost(sf);
+
+                if (BloodCost > 0)
+                {
+                    sf.bloodEnergy -= BloodCost;
+                }
+
+                if (StarCost > 0)
+                {
+                    sf.starEnergy -= StarCost;
+                }
+
+                if (DisplayNameInGame)
+                {
+                    int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
+                    Main.combatText[index1].lifeTime = 180;
+                }
+                if (!sf.summonGaruda)
+                {
+                    return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
+                }
+                else
+                {
+                    return Projectile.NewProjectile(entitySource, player.Center, dir, ModContent.ProjectileType<MassPunch>(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
+                }
+
+
+            }
+            return -1;
         }
 
     }

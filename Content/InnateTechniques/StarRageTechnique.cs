@@ -36,7 +36,8 @@ namespace sorceryFight.Content.InnateTechniques
             new GarudaKick(),
             new GarudaWhip(),
             new MassPunch(),
-            new MassKick(),
+            //new MassKick(),
+            //Removed to combine with GarudaKick
             new StarRush()
         };
 
