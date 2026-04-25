@@ -3,6 +3,7 @@ using sorceryFight.SFPlayer;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Buffs.HeavenlyRestriction
 {

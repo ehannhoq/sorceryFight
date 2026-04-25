@@ -11,6 +11,7 @@ using System;
 using sorceryFight.Content.Projectiles.VFX;
 using sorceryFight.Content.Particles;
 using sorceryFight.Content.Particles.UIParticles;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {

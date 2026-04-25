@@ -1,4 +1,5 @@
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -27,7 +28,7 @@ namespace sorceryFight.Content.Buffs.CursedEnergyTraits
 
         public override bool RightClick(int buffIndex)
         {
-            if (SorceryFight.IsDevMode())
+            if (SorceryFightMod.IsDevMode())
             {
                 Main.LocalPlayer.SorceryFight().overflowingEnergy = false;
                 return true;

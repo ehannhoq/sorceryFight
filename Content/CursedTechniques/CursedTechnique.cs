@@ -118,7 +118,6 @@ using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using System;
 using System.IO;
-
 namespace sorceryFight.Content.CursedTechniques
 {
     public abstract class CursedTechnique : ModProjectile

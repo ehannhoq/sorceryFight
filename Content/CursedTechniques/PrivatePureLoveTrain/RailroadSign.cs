@@ -9,7 +9,6 @@ using Terraria.DataStructures;
 using sorceryFight.SFPlayer;
 using System;
 
-
 namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
 {
     public class RailroadSign : CursedTechnique

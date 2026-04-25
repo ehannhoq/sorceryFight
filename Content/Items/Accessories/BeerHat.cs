@@ -4,6 +4,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using Terraria.ID;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Items.Accessories
 {

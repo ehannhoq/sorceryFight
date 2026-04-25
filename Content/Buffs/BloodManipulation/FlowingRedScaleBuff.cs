@@ -7,8 +7,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-
-//remove Later
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Buffs.BloodManipulation
 {

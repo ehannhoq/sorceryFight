@@ -25,7 +25,7 @@ namespace sorceryFight.Content.UI.Dialog.Conditions
             {
                 return Compare(prop.GetValue(sfPlayer), prop.PropertyType);
             }
-            ModContent.GetInstance<SorceryFight>().Logger.Debug("Content/UI/Dialog/Conditions/FlagCondition: 'prop' was null.");
+            SorceryFightMod.Log.Debug("Content/UI/Dialog/Conditions/FlagCondition: 'prop' was null.");
 
             FieldInfo field = type.GetField(flag, BindingFlags.Instance | BindingFlags.Public);
             if (field != null)
@@ -33,7 +33,7 @@ namespace sorceryFight.Content.UI.Dialog.Conditions
                 return Compare(field.GetValue(sfPlayer), field.FieldType);
             }
 
-            ModContent.GetInstance<SorceryFight>().Logger.Debug("Content/UI/Dialog/Conditions/FlagCondition: 'field' was null.");
+            SorceryFightMod.Log.Debug("Content/UI/Dialog/Conditions/FlagCondition: 'field' was null.");
             return false;
         }
 
@@ -59,7 +59,7 @@ namespace sorceryFight.Content.UI.Dialog.Conditions
             }
             catch
             {
-                ModContent.GetInstance<SorceryFight>().Logger.Debug("Content/UI/Dialog/Conditions/FlagCondition: something went wrong with conversion.");
+                SorceryFightMod.Log.Debug("Content/UI/Dialog/Conditions/FlagCondition: something went wrong with conversion.");
                 return false;
             }
         }

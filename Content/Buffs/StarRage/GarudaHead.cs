@@ -15,8 +15,9 @@ namespace sorceryFight.Content.Buffs.StarRage
         Dictionary<int, Projectile> segments = new Dictionary<int, Projectile>();
         public override void SetStaticDefaults()
         {
-
+            Main.projPet[Type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Type] = true;
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 3000;
         }
 
         public override void SetDefaults()
@@ -46,7 +47,7 @@ namespace sorceryFight.Content.Buffs.StarRage
             Player player = Main.player[Projectile.owner];
             SorceryFightPlayer sfPlayer = player.SorceryFight();
             //player.AddBuff(ModContent.BuffType<KingofConstellationsBuff>(), 1);
-            if (Projectile.type == ModContent.ProjectileType<GarudaHead>())
+            if (Projectile.owner == Main.myPlayer)
             {
                 if (player.dead || sfPlayer.innateTechnique.Name != "StarRage")
                 {
@@ -57,9 +58,13 @@ namespace sorceryFight.Content.Buffs.StarRage
                     Projectile.timeLeft = 2;
                 }
             }
+            else
+            {
+                //projectile will get killed when it expires on the owner even if this keeps ticking
+                Projectile.timeLeft = 2;
+            }
             Projectile.ai[0]++;
-            // Hover to the left because evil is not right or something
-            // What does this mean? ??
+
             Vector2 idealPos = new Vector2(player.Center.X - 200, player.Center.Y - 50);
             float distanceFromOwner = Projectile.Distance(idealPos);
 
@@ -125,12 +130,12 @@ namespace sorceryFight.Content.Buffs.StarRage
             {
                 if (projectile.type == ModContent.ProjectileType<GarudaBody>() && projectile.owner == Projectile.owner && projectile.active && !segments.ContainsKey(projectile.ModProjectile<GarudaBody>().segmentIndex))
                 {
-                    ModContent.GetInstance<SorceryFight>().Logger.Info($"Adding body segment with index: {projectile.ModProjectile<GarudaBody>().segmentIndex}, total so far: {segments.Count}");
+                    //SorceryFightMod.Log.Info($"Adding body segment with index: {projectile.ModProjectile<GarudaBody>().segmentIndex}, total so far: {segments.Count}");
                     segments.Add(projectile.ModProjectile<GarudaBody>().segmentIndex, projectile);
                 }
                 if (projectile.type == ModContent.ProjectileType<GarudaTail>() && projectile.owner == Projectile.owner && projectile.active && !segments.ContainsKey(projectile.ModProjectile<GarudaTail>().segmentIndex))
                 {
-                    ModContent.GetInstance<SorceryFight>().Logger.Info($"Adding tail segment with index: {projectile.ModProjectile<GarudaTail>().segmentIndex}");
+                    //SorceryFightMod.Log.Info($"Adding tail segment with index: {projectile.ModProjectile<GarudaTail>().segmentIndex}");
                     segments.Add(projectile.ModProjectile<GarudaTail>().segmentIndex, projectile);
                 }
             }
@@ -138,7 +143,7 @@ namespace sorceryFight.Content.Buffs.StarRage
             {
                 if (i < segments.Count)
                 {
-                    ModContent.GetInstance<SorceryFight>().Logger.Info("This is what segment is moving:" + i);
+                    //SorceryFightMod.Log.Info("This is what segment is moving:" + i);
                     if (segments.ContainsKey(i))
                         segments[i].ModProjectile<GarudaBody>().SegmentMove();
                 }
@@ -369,6 +374,9 @@ namespace sorceryFight.Content.Buffs.StarRage
 
         public override bool PreDraw(ref Color lightColor)
         {
+            if (Projectile.ai[0] % 60 == 0)
+                Main.NewText($"segments count: {segments.Count}");
+
             Texture2D tex = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
             Texture2D texBody = ModContent.Request<Texture2D>("sorceryFight/Content/Buffs/StarRage/GarudaBody").Value;
             Texture2D texBody2 = ModContent.Request<Texture2D>("sorceryFight/Content/Buffs/StarRage/GarudaBody2").Value;
@@ -401,6 +409,6 @@ namespace sorceryFight.Content.Buffs.StarRage
 
         public override bool MinionContactDamage() => true;
 
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(BuffID.ShadowFlame, 300);
+        //public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(BuffID.ShadowFlame, 300);
     }
 }

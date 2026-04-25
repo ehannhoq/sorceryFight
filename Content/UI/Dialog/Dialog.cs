@@ -6,6 +6,7 @@ using System.Text;
 using Newtonsoft.Json;
 using sorceryFight.Content.UI.Dialog.Actions;
 using sorceryFight.Content.UI.Dialog.Conditions;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -31,7 +32,7 @@ public class Dialog
         string interactableDialogPath = $"sorceryFight/Localization/{Language.ActiveCulture.Name}/InteractableDialog.json";
         if (!ModContent.FileExists(interactableDialogPath))
         {
-            ModContent.GetInstance<SorceryFight>().Logger.Debug($"Couldn't find {interactableDialogPath}, defaulting to en-US");
+            SorceryFightMod.Log.Debug($"Couldn't find {interactableDialogPath}, defaulting to en-US");
             interactableDialogPath = "sorceryFight/Localization/en-US/InteractableDialog.json";
         }
 

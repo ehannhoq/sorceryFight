@@ -1,6 +1,7 @@
 using sorceryFight.Content.Items.Materials;
 using sorceryFight.Rarities;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;

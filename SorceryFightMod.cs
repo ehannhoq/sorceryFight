@@ -1,3 +1,4 @@
+using log4net;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
 using System.Collections.Generic;
@@ -18,11 +19,12 @@ namespace sorceryFight
 		PlayerCastingDomain,
 		KilledNPC
 	}
-	public class SorceryFight : Mod
+	public class SorceryFightMod : Mod
 	{
-		/// <summary>
-		/// The total number of bosses loaded across all mods.
-		/// </summary>
+        internal static SorceryFightMod Instance => _Instance ??= ModContent.GetInstance<SorceryFightMod>();
+        private static SorceryFightMod _Instance;
+        internal static ILog Log => Instance.Logger;
+
 		public static int totalBosses;
 
 		/// <summary>
@@ -43,14 +45,8 @@ namespace sorceryFight
 			[
 				"The Honored One",
 				"ehann",
+				"Kuroka",
 				"gooloohoodoo",
-				"gooloohoodoo1",
-				"gooloohoodoo2",
-				"gooloohoodoo3",
-				"gooloohoodoo4",
-				"gooloohoodoo5",
-				"gooloohoodoo6",
-				"gooloohoodoo7",
 				"TheRealCriky",
 				"prowler",
 				"rend",
@@ -79,7 +75,6 @@ namespace sorceryFight
 				}
 			}
 		}
-
 		private void DetermineStrongestBoss()
 		{
 			List<NPC> bosses = new();
@@ -123,28 +118,33 @@ namespace sorceryFight
 			totalBosses = 0;
 			ModContentProjectileType = null;
 		}
-		public override void HandlePacket(BinaryReader reader, int _)
-		{
-			byte messageType = reader.ReadByte();
-			switch (messageType)
-			{
-				case (byte)MessageType.DefeatedBoss:
-					HandleBossDefeatedPacket(reader);
-					break;
 
-				case (byte)MessageType.SyncDomain:
-					HandleDomainSyncingPacket(reader);
-					break;
 
-				case (byte)MessageType.PlayerCastingDomain:
-					HandlePlayerCastingDomainPacket(reader);
-					break;
+        public override void HandlePacket(BinaryReader reader, int whoAmI) => SorceryFightNetcode.HandlePacket(this, reader, whoAmI);
 
-				case (byte)MessageType.KilledNPC:
-					HandleKilledNPCPacket(reader);
-					break;
-			}
-		}
+  //      public override void HandlePacket(BinaryReader reader, int _)
+		//{
+		//	byte messageType = reader.ReadByte();
+		//	switch (messageType)
+		//	{
+		//		case (byte)MessageType.DefeatedBoss:
+		//			HandleBossDefeatedPacket(reader);
+		//			break;
+
+		//		case (byte)MessageType.SyncDomain:
+		//			HandleDomainSyncingPacket(reader);
+		//			break;
+
+		//		case (byte)MessageType.PlayerCastingDomain:
+		//			HandlePlayerCastingDomainPacket(reader);
+		//			break;
+
+		//		case (byte)MessageType.KilledNPC:
+		//			HandleKilledNPCPacket(reader);
+		//			break;
+		//	}
+		//}
+
 		private void HandleBossDefeatedPacket(BinaryReader reader)
 		{
 			int targetPlayer = reader.ReadInt32();

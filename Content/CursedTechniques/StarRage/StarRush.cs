@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -57,7 +58,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public override float CalculateTrueCost(SorceryFightPlayer sf)
         {
             float speedDiff = maxSpeed - minSpeed;
-            float trueSpeed = sf.unlockedRCT ? ((float)sf.numberBossesDefeated / SorceryFight.totalBosses * speedDiff) + minSpeed : (sf.numberBossesDefeated / (SorceryFight.totalBosses / 1.5f) * speedDiff) + minSpeed;
+            float trueSpeed = sf.unlockedRCT ? ((float)sf.numberBossesDefeated / SorceryFightMod.totalBosses * speedDiff) + minSpeed : (sf.numberBossesDefeated / (SorceryFightMod.totalBosses / 1.5f) * speedDiff) + minSpeed;
 
             float adjustedCost = Cost * trueSpeed;
             float finalCost = adjustedCost - (adjustedCost * (sf.bossesDefeated.Count / 100f));
@@ -95,7 +96,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             startVel = Projectile.velocity;
 
             float speedDiff = maxSpeed - minSpeed;
-            float trueSpeed = ((float)sfPlayer.numberBossesDefeated / SorceryFight.totalBosses * speedDiff) + minSpeed;
+            float trueSpeed = ((float)sfPlayer.numberBossesDefeated / SorceryFightMod.totalBosses * speedDiff) + minSpeed;
             float playerSpeedMultiplier = player.moveSpeed / 2.5f;
             trueSpeed *= playerSpeedMultiplier > 1 ? playerSpeedMultiplier : 1f;
             trueSpeed *= sfPlayer.unlockedRCT ? 1.5f : 1f;
@@ -118,7 +119,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
                 player.SorceryFight().immune = false;
                 player.SorceryFight().disableRegenFromProjectiles = false;
-
             }
 
             if (startPos != Vector2.Zero)
@@ -126,14 +126,63 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                 startPos -= Projectile.velocity * 0.1f;
             }
 
-
             foreach (var kvp in impactPositions)
             {
                 var key = kvp.Key;
                 impactPositions[key]++;
             }
-        }
 
+            // Starry trail
+            if (Projectile.velocity != Vector2.Zero)
+            {
+                int dustType = Main.rand.NextBool() ? DustID.BlueFairy : DustID.PinkFairy;
+
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 spawnOffset = new Vector2(
+                        Main.rand.NextFloat(-player.width * 0.4f, player.width * 0.4f),
+                        Main.rand.NextFloat(-player.height * 0.4f, player.height * 0.4f)
+                    );
+
+                    Dust star = Dust.NewDustDirect(
+                        player.Center + spawnOffset - new Vector2(4f),
+                        0, 0,
+                        dustType,
+                        -Projectile.velocity.X * 0.15f,
+                        -Projectile.velocity.Y * 0.15f
+                    );
+
+                    star.scale = Main.rand.NextFloat(0.6f, 1.4f);
+                    star.fadeIn = Main.rand.NextFloat(0.4f, 0.9f);
+                    star.noGravity = true;
+                    star.color = Main.rand.Next(3) switch
+                    {
+                        0 => new Color(160, 80, 255),   // vivid purple
+                        1 => new Color(80, 0, 120),     // deep dark purple
+                        _ => new Color(200, 150, 255)   // soft lavender
+                    };
+                }
+
+                // Occasional larger glowing star burst
+                if (Main.rand.NextBool(6))
+                {
+                    Dust burst = Dust.NewDustDirect(
+                        player.Center - new Vector2(4f),
+                        0, 0,
+                        dustType,
+                        Main.rand.NextFloat(-1.5f, 1.5f),
+                        Main.rand.NextFloat(-1.5f, 1.5f)
+                    );
+                    burst.scale = Main.rand.NextFloat(1.4f, 2.2f);
+                    burst.noGravity = true;
+                    burst.color = Main.rand.Next(2) switch
+                    {
+                        0 => new Color(140, 0, 200),    // deep violet
+                        _ => new Color(10, 0, 30)       // near-black space
+                    };
+                }
+            }
+        }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             modifiers.FinalDamage *= Projectile.velocity.Length() / 16f;
@@ -163,45 +212,45 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public override bool PreDraw(ref Color lightColor)
         {
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(
-                SpriteSortMode.Immediate,
-                BlendState.NonPremultiplied,
-                SamplerState.LinearClamp,
-                DepthStencilState.None,
-                RasterizerState.CullNone,
-                null,
-                Main.GameViewMatrix.ZoomMatrix
-            );
+            //Main.spriteBatch.End();
+            //Main.spriteBatch.Begin(
+            //    SpriteSortMode.Immediate,
+            //    BlendState.NonPremultiplied,
+            //    SamplerState.LinearClamp,
+            //    DepthStencilState.None,
+            //    RasterizerState.CullNone,
+            //    null,
+            //    Main.GameViewMatrix.ZoomMatrix
+            //);
 
-            Rectangle impactSrc = new Rectangle(0, 0, impactRing.Width, impactRing.Height);
+            //Rectangle impactSrc = new Rectangle(0, 0, impactRing.Width, impactRing.Height);
 
-            float impactScale = MathF.Sqrt(1 - MathF.Pow((tick / 60) - 1, 2)) * Projectile.velocity.Length() / 5f;
-            float impactOpacity = MathF.Sqrt(1 - MathF.Pow(tick / 60, 2));
+            //float impactScale = MathF.Sqrt(1 - MathF.Pow((tick / 60) - 1, 2)) * Projectile.velocity.Length() / 5f;
+            //float impactOpacity = MathF.Sqrt(1 - MathF.Pow(tick / 60, 2));
 
-            impactOpacity = Math.Clamp(impactOpacity, 0f, 1f);
+            //impactOpacity = Math.Clamp(impactOpacity, 0f, 1f);
 
-            Main.EntitySpriteDraw(impactRing, startPos - Main.screenPosition, impactSrc, Color.White * impactOpacity, startVel.ToRotation(), impactSrc.Size() * 0.5f, impactScale, SpriteEffects.None);
+            //Main.EntitySpriteDraw(impactRing, startPos - Main.screenPosition, impactSrc, Color.White * impactOpacity, startVel.ToRotation(), impactSrc.Size() * 0.5f, impactScale, SpriteEffects.None);
 
-            foreach (var kvp in impactPositions)
-            {
-                var tick = kvp.Value;
-                var position = kvp.Key;
+            //foreach (var kvp in impactPositions)
+            //{
+            //    var tick = kvp.Value;
+            //    var position = kvp.Key;
 
-                Rectangle impactCircleSrc = new Rectangle(0, 0, impactCircle.Width, impactCircle.Height);
+            //    Rectangle impactCircleSrc = new Rectangle(0, 0, impactCircle.Width, impactCircle.Height);
 
-                float t = Math.Clamp(tick / 30f, 0f, 1f);
+            //    float t = Math.Clamp(tick / 30f, 0f, 1f);
 
-                float impactCircleOpacity = MathF.Sqrt(1f - t * t);
+            //    float impactCircleOpacity = MathF.Sqrt(1f - t * t);
 
-                float scaleT = Math.Clamp(1f - MathF.Pow(t - 1f, 2f), 0f, 1f);
-                float impactCircleScale = MathF.Sqrt(scaleT) * 2.5f;
+            //    float scaleT = Math.Clamp(1f - MathF.Pow(t - 1f, 2f), 0f, 1f);
+            //    float impactCircleScale = MathF.Sqrt(scaleT) * 2.5f;
 
-                Main.EntitySpriteDraw(impactCircle, position - Main.screenPosition, impactCircleSrc, Color.White * impactCircleOpacity, 0f, impactCircleSrc.Size() * 0.5f, impactCircleScale, SpriteEffects.None);
-            }
+            //    Main.EntitySpriteDraw(impactCircle, position - Main.screenPosition, impactCircleSrc, Color.White * impactCircleOpacity, 0f, impactCircleSrc.Size() * 0.5f, impactCircleScale, SpriteEffects.None);
+            //}
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin();
+            //Main.spriteBatch.End();
+            //Main.spriteBatch.Begin();
 
             return false;
         }

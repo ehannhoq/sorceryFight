@@ -10,6 +10,7 @@ using sorceryFight.Content.Items.Accessories;
 using sorceryFight.Content.Particles;
 using sorceryFight.Content.Particles.UIParticles;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Graphics.Effects;

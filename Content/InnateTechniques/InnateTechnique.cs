@@ -65,11 +65,11 @@ public abstract class InnateTechnique()
                     new ShrineTechnique(),
                     new VesselTechnique(),
                     new BloodManipulationTechnique(),
-                    // new StarRageTechnique(),
-                    // new TenShadowsTechnique(),
+                    new StarRageTechnique(),
+                    new TenShadowsTechnique(),
                     new PrivatePureLoveTrainTechnique(),
                     new HeavenlyRestriction(),
-                    // new IceFormationTechnique()
+                    new IceFormationTechnique()
                 };
         }
     }

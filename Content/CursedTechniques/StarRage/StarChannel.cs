@@ -8,6 +8,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.CursedTechniques.StarRage
 {
@@ -122,7 +123,8 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                             Projectile.NewProjectile(
                             projectile.GetSource_FromThis(),
                             projectile.Center,
-                            Vector2.Zero,
+                            //Vector2.Zero,
+                            new Vector2(0f, -1f),
                             ModContent.ProjectileType<BlackholeProjectile>(),
                             blackHoleDamage,
                             0f,

@@ -12,6 +12,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.Content.Particles.UIParticles;
 
+
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
     public class SuperNovaShard : ModProjectile

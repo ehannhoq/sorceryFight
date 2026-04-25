@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.SFPlayer;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -17,8 +18,9 @@ namespace sorceryFight.Content.Buffs.StarRage
 
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.MinionSacrificable[Type] = false;
+            Main.projPet[Type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Type] = true;
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 3000;
         }
 
         public override void SetDefaults()
@@ -43,9 +45,17 @@ namespace sorceryFight.Content.Buffs.StarRage
         {
             Player player = Main.player[Projectile.owner];
             SorceryFightPlayer sfPlayer = player.SorceryFight();
-            if (sfPlayer.summonGaruda)
+            if (Projectile.owner == Main.myPlayer)
             {
-                Projectile.timeLeft = 2;
+                if (Projectile.owner == Main.myPlayer)
+                {
+                    if (sfPlayer.summonGaruda)
+                        Projectile.timeLeft = 2;
+                }
+                else
+                {
+                    Projectile.timeLeft = 2;
+                }
             }
         }
         internal void SegmentMove()
@@ -110,7 +120,17 @@ namespace sorceryFight.Content.Buffs.StarRage
             }
         }
 
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(BuffID.ShadowFlame, 300);
+        //public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(BuffID.ShadowFlame, 300);
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(segmentIndex);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            segmentIndex = reader.ReadInt32();
+        }
     }
 }
 

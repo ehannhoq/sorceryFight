@@ -9,6 +9,7 @@ using sorceryFight.SFPlayer;
 using sorceryFight.Content.Particles;
 using sorceryFight.Content.Particles.UIParticles;
 
+
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {
     public class MaximumOutputBlue : CursedTechnique
