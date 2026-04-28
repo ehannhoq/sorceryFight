@@ -41,6 +41,7 @@ Mods: {
 			RabbitMoonlord.DisplayName: Rabbit Moonlord
 			RabbitShardscape.DisplayName: Rabbit Shardscape
 			RabbitShardscape_Indicator.DisplayName: Rabbit Shardscape_ Indicator
+			MaxElephantBeam.DisplayName: Max Elephant Beam
 		}
 
 		Configs: {

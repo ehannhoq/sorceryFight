@@ -12,7 +12,6 @@ namespace sorceryFight.Content.Tiles.Ice
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
 
-            // no mining
             MinPick = int.MaxValue;
 
             AddMapEntry(new Color(100, 180, 255));
@@ -28,6 +27,16 @@ namespace sorceryFight.Content.Tiles.Ice
         public override bool CanExplode(int i, int j)
         {
             return false;
+        }
+
+        public override void PlaceInWorld(int i, int j, Item item)
+        {
+            ModContent.GetInstance<UraumeBlockTE>().Place(i, j);
+        }
+
+        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+        {
+            ModContent.GetInstance<UraumeBlockTE>().Kill(i, j);
         }
     }
 }

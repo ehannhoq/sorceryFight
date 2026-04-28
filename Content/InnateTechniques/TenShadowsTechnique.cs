@@ -29,6 +29,7 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
+            new DivineWhite(),
             new RoundDeer(),
             new Nue(),
             new MaxElephant()

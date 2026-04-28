@@ -175,7 +175,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                 }
                 else
                 {
-                    return Projectile.NewProjectile(entitySource, player.Center, dir, ModContent.ProjectileType<MassPunch>(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
+                    return Projectile.NewProjectile(entitySource, player.Center, dir, ModContent.ProjectileType<MassKick>(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
                 }
 
 

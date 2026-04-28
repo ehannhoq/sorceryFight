@@ -213,6 +213,8 @@ namespace sorceryFight.Content.CursedTechniques
 
         public override void AI()
         {
+            //Main.NewText($"Style={Style} parent AI is running");
+
             Owner = Main.player[Projectile.owner];
             SFOwner = Owner.SorceryFight();
 
@@ -230,6 +232,7 @@ namespace sorceryFight.Content.CursedTechniques
             {
                 if (SFOwner?.innateTechnique?.Name == null)
                 {
+                    Main.NewText("No innate technique found for this minion");
                     Projectile.Kill();
                     return;
                 }
@@ -240,6 +243,17 @@ namespace sorceryFight.Content.CursedTechniques
                     return;
                 }
             }
+
+
+            // CE drain
+            if (Projectile.owner == Main.myPlayer)
+            {
+                ActiveDrain(SFOwner);
+            }
+
+
+            SummonTimer++;
+
             // Style-specific base behavior
             switch (Style)
             {
@@ -255,18 +269,13 @@ namespace sorceryFight.Content.CursedTechniques
                 case SummonStyle.GroundedMinion:
                     Projectile.localNPCHitCooldown = IFrames * Projectile.MaxUpdates;
                     SetTarget();
+
+                    //When SummonAI is called after Apply gravity it messes with the wolf jumping
+                    SummonAI();
                     ApplyGravity();
-                    break;
+                    return;
             }
 
-            // CE drain
-            if (Projectile.owner == Main.myPlayer)
-            {
-                ActiveDrain(SFOwner);
-            }
-
-
-            SummonTimer++;
             SummonAI();
         }
 
@@ -421,7 +430,7 @@ namespace sorceryFight.Content.CursedTechniques
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
-            if (Style == SummonStyle.GroundedMinion)
+            if (Style == SummonStyle.GroundedMinion && Owner != null)
                 fallThrough = Projectile.Bottom.Y < Owner.Top.Y;
             else
                 fallThrough = false;
