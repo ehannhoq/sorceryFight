@@ -18,7 +18,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         private const int TICKS_PER_FRAME = 5;
         private const float MAX_LENGTH = 800f;
         private const float STEP_SIZE = 4f;
-        private const float BASE_BEAM_HEIGHT = 0.4f;
+        private const float BASE_BEAM_HEIGHT = 0.8f;
         private const float AIM_LERP_SPEED = 0.12f;
         private const int SLOW_DURATION = 120;
 
@@ -90,7 +90,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
 
             // attach to the frog
             // the frog is still affected by gravity so might be moved (?)
-            Projectile.Center = parent.Center + new Vector2(parent.spriteDirection * (parent.width / 3f), -parent.height / 4f);
+            Projectile.Center = parent.Center + new Vector2(parent.spriteDirection * (parent.width / 3f), -parent.height / 4f + 10f);
             Projectile.timeLeft = 2;
 
             // TODO: change other beam ramps to be like this with a constant instead of magic number

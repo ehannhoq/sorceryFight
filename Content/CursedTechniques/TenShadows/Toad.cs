@@ -31,7 +31,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         public override int MasteryDamageMultiplier => 30;
         public override float Speed => 0f;
         public override float LifeTime => 0f;
-        public override float DetectionRange => 600f;
+        public override float DetectionRange => 1500f;
         public override string ParentInnateName => "TenShadows";
 
         private const int FRAME_COUNT = 5;
