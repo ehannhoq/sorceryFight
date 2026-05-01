@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.CursedTechniques.TenShadows;
 using sorceryFight.Utilities;
+using sorceryFight.Content.Buffs.TenShadows;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -24,15 +25,19 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
-
+            new TotalityBuff()
         };
 
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
+            //divine white spawns black as a child / becomes totality
             new DivineWhite(),
-            new RoundDeer(),
             new Nue(),
-            new MaxElephant()
+            new Toad(),
+            new MaxElephant(),
+            new RoundDeer()
+            
+
         };
 
         public override PlayerDomainExpansion DomainExpansion { get; } = new HeavensRime();

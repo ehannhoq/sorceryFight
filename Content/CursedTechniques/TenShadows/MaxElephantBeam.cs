@@ -171,6 +171,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         {
             behindProjectiles.Add(index);
         }
+
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             if (projHitbox.Intersects(targetHitbox))

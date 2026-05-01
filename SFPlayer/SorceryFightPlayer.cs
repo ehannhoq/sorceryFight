@@ -158,6 +158,9 @@ namespace sorceryFight.SFPlayer
         public NPC garudaCurrentTarget;
         #endregion
 
+        #region TenShadows
+        public bool TotalityToggle;
+        #endregion
 
         public override void UpdateEquips()
         {

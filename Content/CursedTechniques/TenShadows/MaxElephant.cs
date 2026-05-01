@@ -62,8 +62,8 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
 
         public override void SummonSetDefaults()
         {
-            Projectile.width = 60;
-            Projectile.height = 60;
+            Projectile.width = 150;
+            Projectile.height = 120;
             animScale = 1.5f;
 
         }

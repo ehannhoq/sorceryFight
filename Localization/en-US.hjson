@@ -42,6 +42,7 @@ Mods: {
 			RabbitShardscape.DisplayName: Rabbit Shardscape
 			RabbitShardscape_Indicator.DisplayName: Rabbit Shardscape_ Indicator
 			MaxElephantBeam.DisplayName: Max Elephant Beam
+			ToadTongue.DisplayName: Toad Tongue
 		}
 
 		Configs: {

@@ -178,7 +178,8 @@ namespace sorceryFight.Content.CursedTechniques
             switch (Style)
             {
                 case SummonStyle.Sentry:
-                    Projectile.sentry = true;
+                    //was causing problems with terraria's max summons
+                    //Projectile.sentry = true;
                     Projectile.tileCollide = SentryTileCollide;
                     break;
 
@@ -390,8 +391,9 @@ namespace sorceryFight.Content.CursedTechniques
             if (Main.projectile.IndexInRange(projIndex))
                 Main.projectile[projIndex].originalDamage = Damage;
 
-            if (Style == SummonStyle.Sentry)
-                player.UpdateMaxTurrets();
+            // dont need
+            //if (Style == SummonStyle.Sentry)
+                //player.UpdateMaxTurrets();
 
             SorceryFightMod.Log.Info("Summoning Stuff after");
 
