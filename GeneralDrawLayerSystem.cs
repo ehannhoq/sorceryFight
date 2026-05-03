@@ -1,10 +1,24 @@
-﻿using sorceryFight.Content.Enums;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Enums;
 using System;
+using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace CalamityMod.Systems.Graphic
+namespace sorceryFight.Content.Systems.Graphic
 {
+
+    //generated a summary with Claude, but feel free to edit it for accuracy and clarity.
+    
+    /// <summary>
+    /// Hooks into Terraria's draw pipeline and fires events at each draw layer,
+    /// allowing particles (and other systems) to draw at the correct point in
+    /// the render order.
+    /// If Calamity is also loaded, both mods hook the same <c>On_Main</c> events.
+    /// MonoMod chains them via <c>orig</c> delegates, so both fire without conflict.
+    /// Each mod's particle system draws independently at the correct layer.
+    /// </summary>
     internal sealed class GeneralDrawLayerSystem : ModSystem
     {
         public static event Action OnPrepareDraw;
@@ -21,8 +35,30 @@ namespace CalamityMod.Systems.Graphic
         public static event Action OnAfterDusts;
         public static event Action OnAfterEverything;
 
+        // Cached reflection accessors for SpriteBatch's private fields.
+        // These are private in FNA and not publicized by tModLoader.
+        private static FieldInfo f_sortMode;
+        private static FieldInfo f_blendState;
+        private static FieldInfo f_samplerState;
+        private static FieldInfo f_depthStencilState;
+        private static FieldInfo f_rasterizerState;
+        private static FieldInfo f_customEffect;
+        private static FieldInfo f_transformMatrix;
+
+
         public override void OnModLoad()
         {
+            // Cache reflection lookups once at load time.
+            var sbType = typeof(SpriteBatch);
+            const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
+            f_sortMode = sbType.GetField("sortMode", flags) ?? sbType.GetField("_sortMode", flags);
+            f_blendState = sbType.GetField("blendState", flags) ?? sbType.GetField("_blendState", flags);
+            f_samplerState = sbType.GetField("samplerState", flags) ?? sbType.GetField("_samplerState", flags);
+            f_depthStencilState = sbType.GetField("depthStencilState", flags) ?? sbType.GetField("_depthStencilState", flags);
+            f_rasterizerState = sbType.GetField("rasterizerState", flags) ?? sbType.GetField("_rasterizerState", flags);
+            f_customEffect = sbType.GetField("customEffect", flags) ?? sbType.GetField("_effect", flags);
+            f_transformMatrix = sbType.GetField("transformMatrix", flags) ?? sbType.GetField("_matrix", flags);
+
             On_Main.CheckMonoliths += CheckMonoliths;
             On_Main.DrawBackgroundBlackFill += GeneralDrawLayer_DrawToLayer_BeforeAllTiles;
             On_Main.DoDraw_Tiles_Solid += GeneralDrawLayer_DrawToLayer_BeforeSolidTiles;
@@ -32,6 +68,7 @@ namespace CalamityMod.Systems.Graphic
             On_Main.DrawDust += GeneralDrawLayer_DrawToLayer_AfterDusts;
             On_Main.DrawInfernoRings += GeneralDrawLayer_DrawToLayer_AfterEverything;
         }
+
 
         public override void Unload()
         {
@@ -54,6 +91,28 @@ namespace CalamityMod.Systems.Graphic
         {
             orig();
             OnPrepareDraw?.Invoke();
+        }
+
+
+        // Calamity uses Daybreak to do basically the same thing as this
+        /// <summary>
+        /// Snapshots the current SpriteBatch state, ends it, and restarts it
+        /// with the same parameters after calling the provided action.
+        /// This uses cached reflection to read the private fields.
+        /// </summary>
+        private static void EndAndRestart(SpriteBatch sb, Action drawAction)
+        {
+            var sortMode = (SpriteSortMode)f_sortMode.GetValue(sb);
+            var blendState = (BlendState)f_blendState.GetValue(sb);
+            var samplerState = (SamplerState)f_samplerState.GetValue(sb);
+            var depthStencilState = (DepthStencilState)f_depthStencilState.GetValue(sb);
+            var rasterizerState = (RasterizerState)f_rasterizerState.GetValue(sb);
+            var customEffect = (Effect)f_customEffect.GetValue(sb);
+            var transformMatrix = (Matrix)f_transformMatrix.GetValue(sb);
+
+            sb.End();
+            drawAction();
+            sb.Begin(sortMode, blendState, samplerState, depthStencilState, rasterizerState, customEffect, transformMatrix);
         }
 
         #region GeneralDrawLayer Systems Drawing
@@ -80,9 +139,7 @@ namespace CalamityMod.Systems.Graphic
 
         private static void GeneralDrawLayer_DrawToLayer_BeforeAllTiles(On_Main.orig_DrawBackgroundBlackFill orig, Main self)
         {
-            Main.spriteBatch.End(out var ss);
-            GeneralDrawLayer_DrawForLayer(GeneralDrawLayer.BeforeAllTiles);
-            Main.spriteBatch.Begin(ss);
+            EndAndRestart(Main.spriteBatch, () => GeneralDrawLayer_DrawForLayer(GeneralDrawLayer.BeforeAllTiles));
             orig(self);
         }
 
@@ -121,10 +178,9 @@ namespace CalamityMod.Systems.Graphic
         private static void GeneralDrawLayer_DrawToLayer_AfterEverything(On_Main.orig_DrawInfernoRings orig, Main self)
         {
             orig(self);
-            Main.spriteBatch.End(out var ss);
-            GeneralDrawLayer_DrawForLayer(GeneralDrawLayer.AfterEverything);
-            Main.spriteBatch.Begin(ss);
+            EndAndRestart(Main.spriteBatch, () => GeneralDrawLayer_DrawForLayer(GeneralDrawLayer.AfterEverything));
         }
         #endregion
     }
 }
+

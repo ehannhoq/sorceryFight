@@ -1,10 +1,8 @@
 ﻿using sorceryFight.Content.Enums;
-using CalamityMod.Systems.Graphic;
-using CalamityMod.Systems.Graphic.PixelationSystem;
+using sorceryFight.Content.Systems.Graphic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using sorceryFight.Content.Particles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +10,11 @@ using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.Particles
+namespace sorceryFight.Content.Particles    
 {
+    //Modified from Calamity
+
+
     // Important credits for Spirit and Luminance:
     #region CREDITS
 
@@ -61,33 +62,37 @@ namespace sorceryFight.Content.Particles
 
         // Collections for correctly organizing active prticles for drawing.
         private static Dictionary<BlendState, List<Particle>> particlesToDraw;
-        private static Dictionary<BlendState, List<Particle>> particlesToDraw_Pixelated;
+        //private static Dictionary<BlendState, List<Particle>> particlesToDraw_Pixelated;
         private static Dictionary<Effect, Dictionary<BlendState, List<Particle>>> particlesToDraw_CustomShader;
         #endregion
 
         #region Loading and Unloading
         public override void PostSetupContent()
         {
-            Type baseParticleType = typeof(Particle);
-#pragma warning disable CS0618 // Type or member is obsolete
-            ReflectionHelper.IterateEveryModsTypes<Particle>(action: type =>
+            
+            //TODO: Make sure this doesn't mess with ParticleSF
+            
+            // Discover all Particle subclasses in this mod and register them.
+            foreach (var type in Mod.Code.GetTypes())
             {
-                int ID = particleIDsByTypes.Count; //Get the ID of the particle
-                particleIDsByTypes[type] = ID;
+                if (type.IsAbstract || !typeof(Particle).IsAssignableFrom(type))
+                    continue;
 
-                // Flow: 2024/09/17
-                // 'UnintializedObject' is allowed to use here as it's only read for Texture string Property
-                // But do NOT EVER use it's instance as they are literally Uninitialized.
-                // It might cause unintended behaviour if we do that.
+                int id = particleIDsByTypes.Count;
+                particleIDsByTypes[type] = id;
+
+                // GetUninitializedObject is used here ONLY to read the Texture property.
+                // Do not use the resulting instance for anything else.
                 Particle instance = (Particle)RuntimeHelpers.GetUninitializedObject(type);
 
                 string texturePath = type.Namespace.Replace('.', '/') + "/" + type.Name;
                 if (instance.Texture != "")
                     texturePath = instance.Texture;
-                particleTexturesByIDs[ID] = ModContent.Request<Texture2D>(texturePath, instance.TextureRequestMode);
-            });
-#pragma warning restore CS0618 // Type or member is obsolete
+
+                particleTexturesByIDs[id] = ModContent.Request<Texture2D>(texturePath, instance.TextureRequestMode);
+            }
         }
+
 
         public override void Load()
         {
@@ -97,10 +102,10 @@ namespace sorceryFight.Content.Particles
             activeParticles = [];
             particlesToKill = [];
             particlesToSpawnNextFrame = [];
-            particlesToSpawnNextFrame_Pixelated = [];
+            //particlesToSpawnNextFrame_Pixelated = [];
 
             particlesToDraw = [];
-            particlesToDraw_Pixelated = [];
+            //particlesToDraw_Pixelated = [];
             particlesToDraw_CustomShader = [];
 
             GeneralDrawLayerSystem.OnDrawLayer += DrawParticleCollectionsAtSpecificLayer;
@@ -114,10 +119,10 @@ namespace sorceryFight.Content.Particles
             activeParticles = null;
             particlesToKill = null;
             particlesToSpawnNextFrame = null;
-            particlesToSpawnNextFrame_Pixelated = null;
+            //particlesToSpawnNextFrame_Pixelated = null;
 
             particlesToDraw = null;
-            particlesToDraw_Pixelated = null;
+            //particlesToDraw_Pixelated = null;
             particlesToDraw_CustomShader = null;
         }
 
@@ -126,10 +131,10 @@ namespace sorceryFight.Content.Particles
             activeParticles.Clear();
             particlesToKill.Clear();
             particlesToSpawnNextFrame.Clear();
-            particlesToSpawnNextFrame_Pixelated.Clear();
+            //particlesToSpawnNextFrame_Pixelated.Clear();
 
             particlesToDraw.Clear();
-            particlesToDraw_Pixelated.Clear();
+            //particlesToDraw_Pixelated.Clear();
             particlesToDraw_CustomShader.Clear();
         }
         #endregion
@@ -137,7 +142,6 @@ namespace sorceryFight.Content.Particles
         /// <summary>
         /// Spawns the particle instance provided into the world. If the particle limit is reached but the particle is marked as important, it will try to replace a non important particle.
         /// </summary>
-        /// <param name="pixelate">Set to true to force the particle being spawned to be drawn pixelated.</param>
         /// <param name="manualDrawLayerOverride">Only set this to a non-null value if you'd like to manually override the draw layer of the particle instance you are spawning.</param>
         public static void SpawnParticle(Particle particle, bool pixelate = false, GeneralDrawLayer? manualDrawLayerOverride = null)
         {
@@ -147,10 +151,10 @@ namespace sorceryFight.Content.Particles
             if (Main.gamePaused || Main.dedServ || activeParticles == null)
                 return;
 
-            if (activeParticles.Count >= CalamityClientConfig.Instance.ParticleLimit && !particle.Important)
+            if (activeParticles.Count >= ClientConfig.Instance.ParticleLimit && !particle.Important)
                 return;
 
-            particle.Pixelate = pixelate;
+            //particle.Pixelate = pixelate;
             if (manualDrawLayerOverride.HasValue)
                 particle.DrawLayer = manualDrawLayerOverride.Value;
 
@@ -236,7 +240,7 @@ namespace sorceryFight.Content.Particles
             if (Main.dedServ || activeParticles == null)
                 return 0;
 
-            return CalamityClientConfig.Instance.ParticleLimit - activeParticles.Count();
+            return ClientConfig.Instance.ParticleLimit - activeParticles.Count();
         }
 
         /// <summary>
@@ -299,57 +303,30 @@ namespace sorceryFight.Content.Particles
                 return;
 
             DrawParticleCollection(particlesToDraw, drawLayer);
-            DrawParticleCollection(particlesToDraw_Pixelated, drawLayer, true);
+            //DrawParticleCollection(particlesToDraw_Pixelated, drawLayer, true);
             DrawParticlesWithShaders(drawLayer);
         }
 
+
+        //changed to remove all of the trippy effect from calamity mushrooms
         private static void DrawParticleInstance(Particle particle)
         {
-            int drawIterations = Main.LocalPlayer.Calamity().trippy ? 4 : 1;
-            for (int i = 0; i < drawIterations; i++)
+            if (particle.UseCustomDraw)
             {
-                // If you have shrooms, manually spoof the position of the particle for each clone location
-                Vector2 positionSpoof = particle.Position;
-                Vector2 positionDiff = positionSpoof - Main.LocalPlayer.Center;
-                switch (i)
-                {
-                    case 0:
-                        break;
-                    case 1:
-                        particle.Position = Main.LocalPlayer.Center - positionDiff;
-                        break;
-                    case 2:
-                        particle.Position = Main.LocalPlayer.Center - Vector2.UnitY * positionDiff.Y + Vector2.UnitX * positionDiff.X;
-                        break;
-                    case 3:
-                        particle.Position = Main.LocalPlayer.Center - Vector2.UnitX * positionDiff.X + Vector2.UnitY * positionDiff.Y;
-                        break;
-                }
+                particle.CustomDraw(Main.spriteBatch);
+            }
+            else
+            {
+                Color lightColor = particle.Color;
+                if (particle.AffectedByLight)
+                    lightColor = particle.Color.MultiplyRGB(Lighting.GetColor((particle.Position / 16).ToPoint()));
 
-                //if (Main.LocalPlayer.Calamity().trippy)
-                //    particle.Color = Main.DiscoColor;
-
-                // The actual drawing step
-                if (particle.UseCustomDraw)
-                {
-                    particle.CustomDraw(Main.spriteBatch);
-                }
-                else
-                {
-                    Color lightColor = particle.Color;
-                    if (particle.AffectedByLight)
-                        lightColor = particle.Color.MultiplyRGB(Lighting.GetColor((particle.Position / 16).ToPoint()));
-
-                    Rectangle frame = particleTexturesByIDs[particle.Type].Frame(1, particle.FrameVariants, 0, particle.Variant);
-                    Main.spriteBatch.Draw(particleTexturesByIDs[particle.Type].Value, particle.Position - Main.screenPosition, frame, lightColor, particle.Rotation, frame.Size() * 0.5f, particle.Scale, SpriteEffects.None, 0f);
-                }
-
-                // Since the switch case directly modifies the particle position, this resets it to the proper location
-                particle.Position = positionSpoof;
+                Rectangle frame = particleTexturesByIDs[particle.Type].Frame(1, particle.FrameVariants, 0, particle.Variant);
+                Main.spriteBatch.Draw(particleTexturesByIDs[particle.Type].Value, particle.Position - Main.screenPosition, frame, lightColor, particle.Rotation, frame.Size() * 0.5f, particle.Scale, SpriteEffects.None, 0f);
             }
         }
 
-        private static void DrawParticleCollection(Dictionary<BlendState, List<Particle>> drawCollection, GeneralDrawLayer drawLayer, bool pixelated = false)
+        private static void DrawParticleCollection(Dictionary<BlendState, List<Particle>> drawCollection, GeneralDrawLayer drawLayer)
         {
             var scissorRectRasterizer = Main.Rasterizer;
             scissorRectRasterizer.ScissorTestEnable = true;
@@ -358,32 +335,16 @@ namespace sorceryFight.Content.Particles
 
             foreach (var keyValuePair in drawCollection)
             {
-                if (pixelated)
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, keyValuePair.Key, SamplerState.LinearClamp, DepthStencilState.None, scissorRectRasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+
+                var particlesAtSpecifiedLayer = keyValuePair.Value.Where(p => p.DrawLayer == drawLayer);
+                if (particlesAtSpecifiedLayer.Any())
                 {
-                    PixelationManager.AddPixelatedDrawer((pixelationMatrix) =>
-                    {
-                        var particlesAtSpecifiedLayer = keyValuePair.Value.Where(p => p.DrawLayer == drawLayer);
-                        if (particlesAtSpecifiedLayer.Any())
-                        {
-                            foreach (Particle particle in particlesAtSpecifiedLayer)
-                                DrawParticleInstance(particle);
-                        }
-
-                    }, drawLayer, keyValuePair.Key);
+                    foreach (Particle particle in particlesAtSpecifiedLayer)
+                        DrawParticleInstance(particle);
                 }
-                else
-                {
-                    Main.spriteBatch.Begin(SpriteSortMode.Deferred, keyValuePair.Key, SamplerState.LinearClamp, DepthStencilState.None, scissorRectRasterizer, null, Main.GameViewMatrix.TransformationMatrix);
 
-                    var particlesAtSpecifiedLayer = keyValuePair.Value.Where(p => p.DrawLayer == drawLayer);
-                    if (particlesAtSpecifiedLayer.Any())
-                    {
-                        foreach (Particle particle in particlesAtSpecifiedLayer)
-                            DrawParticleInstance(particle);
-                    }
-
-                    Main.spriteBatch.End();
-                }
+                Main.spriteBatch.End();
             }
         }
 
@@ -435,28 +396,6 @@ namespace sorceryFight.Content.Particles
                     if (!particlesToDraw_CustomShader[particle.CustomShader].ContainsKey(BlendState.AlphaBlend))
                         particlesToDraw_CustomShader[particle.CustomShader][BlendState.AlphaBlend] = [];
                     return particlesToDraw_CustomShader[particle.CustomShader][BlendState.AlphaBlend];
-                }
-            }
-            // Pixelated particles.
-            else if (particle.Pixelate)
-            {
-                if (particle.UseAdditiveBlend)
-                {
-                    if (!particlesToDraw_Pixelated.ContainsKey(BlendState.Additive))
-                        particlesToDraw_Pixelated[BlendState.Additive] = [];
-                    return particlesToDraw_Pixelated[BlendState.Additive];
-                }
-                else if (particle.UseHalfTransparency)
-                {
-                    if (!particlesToDraw_Pixelated.ContainsKey(BlendState.NonPremultiplied))
-                        particlesToDraw_Pixelated[BlendState.NonPremultiplied] = [];
-                    return particlesToDraw_Pixelated[BlendState.NonPremultiplied];
-                }
-                else
-                {
-                    if (!particlesToDraw_Pixelated.ContainsKey(BlendState.AlphaBlend))
-                        particlesToDraw_Pixelated[BlendState.AlphaBlend] = [];
-                    return particlesToDraw_Pixelated[BlendState.AlphaBlend];
                 }
             }
             // Non-pixelated particles (regular).

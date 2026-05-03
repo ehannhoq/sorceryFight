@@ -53,11 +53,16 @@ namespace sorceryFight.Content.Particles
         /// </summary>
         public bool AffectedByLight = false;
 
+        
+        //Support for Pixelation mode has been removed because it relied on Daybreak code and wasn't used that much
+        
         /// <summary>
         /// Whether or not your particle should be drawn with a pixelated effect to match Terraria's pixel size.
         /// <br>Defaults to false.</br>
         /// </summary>
-        public bool Pixelate = false;
+        //public bool Pixelate = false;
+
+
 
         /// <summary>
         /// The "layer" or point at which you'd like your particle to draw in Terraria's internal draw order.

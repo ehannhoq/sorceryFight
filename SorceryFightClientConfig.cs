@@ -1,13 +1,17 @@
 using Newtonsoft.Json;
-using sorceryFight.Content.UI.TechniqueSelector;
-using System;
 using System.ComponentModel;
+using System.Runtime.Serialization;
+using sorceryFight.Content.UI.TechniqueSelector;
+using Terraria;
 using Terraria.ModLoader.Config;
+using Terraria.ModLoader;
 
 namespace sorceryFight
 {
     public class ClientConfig : ModConfig
     {
+        public static ClientConfig Instance => ModContent.GetInstance<ClientConfig>();
+
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
         [DefaultValue(true)]
@@ -18,6 +22,17 @@ namespace sorceryFight
         
         [DefaultValue(false)]
         public bool AllUIBackgroundsGrayToggle { get; set; }
+
+        #region Particles
+        [Header("Particles")]
+        public const int MinParticleLimit = 100;
+        public const int MaxParticleLimit = 2000;
+
+        [Range(MinParticleLimit, MaxParticleLimit)]
+        [DefaultValue(500)]
+        [Slider]
+        public int ParticleLimit { get; set; } = 500;
+        #endregion
 
         #region CursedTechniqueSelector
         [Header("CursedTechniqueSelector")]
@@ -150,5 +165,10 @@ namespace sorceryFight
         //public float StarMeterTransparency { get; set; }
         #endregion
 
+        [OnDeserialized]
+        internal void ClampValues(StreamingContext context)
+        {
+            ParticleLimit = (int)Utils.Clamp(ParticleLimit, MinParticleLimit, MaxParticleLimit);
+        }
     }
 }
