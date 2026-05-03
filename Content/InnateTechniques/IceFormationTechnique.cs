@@ -31,7 +31,8 @@ namespace sorceryFight.Content.InnateTechniques
         {
             new IceShard(),
             new IcicleHail(),
-            new IcePlace()
+            new IcePlace(),
+            new FrostCalm()
         };
 
         public override PlayerDomainExpansion DomainExpansion { get; } = new HeavensRime();
