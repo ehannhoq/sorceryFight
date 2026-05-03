@@ -10,12 +10,16 @@ namespace sorceryFight.Content.Particles.UIParticles
 {
     public class ParticleController : ModSystem
     {
-        private static Particle[] particles;
+
+        //ParticleSF and ParticleController are Ehann's particle designs
+        //Particle and GeneralParticleHandler are Calamity's
+
+        private static ParticleSF[] particles;
         private static int firstFreeIndex;
 
         public override void Load()
         {
-            particles = new Particle[1000];
+            particles = new ParticleSF[1000];
             IL_Main.DoDraw_DrawNPCsOverTiles += DrawUIParticleLayer;
             firstFreeIndex = 0;
 
@@ -74,7 +78,7 @@ namespace sorceryFight.Content.Particles.UIParticles
         {
             for (int i = 0; i < particles.Length; i++)
             {
-                Particle particle = particles[i];
+                ParticleSF particle = particles[i];
 
                 if (particle == null) continue;
 
@@ -89,7 +93,7 @@ namespace sorceryFight.Content.Particles.UIParticles
             }
         }
 
-        public static void SpawnParticle(Particle particle)
+        public static void SpawnParticle(ParticleSF particle)
         {
             if (Main.dedServ || Main.gamePaused || particles == null) return;
 

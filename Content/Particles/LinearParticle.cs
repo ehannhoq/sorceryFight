@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Particles
 {
-    public class LinearParticle : Particle
+    public class LinearParticle : ParticleSF
     {
         public static Texture2D Texture => ModContent.Request<Texture2D>("sorceryFight/Content/Particles/LinearParticle", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
