@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.Enums;
+using sorceryFight.Enums;
 using System;
 using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.Systems.Graphic
+namespace sorceryFight
 {
 
     //generated a summary with Claude, but feel free to edit it for accuracy and clarity.

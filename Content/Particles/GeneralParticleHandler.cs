@@ -1,6 +1,4 @@
-﻿using sorceryFight.Content.Enums;
-using sorceryFight.Content.Systems.Graphic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -9,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.ModLoader;
+using sorceryFight.Enums;
 
 namespace sorceryFight.Content.Particles    
 {
@@ -264,12 +263,6 @@ namespace sorceryFight.Content.Particles
             {
                 while (collectionsByDrawLayer.Value.Count > 0)
                     SpawnParticle(collectionsByDrawLayer.Value.Dequeue(), false, collectionsByDrawLayer.Key);
-            }
-
-            foreach (var collectionsByDrawLayer in particlesToSpawnNextFrame_Pixelated)
-            {
-                while (collectionsByDrawLayer.Value.Count > 0)
-                    SpawnParticle(collectionsByDrawLayer.Value.Dequeue(), true, collectionsByDrawLayer.Key);
             }
 
             // Update all particle instances in the world.

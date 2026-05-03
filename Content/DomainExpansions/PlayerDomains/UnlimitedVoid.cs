@@ -131,8 +131,8 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
                     int roll = Main.rand.Next(colors.Count);
                     Color color = colors[roll];
 
-                    LinearParticle particle = new LinearParticle(center, velocity, color, false, 1f, 3f, 180);
-                    ParticleController.SpawnParticle(particle);
+                    LineParticle particle = new LineParticle(center, velocity, false, 180, 3, color);
+                    GeneralParticleHandler.SpawnParticle(particle);
                 }
             }
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace sorceryFight.Content.Enums
+namespace sorceryFight.Enums
 {
     /// <summary>
     /// A general collection of points in Terraria's overall draw order that graphical systems in the mod draw to.

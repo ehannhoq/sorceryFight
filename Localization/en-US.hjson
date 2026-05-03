@@ -206,6 +206,11 @@ Mods: {
 					Label: All U I Backgrounds Gray Toggle
 					Tooltip: ""
 				}
+
+				ParticleLimit: {
+					Label: Particle Limit
+					Tooltip: ""
+				}
 			}
 
 			SorceryFightServerConfig: {

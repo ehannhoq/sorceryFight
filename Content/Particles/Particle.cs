@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using sorceryFight.Content.Enums;
+using sorceryFight.Enums;
 
 namespace sorceryFight.Content.Particles
 {
