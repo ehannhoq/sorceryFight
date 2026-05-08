@@ -22,7 +22,7 @@ namespace sorceryFight.Content.NPCs
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            return currentState.PreDraw(spriteBatch, screenPos, drawColor);
+            return currentState.PreDraw(NPC, spriteBatch, screenPos, drawColor);
         }
 
         public void SetState(IAIState newState)

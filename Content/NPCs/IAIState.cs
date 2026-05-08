@@ -8,7 +8,7 @@ namespace sorceryFight.Content.NPCs
     {
         public void AI(NPC npc);
 
-        public bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor);
+        public bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor);
 
         public void OnEnter(NPC npc);
 
