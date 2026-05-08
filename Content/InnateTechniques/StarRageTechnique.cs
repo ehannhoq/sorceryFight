@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using CalamityMod;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.CursedTechniques.StarRage;
@@ -12,6 +11,7 @@ using sorceryFight.Content.Buffs.Limitless;
 using sorceryFight.Content.Buffs.StarRage;
 using sorceryFight.Content.CursedTechniques.BloodManipulation;
 using Microsoft.Xna.Framework;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.InnateTechniques
 {

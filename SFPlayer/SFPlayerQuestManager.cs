@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Mono.Cecil.Cil;
-using MonoMod.Cil;
 using sorceryFight.Content.Quests;
 using sorceryFight.Content.UI;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -100,7 +98,7 @@ namespace sorceryFight.SFPlayer
         {
             if (Main.dedServ)
             {
-                SendKilledNPCToClients(npcType);
+                //SendKilledNPCToClients(npcType);
                 return;
             }
 

@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using sorceryFight.Content.Projectiles.Melee;
 using sorceryFight.Content.Rarities;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -75,9 +75,9 @@ namespace sorceryFight.Content.Items.Weapons.Melee
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            tooltips.FindAndReplace("[BOSSES]", Main.LocalPlayer.SorceryFight().numberBossesDefeated.ToString());
-            tooltips.FindAndReplace("[DAMAGE]", addedDamage.ToString());
-            tooltips.FindAndReplace("[CRIT]", addedCrit.ToString());
+            // tooltips.FindAndReplace("[BOSSES]", Main.LocalPlayer.SorceryFight().numberBossesDefeated.ToString());
+            // tooltips.FindAndReplace("[DAMAGE]", addedDamage.ToString());
+            // tooltips.FindAndReplace("[CRIT]", addedCrit.ToString());
         }
 
         public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)

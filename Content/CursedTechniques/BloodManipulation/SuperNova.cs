@@ -1,5 +1,3 @@
-using CalamityMod.Particles;
-using CalamityMod.Sounds;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,7 +10,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using CalamityMod.NPCs.AstrumDeus;
+using sorceryFight.Content.Particles.UIParticles;
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
@@ -38,7 +36,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override float LifeTime => 120f;
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<AstrumDeusHead>());
+            // return sf.HasDefeatedBoss(ModContent.NPCType<AstrumDeusHead>());
+            return true;
         }
 
 
@@ -168,8 +167,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
 
-                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, textColor, false, 0.9f, 1, 30);
+                ParticleController.SpawnParticle(particle);
             }
         }
 

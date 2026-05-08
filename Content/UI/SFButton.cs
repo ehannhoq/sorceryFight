@@ -2,7 +2,6 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.GameInput;
 using Terraria.UI;
 
 namespace sorceryFight.Content.UI

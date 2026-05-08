@@ -8,6 +8,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Items.Weapons.Ranged
 {

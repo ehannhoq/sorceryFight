@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -74,6 +75,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         }
         public override void SummonAI()
         {
+            base.SummonAI();
 
             if (!spawnAnimDone)
             {

@@ -1,10 +1,8 @@
-using System;
-using CalamityMod;
-using CalamityMod.Items.Materials;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Projectiles.Melee;
 using sorceryFight.Rarities;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -90,7 +88,6 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         public override void AddRecipes()
         {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<ShadowspecBar>(), 5);
             recipe.AddIngredient(ItemID.Katana);
             recipe.Register();
         }

@@ -1,16 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Composition.Hosting.Core;
-using System.Security.Cryptography.X509Certificates;
-using CalamityMod.NPCs.DevourerofGods;
-using CalamityMod.NPCs.Providence;
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Buffs.Vessel;
 using sorceryFight.Content.Items.Accessories;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -50,7 +46,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         }
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
+            return sf.HasDefeatedBoss(NPCID.MoonLordCore) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
         }
 
         public override void SetStaticDefaults()

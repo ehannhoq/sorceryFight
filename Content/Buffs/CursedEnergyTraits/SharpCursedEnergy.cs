@@ -1,5 +1,3 @@
-using System;
-using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -26,7 +24,7 @@ namespace sorceryFight.Content.Buffs.CursedEnergyTraits
 
         public override bool RightClick(int buffIndex)
         {
-            if (SorceryFight.IsDevMode())
+            if (SorceryFightMod.IsDevMode())
             {
                 Main.LocalPlayer.SorceryFight().sharpCursedEnergy = false;
                 return true;

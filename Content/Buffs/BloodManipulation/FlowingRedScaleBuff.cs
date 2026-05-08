@@ -7,10 +7,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using CalamityMod.NPCs.Perforator;
-using CalamityMod.NPCs.HiveMind;
-
-//remove Later
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Buffs.BloodManipulation
 {
@@ -93,8 +90,8 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
             }
             else
             {
-                return sf.HasDefeatedBoss(ModContent.NPCType<PerforatorHive>()) || sf.HasDefeatedBoss(ModContent.NPCType<HiveMind>());
-
+                // return sf.HasDefeatedBoss(ModContent.NPCType<PerforatorHive>()) || sf.HasDefeatedBoss(ModContent.NPCType<HiveMind>());
+                return true;
             }
         }
 
@@ -106,26 +103,11 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
             player.statDefense += DefenseAddition;
             
             float multiplier = 1;
-            if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
+            if (AreThereAnyDamnBosses.BossActive)
             {
                 multiplier = BossMultiplier;
             }
-
-            /**
-            if (sfPlayer.unlockedRCT)
-            {
-                CostPerSecond = 10f;
-                CostPerSecond += CostPerSecond * multiplier;
-            }
-            else
-            {
-                CostPerSecond = 0;
-                player.lifeRegen -= 10;
-            }
-
-
-
-            **/
+            
             if (sfPlayer.unlockedRCT)
             {
                 CostPerSecond = 10f;

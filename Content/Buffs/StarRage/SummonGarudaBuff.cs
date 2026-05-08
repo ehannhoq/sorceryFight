@@ -1,9 +1,7 @@
-using CalamityMod;
 using Microsoft.Xna.Framework;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Animations;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -66,14 +64,14 @@ namespace sorceryFight.Content.Buffs.StarRage
         public static void SummonGaruda(int headType, int bodyType, int tailType, Vector2 spawnPos, Player player, IEntitySource source, int damage, float knockback)
         {
 
-            ModContent.GetInstance<SorceryFight>().Logger.Info($"ASummoning Garuda");
+            //SorceryFightMod.Log.Info($"ASummoning Garuda");
 
 
             var head = Projectile.NewProjectileDirect(source, spawnPos, player.DirectionTo(Main.MouseWorld) * 3, headType, damage, knockback, player.whoAmI);
-            var tail = Projectile.NewProjectileDirect(source, spawnPos, Vector2.Zero, tailType, damage, knockback, player.whoAmI);
+            var tail = Projectile.NewProjectileDirect(source, spawnPos, new Vector2(0f, -0.01f), tailType, damage, knockback, player.whoAmI);
             for (var i = 0; i < 20; i++)
             {
-                var body = Projectile.NewProjectileDirect(source, spawnPos, Vector2.Zero, bodyType, damage, knockback, player.whoAmI);
+                var body = Projectile.NewProjectileDirect(source, spawnPos, new Vector2(0f, -0.01f), bodyType, damage, knockback, player.whoAmI);
             }
         }
 
@@ -87,7 +85,7 @@ namespace sorceryFight.Content.Buffs.StarRage
         {
 
             int multiplier = 1;
-            if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
+            if (AreThereAnyDamnBosses.BossActive)
             {
                 multiplier = 3;
             }

@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
-using CalamityMod.NPCs.DevourerofGods;
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Particles;
+using sorceryFight.Content.Particles.UIParticles;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -51,7 +51,8 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
+            return true;
+            // return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -130,8 +131,8 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
                     int roll = Main.rand.Next(colors.Count);
                     Color color = colors[roll];
 
-                    LineParticle particle = new LineParticle(center, velocity, false, 180, 3, color);
-                    GeneralParticleHandler.SpawnParticle(particle);
+                    LinearParticle particle = new LinearParticle(center, velocity, color, false, 1f, 3f, 180);
+                    ParticleController.SpawnParticle(particle);
                 }
             }
 

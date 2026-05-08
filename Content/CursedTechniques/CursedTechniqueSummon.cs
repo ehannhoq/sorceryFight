@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using System;
 using System.IO;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.CursedTechniques
 {
@@ -209,6 +210,7 @@ namespace sorceryFight.Content.CursedTechniques
         //  AI LOOP
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+
         public override void AI()
         {
             Owner = Main.player[Projectile.owner];
@@ -221,26 +223,23 @@ namespace sorceryFight.Content.CursedTechniques
                 return;
             }
 
-            //Kill all minions when tech is null
-            if (SFOwner?.innateTechnique?.Name == null)
-            {
-                Projectile.Kill();
-                return;
-            }
 
-            //Kill minion if tech changes
-            if (SFOwner.innateTechnique.Name != ParentInnateName)
-            {
-                Projectile.Kill();
-                return;
-            }
-
-            // CE drain
+            //kill all minions when tech is null or incorrect
+            //this == guard is extremely important for multiplayer syncing 
             if (Projectile.owner == Main.myPlayer)
             {
-                ActiveDrain(SFOwner);
-            }
+                if (SFOwner?.innateTechnique?.Name == null)
+                {
+                    Projectile.Kill();
+                    return;
+                }
 
+                if (SFOwner.innateTechnique.Name != ParentInnateName)
+                {
+                    Projectile.Kill();
+                    return;
+                }
+            }
             // Style-specific base behavior
             switch (Style)
             {
@@ -260,9 +259,14 @@ namespace sorceryFight.Content.CursedTechniques
                     break;
             }
 
-            SummonTimer++;
+            // CE drain
+            if (Projectile.owner == Main.myPlayer)
+            {
+                ActiveDrain(SFOwner);
+            }
 
-            // Delegate to subclass
+
+            SummonTimer++;
             SummonAI();
         }
 
@@ -270,7 +274,10 @@ namespace sorceryFight.Content.CursedTechniques
         /// Override this with your summon's actual behavior.
         /// Called every tick after base logic (gravity, targeting, etc.) runs.
         /// </summary>
-        public virtual void SummonAI() { }
+        public virtual void SummonAI() {
+            if (SummonTimer == 1f)
+                Main.NewText($"Summon AI running netMode={Main.netMode} owner={Projectile.owner} myPlayer={Main.myPlayer}");
+        }
 
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         //  STYLE-SPECIFIC BASE BEHAVIOR
@@ -306,6 +313,10 @@ namespace sorceryFight.Content.CursedTechniques
         public override int UseTechnique(SorceryFightPlayer sf)
         {
             Player player = sf.Player;
+
+            Main.NewText($"SUMMONING owner={sf.Player} myPlayer={Main.myPlayer}");
+
+            SorceryFightMod.Log.Info("Summoning Stuff befpre");
 
             if (player.whoAmI != Main.myPlayer)
                 return -1;
@@ -354,10 +365,13 @@ namespace sorceryFight.Content.CursedTechniques
             Vector2 spawnPos = Main.MouseWorld;
             var source = player.GetSource_FromThis();
 
+            SorceryFightMod.Log.Info("Summoning Stuff");
+
+
             int projIndex = Projectile.NewProjectile(
                 source,
                 spawnPos,
-                Vector2.Zero,
+                new Vector2(0.1f, 0.1f),
                 summonType,
                 (int)CalculateTrueDamage(sf),
                 0f,
@@ -369,6 +383,8 @@ namespace sorceryFight.Content.CursedTechniques
 
             if (Style == SummonStyle.Sentry)
                 player.UpdateMaxTurrets();
+
+            SorceryFightMod.Log.Info("Summoning Stuff after");
 
             return projIndex;
         }
@@ -444,39 +460,55 @@ namespace sorceryFight.Content.CursedTechniques
         /// then falls back to the closest valid NPC within range.
         /// Called automatically for minion styles. Sentries should call manually if needed.
         /// </summary>
+
+        private int _targetIndex = -1;
         public void SetTarget()
         {
             float range = Style == SummonStyle.Sentry ? DetectionRange : AdaptiveDetectionRange;
 
-            if (Owner.HasMinionAttackTargetNPC)
+            // Only the owner decides the target
+            if (Projectile.owner == Main.myPlayer)
             {
-                NPC manual = Main.npc[Owner.MinionAttackTargetNPC];
-                if (manual.CanBeChasedBy(Projectile) &&
-                    Vector2.Distance(Projectile.Center, manual.Center) < range)
+                int newIndex = -1;
+
+                if (Owner.HasMinionAttackTargetNPC)
                 {
-                    Target = manual;
-                    return;
+                    NPC manual = Main.npc[Owner.MinionAttackTargetNPC];
+                    if (manual.CanBeChasedBy(Projectile) &&
+                        Vector2.Distance(Projectile.Center, manual.Center) < range)
+                        newIndex = manual.whoAmI;
+                }
+
+                if (newIndex == -1)
+                {
+                    float bestDist = range;
+                    foreach (NPC npc in Main.ActiveNPCs)
+                    {
+                        if (!npc.CanBeChasedBy(Projectile))
+                            continue;
+                        float dist = Vector2.Distance(Projectile.Center, npc.Center);
+                        if (dist < bestDist)
+                        {
+                            bestDist = dist;
+                            newIndex = npc.whoAmI;
+                        }
+                    }
+                }
+
+                // Only sync if target changed
+                if (newIndex != _targetIndex)
+                {
+                    _targetIndex = newIndex;
+                    Projectile.netUpdate = true;
                 }
             }
 
-            NPC best = null;
-            float bestDist = range;
-
-            foreach (NPC npc in Main.ActiveNPCs)
-            {
-                if (!npc.CanBeChasedBy(Projectile))
-                    continue;
-
-                float dist = Vector2.Distance(Projectile.Center, npc.Center);
-                if (dist < bestDist)
-                {
-                    bestDist = dist;
-                    best = npc;
-                }
-            }
-
-            Target = best;
+            // All clients resolve the NPC reference from the synced index
+            Target = _targetIndex >= 0 && _targetIndex < Main.maxNPCs && Main.npc[_targetIndex].active
+                ? Main.npc[_targetIndex]
+                : null;
         }
+
 
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         //  MOVEMENT HELPERS

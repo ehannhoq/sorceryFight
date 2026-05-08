@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
-using sorceryFight.Content.Buffs;
 using sorceryFight.SFPlayer;
-using Steamworks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -55,7 +53,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             {
                 SorceryFightPlayer sfPlayer = player.SorceryFight();
                 float distanceDiff = maxDistance - minDistance;
-                float trueMaxDistance = minDistance + ((sfPlayer.numberBossesDefeated / SorceryFight.totalBosses) * distanceDiff);
+                float trueMaxDistance = minDistance + ((sfPlayer.numberBossesDefeated / SorceryFightMod.totalBosses) * distanceDiff);
 
                 Vector2 dir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.UnitX);
 

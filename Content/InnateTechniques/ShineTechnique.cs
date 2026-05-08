@@ -7,6 +7,7 @@ using sorceryFight.Content.CursedTechniques.Shrine;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.InnateTechniques
 {

@@ -1,7 +1,6 @@
-using System;
-using CalamityMod.Items.Accessories;
 using sorceryFight.Content.Items.Materials;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -45,7 +44,7 @@ namespace sorceryFight.Content.Items.Accessories
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.MechanicalGlove);
             recipe.AddIngredient(ModContent.ItemType<LunarCursedFragment>(), 10);
-            recipe.AddIngredient(ModContent.ItemType<CalamityMod.Items.Weapons.Magic.MadAlchemistsCocktailGlove>());
+            // recipe.AddIngredient(ModContent.ItemType<CalamityMod.Items.Weapons.Magic.MadAlchemistsCocktailGlove>());
             recipe.Register();
         }
     }

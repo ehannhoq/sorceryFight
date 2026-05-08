@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using CalamityMod;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.CursedTechniques.BloodManipulation;
@@ -10,6 +9,7 @@ using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.SFPlayer;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -46,7 +46,6 @@ namespace sorceryFight.Content.InnateTechniques
             sf.Player.GetDamage(DamageClass.Ranged) *= 1 + (0.05f * sf.sukunasFingerConsumed);
             sf.Player.GetDamage(DamageClass.Magic) *= 1 + (0.05f * sf.sukunasFingerConsumed);
             sf.Player.GetDamage(DamageClass.Summon) *= 1 + (0.05f * sf.sukunasFingerConsumed);
-            sf.Player.GetDamage(RogueDamageClass.Throwing) *= 1 + (0.05f * sf.sukunasFingerConsumed);
 
             sf.Player.statDefense *= 1 + (0.03f * sf.sukunasFingerConsumed);
     

@@ -1,17 +1,13 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using sorceryFight.SFPlayer;
 using Microsoft.Xna.Framework;
-using sorceryFight.Content.Buffs;
-using Terraria.ID;
-using CalamityMod.NPCs.NormalNPCs;
 using Terraria.ModLoader;
 using System;
 using Terraria.Audio;
-using sorceryFight.Content.InnateTechniques;
 using Terraria.GameContent;
 using sorceryFight.Content.Particles;
 using sorceryFight.Content.Particles.UIParticles;
+using sorceryFight.Utilities;
 
 
 namespace sorceryFight.Content.DomainExpansions

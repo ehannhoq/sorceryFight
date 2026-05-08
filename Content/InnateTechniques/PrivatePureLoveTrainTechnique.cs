@@ -5,6 +5,7 @@ using sorceryFight.Content.Buffs;
 using sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using Microsoft.Xna.Framework;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.InnateTechniques
 {

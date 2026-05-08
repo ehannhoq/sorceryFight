@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.CursedTechniques;
-using sorceryFight.Content.CursedTechniques.Limitless;
-using sorceryFight.Content.InnateTechniques;
-using sorceryFight.Content.UI.InnateTechniqueSelector;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;

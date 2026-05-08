@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CalamityMod.Items.Placeables.FurnitureProfaned;
-using CalamityMod.Tiles.FurnitureProfaned;
 using Microsoft.Xna.Framework;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -106,7 +105,7 @@ namespace sorceryFight.StructureHelper
         {
             if (template == null)
             {
-                ModContent.GetInstance<SorceryFight>().Logger.Error("Structure template is null!");
+                SorceryFightMod.Log.Error("Structure template is null!");
                 return;
             }
 
