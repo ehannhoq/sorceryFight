@@ -306,10 +306,15 @@ BloodshedCooldown: {
 
 BloodPoison: {
 	DisplayName: Blood Poison
-	Description: Mods.sorceryFight.Buffs.BloodPoison.Description
+	Description: Blood Poison Description
 }
 
 GarudaCooldown: {
 	DisplayName: Garuda Cooldown
-	Description: Mods.sorceryFight.Buffs.GarudaCooldown.Description
+	Description: Garuda cooldown Description
+}
+
+MohuDogBuff: {
+	DisplayName: Mohu Dog
+	Description: The fluffiest pal!
 }

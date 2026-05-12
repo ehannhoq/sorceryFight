@@ -39,4 +39,4 @@ namespace sorceryFight.Content.InnateTechniques
 
 
     }
-}
+} 

@@ -44,6 +44,7 @@ Mods: {
 			MaxElephantBeam.DisplayName: Max Elephant Beam
 			ToadTongue.DisplayName: Toad Tongue
 			FrostCalmProjectile.DisplayName: Frost Calm Projectile
+			MohuDogProjectile.DisplayName: Mohu Dog Projectile
 		}
 
 		Configs: {
