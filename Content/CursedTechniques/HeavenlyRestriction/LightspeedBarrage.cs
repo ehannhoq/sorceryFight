@@ -1,12 +1,7 @@
 using System;
 using System.Collections.Generic;
-using CalamityMod.NPCs.CeaselessVoid;
-using CalamityMod.NPCs.NormalNPCs;
-using CalamityMod.NPCs.Signus;
-using CalamityMod.NPCs.StormWeaver;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.Buffs;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
@@ -62,7 +57,8 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<Signus>()) && sf.HasDefeatedBoss(ModContent.NPCType<StormWeaverHead>()) && sf.HasDefeatedBoss(ModContent.NPCType<CeaselessVoid>());
+            return true;
+            // return sf.HasDefeatedBoss(ModContent.NPCType<Signus>()) && sf.HasDefeatedBoss(ModContent.NPCType<StormWeaverHead>()) && sf.HasDefeatedBoss(ModContent.NPCType<CeaselessVoid>());
         }
 
         public override void SetStaticDefaults()
@@ -231,7 +227,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
             foreach (NPC npc in Main.ActiveNPCs)
             {
-                if (npc.friendly || npc.type == NPCID.TargetDummy || npc.type == ModContent.NPCType<SuperDummyNPC>()) continue;
+                if (npc.friendly || npc.type == NPCID.TargetDummy) continue;
                 if (enemiesHit.Contains(npc.whoAmI)) continue;
 
                 float dist = (Projectile.Center - npc.Center).Length();

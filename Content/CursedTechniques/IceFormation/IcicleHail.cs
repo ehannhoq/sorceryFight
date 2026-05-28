@@ -1,5 +1,3 @@
-using CalamityMod.Particles;
-using CalamityMod.Sounds;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;

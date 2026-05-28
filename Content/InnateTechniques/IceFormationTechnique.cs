@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using CalamityMod;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.CursedTechniques.IceFormation;

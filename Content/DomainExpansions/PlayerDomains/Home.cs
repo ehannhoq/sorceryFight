@@ -1,5 +1,3 @@
-using System;
-using CalamityMod.NPCs.DevourerofGods;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.CursedTechniques.Vessel;
@@ -7,6 +5,7 @@ using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.DomainExpansions.PlayerDomains
@@ -71,7 +70,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
+            return sf.HasDefeatedBoss(NPCID.Golem);
         }
 
         public override void Update()

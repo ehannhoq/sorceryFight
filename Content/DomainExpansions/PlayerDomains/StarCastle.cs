@@ -1,5 +1,3 @@
-using CalamityMod.NPCs.DevourerofGods;
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Particles;

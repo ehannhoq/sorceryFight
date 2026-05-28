@@ -1,7 +1,6 @@
 using System;
 using sorceryFight.SFPlayer;
 using Terraria;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader;
 
 namespace sorceryFight

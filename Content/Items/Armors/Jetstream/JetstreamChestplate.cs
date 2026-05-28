@@ -1,8 +1,3 @@
-using CalamityMod.Items.Accessories;
-using CalamityMod.Items.Armor.Bloodflare;
-using CalamityMod.Items.Materials;
-using CalamityMod.Items.Weapons.Melee;
-using CalamityMod.Tiles.Furniture.CraftingStations;
 using sorceryFight.Content.Buffs;
 using Terraria;
 using Terraria.ID;
@@ -51,11 +46,11 @@ namespace sorceryFight.Content.Items.Armors.Jetstream
         public override void AddRecipes()
         {
             Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ModContent.ItemType<BloodflareBodyArmor>(), 1);
-            recipe.AddIngredient(ModContent.ItemType<ShadowspecBar>(), 5);
-            recipe.AddIngredient(ModContent.ItemType<DubiousPlating>(), 10);
-            recipe.AddIngredient(ModContent.ItemType<ExoPrism>(), 10);
-            recipe.AddTile(ModContent.TileType<DraedonsForge>());
+            // recipe.AddIngredient(ModContent.ItemType<BloodflareBodyArmor>(), 1);
+            // recipe.AddIngredient(ModContent.ItemType<ShadowspecBar>(), 5);
+            // recipe.AddIngredient(ModContent.ItemType<DubiousPlating>(), 10);
+            // recipe.AddIngredient(ModContent.ItemType<ExoPrism>(), 10);
+            // recipe.AddTile(ModContent.TileType<DraedonsForge>());
             recipe.Register();
         }
 
@@ -73,11 +68,11 @@ namespace sorceryFight.Content.Items.Armors.Jetstream
             ).Value;
 
             player.GetDamage(DamageClass.Melee) *= 1 + setBonusMeleeDmg;
-            if (player.HeldItem.type == ModContent.ItemType<Murasama>())
-            {
-                player.GetDamage(DamageClass.Melee) *= 1 + setBonusMurasamaDmg;
-                player.GetAttackSpeed(DamageClass.Melee) *= 1 + setBonusMurasamaAttackSpeed;
-            }
+            // if (player.HeldItem.type == ModContent.ItemType<Murasama>())
+            // {
+            //     player.GetDamage(DamageClass.Melee) *= 1 + setBonusMurasamaDmg;
+            //     player.GetAttackSpeed(DamageClass.Melee) *= 1 + setBonusMurasamaAttackSpeed;
+            // }
         }
 
         private class SetBonusPlayer : ModPlayer
@@ -89,22 +84,22 @@ namespace sorceryFight.Content.Items.Armors.Jetstream
                 
                 if (Player.armor[0].type == ModContent.ItemType<JetstreamMask>() && Player.armor[1].type == ModContent.ItemType<JetstreamChestplate>() && Player.armor[2].type == ModContent.ItemType<JetstreamLeggings>())
                 {
-                    CalamityMod.TrueMeleeDamageClass tmInstance = SFUtils.GetInternalFieldFromCalamity<CalamityMod.TrueMeleeDamageClass>("CalamityMod.TrueMeleeDamageClass", "Instance");
-                    CalamityMod.TrueMeleeNoSpeedDamageClass tmNSInstance = SFUtils.GetInternalFieldFromCalamity<CalamityMod.TrueMeleeNoSpeedDamageClass>("CalamityMod.TrueMeleeNoSpeedDamageClass", "Instance");
+                    // CalamityMod.TrueMeleeDamageClass tmInstance = SFUtils.GetInternalFieldFromCalamity<CalamityMod.TrueMeleeDamageClass>("CalamityMod.TrueMeleeDamageClass", "Instance");
+                    // CalamityMod.TrueMeleeNoSpeedDamageClass tmNSInstance = SFUtils.GetInternalFieldFromCalamity<CalamityMod.TrueMeleeNoSpeedDamageClass>("CalamityMod.TrueMeleeNoSpeedDamageClass", "Instance");
 
-                    if (modifiers.DamageType == tmInstance || modifiers.DamageType == tmNSInstance)
-                    {
-                        Player.Heal(5);
+                    // if (modifiers.DamageType == tmInstance || modifiers.DamageType == tmNSInstance)
+                    // {
+                    //     Player.Heal(5);
 
-                        if (!Player.HasBuff(ModContent.BuffType<Bloodshed>()) && !Player.HasBuff(ModContent.BuffType<BloodshedCooldown>()))
-                        {
-                            if (trueMeleeStrikesCounter++ >= setBonusBloodshedCooldown)
-                            {
-                                Player.AddBuff(ModContent.BuffType<Bloodshed>(), SFUtils.BuffSecondsToTicks(10));
-                                trueMeleeStrikesCounter = 0;
-                            }
-                        }
-                    }
+                    //     if (!Player.HasBuff(ModContent.BuffType<Bloodshed>()) && !Player.HasBuff(ModContent.BuffType<BloodshedCooldown>()))
+                    //     {
+                    //         if (trueMeleeStrikesCounter++ >= setBonusBloodshedCooldown)
+                    //         {
+                    //             Player.AddBuff(ModContent.BuffType<Bloodshed>(), SFUtils.BuffSecondsToTicks(10));
+                    //             trueMeleeStrikesCounter = 0;
+                    //         }
+                    //     }
+                    // }
 
                     if (SFUtils.Roll(setBonusHeartDropChance))
                     {

@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CalamityMod;
-using CalamityMod.Items.Materials;
-using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
@@ -96,9 +93,9 @@ namespace sorceryFight.Content.Items.Weapons.Melee
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            tooltips.FindAndReplace("[BOSSES]", Main.LocalPlayer.SorceryFight().numberBossesDefeated.ToString());
-            tooltips.FindAndReplace("[DAMAGE]", addedDamage.ToString());
-            tooltips.FindAndReplace("[CRIT]", addedCrit.ToString());
+            // tooltips.FindAndReplace("[BOSSES]", Main.LocalPlayer.SorceryFight().numberBossesDefeated.ToString());
+            // tooltips.FindAndReplace("[DAMAGE]", addedDamage.ToString());
+            // tooltips.FindAndReplace("[CRIT]", addedCrit.ToString());
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -186,10 +183,6 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<ObliviousSword>());
-            recipe.AddIngredient(ModContent.ItemType<UnholyEssence>(), 60);
-            recipe.AddIngredient(ModContent.ItemType<GalacticaSingularity>(), 4);
-            recipe.AddIngredient(ModContent.ItemType<Necroplasm>(), 5);
-            recipe.AddIngredient(ModContent.ItemType<DivineGeode>(), 30);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }

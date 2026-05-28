@@ -1,6 +1,4 @@
-﻿using CalamityMod.Projectiles.Enemy;
-using Microsoft.Build.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;

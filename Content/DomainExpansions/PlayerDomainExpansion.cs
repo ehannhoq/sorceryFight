@@ -1,5 +1,3 @@
-using System;
-using CalamityMod.NPCs.NormalNPCs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.SFPlayer;

@@ -1,4 +1,3 @@
-using System;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;

@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using CalamityMod.NPCs.DevourerofGods;
-using CalamityMod.NPCs.SupremeCalamitas;
-using Humanizer;
 using sorceryFight.Content.Items.Armors.QuantumCoulomb;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.UI;
@@ -79,32 +74,32 @@ namespace sorceryFight.Content.Tiles
 
         public override bool RightClick(int i, int j)
         {
-            SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
-            LastChallengerStatueManager lcsManager = Main.LocalPlayer.GetModPlayer<LastChallengerStatueManager>();
+            // SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
+            // LastChallengerStatueManager lcsManager = Main.LocalPlayer.GetModPlayer<LastChallengerStatueManager>();
 
-            string dialogKey = "LastChallenger.Unworthy";
-            bool worthy = sfPlayer.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
-            bool postScal = sfPlayer.HasDefeatedBoss(ModContent.NPCType<SupremeCalamitas>());
+            // string dialogKey = "LastChallenger.Unworthy";
+            // bool worthy = sfPlayer.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
+            // bool postScal = sfPlayer.HasDefeatedBoss(ModContent.NPCType<SupremeCalamitas>());
 
-            if (lcsManager.interactionProgress == PlayerInteractions.DidntGetArmorSet)
-            {
-                if (worthy)
-                {
-                    lcsManager.interactionProgress = PlayerInteractions.GotArmorSet;
-                    dialogKey = "LastChallenger.Worthy";
-                }
-            }
-            else
-            {
-                dialogKey = "LastChallenger.PreSupremeCalamitas";
-                if (postScal)
-                {
-                    dialogKey = "LastChallenger.PostSupremeCalamitas";
-                }
-            }
+            // if (lcsManager.interactionProgress == PlayerInteractions.DidntGetArmorSet)
+            // {
+            //     if (worthy)
+            //     {
+            //         lcsManager.interactionProgress = PlayerInteractions.GotArmorSet;
+            //         dialogKey = "LastChallenger.Worthy";
+            //     }
+            // }
+            // else
+            // {
+            //     dialogKey = "LastChallenger.PreSupremeCalamitas";
+            //     if (postScal)
+            //     {
+            //         dialogKey = "LastChallenger.PostSupremeCalamitas";
+            //     }
+            // }
 
 
-            ModContent.GetInstance<SorceryFightUISystem>().ActivateDialogUI(Dialog.Create(dialogKey), this);
+            // ModContent.GetInstance<SorceryFightUISystem>().ActivateDialogUI(Dialog.Create(dialogKey), this);
             return true;
         }
 

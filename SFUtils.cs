@@ -4,15 +4,15 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
-using CalamityMod.NPCs.DevourerofGods;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Buffs.Limitless;
 using sorceryFight.Content.Buffs.Shrine;
-using sorceryFight.Content.DomainExpansions;
 using sorceryFight.SFPlayer;
 using Terraria;
+using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -60,8 +60,8 @@ public static class SFUtils
         if (npc.type == NPCID.DD2LanePortal)
             return false;
 
-        if (npc.type == ModContent.NPCType<DevourerofGodsBody>() || npc.type == ModContent.NPCType<DevourerofGodsHead>() || npc.type == ModContent.NPCType<DevourerofGodsTail>())
-            return false;
+        // if (npc.type == ModContent.NPCType<DevourerofGodsBody>() || npc.type == ModContent.NPCType<DevourerofGodsHead>() || npc.type == ModContent.NPCType<DevourerofGodsTail>())
+        //     return false;
 
 
         return true;
@@ -123,11 +123,11 @@ public static class SFUtils
         if (start == end)
             return;
 
-        Texture2D line = ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Line").Value;
+        Texture2D line = TextureAssets.MagicPixel.Value;
         float rotation = (end - start).ToRotation();
-        Vector2 scale = new Vector2(Vector2.Distance(start, end) / line.Width, width);
+        Vector2 scale = new Vector2(Vector2.Distance(start, end) / line.Width, width / line.Height);
 
-        spriteBatch.Draw(line, start, null, color, rotation, line.Size() * Vector2.UnitY * 0.5f, scale, SpriteEffects.None, 0f);
+        spriteBatch.Draw(line, start, null, color, rotation, new Vector2(0f, line.Height * 0.5f), scale, SpriteEffects.None, 0f);
     }
 
 
@@ -347,6 +347,7 @@ public static class SFUtils
             }
         }
 
+
         return typeName[index..];
     }
 
@@ -355,6 +356,11 @@ public static class SFUtils
         Vector2 mousePos = Main.MouseWorld;
         projectile.velocity = mousePos - projectile.Center;
         projectile.velocity.Normalize();
+    }
+
+    public static IItemDropRule Add(this LeadingConditionRule mainRule, IItemDropRule chainedRule, bool hideLootReport = false)
+    {
+        return mainRule.OnSuccess(chainedRule, hideLootReport);
     }
 
     public static T ModProjectile<T>(this Projectile projectile) where T : ModProjectile

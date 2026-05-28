@@ -1,6 +1,3 @@
-using CalamityMod.Items.Armor.Bloodflare;
-using CalamityMod.Items.Materials;
-using CalamityMod.Tiles.Furniture.CraftingStations;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -33,11 +30,11 @@ namespace sorceryFight.Content.Items.Armors.Jetstream
         public override void AddRecipes()
         {
             Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ModContent.ItemType<BloodflareCuisses>(), 1);
-            recipe.AddIngredient(ModContent.ItemType<ShadowspecBar>(), 5);
-            recipe.AddIngredient(ModContent.ItemType<DubiousPlating>(), 7);
-            recipe.AddIngredient(ModContent.ItemType<MiracleMatter>(), 1);
-            recipe.AddTile(ModContent.TileType<DraedonsForge>());
+            // recipe.AddIngredient(ModContent.ItemType<BloodflareCuisses>(), 1);
+            // recipe.AddIngredient(ModContent.ItemType<ShadowspecBar>(), 5);
+            // recipe.AddIngredient(ModContent.ItemType<DubiousPlating>(), 7);
+            // recipe.AddIngredient(ModContent.ItemType<MiracleMatter>(), 1);
+            // recipe.AddTile(ModContent.TileType<DraedonsForge>());
             recipe.Register();
         }
     }

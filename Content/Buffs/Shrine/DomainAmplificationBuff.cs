@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs.Vessel;
@@ -113,7 +112,7 @@ namespace sorceryFight.Content.Buffs.Shrine
             }
 
             float multiplier = 1;
-            if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
+            if (AreThereAnyDamnBosses.BossActive)
             {
                 multiplier = 1.5f;
             }
