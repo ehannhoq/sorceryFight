@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.GameContent.Biomes;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.IO;
@@ -19,7 +18,7 @@ namespace sorceryFight.StructureHelper
 
         public override void Load()
         {
-            foreach (var type in AssemblyManager.GetLoadableTypes(ModContent.GetInstance<SorceryFight>().Code))
+            foreach (var type in AssemblyManager.GetLoadableTypes(SorceryFightMod.Instance.Code))
             {
                 if (type.IsAbstract || !typeof(RandomStructure).IsAssignableFrom(type))
                     continue;

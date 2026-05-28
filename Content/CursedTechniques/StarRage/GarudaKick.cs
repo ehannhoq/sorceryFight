@@ -1,10 +1,10 @@
-using CalamityMod.Particles;
-using CalamityMod.Sounds;
 using Microsoft.Build.Graph;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Particles;
+using sorceryFight.Content.Particles.UIParticles;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -56,10 +56,10 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             return ModContent.ProjectileType<GarudaKick>();
         }
 
-        public override bool UseCondition(SorceryFightPlayer sf)
-        {
-            return !sf.summonGaruda;
-        }
+        //public override bool UseCondition(SorceryFightPlayer sf)
+        //{
+        //    return !sf.summonGaruda;
+        //}
 
         public override void SetDefaults()
         {
@@ -136,9 +136,51 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
 
-                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, textColor, false, 0.9f, 1f, 30);
+                ParticleController.SpawnParticle(particle);
             }
+        }
+
+        public override int UseTechnique(SorceryFightPlayer sf)
+        {
+            Player player = sf.Player;
+
+            if (player.whoAmI == Main.myPlayer)
+            {
+                Vector2 playerPos = player.MountedCenter;
+                Vector2 mousePos = Main.MouseWorld;
+                Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * Speed;
+                var entitySource = player.GetSource_FromThis();
+
+                sf.cursedEnergy -= CalculateTrueCost(sf);
+
+                if (BloodCost > 0)
+                {
+                    sf.bloodEnergy -= BloodCost;
+                }
+
+                if (StarCost > 0)
+                {
+                    sf.starEnergy -= StarCost;
+                }
+
+                if (DisplayNameInGame)
+                {
+                    int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
+                    Main.combatText[index1].lifeTime = 180;
+                }
+                if (!sf.summonGaruda)
+                {
+                    return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
+                }
+                else
+                {
+                    return Projectile.NewProjectile(entitySource, player.Center, dir, ModContent.ProjectileType<MassKick>(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
+                }
+
+
+            }
+            return -1;
         }
 
     }

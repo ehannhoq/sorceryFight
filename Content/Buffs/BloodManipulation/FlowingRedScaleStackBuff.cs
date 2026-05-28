@@ -8,7 +8,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using CalamityMod.NPCs.Leviathan;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Buffs.BloodManipulation
 {
@@ -92,7 +92,8 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
             }
             else
             {
-                return sf.HasDefeatedBoss(ModContent.NPCType<Anahita>());
+                // return sf.HasDefeatedBoss(ModContent.NPCType<Anahita>());
+                return true;
             }
         }
 
@@ -104,7 +105,7 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
             player.statDefense += DefenseAddition;
             
             float multiplier = 1;
-            if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
+            if (AreThereAnyDamnBosses.BossActive)
             {
                 multiplier = BossMultiplier;
             }

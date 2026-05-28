@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using sorceryFight.Content.Shops;
 using sorceryFight.Content.UI.Dialog;
 using sorceryFight.Content.UI.Shop;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

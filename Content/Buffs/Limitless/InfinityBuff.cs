@@ -125,7 +125,7 @@ namespace sorceryFight.Content.Buffs.Limitless
             }
 
             int multiplier = 1;
-            if (CalamityMod.CalPlayer.CalamityPlayer.areThereAnyDamnBosses)
+            if (AreThereAnyDamnBosses.BossActive)
             {
                 multiplier = 3;
             }

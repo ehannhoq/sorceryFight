@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using CalamityMod;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.CursedTechniques.BloodManipulation;
@@ -10,6 +9,7 @@ using sorceryFight.SFPlayer;
 using Terraria.ModLoader;
 using sorceryFight.Content.Buffs.Limitless;
 using Microsoft.Xna.Framework;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.InnateTechniques
 {

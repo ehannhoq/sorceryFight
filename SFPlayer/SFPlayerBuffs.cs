@@ -1,5 +1,5 @@
-using System;
 using sorceryFight.Content.Buffs;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -27,9 +27,6 @@ namespace sorceryFight.SFPlayer
         public override void PostUpdateBuffs()
         {
             if (innateTechnique == null) return;
-
-            if (infinity || hollowWickerBasket)
-                Player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>().adrenaline = 0;
 
             foreach (PassiveTechnique passiveTechnique in innateTechnique.PassiveTechniques)
             {

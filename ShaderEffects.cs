@@ -1,5 +1,3 @@
-using System;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
@@ -8,9 +6,9 @@ using Terraria.ModLoader;
 
 namespace sorceryFight
 {
+    [Autoload(Side = ModSide.Client)]
     public class ShaderEffects : ModSystem
     {
-
         public override void Load()
         {
             if (!Main.dedServ)

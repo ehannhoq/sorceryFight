@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Items.Consumables;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ModLoader;
 

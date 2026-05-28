@@ -1,12 +1,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.CursedTechniques.TenShadows
 {
@@ -41,7 +43,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
 
         private const float HEAL_RADIUS = 300f;
         private const int HEAL_AMOUNT = 100;
-        private const float HEAL_COOLDOWN = 120f;
+        private const float HEAL_COOLDOWN = 60f;
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
@@ -69,11 +71,14 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
 
         public override void SummonSetDefaults()
         {
-            Projectile.width = 40;
-            Projectile.height = 50;
+            Projectile.width = 50;
+            Projectile.height = 70;
         }
         public override void SummonAI()
         {
+            Projectile.velocity.X = 0f;
+
+            base.SummonAI();
 
             if (!spawnAnimDone)
             {
@@ -123,6 +128,26 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
                         p.Heal(HEAL_AMOUNT);
                     }
                 }
+
+                // Damage blood moon enemies
+                foreach (NPC npc in Main.ActiveNPCs)
+                {
+                    if (!npc.active || npc.friendly || npc.dontTakeDamage)
+                        continue;
+
+                    if (Vector2.Distance(Projectile.Center, npc.Center) > HEAL_RADIUS)
+                        continue;
+
+                    if (SFUtils.IsRCTWeakNPC(npc))
+                    {
+                        Player owner = Main.player[Projectile.owner];
+                        int damage = (int)CalculateTrueDamage(owner.SorceryFight());
+                        npc.SimpleStrikeNPC(damage, Projectile.Center.X < npc.Center.X ? 1 : -1, false, 0f, DamageClass.Default);
+                    }
+                }
+
+
+
             }
         }
 

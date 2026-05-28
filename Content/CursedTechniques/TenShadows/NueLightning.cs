@@ -25,7 +25,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
             Projectile.height = 10;
             Projectile.friendly = true;
             Projectile.hostile = false;
-            Projectile.tileCollide = true;
+            Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 180;
             Projectile.penetrate = 1;

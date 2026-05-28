@@ -1,8 +1,6 @@
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
-using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
