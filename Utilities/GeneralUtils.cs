@@ -102,7 +102,6 @@ namespace sorceryFight
             return Language.GetTextValue(key).Split('\n').ToList();
         }
 
-        // seemingly completely useless and requires calamity mod
         /// <summary>
         /// Draws a line between two points using a sprite batch. TAKEN FROM CALAMITY MOD, MODIFIED BY EHANN
         /// </summary>
@@ -117,7 +116,7 @@ namespace sorceryFight
             if (start == end)
                 return;
 
-            Texture2D line = ModContent.Request<Texture2D>("CalamityMod/ExtraTextures/Line").Value;
+            Texture2D line = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/Line").Value;
             float rotation = (end - start).ToRotation();
             Vector2 scale = new Vector2(Vector2.Distance(start, end) / line.Width, width);
 
