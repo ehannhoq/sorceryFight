@@ -21,7 +21,6 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
         public static readonly int TICKS_PER_FRAME = 8;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.SlicingExorcism.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SlicingExorcism.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SlicingExorcism.LockedDescription");
         public override float Cost => 20f;
 
         public override Color textColor => new Color(255, 0, 0);
@@ -32,11 +31,6 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
 
         public override float Speed => 25f;
         public override float LifeTime => 300f;
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.KingSlime);
-        }
-
 
         public static Texture2D texture;
 

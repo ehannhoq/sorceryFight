@@ -19,7 +19,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public static Texture2D texture;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.Cleave.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Cleave.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Cleave.LockedDescription");
         public override float Cost => 75f;
         public override Color textColor => new Color(120, 21, 8);
         public override bool DisplayNameInGame => false;
@@ -31,10 +30,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<Cleave>();
-        }
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
         }
 
         public override string GetStats(SorceryFightPlayer sf)

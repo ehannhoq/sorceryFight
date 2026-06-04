@@ -13,28 +13,17 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 {
     public class AmplificationBlue : CursedTechnique
     {
-
         public static readonly int FRAME_COUNT = 8;
         public static readonly int TICKS_PER_FRAME = 5;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.AmplificationBlue.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.AmplificationBlue.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.AmplificationBlue.LockedDescription");
         public override float Cost => 30f;
         public override Color textColor => new Color(108, 158, 240);
         public override bool DisplayNameInGame => true;
-
         public override int Damage => 30;
         public override int MasteryDamageMultiplier => 50;
-
         public override float Speed => 25f;
         public override float LifeTime => 300f;
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
-        }
-
-
-
 
         public virtual float AttractionRadius { get; } = 100f;
         public virtual float AttractionStrength { get; } = 12f;

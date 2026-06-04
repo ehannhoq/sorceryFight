@@ -5,6 +5,7 @@ using sorceryFight.Content.DomainExpansions;
 using sorceryFight.SFPlayer;
 using sorceryFight.Content.InnateTechniques;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace sorceryFight.Content.InnateTechniques
 {

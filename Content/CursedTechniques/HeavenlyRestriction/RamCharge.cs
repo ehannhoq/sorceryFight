@@ -17,8 +17,6 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.RamCharge.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.RamCharge.Description");
 
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.RamCharge.LockedDescription");
-
         public override float Cost => 5f;
 
         public override Color textColor => Color.White;
@@ -47,11 +45,6 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<RamCharge>();
-        }
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
         }
 
         public override float CalculateTrueCost(SorceryFightPlayer sf)

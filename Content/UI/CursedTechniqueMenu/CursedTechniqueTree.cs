@@ -107,8 +107,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 string texturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Limitless/c{i}";
                 Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                bool unlocked = ct.Unlocked(player);
-                string hoverText = unlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+                bool unlocked = ct.IsUnlocked(player);
+                string hoverText = unlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.GetLockedDescription()}";
 
                 TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
                 ctIcons.Add(icon);
@@ -120,8 +120,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 string texturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Limitless/p{i}";
                 Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                bool unlocked = pt.Unlocked(player);
-                string hoverText = unlocked ? $"{pt.DisplayName}\n{pt.Stats}\n{pt.Description}" : $"{pt.LockedDescription}";
+                bool unlocked = pt.IsUnlocked(player);
+                string hoverText = unlocked ? $"{pt.DisplayName}\n{pt.Stats}\n{pt.Description}" : $"{pt.GetLockedDescription()}";
 
                 TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
                 ptIcons.Add(icon);
@@ -253,8 +253,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 string texturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Shrine/c{i}";
                 Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                bool unlocked = ct.Unlocked(player);
-                string hoverText = unlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+                bool unlocked = ct.IsUnlocked(player);
+                string hoverText = unlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.GetLockedDescription()}";
 
                 TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
                 ctIcons.Add(icon);
@@ -266,8 +266,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 string texturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Shrine/p{i}";
                 Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                bool unlocked = pt.Unlocked(player);
-                string hoverText = unlocked ? $"{pt.DisplayName}\n{pt.Stats}\n{pt.Description}" : $"{pt.LockedDescription}";
+                bool unlocked = pt.IsUnlocked(player);
+                string hoverText = unlocked ? $"{pt.DisplayName}\n{pt.Stats}\n{pt.Description}" : $"{pt.GetLockedDescription()}";
 
                 TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
                 ptIcons.Add(icon);
@@ -362,8 +362,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                     string ptTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Vessel/p{j}";
                     Texture2D ptTexture = ModContent.Request<Texture2D>(ptTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                    bool ptUnlocked = pt.Unlocked(player);
-                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.LockedDescription}";
+                    bool ptUnlocked = pt.IsUnlocked(player);
+                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.GetLockedDescription()}";
 
                     TechniqueIcon ptIcon = new TechniqueIcon(ptTexture, ptUnlocked, ptHoverText);
                     ptIcon.Left.Set(originPositions[i].X, 0f);
@@ -377,8 +377,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                     string ctTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Vessel/c{i}";
                     Texture2D ctTexture = ModContent.Request<Texture2D>(ctTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                    bool ctUnlocked = ct.Unlocked(player);
-                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+                    bool ctUnlocked = ct.IsUnlocked(player);
+                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.GetLockedDescription()}";
 
                     TechniqueIcon ctIcon = new TechniqueIcon(ctTexture, ctUnlocked, ctHoverText);
                     ctIcon.Left.Set(originPositions[i].X, 0f);
@@ -413,8 +413,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                     string ptTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/BloodManipulation/p{j}";
                     Texture2D ptTexture = ModContent.Request<Texture2D>(ptTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                    bool ptUnlocked = pt.Unlocked(player);
-                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.LockedDescription}";
+                    bool ptUnlocked = pt.IsUnlocked(player);
+                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.GetLockedDescription()}";
 
                     TechniqueIcon ptIcon = new TechniqueIcon(ptTexture, ptUnlocked, ptHoverText);
                     ptIcon.Left.Set(originPositions[i].X, 0f);
@@ -428,8 +428,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                     string ctTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/BloodManipulation/c{i}";
                     Texture2D ctTexture = ModContent.Request<Texture2D>(ctTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                    bool ctUnlocked = ct.Unlocked(player);
-                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+                    bool ctUnlocked = ct.IsUnlocked(player);
+                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.GetLockedDescription()}";
 
                     TechniqueIcon ctIcon = new TechniqueIcon(ctTexture, ctUnlocked, ctHoverText);
                     ctIcon.Left.Set(originPositions[i].X, 0f);
@@ -464,8 +464,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                     string ptTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/StarRage/p{j}";
                     Texture2D ptTexture = ModContent.Request<Texture2D>(ptTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                    bool ptUnlocked = pt.Unlocked(player);
-                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.LockedDescription}";
+                    bool ptUnlocked = pt.IsUnlocked(player);
+                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.GetLockedDescription()}";
 
                     TechniqueIcon ptIcon = new TechniqueIcon(ptTexture, ptUnlocked, ptHoverText);
                     ptIcon.Left.Set(originPositions[i].X, 0f);
@@ -479,8 +479,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                     string ctTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/StarRage/c{i}";
                     Texture2D ctTexture = ModContent.Request<Texture2D>(ctTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                    bool ctUnlocked = ct.Unlocked(player);
-                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+                    bool ctUnlocked = ct.IsUnlocked(player);
+                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.GetLockedDescription()}";
 
                     TechniqueIcon ctIcon = new TechniqueIcon(ctTexture, ctUnlocked, ctHoverText);
                     ctIcon.Left.Set(originPositions[i].X, 0f);
@@ -515,8 +515,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                     string ptTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/IceFromation/p{j}";
                     Texture2D ptTexture = ModContent.Request<Texture2D>(ptTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                    bool ptUnlocked = pt.Unlocked(player);
-                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.LockedDescription}";
+                    bool ptUnlocked = pt.IsUnlocked(player);
+                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.GetLockedDescription()}";
 
                     TechniqueIcon ptIcon = new TechniqueIcon(ptTexture, ptUnlocked, ptHoverText);
                     ptIcon.Left.Set(originPositions[i].X, 0f);
@@ -530,8 +530,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                     string ctTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/IceFormation/c{i}";
                     Texture2D ctTexture = ModContent.Request<Texture2D>(ctTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                    bool ctUnlocked = ct.Unlocked(player);
-                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+                    bool ctUnlocked = ct.IsUnlocked(player);
+                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.GetLockedDescription()}";
 
                     TechniqueIcon ctIcon = new TechniqueIcon(ctTexture, ctUnlocked, ctHoverText);
                     ctIcon.Left.Set(originPositions[i].X, 0f);
@@ -564,8 +564,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                     string ptTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/TenShadows/p{j}";
                     Texture2D ptTexture = ModContent.Request<Texture2D>(ptTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                    bool ptUnlocked = pt.Unlocked(player);
-                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.LockedDescription}";
+                    bool ptUnlocked = pt.IsUnlocked(player);
+                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.GetLockedDescription()}";
 
                     TechniqueIcon ptIcon = new TechniqueIcon(ptTexture, ptUnlocked, ptHoverText);
                     ptIcon.Left.Set(originPositions[i].X, 0f);
@@ -579,8 +579,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                     string ctTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/TenShadows/c{i}";
                     Texture2D ctTexture = ModContent.Request<Texture2D>(ctTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                    bool ctUnlocked = ct.Unlocked(player);
-                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+                    bool ctUnlocked = ct.IsUnlocked(player);
+                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.GetLockedDescription()}";
 
                     TechniqueIcon ctIcon = new TechniqueIcon(ctTexture, ctUnlocked, ctHoverText);
                     ctIcon.Left.Set(originPositions[i].X, 0f);
@@ -608,8 +608,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 string texturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/PrivatePureLoveTrain/c{i}";
                 Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                bool unlocked = ct.Unlocked(player);
-                string hoverText = unlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+                bool unlocked = ct.IsUnlocked(player);
+                string hoverText = unlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.GetLockedDescription()}";
 
                 TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
                 icon.Left.Set(originPositions[i].X, 0f);
@@ -641,8 +641,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                     string ptTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/HeavenlyRestriction/p{j}";
                     Texture2D ptTexture = ModContent.Request<Texture2D>(ptTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                    bool ptUnlocked = pt.Unlocked(player);
-                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.LockedDescription}";
+                    bool ptUnlocked = pt.IsUnlocked(player);
+                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.GetLockedDescription()}";
 
                     TechniqueIcon ptIcon = new TechniqueIcon(ptTexture, ptUnlocked, ptHoverText);
                     ptIcon.Left.Set(originPositions[i].X, 0f);
@@ -656,8 +656,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                     string ctTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/HeavenlyRestriction/c{i}";
                     Texture2D ctTexture = ModContent.Request<Texture2D>(ctTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-                    bool ctUnlocked = ct.Unlocked(player);
-                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+                    bool ctUnlocked = ct.IsUnlocked(player);
+                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.GetLockedDescription()}";
 
                     TechniqueIcon ctIcon = new TechniqueIcon(ctTexture, ctUnlocked, ctHoverText);
                     ctIcon.Left.Set(originPositions[i].X, 0f);

@@ -250,7 +250,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 string ctHoverText = $"{sfPlayer.innateTechnique.CursedTechniques[i].DisplayName.Value}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip")}";
                 TechniqueSelectorButton ctIcon = new TechniqueSelectorButton(ctTexture, ctHoverText, i);
 
-                if (sfPlayer.innateTechnique.CursedTechniques[i].Unlocked(sfPlayer))
+                if (sfPlayer.innateTechnique.CursedTechniques[i].IsUnlocked(sfPlayer))
                 {
                     ctIcon.Left.Set(unlockedTechniques * (ctIcon.texture.Width + ButtonGap), 0f);
                     ctIcon.Top.Set(0f, 0f);

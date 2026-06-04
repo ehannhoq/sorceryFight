@@ -16,7 +16,6 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public static Texture2D texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/PrivatePureLoveTrain/RailroadSign", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.RailroadSign.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.RailroadSign.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.RailroadSign.LockedDescription");
         public override float Cost => 120f;
         public override Color textColor => new Color(108, 158, 240);
         public override bool DisplayNameInGame => true;
@@ -71,10 +70,6 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         // public static CurveSegment Recovery => new(EasingType.PolyOut, RecoveryCompletionRatio, Swing.EndingHeight, 0.97f, 3);
 
         // public static float GetSwingOffsetAngle(float completion) => PiecewiseAnimation(completion, AnticipationWait, Anticipation, Swing, Recovery);
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return true;
-        }
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<RailroadSign>();

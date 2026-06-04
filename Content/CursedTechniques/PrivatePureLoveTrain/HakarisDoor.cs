@@ -17,7 +17,6 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public static Texture2D texture;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.HakarisDoor.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HakarisDoor.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HakarisDoor.LockedDescription");
         public override float Cost => 100f;
         public override Color textColor => new Color(108, 158, 240);
         public override bool DisplayNameInGame => true;
@@ -33,11 +32,6 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<HakarisDoor>();
-        }
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)

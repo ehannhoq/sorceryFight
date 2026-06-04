@@ -18,7 +18,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.ReversalRed.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.ReversalRed.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.ReversalRed.LockedDescription");
         public override float Cost { get; } = 300f;
         public override Color textColor { get; } = new Color(224, 74, 74);
 
@@ -27,10 +26,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override int MasteryDamageMultiplier => 80;
         public override float Speed { get; } = 32f;
         public override float LifeTime { get; } = 200f;
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.unlockedRCT;
-        }
 
         public static Texture2D texture;
         public override bool DisplayNameInGame { get; } = true;

@@ -13,8 +13,6 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.FlashStep.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.FlashStep.Description");
 
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.FlashStep.LockedDescription");
-
         public override float Cost => 250f;
 
         public override Color textColor => Color.White;
@@ -38,11 +36,6 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<FlashStep>();
-        }
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.SkeletronPrime);
         }
 
         public override void OnSpawn(IEntitySource source)

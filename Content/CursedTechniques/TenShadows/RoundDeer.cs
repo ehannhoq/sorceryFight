@@ -25,7 +25,6 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         public static readonly int TICKS_PER_FRAME = 5;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.RoundDeer.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.RoundDeer.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.RoundDeer.LockedDescription");
         public override float Cost => 35f;
         public override float CursedCostPerSecond => 2f;
         public override Color textColor => new Color(120, 40, 200);
@@ -43,11 +42,6 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         private const float HEAL_RADIUS = 300f;
         private const int HEAL_AMOUNT = 100;
         private const float HEAL_COOLDOWN = 60f;
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.EyeofCthulhu);
-        }
 
         public override int GetProjectileType()
         {

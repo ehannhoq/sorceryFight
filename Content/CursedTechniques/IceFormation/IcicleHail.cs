@@ -49,8 +49,6 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
 
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.IcicleHail.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.IcicleHail.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.IcicleHail.LockedDescription");
-
         public override Color textColor => new Color(255, 0, 0);
         public override bool DisplayNameInGame => true;
 
@@ -66,13 +64,6 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
         public override float LifeTime => 300f;
 
         private float spawnTimer = 0;
-
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.HallowBoss);
-
-        }
 
         public override int GetProjectileType()
         {

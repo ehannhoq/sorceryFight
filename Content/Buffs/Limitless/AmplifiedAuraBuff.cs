@@ -28,15 +28,8 @@ namespace sorceryFight.Content.Buffs.Limitless
             }
         }
         public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.AmplifiedAuraBuff.Description");
-
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.Buffs.AmplifiedAuraBuff.LockedDescription");
         public override bool isActive { get; set; } = false;
         public override float CostPerSecond { get; set; }
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.WallofFlesh);
-        }
 
         protected Dictionary<int, int> auraIndices;
         public override void Apply(Player player)

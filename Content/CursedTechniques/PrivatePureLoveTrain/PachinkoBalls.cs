@@ -17,7 +17,6 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public static Texture2D texture;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.PachinkoBalls.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PachinkoBalls.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PachinkoBalls.LockedDescription");
         public override float Cost => 30f;
         public override Color textColor => new Color(108, 158, 240);
         public override bool DisplayNameInGame => true;
@@ -28,11 +27,6 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
 
         Dictionary<int, List<int>> enemyRicochets = new Dictionary<int, List<int>>();
         Dictionary<int, Color> rarity = new Dictionary<int, Color>();
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return true;
-            // return sf.HasDefeatedBoss(ModContent.NPCType<DesertScourgeHead>());
-        }
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<PachinkoBalls>();

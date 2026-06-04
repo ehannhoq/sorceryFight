@@ -22,21 +22,14 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.LockedDescription");
         public override float Cost { get; } = 1100f;
         public override Color textColor { get; } = new Color(235, 117, 233);
         public override bool DisplayNameInGame { get; } = false;
-
 
         public override int Damage => 50000;
         public override int MasteryDamageMultiplier => 200;
         public override float Speed { get; } = 50f;
         public override float LifeTime { get; } = 500f;
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return true;
-            // return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
-        }
 
         public static Texture2D texture;
         public static Texture2D flashTexture;

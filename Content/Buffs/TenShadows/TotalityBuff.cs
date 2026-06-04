@@ -11,7 +11,6 @@ namespace sorceryFight.Content.Buffs.TenShadows
     {
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.TotalityBuff.DisplayName");
         public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.TotalityBuff.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.Buffs.TotalityBuff.LockedDescription");
         public override bool isActive { get; set; } = false;
 
         public override float CostPerSecond { get; set; } = 10f;
@@ -42,12 +41,6 @@ namespace sorceryFight.Content.Buffs.TenShadows
             SorceryFightPlayer sfPlayer = player.SorceryFight();
             sfPlayer.TotalityToggle = false;
 
-        }
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            // return sf.HasDefeatedBoss(ModContent.NPCType<PerforatorHive>()) || sf.HasDefeatedBoss(ModContent.NPCType<HiveMind>());
-            return true;
         }
 
         public override void Update(Player player, ref int buffIndex)

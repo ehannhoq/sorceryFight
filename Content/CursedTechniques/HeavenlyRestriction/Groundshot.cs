@@ -16,8 +16,6 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.Groundshot.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Groundshot.Description");
 
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Groundshot.LockedDescription");
-
         public override float Cost => 30f;
 
         public override Color textColor => Color.White;
@@ -45,10 +43,6 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             return ModContent.ProjectileType<Groundshot>();
         }
 
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.EyeofCthulhu);
-        }
 
         public override void SetStaticDefaults()
         {

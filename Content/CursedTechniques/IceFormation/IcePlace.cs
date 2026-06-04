@@ -17,7 +17,6 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
     {
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.IcePlace.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.IcePlace.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.IcePlace.LockedDescription");
         public override float Cost => 2f;
         public override float CursedCostPerSecond => 5f;
 
@@ -29,10 +28,6 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
 
         public override float Speed => 0f;
         public override float LifeTime => 9000f;
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.KingSlime);
-        }
 
         public bool keyHeld;
         private int placeCooldown = 0;

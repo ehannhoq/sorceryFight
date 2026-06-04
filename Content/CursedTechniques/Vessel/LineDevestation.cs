@@ -23,7 +23,6 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public static Texture2D texture;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.LineDevestation.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.LineDevestation.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.LineDevestation.LockedDescription");
         public override float Cost => 400f;
         public override Color textColor => new Color(120, 21, 8);
         public override bool DisplayNameInGame => false;
@@ -43,11 +42,6 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         {
             return ModContent.ProjectileType<LineDevestation>();
         }
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.sukunasFingerConsumed >= 15;
-        }
-
         public override void SetDefaults()
         {
             base.SetDefaults();

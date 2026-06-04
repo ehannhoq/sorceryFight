@@ -18,8 +18,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.StarRush.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.StarRush.Description");
 
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.StarRush.LockedDescription");
-
         public override float Cost => 5f;
 
         public override Color textColor => Color.White;
@@ -48,11 +46,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<StarRush>();
-        }
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
         }
 
         public override float CalculateTrueCost(SorceryFightPlayer sf)

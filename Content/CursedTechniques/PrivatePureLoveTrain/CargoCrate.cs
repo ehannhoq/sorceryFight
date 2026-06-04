@@ -18,7 +18,6 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public static Texture2D punchTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/PrivatePureLoveTrain/CargoCratePunch", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.CargoCrate.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.CargoCrate.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.CargoCrate.LockedDescription");
         public override float Cost => 300f;
         public override Color textColor => new Color(59, 64, 112);
         public override bool DisplayNameInGame => true;
@@ -35,12 +34,6 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         {
             return ModContent.ProjectileType<CargoCrate>();
         }
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.CultistBoss);
-        }
-
 
         public override void SetDefaults()
         {

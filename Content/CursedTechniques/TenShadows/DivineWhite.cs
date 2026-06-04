@@ -21,8 +21,6 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
             SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.DivineWhite.DisplayName");
         public override string Description =>
             SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.DivineWhite.Description");
-        public override string LockedDescription =>
-            SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.DivineWhite.LockedDescription");
 
         public override float Cost => 50f;
         public override Color textColor => new Color(240, 240, 255);
@@ -48,11 +46,6 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         public static Texture2D runTexture;
 
         public override string ParentInnateName => "TenShadows";
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.EyeofCthulhu);
-        }
 
         public override int GetProjectileType()
         {

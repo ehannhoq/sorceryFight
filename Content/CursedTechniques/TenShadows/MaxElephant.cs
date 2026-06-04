@@ -20,8 +20,6 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
             SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.MaxElephant.DisplayName");
         public override string Description =>
             SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.MaxElephant.Description");
-        public override string LockedDescription =>
-            SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.MaxElephant.LockedDescription");
 
         public override float Cost => 60f;
         public override float CursedCostPerSecond => 3f;
@@ -43,11 +41,6 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         private Vector2 lastPosition;
 
         public float animScale;
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.EyeofCthulhu);
-        }
 
         public override int GetProjectileType()
         {

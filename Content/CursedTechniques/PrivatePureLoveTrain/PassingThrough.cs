@@ -16,7 +16,6 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public static Texture2D texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/PrivatePureLoveTrain/PassingThrough", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.PassingThrough.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PassingThrough.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PassingThrough.LockedDescription");
         public override float Cost => 300f;
         public override Color textColor => new Color(59, 64, 112);
         public override bool DisplayNameInGame => true;
@@ -31,11 +30,6 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<PassingThrough>();
-        }
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.SkeletronPrime);
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)

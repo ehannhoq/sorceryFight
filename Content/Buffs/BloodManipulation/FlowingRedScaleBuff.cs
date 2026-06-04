@@ -15,7 +15,6 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
     {
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.FlowingRedScaleBuff.DisplayName");
         public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.FlowingRedScaleBuff.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.Buffs.FlowingRedScaleBuff.LockedDescription");
 
         public override bool isActive { get; set; } = false;
         public override float BloodRegenPerSecond { get; set; } = 10;
@@ -80,19 +79,6 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
             }
             
             sfPlayer.disableCurseTechniques = false;
-        }
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            if (sf.innateTechnique.Name == "Vessel")
-            {
-                return sf.sukunasFingerConsumed >= 3;
-            }
-            else
-            {
-                // return sf.HasDefeatedBoss(ModContent.NPCType<PerforatorHive>()) || sf.HasDefeatedBoss(ModContent.NPCType<HiveMind>());
-                return true;
-            }
         }
 
         public override void Update(Player player, ref int buffIndex)

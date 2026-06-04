@@ -21,7 +21,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public static readonly int TICKS_PER_FRAME = 1;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.GarudaKick.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.GarudaKick.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.GarudaKick.LockedDescription");
         public override float Cost => 40f;
 
         public override float BloodCost => 20f;
@@ -34,12 +33,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
         public override float Speed => 25f;
         public override float LifeTime => 300f;
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
-        }
-
-
+        
         public static Texture2D texture;
 
     public bool animating;

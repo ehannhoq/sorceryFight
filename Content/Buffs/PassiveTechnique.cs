@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs.PlayerAttributes;
 using sorceryFight.SFPlayer;
@@ -8,9 +9,7 @@ namespace sorceryFight.Content.Buffs
 {
     public abstract class PassiveTechnique : ModBuff
     {
-        public abstract string Stats { get;}
-        public abstract string LockedDescription { get; }
-
+        public abstract string Stats { get; }
         public virtual bool isAura { get; } = false;
 
         public abstract bool isActive { get; set; }
@@ -21,7 +20,8 @@ namespace sorceryFight.Content.Buffs
         public virtual Color selectorBGColor { get; set; }
         public virtual Color selectorBorderColor { get; set; }
 
-        public abstract bool Unlocked(SorceryFightPlayer sf);
+        private Predicate<SorceryFightPlayer> unlocked;
+        private string lockedDescriptionLocalizationKey;
 
         public override void SetStaticDefaults()
         {
@@ -53,5 +53,27 @@ namespace sorceryFight.Content.Buffs
             return true;
         }
 
+
+        public PassiveTechnique() { }
+
+        public PassiveTechnique SetUnlock(Predicate<SorceryFightPlayer> predicate)
+        {
+            this.unlocked = predicate;
+            return this;
+
+        }
+        public PassiveTechnique SetLockedDescription(string localizationKey)
+        {
+            this.lockedDescriptionLocalizationKey = localizationKey;
+            return this;
+        }
+        public bool IsUnlocked(SorceryFightPlayer sfPlayer)
+        {
+            return unlocked(sfPlayer);
+        }
+        public string GetLockedDescription()
+        {
+            return SFUtils.GetLocalizationValue(lockedDescriptionLocalizationKey);
+        }
     }
 }

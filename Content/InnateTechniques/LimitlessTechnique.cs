@@ -6,6 +6,9 @@ using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Buffs.Limitless;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using Microsoft.Xna.Framework;
+using sorceryFight.SFPlayer;
+using Terraria.ID;
+using sorceryFight.Content.Buffs.Shrine;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -20,21 +23,47 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
-            new InfinityBuff(),
-            new AmplifiedAuraBuff(),
-            new MaximumAmplifiedAuraBuff(),
-            new FallingBlossomEmotionBuff()
+            new InfinityBuff()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.HasDefeatedBoss(NPCID.EyeofCthulhu))
+                .SetLockedDescription("Mods.sorceryFight.Buffs.Infinity.LockedDescription"),
+
+            new AmplifiedAuraBuff()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.HasDefeatedBoss(NPCID.SkeletronHead))
+                .SetLockedDescription("Mods.sorceryFight.Buffs.AmplifiedAuraBuff.LockedDescription"),
+
+            new MaximumAmplifiedAuraBuff()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedMechBossThree)
+                .SetLockedDescription("Mods.sorceryFight.Buffs.MaximumAmplifiedAuraBuff.LockedDescription"),
+                
+            new HollowWickerBasketBuff()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.HasDefeatedBoss(NPCID.HallowBoss))
+                .SetLockedDescription("Mods.sorceryFight.Buffs.HollowWickerBasketBuff.LockedDescription")
         };
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
-            new AmplificationBlue(),
-            new MaximumOutputBlue(),
+            new AmplificationBlue()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedEvilBoss)
+                .SetLockedDescription("Mods.sorceryFight.CursedTechniques.AmplificationBlue.LockedDescription"),
 
-            new ReversalRed(),
-            new MaximumOutputRed(),
-        
-            new HollowPurple(),
+            new MaximumOutputBlue()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.HasDefeatedBoss(NPCID.WallofFlesh))
+                .SetLockedDescription("Mods.sorceryFight.CursedTechniques.MaximumOutputBlue.LockedDescription"),
+
+            new ReversalRed()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.HasDefeatedBoss(NPCID.Plantera))
+                .SetLockedDescription("Mods.sorceryFight.CursedTechniques.ReversalRed.LockedDescription"),
+
+            new MaximumOutputRed()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.HasDefeatedBoss(NPCID.Golem))
+                .SetLockedDescription("Mods.sorceryFight.CursedTechniques.MaximumOutputRed.LockedDescription"),
+
+            new HollowPurple()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.HasDefeatedBoss(NPCID.CultistBoss))
+                .SetLockedDescription("Mods.sorceryFight.CursedTechniques.HollowPurple.LockedDescription"),
+
             new HollowPurple200Percent()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.HasDefeatedBoss(NPCID.MoonLordCore))
+                .SetLockedDescription("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.LockedDescription")
         };
 
         public override PlayerDomainExpansion DomainExpansion => new UnlimitedVoid();

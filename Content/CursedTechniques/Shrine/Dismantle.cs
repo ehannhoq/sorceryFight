@@ -17,7 +17,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         static Texture2D texture;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.Dismantle.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Dismantle.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Dismantle.LockedDescription");
         public override float Cost => 30f;
         public override Color textColor => new Color(120, 21, 8);
         public override bool DisplayNameInGame => true;
@@ -28,10 +27,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<Dismantle>();
-        }
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.EyeofCthulhu) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
         }
 
         public override void SetStaticDefaults()

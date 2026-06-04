@@ -13,7 +13,6 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
     {
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.FullIncarnationKOC.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.FullIncarnationKOC.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.FullIncarnationKOC.LockedDescription");
         public override float Cost => 1000f;
         public override float BloodCost => 100f;
         public override Color textColor => new Color(255, 0, 0);
@@ -22,11 +21,6 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public override int MasteryDamageMultiplier => 0;
         public override float Speed => 0f;
         public override float LifeTime => 300f;
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.sukunasSkull;
-        }
 
         public override int GetProjectileType()
         {

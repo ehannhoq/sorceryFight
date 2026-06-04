@@ -22,8 +22,6 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
             SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.CursedSpiritMinion.DisplayName");
         public override string Description =>
             SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.CursedSpiritMinion.Description");
-        public override string LockedDescription =>
-            SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.CursedSpiritMinion.LockedDescription");
 
         // ── Stats ─────────────────────────────────────────────────────
         public override float Cost => 40f;
@@ -48,11 +46,6 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         private bool IsMoving => Target != null;
         //variable name is misleading for now, checks if there is a target
 
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.EyeofCthulhu);
-        }
 
         public override int GetProjectileType()
         {

@@ -20,9 +20,6 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
             SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.Toad.DisplayName");
         public override string Description =>
             SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Toad.Description");
-        public override string LockedDescription =>
-            SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Toad.LockedDescription");
-
         public override float Cost => 40f;
         public override float CursedCostPerSecond => 2f;
         public override Color textColor => new Color(60, 140, 50);
@@ -47,11 +44,6 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         private int mouthFrameCounter = 0;
         private bool closing = false;
         private int lastTargetWhoAmI = -1;
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.EyeofCthulhu);
-        }
 
         public override int GetProjectileType()
         {

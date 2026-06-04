@@ -21,7 +21,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public static readonly int TICKS_PER_FRAME = 5;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.SuperNova.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SuperNova.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SuperNova.LockedDescription");
         public override float Cost => 40f;
 
         public override float BloodCost => 100f;
@@ -34,12 +33,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public override float Speed => 25f;
         public override float LifeTime => 120f;
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            // return sf.HasDefeatedBoss(ModContent.NPCType<AstrumDeusHead>());
-            return true;
-        }
-
 
         public static Texture2D texture;
 

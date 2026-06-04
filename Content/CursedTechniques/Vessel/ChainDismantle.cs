@@ -18,7 +18,6 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public static Texture2D texture;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.ChainDismantle.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.ChainDismantle.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.ChainDismantle.LockedDescription");
         public override float Cost => 350f;
         public override Color textColor => new Color(120, 21, 8);
         public override bool DisplayNameInGame => false;
@@ -30,10 +29,6 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<ChainDismantle>();
-        }
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.sukunasFingerConsumed >= 8;
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)

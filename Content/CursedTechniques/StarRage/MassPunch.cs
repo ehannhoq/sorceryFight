@@ -24,7 +24,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         public static readonly int TICKS_PER_FRAME = 4;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.MassPunch.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.MassPunch.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.MassPunch.LockedDescription");
         public override float Cost => 40f;
 
         public override float BloodCost => 20f;
@@ -37,10 +36,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
         public override float Speed => 0f;
         public override float LifeTime => 28f;
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
-        }
 
         //this is only here to try and set velocity to zero to make the projecitle not move based on mouse position
         public override int UseTechnique(SorceryFightPlayer sf)

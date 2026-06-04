@@ -12,7 +12,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
     {
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.BloodDaggerStorm.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.BloodDaggerStorm.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.BloodDaggerStorm.LockedDescription");
         public override float Cost => 40f;
 
         public override float BloodCost => 20f;
@@ -31,19 +30,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override float LifeTime => 300f;
 
         private float spawnTimer = 0;
-
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            if (sf.innateTechnique.Name == "Vessel")
-            {
-                return sf.sukunasFingerConsumed >= 11;
-            }   
-            else
-            {
-                return sf.HasDefeatedBoss(NPCID.HallowBoss);
-            }
-        }
 
         public override int GetProjectileType()
         {

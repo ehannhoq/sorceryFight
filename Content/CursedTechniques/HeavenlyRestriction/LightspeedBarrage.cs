@@ -18,8 +18,6 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.LightspeedBarrage.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.LightspeedBarrage.Description");
 
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.LightspeedBarrage.LockedDescription");
-
         public override float Cost => 670f;
 
         public override Color textColor => Color.White;
@@ -54,12 +52,6 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<LightspeedBarrage>();
-        }
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return true;
-            // return sf.HasDefeatedBoss(ModContent.NPCType<Signus>()) && sf.HasDefeatedBoss(ModContent.NPCType<StormWeaverHead>()) && sf.HasDefeatedBoss(ModContent.NPCType<CeaselessVoid>());
         }
 
         public override void SetStaticDefaults()

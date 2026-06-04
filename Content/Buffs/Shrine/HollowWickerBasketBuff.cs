@@ -13,7 +13,6 @@ namespace sorceryFight.Content.Buffs.Shrine
     {
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.HollowWickerBasketBuff.DisplayName");
         public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.HollowWickerBasketBuff.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.Buffs.HollowWickerBasketBuff.LockedDescription");
 
         public override bool isAura => true;
         public override string Stats
@@ -34,11 +33,6 @@ namespace sorceryFight.Content.Buffs.Shrine
         public override float CostPerSecond { get; set; } = 50f;
         public Dictionary<int, int> auraIndices;
         public bool waiting = false;
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.Golem) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
-        }
 
         public override void Apply(Player player)
         {

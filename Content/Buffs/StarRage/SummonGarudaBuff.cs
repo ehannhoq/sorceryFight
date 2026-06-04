@@ -14,7 +14,6 @@ namespace sorceryFight.Content.Buffs.StarRage
         //code made using Calamity's Tenryu as an example, HEAVILY modified to fit PassiveTechnique structure
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.SummonGarudaBuff.DisplayName");
         public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.SummonGarudaBuff.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.Buffs.SummonGarudaBuff.LockedDescription");
 
         public int Damage => 20;
 
@@ -29,11 +28,6 @@ namespace sorceryFight.Content.Buffs.StarRage
         }
         public override bool isActive { get; set; } = false;
         public override float CostPerSecond { get; set; } = 10f;
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.Golem);
-        }
 
         public override void Apply(Player player)
         {

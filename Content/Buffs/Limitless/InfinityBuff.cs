@@ -26,16 +26,10 @@ namespace sorceryFight.Content.Buffs.Limitless
             }
         }
         public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.Infinity.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.Buffs.Infinity.LockedDescription");
 
         public override bool isActive { get; set; } = false;
         public override float CostPerSecond { get; set; } = 1f;
         public bool waiting = false;
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.EyeofCthulhu);
-        }
-
         public override void Apply(Player player)
         {
             player.AddBuff(ModContent.BuffType<InfinityBuff>(), 2);

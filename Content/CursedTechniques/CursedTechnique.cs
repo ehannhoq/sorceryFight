@@ -123,7 +123,6 @@ namespace sorceryFight.Content.CursedTechniques
     public abstract class CursedTechnique : ModProjectile
     {
         public abstract string Description { get; }
-        public abstract string LockedDescription { get; }
         public abstract float Cost { get; }
 
         //public virtual int hasCharge { get; set; } = 0;
@@ -141,8 +140,8 @@ namespace sorceryFight.Content.CursedTechniques
 
         public virtual float CursedCostPerSecond { get; } = 0;
         public virtual float BloodCostPerSecond { get; } = 0;
-        
-        
+
+
         public virtual float StarCost { get; } = 0;
         public abstract Color textColor { get; }
         public abstract bool DisplayNameInGame { get; }
@@ -150,12 +149,16 @@ namespace sorceryFight.Content.CursedTechniques
         public abstract int MasteryDamageMultiplier { get; }
         public abstract float Speed { get; }
         public abstract float LifeTime { get; }
-        public abstract bool Unlocked(SorceryFightPlayer sf);
         public abstract int GetProjectileType();
 
         public virtual Color selectorBGColor { get; set; }
 
         public virtual Color selectorBorderColor { get; set; }
+
+
+        private Predicate<SorceryFightPlayer> unlocked;
+        private string lockedDescriptionLocalizationKey;
+
 
         public virtual string GetStats(SorceryFightPlayer sf)
         {
@@ -185,7 +188,7 @@ namespace sorceryFight.Content.CursedTechniques
 
         public virtual float CalculateTrueCost(SorceryFightPlayer sf)
         {
-            float finalCost =  Cost - (Cost * (sf.bossesDefeated.Count / 100f));
+            float finalCost = Cost - (Cost * (sf.bossesDefeated.Count / 100f));
             finalCost *= 1 - sf.ctCostReduction;
             return finalCost;
         }
@@ -221,7 +224,7 @@ namespace sorceryFight.Content.CursedTechniques
 
                 sf.cursedEnergy -= CalculateTrueCost(sf);
 
-                if(BloodCost > 0)
+                if (BloodCost > 0)
                 {
                     sf.bloodEnergy -= BloodCost;
                 }
@@ -276,13 +279,13 @@ namespace sorceryFight.Content.CursedTechniques
 
             if (CursedCostPerSecond > 0)
                 sf.cursedEnergy -= (CursedCostPerSecond / 60);
-                if(sf.cursedEnergy < 0)
-                    Projectile.Kill();
+            if (sf.cursedEnergy < 0)
+                Projectile.Kill();
 
             if (BloodCostPerSecond > 0)
                 sf.bloodEnergy -= (BloodCostPerSecond / 60);
-                if (sf.bloodEnergy < 0)
-                    Projectile.Kill();
+            if (sf.bloodEnergy < 0)
+                Projectile.Kill();
         }
 
         public virtual bool UseCondition(SorceryFightPlayer sf)
@@ -291,5 +294,25 @@ namespace sorceryFight.Content.CursedTechniques
         }
 
 
+        public CursedTechnique() { }
+        public CursedTechnique SetUnlock(Predicate<SorceryFightPlayer> predicate)
+        {
+            this.unlocked = predicate;
+            return this;
+            
+        }
+        public CursedTechnique SetLockedDescription(string localizationKey)
+        {
+            this.lockedDescriptionLocalizationKey = localizationKey;
+            return this;
+        }
+        public bool IsUnlocked(SorceryFightPlayer sfPlayer)
+        {
+            return unlocked(sfPlayer);
+        }
+        public string GetLockedDescription()
+        {
+            return SFUtils.GetLocalizationValue(lockedDescriptionLocalizationKey);
+        }
     }
 }

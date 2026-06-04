@@ -27,14 +27,8 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
         }
         public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.InorganicPerception.Description");
 
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.Buffs.InorganicPerception.LockedDescription");
         public override bool isActive { get; set; } = false;
         public override float CostPerSecond { get; set; } = 85;
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.Golem);
-        }
 
         public override void Apply(Player player)
         {

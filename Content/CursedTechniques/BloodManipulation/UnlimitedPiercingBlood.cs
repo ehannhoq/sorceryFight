@@ -29,7 +29,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public static Texture2D collisionTexture;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.UnlimitedPiercingBlood.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.UnlimitedPiercingBlood.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.UnlimitedPiercingBlood.LockedDescription");
         public override float Cost => 750f;
         public override Color textColor => new Color(132, 4, 4);
         public override bool DisplayNameInGame => true;
@@ -56,19 +55,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<UnlimitedPiercingBlood>();
-        }
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            if (sf.innateTechnique.Name == "Vessel")
-            {
-                return sf.sukunasFingerConsumed >= 19;
-            }
-            else
-            {
-                // return sf.HasDefeatedBoss(ModContent.NPCType<OldDuke>());
-                return true;
-            }
         }
 
         public override void SetStaticDefaults()

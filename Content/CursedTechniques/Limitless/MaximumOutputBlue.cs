@@ -20,7 +20,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.MaximumOutputBlue.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.MaximumOutputBlue.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.MaximumOutputBlue.LockedDescription");
         public override float Cost { get; } = 150f;
         public override Color textColor { get; } = new Color(108, 158, 240);
         public override bool DisplayNameInGame { get; } = true;
@@ -28,10 +27,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override int MasteryDamageMultiplier => 28;
         public override float Speed { get; } = 20f;
         public override float LifeTime { get; } = 180f;
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.SkeletronPrime);
-        }
+
         public virtual float AttractionRadius { get; set; } = 130f;
         public virtual float AttractionStrength { get; set; } = 15f;
 

@@ -21,7 +21,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public static Texture2D texture;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.SelfBloodBlade.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SelfBloodBlade.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SelfBloodBlade.LockedDescription");
         public override float Cost => 50f;
         public override float BloodCost => 30f;
         public override Color textColor => new Color(120, 21, 8);
@@ -35,10 +34,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<SelfBloodBlade>();
-        }
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return true;
         }
 
         public override string GetStats(SorceryFightPlayer sf)

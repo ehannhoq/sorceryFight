@@ -29,17 +29,12 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.MaximumOutputRed.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.MaximumOutputRed.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.MaximumOutputRed.LockedDescription");
         public override float Cost { get; } = 750f;
         public override Color textColor { get; } = new Color(224, 74, 74);
         public override int Damage => 4500;
         public override int MasteryDamageMultiplier => 310;
         public override float Speed { get; } = 23f;
         public override float LifeTime { get; } = 180f;
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.unlockedRCT;
-        }
         public override bool DisplayNameInGame { get; } = true;
 
         public override int GetProjectileType()

@@ -15,7 +15,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public static Texture2D texture;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.InstantDismantle.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.InstantDismantle.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.InstantDismantle.LockedDescription");
         public override float Cost => 80f;
         public override Color textColor => new Color(184, 130, 101);
         public override bool DisplayNameInGame => false;
@@ -31,11 +30,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<InstantDismantle>();
-        }
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.SkeletronPrime) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)

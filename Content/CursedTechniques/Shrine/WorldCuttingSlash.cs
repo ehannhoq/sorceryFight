@@ -25,7 +25,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         static Texture2D texture;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.WorldCuttingSlash.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.WorldCuttingSlash.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.WorldCuttingSlash.LockedDescription");
         public override float Cost => 1225f;
         public override Color textColor => new Color(245, 214, 208);
         public override bool DisplayNameInGame => false;
@@ -43,10 +42,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<WorldCuttingSlash>();
-        }
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.MoonLordCore) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
         }
 
         public override void SetStaticDefaults()

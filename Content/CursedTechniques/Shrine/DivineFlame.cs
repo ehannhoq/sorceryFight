@@ -27,7 +27,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         static List<Texture2D> textures;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.DivineFlame.DisplayName");
         public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.DivineFlame.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.DivineFlame.LockedDescription");
         public override float Cost => 525f;
         public override Color textColor => new Color(242, 144, 82);
         public override bool DisplayNameInGame => false;
@@ -45,12 +44,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         {
             return ModContent.ProjectileType<DivineFlame>();
         }
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            // return sf.HasDefeatedBoss(ModContent.NPCType<Providence>()) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
-            return true;
-        }
-
         public override void SetStaticDefaults()
         {
             if (Main.dedServ) return;
