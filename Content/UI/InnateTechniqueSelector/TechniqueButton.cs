@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using sorceryFight.Utilities;
+using sorceryFight.Content.InnateTechniques;
 
 namespace sorceryFight.Content.UI.InnateTechniqueSelector
 {

@@ -9,6 +9,7 @@ using sorceryFight.SFPlayer;
 using Terraria.ModLoader;
 using Terraria.UI;
 using sorceryFight.Utilities;
+using sorceryFight.Content.InnateTechniques;
 
 namespace sorceryFight.Content.UI.InnateTechniqueSelector
 {

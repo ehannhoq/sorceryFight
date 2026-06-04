@@ -9,16 +9,13 @@ using sorceryFight.Content.Buffs.PlayerAttributes;
 using Terraria.Chat;
 using Terraria.ID;
 using System;
-using sorceryFight.Content.Buffs.Vessel;    
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.DomainExpansions;
 using System.Linq;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
 using sorceryFight.Content.Buffs.CursedEnergyTraits;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Terraria.Localization;
-using sorceryFight.Utilities;
+using sorceryFight.Content.InnateTechniques;
 
 
 namespace sorceryFight.SFPlayer
