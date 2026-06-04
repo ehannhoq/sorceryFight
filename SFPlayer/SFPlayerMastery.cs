@@ -17,6 +17,7 @@ namespace sorceryFight.SFPlayer
         public bool defeatedMechBossOne => (mechanicalBossesDefeatedFlags & 0b0001) == 1;
         public bool defeatedMechBossTwo => (mechanicalBossesDefeatedFlags & 0b0010) == 1;
         public bool defeatedMechBossThree => (mechanicalBossesDefeatedFlags & 0b0100) == 1;
+        public bool defeatedEvilBoss => HasDefeatedBoss(NPCID.BrainofCthulhu) || HasDefeatedBoss(NPCID.EaterofWorldsHead);
 
         public void AddDefeatedBoss(int bossType)
         {
