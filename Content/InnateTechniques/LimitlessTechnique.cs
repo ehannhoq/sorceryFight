@@ -24,46 +24,38 @@ namespace sorceryFight.Content.InnateTechniques
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
             new InfinityBuff()
-                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.HasDefeatedBoss(NPCID.EyeofCthulhu))
-                .SetLockedDescription("Mods.sorceryFight.Buffs.Infinity.LockedDescription"),
+                .SetUnlock(NPCID.EyeofCthulhu),
 
             new AmplifiedAuraBuff()
-                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.HasDefeatedBoss(NPCID.SkeletronHead))
-                .SetLockedDescription("Mods.sorceryFight.Buffs.AmplifiedAuraBuff.LockedDescription"),
+                .SetUnlock(NPCID.SkeletronHead),
 
             new MaximumAmplifiedAuraBuff()
                 .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedMechBossThree)
-                .SetLockedDescription("Mods.sorceryFight.Buffs.MaximumAmplifiedAuraBuff.LockedDescription"),
+                .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.MechBossThree"),
                 
             new HollowWickerBasketBuff()
-                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.HasDefeatedBoss(NPCID.HallowBoss))
-                .SetLockedDescription("Mods.sorceryFight.Buffs.HollowWickerBasketBuff.LockedDescription")
+                .SetUnlock(NPCID.HallowBoss)
         };
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
             new AmplificationBlue()
-                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedEvilBoss)
-                .SetLockedDescription("Mods.sorceryFight.CursedTechniques.AmplificationBlue.LockedDescription"),
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedEvilBoss),
 
             new MaximumOutputBlue()
-                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.HasDefeatedBoss(NPCID.WallofFlesh))
-                .SetLockedDescription("Mods.sorceryFight.CursedTechniques.MaximumOutputBlue.LockedDescription"),
+                .SetUnlock(NPCID.WallofFlesh),
 
             new ReversalRed()
-                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.HasDefeatedBoss(NPCID.Plantera))
-                .SetLockedDescription("Mods.sorceryFight.CursedTechniques.ReversalRed.LockedDescription"),
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.unlockedRCT)
+                .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.RCT"),
 
             new MaximumOutputRed()
-                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.HasDefeatedBoss(NPCID.Golem))
-                .SetLockedDescription("Mods.sorceryFight.CursedTechniques.MaximumOutputRed.LockedDescription"),
+                .SetUnlock(NPCID.Golem),
 
             new HollowPurple()
-                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.HasDefeatedBoss(NPCID.CultistBoss))
-                .SetLockedDescription("Mods.sorceryFight.CursedTechniques.HollowPurple.LockedDescription"),
+                .SetUnlock(NPCID.CultistBoss),
 
             new HollowPurple200Percent()
-                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.HasDefeatedBoss(NPCID.MoonLordCore))
-                .SetLockedDescription("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.LockedDescription")
+                .SetUnlock(NPCID.MoonLordCore)
         };
 
         public override PlayerDomainExpansion DomainExpansion => new UnlimitedVoid();

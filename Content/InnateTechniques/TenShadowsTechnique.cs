@@ -26,16 +26,22 @@ namespace sorceryFight.Content.InnateTechniques
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
             new TotalityBuff()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => true)
         };
 
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
             //divine white spawns black as a child / becomes totality
-            new DivineWhite(),
-            new Nue(),
-            new Toad(),
-            new MaxElephant(),
+            new DivineWhite()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => true),
+            new Nue()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => true),
+            new Toad()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => true),
+            new MaxElephant()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => true),
             new RoundDeer()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => true)
             
 
         };

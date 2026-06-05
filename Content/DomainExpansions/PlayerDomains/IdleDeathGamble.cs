@@ -20,7 +20,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
         {
             string desc = SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.Description");
             desc += "\n";
-            if (player.HasDefeatedBoss(NPCID.Golem))
+            if (player.HasDefeatedBoss(NPCID.CultistBoss))
             {
                 desc += SFUtils.GetLocalizationValue($"Mods.sorceryFight.DomainExpansions.{InternalName}.TierIII");
             }

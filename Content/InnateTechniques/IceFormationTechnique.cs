@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.CursedTechniques.TenShadows;
 using sorceryFight.Utilities;
+using Terraria.ID;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -29,9 +30,12 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
-            new IceShard(),
-            new IcicleHail(),
+            new IceShard()
+                .SetUnlock(NPCID.KingSlime),
+            new IcicleHail()
+                .SetUnlock(NPCID.HallowBoss),
             new IcePlace()
+                .SetUnlock(NPCID.KingSlime)
         };
 
         public override PlayerDomainExpansion DomainExpansion { get; } = new HeavensRime();

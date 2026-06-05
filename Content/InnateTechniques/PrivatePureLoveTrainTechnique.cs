@@ -6,6 +6,8 @@ using sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using Microsoft.Xna.Framework;
 using sorceryFight.Utilities;
+using Terraria.ID;
+using sorceryFight.SFPlayer;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -23,11 +25,21 @@ namespace sorceryFight.Content.InnateTechniques
         };
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
-            new PachinkoBalls(),
-            new HakarisDoor(),
-            new PassingThrough(),
-            new CargoCrate(),
+            new PachinkoBalls()
+                .SetUnlock(NPCID.EyeofCthulhu),
+
+            new HakarisDoor()
+                .SetUnlock(NPCID.SkeletronHand),
+
+            new PassingThrough()
+                .SetUnlock(NPCID.WallofFlesh),
+
+            new CargoCrate()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedMechBossThree)
+                .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.MechBossThree"),
+
             new RailroadSign()
+                .SetUnlock(NPCID.HallowBoss)
         };
 
         public override PlayerDomainExpansion DomainExpansion { get; } = new IdleDeathGamble();

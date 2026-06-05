@@ -12,6 +12,7 @@ using sorceryFight.Content.Buffs.StarRage;
 using sorceryFight.Content.CursedTechniques.BloodManipulation;
 using Microsoft.Xna.Framework;
 using sorceryFight.Utilities;
+using Terraria.ID;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -26,19 +27,29 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
-            new SummonGarudaBuff(),
+            new SummonGarudaBuff()
+                .SetUnlock(NPCID.SkeletronHead),
+
             new FallingBlossomEmotionBuff()
+                .SetUnlock(NPCID.SkeletronHead)
         };
 
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
             new StarChannel(),
-            new GarudaKick(),
-            new GarudaWhip(),
-            new MassPunch(),
-            //new MassKick(),
-            //Removed to combine with GarudaKick
+
+            new GarudaKick()
+                .SetUnlock(NPCID.SkeletronHead),
+
+            new GarudaWhip()
+                .SetUnlock(NPCID.SkeletronHead),
+
+            new MassPunch()
+                .SetUnlock(NPCID.SkeletronHead),
+
             new StarRush()
+                .SetUnlock(NPCID.SkeletronHead),
+            
         };
 
         public override PlayerDomainExpansion DomainExpansion { get; } = new StarCastle();

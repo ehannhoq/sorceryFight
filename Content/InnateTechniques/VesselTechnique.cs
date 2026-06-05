@@ -24,18 +24,33 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
-            new FlowingRedScaleBuff(),
+            new FlowingRedScaleBuff()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 5),
+
             new FlowingRedScaleStackBuff()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 15),
         };
 
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
-            new SoulDismantle(),
-            new PiercingBlood(),
-            new ChainDismantle(),
-            new BloodDaggerStorm(),
-            new LineDevestation(),
+            new SoulDismantle()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 1),
+
+            new PiercingBlood()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 3),
+
+            new ChainDismantle()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 10),
+
+            new BloodDaggerStorm()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 12),
+
+            new LineDevestation()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 20),
+
             new FullIncarnationKOC()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasSkull)
+                .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.SukunasSkull")
         };
 
         public override PlayerDomainExpansion DomainExpansion { get; } = new Home();

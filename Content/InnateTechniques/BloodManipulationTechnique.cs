@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using sorceryFight.Content.Buffs.Limitless;
 using Microsoft.Xna.Framework;
 using sorceryFight.Utilities;
+using Terraria.ID;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -24,19 +25,38 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
-            new FlowingRedScaleBuff(),
-            new FlowingRedScaleStackBuff(),
+            new FlowingRedScaleBuff()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedEvilBoss)
+                .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.EvilBoss"),
+                
+            new FlowingRedScaleStackBuff()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedMechBossThree)
+                .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.MechBossThree"),
+                
             new FallingBlossomEmotionBuff()
+                .SetUnlock(NPCID.HallowBoss)
         };
 
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
-            new SlicingExorcism(),
-            new SelfBloodBlade(),
-            new PiercingBlood(),
-            new BloodDaggerStorm(),
-            new SuperNova(),
+            new SlicingExorcism()
+                .SetUnlock(NPCID.EyeofCthulhu),
+                
+            new SelfBloodBlade()
+                .SetUnlock(NPCID.SkeletronHand),
+                
+            new PiercingBlood()
+                .SetUnlock(NPCID.WallofFlesh),
+                
+            new BloodDaggerStorm()
+             .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.unlockedRCT)
+             .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.RCT"),
+                
+            new SuperNova()
+                .SetUnlock(NPCID.Golem),
+                
             new UnlimitedPiercingBlood()
+                .SetUnlock(NPCID.CultistBoss)
         };
 
         public override void PreUpdate(SorceryFightPlayer sf)

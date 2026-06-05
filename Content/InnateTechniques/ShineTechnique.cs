@@ -8,6 +8,7 @@ using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
+using Terraria.ID;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -21,17 +22,25 @@ namespace sorceryFight.Content.InnateTechniques
         public override Color innateBorderColor => new Color(0, 0, 0, 128);
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
-            new DomainAmplificationBuff(),
+            new DomainAmplificationBuff()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedMechBossThree)
+                .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.MechBossThree"),
             new HollowWickerBasketBuff()
+                .SetUnlock(NPCID.HallowBoss)
         };
 
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
-            new Dismantle(),
-            new Cleave(),
-            new InstantDismantle(),
-            new DivineFlame(),
+            new Dismantle()
+                .SetUnlock(NPCID.EyeofCthulhu),
+            new Cleave()
+                .SetUnlock(NPCID.SkeletronHead),
+            new InstantDismantle()
+                .SetUnlock(NPCID.WallofFlesh),
+            new DivineFlame()
+                .SetUnlock(NPCID.Golem),
             new WorldCuttingSlash()
+                .SetUnlock(NPCID.MoonLordCore)
         };
 
         public override PlayerDomainExpansion DomainExpansion { get; } = new MalevolentShrine();
