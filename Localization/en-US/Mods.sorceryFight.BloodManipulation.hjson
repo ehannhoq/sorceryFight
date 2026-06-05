@@ -1,0 +1,30 @@
+SlicingExorcism: {
+	DisplayName: Slicing Exorcism
+	Description:
+		'''
+		By compressing blood into a sphere then flattening it
+		you create a powerful slicing disk that carves through flesh like butter
+		'''
+	LockedDescription: Defeat the King of Slimes
+}
+
+SelfBloodBlade: {
+	DisplayName: Blood Blade
+	Description:
+		'''
+		Create a spinning blade of blood infront of you,
+		it can be rotated 360 degrees around you
+		'''
+	LockedDescription: Defeat The Slime God
+}
+
+UnlimitedPiercingBlood: {
+	DisplayName: Unlimited Piercing Blood
+	Description:
+		'''
+		Shoot a beam of Unlimited Piercing Blood that spawns mini Piercing Bloods
+		These Mini Piercing Bloods are created for every enemy poisoned by your blood
+		The more of them there are, the more mini beams spawn
+		'''
+	LockedDescription: Defeat the Old duke
+}
