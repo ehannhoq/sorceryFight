@@ -87,21 +87,6 @@ namespace sorceryFight
             return true;
         }
 
-        public static LocalizedText GetLocalization(string key)
-        {
-            return Language.GetText(key);
-        }
-
-        public static string GetLocalizationValue(string key)
-        {
-            return Language.GetTextValue(key);
-        }
-
-        public static List<string> GetLocalizationValues(string key)
-        {
-            return Language.GetTextValue(key).Split('\n').ToList();
-        }
-
         /// <summary>
         /// Draws a line between two points using a sprite batch. TAKEN FROM CALAMITY MOD, MODIFIED BY EHANN
         /// </summary>

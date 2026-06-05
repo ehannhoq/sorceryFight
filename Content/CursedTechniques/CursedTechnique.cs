@@ -157,6 +157,7 @@ namespace sorceryFight.Content.CursedTechniques
 
 
         private Predicate<SorceryFightPlayer> unlocked;
+        private int bossType = -1;
         private string lockedDescriptionLocalizationKey;
 
 
@@ -299,19 +300,30 @@ namespace sorceryFight.Content.CursedTechniques
         {
             this.unlocked = predicate;
             return this;
-            
         }
-        public CursedTechnique SetLockedDescription(string localizationKey)
+
+        public CursedTechnique SetUnlock(int bossType)
+        {
+            this.bossType = bossType;
+            return this;
+        }
+
+        public CursedTechnique SetUnlockRequirement(string localizationKey)
         {
             this.lockedDescriptionLocalizationKey = localizationKey;
             return this;
         }
         public bool IsUnlocked(SorceryFightPlayer sfPlayer)
         {
-            return unlocked != null && unlocked(sfPlayer);
+            return unlocked != null ? unlocked(sfPlayer) : sfPlayer.HasDefeatedBoss(bossType);
         }
-        public string GetLockedDescription()
+        public string GetUnlockRequirement()
         {
+            if (lockedDescriptionLocalizationKey == null)
+            {
+                return SFUtils.GetUnlockRequirementFromBossID(bossType);
+            }
+
             return SFUtils.GetLocalizationValue(lockedDescriptionLocalizationKey);
         }
     }

@@ -21,6 +21,7 @@ namespace sorceryFight.Content.Buffs
         public virtual Color selectorBorderColor { get; set; }
 
         private Predicate<SorceryFightPlayer> unlocked;
+        private int bossType;
         private string lockedDescriptionLocalizationKey;
 
         public override void SetStaticDefaults()
@@ -60,19 +61,32 @@ namespace sorceryFight.Content.Buffs
         {
             this.unlocked = predicate;
             return this;
-
         }
-        public PassiveTechnique SetLockedDescription(string localizationKey)
+
+        public PassiveTechnique SetUnlock(int bossType)
+        {
+            this.bossType = bossType;
+            return this;
+        }
+
+        public PassiveTechnique SetUnlockRequirement(string localizationKey)
         {
             this.lockedDescriptionLocalizationKey = localizationKey;
             return this;
         }
+
         public bool IsUnlocked(SorceryFightPlayer sfPlayer)
         {
-            return unlocked(sfPlayer);
+            return unlocked != null ? unlocked(sfPlayer) : sfPlayer.HasDefeatedBoss(bossType);
         }
-        public string GetLockedDescription()
+
+        public string GetUnlockRequirement()
         {
+            if (lockedDescriptionLocalizationKey == null)
+            {
+                return SFUtils.GetUnlockRequirementFromBossID(bossType);
+            }
+
             return SFUtils.GetLocalizationValue(lockedDescriptionLocalizationKey);
         }
     }
