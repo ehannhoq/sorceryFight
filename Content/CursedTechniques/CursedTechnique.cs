@@ -308,7 +308,7 @@ namespace sorceryFight.Content.CursedTechniques
         }
         public bool IsUnlocked(SorceryFightPlayer sfPlayer)
         {
-            return unlocked(sfPlayer);
+            return unlocked != null && unlocked(sfPlayer);
         }
         public string GetLockedDescription()
         {
