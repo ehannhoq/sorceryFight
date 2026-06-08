@@ -23,24 +23,37 @@ namespace sorceryFight.Content.UI.GeneticEditor
         bool rctState;
 
         List<int> bosses => new([
+            // Pre Skeletron
             NPCID.KingSlime,
             NPCID.EyeofCthulhu,
-            NPCID.EaterofWorldsHead,
-            NPCID.BrainofCthulhu,
+            NPCID.EaterofWorldsHead, NPCID.BrainofCthulhu,
             NPCID.QueenBee,
+
+            // Pre Wall of Flesh
             NPCID.SkeletronHead,
             NPCID.Deerclops,
+
+            // Pre Mechanical Bosses
             NPCID.WallofFlesh,
             NPCID.QueenSlimeBoss,
-            NPCID.Retinazer,
-            NPCID.Spazmatism,
+
+            // Pre Plantera
+            NPCID.Retinazer, NPCID.Spazmatism,
             NPCID.TheDestroyer,
             NPCID.SkeletronPrime,
+
+            // Pre Golem
             NPCID.Plantera,
+
+            // Pre Lunatic Cultist
             NPCID.Golem,
             NPCID.DukeFishron,
             NPCID.HallowBoss,
+
+            // Pre Moon Lord
             NPCID.CultistBoss,
+            
+            // End Game
             NPCID.MoonLordCore,
         ]);
 
@@ -178,7 +191,7 @@ namespace sorceryFight.Content.UI.GeneticEditor
             SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
 
             sfPlayer.bossesDefeated = trimmedList.ToHashSet();
-            sfPlayer.unlockedRCT = i >= 36;
+            sfPlayer.unlockedRCT = i >= 14;
             SorceryFightUI.UpdateTechniqueUI?.Invoke();
 
             SorceryFightUI sfUI = (SorceryFightUI)Parent;
