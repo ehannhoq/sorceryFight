@@ -39,7 +39,9 @@ namespace sorceryFight.Content.InnateTechniques
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
             new AmplificationBlue()
-                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedEvilBoss),
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedEvilBoss)
+                .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.EvilBoss"),
+
 
             new MaximumOutputBlue()
                 .SetUnlock(NPCID.WallofFlesh),
