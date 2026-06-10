@@ -174,7 +174,16 @@ namespace sorceryFight.Content.UI.GeneticEditor
                 if (bossesCount < 0 || bossesCount > bosses.Count) return;
 
                 List<int> trimmedList = bosses[..bossesCount];
+
+                HashSet<int> mechanicalBossesDefeated = [NPCID.Retinazer, NPCID.TheDestroyer, NPCID.SkeletronPrime];
+                mechanicalBossesDefeated.IntersectWith(trimmedList.ToHashSet());
+                foreach (int bossType in mechanicalBossesDefeated)
+                {
+                    sfPlayer.AddDefeatedBoss(bossType);
+                }
+
                 sfPlayer.bossesDefeated = trimmedList.ToHashSet();
+
             }
 
             sfPlayer.unlockedRCT = rctState;
@@ -189,6 +198,14 @@ namespace sorceryFight.Content.UI.GeneticEditor
         {
             List<int> trimmedList = bosses[..i];
             SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
+
+            HashSet<int> mechanicalBossesDefeated = [NPCID.Retinazer, NPCID.TheDestroyer, NPCID.SkeletronPrime];
+            mechanicalBossesDefeated.IntersectWith(trimmedList.ToHashSet());
+            foreach (int bossType in mechanicalBossesDefeated)
+            {
+                sfPlayer.AddDefeatedBoss(bossType);
+            }
+
 
             sfPlayer.bossesDefeated = trimmedList.ToHashSet();
             sfPlayer.unlockedRCT = i >= 14;
