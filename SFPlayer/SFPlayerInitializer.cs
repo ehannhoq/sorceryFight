@@ -100,7 +100,7 @@ namespace sorceryFight.SFPlayer
             tag["ctCostReduction"] = ctCostReduction;
 
             if (innateTechnique != null)
-                tag["innateTechnique"] = innateTechnique.Name;
+                tag["innateTechnique"] = innateTechnique.InternalName;
 
             tag["cursedEnergy"] = cursedEnergy;
 

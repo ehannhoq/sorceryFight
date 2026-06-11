@@ -15,8 +15,7 @@ namespace sorceryFight.Content.InnateTechniques
 {
     public class VesselTechnique : InnateTechnique
     {
-        public override string Name => "Vessel";
-        public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.Vessel.DisplayName");
+        public override string InternalName => "Vessel";
 
         public override Color innateBGColor => new Color(236, 171, 162, 100);
 

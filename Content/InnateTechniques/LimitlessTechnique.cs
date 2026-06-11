@@ -14,8 +14,7 @@ namespace sorceryFight.Content.InnateTechniques
 {
     public class LimitlessTechnique : InnateTechnique
     {
-        public override string Name => "Limitless";
-        public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.Limitless.DisplayName");
+        public override string InternalName => "Limitless";
 
         public override Color innateBGColor => new Color(150, 219, 235, 85);
 
@@ -41,7 +40,6 @@ namespace sorceryFight.Content.InnateTechniques
             new AmplificationBlue()
                 .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedEvilBoss)
                 .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.EvilBoss"),
-
 
             new MaximumOutputBlue()
                 .SetUnlock(NPCID.WallofFlesh),

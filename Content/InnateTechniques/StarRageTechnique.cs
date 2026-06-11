@@ -18,8 +18,7 @@ namespace sorceryFight.Content.InnateTechniques
 {
     public class StarRageTechnique : InnateTechnique
     {
-        public override string Name => "StarRage";
-        public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.StarRage.DisplayName");
+        public override string InternalName => "StarRage";
 
         public override Color innateBGColor => new Color(11, 13, 30, 70);
 

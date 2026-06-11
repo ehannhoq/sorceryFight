@@ -32,8 +32,8 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
             center = new Vector2(18f + backgroundTexture.Width / 2, closeButtonTexture.Height + 24f + backgroundTexture.Height / 2);
 
-            Texture2D centerIconBackgroundTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{player.innateTechnique.Name}_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            Texture2D centerIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{player.innateTechnique.Name}_Icon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D centerIconBackgroundTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{player.innateTechnique.InternalName}_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D centerIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{player.innateTechnique.InternalName}_Icon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
             SpecialUIElement centerIconBG = new SpecialUIElement(centerIconBackgroundTexture, default, -1f, 0.05f, 1.5f);
             centerIconBG.Left.Set(center.X - centerIconBackgroundTexture.Width / 2, 0f);
@@ -55,7 +55,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             - ehann.
             **/
 
-            switch (player.innateTechnique.Name)
+            switch (player.innateTechnique.InternalName)
             {
                 case "Limitless":
                     DrawLimitless(center, player);

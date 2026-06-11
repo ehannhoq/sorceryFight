@@ -44,7 +44,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             this.sfPlayer = sfPlayer;
             isInitialized = false;
 
-            Texture2D treeBGTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{sfPlayer.innateTechnique.Name}/Background", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D treeBGTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{sfPlayer.innateTechnique.InternalName}/Background", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             borderTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/CursedTechniqueMenuBGBorder", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             closeButtonTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/CursedTechniqueMenuBGCloseButton", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             moveButtonTexture = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedTechniqueMenu/CursedTechniqueMenuBGMoveButton", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
@@ -179,7 +179,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
                 if (sfPlayer.innateTechnique.DomainExpansion != null)
                 {
-                    Texture2D domainIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{sfPlayer.innateTechnique.Name}/DomainIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D domainIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{sfPlayer.innateTechnique.InternalName}/DomainIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                     string domainIconHoverText = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? $"{sfPlayer.innateTechnique.DomainExpansion.DisplayName}\n{sfPlayer.innateTechnique.DomainExpansion.Description(sfPlayer)}"
                     : $"{sfPlayer.innateTechnique.DomainExpansion.LockedDescription}";
                     Texture2D finalDomainTexture = sfPlayer.innateTechnique.DomainExpansion.Unlocked(sfPlayer) ? ref domainIconTexture : ref lockedTexture;
@@ -192,7 +192,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             }
             else
             {
-                Texture2D leftItAllBehindIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{sfPlayer.innateTechnique.Name}/LeftItAllBehindIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                Texture2D leftItAllBehindIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/CursedTechniqueMenu/{sfPlayer.innateTechnique.InternalName}/LeftItAllBehindIcon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
                 string leftItAllBehindIconHoverText = sfPlayer.unlockedRCT ? $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.LeftItAllBehindIcon.DisplayName")}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.LeftItAllBehindIcon.Info")}"
                 : $"{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.LeftItAllBehindIcon.LockedInfo")}";

@@ -154,7 +154,7 @@ public class CursedEnergyUI : ModSystem
         float completionRatio = sf.maxCursedEnergy <= 0f ? 0f : sf.cursedEnergy / sf.maxCursedEnergy;
         Texture2D activeBar = barTexture;
 
-        if(sf.innateTechnique.Name == "HeavenlyRestriction")
+        if(sf.innateTechnique.InternalName == "HeavenlyRestriction")
         {
             activeBar = ModContent.Request<Texture2D>("sorceryFight/Content/UI/CursedEnergyBar/StaminaBarFill", AssetRequestMode.ImmediateLoad).Value;
         }

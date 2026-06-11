@@ -14,8 +14,7 @@ namespace sorceryFight.Content.InnateTechniques
 {
     public class HeavenlyRestriction : InnateTechnique
     {
-        public override string Name => "HeavenlyRestriction";
-        public override string DisplayName => SFUtils.GetLocalizationValue($"Mods.sorceryFight.Misc.InnateTechniques.{Name}.DisplayName");
+        public override string InternalName => "HeavenlyRestriction";
 
         public override Color innateBGColor => new Color(120, 120, 120, 70);
 

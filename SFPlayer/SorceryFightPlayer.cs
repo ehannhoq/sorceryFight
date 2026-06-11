@@ -175,7 +175,7 @@ namespace sorceryFight.SFPlayer
         {
             if (innateTechnique == null || Main.dedServ) return;
 
-            if (innateTechnique.Name == "StarRage")
+            if (innateTechnique.InternalName == "StarRage")
                 maxStarEnergy = 100f;
             else
                 maxStarEnergy = 0;
@@ -424,7 +424,7 @@ namespace sorceryFight.SFPlayer
 
                 int variation = pictureLocket ? Main.rand.Next(-3, 2) : Main.rand.Next(-5, 4);
 
-                lowerWindowTime = innateTechnique.Name == "Vessel" ? 14 - blackFlashCounter / 2 + variation : 15 - blackFlashCounter / 2 + variation;
+                lowerWindowTime = innateTechnique.InternalName == "Vessel" ? 14 - blackFlashCounter / 2 + variation : 15 - blackFlashCounter / 2 + variation;
                 sfUI.BlackFlashWindow(lowerWindowTime, lowerWindowTime + blackFlashWindowTime);
             }
 
@@ -696,7 +696,7 @@ namespace sorceryFight.SFPlayer
             if (blessedByBlackFlash)
                 Player.AddBuff(ModContent.BuffType<BlessedByBlackSparksBuff>(), 2);
 
-            if (innateTechnique.Name == "Vessel")
+            if (innateTechnique.InternalName == "Vessel")
                 Player.AddBuff(ModContent.BuffType<SukunasVesselBuff>(), 2);
 
             if (explosiveCursedEnergy)

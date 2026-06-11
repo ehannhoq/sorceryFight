@@ -204,7 +204,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             {
                 if (sfPlayer.innateTechnique.PassiveTechniques[i].IsUnlocked(sfPlayer))
                 {
-                    Texture2D ptTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueSelector/{sfPlayer.innateTechnique.Name}/p{i}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D ptTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueSelector/{sfPlayer.innateTechnique.InternalName}/p{i}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                     string ptHoverText = $"{sfPlayer.innateTechnique.PassiveTechniques[i].DisplayName.Value}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip")}";
                     TechniqueSelectorButton ptIcon = new TechniqueSelectorButton(ptTexture, ptHoverText, i);
                     ptIcon.Left.Set(0f, 0f);

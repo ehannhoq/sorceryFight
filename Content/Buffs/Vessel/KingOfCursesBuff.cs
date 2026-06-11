@@ -25,7 +25,7 @@ namespace sorceryFight.Content.Buffs.Vessel
                 return;
             }
 
-            if (sfPlayer.innateTechnique.Name.Equals("Vessel"))
+            if (sfPlayer.innateTechnique.InternalName.Equals("Vessel"))
             {
                 sfPlayer.innateTechnique = new ShrineTechnique();
                 rctTracker[player.whoAmI] = sfPlayer.unlockedRCT;

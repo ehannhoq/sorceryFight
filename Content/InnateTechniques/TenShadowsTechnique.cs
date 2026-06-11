@@ -16,8 +16,7 @@ namespace sorceryFight.Content.InnateTechniques
 {
     public class TenShadowsTechnique : InnateTechnique
     {
-        public override string Name => "TenShadows";
-        public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.TenShadows.DisplayName");
+        public override string InternalName => "TenShadows";
 
         public override Color innateBGColor => new Color(11, 13, 30, 70);
 

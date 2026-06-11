@@ -30,7 +30,7 @@ namespace sorceryFight.Content.Items.Consumables
 
         public override bool CanUseItem(Player player)
         {
-            string techName = player.SorceryFight().innateTechnique.Name;
+            string techName = player.SorceryFight().innateTechnique.InternalName;
             return techName == "Vessel";
         }
 
@@ -39,7 +39,7 @@ namespace sorceryFight.Content.Items.Consumables
             if (player.whoAmI == Main.myPlayer)
             {
                 SorceryFightPlayer sf = player.SorceryFight();
-                if (!sf.innateTechnique.Name.Equals("Vessel")) return false;
+                if (!sf.innateTechnique.InternalName.Equals("Vessel")) return false;
 
                 //SoundEngine.PlaySound(SoundID.Item4);
 

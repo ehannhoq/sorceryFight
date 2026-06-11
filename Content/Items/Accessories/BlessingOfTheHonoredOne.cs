@@ -49,7 +49,7 @@ namespace sorceryFight.Content.Items.Accessories
             SorceryFightPlayer sfPlayer = player.SorceryFight();
             if (sfPlayer.innateTechnique != null)
             {
-                if (sfPlayer.innateTechnique.Name.Equals("Limitless"))
+                if (sfPlayer.innateTechnique.InternalName.Equals("Limitless"))
                     player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1f + limitlessDamageIncrease;
                 else
                     player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1f + cursedTechniqueDamageIncrease;

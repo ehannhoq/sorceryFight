@@ -56,8 +56,8 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
             for (int i = 0; i < InnateTechnique.InnateTechniques.Count; i++)
             {
                 InnateTechnique t = InnateTechnique.InnateTechniques[i];
-                Texture2D iconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.Name}_Icon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                Texture2D backgroundTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.Name}_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                Texture2D iconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.InternalName}_Icon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                Texture2D backgroundTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.InternalName}_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
                 SpecialUIElement background = new SpecialUIElement(backgroundTexture, default, -1f, 0.05f);
                 background.Left.Set(iconPositions[i].X - (backgroundTexture.Width / 2), 0f);
@@ -99,7 +99,7 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
                     sfPlayer.DisablePTBooleans();
                     sfPlayer.cursedEnergy = sfPlayer.maxCursedEnergy;
                     sfPlayer.bloodEnergy = 10f;
-                    ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.{selectedTechnique.Name}"), Color.Khaki, player.whoAmI);
+                    ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.{selectedTechnique.InternalName}"), Color.Khaki, player.whoAmI);
 
                     if (!sfPlayer.usedYourPotentialBefore)
                     {

@@ -16,8 +16,7 @@ namespace sorceryFight.Content.InnateTechniques
 {
     public class BloodManipulationTechnique : InnateTechnique
     {
-        public override string Name => "BloodManipulation";
-        public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.BloodManipulation.DisplayName");
+        public override string InternalName => "BloodManipulation";
 
         //public override Color innateBGColor => new Color(205, 205, 205, 70);
         public override Color innateBGColor => new Color(156, 14, 134, 110);

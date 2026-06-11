@@ -13,8 +13,7 @@ namespace sorceryFight.Content.InnateTechniques
 {
     public class PrivatePureLoveTrainTechnique : InnateTechnique
     {
-        public override string Name => "PrivatePureLoveTrain";
-        public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.PrivatePureLoveTrain.DisplayName");
+        public override string InternalName => "PrivatePureLoveTrain";
 
         public override Color innateBGColor => new Color(160, 232, 64, 85);
 

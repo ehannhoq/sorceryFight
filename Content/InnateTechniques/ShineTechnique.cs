@@ -14,8 +14,7 @@ namespace sorceryFight.Content.InnateTechniques
 {
     public class ShrineTechnique : InnateTechnique
     {
-        public override string Name => "Shrine";
-        public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.Shrine.DisplayName");
+        public override string InternalName => "Shrine";
         //public override Color innateBGColor => new Color(98, 4, 4, 70);
         public override Color innateBGColor => new Color(169, 4, 4, 85);
 

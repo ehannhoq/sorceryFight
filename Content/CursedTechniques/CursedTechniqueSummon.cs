@@ -231,14 +231,14 @@ namespace sorceryFight.Content.CursedTechniques
             //this == guard is extremely important for multiplayer syncing 
             if (Projectile.owner == Main.myPlayer)
             {
-                if (SFOwner?.innateTechnique?.Name == null)
+                if (SFOwner?.innateTechnique?.InternalName == null)
                 {
                     Main.NewText("No innate technique found for this minion");
                     Projectile.Kill();
                     return;
                 }
 
-                if (SFOwner.innateTechnique.Name != ParentInnateName)
+                if (SFOwner.innateTechnique.InternalName != ParentInnateName)
                 {
                     Projectile.Kill();
                     return;

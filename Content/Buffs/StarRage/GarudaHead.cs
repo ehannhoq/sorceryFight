@@ -49,7 +49,7 @@ namespace sorceryFight.Content.Buffs.StarRage
             //player.AddBuff(ModContent.BuffType<KingofConstellationsBuff>(), 1);
             if (Projectile.owner == Main.myPlayer)
             {
-                if (player.dead || sfPlayer.innateTechnique.Name != "StarRage")
+                if (player.dead || sfPlayer.innateTechnique.InternalName != "StarRage")
                 {
                     sfPlayer.summonGaruda = false;
                 }

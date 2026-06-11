@@ -32,14 +32,14 @@ namespace sorceryFight.Content.Items.Consumables
             {
                 SorceryFightPlayer sf = player.SorceryFight();
 
-                if (!sf.innateTechnique.Name.Equals("Vessel")) return false;
+                if (!sf.innateTechnique.InternalName.Equals("Vessel")) return false;
 
                 if (!sf.sukunasFingers[Id - 1])
                 {
                     sf.sukunasFingers[Id - 1] = true;
                     SoundEngine.PlaySound(SoundID.Item2, player.Center);
 
-                    if (sf.innateTechnique.Name.Equals("Vessel"))
+                    if (sf.innateTechnique.InternalName.Equals("Vessel"))
                         SorceryFightUI.UpdateTechniqueUI.Invoke();
                 }
                 return true;

@@ -9,17 +9,18 @@ using System;
 
 namespace sorceryFight.Content.InnateTechniques
 {
-    public abstract class InnateTechnique()
+    public abstract class InnateTechnique
     {
         /// <summary>
         /// The internal name of the innate technique
         /// </summary>
-        public abstract string Name { get; }
+        public abstract string InternalName { get; }
+
 
         /// <summary>
         /// The display name of the innate technique
         /// </summary>
-        public abstract string DisplayName { get; }
+        public string DisplayName => SFUtils.GetLocalizationValue($"Mods.sorceryFight.Misc.InnateTechniques.{InternalName}.DisplayName");
         public abstract List<PassiveTechnique> PassiveTechniques { get; }
         public abstract List<CursedTechnique> CursedTechniques { get; }
         public abstract PlayerDomainExpansion DomainExpansion { get; }
@@ -84,5 +85,19 @@ namespace sorceryFight.Content.InnateTechniques
         /// </summary>
         public virtual void UpdateLifeRegen(SorceryFightPlayer sf) { }
         public virtual void PreUpdate(SorceryFightPlayer sf) { }
+
+        public InnateTechnique()
+        {
+            foreach (CursedTechnique ct in CursedTechniques)
+            {
+                ct.SetParentTechnique(InternalName);
+            }
+
+            // foreach (PassiveTechnique pt in PassiveTechniques)
+            // {
+            //     pt.SetParentTechnique(InternalName);
+            // }
+        }
+
     }
 }

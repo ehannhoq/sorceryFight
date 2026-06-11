@@ -50,7 +50,7 @@ namespace sorceryFight.Content.Items.Accessories
             SorceryFightPlayer sfPlayer = player.SorceryFight();
             if (sfPlayer.innateTechnique != null)
             {
-                if (sfPlayer.innateTechnique.Name.Equals("Shrine"))
+                if (sfPlayer.innateTechnique.InternalName.Equals("Shrine"))
                     player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1f + shrineDamageIncrease;
                 else
                     player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1f + cursedTechniqueDamageIncrease;
