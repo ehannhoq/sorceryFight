@@ -32,7 +32,7 @@ namespace sorceryFight.Content.CursedTechniques
         public virtual Color selectorBGColor { get; set; }
         public virtual Color selectorBorderColor { get; set; }
 
-        
+
         /// Variables below are set from methods that are used in each innate technique when adding a new technique to it.
         private Predicate<SorceryFightPlayer> unlocked;
         private int bossType = -1;
@@ -175,6 +175,10 @@ namespace sorceryFight.Content.CursedTechniques
         }
 
 
+
+        /// <summary>
+        /// Returns the final damage of the cursed technique, after applying boss multiplier and damage class modifiers.
+        /// </summary>
         public virtual int CalculateTrueDamage(SorceryFightPlayer sf)
         {
             int damage = baseDamage + (sf.bossesDefeated.Count * damagePerBoss);
@@ -182,6 +186,9 @@ namespace sorceryFight.Content.CursedTechniques
         }
 
 
+        /// <summary>
+        /// Returns the total cost of the cursed technique, after applying boss defeated discount and accessory-related deductions.
+        /// </summary>
         public virtual float CalculateTrueCost(SorceryFightPlayer sf)
         {
             float finalCost = cost - (cost * (sf.bossesDefeated.Count / 100f));
