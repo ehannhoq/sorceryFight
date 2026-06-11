@@ -14,7 +14,7 @@ using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
-    public class UnlimitedPiercingBlood : CursedTechnique
+    public class UnlimitedPiercingBlood : CursedTechniqueContinuous
     {
         public static Texture2D texture;
         public static Texture2D convergenceTexture;
@@ -30,7 +30,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         private int beamFrame = 0;
         private int collisionFrame = 0;
         private int frameTime = 0;
-        private bool keyHeld = false;
         private const float MAX_LENGTH = 1600f;
         private const float STEP_SIZE = 4f;
         private const float BASE_BEAM_HEIGHT = 0.5f;
@@ -66,14 +65,12 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Main.projectile[index].rotation = (Main.MouseWorld - sf.Player.Center).ToRotation();
             return index;
         }
-        
+
 
         public override void AI()
         {
             if (Main.myPlayer == Projectile.owner)
             {
-                keyHeld = SFKeybinds.UseTechnique.Current;
-
                 Player player = Main.player[Projectile.owner];
                 Projectile.Center = player.Center;
 
@@ -124,21 +121,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
             if (beamHeight < 2.0f && keyHeld)
                 beamHeight += 0.2f;
-
-            //eventually create code to make sure only one instance of this projecitle can exist at a time, same for normal piercing blood
-            if (keyHeld)
-            {
-                SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
-                // ActiveDrain(sf);
-            }
-
-            if (!keyHeld)
-            {
-                beamHeight -= 0.2f;
-                Main.player[Projectile.owner].SorceryFight().disableRegenFromProjectiles = false;
-                if (beamHeight <= 0f)
-                    Projectile.Kill();
-            }
 
             if (Main.myPlayer == Projectile.owner)
             {
@@ -196,6 +178,16 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 }
             }
         }
+
+
+        public override void Destroy()
+        {
+            beamHeight -= 0.2f;
+            Main.player[Projectile.owner].SorceryFight().disableRegenFromProjectiles = false;
+            if (beamHeight <= 0f)
+                Projectile.Kill();
+        }
+
 
 
         public override bool PreDraw(ref Color lightColor)

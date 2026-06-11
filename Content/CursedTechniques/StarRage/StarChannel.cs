@@ -12,9 +12,8 @@ using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.CursedTechniques.StarRage
 {
-    public class StarChannel : CursedTechnique
+    public class StarChannel : CursedTechniqueContinuous
     {
-
         public static readonly int FRAME_COUNT = 8;
         public static readonly int TICKS_PER_FRAME = 5;
         public static Texture2D texture;
@@ -24,7 +23,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         private float blackholeThreshold = 360f;
         private const int blackHoleDamage = 40000;
         private float starRegen => 34f;
-        private bool keyHeld = false;
         public float animScale;
         public bool hasPlayedSound;
 
@@ -65,8 +63,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         {
             if (Main.myPlayer == Projectile.owner)
             {
-                keyHeld = SFKeybinds.UseTechnique.Current;
-
                 Projectile.Center = Main.MouseWorld;
 
                 Player player = Main.player[Projectile.owner];
@@ -74,7 +70,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
                 if (keyHeld)
                 {
-
                     //add star power
                     sf.starEnergyRegenPerSecond += starRegen;
                     //check if star energy is going to be full, if it is, play sound effect
@@ -87,10 +82,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                     blackholeThreshold--;
                 }
 
-                if (!keyHeld)
-                {
-                    Projectile.Kill();
-                }
 
                 if(blackholeThreshold <= 0)
                 {

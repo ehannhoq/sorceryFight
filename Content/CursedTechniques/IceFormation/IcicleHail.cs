@@ -17,13 +17,12 @@ using static Terraria.GameContent.Animations.IL_Actions.NPCs;
 
 namespace sorceryFight.Content.CursedTechniques.IceFormation
 {
-    public class IcicleHail : CursedTechnique
+    public class IcicleHail : CursedTechniqueContinuous
     {
         public static readonly ProjectilePool Pool = new ProjectilePool();
 
         public override string InternalName => "IcicleHail";
 
-        private bool keyHeld = false;
         private float spawnTimer = 0;
         
 
@@ -72,7 +71,6 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
 
         public override void AI()
         {
-            keyHeld = SFKeybinds.UseTechnique.Current;
             //Mod.Logger.Info("AI running");
 
             if (Main.myPlayer == Projectile.owner)
@@ -136,11 +134,6 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
                         }
 
                     }
-
-                }
-                else
-                {
-                    Projectile.Kill();
                 }
             }
         }

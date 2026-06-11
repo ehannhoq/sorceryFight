@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
-    public class PiercingBlood : CursedTechnique
+    public class PiercingBlood : CursedTechniqueContinuous
     {
         public static Texture2D texture;
         public static Texture2D convergenceTexture;
@@ -26,7 +26,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         private int convergenceFrame = 0;
         private int collisionFrame = 0;
         private int frameTime = 0;
-        private bool keyHeld = false;
         private const float MAX_LENGTH = 1600f;
         private const float STEP_SIZE = 4f;
         private const float BASE_BEAM_HEIGHT = 0.5f;
@@ -65,10 +64,10 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public override void AI()
         {
+            base.AI();
+
             if (Main.myPlayer == Projectile.owner)
             {
-                keyHeld = SFKeybinds.UseTechnique.Current;
-
                 Player player = Main.player[Projectile.owner];
                 Projectile.Center = player.Center;
 
@@ -116,20 +115,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             if (beamHeight < 2.0f && keyHeld)
                 beamHeight += 0.2f;
 
-            //need to add code to make sure multiple of this projecitle can't be active at the same time
-            if (keyHeld)
-            {
-                SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
-                // ActiveDrain(sf);
-            }
-
-            if (!keyHeld)
-            {
-                beamHeight -= 0.2f;
-                Main.player[Projectile.owner].SorceryFight().disableRegenFromProjectiles = false;
-                if (beamHeight <= 0f)
-                    Projectile.Kill();
-            }
 
             if (Main.myPlayer == Projectile.owner)
             {
@@ -147,6 +132,16 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 Projectile.localAI[0] = beamLength;
             }
         }
+
+
+        public override void Destroy()
+        {
+            beamHeight -= 0.2f;
+            Main.player[Projectile.owner].SorceryFight().disableRegenFromProjectiles = false;
+            if (beamHeight <= 0f)
+                Projectile.Kill();
+        }
+
 
         public override bool PreDraw(ref Color lightColor)
         {

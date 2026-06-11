@@ -65,12 +65,6 @@ namespace sorceryFight.Content.CursedTechniques
 
 
         /// <summary>
-        /// Determines whether this cursed technique drains ce gradually instead of a one-time cost. If true, cost is converted to cost/second.
-        /// </summary>
-        public bool isCostContinuous = false;
-
-
-        /// <summary>
         /// Initial speed the cursed technique is fired at.
         /// </summary>
         public float speed = 0;
@@ -166,7 +160,7 @@ namespace sorceryFight.Content.CursedTechniques
             string damage = SFUtils.GetLocalization(localizationCategoryKey + ".Damage")
                 .WithFormatArgs(CalculateTrueDamage(sf)).Value;
 
-            string ceCost = SFUtils.GetLocalization(localizationCategoryKey + (isCostContinuous ? ".ContinuousCost" : ".Cost"))
+            string ceCost = SFUtils.GetLocalization(localizationCategoryKey + ".Cost")
                 .WithFormatArgs(CalculateTrueCost(sf)).Value;
 
             string stats = damage + "\n" + ceCost;
@@ -193,7 +187,7 @@ namespace sorceryFight.Content.CursedTechniques
         {
             float finalCost = cost - (cost * (sf.bossesDefeated.Count / 100f));
             finalCost *= 1 - sf.ctCostReduction;
-            return isCostContinuous ? SFUtils.RateSecondsToTicks(finalCost) : finalCost;
+            return finalCost;
         }
 
 

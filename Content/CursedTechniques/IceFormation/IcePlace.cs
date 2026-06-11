@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.CursedTechniques.IceFormation
 {
-    public class IcePlace : CursedTechnique
+    public class IcePlace : CursedTechniqueContinuous
     {
         public override string InternalName => "IcePlace";
         
@@ -26,7 +26,6 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
         // public override float Speed => 0f;
         // public override float LifeTime => 9000f;
 
-        public bool keyHeld;
         private int placeCooldown = 0;
         private static readonly int PLACE_DELAY = 3;
 
@@ -56,20 +55,6 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
-            SorceryFightPlayer sf = player.SorceryFight();
-
-            if (Main.myPlayer == Projectile.owner)
-            {
-                keyHeld = SFKeybinds.UseTechnique.Current;
-            }
-
-            if (!keyHeld || sf.cursedEnergy <= 0)
-            {
-                Projectile.Kill();
-                return;
-            }
-
-            // ActiveDrain(sf);
 
             if (placeCooldown > 0)
             {

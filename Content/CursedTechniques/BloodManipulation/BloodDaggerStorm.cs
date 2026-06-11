@@ -8,11 +8,10 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
-    public class BloodDaggerStorm : CursedTechnique
+    public class BloodDaggerStorm : CursedTechniqueContinuous
     {
         public override string InternalName => "BloodDaggerStorm";
 
-        private bool keyHeld = false;
         private float spawnTimer = 0;
 
 
@@ -24,8 +23,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public override void AI()
         {
-            keyHeld = SFKeybinds.UseTechnique.Current;
-
             if (Main.myPlayer == Projectile.owner)
             {
                 if (keyHeld)
@@ -33,7 +30,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                     spawnTimer++;
 
                     SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
-                    // ActiveDrain(sf);
 
                     if (spawnTimer >= 10f)
                     {
@@ -54,11 +50,6 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                         ai1: -1f
                         );
                     }
-
-                }
-                else
-                {
-                    Projectile.Kill();
                 }
             }
         }
