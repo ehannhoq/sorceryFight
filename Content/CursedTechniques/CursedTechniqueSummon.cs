@@ -43,12 +43,6 @@ namespace sorceryFight.Content.CursedTechniques
         //  CONFIGURATION — Override these in subclasses
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-
-        //Cleans up the minions if state switches
-        //Important to set in sub classes unless it's a multi tech summon
-        public virtual string ParentInnateName => null;
-
-
         /// <summary>
         /// Determines the movement style. Default Sentry.
         /// </summary>
@@ -238,7 +232,7 @@ namespace sorceryFight.Content.CursedTechniques
                     return;
                 }
 
-                if (SFOwner.innateTechnique.InternalName != ParentInnateName)
+                if (SFOwner.innateTechnique.InternalName != GetParentTechnique())
                 {
                     Projectile.Kill();
                     return;
@@ -247,10 +241,10 @@ namespace sorceryFight.Content.CursedTechniques
 
 
             // CE drain
-            if (Projectile.owner == Main.myPlayer)
-            {
-                ActiveDrain(SFOwner);
-            }
+            // if (Projectile.owner == Main.myPlayer)
+            // {
+            //     ActiveDrain(SFOwner);
+            // }
 
 
             SummonTimer++;
@@ -284,7 +278,8 @@ namespace sorceryFight.Content.CursedTechniques
         /// Override this with your summon's actual behavior.
         /// Called every tick after base logic (gravity, targeting, etc.) runs.
         /// </summary>
-        public virtual void SummonAI() {
+        public virtual void SummonAI()
+        {
             if (SummonTimer == 1f)
                 Main.NewText($"Summon AI running netMode={Main.netMode} owner={Projectile.owner} myPlayer={Main.myPlayer}");
         }
@@ -347,29 +342,13 @@ namespace sorceryFight.Content.CursedTechniques
 
             if (found)
             {
-                if (DisplayNameInGame)
-                {
-                    int idx = CombatText.NewText(player.getRect(), textColor, $"{DisplayName.Value} - Dismissed");
-                    Main.combatText[idx].lifeTime = 120;
-                }
+                int idx = CombatText.NewText(player.getRect(), Color.White, $"{DisplayName} - Dismissed");
+                Main.combatText[idx].lifeTime = 120;
                 return -1;
             }
 
-            // Deduct costs
-            sf.cursedEnergy -= CalculateTrueCost(sf);
-
-            if (BloodCost > 0)
-                sf.bloodEnergy -= BloodCost;
-
-            if (StarCost > 0)
-                sf.starEnergy -= StarCost;
-
-            // Display name
-            if (DisplayNameInGame)
-            {
-                int idx = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
-                Main.combatText[idx].lifeTime = 180;
-            }
+            int idx2 = CombatText.NewText(player.getRect(), Color.White, DisplayName);
+            Main.combatText[idx2].lifeTime = 180;
 
             // Spawn
             Vector2 spawnPos = Main.MouseWorld;
@@ -389,11 +368,11 @@ namespace sorceryFight.Content.CursedTechniques
             );
 
             if (Main.projectile.IndexInRange(projIndex))
-                Main.projectile[projIndex].originalDamage = Damage;
+                Main.projectile[projIndex].originalDamage = baseDamage;
 
             // dont need
             //if (Style == SummonStyle.Sentry)
-                //player.UpdateMaxTurrets();
+            //player.UpdateMaxTurrets();
 
             SorceryFightMod.Log.Info("Summoning Stuff after");
 

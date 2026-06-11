@@ -16,6 +16,12 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
     public class UnlimitedPiercingBlood : CursedTechnique
     {
+        public static Texture2D texture;
+        public static Texture2D convergenceTexture;
+        public static Texture2D collisionTexture;
+
+        public override string InternalName => "UnlimitedPiercingBlood";
+
         private const int CONVERGENCE_FRAMES = 5;
         private const int BEAM_FRAMES = 5;
         private const int COLLISION_FRAMES = 5;
@@ -24,38 +30,14 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         private int beamFrame = 0;
         private int collisionFrame = 0;
         private int frameTime = 0;
-        public static Texture2D texture;
-        public static Texture2D convergenceTexture;
-        public static Texture2D collisionTexture;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.UnlimitedPiercingBlood.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.UnlimitedPiercingBlood.Description");
-        public override float Cost => 750f;
-        public override Color textColor => new Color(132, 4, 4);
-        public override bool DisplayNameInGame => true;
-        public override int Damage => 400;
-        public override int MasteryDamageMultiplier => 24;
-        public override float Speed => 0f;
-
-        //Lifetime is made useless but must be implmented 
-        public override float LifeTime => 240f;
-
-        //this number gets doubled in SorceryFightPlayer.ApplyBloodCost, so the actual cost is 8 CE/s
-        public override float BloodCostPerSecond => 125f;
-
         private bool keyHeld = false;
         private const float MAX_LENGTH = 1600f;
         private const float STEP_SIZE = 4f;
         private const float BASE_BEAM_HEIGHT = 0.5f;
-
         private int daggerSpawnTimer = 0;
-
         ref float justSpawned => ref Projectile.ai[0];
         ref float beamHeight => ref Projectile.ai[1];
 
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<UnlimitedPiercingBlood>();
-        }
 
         public override void SetStaticDefaults()
         {
@@ -63,8 +45,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/UnlimitedPiercingBlood", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             convergenceTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/UnlimitedConvergence", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             collisionTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/BloodManipulation/UnlimitedPiercingBloodCollision", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
         }
+
 
         public override void SetDefaults()
         {
@@ -75,8 +57,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Projectile.penetrate = -1;
             Projectile.ignoreWater = true;
             beamHeight = 0.0f;
-            //Projectile.timeLeft = (int)LifeTime;
         }
+
 
         public override int UseTechnique(SorceryFightPlayer sf)
         {
@@ -84,6 +66,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Main.projectile[index].rotation = (Main.MouseWorld - sf.Player.Center).ToRotation();
             return index;
         }
+        
 
         public override void AI()
         {
@@ -146,7 +129,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             if (keyHeld)
             {
                 SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
-                ActiveDrain(sf);
+                // ActiveDrain(sf);
             }
 
             if (!keyHeld)
@@ -214,6 +197,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             }
         }
 
+
         public override bool PreDraw(ref Color lightColor)
         {
             float beamLength = Projectile.localAI[0] - 50f;
@@ -273,6 +257,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
             return false;
         }
+
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {

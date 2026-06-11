@@ -13,25 +13,11 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
 {
     public class MaxElephant : CursedTechniqueSummon
     {
+        public override string InternalName => "MaxElephant";
+
         public override SummonStyle Style => SummonStyle.Sentry;
         public override bool SentryTileCollide => true;
-
-        public override LocalizedText DisplayName =>
-            SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.MaxElephant.DisplayName");
-        public override string Description =>
-            SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.MaxElephant.Description");
-
-        public override float Cost => 60f;
-        public override float CursedCostPerSecond => 3f;
-        public override Color textColor => new Color(200, 180, 100);
-        public override bool DisplayNameInGame => true;
-        public override int Damage => 25;
-        public override int MasteryDamageMultiplier => 40;
-        public override float Speed => 0f;
-        public override float LifeTime => 0f;
         public override float DetectionRange => 800f;
-        public override string ParentInnateName => "TenShadows";
-
         private const int FRAME_COUNT = 7;
         private const int TICKS_PER_FRAME = 5;
         private const int FALL_DAMAGE_MULTIPLIER = 5;
@@ -40,12 +26,12 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         private int beamIndex = -1;
         private Vector2 lastPosition;
 
-        public float animScale;
-
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<MaxElephant>();
-        }
+        // public override float Cost => 60f;
+        // public override float CursedCostPerSecond => 3f;
+        // public override int Damage => 25;
+        // public override int MasteryDamageMultiplier => 40;
+        // public override float Speed => 0f;
+        // public override float LifeTime => 0f;
 
         public override void SetStaticDefaults()
         {
@@ -57,8 +43,6 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         {
             Projectile.width = 150;
             Projectile.height = 120;
-            animScale = 1.5f;
-
         }
 
         //we still want it to do some contact damage, just less than falling
@@ -175,7 +159,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
                 lightColor,
                 Projectile.rotation,
                 origin,
-                animScale,
+                1.5f,
                 flip,
                 0f
             );

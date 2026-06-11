@@ -20,16 +20,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public static readonly int FRAME_COUNT = 4;
         public static readonly int TICKS_PER_FRAME = 5;
 
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HollowPurple200Percent.Description");
-        public override float Cost { get; } = 1100f;
-        public override Color textColor { get; } = new Color(235, 117, 233);
-        public override bool DisplayNameInGame { get; } = false;
-
-        public override int Damage => 50000;
-        public override int MasteryDamageMultiplier => 200;
-        public override float Speed { get; } = 50f;
-        public override float LifeTime { get; } = 500f;
+        public override string InternalName => "HollowPurple200Percent";
 
         public static Texture2D texture;
         public static Texture2D flashTexture;
@@ -42,10 +33,16 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public int incantationsIndex;
         public List<string> incantations;
 
-        public override int GetProjectileType()
+
+        public HollowPurple200Percent()
         {
-            return ModContent.ProjectileType<HollowPurple200Percent>();
+            Technique.baseDamage = 30;
+            Technique.damagePerBoss = 10;
+            Technique.cost = 1100f;
+            Technique.speed = 50;
+            Technique.lifetime = 500;
         }
+
 
         public override void SetDefaults()
         {
@@ -86,7 +83,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             float collisionStartTime = 290f * multiplier + bufferTime;
             float totalCastTime = 320f * multiplier + bufferTime * 3f;
 
-            if (Projectile.ai[0] > LifeTime + totalCastTime)
+            if (Projectile.ai[0] > lifetime + totalCastTime)
             {
                 Projectile.Kill();
             }
@@ -219,21 +216,21 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 animScale = 2.5f;
                 Projectile.damage = (int)CalculateTrueDamage(player.SorceryFight());
                 Projectile.Hitbox = hitbox;
-                Projectile.timeLeft = (int)LifeTime;
+                Projectile.timeLeft = lifetime;
                 Main.projectile[(int)Projectile.ai[1]].Kill();
                 Main.projectile[(int)Projectile.ai[2]].Kill();
                 Projectile.Center = player.Center + new Vector2(0f, -40f);
                 SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleSnap, Projectile.Center);
                 player.SorceryFight().disableRegenFromProjectiles = false;
-                int index = CombatText.NewText(player.getRect(), textColor, "Hollow Technique: 200% Hollow Purple.");
+                int index = CombatText.NewText(player.getRect(), new Color(239, 138, 242), "Hollow Technique: 200% Hollow Purple.");
                 Main.combatText[index].lifeTime = 180;
 
                 CameraController.CameraShake(30, 75, 10);
-                ImpactFrameController.ImpactFrame(textColor, 8);
+                ImpactFrameController.ImpactFrame(new Color(239, 138, 242), 8);
 
                 if (Main.myPlayer == Projectile.owner)
                 {
-                    Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
+                    Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * speed;
                     player.SorceryFight().AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), 5);
                     Projectile.netUpdate = true;
                 }
@@ -248,7 +245,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 7), Main.rand.NextFloat(-7, 7));
 
-                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, textColor, false, 0.9f, 1, 30);
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, new Color(239, 138, 242), false, 0.9f, 1, 30);
                 ParticleController.SpawnParticle(particle);
             }
         }

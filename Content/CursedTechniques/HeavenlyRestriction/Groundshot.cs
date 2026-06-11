@@ -13,22 +13,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 {
     public class Groundshot : CursedTechnique
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.Groundshot.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Groundshot.Description");
-
-        public override float Cost => 30f;
-
-        public override Color textColor => Color.White;
-
-        public override bool DisplayNameInGame => false;
-
-        public override int Damage => 50;
-
-        public override int MasteryDamageMultiplier => 75;
-
-        public override float Speed => 30f;
-
-        public override float LifeTime => 300;
+        public override string InternalName => "GroundShot";
 
         private static Texture2D texture;
         private static Texture2D impactTexture;
@@ -38,17 +23,13 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         private Vector2 impactPos = Vector2.Zero;
         private int ownerDirection = 0;
 
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<Groundshot>();
-        }
-
 
         public override void SetStaticDefaults()
         {
             texture = ModContent.Request<Texture2D>(Texture, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             impactTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/HeavenlyRestriction/ImpactRing", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
+
 
         public override void SetDefaults()
         {
@@ -60,6 +41,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
         }
+
 
         public override void OnSpawn(IEntitySource source)
         {
@@ -79,11 +61,12 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             SoundEngine.PlaySound(SorceryFightSounds.GroundshotGroundSlam, player.Center);
         }
 
+
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
 
-            if (tick > LifeTime)
+            if (tick > lifetime)
                 Projectile.Kill();
 
             if (tick < 30)
@@ -104,7 +87,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
                 if (Main.myPlayer == player.whoAmI)
                 {
                     Projectile.RotateVelocityTowardsCursor();
-                    Projectile.velocity *= Speed;
+                    Projectile.velocity *= speed;
                     Projectile.netUpdate = true;
                 }
 
@@ -135,6 +118,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
             player.velocity = Vector2.Zero;
         }
+        
 
         public override bool PreDraw(ref Color lightColor)
         {

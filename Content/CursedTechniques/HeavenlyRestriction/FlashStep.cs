@@ -10,33 +10,13 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 {
     public class FlashStep : CursedTechnique
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.FlashStep.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.FlashStep.Description");
-
-        public override float Cost => 250f;
-
-        public override Color textColor => Color.White;
-
-        public override bool DisplayNameInGame => false;
-
-        public override int Damage => 50;
-
-        public override int MasteryDamageMultiplier => 50;
-
-        public override float Speed => 15f;
-
-        public override float LifeTime => 1;
+        public override string InternalName => "FlashStep";
 
         ref float tick => ref Projectile.ai[0];
         private const float tileSize = 16f;
         private float minDistance = 30f * tileSize;
         private float maxDistance = 50f * tileSize;
 
-
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<FlashStep>();
-        }
 
         public override void OnSpawn(IEntitySource source)
         {

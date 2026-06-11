@@ -15,42 +15,28 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
     //divine white is the parent
     public class DivineWhite : CursedTechniqueSummon
     {
+        public static Texture2D texture;
+        public static Texture2D runTexture;
+
+        public override string InternalName => "DivineWhite";
+
         public override SummonStyle Style => SummonStyle.GroundedMinion;
-
-        public override LocalizedText DisplayName =>
-            SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.DivineWhite.DisplayName");
-        public override string Description =>
-            SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.DivineWhite.Description");
-
-        public override float Cost => 50f;
-        public override Color textColor => new Color(240, 240, 255);
-        public override bool DisplayNameInGame => true;
-        public override int Damage => 25;
-        public override int MasteryDamageMultiplier => 40;
-        public override float Speed => 8f;
-        public override float LifeTime => 0f;
         public override float DetectionRange => 800f;
+
         public override float Gravity => 0.4f;
         public override float MaxFallSpeed => 12f;
         public override bool CanContactDamage => true;
-
-        public override Color selectorBGColor { get; set; }
-        public override Color selectorBorderColor { get; set; }
 
         private const int FRAME_COUNT = 7;
         private const int TICKS_PER_FRAME = 6;
 
         private bool IsMoving => MathF.Abs(Projectile.velocity.X) > 0.5f || MathF.Abs(Projectile.velocity.Y) > 0.5f;
 
-        public static Texture2D texture;
-        public static Texture2D runTexture;
-
-        public override string ParentInnateName => "TenShadows";
-
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<DivineWhite>();
-        }
+        // public override float Cost => 50f;
+        // public override int Damage => 25;
+        // public override int MasteryDamageMultiplier => 40;
+        // public override float Speed => 8f;
+        // public override float LifeTime => 0f;
 
         public override int UseTechnique(SorceryFightPlayer sf)
         {
@@ -68,22 +54,16 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
                 {
                     proj.Kill();
 
-                    if (DisplayNameInGame)
-                    {
-                        int idx = CombatText.NewText(player.getRect(), textColor, $"{DisplayName.Value} - Dismissed");
-                        Main.combatText[idx].lifeTime = 120;
-                    }
+                    int idx = CombatText.NewText(player.getRect(), Color.White, $"{DisplayName} - Dismissed");
+                    Main.combatText[idx].lifeTime = 120;
                     return -1;
                 }
             }
 
             sf.cursedEnergy -= CalculateTrueCost(sf);
 
-            if (DisplayNameInGame)
-            {
-                int idx = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
-                Main.combatText[idx].lifeTime = 180;
-            }
+            int idx2 = CombatText.NewText(player.getRect(), Color.White, DisplayName);
+            Main.combatText[idx2].lifeTime = 180;
 
             var source = player.GetSource_FromThis();
             Vector2 spawnPos = Main.MouseWorld;
@@ -100,7 +80,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
             );
 
             if (Main.projectile.IndexInRange(whiteIndex))
-                Main.projectile[whiteIndex].originalDamage = Damage;
+                Main.projectile[whiteIndex].originalDamage = baseDamage;
 
             int blackIndex = Projectile.NewProjectile(
                 source,
@@ -113,7 +93,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
             );
 
             if (Main.projectile.IndexInRange(blackIndex))
-                Main.projectile[blackIndex].originalDamage = Damage;
+                Main.projectile[blackIndex].originalDamage = baseDamage;
 
             Main.NewText($"Black spawned: index={blackIndex}, type={ModContent.ProjectileType<DivineBlack>()}");
 
@@ -177,7 +157,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
                 float hopStrength = MathHelper.Clamp(dist / 200f, 0.3f, 1f);
 
                 Vector2 dir = (target - Projectile.Center).SafeNormalize(Vector2.UnitX);
-                Projectile.velocity = dir * Speed * hopStrength + new Vector2(MathF.Sign(dir.X) * 2f * hopStrength, -8f * hopStrength);
+                Projectile.velocity = dir * speed * hopStrength + new Vector2(MathF.Sign(dir.X) * 2f * hopStrength, -8f * hopStrength);
                 Projectile.tileCollide = false;
                 Projectile.netUpdate = true;
             }

@@ -25,25 +25,15 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public static readonly int FRAME_COUNT = 9;
         public static readonly int TICKS_PER_FRAME = 2;
         static List<Texture2D> textures;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.DivineFlame.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.DivineFlame.Description");
-        public override float Cost => 525f;
-        public override Color textColor => new Color(242, 144, 82);
-        public override bool DisplayNameInGame => false;
-        public override int Damage => 15000;
-        public override int MasteryDamageMultiplier => 400;
-        public override float Speed => 30f;
-        public override float LifeTime => 300f;
+
+        public override string InternalName => "DivineFlame";
 
         ref float castTimer => ref Projectile.ai[0];
         Rectangle hitbox;
         int texturePhase; // 0 -> Fire strands. 1 -> Fire arrow, 2 -> Explosion
-
         bool casting;
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<DivineFlame>();
-        }
+
+
         public override void SetStaticDefaults()
         {
             if (Main.dedServ) return;
@@ -53,6 +43,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Shrine/DivineFlame", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value,
             };
         }
+
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -65,6 +57,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             hitbox = Projectile.Hitbox;
             texturePhase = 0;
         }
+
         
         public override void AI()
         {
@@ -124,7 +117,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 if (castTimer == (int)transitionTime)
                 {
                     texturePhase = 1;
-                    int index = CombatText.NewText(player.getRect(), textColor, "Divine Flame");
+                    int index = CombatText.NewText(player.getRect(), new Color(242, 140, 44), "Divine Flame");
                     Main.combatText[index].lifeTime = 60;
                     // for (int i = 0; i < 3; i++)
                     // {
@@ -137,7 +130,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
                 if (castTimer == (int)totalCastTime - 10)
                 {
-                    int index = CombatText.NewText(player.getRect(), textColor, "Open.");
+                    int index = CombatText.NewText(player.getRect(), new Color(242, 140, 44), "Open.");
                     Main.combatText[index].lifeTime = 180;
                 }
 
@@ -162,7 +155,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 Projectile.width = 227;
                 Projectile.height = 49;
                 Projectile.Hitbox = hitbox;
-                Projectile.timeLeft = (int)LifeTime;
+                Projectile.timeLeft = lifetime;
                 Projectile.Center = player.Center;
 
 
@@ -177,7 +170,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                             Filters.Scene["SF:DivineFlame"].Deactivate();
                         }
 
-                    Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
+                    Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * speed;
                 }
             }
 
@@ -190,6 +183,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             // GlowSparkParticle particle2 = new GlowSparkParticle(pos2, velocity2, false, 60, 0.05f, textColor, new Vector2(1, 1));
             // GeneralParticleHandler.SpawnParticle(particle2);
         }
+
 
         public override bool PreDraw(ref Color lightColor)
         {
@@ -211,6 +205,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             return false;
         }
 
+
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             if (DomainExpansionController.ActiveDomains.Any(de => de.owner == Projectile.owner && de.GetType() == typeof(MalevolentShrine)))
@@ -220,6 +215,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             base.ModifyHitNPC(target, ref modifiers);
         }
 
+
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             SoundEngine.PlaySound(SorceryFightSounds.DivineFlameExplosion, Projectile.Center);
@@ -227,11 +223,11 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             for (int i = 0; i < 20; i++)
             {
                 Vector2 vel = new Vector2(Main.rand.NextFloat(-50f, 50f), Main.rand.NextFloat(-50f, 50f));
-                LinearParticle particle = new LinearParticle(Projectile.Center, vel, textColor, false, 0.9f, 5f, 120);
+                LinearParticle particle = new LinearParticle(Projectile.Center, vel, new Color(242, 140, 44), false, 0.9f, 5f, 120);
                 ParticleController.SpawnParticle(particle);
 
                 Vector2 vel2 = new Vector2(Main.rand.NextFloat(-25f, 25f), Main.rand.NextFloat(-25f, 25f));
-                LinearParticle particle2 = new LinearParticle(Projectile.Center, vel2, new Color(textColor.R + 10, textColor.G + 10, textColor.B + 10), false, 0.9f, 1f, 120);
+                LinearParticle particle2 = new LinearParticle(Projectile.Center, vel2, new Color(252, 150, 54), false, 0.9f, 1f, 120);
                 ParticleController.SpawnParticle(particle2);
             }
 
@@ -244,7 +240,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 {
                     npc.AddBuff(BuffID.OnFire, SFUtils.BuffSecondsToTicks(10f));
                     if (npc.whoAmI != target.whoAmI)
-                        Main.player[Projectile.owner].ApplyDamageToNPC(npc, Damage / 3, 0f, Projectile.direction, false, CursedTechniqueDamageClass.Instance, false);
+                        Main.player[Projectile.owner].ApplyDamageToNPC(npc, baseDamage / 3, 0f, Projectile.direction, false, CursedTechniqueDamageClass.Instance, false);
                 }
             }
             Projectile.Kill();

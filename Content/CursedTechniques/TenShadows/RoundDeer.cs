@@ -15,6 +15,9 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
     {
         public static Texture2D spawnTexture;
         public static Texture2D texture;
+
+        public override string InternalName => "RoundDeer";
+
         private const int SPAWN_FRAMES = 15;
         private const int SPAWN_TICKS = 60;
         private bool spawnAnimDone = false;
@@ -23,18 +26,15 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
 
         public static readonly int FRAME_COUNT = 1;
         public static readonly int TICKS_PER_FRAME = 5;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.RoundDeer.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.RoundDeer.Description");
-        public override float Cost => 35f;
-        public override float CursedCostPerSecond => 2f;
-        public override Color textColor => new Color(120, 40, 200);
-        public override bool DisplayNameInGame => true;
-        public override int Damage => 22;
-        public override int MasteryDamageMultiplier => 40;
-        public override float Speed => 12f;
-        public override float LifeTime => 0f;
+
+        // public override float Cost => 35f;
+        // public override float CursedCostPerSecond => 2f;
+        // public override int Damage => 22;
+        // public override int MasteryDamageMultiplier => 40;
+        // public override float Speed => 12f;
+        // public override float LifeTime => 0f;
+        
         public override float DetectionRange => 800f;
-        public override string ParentInnateName => "TenShadows";
 
         public override bool SentryTileCollide => true;
         //public override bool FollowsPlayer => false;
@@ -42,11 +42,6 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         private const float HEAL_RADIUS = 300f;
         private const int HEAL_AMOUNT = 100;
         private const float HEAL_COOLDOWN = 60f;
-
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<RoundDeer>();
-        }
 
         public override string GetStats(SorceryFightPlayer sf)
         {

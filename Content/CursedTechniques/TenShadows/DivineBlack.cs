@@ -15,20 +15,16 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
     //child of white
     public class DivineBlack : CursedTechniqueSummon
     {
+        public override string InternalName => "DivineBlack";
+
         public override SummonStyle Style => SummonStyle.GroundedMinion;
 
-        public override LocalizedText DisplayName =>
-            SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.DivineBlack.DisplayName");
-        public override string Description =>
-            SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.DivineBlack.Description");
 
-        public override float Cost => 0f;
-        public override Color textColor => new Color(30, 30, 40);
-        public override bool DisplayNameInGame => false;
-        public override int Damage => 25;
-        public override int MasteryDamageMultiplier => 40;
-        public override float Speed => 8f;
-        public override float LifeTime => 0f;
+        // public override float Cost => 0f;
+        // public override int Damage => 25;
+        // public override int MasteryDamageMultiplier => 40;
+        // public override float Speed => 8f;
+        // public override float LifeTime => 0f;
         public override float DetectionRange => 800f;
         public override float Gravity => 0.4f;
         public override float MaxFallSpeed => 12f;
@@ -44,13 +40,6 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
 
         public static Texture2D texture;
         public static Texture2D runTexture;
-
-        public override string ParentInnateName => "TenShadows";
-
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<DivineBlack>();
-        }
 
         public override int UseTechnique(SorceryFightPlayer sf)
         {
@@ -104,7 +93,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
             if (OnGround && SummonTimer % 30f >= 29f)
             {
                 Vector2 dir = (target - Projectile.Center).SafeNormalize(Vector2.UnitX);
-                Projectile.velocity = dir * Speed + new Vector2(MathF.Sign(dir.X) * 2f, -8f);
+                Projectile.velocity = dir * speed + new Vector2(MathF.Sign(dir.X) * 2f, -8f);
                 Projectile.tileCollide = false;
                 Projectile.netUpdate = true;
             }

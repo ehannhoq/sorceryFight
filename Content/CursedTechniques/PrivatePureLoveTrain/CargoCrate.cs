@@ -16,24 +16,13 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public static Texture2D texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/PrivatePureLoveTrain/CargoCrate", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public static Texture2D hitTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/PrivatePureLoveTrain/CargoCrateHit", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public static Texture2D punchTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/PrivatePureLoveTrain/CargoCratePunch", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.CargoCrate.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.CargoCrate.Description");
-        public override float Cost => 300f;
-        public override Color textColor => new Color(59, 64, 112);
-        public override bool DisplayNameInGame => true;
-        public override int Damage => 5500;
-        public override int MasteryDamageMultiplier => 350;
-        public override float Speed => 0f;
-        public override float LifeTime => 180f;
+
+        public override string InternalName => "CargoCrate";
+
         public Vector2 direction;
         public bool impactFrame = false;
         float distance = 0f;
 
-
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<CargoCrate>();
-        }
 
         public override void SetDefaults()
         {
@@ -42,11 +31,12 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             Projectile.tileCollide = true;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
-            Projectile.timeLeft = (int)LifeTime;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 30;
             Projectile.aiStyle = 14;
         }
+
+
         public override void OnSpawn(IEntitySource source)
         {
             Player player = Main.player[Projectile.owner];
@@ -85,11 +75,9 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                     Projectile.rotation = Main.rand.NextFloat(0f, 360f);
                     break;
             }
-
-            
-
-            
         }
+
+
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -150,11 +138,13 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             }
         }
 
+
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.velocity = Vector2.Zero;
             Projectile.Kill();
         }
+
 
         public override void OnKill(int timeLeft)
         {
@@ -165,9 +155,9 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 player.SorceryFight().disableRegenFromProjectiles = false;
                 Projectile.NewProjectile(null, Projectile.Center, Vector2.Zero, this.Type, 0, 0, player.whoAmI, ai1: 2);
             }
-
-                
         }
+
+
         public override bool PreDraw(ref Color lightColor)
         {
             switch ((int)Projectile.ai[1])
@@ -199,13 +189,8 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                     spriteBatch.End();
                     spriteBatch.Begin();
                     break;
-
             }
-
             return false;
         }
-        
-        
     }
-
 }

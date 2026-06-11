@@ -15,18 +15,11 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
     {
         public static readonly int FRAME_COUNT = 8;
         public static readonly int TICKS_PER_FRAME = 5;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.AmplificationBlue.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.AmplificationBlue.Description");
-        public override float Cost => 30f;
-        public override Color textColor => new Color(108, 158, 240);
-        public override bool DisplayNameInGame => true;
-        public override int Damage => 30;
-        public override int MasteryDamageMultiplier => 50;
-        public override float Speed => 25f;
-        public override float LifeTime => 300f;
 
-        public virtual float AttractionRadius { get; } = 100f;
-        public virtual float AttractionStrength { get; } = 12f;
+        public override string InternalName => "AmplificationBlue";
+
+        public float attractionRadius = 100f;
+        public float attractionStrength = 12f;
 
         public static Texture2D texture;
 
@@ -34,26 +27,33 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public float animScale;
 
 
+        public AmplificationBlue()
+        {
+            Technique.baseDamage = 30;
+            Technique.damagePerBoss = 10;
+            Technique.cost = 20;
+            Technique.speed = 15;
+        }
+
+
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = FRAME_COUNT;
-        }
 
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<AmplificationBlue>();
+            if (!Main.dedServ)
+                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/AmplificationBlue", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
-
 
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 65;
-            Projectile.height = 65;
+            Projectile.width = 60;
+            Projectile.height = 60;
             Projectile.tileCollide = true;
             animating = false;
             animScale = 1.25f;
         }
+
         public override void AI()
         {
             Projectile.ai[0] += 1;
@@ -61,7 +61,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             bool spawnedFromPurple = Projectile.ai[1] == 1;
             Player player = Main.player[Projectile.owner];
 
-            if (Projectile.ai[0] > LifeTime + beginAnimTime)
+            if (Projectile.ai[0] > lifetime + beginAnimTime)
             {
                 Projectile.Kill();
             }
@@ -102,7 +102,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                 Vector2 particleOffset = Projectile.Center + new Vector2(Main.rand.NextFloat(-40f, 40f), Main.rand.NextFloat(-40f, 40f));
                 Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                LinearParticle particle = new LinearParticle(particleOffset, particleVelocity * 3, textColor, false, 0.9f, 1f, 10);
+                LinearParticle particle = new LinearParticle(particleOffset, particleVelocity * 3, new Color(108, 218, 240), false, 0.9f, 1f, 10);
                 ParticleController.SpawnParticle(particle);
 
                 return;
@@ -121,10 +121,10 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 {
                     float distance = Vector2.Distance(proj.Center, Projectile.Center);
 
-                    if (distance <= AttractionRadius)
+                    if (distance <= attractionRadius)
                     {
                         Vector2 direction = proj.Center.DirectionTo(Projectile.Center);
-                        Vector2 newVelocity = Vector2.Lerp(proj.velocity, direction * AttractionStrength, 0.1f);
+                        Vector2 newVelocity = Vector2.Lerp(proj.velocity, direction * attractionStrength, 0.1f);
 
                         proj.velocity = newVelocity;
                     }
@@ -136,10 +136,10 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 if (!npc.friendly && npc.type != NPCID.TargetDummy && npc.MoveableByBlue())
                 {
                     float distance = Vector2.Distance(npc.Center, Projectile.Center);
-                    if (distance <= AttractionRadius)
+                    if (distance <= attractionRadius)
                     {
                         Vector2 direction = npc.Center.DirectionTo(Projectile.Center);
-                        Vector2 newVelocity = Vector2.Lerp(npc.velocity, direction * AttractionStrength, 0.1f);
+                        Vector2 newVelocity = Vector2.Lerp(npc.velocity, direction * attractionStrength, 0.1f);
 
                         npc.velocity = newVelocity;
                     }
@@ -151,10 +151,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
-
-            if (texture == null && !Main.dedServ)
-                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/AmplificationBlue").Value;
-
 
             int frameHeight = texture.Height / FRAME_COUNT;
             int frameY = Projectile.frame * frameHeight;
@@ -176,7 +172,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
 
-                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, textColor, false, 0.9f, 1, 30);
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, new Color(108, 218, 240), false, 0.9f, 1, 30);
                 ParticleController.SpawnParticle(particle);
             }
         }

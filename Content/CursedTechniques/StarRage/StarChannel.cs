@@ -17,43 +17,29 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
         public static readonly int FRAME_COUNT = 8;
         public static readonly int TICKS_PER_FRAME = 5;
-
         public static Texture2D texture;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.StarChannel.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.StarChannel.Description");
-        public override float Cost => 50f;
-        public override Color textColor => new Color(132, 4, 4);
-        public override bool DisplayNameInGame => true;
-        public override int Damage => 100;
-        public override int MasteryDamageMultiplier => 18;
-        public override float Speed => 0f;
+
+        public override string InternalName => "StarChannel";
 
         private float blackholeThreshold = 360f;
-
         private const int blackHoleDamage = 40000;
-
         private float starRegen => 34f;
-
-        //Lifetime is made useless but must be implmented 
-        public override float LifeTime => 240f;
-
         private bool keyHeld = false;
         public float animScale;
         public bool hasPlayedSound;
 
-
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<StarChannel>();
-        }
+        // public override float Cost => 50f;
+        // public override int Damage => 100;
+        // public override int MasteryDamageMultiplier => 18;
+        // public override float Speed => 0f;
 
 
         public override void SetStaticDefaults()
         {
             if (Main.dedServ) return;
             texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/StarRage/StarChannel", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
         }
+
 
         public override void SetDefaults()
         {
@@ -64,8 +50,8 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             Projectile.penetrate = -1;
             Projectile.ignoreWater = true;
             animScale = 1f;
-            //Projectile.timeLeft = (int)LifeTime;
         }
+
 
         public override int UseTechnique(SorceryFightPlayer sf)
         {
@@ -73,6 +59,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             Main.projectile[index].rotation = (Main.MouseWorld - sf.Player.Center).ToRotation();
             return index;
         }
+
 
         public override void AI()
         {
@@ -143,6 +130,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
         }
 
+
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
@@ -161,6 +149,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
             return false;
         }
+
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {

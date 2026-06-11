@@ -17,28 +17,20 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public static readonly int FRAME_COUNT = 8;
         public static readonly int TICKS_PER_FRAME = 1;
         public static Texture2D texture;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.Cleave.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Cleave.Description");
-        public override float Cost => 75f;
-        public override Color textColor => new Color(120, 21, 8);
-        public override bool DisplayNameInGame => false;
-        public override int Damage => 50;
-        public override int MasteryDamageMultiplier => 25;
-        public override float Speed => 0f;
-        public override float LifeTime => 16f;
-        float baseDamagePercent = 0.05f;
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<Cleave>();
-        }
 
-        public override string GetStats(SorceryFightPlayer sf)
-        {
-            float cost = CalculateTrueCost(sf);
-            float percent = cost / sf.maxCursedEnergy;
-            return $"Damage: {Math.Round(CalculateTrueDamage(sf), 2)} + {Math.Round(baseDamagePercent * 100, 2)}% of target's health\n"
-                + $"Cost: {Math.Round(CalculateTrueCost(sf), 2)} CE\n";
-        }
+        public override string InternalName => "Cleave";
+
+        float baseDamagePercent = 0.05f;
+
+
+        // public override string GetStats(SorceryFightPlayer sf)
+        // {
+        //     float cost = CalculateTrueCost(sf);
+        //     float percent = cost / sf.maxCursedEnergy;
+        //     return $"Damage: {Math.Round(CalculateTrueDamage(sf), 2)} + {Math.Round(baseDamagePercent * 100, 2)}% of target's health\n"
+        //         + $"Cost: {Math.Round(CalculateTrueCost(sf), 2)} CE\n";
+        // }
+
 
         public override int UseTechnique(SorceryFightPlayer sf)
         {
@@ -48,14 +40,15 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             {
                 Vector2 playerPos = player.MountedCenter;
                 Vector2 mousePos = Main.MouseWorld;
-                Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * Speed;
+                Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * speed;
                 var entitySource = player.GetSource_FromThis();
                 sf.cursedEnergy -= CalculateTrueCost(sf);
 
-                return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
+                return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), CalculateTrueDamage(sf), 0, player.whoAmI);
             }
             return -1;
         }
+
 
         public override void SetStaticDefaults()
         {
@@ -64,6 +57,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             if (Main.dedServ) return;
             texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Shrine/Cleave", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
+
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -75,11 +70,12 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Projectile.localNPCHitCooldown = -1;
         }
 
+
         public override void AI()
         {
             Projectile.ai[0]++;
 
-            if (Projectile.ai[0] >= LifeTime)
+            if (Projectile.ai[0] >= lifetime)
             {
                 Projectile.Kill();
             }
@@ -116,6 +112,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         }
 
+
         public override bool PreDraw(ref Color lightColor)
         {
             int frameHeight = texture.Height / FRAME_COUNT;
@@ -127,6 +124,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, -32).RotatedBy(Projectile.rotation), sourceRectangle, Color.White, Projectile.rotation, projOrigin, 0.75f, spriteEffects, 0f);
             return false;
         }
+        
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {

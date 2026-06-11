@@ -14,43 +14,32 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
 {
     public class Nue : CursedTechniqueSummon
     {
+        public static Texture2D texture;
+        public static Texture2D flyTexture;
+
+        public override string InternalName => "Nue";
+
         // ── Style ─────────────────────────────────────────────────────
         public override SummonStyle Style => SummonStyle.FlyingMinion;
 
-        // ── Technique Identity ────────────────────────────────────────
-        public override LocalizedText DisplayName =>
-            SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.CursedSpiritMinion.DisplayName");
-        public override string Description =>
-            SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.CursedSpiritMinion.Description");
-
         // ── Stats ─────────────────────────────────────────────────────
-        public override float Cost => 40f;
-        public override float CursedCostPerSecond => 2f;
-        public override Color textColor => new Color(80, 180, 255);
-        public override bool DisplayNameInGame => true;
-        public override int Damage => 18;
-        public override int MasteryDamageMultiplier => 35;
-        public override float Speed => 10f;
-        public override float LifeTime => 0f;
+        // public override float Cost => 40f;
+        // public override float CursedCostPerSecond => 2f;
+        // public override int Damage => 18;
+        // public override int MasteryDamageMultiplier => 35;
+        // public override float Speed => 10f;
+        // public override float LifeTime => 0f;
+
         public override float DetectionRange => 900f;
-        public override string ParentInnateName => "TenShadows";
 
         private const int FRAME_COUNT = 8;
         private const int TICKS_PER_FRAME = 5;
         private const float FIRE_RATE = 60f;
 
-        public static Texture2D texture;
-        public static Texture2D flyTexture;
-
         //private bool IsMoving => Projectile.velocity.Length() > 0.5f;
         private bool IsMoving => Target != null;
         //variable name is misleading for now, checks if there is a target
 
-
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<Nue>();
-        }
 
         // ── Stats Display ─────────────────────────────────────────────
         public override string GetStats(SorceryFightPlayer sf)
@@ -129,7 +118,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
                 Projectile.netUpdate = true;
 
                 Vector2 direction = (Target.Center - Projectile.Center).SafeNormalize(Vector2.UnitY);
-                Vector2 velocity = direction * Speed;
+                Vector2 velocity = direction * speed;
 
                 int bolt = Projectile.NewProjectile(
                     Projectile.GetSource_FromThis(),

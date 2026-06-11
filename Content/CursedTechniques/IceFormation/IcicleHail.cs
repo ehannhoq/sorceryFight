@@ -21,6 +21,12 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
     {
         public static readonly ProjectilePool Pool = new ProjectilePool();
 
+        public override string InternalName => "IcicleHail";
+
+        private bool keyHeld = false;
+        private float spawnTimer = 0;
+        
+
         //static code for setting up the projectile pool
         public override void SetStaticDefaults()
         {
@@ -47,34 +53,23 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
         }
 
 
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.IcicleHail.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.IcicleHail.Description");
-        public override Color textColor => new Color(255, 0, 0);
-        public override bool DisplayNameInGame => true;
+        // public override float Cost => 0f;
+        // public override int Damage => 100;
+        // public override int MasteryDamageMultiplier => 50;
 
-        public override float Cost => 0f;
-        public override int Damage => 100;
-        public override int MasteryDamageMultiplier => 50;
+        // public override float CursedCostPerSecond => 20f;
 
-        private bool keyHeld = false;
+        // public override float Speed => 0f;
+        // public override float LifeTime => 300f;
 
-        public override float CursedCostPerSecond => 20f;
-
-        public override float Speed => 0f;
-        public override float LifeTime => 300f;
-
-        private float spawnTimer = 0;
-
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<IcicleHail>();
-        }
 
 
         public override bool PreDraw(ref Color lightColor)
         {
             return false;
         }
+
+
         public override void AI()
         {
             keyHeld = SFKeybinds.UseTechnique.Current;
@@ -87,7 +82,7 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
                     spawnTimer++;
 
                     SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
-                    ActiveDrain(sf);
+                    // ActiveDrain(sf);
 
                     if (spawnTimer >= 5f)
                     {
@@ -113,7 +108,7 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
                             spawnPosition,
                             velocity,
                             ModContent.ProjectileType<IcicleHailProjectile>(),
-                            Damage,
+                            CalculateTrueDamage(sf),
                             0f,
                             player.whoAmI,
                             variant
@@ -127,7 +122,7 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
                             spawnPosition,
                             velocity,
                             entry.GetProjectileType(),
-                            Damage,
+                            CalculateTrueDamage(sf),
                             0f,
                             player.whoAmI
                         );

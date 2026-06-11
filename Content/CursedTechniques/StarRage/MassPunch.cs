@@ -22,20 +22,17 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
         public static readonly int FRAME_COUNT = 7;
         public static readonly int TICKS_PER_FRAME = 4;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.MassPunch.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.MassPunch.Description");
-        public override float Cost => 40f;
+        public static Texture2D texture;
 
-        public override float BloodCost => 20f;
+        public override string InternalName => "MassPunch";
 
-        public override Color textColor => new Color(255, 0, 0);
-        public override bool DisplayNameInGame => true;
 
-        public override int Damage => 30;
-        public override int MasteryDamageMultiplier => 50;
+        // public override float Cost => 40f;
+        // public override int Damage => 30;
+        // public override int MasteryDamageMultiplier => 50;
+        // public override float Speed => 0f;
+        // public override float LifeTime => 28f;
 
-        public override float Speed => 0f;
-        public override float LifeTime => 28f;
 
         //this is only here to try and set velocity to zero to make the projecitle not move based on mouse position
         public override int UseTechnique(SorceryFightPlayer sf)
@@ -45,38 +42,15 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             if (player.whoAmI == Main.myPlayer)
             {
                 var entitySource = player.GetSource_FromThis();
-
-                sf.cursedEnergy -= CalculateTrueCost(sf);
-
-                if (BloodCost > 0)
-                    sf.bloodEnergy -= BloodCost;
-
-                if (DisplayNameInGame)
-                {
-                    int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
-                    Main.combatText[index1].lifeTime = 180;
-                }
-
                 return Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
             }
             return -1;
         }
 
 
-        public static Texture2D texture;
-
-        public bool animating;
-        public float animScale;
-
-
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = FRAME_COUNT;
-        }
-
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<MassPunch>();
         }
 
 
@@ -87,15 +61,16 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             Projectile.height = 65;
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
-            animScale = 2;
         }
+
+
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             Player player = Main.player[Projectile.owner];
 
             Projectile.ai[0]++;
-            float progress = Projectile.ai[0] / LifeTime;
+            float progress = Projectile.ai[0] / lifetime;
 
             float dashStart = 0.4f;
             float dashEnd = 0.8f;
@@ -113,7 +88,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
                 //iframes
                 player.immune = true;
-                int remainingDashTicks = (int)((dashEnd - progress) * LifeTime);
+                int remainingDashTicks = (int)((dashEnd - progress) * lifetime);
                 player.immuneTime = remainingDashTicks;
                 for (int i = 0; i < player.hurtCooldowns.Length; i++)
                 {
@@ -130,7 +105,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             float xOffset = MathHelper.Lerp(-60f, 60f, progress) * player.direction;
             Projectile.Center = player.Center + new Vector2(xOffset, 0f);
 
-            if (Projectile.ai[0] > LifeTime)
+            if (Projectile.ai[0] > lifetime)
             {
                 Projectile.Kill();
             }
@@ -147,10 +122,12 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             }
         }
 
+
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> alreadyDrawnProjectiles)
         {
             overPlayers.Add(index);
         }
+
 
         public override bool PreDraw(ref Color lightColor)
         {
@@ -167,10 +144,11 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             Player player = Main.player[Projectile.owner];
             SpriteEffects effects = player.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
-            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, effects, 0f);
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, 2f, effects, 0f);
 
             return false;
         }
+
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
@@ -180,7 +158,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
 
-                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, textColor, false, 0.9f, 1f, 30);
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, new Color(255, 0, 0), false, 0.9f, 1f, 30);
                 ParticleController.SpawnParticle(particle);
             }
         }

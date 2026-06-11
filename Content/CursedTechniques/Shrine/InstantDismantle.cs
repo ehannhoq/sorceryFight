@@ -13,24 +13,14 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
     public class InstantDismantle : CursedTechnique
     {
         public static Texture2D texture;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.InstantDismantle.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.InstantDismantle.Description");
-        public override float Cost => 80f;
-        public override Color textColor => new Color(184, 130, 101);
-        public override bool DisplayNameInGame => false;
-        public override int Damage => 1000;
-        public override int MasteryDamageMultiplier => 100;
-        public override float Speed => 0f;
-        public override float LifeTime => 2f;
+
+        public override string InternalName => "InstantDismantle";
+
         public ref float spawnedByDE => ref Projectile.ai[0];
         public ref float randomSprite => ref Projectile.ai[1];
         public ref float randomRotation => ref Projectile.ai[2];
         bool hasHit;
 
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<InstantDismantle>();
-        }
 
         public override int UseTechnique(SorceryFightPlayer sf)
         {
@@ -39,13 +29,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
             if (Main.myPlayer == player.whoAmI)
             {
-                sf.cursedEnergy -= CalculateTrueCost(sf);
-                if (DisplayNameInGame)
-                {
-                    int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
-                    Main.combatText[index1].lifeTime = 180;
-                }
-
                 Vector2 mousePos = Main.MouseWorld;
                 var entitySource = player.GetSource_FromThis();
                 int index = Projectile.NewProjectile(entitySource, mousePos, Vector2.Zero, GetProjectileType(), (int)CalculateTrueDamage(sf), 0f, player.whoAmI);
@@ -57,6 +40,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             return -1;
         }
 
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -64,9 +48,9 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Projectile.height = 176;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = (int)LifeTime;
             hasHit = false;
         }
+
 
         public override void AI()
         {
@@ -74,8 +58,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             {
                 Projectile.damage = 100;
             }
-
         }
+
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
@@ -95,6 +79,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             base.ModifyHitNPC(target, ref modifiers);
         }
 
+
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
@@ -111,6 +96,5 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
             return false;
         }
-
     }
 }

@@ -14,22 +14,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 {
     public class RamCharge : CursedTechnique
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.RamCharge.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.RamCharge.Description");
-
-        public override float Cost => 5f;
-
-        public override Color textColor => Color.White;
-
-        public override bool DisplayNameInGame => false;
-
-        public override int Damage => 150;
-
-        public override int MasteryDamageMultiplier => 175;
-
-        public override float Speed => 15f;
-
-        public override float LifeTime => 40;
+        public override string InternalName => "RamCharge";
 
         private static Texture2D impactRing;
         private static Texture2D impactCircle;
@@ -38,32 +23,29 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         private Vector2 startVel;
         private Dictionary<Vector2, int> impactPositions = new();
 
-
         private const float minSpeed = 10f;
         private const float maxSpeed = 20f;
 
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<RamCharge>();
-        }
 
         public override float CalculateTrueCost(SorceryFightPlayer sf)
         {
             float speedDiff = maxSpeed - minSpeed;
             float trueSpeed = sf.unlockedRCT ? ((float)sf.numberBossesDefeated / SorceryFightMod.totalBosses * speedDiff) + minSpeed : (sf.numberBossesDefeated / (SorceryFightMod.totalBosses / 1.5f) * speedDiff) + minSpeed;
 
-            float adjustedCost = Cost * trueSpeed;
+            float adjustedCost = cost * trueSpeed;
             float finalCost = adjustedCost - (adjustedCost * (sf.bossesDefeated.Count / 100f));
             finalCost *= 1 - sf.ctCostReduction;
 
             return finalCost;
         }
 
+
         public override void SetStaticDefaults()
         {
             impactRing = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/HeavenlyRestriction/ImpactRing", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             impactCircle = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/HeavenlyRestriction/ImpactCircle", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
+
 
         public override void SetDefaults()
         {
@@ -76,6 +58,8 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             Projectile.localNPCHitCooldown = -1;
             Projectile.penetrate = -1;
         }
+
+
         public override void OnSpawn(IEntitySource source)
         {
             Player player = Main.player[Projectile.owner];
@@ -96,6 +80,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             Projectile.velocity *= trueSpeed;
         }
 
+
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
@@ -105,7 +90,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
             Projectile.velocity.Y += 0.3f;
 
-            if (tick++ >= LifeTime)
+            if (tick++ >= lifetime)
             {
                 Projectile.Kill();
 
@@ -127,17 +112,19 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             }
         }
 
+
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             modifiers.FinalDamage *= Projectile.velocity.Length() / 16f;
         }
 
+
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             impactPositions.Add(target.Center, 0);
             SoundEngine.PlaySound(SorceryFightSounds.DashImpact, target.Center);
-
         }
+
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
@@ -148,6 +135,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
             return false;
         }
+        
 
         public override bool PreDraw(ref Color lightColor)
         {

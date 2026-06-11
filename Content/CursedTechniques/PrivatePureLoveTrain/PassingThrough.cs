@@ -14,23 +14,9 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
     public class PassingThrough : CursedTechnique
     {
         public static Texture2D texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/PrivatePureLoveTrain/PassingThrough", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.PassingThrough.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PassingThrough.Description");
-        public override float Cost => 300f;
-        public override Color textColor => new Color(59, 64, 112);
-        public override bool DisplayNameInGame => true;
-        public override int Damage => 200;
-        public override int MasteryDamageMultiplier => 30;
-        public override float Speed => 30f;
-        public override float LifeTime => 180f;
+     
+        public override string InternalName => "HakarisDoor";
 
-        //public override Color selectorBGColor => new Color(0, 5, 75, 220);
-
-        //public override Color selectorBorderColor => new Color(0, 200, 0, 200);
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<PassingThrough>();
-        }
 
         public override int UseTechnique(SorceryFightPlayer sf)
         {
@@ -38,15 +24,6 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
 
             if (player.whoAmI == Main.myPlayer)
             {
-
-                sf.cursedEnergy -= CalculateTrueCost(sf);
-
-                if (DisplayNameInGame)
-                {
-                    int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
-                    Main.combatText[index1].lifeTime = 180;
-                }
-
                 var entitySource = player.GetSource_FromThis();
 
                 Vector2 mousePos = Main.MouseWorld;
@@ -54,7 +31,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 posOffset = posOffset.RotatedByRandom(2 * MathF.PI);
                 Vector2 pos = mousePos + posOffset;
 
-                Vector2 dir = pos.DirectionTo(mousePos) * Speed;
+                Vector2 dir = pos.DirectionTo(mousePos) * speed;
 
                 SoundEngine.PlaySound(SorceryFightSounds.CommonWoosh, pos);
 
@@ -63,6 +40,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             return -1;
         }
 
+
         public override void SetDefaults()
         {
             Projectile.width = 300;
@@ -70,15 +48,16 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             Projectile.tileCollide = false;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
-            Projectile.timeLeft = (int)LifeTime;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 4;
         }
+
 
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
         }
+        
 
         public override bool PreDraw(ref Color lightColor)
         {

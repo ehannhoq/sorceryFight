@@ -15,28 +15,20 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
 {
     public class IcePlace : CursedTechnique
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.IcePlace.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.IcePlace.Description");
-        public override float Cost => 2f;
-        public override float CursedCostPerSecond => 5f;
+        public override string InternalName => "IcePlace";
+        
+        // public override float Cost => 2f;
+        // public override float CursedCostPerSecond => 5f;
 
-        public override Color textColor => new Color(100, 180, 255);
-        public override bool DisplayNameInGame => true;
+        // public override int Damage => 0;
+        // public override int MasteryDamageMultiplier => 0;
 
-        public override int Damage => 0;
-        public override int MasteryDamageMultiplier => 0;
-
-        public override float Speed => 0f;
-        public override float LifeTime => 9000f;
+        // public override float Speed => 0f;
+        // public override float LifeTime => 9000f;
 
         public bool keyHeld;
         private int placeCooldown = 0;
         private static readonly int PLACE_DELAY = 3;
-
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<IcePlace>();
-        }
 
         public override void SetDefaults()
         {
@@ -46,7 +38,6 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.friendly = false;
-            Projectile.timeLeft = (int)LifeTime;
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)
@@ -56,19 +47,11 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
             if (player.whoAmI == Main.myPlayer)
             {
                 var entitySource = player.GetSource_FromThis();
-
-                sf.cursedEnergy -= CalculateTrueCost(sf);
-
-                if (DisplayNameInGame)
-                {
-                    int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
-                    Main.combatText[index1].lifeTime = 120;
-                }
-
                 return Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, GetProjectileType(), 0, 0, player.whoAmI);
             }
             return -1;
         }
+
 
         public override void AI()
         {
@@ -86,7 +69,7 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
                 return;
             }
 
-            ActiveDrain(sf);
+            // ActiveDrain(sf);
 
             if (placeCooldown > 0)
             {
@@ -142,7 +125,7 @@ namespace sorceryFight.Content.CursedTechniques.IceFormation
         public override string GetStats(SorceryFightPlayer sf)
         {
             string stats = $"Cost: {Math.Round(CalculateTrueCost(sf), 2)} CE\n"
-                + $"Drain: {CursedCostPerSecond} CE/s\n"
+                // + $"Drain: {CursedCostPerSecond} CE/s\n"
                 + "Hold to place temporary ice blocks at cursor";
             return stats;
         }

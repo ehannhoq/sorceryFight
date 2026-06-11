@@ -13,23 +13,19 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
 {
     public class Toad : CursedTechniqueSummon
     {
+        public override string InternalName => "Toad";
+        
+
         public override SummonStyle Style => SummonStyle.Sentry;
         public override bool SentryTileCollide => true;
 
-        public override LocalizedText DisplayName =>
-            SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.Toad.DisplayName");
-        public override string Description =>
-            SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Toad.Description");
-        public override float Cost => 40f;
-        public override float CursedCostPerSecond => 2f;
-        public override Color textColor => new Color(60, 140, 50);
-        public override bool DisplayNameInGame => true;
-        public override int Damage => 15;
-        public override int MasteryDamageMultiplier => 30;
-        public override float Speed => 0f;
-        public override float LifeTime => 0f;
+        // public override float Cost => 40f;
+        // public override float CursedCostPerSecond => 2f;
+        // public override int Damage => 15;
+        // public override int MasteryDamageMultiplier => 30;
+        // public override float Speed => 0f;
+        // public override float LifeTime => 0f;
         public override float DetectionRange => 1500f;
-        public override string ParentInnateName => "TenShadows";
 
         private const int FRAME_COUNT = 5;
         private const int TICKS_PER_FRAME = 5;
@@ -45,10 +41,6 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         private bool closing = false;
         private int lastTargetWhoAmI = -1;
 
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<Toad>();
-        }
 
         public override void SetStaticDefaults()
         {

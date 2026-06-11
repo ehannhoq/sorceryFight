@@ -16,33 +16,10 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
     {
         public static readonly int FRAME_COUNT = 16;
         public static readonly int TICKS_PER_FRAME = 1;
-        public float animScale;
-
         public static Texture2D texture;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.SelfBloodBlade.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SelfBloodBlade.Description");
-        public override float Cost => 50f;
-        public override float BloodCost => 30f;
-        public override Color textColor => new Color(120, 21, 8);
-        public override bool DisplayNameInGame => false;
-        public override int Damage => 50;
-        public override int MasteryDamageMultiplier => 25;
-        public override float Speed => 0f;
-        public override float LifeTime => 32f;
-        //double from cleave 16 
 
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<SelfBloodBlade>();
-        }
+        public override string InternalName => "PiercingBlood";
 
-        public override string GetStats(SorceryFightPlayer sf)
-        {
-            float cost = CalculateTrueCost(sf);
-            float percent = cost / sf.maxCursedEnergy;
-            return $"Damage: {Math.Round(CalculateTrueDamage(sf), 2)}\n"
-                + $"Cost: {Math.Round(CalculateTrueCost(sf), 2)} CE\n";
-        }
 
         public override int UseTechnique(SorceryFightPlayer sf)
         {
@@ -51,26 +28,12 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             if (player.whoAmI == Main.myPlayer)
             {
                 var entitySource = player.GetSource_FromThis();
-
-                sf.cursedEnergy -= CalculateTrueCost(sf);
-
-                sf.bloodEnergy -= BloodCost;
-
-                if (DisplayNameInGame)
-                {
-                    int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
-                    Main.combatText[index1].lifeTime = 180;
-                }
-
-                return Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
+                return Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, GetProjectileType(), CalculateTrueDamage(sf), 0, player.whoAmI);
             }
             return -1;
         }
 
-        public override void SetStaticDefaults()
-        {
-            //Main.projFrames[Projectile.type] = FRAME_COUNT;
-        }
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -80,8 +43,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 30;
-            animScale = 2f;
         }
+
 
         public override void AI()
         {
@@ -92,7 +55,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 Projectile.ai[0]--;
 
             }
-                if (Projectile.ai[0] >= LifeTime)
+                if (Projectile.ai[0] >= lifetime)
             {
                 Projectile.Kill();
             }
@@ -154,7 +117,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             SpriteEffects effects = player.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
-            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, effects, 0f);
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, 2f, effects, 0f);
 
             return false;
         }

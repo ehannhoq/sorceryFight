@@ -78,7 +78,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, bgRect, bgColor);
 
                 //rewrite this later
-                Color iconColor = sfPlayer.innateTechnique.CursedTechniques[id].UseCondition(sfPlayer)
+                Color iconColor = sfPlayer.innateTechnique.CursedTechniques[id].CanUse(sfPlayer)
                     ? Color.White
                     : Color.Gray;
 
@@ -247,7 +247,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             for (int i = 0; i < sfPlayer.innateTechnique.CursedTechniques.Count; i++)
             {
                 Texture2D ctTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueSelector/{sfPlayer.innateTechnique.InternalName}/c{i}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                string ctHoverText = $"{sfPlayer.innateTechnique.CursedTechniques[i].DisplayName.Value}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip")}";
+                string ctHoverText = $"{sfPlayer.innateTechnique.CursedTechniques[i].DisplayName}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip")}";
                 TechniqueSelectorButton ctIcon = new TechniqueSelectorButton(ctTexture, ctHoverText, i);
 
                 if (sfPlayer.innateTechnique.CursedTechniques[i].IsUnlocked(sfPlayer))

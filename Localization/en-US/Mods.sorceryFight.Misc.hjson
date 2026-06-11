@@ -49,3 +49,12 @@ InnateTechniqueUnlocker: {
 		FailedReroll: Your cursed energy seems to be the same as before.
 	}
 }
+
+CursedTechniques: {
+	Damage: Damage: {0}
+	Cost: Cost: {0}
+	ContinuousCost: Cursed Energy per Second: {0}
+	BloodCost: Blood: {0}
+	ContinuousBloodCost: Blood per Second: {0}
+	StarCost: Mass Overcharge Cost: {0}
+}

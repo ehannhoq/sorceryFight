@@ -441,7 +441,7 @@ namespace sorceryFight.SFPlayer
                 return;
             }
 
-            if (!selectedTechnique.UseCondition(this))
+            if (!selectedTechnique.CanUse(this))
             {
                 return;
             }

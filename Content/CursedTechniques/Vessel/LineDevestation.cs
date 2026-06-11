@@ -21,27 +21,15 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public static readonly int FRAME_COUNT = 5;
         public static readonly int TICKS_PER_FRAME = 8;
         public static Texture2D texture;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.LineDevestation.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.LineDevestation.Description");
-        public override float Cost => 400f;
-        public override Color textColor => new Color(120, 21, 8);
-        public override bool DisplayNameInGame => false;
-        public override int Damage => 3000;
-        public override int MasteryDamageMultiplier => 40;
-        public override float Speed => 12f;
-        public override float LifeTime => 180f;
+
+        public override string InternalName => "LineDevestation";
 
         public bool animating;
-        public float animScale;
-
         public int childDamage = 10000;
-
         private List<Vector2> dotPositions = new List<Vector2>();
         private bool initialized = false;
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<LineDevestation>();
-        }
+
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -50,15 +38,16 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             Projectile.tileCollide = true;
             animating = false;
             Projectile.penetrate = 1;
-            animScale = 1.25f;
         }
+
+
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             Projectile.ai[0] += 1;
             float beginAnimTime = 30f;
 
-            if (Projectile.ai[0] > LifeTime + beginAnimTime)
+            if (Projectile.ai[0] > lifetime + beginAnimTime)
                 Projectile.Kill();
 
             if (++Projectile.frameCounter >= TICKS_PER_FRAME)
@@ -109,6 +98,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             }
         }
 
+
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
@@ -151,9 +141,10 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2 + 3);
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
 
-            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, 1.25f, SpriteEffects.None, 0f);
             return false;
         }
+
 
         private static float GetRayLength(Vector2 start, Vector2 direction, float maxLength, float step = 8f)
         {
@@ -171,6 +162,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             }
             return maxLength;
         }
+        
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
@@ -178,6 +170,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             Projectile.Kill();
 
         }
+
 
         public override void OnKill(int timeLeft)
         {

@@ -13,23 +13,14 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
 {
     public class ChainDismantle : CursedTechnique
     {
-        public static readonly int FRAME_COUNT = 6;
         public static readonly int TICKS_PER_FRAME = 2;
+        public static readonly int FRAME_COUNT = 6;
         public static Texture2D texture;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.ChainDismantle.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.ChainDismantle.Description");
-        public override float Cost => 350f;
-        public override Color textColor => new Color(120, 21, 8);
-        public override bool DisplayNameInGame => false;
-        public override int Damage => 60;
-        public override int MasteryDamageMultiplier => 50;
-        public override float Speed => 0f;
-        public override float LifeTime => 18f;
+        
+        public override string InternalName => "ChainDismantle";
+
         ref float isBarrage => ref Projectile.ai[2];
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<ChainDismantle>();
-        }
+
 
         public override int UseTechnique(SorceryFightPlayer sf)
         {
@@ -39,9 +30,8 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             {
                 Vector2 playerPos = player.MountedCenter;
                 Vector2 mousePos = Main.MouseWorld;
-                Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * Speed;
+                Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * speed;
                 var entitySource = player.GetSource_FromThis();
-                sf.cursedEnergy -= CalculateTrueCost(sf);
 
                 int index = Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), 1, 0, player.whoAmI);
                 Main.projectile[index].ai[2] = 0f;
@@ -50,6 +40,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             return -1;
         }
 
+
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = FRAME_COUNT;
@@ -57,6 +48,8 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             if (Main.dedServ) return;
             texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Vessel/ChainDismantle", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
+
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -67,6 +60,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
         }
+
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
@@ -86,7 +80,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
 
                         Vector2 playerPos = player.MountedCenter;
                         Vector2 mousePos = Main.MouseWorld;
-                        Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * Speed;
+                        Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * speed;
                         var entitySource = player.GetSource_FromThis();
 
                         int index = Projectile.NewProjectile(entitySource, npc.Center, dir, GetProjectileType(), 1, 0, player.whoAmI);
@@ -98,11 +92,12 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             base.ModifyHitNPC(target, ref modifiers);
         }
 
+
         public override void AI()
         {
             Projectile.ai[0]++;
 
-            if (Projectile.ai[0] >= LifeTime)
+            if (Projectile.ai[0] >= lifetime)
             {
                 Projectile.Kill();
             }
@@ -137,6 +132,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                 SoundEngine.PlaySound(SorceryFightSounds.SoulDismantle, Projectile.Center);
             }
         }
+
 
         public override bool PreDraw(ref Color lightColor)
         {

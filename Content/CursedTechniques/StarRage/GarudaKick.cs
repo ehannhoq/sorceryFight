@@ -19,41 +19,30 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
         public static readonly int FRAME_COUNT = 1;
         public static readonly int TICKS_PER_FRAME = 1;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.GarudaKick.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.GarudaKick.Description");
-        public override float Cost => 40f;
-
-        public override float BloodCost => 20f;
-
-        public override Color textColor => new Color(255, 0, 0);
-        public override bool DisplayNameInGame => true;
-
-        public override int Damage => 30;
-        public override int MasteryDamageMultiplier => 50;
-
-        public override float Speed => 25f;
-        public override float LifeTime => 300f;
-        
         public static Texture2D texture;
 
-    public bool animating;
-    public float animScale;
+        public override string InternalName => "GarudaKick";
 
+        public bool animating;
+        public float animScale;
+
+        // public override float Cost => 40f;
+        // public override int Damage => 30;
+        // public override int MasteryDamageMultiplier => 50;
+        // public override float Speed => 25f;
+        // public override float LifeTime => 300f;
 
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = FRAME_COUNT;
         }
 
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<GarudaKick>();
-        }
 
         //public override bool UseCondition(SorceryFightPlayer sf)
         //{
         //    return !sf.summonGaruda;
         //}
+
 
         public override void SetDefaults()
         {
@@ -65,6 +54,8 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             Projectile.penetrate = -1;
             animScale = 1.25f;
         }
+
+
         public override void AI()
         {
             Projectile.rotation += MathHelper.ToRadians(10f);
@@ -72,7 +63,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             float beginAnimTime = 30f;
             Player player = Main.player[Projectile.owner];
 
-            if (Projectile.ai[0] > LifeTime + beginAnimTime)
+            if (Projectile.ai[0] > lifetime + beginAnimTime)
             {
                 Projectile.Kill();
             }
@@ -108,6 +99,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             }
         }
 
+
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
@@ -122,6 +114,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             return false;
         }
 
+
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
@@ -130,10 +123,11 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
 
-                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, textColor, false, 0.9f, 1f, 30);
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, new Color(255, 0, 0), false, 0.9f, 1f, 30);
                 ParticleController.SpawnParticle(particle);
             }
         }
+
 
         public override int UseTechnique(SorceryFightPlayer sf)
         {
@@ -143,36 +137,17 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             {
                 Vector2 playerPos = player.MountedCenter;
                 Vector2 mousePos = Main.MouseWorld;
-                Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * Speed;
+                Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * speed;
                 var entitySource = player.GetSource_FromThis();
 
-                sf.cursedEnergy -= CalculateTrueCost(sf);
-
-                if (BloodCost > 0)
-                {
-                    sf.bloodEnergy -= BloodCost;
-                }
-
-                if (StarCost > 0)
-                {
-                    sf.starEnergy -= StarCost;
-                }
-
-                if (DisplayNameInGame)
-                {
-                    int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
-                    Main.combatText[index1].lifeTime = 180;
-                }
                 if (!sf.summonGaruda)
                 {
-                    return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
+                    return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), CalculateTrueDamage(sf), 0, player.whoAmI);
                 }
                 else
                 {
-                    return Projectile.NewProjectile(entitySource, player.Center, dir, ModContent.ProjectileType<MassKick>(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
+                    return Projectile.NewProjectile(entitySource, player.Center, dir, ModContent.ProjectileType<MassKick>(), CalculateTrueDamage(sf), 0, player.whoAmI);
                 }
-
-
             }
             return -1;
         }

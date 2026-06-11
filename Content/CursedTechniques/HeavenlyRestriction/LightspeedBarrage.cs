@@ -15,50 +15,30 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 {
     public class LightspeedBarrage : CursedTechnique
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.LightspeedBarrage.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.LightspeedBarrage.Description");
-
-        public override float Cost => 670f;
-
-        public override Color textColor => Color.White;
-
-        public override bool DisplayNameInGame => false;
-
-        public override int Damage => 30000;
-
-        public override int MasteryDamageMultiplier => 300;
-
-        public override float Speed => 15f;
-
-        public override float LifeTime => 30;
+        public override string InternalName => "LightspeedBarrage";
 
         private static Texture2D impactCircleTexture;
         private static Texture2D impactRingTexture;
 
         ref float lifeTimer => ref Projectile.ai[0];
-
         ref float ricochets => ref Projectile.ai[1];
         private List<int> enemiesHit = new List<int>();
         private Vector2 startPos;
 
         private Dictionary<Vector2, int> ricochetPositions = new();
 
-
         private const int maxRicochets = 7;
         private const float minSpeed = 30f;
         private const float maxSpeed = 80f;
         private const float minTargetDistance = 1000f;
 
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<LightspeedBarrage>();
-        }
 
         public override void SetStaticDefaults()
         {
             impactCircleTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/HeavenlyRestriction/ImpactCircle", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             impactRingTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/HeavenlyRestriction/ImpactRing", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
+
 
         public override void SetDefaults()
         {
@@ -71,6 +51,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             Projectile.localNPCHitCooldown = -1;
             Projectile.penetrate = -1;
         }
+
 
         public override void OnSpawn(IEntitySource source)
         {
@@ -87,6 +68,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             TargetNearestNPC();
         }
 
+
         public override int UseTechnique(SorceryFightPlayer sf)
         {
             Player player = sf.Player;
@@ -95,7 +77,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             {
                 Vector2 playerPos = player.MountedCenter;
                 Vector2 mousePos = Main.MouseWorld;
-                Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * Speed;
+                Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * speed;
                 var entitySource = player.GetSource_FromThis();
                 int index = Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
 
@@ -108,6 +90,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             }
             return -1;
         }
+
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
@@ -137,7 +120,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             Projectile.Center = player.Center;
             player.direction = Projectile.velocity.X > 0 ? 1 : -1;
 
-            if (lifeTimer > LifeTime)
+            if (lifeTimer > lifetime)
             {
 
                 KillProjectile(player.SorceryFight());
@@ -151,6 +134,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
                 ricochetPositions[key]++;
             }
         }
+
 
         public override bool PreDraw(ref Color lightColor)
         {
@@ -193,6 +177,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             return false;
         }
 
+
         private void TargetNearestNPC()
         {
             Player player = Main.player[Projectile.owner];
@@ -212,6 +197,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
                 KillProjectile(sfPlayer);
             }
         }
+
 
         private bool GetNearestNPCPos(out Vector2 position)
         {
@@ -245,6 +231,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             return true;
         }
 
+
         private bool HasLOS(Vector2 start, Vector2 end)
         {
             Vector2 direction = end - start;
@@ -271,6 +258,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
             return true;
         }
+
 
         private void KillProjectile(SorceryFightPlayer sfPlayer)
         {

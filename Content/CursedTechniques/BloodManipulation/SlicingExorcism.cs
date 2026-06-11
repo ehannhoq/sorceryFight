@@ -16,39 +16,17 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
     public class SlicingExorcism : CursedTechnique
     {
-
         public static readonly int FRAME_COUNT = 8;
         public static readonly int TICKS_PER_FRAME = 5;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.SlicingExorcism.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SlicingExorcism.Description");
-        public override float Cost => 20f;
-
-        public override float BloodCost => 20f;
-
-        public override Color textColor => new Color(255, 0, 0);
-        public override bool DisplayNameInGame => true;
-
-        public override int Damage => 18;
-        public override int MasteryDamageMultiplier => 50;
-
-        public override float Speed => 25f;
-        public override float LifeTime => 300f;
-        
-
         public static Texture2D texture;
 
-        public bool animating;
-        public float animScale;
+        public override string InternalName => "SlicingExorcism";
 
+        public bool animating;
 
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = FRAME_COUNT;
-        }
-
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<SlicingExorcism>();
         }
 
 
@@ -60,8 +38,9 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Projectile.tileCollide = true;
             animating = false;
             Projectile.penetrate = -1;
-            animScale = 1.25f;
         }
+
+
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
@@ -69,7 +48,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             float beginAnimTime = 30f;
             Player player = Main.player[Projectile.owner];
 
-            if (Projectile.ai[0] > LifeTime + beginAnimTime)
+            if (Projectile.ai[0] > lifetime + beginAnimTime)
             {
                 Projectile.Kill();
             }
@@ -106,7 +85,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(10f, 40f);
                 Vector2 particleOffset = Projectile.Center + behindOffset;
                 Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                LinearParticle particle = new LinearParticle(particleOffset, particleVelocity * 3, textColor, false, 0.9f, 1f, 20);
+                LinearParticle particle = new LinearParticle(particleOffset, particleVelocity * 3, new Color(140, 13, 13), false, 0.9f, 1f, 20);
                 ParticleController.SpawnParticle(particle);
                 return;
             }
@@ -133,7 +112,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
 
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
-            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, 1.25f, SpriteEffects.None, 0f);
 
             return false;
         }
@@ -148,7 +127,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
 
-                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, textColor, false, 0.9f, 1f, 30);
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, new Color(140, 13, 13), false, 0.9f, 1f, 30);
                 ParticleController.SpawnParticle(particle);
             }
         }

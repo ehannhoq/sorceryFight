@@ -22,28 +22,28 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         private static readonly float COLLISION_TIME = HollowPurpleCollision.FRAMES * HollowPurpleCollision.TICKS_PER_FRAME;
         private static readonly float WAIT_TIME = 90f;
 
+        public override string InternalName => "HollowPurple";
+
         public static Texture2D texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/HollowPurple", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public static Texture2D prism1 = ModContent.Request<Texture2D>("sorceryFight/Content/VFXSprites/HollowPurplePrisms1", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public static Texture2D prism2 = ModContent.Request<Texture2D>("sorceryFight/Content/VFXSprites/HollowPurplePrisms2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public static Texture2D prism3 = ModContent.Request<Texture2D>("sorceryFight/Content/VFXSprites/HollowPurplePrisms3", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public static Texture2D ring = ModContent.Request<Texture2D>("sorceryFight/Content/VFXSprites/HollowPurpleRing", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public static Texture2D flash = ModContent.Request<Texture2D>("sorceryFight/Content/VFXSprites/WhiteFlash", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.HollowPurple.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HollowPurple.Description");
-        public override float Cost { get; } = 525f;
-        public override Color textColor { get; } = new Color(235, 117, 233);
-        public override bool DisplayNameInGame { get; } = true;
-        public override int Damage => 13000;
-        public override int MasteryDamageMultiplier => 450;
-        public override float Speed { get; } = 45f;
-        public override float LifeTime { get; } = 500f;
 
         public Projectile collisionVFX;
         public int glareIndex;
-        public override int GetProjectileType()
+
+
+        public HollowPurple()
         {
-            return ModContent.ProjectileType<HollowPurple>();
+            Technique.baseDamage = 30;
+            Technique.damagePerBoss = 10;
+            Technique.cost = 525;
+            Technique.speed = 45;
+            Technique.lifetime = 500;
         }
+
 
         public override void SetDefaults()
         {
@@ -114,11 +114,11 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 Projectile.damage = (int)CalculateTrueDamage(player.SorceryFight());
 
-                Projectile.timeLeft = (int)LifeTime;
+                Projectile.timeLeft = lifetime;
                 Projectile.Center = projOrigin;
 
                 if (Main.myPlayer == Projectile.owner)
-                    Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
+                    Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * speed;
 
                 sfPlayer.disableRegenFromProjectiles = false;
                 Projectile.netUpdate = true;
@@ -135,7 +135,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                     Vector2 velocity = direction * speed;
 
-                    LinearParticle particle = new LinearParticle(Projectile.Center, velocity, textColor, false, 0.9f, 2f);
+                    LinearParticle particle = new LinearParticle(Projectile.Center, velocity, new Color(239, 138, 242), false, 0.9f, 2f);
                     ParticleController.SpawnParticle(particle);
                 }
             }
@@ -223,7 +223,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 opacity = Math.Clamp(opacity, 0f, 1f);
 
                 Rectangle flashSrc = new Rectangle(0, 0, flash.Width, flash.Height);
-                Main.EntitySpriteDraw(flash, Projectile.Center - Main.screenPosition, flashSrc, new Color(textColor.R, textColor.G, textColor.B, opacity), Projectile.rotation, flashSrc.Size() * 0.5f, 2.5f, SpriteEffects.None);
+                Main.EntitySpriteDraw(flash, Projectile.Center - Main.screenPosition, flashSrc, new Color(239, 138, 242, opacity), Projectile.rotation, flashSrc.Size() * 0.5f, 2.5f, SpriteEffects.None);
 
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin();
@@ -246,7 +246,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 7), Main.rand.NextFloat(-7, 7));
 
-                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, textColor, false, 0.9f, 1, 30);
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, new Color(239, 138, 242), false, 0.9f, 1, 30);
                 ParticleController.SpawnParticle(particle);
             }
         }

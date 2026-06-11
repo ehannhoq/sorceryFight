@@ -14,24 +14,13 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
     public class RailroadSign : CursedTechnique
     {
         public static Texture2D texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/PrivatePureLoveTrain/RailroadSign", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.RailroadSign.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.RailroadSign.Description");
-        public override float Cost => 120f;
-        public override Color textColor => new Color(108, 158, 240);
-        public override bool DisplayNameInGame => true;
-        public override int Damage => 15000;
-        public override int MasteryDamageMultiplier => 700;
-        public override float Speed => 0;
-        public override float LifeTime => 60f;
+
+        public override string InternalName => "RailroadSign";
 
         public Player Owner => Main.player[Projectile.owner];
-
         public int Direction => Math.Sign(Main.MouseWorld.X - Owner.Center.X);
-       
         public int SwingTime = 60;
-
         public float SwingCompletion => MathHelper.Clamp(Time / SwingTime, 0f, 1f);
-
         public float SwingCompletionAtStartOfTrail
         {
             get
@@ -40,7 +29,6 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 return MathHelper.Clamp(swingCompletion, SwingCompletionRatio, 1f);
             }
         }
-
         public float SwordRotation
         {
             get
@@ -52,15 +40,10 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 return swordRotation;
             }
         }
-
         public Vector2 SwordDirection => SwordRotation.ToRotationVector2() * Direction;
-
         public ref float Time => ref Projectile.ai[0];
-
         public ref float InitialRotation => ref Projectile.ai[1];
-
         public static float SwingCompletionRatio => 0.37f;
-
         public static float RecoveryCompletionRatio => 0.84f;
         public float SlashWidthFunction(float completionRatio) => Projectile.scale * 22f;
 
@@ -70,34 +53,18 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         // public static CurveSegment Recovery => new(EasingType.PolyOut, RecoveryCompletionRatio, Swing.EndingHeight, 0.97f, 3);
 
         // public static float GetSwingOffsetAngle(float completion) => PiecewiseAnimation(completion, AnticipationWait, Anticipation, Swing, Recovery);
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<RailroadSign>();
-        }
-
-        public override void SetStaticDefaults()
-        {
-            if (Main.dedServ) return;
-
-        }
 
         public override void SetDefaults()
         {
             base.SetDefaults();
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
-            Projectile.timeLeft = (int)LifeTime;
             Projectile.scale = 1.75f;
         }
 
-        public override int UseTechnique(SorceryFightPlayer sf)
-        {
-            return base.UseTechnique(sf);
-        }
 
         public override void OnSpawn(IEntitySource source)
         {
-
             for (int i = 0; i < Main.projectile.Length; i++)
             {
                 if (i == Projectile.whoAmI)
@@ -109,7 +76,6 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 {
                     proj.active = false;
                 }
-
             }
         }
 
@@ -132,9 +98,8 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             StickToOwner();
             Projectile.rotation = SwordRotation;
             Time++;
-
-            
         }
+
 
         public void AdjustPlayerValues()
         {
@@ -143,6 +108,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             Owner.SetCompositeArmFront(Math.Abs(armRotation) > 0.01f, Player.CompositeArmStretchAmount.Full, armRotation);
         }
 
+
         public void StickToOwner()
         {
            Vector2 holdOffset = new Vector2(0f, texture.Height * 0.1f) * Projectile.scale;
@@ -150,6 +116,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 - SwordDirection * holdOffset;
             Owner.ChangeDir(Direction);
         }
+
 
         public override bool PreDraw(ref Color lightColor)
         {
@@ -165,6 +132,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             return false;
         }
 
+
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             float collisionPoint = 0f;
@@ -179,16 +147,18 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
 
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), start, end,Projectile.width * 0.25f, ref collisionPoint) && Projectile.timeLeft <= 35;
         }
+
+
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.velocity = Vector2.Zero;
         }
+
 
         public override void OnKill(int timeLeft)
         {
             Player player = Main.player[Projectile.owner];
             player.SorceryFight().disableRegenFromProjectiles = false;
         }
-
     }
 }

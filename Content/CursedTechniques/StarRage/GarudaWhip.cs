@@ -20,32 +20,16 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
         //public static readonly int FRAME_COUNT = 8;
         //public static readonly int TICKS_PER_FRAME = 5;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.GarudaWhip.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.GarudaWhip.Description");
-        public override float Cost => 40f;
-
-        public override float StarCost => 20f;
-
-        public override Color textColor => new Color(255, 0, 0);
-        public override bool DisplayNameInGame => true;
-
-        public override int Damage => 30;
-        public override int MasteryDamageMultiplier => 50;
-
-        public override float Speed => 30f;
-        public override float LifeTime => 300f;
-
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<GarudaWhipProjectile>();
-        }
-
-
         public static Texture2D texture;
 
-        public bool animating;
-        public float animScale;
+        public override string InternalName => "GarudaWhip";
 
+        // public override float Cost => 40f;
+        // public override float StarCost => 20f;
+        // public override int Damage => 30;
+        // public override int MasteryDamageMultiplier => 50;
+        // public override float Speed => 30f;
+        // public override float LifeTime => 300f;
 
 
         public override int UseTechnique(SorceryFightPlayer sf)
@@ -53,23 +37,15 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             Player player = sf.Player;
             if (player.whoAmI != Main.myPlayer) return -1;
 
-            sf.cursedEnergy -= CalculateTrueCost(sf);
-            sf.starEnergy -= StarCost;
-
-            if (DisplayNameInGame)
-            {
-                int index = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
-                Main.combatText[index].lifeTime = 180;
-            }
-
-            Vector2 velocity = (Main.MouseWorld - player.MountedCenter).SafeNormalize(Vector2.Zero) * Speed;
+            // sf.starEnergy -= StarCost;
+            Vector2 velocity = (Main.MouseWorld - player.MountedCenter).SafeNormalize(Vector2.Zero) * speed;
 
             return Projectile.NewProjectile(
                 player.GetSource_FromThis(),
                 player.MountedCenter,
                 velocity,
-                GetProjectileType(),
-                (int)CalculateTrueDamage(sf),
+                ModContent.ProjectileType<GarudaWhipProjectile>(),
+                CalculateTrueDamage(sf),
                 0,
                 player.whoAmI
             );

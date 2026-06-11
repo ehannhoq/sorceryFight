@@ -22,16 +22,9 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public static readonly int FRAME_COUNT = 4;
         public static readonly int TICKS_PER_FRAME = 5;
         static List<string> incantations;
-        static Texture2D texture;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.WorldCuttingSlash.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.WorldCuttingSlash.Description");
-        public override float Cost => 1225f;
-        public override Color textColor => new Color(245, 214, 208);
-        public override bool DisplayNameInGame => false;
-        public override int Damage => 20000;
-        public override int MasteryDamageMultiplier => 525;
-        public override float Speed => 60f;
-        public override float LifeTime => 300f;
+
+        public override string InternalName => "WorldCuttingSlash";
+
         ref float castTime => ref Projectile.ai[0];
         ref float totalCastTime => ref Projectile.localAI[0];
         ref float multiplier => ref Projectile.localAI[1];
@@ -39,10 +32,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         private const float INCANTATION_TIME = 90.0f;
         private const float BUFFER_TIME = 30.0f;
         private const float SHADER_TIME = 120.0f;
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<WorldCuttingSlash>();
-        }
+
 
         public override void SetStaticDefaults()
         {
@@ -52,10 +42,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 "Repulsion.",
                 "Paired Falling Stars."
             };
-
-            if (Main.dedServ) return;
-            texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Shrine/WorldCuttingSlash", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
+
 
         public override void SetDefaults()
         {
@@ -68,6 +56,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
         }
+
 
         public override void OnSpawn(IEntitySource source)
         {
@@ -82,6 +71,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             multiplier = sfPlayer.cursedOfuda ? CursedOfuda.cursedTechniqueCastTimeDecrease : 1.0f;
             totalCastTime = (incantations.Count * INCANTATION_TIME + SHADER_TIME + BUFFER_TIME) * multiplier;
         }
+
 
         public override void AI()
         {
@@ -144,11 +134,13 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Projectile.Kill();
         }
 
+
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             modifiers.Defense *= 0.0f;
             modifiers.DefenseEffectiveness *= 0.0f;
         }
+
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {

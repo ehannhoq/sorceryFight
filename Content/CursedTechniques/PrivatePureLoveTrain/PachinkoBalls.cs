@@ -15,28 +15,19 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
     public class PachinkoBalls : CursedTechnique
     {
         public static Texture2D texture;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.PachinkoBalls.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PachinkoBalls.Description");
-        public override float Cost => 30f;
-        public override Color textColor => new Color(108, 158, 240);
-        public override bool DisplayNameInGame => true;
-        public override int Damage => 30;
-        public override int MasteryDamageMultiplier => 35;
-        public override float Speed => 30f;
-        public override float LifeTime => 300f;
+
+        public override string InternalName => "HakarisDoor";
 
         Dictionary<int, List<int>> enemyRicochets = new Dictionary<int, List<int>>();
         Dictionary<int, Color> rarity = new Dictionary<int, Color>();
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<PachinkoBalls>();
-        }
+
 
         public override void SetStaticDefaults()
         {            
             if (Main.dedServ) return;
             texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/PrivatePureLoveTrain/PachinkoBalls", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
+
 
         public override void SetDefaults()
         {
@@ -45,8 +36,8 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             Projectile.height = 32;
             Projectile.tileCollide = true;
             Projectile.penetrate = -1;
-            Projectile.timeLeft = (int)LifeTime;
         }
+
 
         public override void AI()
         {
@@ -71,6 +62,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 }
             }
         }
+
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
@@ -99,7 +91,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 if (closestNPCIndex != -1)
                 {
                     NPC targetNPC = Main.npc[closestNPCIndex];
-                    Projectile.velocity = Projectile.Center.DirectionTo(targetNPC.Center) * Speed;
+                    Projectile.velocity = Projectile.Center.DirectionTo(targetNPC.Center) * speed;
                     SoundEngine.PlaySound(SorceryFightSounds.PachinkoBallCollision, Projectile.Center);
 
                     enemyRicochets[Projectile.whoAmI][0]++;
@@ -111,6 +103,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             else
                 Projectile.Kill();
         }
+
 
         public override bool PreDraw(ref Color lightColor)
         {
