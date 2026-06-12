@@ -226,7 +226,6 @@ namespace sorceryFight.SFPlayer
             }
         }
 
-        private int TEMP_disabledRegenTimer = 0;
         public override void PostUpdate()
         {
             cursedEnergyRegenPerSecond += cursedEnergyRegenFromOtherSources;
@@ -272,7 +271,7 @@ namespace sorceryFight.SFPlayer
             if (bloodEnergy < 0)
             {
                 AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
-                Player.Hurt(PlayerDeathReason.ByCustomReason($"{Player.name} overexerted their blood energy."), (int)(Math.Abs(bloodEnergy)) , 0, false, false, default, default, 9999);
+                Player.Hurt(PlayerDeathReason.ByCustomReason($"{Player.name} overexerted their blood energy."), (int)(Math.Abs(bloodEnergy)), 0, false, false, default, default, 9999);
                 bloodEnergy = 0;
             }
 
@@ -311,16 +310,11 @@ namespace sorceryFight.SFPlayer
 
             starEnergyRegenPerSecond = 0f;
 
-            if (disabledRegen)
+            if (disabledRegen && !Main.projectile.Any(proj => proj.active && proj.ModProjectile is CursedTechnique && proj.owner == Player.whoAmI))
             {
-                TEMP_disabledRegenTimer++;
-                if (TEMP_disabledRegenTimer >= 300)
-                {
-                    disableRegenFromBuffs = false;
-                    disableRegenFromProjectiles = false;
-                    disableRegenFromDE = false;
-                    TEMP_disabledRegenTimer = 0;
-                }
+                disableRegenFromBuffs = false;
+                disableRegenFromProjectiles = false;
+                disableRegenFromDE = false;
             }
 
             CheckQuests();
@@ -412,7 +406,7 @@ namespace sorceryFight.SFPlayer
                 CameraController.ResetCameraZoom();
             }
 
-            if(SFKeybinds.DomainExpansion.JustReleased && noInnateDomain == true)
+            if (SFKeybinds.DomainExpansion.JustReleased && noInnateDomain == true)
             {
                 ToggleSimpleDomain();
             }
