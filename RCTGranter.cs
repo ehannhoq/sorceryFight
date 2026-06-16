@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using Terraria;
@@ -8,7 +12,9 @@ namespace sorceryFight.Content
 {
     public class RCTGranter : ModSystem
     {
-        private int planteraIndex = -1;
+        public static int planteraIndex = -1;
+        private static Vector2 planteraPos;
+
         public override void PreUpdatePlayers()
         {
             if (!CheckPlantera()) return;
@@ -19,21 +25,14 @@ namespace sorceryFight.Content
 
                 SorceryFightPlayer sfPlayer = player.SorceryFight();
 
-                if (sfPlayer.unlockedRCT) continue;
+                if (sfPlayer.unlockedRCT || sfPlayer.rctAnimation) continue;
 
-                if (player.statLife < 10)
-                {
-                    player.dead = false;
-                    player.immuneTime = 120;
-                    player.respawnTimer = 0;
-                    player.statLife = 1;
-                    player.creativeGodMode = true;
-                    sfPlayer.rctAnimation = true;
-                }
+                sfPlayer.preventDeath = true;
             }
         }
 
-        public bool CheckPlantera()
+
+        public static bool CheckPlantera()
         {
             int planteraType = NPCID.Plantera;
             if (planteraIndex >= 0 && Main.npc[planteraIndex].active && Main.npc[planteraIndex].type == planteraType)
@@ -49,8 +48,29 @@ namespace sorceryFight.Content
                     break;
                 }
             }
-            
+
             return planteraIndex != -1;
+        }
+
+
+        public override void PreUpdateNPCs()
+        {
+            if (planteraIndex == -1) return;
+
+            NPC plantera = Main.npc[planteraIndex];
+
+            HashSet<int> viableTargets = [];
+            foreach (Player player in Main.ActivePlayers)
+            {
+                SorceryFightPlayer sfPlayer = player.SorceryFight();
+                if (!sfPlayer.rctAnimation)
+                    viableTargets.Add(player.whoAmI);
+            }
+
+            if (viableTargets.Count > 0)
+                plantera.target = viableTargets.ElementAt(new Random().Next(viableTargets.Count));
+            else
+                plantera.velocity = Vector2.Zero;
         }
     }
 }
