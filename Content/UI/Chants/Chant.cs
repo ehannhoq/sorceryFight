@@ -15,14 +15,16 @@ namespace sorceryFight.Content.UI.Chants
         float tick = 0;
         float lifetime;
         int timeBetweenChants;
+        Action onFinished;
 
-        public Chant(List<string> chants, int timeBetweenChants, int bufferTime, ChantTextStyle style, float scale = 2.0f)
+        public Chant(List<string> chants, int timeBetweenChants, int bufferTime, ChantTextStyle style, Action onFinished, float scale = 2.0f)
         {
             texts = new List<ChantText>(chants.Count);
             var font = FontAssets.MouseText.Value;
             float totalWidth = 0.0f;
             float gap = 16.0f * scale;
             this.timeBetweenChants = timeBetweenChants;
+            this.onFinished = onFinished;
 
             foreach (string chant in chants)
             {
@@ -55,8 +57,10 @@ namespace sorceryFight.Content.UI.Chants
         {
             if (tick++ >= lifetime)
             {
+                onFinished?.Invoke();
                 SorceryFightUI sfUI = (SorceryFightUI)Parent;
                 sfUI.RemoveElement(this);
+
                 return;
             }
 

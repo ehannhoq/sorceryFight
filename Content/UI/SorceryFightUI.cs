@@ -183,9 +183,9 @@ public class SorceryFightUI : UIState
         Append(questToast);
     }
 
-    public void InitializeChant(List<string> chants, int timeBetweenChants, int bufferTime, ChantTextStyle style)
+    public void InitializeChant(List<string> chants, int timeBetweenChants, int bufferTime, ChantTextStyle style, Action onFinished = null)
     {
-        chantUI = new Chant(chants, timeBetweenChants, bufferTime, style);
+        chantUI = new Chant(chants, timeBetweenChants, bufferTime, style, onFinished);
         Append(chantUI);
     }
     
