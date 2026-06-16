@@ -144,7 +144,7 @@ namespace sorceryFight.StructureHelper
                         {
                             var moddedTileType = SFUtils.FindTypeAcrossMods(tileClass);
 
-                            var method = typeof(ModContent).GetMethod("TileType", Type.EmptyTypes);
+                            var method = typeof(ModContent).GetMethods().First(m => m.Name == "TileType" && m.IsGenericMethodDefinition);
                             var generic = method.MakeGenericMethod(moddedTileType);
                             int moddedTileID = (int)generic.Invoke(null, null);
 

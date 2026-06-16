@@ -1,3 +1,8 @@
 displayName = Sorcery Fight (A Jujutsu Kaisen Mod)
 author = ehann and the dev team
+<<<<<<<<< Temporary merge branch 1
+version = 1.3.12.4
+modReferences = CalamityMod
+=========
 version = 1.4.0
+>>>>>>>>> Temporary merge branch 2
