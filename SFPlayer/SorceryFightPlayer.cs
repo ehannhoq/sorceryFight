@@ -116,6 +116,8 @@ namespace sorceryFight.SFPlayer
         #endregion
 
         #region RCT
+        public Action onRevive;
+        public Action onDeath;
         public bool unlockedRCT;
         public int rctAuraIndex;
         public int rctBaseHealPerSecond { get; private set; }
@@ -180,14 +182,8 @@ namespace sorceryFight.SFPlayer
             else
                 maxStarEnergy = 0;
 
-            if (preventDeath && deathPosition != Vector2.Zero && Player.position != deathPosition)
-            {
-                Player.position = deathPosition;
-                preventDeath = false;
-            }
-
             innateTechnique.PreUpdate(this);
-            RCTAnimation();
+
             AttributeIcons();
             Keybinds();
 
