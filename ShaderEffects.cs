@@ -42,6 +42,14 @@ namespace sorceryFight
                 Asset<Effect> worldCuttingSlash = Mod.Assets.Request<Effect>("Content/Shaders/WorldCuttingSlash", AssetRequestMode.ImmediateLoad);
                 Filters.Scene["SF:WorldCuttingSlash"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(worldCuttingSlash, "WorldCuttingSlash"), EffectPriority.Medium);
                 Filters.Scene["SF:WorldCuttingSlash"].Load();
+
+                Asset<Effect> limitlessRCTFilter = Mod.Assets.Request<Effect>("Content/Shaders/LimitlessRCTFilter", AssetRequestMode.ImmediateLoad);
+                Filters.Scene["SF:LimitlessRCTFilter"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(limitlessRCTFilter, "LimitlessRCTFilter"), EffectPriority.Medium);
+                Filters.Scene["SF:LimitlessRCTFilter"].Load();
+
+                Asset<Effect> blackScreen = Mod.Assets.Request<Effect>("Content/Shaders/BlackScreen", AssetRequestMode.ImmediateLoad);
+                Filters.Scene["SF:BlackScreen"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(blackScreen, "BlackScreen"), EffectPriority.High);
+                Filters.Scene["SF:BlackScreen"].Load();
             }
         }
     }

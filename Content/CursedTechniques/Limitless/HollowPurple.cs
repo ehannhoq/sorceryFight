@@ -33,6 +33,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public Projectile collisionVFX;
         public int glareIndex;
+        private bool summonedFromRCT => Projectile.ai[1] == 1f;
 
 
         public HollowPurple()
@@ -91,10 +92,12 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleCollide, Projectile.Center);
                 }
 
-                Projectile.Center = projOrigin;
+                if (!summonedFromRCT)
+                    Projectile.Center = projOrigin;
+
                 Projectile.velocity = Vector2.Zero;
                 Projectile.damage = 0;
-                collisionVFX.Center = projOrigin;
+                collisionVFX.Center = Projectile.Center;
                 Projectile.netUpdate = true;
                 sfPlayer.disableRegenFromProjectiles = true;
 
@@ -104,23 +107,28 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             }
             else if (Projectile.ai[0] < COLLISION_TIME + trueWaitTime)
             {
-                if (Main.myPlayer == Projectile.owner)
-                    Projectile.Center = projOrigin;
+                if (!summonedFromRCT)
+                    if (Main.myPlayer == Projectile.owner)
+                        Projectile.Center = projOrigin;
 
                 Projectile.netUpdate = true;
-
             }
             else if (Projectile.ai[0] == COLLISION_TIME + trueWaitTime)
             {
                 Projectile.damage = (int)CalculateTrueDamage(player.SorceryFight());
 
                 Projectile.timeLeft = lifetime;
-                Projectile.Center = projOrigin;
 
-                if (Main.myPlayer == Projectile.owner)
-                    Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * speed;
+                if (!summonedFromRCT)
+                {
+                    Projectile.Center = projOrigin;
 
-                sfPlayer.disableRegenFromProjectiles = false;
+                    if (Main.myPlayer == Projectile.owner)
+                        Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * speed;
+
+                    sfPlayer.disableRegenFromProjectiles = false;
+                }
+
                 Projectile.netUpdate = true;
                 SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleRelease, Projectile.Center);
 
