@@ -182,6 +182,7 @@ namespace sorceryFight.SFPlayer
 
             string innateTechniqueName = tag.ContainsKey("innateTechnique") ? tag.GetString("innateTechnique") : "";
             innateTechnique = InnateTechnique.GetInnateTechnique(innateTechniqueName);
+            innateTechnique?.Initialize(this);
 
             cursedEnergy = tag.ContainsKey("cursedEnergy") ? tag.GetFloat("cursedEnergy") : 1f;
             var defeatedBosses = tag.ContainsKey("bossesDefeated") ? tag.GetList<int>("bossesDefeated") : new List<int>();
