@@ -137,7 +137,46 @@ namespace sorceryFight
 
         public static bool IsRCTWeakNPC(NPC npc) => RCTWeakNPC.Contains(npc.type);
 
+        public static bool IsHitboxTileColliding(Rectangle hitbox, out Vector2 hitPosition)
+        {
+            int left = hitbox.Left / 16;
+            int right = hitbox.Right / 16;
+            int top = hitbox.Top / 16;
+            int bottom = hitbox.Bottom / 16;
+
+            for (int x = left; x <= right; x++)
+            {
+                for (int y = top; y <= bottom; y++)
+                {
+                    if (!WorldGen.InWorld(x, y))
+                    {
+                        hitPosition = new Vector2(x * 16, y * 16);
+                        return true;
+                    }
+
+                    Tile tile = Framing.GetTileSafely(x, y);
+
+                    if (tile.HasTile && Main.tileSolid[tile.TileType])
+                    {
+                        hitPosition = new Vector2(x * 16, y * 16);
+                        return true;
+                    }
+                }
+            }
+
+            hitPosition = Vector2.Zero;
+            return false;
+        }
 
 
+        public static Vector2 AdjustDashPosition(Vector2 dashVector, Rectangle npcHitbox)
+        {
+            Rectangle futureHitbox = new Rectangle((int)(dashVector.X - npcHitbox.Width / 2f), (int)(dashVector.Y - npcHitbox.Height / 2f), npcHitbox.Width, npcHitbox.Height);
+            if (IsHitboxTileColliding(futureHitbox, out Vector2 hitPosition))
+            {
+                return hitPosition - new Vector2(npcHitbox.Width / 2f, npcHitbox.Height / 2f);
+            }
+            return dashVector;
+        }
     }
 }

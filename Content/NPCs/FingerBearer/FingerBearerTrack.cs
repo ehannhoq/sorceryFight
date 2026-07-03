@@ -1,5 +1,4 @@
 using System;
-using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -17,6 +16,8 @@ namespace sorceryFight.Content.NPCs.FingerBearer
 
         public int frame;
         public int frametime;
+        public bool waitingToJump;
+        public const int jumpTimer = 120;
 
         public override void AI(NPC npc)
         {
@@ -27,7 +28,6 @@ namespace sorceryFight.Content.NPCs.FingerBearer
                     frame = 0;
             }
 
-
             Vector2 toPlayer = npc.Center.DirectionTo(((FingerBearer)bossNPC).closestTargetPos);
             Vector2 xVector = Vector2.UnitX * npc.direction;
 
@@ -36,8 +36,10 @@ namespace sorceryFight.Content.NPCs.FingerBearer
 
             npc.velocity.X = (projection * movementSpeed).X;
 
+            Collision.StepUp(ref npc.position, ref npc.velocity, npc.width, npc.height, ref npc.stepSpeed, ref npc.gfxOffY);
+
             DashIfPlayerRunningAway(npc);
-            // DashIfPlayerAbove(npc);
+            DashIfPlayerAbove(npc);
         }
 
         private void DashIfPlayerRunningAway(NPC npc)
@@ -52,10 +54,7 @@ namespace sorceryFight.Content.NPCs.FingerBearer
 
             if (playerRelativeVelocity > 0.75f && player.velocity.Length() > 12f) // player is most likely running away from finger bearer
             {
-                FingerBearer fingerBearer = (FingerBearer) bossNPC;
-                Vector2 dashPos = fingerBearer.furthestTargetPos + player.velocity.SafeNormalize(Vector2.Zero) * (npc.width + 10f) * 15f;
-                bossNPC.SetState(new FingerBearerDashState(bossNPC, dashPos));
-                Main.NewText("run");
+                bossNPC.SetState(new FingerBearerDashState(bossNPC, ((FingerBearer)bossNPC).furthestTargetPos));
             }
         }
 
@@ -63,14 +62,18 @@ namespace sorceryFight.Content.NPCs.FingerBearer
         private void DashIfPlayerAbove(NPC npc)
         {
             Player player = Main.player[npc.target];
-            FingerBearer fingerBearer = (FingerBearer) bossNPC;
+            FingerBearer fingerBearer = (FingerBearer)bossNPC;
             float yDiff = Math.Abs(player.Center.Y - npc.Center.Y);
-            if (yDiff > 30f)
+            if (yDiff > (npc.height / 2))
             {
-                bool coinFlip = Main.rand.NextFloat() > 0.5;
-                Vector2 dashPos = coinFlip ? fingerBearer.closestTargetPos : fingerBearer.furthestTargetPos;
-                bossNPC.SetState(new FingerBearerDashState(bossNPC, dashPos));
-                Main.NewText("above");
+                if (!waitingToJump)
+                    waitingToJump = TaskScheduler.Instance.AddDelayedTask(() =>
+                    {
+                        bool coinFlip = Main.rand.NextFloat() > 0.5;
+                        Vector2 dashPos = coinFlip ? fingerBearer.closestTargetPos : fingerBearer.furthestTargetPos;
+                        bossNPC.SetState(new FingerBearerDashState(bossNPC, dashPos));
+                        waitingToJump = false;
+                    }, jumpTimer);
             }
         }
 
@@ -79,6 +82,7 @@ namespace sorceryFight.Content.NPCs.FingerBearer
         {
             frame = 0;
             frametime = 0;
+            waitingToJump = false;
         }
 
         public override void OnExit(NPC npc)

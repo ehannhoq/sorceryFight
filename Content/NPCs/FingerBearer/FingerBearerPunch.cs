@@ -30,12 +30,12 @@ namespace sorceryFight.Content.NPCs.FingerBearer
                         (int)npc.position.Y,
                         100,
                         npc.height
-                    ); 
+                    );
                     foreach (Player player in Main.ActivePlayers)
                     {
                         if (player.Hitbox.Intersects(punchHitbox))
                         {
-                            player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), npc.damage, npc.direction, dodgeable:true, knockback:5f);
+                            player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), npc.damage, npc.direction, dodgeable: true, knockback: 5f);
                         }
                     }
                     bossNPC.SetState(new FingerBearerTrack(bossNPC));

@@ -8,9 +8,13 @@ namespace sorceryFight.Content.NPCs.FingerBearer
     [Autoload(true)]
     public class FingerBearer : BossNPC
     {
-        public static readonly float MINIMUM_DISTANCE_TO_PLAYER = 700f;
+        public static readonly float MINIMUM_DISTANCE_TO_PLAYER = 900f;
         public Vector2 closestTargetPos;
         public Vector2 furthestTargetPos;
+
+        public bool readyForOrb = true;
+        private const int runawayDashCooldown = 600;
+        public bool onRunawayDashCooldown = false;
 
         public override void SetDefaults()
         {
@@ -33,18 +37,33 @@ namespace sorceryFight.Content.NPCs.FingerBearer
             int whoAmI = NPC.FindClosestPlayer(out float distanceToPlayer);
             NPC.target = distanceToPlayer <= MINIMUM_DISTANCE_TO_PLAYER ? whoAmI : -1;
 
-            float distanceToTarget = Math.Min((NPC.Center - closestTargetPos).Length(), (NPC.Center - furthestTargetPos).Length());
-
             if (NPC.target == -1)
             {
-                SetState(new FingerBearerDefaultState(this));
+                if (currentState is not FingerBearerChargeUp)
+                    SetState(new FingerBearerDefaultState(this));
             }
             else
             {
                 CalculateTargetPosition();
 
-                if (distanceToTarget < 15f && currentState is not FingerBearerPunch)
+                if (CanAttack())
                     SetState(new FingerBearerPunch(this));
+            }
+
+            if (GetHealthPercentage() < 0.25)
+            {
+                if (GetDistanceToTarget() > FingerBearer.MINIMUM_DISTANCE_TO_PLAYER - 200 && readyForOrb)
+                {
+                    SetState(new FingerBearerChargeUp(this));
+                }
+                else if (GetDistanceToTarget() > FingerBearer.MINIMUM_DISTANCE_TO_PLAYER - 300 && currentState is not FingerBearerChargeUp)
+                {
+                    if (!onRunawayDashCooldown)
+                    {
+                        SetState(new FingerBearerDashState(this, furthestTargetPos));
+                        onRunawayDashCooldown = TaskScheduler.Instance.AddDelayedTask(() => onRunawayDashCooldown = false, runawayDashCooldown);
+                    }
+                }
             }
 
             currentState?.AI(NPC);
@@ -72,6 +91,23 @@ namespace sorceryFight.Content.NPCs.FingerBearer
                 closestTargetPos = targetPosRight;
                 furthestTargetPos = targetPosLeft;
             }
+        }
+
+        private bool CanAttack()
+        {
+            if (GetDistanceToTarget(closestTargetPos) >= 15f)
+                return false;
+
+            if (currentState is FingerBearerPunch)
+                return false;
+
+            if (currentState is FingerBearerDashState)
+                return false;
+
+            if (currentState is FingerBearerChargeUp)
+                return false;
+
+            return true;
         }
     }
 }

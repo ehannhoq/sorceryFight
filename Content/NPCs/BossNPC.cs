@@ -18,8 +18,6 @@ namespace sorceryFight.Content.NPCs
 
         public override void AI()
         {
-            if (currentState == null) return;
-
             currentState?.AI(NPC);
         }
 
@@ -32,22 +30,31 @@ namespace sorceryFight.Content.NPCs
 
         public void SetState(AIState newState)
         {
+            if (currentState.GetType() == newState.GetType()) return;
+
+            // Main.NewText($"{currentState.ToString()} -> {newState.ToString()}");
             currentState?.OnExit(NPC);
             currentState = newState;
             currentState.OnEnter(NPC);
         }
 
-        public float GetDistanceToTarget()
+        public float GetDistanceToTarget(Vector2? targetPos = null)
         {
             if (!NPC.HasValidTarget) return -1f;
 
-            return (NPC.Center - Main.player[NPC.target].Center).Length();
+            Vector2 playerPos = targetPos ?? Main.player[NPC.target].Center;
+            return (NPC.Center - playerPos).Length();
         }
 
         public Player GetTarget()
         {
             if (!NPC.HasValidTarget) return null;
             return Main.player[NPC.target];
+        }
+
+        public float GetHealthPercentage()
+        {
+            return (float)NPC.life / NPC.lifeMax;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace sorceryFight.Content.Projectiles
 {
     public class FingerBearerBall : ModProjectile
     {
-        public static readonly int FRAMES = 8;
+        public static readonly int FRAMES = 4;
         public static readonly int TICKS_PER_FRAME = 3;
         public static Texture2D texture;
 
@@ -15,7 +15,7 @@ namespace sorceryFight.Content.Projectiles
         public ref float ChargeUpTime => ref Projectile.ai[1];
         public ref float Target => ref Projectile.ai[2];
 
-        public const float projectileSpeed = 20f;
+        public const float projectileSpeed = 40f;
         public float scale;
 
         public override void SetStaticDefaults()

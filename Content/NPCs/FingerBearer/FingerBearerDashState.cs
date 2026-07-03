@@ -11,8 +11,8 @@ namespace sorceryFight.Content.NPCs.FingerBearer
     {
         private static readonly Texture2D texture = ModContent.Request<Texture2D>("sorceryFight/Content/NPCs/FingerBearer/FingerBearerDash", AssetRequestMode.ImmediateLoad).Value;
 
-        float tick;
-        Vector2 startPos;
+        public float tick;
+        public Vector2 startPos;
 
         public override void AI(NPC npc)
         {
@@ -33,11 +33,26 @@ namespace sorceryFight.Content.NPCs.FingerBearer
             tick = 0;
             startPos = npc.Center;
             npc.noTileCollide = true;
+
+            Player target = Main.player[npc.target];
+            Vector2 playerDir = target.velocity.SafeNormalize(Vector2.Zero);
+            Vector2 predictedPosition = targetPos + target.velocity * 15.0f;
+            predictedPosition = SFUtils.AdjustDashPosition(predictedPosition, npc.Hitbox);
+            targetPos = predictedPosition;
+
+            foreach (Player player in Main.ActivePlayers)
+            {
+                npc.immune[player.whoAmI] = 999;
+            }
         }
 
         public override void OnExit(NPC npc)
         {
             npc.noTileCollide = false;
+            foreach (Player player in Main.ActivePlayers)
+            {
+                npc.immune[player.whoAmI] = 0;
+            }
         }
 
         public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
