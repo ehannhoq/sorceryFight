@@ -17,9 +17,6 @@ namespace sorceryFight.Content.Buffs
 
         public virtual float BloodRegenPerSecond { get; set; }
 
-        public virtual Color selectorBGColor { get; set; }
-        public virtual Color selectorBorderColor { get; set; }
-
         private Predicate<SorceryFightPlayer> unlocked;
         private int bossType;
         private string lockedDescriptionLocalizationKey;

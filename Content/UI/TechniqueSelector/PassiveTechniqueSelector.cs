@@ -40,11 +40,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 Rectangle borderRect = bgRect;
                 borderRect.Inflate(2, 2);
 
-                Color borderColor;
-                if (sfPlayer.innateTechnique.PassiveTechniques[id].selectorBorderColor != default)
-                    borderColor = sfPlayer.innateTechnique.PassiveTechniques[id].selectorBorderColor;
-                else
-                    borderColor = sfPlayer.innateTechnique.innateBorderColor;
+                Color borderColor = sfPlayer.innateTechnique.innateBorderColor;
 
                 Color bgColor;
                 if (ModContent.GetInstance<ClientConfig>().AllUIBackgroundsGrayToggle)
@@ -54,11 +50,9 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 }
                 else
                 {
-                    if (sfPlayer.innateTechnique.PassiveTechniques[id].selectorBGColor != default)
-                        bgColor = sfPlayer.innateTechnique.PassiveTechniques[id].selectorBGColor;
-                    else
-                        bgColor = sfPlayer.innateTechnique.innateBGColor;
+                    bgColor = sfPlayer.innateTechnique.innateBGColor;
                 }
+
                 //darken the background when the technique is active
                 if (sfPlayer.innateTechnique.PassiveTechniques[id].isActive)
                     bgColor = new Color((int)(bgColor.R * 0.8f), (int)(bgColor.G * 0.8f), (int)(bgColor.B * 0.8f), bgColor.A);
@@ -233,5 +227,3 @@ namespace sorceryFight.Content.UI.TechniqueSelector
         }
     }
 }
-
-

@@ -43,11 +43,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 borderRect.Inflate(2, 2);
 
                 //fall back on innateBGColor if there is no selector color in the Cursed Technique
-                Color borderColor;
-                if (sfPlayer.innateTechnique.CursedTechniques[id].selectorBorderColor != default)
-                    borderColor = sfPlayer.innateTechnique.CursedTechniques[id].selectorBorderColor;
-                else
-                    borderColor = sfPlayer.innateTechnique.innateBorderColor;
+                Color borderColor = sfPlayer.innateTechnique.innateBorderColor;
 
                 Color bgColor;
                 if (ModContent.GetInstance<ClientConfig>().AllUIBackgroundsGrayToggle)
@@ -57,10 +53,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 }
                 else
                 {
-                    if (sfPlayer.innateTechnique.CursedTechniques[id].selectorBGColor != default)
-                        bgColor = sfPlayer.innateTechnique.CursedTechniques[id].selectorBGColor;
-                    else
-                        bgColor = sfPlayer.innateTechnique.innateBGColor;
+                    bgColor = sfPlayer.innateTechnique.innateBGColor;
                 }
 
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X, bgRect.Y - 2, bgRect.Width, 2), borderColor);
@@ -171,7 +164,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
             if (selectorIndex != -1)
                 sfPlayer.selectedTechnique = sfPlayer.innateTechnique.CursedTechniques[icons[selectorIndex].id];
-            
+
             #region Screen Position Logic
             Vector2 screenRatioPosition = new Vector2(
                  ModContent.GetInstance<ClientConfig>().CTSelectorPosX,
@@ -304,5 +297,3 @@ namespace sorceryFight.Content.UI.TechniqueSelector
         }
     }
 }
-
-

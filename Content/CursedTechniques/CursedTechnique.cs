@@ -29,10 +29,6 @@ namespace sorceryFight.Content.CursedTechniques
         public string Description => SFUtils.GetLocalizationValue($"Mods.sorceryFight.{parentTechnique}.{InternalName}.Description");
 
 
-        public virtual Color selectorBGColor { get; set; }
-        public virtual Color selectorBorderColor { get; set; }
-
-
         /// Variables below are set from methods that are used in each innate technique when adding a new technique to it.
         private Predicate<SorceryFightPlayer> unlocked;
         private int bossType = -1;
