@@ -52,10 +52,10 @@ InnateTechniqueUnlocker: {
 }
 
 CursedTechniques: {
-	Damage: Damage: {0}
-	Cost: Cost: {0}
-	ContinuousCost: Cursed Energy per Second: {0}
-	BloodCost: Blood: {0}
-	ContinuousBloodCost: Blood per Second: {0}
-	StarCost: Mass Overcharge Cost: {0}
+	Damage: "{0} cursed damage"
+	Cost: "{0} cursed energy"
+	ContinuousCost: "{0} cursed energy per second"
+	BloodCost: "{0} blood"
+	ContinuousBloodCost: "{0} blood per second"
+	StarCost: "{0} mass overcharge"
 }
