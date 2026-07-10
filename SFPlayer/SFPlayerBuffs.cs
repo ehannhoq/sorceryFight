@@ -32,24 +32,20 @@ namespace sorceryFight.SFPlayer
             {
                 if (Player.HasBuff<BurntTechnique>() || (!beerHat && cursedEnergy < 2))
                 {
-                    passiveTechnique.isActive = false;
+                    passiveTechnique.Remove(Player);
                     continue;
                 }
 
-                if (!passiveTechnique.UseCondition(Player))
-                {
-                    passiveTechnique.isActive = false;
-                    //Main.NewText("Technique on cooldonw!");
-                    continue;
-                }
-
-                if (passiveTechnique.isActive)
-                {
-                    passiveTechnique.Apply(Player);
-                }
-                else
+                if (!passiveTechnique.CanUse(Player))
                 {
                     passiveTechnique.Remove(Player);
+                    continue;
+                }
+
+                if (passiveTechnique.active)
+                {
+                    int buffType = passiveTechnique.GetBuffType();
+                    Player.AddBuff(buffType, 2);
                 }
             }
         }
@@ -59,7 +55,7 @@ namespace sorceryFight.SFPlayer
             if (innateTechnique == null) return;
             foreach (PassiveTechnique passiveTechnique in innateTechnique.PassiveTechniques)
             {
-                passiveTechnique.isActive = false;
+                passiveTechnique.Remove(Player);
             }
         }
 

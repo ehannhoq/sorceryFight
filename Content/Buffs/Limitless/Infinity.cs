@@ -9,45 +9,37 @@ using Terraria.ModLoader;
 namespace sorceryFight.Content.Buffs.Limitless
 {
 
-    public class InfinityBuff : PassiveTechnique
+    public class Infinity : PassiveTechnique
     {
-        private Dictionary<int, Vector2> velocityData = new Dictionary<int, Vector2>();
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.Infinity.DisplayName");
-        public override string Stats
-        {
-            get
-            {
-                return $"Base CE Consumption: 1 CE/s\n"
-                        + "Each object blocked by Infinity\n"
-                        + "increases CE consumption dependent\n"
-                        + "on the object's damamge.\n"
-                        + "Infinity takes 3x more CE during boss fights.\n";
+        public override string InternalName => "Infinity";
 
-            }
+        public Infinity()
+        {
+            Technique.cost = 1;
         }
-        public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.Infinity.Description");
 
-        public override bool isActive { get; set; } = false;
-        public override float CostPerSecond { get; set; } = 1f;
+        private const int BOSS_MULTIPLIER = 3;
+
+        private Dictionary<int, Vector2> velocityData = new Dictionary<int, Vector2>();
+
+
         public bool waiting = false;
-        public override void Apply(Player player)
-        {
-            player.AddBuff(ModContent.BuffType<InfinityBuff>(), 2);
 
+        public override void OnApply(Player player)
+        {
             player.SorceryFight().infinity = true;
         }
 
-        public override void Remove(Player player)
+        public override void OnRemove(Player player)
         {
-            SorceryFightPlayer sf = player.SorceryFight();
-            sf.infinity = false;
+            player.SorceryFight().infinity = false;
         }
 
         public override void Update(Player player, ref int buffIndex)
         {
             SorceryFightPlayer sf = player.SorceryFight();
             float infinityDistance = 50f;
-            CostPerSecond = 1f;
+            Technique.cost = 1;
 
             sf.disableRegenFromBuffs = false;
 
@@ -121,12 +113,24 @@ namespace sorceryFight.Content.Buffs.Limitless
             int multiplier = 1;
             if (AreThereAnyDamnBosses.BossActive)
             {
-                multiplier = 3;
+                multiplier = BOSS_MULTIPLIER;
             }
 
-            CostPerSecond += accumulativeDamage *= multiplier;
+            Technique.cost += accumulativeDamage *= multiplier;
 
             base.Update(player, ref buffIndex);
+        }
+
+
+        public override string GetStats(SorceryFightPlayer sf)
+        {
+            string baseStats = base.GetStats(sf);
+            string additionalStats = SFUtils.GetLocalization(
+                "Mods.sorceryFight.PassiveTechniques.Infinity.AdditionalStats")
+                .WithFormatArgs(
+                    BOSS_MULTIPLIER
+                ).Value;
+            return baseStats + "\n" + additionalStats;
         }
     }
 }

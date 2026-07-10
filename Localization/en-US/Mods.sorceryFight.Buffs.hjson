@@ -122,6 +122,11 @@ KingOfCursesBuff: {
 	Description: Give me your body, kid.
 }
 
+KingOfCurses: {
+	DisplayName: King Of Curses
+	Description: Mods.sorceryFight.Buffs.KingOfCurses.Description
+}
+
 BrainDamage: {
 	DisplayName: Brain Damage
 	Description: You are not able to expand your domain!
@@ -184,4 +189,59 @@ IdleDeathGambleBuff: {
 GarudaCooldown: {
 	Description: Mods.sorceryFight.Buffs.GarudaCooldown.Description
 	DisplayName: Garuda Cooldown
+}
+
+DomainAmplification: {
+	Description: Mods.sorceryFight.Buffs.DomainAmplification.Description
+	DisplayName: Domain Amplification
+}
+
+MaximumAmplifiedAura: {
+	Description: Mods.sorceryFight.Buffs.MaximumAmplifiedAura.Description
+	DisplayName: Maximum Amplified Aura
+}
+
+Infinity: {
+	Description: Mods.sorceryFight.Buffs.Infinity.Description
+	DisplayName: Infinity
+}
+
+FallingBlossomEmotion: {
+	Description: Mods.sorceryFight.Buffs.FallingBlossomEmotion.Description
+	DisplayName: Falling Blossom Emotion
+}
+
+AmplifiedAura: {
+	Description: Mods.sorceryFight.Buffs.AmplifiedAura.Description
+	DisplayName: Amplified Aura
+}
+
+MindlessCarnage: {
+	Description: Mods.sorceryFight.Buffs.MindlessCarnage.Description
+	DisplayName: Mindless Carnage
+}
+
+FlowingRedScaleStack: {
+	Description: Mods.sorceryFight.Buffs.FlowingRedScaleStack.Description
+	DisplayName: Flowing Red Scale Stack
+}
+
+FlowingRedScale: {
+	Description: Mods.sorceryFight.Buffs.FlowingRedScale.Description
+	DisplayName: Flowing Red Scale
+}
+
+HollowWickerBasket: {
+	DisplayName: Hollow Wicker Basket
+	Description: Mods.sorceryFight.Buffs.HollowWickerBasket.Description
+}
+
+SummonGaruda: {
+	DisplayName: Summon Garuda
+	Description: Mods.sorceryFight.Buffs.SummonGaruda.Description
+}
+
+Totality: {
+	DisplayName: Totality
+	Description: Mods.sorceryFight.Buffs.Totality.Description
 }

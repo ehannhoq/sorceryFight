@@ -37,17 +37,17 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
-            new InfinityBuff()
+            new Infinity()
                 .SetUnlock(NPCID.EyeofCthulhu),
 
-            new AmplifiedAuraBuff()
+            new AmplifiedAura()
                 .SetUnlock(NPCID.SkeletronHead),
 
-            new MaximumAmplifiedAuraBuff()
+            new MaximumAmplifiedAura()
                 .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedMechBossThree)
                 .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.MechBossThree"),
 
-            new HollowWickerBasketBuff()
+            new HollowWickerBasket()
                 .SetUnlock(NPCID.HallowBoss)
         };
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>

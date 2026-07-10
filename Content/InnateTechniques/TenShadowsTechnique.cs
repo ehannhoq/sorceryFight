@@ -24,7 +24,7 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
-            new TotalityBuff()
+            new Totality()
                 .SetUnlock((SorceryFightPlayer sfPlayer) => true)
         };
 
@@ -41,7 +41,7 @@ namespace sorceryFight.Content.InnateTechniques
                 .SetUnlock((SorceryFightPlayer sfPlayer) => true),
             new RoundDeer()
                 .SetUnlock((SorceryFightPlayer sfPlayer) => true)
-            
+
 
         };
 

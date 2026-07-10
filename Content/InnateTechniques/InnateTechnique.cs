@@ -197,12 +197,6 @@ namespace sorceryFight.Content.InnateTechniques
             {
                 ct.SetParentTechnique(InternalName);
             }
-
-            // foreach (PassiveTechnique pt in PassiveTechniques)
-            // {
-            //     pt.SetParentTechnique(InternalName);
-            // }
         }
-
     }
 }

@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Buffs.Vessel
 {
-    public class KingOfCursesBuff : ModBuff
+    public class KingOfCurses : ModBuff
     {
         private static Dictionary<int, bool> rctTracker = new Dictionary<int, bool>();
         public override void SetStaticDefaults()
@@ -53,7 +53,7 @@ namespace sorceryFight.Content.Buffs.Vessel
             {
                 foreach (PassiveTechnique pt in sfPlayer.innateTechnique.PassiveTechniques)
                 {
-                    pt.isActive = false;
+                    pt.active = false;
                 }
 
                 sfPlayer.selectedTechnique = null;

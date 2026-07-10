@@ -7,11 +7,6 @@ Groundshot: {
 		punch it towards your cursor with incredibl
 		force.
 		'''
-	LockedDescription:
-		'''
-		Defeat the piece of Cthulhu that was
-		ripped out from him centuries ago.
-		'''
 }
 
 RamCharge: {
@@ -21,7 +16,6 @@ RamCharge: {
 		Dash towards your cursor, dealing damage to
 		anything in your path.
 		'''
-	LockedDescription: Defeat the one who guards the Dungeon.
 }
 
 FlashStep: {
@@ -31,35 +25,14 @@ FlashStep: {
 		Immedietely teleport to your cursor. Has max range of tiles,
 		which increases with mastery.
 		'''
-	LockedDescription: Defeat the mechanical recreation of Cthulu's skull.
 }
 
 LightspeedBarrage: {
 	DisplayName: Lightspeed Barrage
 	Description:
 		'''
-		Auto-dash to the nearest enemy. If there 
-		are any more nearby enemies, auto-dash to 
+		Auto-dash to the nearest enemy. If there
+		are any more nearby enemies, auto-dash to
 		them as well.
 		'''
-	LockedDescription: Defeat the Sentinels of the Devourer.
-}
-
-MindlessCarnage: {
-	DisplayName: Mindless Carnage
-	Description:
-		'''
-		Your mind goes blank, eyes go gray.
-		Damage and speed scales to the strongest
-		enemy near you.
-		Stamina drain also increases the stronger
-		the enemy.
-		'''
-	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
-}
-
-InorganicPerception: {
-	DisplayName: Inorganic Perception
-	Description: placeholder
-	LockedDescription: Defeat the stone-faced ritualistic idol of the Lihzahrd tribe.
 }

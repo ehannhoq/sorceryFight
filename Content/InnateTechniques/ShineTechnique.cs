@@ -21,10 +21,10 @@ namespace sorceryFight.Content.InnateTechniques
         public override Color innateBorderColor => new Color(0, 0, 0, 128);
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
-            new DomainAmplificationBuff()
+            new DomainAmplification()
                 .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedMechBossThree)
                 .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.MechBossThree"),
-            new HollowWickerBasketBuff()
+            new HollowWickerBasket()
                 .SetUnlock(NPCID.HallowBoss)
         };
 

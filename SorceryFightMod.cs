@@ -32,6 +32,11 @@ namespace sorceryFight
 		/// </summary>
 		public static MethodInfo ModContentProjectileType;
 
+		/// <summary>
+		/// A reflection method allowing to retrieve ModContent.BuffTypes at runtime.
+		/// </summary>
+		public static MethodInfo ModContentBuffType;
+
 		public static NPC strongestBoss;
 
 		private static readonly int vanillaBossesCount = 32;
@@ -58,6 +63,7 @@ namespace sorceryFight
 		public override void PostSetupContent()
 		{
 			ModContentProjectileType = typeof(ModContent).GetMethod("ProjectileType");
+			ModContentBuffType = typeof(ModContent).GetMethod("BuffType");
 			CountBosses();
 			DetermineStrongestBoss();
 		}
@@ -117,7 +123,8 @@ namespace sorceryFight
 		{
 			totalBosses = 0;
 			ModContentProjectileType = null;
-		}
+            ModContentBuffType = null;
+        }
 
 
         public override void HandlePacket(BinaryReader reader, int whoAmI) => SorceryFightNetcode.HandlePacket(this, reader, whoAmI);

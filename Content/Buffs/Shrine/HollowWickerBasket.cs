@@ -9,35 +9,24 @@ using sorceryFight.Content.Buffs.Vessel;
 
 namespace sorceryFight.Content.Buffs.Shrine
 {
-    public class HollowWickerBasketBuff : PassiveTechnique
+    public class HollowWickerBasket : PassiveTechnique
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.HollowWickerBasketBuff.DisplayName");
-        public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.HollowWickerBasketBuff.Description");
+        public override string InternalName => "HollowWickerBasket";
 
-        public override bool isAura => true;
-        public override string Stats
+        public HollowWickerBasket()
         {
-            get
-            {
-                return "Base CE Consumption: 50 CE/s\n"
-                        + "100% of incoming damage is\n"
-                        + "neutralized into Cursed Energy.\n"
-                        + "Grants immunity to enemy domains.\n"            
-                        + "You cannot use Cursed Techniques while,\n"
-                        + "this is active, as well as moving 10% slower,\n"
-                        + "unless you have a unique body structure.\n"
-                       + "Hollow Wicker Basket takes 3x more CE during boss fights.\n";
-            }
+            Technique.cost = 50;
         }
-        public override bool isActive { get; set; } = false;
-        public override float CostPerSecond { get; set; } = 50f;
+
+        private const float DAMAGE_NEGATION = 1.0f;
+        private const float SPEED_REDUCTION = 0.1f;
+        private const int BOSS_REDUCTION = 3;
+
         public Dictionary<int, int> auraIndices;
         public bool waiting = false;
 
-        public override void Apply(Player player)
+        public override void OnApply(Player player)
         {
-            player.AddBuff(ModContent.BuffType<HollowWickerBasketBuff>(), 2);
-
             SorceryFightPlayer sfPlayer = player.SorceryFight();
 
             sfPlayer.hollowWickerBasket = true;
@@ -54,13 +43,10 @@ namespace sorceryFight.Content.Buffs.Shrine
 
             }
 
-            if (!sfPlayer.uniqueBodyStructure)
-                player.moveSpeed -= 0.10f;
-
             sfPlayer.disableCurseTechniques = true;
         }
 
-        public override void Remove(Player player)
+        public override void OnRemove(Player player)
         {
             SorceryFightPlayer sfPlayer = player.SorceryFight();
             sfPlayer.hollowWickerBasket = false;
@@ -81,6 +67,7 @@ namespace sorceryFight.Content.Buffs.Shrine
         public override void Update(Player player, ref int buffIndex)
         {
             SorceryFightPlayer sfPlayer = player.SorceryFight();
+            player.moveSpeed -= SPEED_REDUCTION;
 
             float minimumDistance = 25f;
             float accumulativeDamage = 0f;
@@ -128,13 +115,26 @@ namespace sorceryFight.Content.Buffs.Shrine
             int multiplier = 1;
             if (AreThereAnyDamnBosses.BossActive)
             {
-                multiplier = 3;
+                multiplier = BOSS_REDUCTION;
             }
 
-            CostPerSecond = 50f;
-            CostPerSecond += accumulativeDamage * 3f * multiplier;
+            Technique.cost = 50f;
+            Technique.cost += accumulativeDamage * 3f * multiplier;
 
-            base.Update(player, ref buffIndex);            
+            base.Update(player, ref buffIndex);
+        }
+
+        public override string GetStats(SorceryFightPlayer sf)
+        {
+            string baseStats = base.GetStats(sf);
+            string additionalStats = SFUtils.GetLocalization(
+                "Mods.sorceryFight.PassiveTechniques.HollowWickerBasket.AdditionalStats")
+                .WithFormatArgs(
+                    (int)(DAMAGE_NEGATION * 100),
+                    (int)(SPEED_REDUCTION * 100),
+                    BOSS_REDUCTION
+                ).Value;
+            return baseStats + "\n" + additionalStats;
         }
     }
 }

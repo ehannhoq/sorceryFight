@@ -108,7 +108,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                             projectile.Kill();
                             //Need code to uncheck the garuda summon box in the UI and remove the buff
 
-                            player.ClearBuff(ModContent.BuffType<SummonGarudaBuff>());
+                            player.ClearBuff(ModContent.BuffType<SummonGaruda>());
                             player.AddBuff(ModContent.BuffType<GarudaCooldown>(), 3600);
                             Projectile.Kill();
                         }

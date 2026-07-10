@@ -8,35 +8,21 @@ using Terraria.ID;
 
 namespace sorceryFight.Content.Buffs.Limitless
 {
-    public class FallingBlossomEmotionBuff : PassiveTechnique
+    public class FallingBlossomEmotion : PassiveTechnique
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.FallingBlossomEmotionBuff.DisplayName");
+        public override string InternalName => "FallingBlossomEmotion";
 
-        public override bool isAura => true;
-
-        public override string Stats
+        public FallingBlossomEmotion()
         {
-            get
-            {
-                return $"CE Consumption: {CostPerSecond} CE/s\n"
-                        + "You must be standing still in order to recieve the buffs.\n"
-                        + "Grants immunity to enemy domains.\n"
-                        + "Grants +20 defense.\n"
-                        + "Grants immunity to knockback.\n"
-                        + "You cannot use Cursed Techniques while this is active,\n"
-                        + "unless you have a unique body structure.\n";
-            }
+            Technique.cost = 85;
         }
-        public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.FallingBlossomEmotionBuff.Description");
 
-        public override bool isActive { get; set; } = false;
-        public override float CostPerSecond { get; set; } = 85;
+        private const int DEFENSE = 20;
 
         protected Dictionary<int, int> auraIndices;
-        public override void Apply(Player player)
-        {
-            player.AddBuff(ModContent.BuffType<FallingBlossomEmotionBuff>(), 2);
 
+        public override void OnApply(Player player)
+        {
             if (auraIndices == null)
                 auraIndices = new Dictionary<int, int>();
 
@@ -52,7 +38,7 @@ namespace sorceryFight.Content.Buffs.Limitless
             player.SorceryFight().fallingBlossomEmotion = true;
         }
 
-        public override void Remove(Player player)
+        public override void OnRemove(Player player)
         {
             if (auraIndices == null)
                 auraIndices = new Dictionary<int, int>();
@@ -76,10 +62,21 @@ namespace sorceryFight.Content.Buffs.Limitless
             base.Update(player, ref buffIndex);
 
             if (player.velocity == Vector2.Zero)
-            { 
-                player.statDefense += 20;
+            {
+                player.statDefense += DEFENSE;
                 player.noKnockback = true;
             }
+        }
+
+        public override string GetStats(SorceryFightPlayer sf)
+        {
+            string baseStats =  base.GetStats(sf);
+            string additionalStats = SFUtils.GetLocalization(
+                "Mods.sorceryFight.PassiveTechniques.FallingBlossomEmotion.AdditionalStats")
+                .WithFormatArgs(
+                    DEFENSE
+                ).Value;
+            return baseStats + "\n" + additionalStats;
         }
     }
 }

@@ -121,7 +121,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
                 bool unlocked = pt.IsUnlocked(player);
-                string hoverText = unlocked ? $"{pt.DisplayName}\n{pt.Stats}\n{pt.Description}" : $"{pt.GetUnlockRequirement()}";
+                string hoverText = unlocked ? $"{pt.DisplayName}\n{pt.GetStats(player)}\n{pt.Description}" : $"{pt.GetUnlockRequirement()}";
 
                 TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
                 ptIcons.Add(icon);
@@ -267,7 +267,7 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
                 bool unlocked = pt.IsUnlocked(player);
-                string hoverText = unlocked ? $"{pt.DisplayName}\n{pt.Stats}\n{pt.Description}" : $"{pt.GetUnlockRequirement()}";
+                string hoverText = unlocked ? $"{pt.DisplayName}\n{pt.GetStats(player)}\n{pt.Description}" : $"{pt.GetUnlockRequirement()}";
 
                 TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
                 ptIcons.Add(icon);

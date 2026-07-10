@@ -24,15 +24,15 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
-            new FlowingRedScaleBuff()
+            new FlowingRedScale()
                 .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedEvilBoss)
                 .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.EvilBoss"),
-                
-            new FlowingRedScaleStackBuff()
+
+            new FlowingRedScaleStack()
                 .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedMechBossThree)
                 .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.MechBossThree"),
-                
-            new FallingBlossomEmotionBuff()
+
+            new FallingBlossomEmotion()
                 .SetUnlock(NPCID.HallowBoss)
         };
 
@@ -40,20 +40,20 @@ namespace sorceryFight.Content.InnateTechniques
         {
             new SlicingExorcism()
                 .SetUnlock(NPCID.EyeofCthulhu),
-                
+
             new SelfBloodBlade()
                 .SetUnlock(NPCID.SkeletronHand),
-                
+
             new PiercingBlood()
                 .SetUnlock(NPCID.WallofFlesh),
-                
+
             new BloodDaggerStorm()
              .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.unlockedRCT)
              .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.RCT"),
-                
+
             new SuperNova()
                 .SetUnlock(NPCID.Golem),
-                
+
             new UnlimitedPiercingBlood()
                 .SetUnlock(NPCID.CultistBoss)
         };

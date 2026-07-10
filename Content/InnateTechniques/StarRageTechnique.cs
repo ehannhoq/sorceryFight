@@ -26,10 +26,10 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
-            new SummonGarudaBuff()
+            new SummonGaruda()
                 .SetUnlock(NPCID.SkeletronHead),
 
-            new FallingBlossomEmotionBuff()
+            new FallingBlossomEmotion()
                 .SetUnlock(NPCID.SkeletronHead)
         };
 
@@ -48,7 +48,7 @@ namespace sorceryFight.Content.InnateTechniques
 
             new StarRush()
                 .SetUnlock(NPCID.SkeletronHead),
-            
+
         };
 
         public override PlayerDomainExpansion DomainExpansion { get; } = new StarCastle();

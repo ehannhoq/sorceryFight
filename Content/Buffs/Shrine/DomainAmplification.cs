@@ -9,36 +9,24 @@ using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Buffs.Shrine
 {
-    public class DomainAmplificationBuff : PassiveTechnique
+    public class DomainAmplification : PassiveTechnique
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.DomainAmplificationBuff.DisplayName");
-        public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.DomainAmplificationBuff.Description");
+        public override string InternalName => "DomainAmplificaton";
 
-        public override bool isAura => true;
-        public override string Stats
+        public DomainAmplification()
         {
-            get
-            {
-                return "Base CE Consumption: 10 CE/s\n"
-                        + "50% of incoming damage is\n"
-                        + "neutralized using Cursed Energy.\n"
-                        + "You cannot use Cursed Techniques while this is active.\n"
-                        + "unless you have a unique body structure.\n"
-                        + "Domain Amplification takes 1.5x more CE during boss fights.\n";
-            }
+            Technique.cost = 10;
         }
-        public override bool isActive { get; set; } = false;
-        public override float CostPerSecond { get; set; } = 10f;
+
+        private const float DAMAGE_REDUCTION = 0.5f;
+        private const float BOSS_MULTIPLIER = 1.5f;
 
         public Dictionary<int, int> auraIndices;
 
-        public override void Apply(Player player)
+        public override void OnApply(Player player)
         {
-            player.AddBuff(ModContent.BuffType<DomainAmplificationBuff>(), 2);
             SorceryFightPlayer sfPlayer = player.SorceryFight();
-
             sfPlayer.domainAmp = true;
-
 
             if (auraIndices == null)
                 auraIndices = new Dictionary<int, int>();
@@ -54,7 +42,7 @@ namespace sorceryFight.Content.Buffs.Shrine
             sfPlayer.disableCurseTechniques = true;
         }
 
-        public override void Remove(Player player)
+        public override void OnRemove(Player player)
         {
             SorceryFightPlayer sfPlayer = player.SorceryFight();
             sfPlayer.domainAmp = false;
@@ -68,7 +56,7 @@ namespace sorceryFight.Content.Buffs.Shrine
                 auraIndices.Remove(player.whoAmI);
             }
 
-           // sfPlayer.disableCurseTechniques = false;
+           sfPlayer.disableCurseTechniques = false;
         }
 
         public override void Update(Player player, ref int buffIndex)
@@ -108,13 +96,25 @@ namespace sorceryFight.Content.Buffs.Shrine
             float multiplier = 1;
             if (AreThereAnyDamnBosses.BossActive)
             {
-                multiplier = 1.5f;
+                multiplier = BOSS_MULTIPLIER;
             }
 
-            CostPerSecond = 10f;
-            CostPerSecond += accumulativeDamage * multiplier;
-            
+            Technique.cost = 10f;
+            Technique.cost += accumulativeDamage * multiplier;
+
             base.Update(player, ref buffIndex);
+        }
+
+        public override string GetStats(SorceryFightPlayer sf)
+        {
+            string baseStats = base.GetStats(sf);
+            string additionalStats = SFUtils.GetLocalization(
+                "Mods.sorceryFight.PassiveTechniques.DomainAmplification.AdditionalStats")
+                .WithFormatArgs(
+                    DAMAGE_REDUCTION,
+                    BOSS_MULTIPLIER
+                ).Value;
+            return baseStats + "\n" + additionalStats;
         }
     }
 }

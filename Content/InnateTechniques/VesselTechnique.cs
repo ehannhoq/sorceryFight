@@ -23,10 +23,10 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
-            new FlowingRedScaleBuff()
+            new FlowingRedScale()
                 .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 5),
 
-            new FlowingRedScaleStackBuff()
+            new FlowingRedScaleStack()
                 .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 15),
         };
 
@@ -62,11 +62,11 @@ namespace sorceryFight.Content.InnateTechniques
             sf.Player.GetDamage(DamageClass.Summon) *= 1 + (0.05f * sf.sukunasFingerConsumed);
 
             sf.Player.statDefense *= 1 + (0.03f * sf.sukunasFingerConsumed);
-    
+
             sf.blackFlashWindowTime += 1;
         }
 
-        public override void UpdateLifeRegen(SorceryFightPlayer sf) 
+        public override void UpdateLifeRegen(SorceryFightPlayer sf)
         {
             sf.Player.lifeRegen += 2 * sf.sukunasFingerConsumed;
         }

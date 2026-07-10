@@ -1,48 +1,48 @@
-using Terraria;
-using sorceryFight.SFPlayer;
-using Terraria.Localization;
-using Terraria.ModLoader;
-using Terraria.ID;
-using sorceryFight.Utilities;
+// using Terraria;
+// using sorceryFight.SFPlayer;
+// using Terraria.Localization;
+// using Terraria.ModLoader;
+// using Terraria.ID;
+// using sorceryFight.Utilities;
 
-namespace sorceryFight.Content.Buffs.HeavenlyRestriction
-{
-    public class InorganicPerception : PassiveTechnique
-    {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.InorganicPerception.DisplayName");
+// namespace sorceryFight.Content.Buffs.HeavenlyRestriction
+// {
+//     public class InorganicPerception : PassiveTechnique
+//     {
+//         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.InorganicPerception.DisplayName");
 
-        public override bool isAura => true;
-        public override string Stats
-        {
-            get
-            {
-                return $"CE Consumption: {CostPerSecond} CE/s\n"
-                        + "You must be standing still in order to recieve the buffs.\n"
-                        + "Grants immunity to enemy domains.\n"
-                        + "Grants +20 defense.\n"
-                        + "Grants immunity to knockback.\n"
-                        + "You cannot use Cursed Techniques while this is active,\n"
-                        + "unless you have a unique body structure.\n";
-            }
-        }
-        public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.InorganicPerception.Description");
+//         public override bool isAura => true;
+//         public override string Stats
+//         {
+//             get
+//             {
+//                 return $"CE Consumption: {CostPerSecond} CE/s\n"
+//                         + "You must be standing still in order to recieve the buffs.\n"
+//                         + "Grants immunity to enemy domains.\n"
+//                         + "Grants +20 defense.\n"
+//                         + "Grants immunity to knockback.\n"
+//                         + "You cannot use Cursed Techniques while this is active,\n"
+//                         + "unless you have a unique body structure.\n";
+//             }
+//         }
+//         public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.InorganicPerception.Description");
 
-        public override bool isActive { get; set; } = false;
-        public override float CostPerSecond { get; set; } = 85;
+//         public override bool isActive { get; set; } = false;
+//         public override float CostPerSecond { get; set; } = 85;
 
-        public override void Apply(Player player)
-        {
-            player.AddBuff(ModContent.BuffType<InorganicPerception>(), 2);
-        }
+//         public override void OnApply(Player player)
+//         {
+//             player.AddBuff(ModContent.BuffType<InorganicPerception>(), 2);
+//         }
 
-        public override void Remove(Player player)
-        {
+//         public override void OnRemove(Player player)
+//         {
 
-        }
+//         }
 
-        public override void Update(Player player, ref int buffIndex)
-        {
-            base.Update(player, ref buffIndex);
-        }
-    }
-}
+//         public override void Update(Player player, ref int buffIndex)
+//         {
+//             base.Update(player, ref buffIndex);
+//         }
+//     }
+// }

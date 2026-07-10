@@ -30,9 +30,6 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
         public override float MaxFallSpeed => 12f;
         public override bool CanContactDamage => true;
 
-        public override Color selectorBGColor { get; set; }
-        public override Color selectorBorderColor { get; set; }
-
         private const int FRAME_COUNT = 7;
         private const int TICKS_PER_FRAME = 6;
 
@@ -58,7 +55,7 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
             Projectile.width = 40;
             Projectile.height = 40;
         }
-  
+
         public override void SummonAI()
         {
             base.SummonAI();

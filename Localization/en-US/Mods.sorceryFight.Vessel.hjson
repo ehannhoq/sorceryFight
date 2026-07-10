@@ -5,7 +5,6 @@ SoulDismantle: {
 		A devastating slash that targets the soul,
 		ignoring any and all defense.
 		'''
-	LockedDescription: Consume at least 3 of Ryomen Sukuna's Fingers.
 }
 
 ChainDismantle: {
@@ -13,10 +12,9 @@ ChainDismantle: {
 	Description:
 		'''
 		A slash attack that chains onto any other
-		enemies within a radius upon first successful 
+		enemies within a radius upon first successful
 		hit. Also ignores defense.
 		'''
-	LockedDescription: Consome at 9 least of Ryomen Sukuna's Fingers.
 }
 
 PiercingBlood: {
@@ -27,7 +25,6 @@ PiercingBlood: {
 		you shoot a concetrated beam of blood; piercing
 		through anything.
 		'''
-	LockedDescription: Consume at least 6 of Ryomen Sukuna's Fingers (Vessel) or defeat Cryogen (Blood).
 }
 
 BloodDaggerStorm: {
@@ -37,7 +34,6 @@ BloodDaggerStorm: {
 		By constantly compressing blood into daggers and firing them with tiny lines of blood attached
 		they can be redirected mid air towards your cursor, seeking out enemies as they get closer
 		'''
-	LockedDescription: Consume at least 11 of Ryomen Sukuna's Fingers (Vessel) or defeat the Empress of Light (Blood).
 }
 
 LineDevestation: {
@@ -49,12 +45,7 @@ LineDevestation: {
 		by having maximum blood, at which point the slash will consume half of it and
 		explode with blood dealing triple damage.
 		'''
-	LockedDescription: Consume at least 15 of Ryomen Sukuna's Fingers.
 }
-
-
-
-
 
 FlowingRedScaleBuff: {
 	DisplayName: Flowing Red Scale
@@ -64,7 +55,6 @@ FlowingRedScaleBuff: {
 		actively through the user's body, increasing
 		defense and reducing incoming damage taken.
 		'''
-	LockedDescription: Consume 3 of Sukuna's Fingers (Vessel) or defeat Perforator / HiveMind (Blood)
 }
 
 FlowingRedScaleStackBuff: {
@@ -75,7 +65,6 @@ FlowingRedScaleStackBuff: {
 		actively through the user's body, further increasing
 		defense and reducing incoming damage taken.
 		'''
-	LockedDescription: Consume 10 of Sukuna's Fingers (Vessel) or defeat Leviathan (Blood)
 }
 
 FullIncarnationKOC: {
@@ -85,5 +74,4 @@ FullIncarnationKOC: {
 		After consuming enough you now have the ability to take form at will.
 		The only way back from this transformation is death
 		'''
-	LockedDescription: Consume the skull of Ryomen Sukuna, guarded by Supreme Calamitas
 }

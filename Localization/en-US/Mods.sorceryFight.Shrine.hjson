@@ -5,11 +5,6 @@ Dismantle: {
 		The default shashing technique of Shrine,
 		it fires a slash towards the user's cursor.
 		'''
-	LockedDescription:
-		'''
-		Defeat the piece of Cthulhu that was
-		ripped out from him centuries ago.
-		'''
 }
 
 Cleave: {
@@ -20,13 +15,11 @@ Cleave: {
 		its power based off of the target's current
 		health.
 		'''
-	LockedDescription: Defeat the one who guards the Dungeon.
 }
 
 InstantDismantle: {
 	DisplayName: Instantaneous Dismantle
 	Description: Slashes near instantly at the user's cursor.
-	LockedDescription: Defeat the mechanical recreation of Cthulu's skeleton.
 }
 
 DivineFlame: {
@@ -36,11 +29,6 @@ DivineFlame: {
 		Flames hotter than hell take shape into an
 		arrow, in which launches and deals a massive
 		amount of damage despite its slow speed.
-		'''
-	LockedDescription:
-		'''
-		Defeat the Goddess who slew a dragon and
-		gorged Herself in its auric soul of Flame.
 		'''
 }
 
@@ -53,27 +41,4 @@ WorldCuttingSlash: {
 		This powerful slash cuts through everything
 		and anything.
 		'''
-	LockedDescription: Defeat the Devourer of Gods.
-}
-
-DomainAmplificationBuff: {
-	DisplayName: Domain Amplification
-	Description:
-		'''
-		A simple technique that casts
-		a barrier around the user, 
-		nullifying partial damage taken.
-		'''
-	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
-}
-
-HollowWickerBasketBuff: {
-	DisplayName: Hollow Wicker Basket
-	Description:
-		'''
-		An ancient technique. It shrouds
-		the user in a basket of Cursed
-		Energy, nullifying any damage taken.
-		'''
-	LockedDescription: Defeat the stone-faced ritualistic idol of the Lihzahrd tribe.
 }

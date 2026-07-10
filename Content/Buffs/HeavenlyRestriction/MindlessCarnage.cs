@@ -10,32 +10,22 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
 {
     public class MindlessCarnage : PassiveTechnique
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.MindlessCarnage.DisplayName");
+        public override string InternalName => "MindlessCarnage";
 
-        public override bool isAura => true;
-        public override string Stats
+        public MindlessCarnage()
         {
-            get
-            {
-                return $"Stamina Consumption: {CostPerSecond} CE/s\n"
-                        + "Your screen goes black and gray, and only see red.\n"
-                        + "Your movement speed and strength scales to the strongest enemy near you.\n"
-                        + "However, stamina consumption also scales to the strongest enemy near you.";
-            }
+            Technique.cost = 85;
         }
-        public override LocalizedText Description => SFUtils.GetLocalization("Mods.sorceryFight.Buffs.MindlessCarnage.Description");
 
-        public override bool isActive { get; set; } = false;
-        public override float CostPerSecond { get; set; } = 85;
 
-        private const float minSpeed = 0.05f;
-        private const float maxSpeed = 0.75f;
-        private const float minDamageBoost = 1.1f;
-        private const float maxDamageBoost = 2f;
+        private const float MIN_SPEED = 0.05f;
+        private const float MAX_SPEED = 0.75f;
+        private const float MIN_DAMAGE_BOOST = 1.1f;
+        private const float MAX_DAMAGE_BOOST = 2f;
 
         private static float ease = 0.0f;
 
-        public override void Apply(Player player)
+        public override void OnApply(Player player)
         {
             player.AddBuff(ModContent.BuffType<MindlessCarnage>(), 2);
 
@@ -46,31 +36,31 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
                 Filters.Scene.Activate("SF:MindlessBarrage");
             }
 
-            ease = MathHelper.Clamp(ease + 0.04f, 0f, 1f);
-            Filters.Scene["SF:MindlessBarrage"].GetShader().UseOpacity(ease).UseTargetPosition(player.Center);
+            // ease = MathHelper.Clamp(ease + 0.04f, 0f, 1f);
+            Filters.Scene["SF:MindlessBarrage"].GetShader().UseOpacity(1.0f).UseTargetPosition(player.Center);
         }
 
-        public override void Remove(Player player)
+        public override void OnRemove(Player player)
         {
             if (Main.myPlayer != player.whoAmI) return;
 
-            ease = MathHelper.Clamp(ease - 0.04f, 0f, 1f);
+            // ease = MathHelper.Clamp(ease - 0.04f, 0f, 1f);
 
-            if (ease > 0)
-            {
-                Filters.Scene["SF:MindlessBarrage"].GetShader().UseOpacity(ease).UseTargetPosition(player.Center);
-                CameraController.ResetCameraPosition();
-            }
-            else
-            {
-                Filters.Scene["SF:MindlessBarrage"].Deactivate();
-                ease = 0;
-            }
+            // if (ease > 0)
+            // {
+            //     Filters.Scene["SF:MindlessBarrage"].GetShader().UseOpacity(ease).UseTargetPosition(player.Center);
+            // }
+            // else
+            // {
+            CameraController.ResetCameraPosition();
+            Filters.Scene["SF:MindlessBarrage"].Deactivate();
+            // ease = 0;
+            // }
         }
 
         public override void Update(Player player, ref int buffIndex)
         {
-            CostPerSecond = 65f;
+            Technique.cost = 65f;
 
             if (Main.myPlayer == player.whoAmI)
             {
@@ -110,10 +100,10 @@ namespace sorceryFight.Content.Buffs.HeavenlyRestriction
             float healthProportion = npcHealth / 100000f;
 
             // TODO: if theres a system that identifies the current strongest boss, use that bosses health and contact damage instead of these arbituary numbers.
-            player.moveSpeed += ((maxSpeed - minSpeed) / 2 * damageProportion) + ((maxSpeed - minSpeed) / 2 * healthProportion) + minSpeed;
-            player.GetDamage(DamageClass.Melee) *= ((maxDamageBoost - minDamageBoost) / 2 * damageProportion) + ((maxDamageBoost - minDamageBoost) / 2 * healthProportion) + minDamageBoost;
+            player.moveSpeed += ((MAX_SPEED - MIN_SPEED) / 2 * damageProportion) + ((MAX_SPEED - MIN_SPEED) / 2 * healthProportion) + MIN_SPEED;
+            player.GetDamage(DamageClass.Melee) *= ((MAX_DAMAGE_BOOST - MIN_DAMAGE_BOOST) / 2 * damageProportion) + ((MAX_DAMAGE_BOOST - MIN_DAMAGE_BOOST) / 2 * healthProportion) + MIN_DAMAGE_BOOST;
 
-            CostPerSecond += 50 * ((damageProportion + healthProportion) / 2);
+            Technique.cost += 30 * ((damageProportion + healthProportion) / 2);
             base.Update(player, ref buffIndex);
         }
     }

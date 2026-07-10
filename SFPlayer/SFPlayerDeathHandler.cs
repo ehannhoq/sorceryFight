@@ -60,9 +60,9 @@ namespace sorceryFight.SFPlayer
             onDeath?.Invoke();
             if (!rctAnimation && sukunasFingerConsumed >= 1)
             {
-                //King of Curses is set to 2 ticks when it's re-applied, this reapplies it if the player dies again
-                if (Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>()) && innateTechnique.InternalName == "Shrine")
-                    Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(2));
+                //King of Curses is set to 2 ticks when it's re-applied, this reapplies it if the player dies again; essentially removing it
+                if (Player.HasBuff(ModContent.BuffType<KingOfCurses>()) && innateTechnique.InternalName == "Shrine")
+                    Player.AddBuff(ModContent.BuffType<KingOfCurses>(), SFUtils.BuffSecondsToTicks(2));
 
                 else if (innateTechnique.InternalName == "Vessel")
                 {
@@ -73,7 +73,7 @@ namespace sorceryFight.SFPlayer
                         int messageIndex = Main.rand.Next(6);
                         ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText("Mods.sorceryFight.Misc.SukunaRevive." + messageIndex), new Color(220,40,40), Player.whoAmI);
 
-                        Player.AddBuff(ModContent.BuffType<KingOfCursesBuff>(), SFUtils.BuffSecondsToTicks(15 + (sukunasFingerConsumed * 2.25f)));
+                        Player.AddBuff(ModContent.BuffType<KingOfCurses>(), SFUtils.BuffSecondsToTicks(15 + (sukunasFingerConsumed * 2.25f)));
                     }
                 }
             }

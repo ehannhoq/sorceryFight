@@ -22,7 +22,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         {
             if (Projectile.owner == Main.myPlayer)
             {
-                Main.player[Projectile.owner].AddBuff(ModContent.BuffType<KingOfCursesBuff>(), 9999999);
+                Main.player[Projectile.owner].AddBuff(ModContent.BuffType<KingOfCurses>(), SFUtils.BuffSecondsToTicks(60));
             }
 
             Projectile.Kill();

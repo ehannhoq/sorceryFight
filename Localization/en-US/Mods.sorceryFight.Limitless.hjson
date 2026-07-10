@@ -7,19 +7,17 @@ AmplificationBlue: {
 		converges into a single point, creating
 		a powerful, attractive force.
 		'''
-	LockedDescription: Defeat the one who guards the Dungeon.
 }
 
 MaximumOutputBlue: {
 	DisplayName: Maximum Output: Blue
 	Description:
 		'''
-		The mastered version of Blue, the 
-		projectile generates an even stronger 
+		The mastered version of Blue, the
+		projectile generates an even stronger
 		gravitational field, and crushes
 		enemies instantly upon impact.
 		'''
-	LockedDescription: Defeat the mechanical recreation of Cthulu's skeleton.
 }
 
 ReversalRed: {
@@ -33,11 +31,6 @@ ReversalRed: {
 		repelling force. The CE output is twice
 		as much as the amplified Limitless.
 		'''
-	LockedDescription:
-		'''
-		Be at the brink of death at the hands
-		of the queen of the jungle.
-		'''
 }
 
 MaximumOutputRed: {
@@ -47,11 +40,6 @@ MaximumOutputRed: {
 		The mastered version of Red. The projectile
 		pierces through enemies, dealing immense contact
 		damage.
-		'''
-	LockedDescription:
-		'''
-		Defeat the Goddess who slew a dragon and
-		gorged Herself in its auric soul of Flame.
 		'''
 }
 
@@ -63,66 +51,14 @@ HollowPurple: {
 		and divergence, an imaginary mass is formed.
 		The CE output far surpasses of Blue and Red.
 		'''
-	LockedDescription: Defeat the Sentinels of the Devourer.
 }
 
 HollowPurple200Percent: {
 	DisplayName: 200% Hollow Technqiue: Purple
 	Description:
 		'''
-		By chanting the incantation and at the 
+		By chanting the incantation and at the
 		cost of burning out your Cursed Technique,
 		the CE output doubles.
 		'''
-	LockedDescription: Defeat the Devourer of Gods.
-}
-
-Infinity: {
-	DisplayName: Infinity
-	Description:
-		'''
-		Infinity is the convergence of an 
-		immeasurable series, anything that
-		approaches the infinity slows down 
-		and never reaches you.
-		'''
-	LockedDescription:
-		'''
-		Defeat the piece of Cthulhu that was
-		ripped out from him centuries ago.
-		'''
-}
-
-AmplifiedAuraBuff: {
-	DisplayName: Amplified Aura
-	Description:
-		'''
-		Covering yourself in a shroud of 
-		the amplified Limitless, you gain 
-		an increase in speed and damage.
-		'''
-	LockedDescription: Defeat the world's core that keeps ancient sprits sealed away.
-}
-
-MaximumAmplifiedAuraBuff: {
-	DisplayName: Maximum Output: Amplified Aura
-	Description:
-		'''
-		Covering yourself in a shroud
-		of the amplified Limitless using
-		maximum cursed energy output,
-		you gain a major increase in
-		speed and damage.
-		'''
-	LockedDescription: Defeat the stone-faced ritualistic idol of the Lihzahrd tribe.
-}
-
-FallingBlossomEmotionBuff: {
-	DisplayName: Falling Blossom Emotion
-	Description:
-		'''
-		An anti-domain technique passed down
-		among the Big Three clans.
-		'''
-	LockedDescription: Defeat the crazed cultist leader at the entrance of the dungeon.
 }
