@@ -5,27 +5,24 @@ PachinkoBalls: {
 		Shoot a pachinko ball that ricochets off of
 		up to five enemies.
 		'''
-	LockedDescription: Defeat the sea serpent that scourges the desert.
 }
 
 HakarisDoor: {
 	DisplayName: Train Doors
 	Description:
 		'''
-		Summon a pair of train doors that shut on 
+		Summon a pair of train doors that shut on
 		enemies, crushing them.
 		'''
-	LockedDescription: Defeat the one who guards the Dungeon.
 }
 
 PassingThrough: {
 	DisplayName: Passing Through!
 	Description:
 		'''
-		Summon a subway cart that rams through 
+		Summon a subway cart that rams through
 		your cursor.
 		'''
-	LockedDescription: Defeat the mechanical recreation of Cthulu's skull.
 }
 
 CargoCrate: {
@@ -35,17 +32,11 @@ CargoCrate: {
 		Launches a cargo crate filled with
 		sharp cursed energy.
 		'''
-	LockedDescription: Defeat the crazed cultist leader at the entrance of the dungeon.
 }
 
 RailroadSign: {
 	DisplayName: Railroad Sign
 	Description: Swing a railroad sign.
-	LockedDescription:
-		'''
-		Defeat the Goddess who slew a dragon and
-		gorged Herself in its auric soul of Flame.
-		'''
 }
 
 IdleDeathGambleJackpotBuffI: {
@@ -71,8 +62,8 @@ IdleDeathGambleBuff: {
 	DisplayName: Nice Try!
 	Description:
 		'''
-		You didn't get a jackpot this time, 
-		instead you get a small buff based 
+		You didn't get a jackpot this time,
+		instead you get a small buff based
 		on the highest number you rolled!
 		'''
 }

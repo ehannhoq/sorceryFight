@@ -1,5 +1,4 @@
 RoundDeer: {
 	DisplayName: Round Deer
 	Description: Spawn a Deer sentry that heals any player in its radius
-	LockedDescription: Defeat the Deer
 }
