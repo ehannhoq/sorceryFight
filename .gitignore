@@ -1,7 +1,7 @@
-**/.DS_Store
+*.DS_Store
 .vs
 obj
-**/.psd
+*.psd
 
 # Exclude any fx compiler that is present.
 Content/Shaders/*
