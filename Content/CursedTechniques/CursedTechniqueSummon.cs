@@ -222,7 +222,7 @@ namespace sorceryFight.Content.CursedTechniques
 
 
             //kill all minions when tech is null or incorrect
-            //this == guard is extremely important for multiplayer syncing 
+            //this == guard is extremely important for multiplayer syncing
             if (Projectile.owner == Main.myPlayer)
             {
                 if (SFOwner?.innateTechnique?.InternalName == null)
@@ -234,6 +234,7 @@ namespace sorceryFight.Content.CursedTechniques
 
                 if (SFOwner.innateTechnique.InternalName != GetParentTechnique())
                 {
+                    Main.NewText($"Innate Technique does not match parent technique: {SFOwner.innateTechnique.InternalName} != {GetParentTechnique()}");
                     Projectile.Kill();
                     return;
                 }
@@ -366,6 +367,8 @@ namespace sorceryFight.Content.CursedTechniques
                 0f,
                 player.whoAmI
             );
+
+            SyncCursedTechniqueInfo(projIndex);
 
             if (Main.projectile.IndexInRange(projIndex))
                 Main.projectile[projIndex].originalDamage = baseDamage;

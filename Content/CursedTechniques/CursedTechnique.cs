@@ -33,7 +33,7 @@ namespace sorceryFight.Content.CursedTechniques
         private Predicate<SorceryFightPlayer> unlocked;
         private int bossType = -1;
         private string lockedDescriptionLocalizationKey;
-        private string parentTechnique;
+        public string parentTechnique;
 
 
         /// <summary>
@@ -206,9 +206,24 @@ namespace sorceryFight.Content.CursedTechniques
                 Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * speed;
                 var entitySource = player.GetSource_FromThis();
 
-                return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), CalculateTrueDamage(sf), 0, player.whoAmI);
+                int index = Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), CalculateTrueDamage(sf), 0, player.whoAmI);
+                SyncCursedTechniqueInfo(index);
+                return index;
             }
             return -1;
+        }
+
+
+        public void SyncCursedTechniqueInfo(int index)
+        {
+            CursedTechnique self = Main.projectile[index].ModProjectile as CursedTechnique;
+
+            self.baseDamage = this.baseDamage;
+            self.damagePerBoss = this.damagePerBoss;
+            self.speed = this.speed;
+            self.cost = this.cost;
+            self.lifetime = this.lifetime;
+            self.parentTechnique = this.parentTechnique;
         }
 
 

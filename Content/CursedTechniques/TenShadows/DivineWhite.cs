@@ -79,6 +79,8 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
                 player.whoAmI
             );
 
+            SyncCursedTechniqueInfo(whiteIndex);
+
             if (Main.projectile.IndexInRange(whiteIndex))
                 Main.projectile[whiteIndex].originalDamage = baseDamage;
 
@@ -91,6 +93,8 @@ namespace sorceryFight.Content.CursedTechniques.TenShadows
                 0f,
                 player.whoAmI
             );
+
+            SyncCursedTechniqueInfo(blackIndex);
 
             if (Main.projectile.IndexInRange(blackIndex))
                 Main.projectile[blackIndex].originalDamage = baseDamage;
