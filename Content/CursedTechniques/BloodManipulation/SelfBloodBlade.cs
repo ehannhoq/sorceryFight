@@ -18,7 +18,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public static readonly int TICKS_PER_FRAME = 1;
         public static Texture2D texture;
 
-        public override string InternalName => "PiercingBlood";
+        public override string InternalName => "SelfBloodBlade";
 
 
         public override int UseTechnique(SorceryFightPlayer sf)

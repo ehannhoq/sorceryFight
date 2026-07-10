@@ -47,7 +47,7 @@ namespace sorceryFight.Content.InnateTechniques
                 .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedMechBossThree)
                 .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.MechBossThree"),
 
-            new HollowWickerBasket()
+            new FallingBlossomEmotion()
                 .SetUnlock(NPCID.HallowBoss)
         };
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>

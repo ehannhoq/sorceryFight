@@ -239,7 +239,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
             for (int i = 0; i < sfPlayer.innateTechnique.CursedTechniques.Count; i++)
             {
-                Texture2D ctTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueSelector/{sfPlayer.innateTechnique.InternalName}/c{i}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                Texture2D ctTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueIcons/{sfPlayer.innateTechnique.InternalName}/{sfPlayer.innateTechnique.CursedTechniques[i].InternalName}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
                 string ctHoverText = $"{sfPlayer.innateTechnique.CursedTechniques[i].DisplayName}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip")}";
                 TechniqueSelectorButton ctIcon = new TechniqueSelectorButton(ctTexture, ctHoverText, i);
 

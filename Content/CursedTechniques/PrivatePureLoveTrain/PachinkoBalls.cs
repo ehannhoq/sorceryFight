@@ -16,14 +16,14 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
     {
         public static Texture2D texture;
 
-        public override string InternalName => "HakarisDoor";
+        public override string InternalName => "PachinkoBalls";
 
         Dictionary<int, List<int>> enemyRicochets = new Dictionary<int, List<int>>();
         Dictionary<int, Color> rarity = new Dictionary<int, Color>();
 
 
         public override void SetStaticDefaults()
-        {            
+        {
             if (Main.dedServ) return;
             texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/PrivatePureLoveTrain/PachinkoBalls", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
@@ -46,7 +46,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 // the first index is the number of ricochets
                 // everything after is the npc.whoAmI of all the npc's has already hit; preventing them from being hit again.
                 enemyRicochets[Projectile.whoAmI] = new List<int> { 0 };
-                
+
                 int roll = Main.rand.Next(0, 100);
                 if (roll < 89)
                     rarity[Projectile.whoAmI] = Color.Green;

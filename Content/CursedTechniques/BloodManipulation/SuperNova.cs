@@ -20,7 +20,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public static readonly int TICKS_PER_FRAME = 5;
         public static Texture2D texture;
 
-        public override string InternalName => "UnlimitedPiercingBlood";
+        public override string InternalName => "SuperNova";
 
 
         public override void SetStaticDefaults()

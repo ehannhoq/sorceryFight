@@ -14,8 +14,8 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
     public class PassingThrough : CursedTechnique
     {
         public static Texture2D texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/PrivatePureLoveTrain/PassingThrough", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-     
-        public override string InternalName => "HakarisDoor";
+
+        public override string InternalName => "PassingThrough";
 
 
         public override int UseTechnique(SorceryFightPlayer sf)
@@ -57,7 +57,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
         }
-        
+
 
         public override bool PreDraw(ref Color lightColor)
         {
