@@ -30,6 +30,9 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override float Speed => 0f;
         public override float LifeTime => 16f;
         float baseDamagePercent = 0.05f;
+
+        ref float attacked => ref Projectile.ai[1];
+
         public override int GetProjectileType()
         {
             return ModContent.ProjectileType<Cleave>();
@@ -45,6 +48,15 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             float percent = cost / sf.maxCursedEnergy;
             return $"Damage: {Math.Round(CalculateTrueDamage(sf), 2)} + {Math.Round(baseDamagePercent * 100, 2)}% of target's health\n"
                 + $"Cost: {Math.Round(CalculateTrueCost(sf), 2)} CE\n";
+        }
+
+        public override float CalculateTrueCost(SorceryFightPlayer sf)
+        {
+            float masteryMultiplier = 1 - (sf.bossesDefeated.Count / 100f);
+            float maxCEPenalty = sf.maxCursedEnergy * 0.11f;
+            float finalCost = maxCEPenalty * masteryMultiplier;
+            finalCost *= 1 - sf.ctCostReduction;
+            return finalCost;
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)
@@ -74,8 +86,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 188;
-            Projectile.height = 188;
+            Projectile.width = 90;
+            Projectile.height = 90;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
@@ -108,12 +120,12 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Player player = Main.player[Projectile.owner];
             Vector2 playerRotatedPoint = player.RotatedRelativePoint(player.MountedCenter, true);
             float velocityAngle = Projectile.velocity.ToRotation();
-            float offset = 60f * Projectile.scale;
+            float offset = 30f * Projectile.scale;
 
             Projectile.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
             Projectile.direction = (Math.Cos(velocityAngle) > 0).ToDirectionInt();
             Projectile.rotation = velocityAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
-            Projectile.Center = playerRotatedPoint + velocityAngle.ToRotationVector2() * offset;
+            Projectile.Center = playerRotatedPoint + new Vector2(0.0f, 20.0f) + velocityAngle.ToRotationVector2() * offset;
             player.ChangeDir(Projectile.direction);
 
             if (Projectile.ai[0] == 1)
@@ -131,13 +143,19 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
             Vector2 projOrigin = sourceRectangle.Size() * 0.5f;
             SpriteEffects spriteEffects = Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, -32).RotatedBy(Projectile.rotation), sourceRectangle, Color.White, Projectile.rotation, projOrigin, 0.75f, spriteEffects, 0f);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, -32).RotatedBy(Projectile.rotation), sourceRectangle, Color.White, Projectile.rotation, projOrigin, 0.33f, spriteEffects, 0f);
             return false;
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            modifiers.FinalDamage.Flat += target.life * baseDamagePercent;
+            if (attacked == 0)
+            {
+                attacked = 1.0f;
+                modifiers.FinalDamage.Flat += target.life * baseDamagePercent;
+                return;
+            }
+            modifiers.FinalDamage.Flat *= 0;
         }
     }
 }
