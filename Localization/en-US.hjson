@@ -329,6 +329,21 @@ Mods: {
 				Tooltip: ""
 				DisplayName: Megumi Sword Shibuya
 			}
+
+			CursedKatana: {
+				Tooltip: ""
+				DisplayName: Cursed Katana
+			}
+
+			SlaughterDemon: {
+				Tooltip: ""
+				DisplayName: Slaughter Demon
+			}
+
+			CursedSpear: {
+				DisplayName: Cursed Spear
+				Tooltip: ""
+			}
 		}
 	}
 }
