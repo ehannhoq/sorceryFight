@@ -16,7 +16,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.maxStack = 1;
             Item.useTime = 13;
             Item.useAnimation = 13;
-            Item.damage = 18;
+            Item.damage = 17;
             Item.knockBack = 5;
             Item.autoReuse = true;
             Item.DamageType = CursedTechniqueDamageClass.Instance;

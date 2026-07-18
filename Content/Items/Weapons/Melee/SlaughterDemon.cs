@@ -11,12 +11,11 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.width = 29;
             Item.height = 29;
             Item.maxStack = 1;
-            Item.useTime = 24;
+            Item.useTime = 19;
             Item.damage = 22;
             Item.crit = 8;
             Item.knockBack = 8;
-            Item.autoReuse = true;
-            Item.useAnimation = 24;
+            Item.useAnimation = 19;
             Item.DamageType = CursedTechniqueDamageClass.Instance;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.UseSound = SoundID.Item1;
