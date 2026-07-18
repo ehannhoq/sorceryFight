@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -7,6 +8,7 @@ using ReLogic.Graphics;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Projectiles.Melee;
 using sorceryFight.Content.Rarities;
+using sorceryFight.Misc;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using Terraria;
@@ -78,7 +80,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             if (player.whoAmI != Main.myPlayer)
                 return;
 
-            SorceryFightPlayer sfPlayer = player.SorceryFight(); 
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
 
             if ((!sfPlayer.uniqueBodyStructure && sfPlayer.disableCurseTechniques) || player.HasBuff(ModContent.BuffType<BurntTechnique>()) || sfPlayer.heavenlyRestriction)
                 return;
@@ -140,6 +142,12 @@ namespace sorceryFight.Content.Items.Weapons.Melee
                 0
             );
 
+            return true;
+        }
+
+        public override bool PreDrawTooltip(ReadOnlyCollection<TooltipLine> lines, ref int x, ref int y)
+        {
+            TooltipOverride.ShaderOverride(lines, ref x, ref y,  "sorceryFight/Content/Shaders/ResonantTooltip");
             return true;
         }
 

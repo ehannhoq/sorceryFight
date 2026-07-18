@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using sorceryFight.Content.Projectiles.Melee;
 using sorceryFight.Content.Rarities;
+using sorceryFight.Misc;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using Terraria;
@@ -105,6 +107,13 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             return true;
         }
 
+        public override bool PreDrawTooltip(ReadOnlyCollection<TooltipLine> lines, ref int x, ref int y)
+        {
+            TooltipOverride.ShaderOverride(lines, ref x, ref y,  "sorceryFight/Content/Shaders/ResonantTooltip");
+            return true;
+        }
+
+
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frameRect, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             int frameHeight = texture.Height / FRAMES;
@@ -112,7 +121,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Rectangle srcRect = new Rectangle(0, frameY, texture.Width, frameHeight);
 
             spriteBatch.Draw(texture, position, srcRect, Color.White, 0f, origin, scale * 1.5f, SpriteEffects.None, 0f);
-            
+
             return false;
         }
 
