@@ -2,11 +2,13 @@ using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.NPCs.TownNPCs;
 using sorceryFight.Content.UI.Dialog.Actions;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -204,6 +206,11 @@ namespace sorceryFight.Content.UI.Dialog
 
         private void EndDialog()
         {
+            if (initiator is SorceryFightNPC sfNPC)
+            {
+                sfNPC.interactingWithPlayer = -1;
+            }
+
             endOfDialogAction?.Invoke();
             dialog = null;
             ModContent.GetInstance<SorceryFightUISystem>().ResetUI();
@@ -229,6 +236,9 @@ namespace sorceryFight.Content.UI.Dialog
             {
                 NextLine();
             }
+
+            if (PlayerInput.Triggers.JustPressed.Inventory)
+                EndDialog();
         }
     }
 }
