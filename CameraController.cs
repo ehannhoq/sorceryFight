@@ -22,7 +22,6 @@ namespace sorceryFight
                 targetScreenPosition = Vector2.Lerp(targetScreenPosition, worldPos, lerp);
             }, 10);
 
-            targetScreenPosition = worldPos;
             screenPositionInterlopant = 1f;
 
             if (duration > 0)
@@ -66,7 +65,7 @@ namespace sorceryFight
 
             TaskScheduler.Instance.AddContinuousTask(() =>
             {
-                targetScreenPosition = Vector2.Lerp(targetScreenPosition, Main.LocalPlayer.Center, screenPositionInterlopant);
+                targetScreenPosition = Vector2.Lerp(targetScreenPosition, Main.LocalPlayer.Center, 0.5f);
             }, 60);
 
             TaskScheduler.Instance.AddDelayedTask(() =>
