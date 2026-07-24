@@ -20,6 +20,7 @@ using Terraria.GameContent;
 using Terraria.ModLoader;
 using sorceryFight.Content.Projectiles.VFX;
 using sorceryFight.Content.Items.Accessories;
+using sorceryFight.Content.UI.Chants;
 
 namespace sorceryFight.Content.InnateTechniques
 {
@@ -126,21 +127,38 @@ namespace sorceryFight.Content.InnateTechniques
                 string line = SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.UnlockedRCT.Limitless");
                 string[] parts = line.Split('~');
 
-
-                sf.sfUI.InitializeChant([.. parts], 120, 30, new UI.Chants.ChantTextStyle(
-                    textColor: new Color(245, 225, 171, 255),
-                    text2Color: new Color(227, 191, 141, 255),
-                    borderWidth: 2.0f,
-                    borderColor: new Color(191, 128, 38, 255),
-                    border2Color: new Color(176, 96, 35, 255),
-                    glowRadius: 3.0f,
-                    glowColor: new Color(237, 225, 190, 255)
-                ),
-                () =>
-                {
-                    int index = Projectile.NewProjectile(sf.Player.GetSource_FromThis(), hollowPurplePos, Vector2.Zero, ModContent.ProjectileType<HollowPurple>(), 0, 0, sf.Player.whoAmI, ai1: 1f);
-                    hollowPurple = Main.projectile[index];
-                });
+                ChantManager.InitiateChant(new Chant(
+                    text: SFUtils.CombineListOfStrings([.. parts]),
+                    colors: [
+                        new Color(245, 225, 171, 255),
+                        new Color(227, 191, 141, 255),
+                    ],
+                    timeBetweenCharacters: 5,
+                    timeBetweenWords: 60,
+                    delayAfterChant: 120,
+                    onEnd: () =>
+                    {
+                        int index = Projectile.NewProjectile(sf.Player.GetSource_FromThis(), hollowPurplePos, Vector2.Zero, ModContent.ProjectileType<HollowPurple>(), 0, 0, sf.Player.whoAmI, ai1: 1f);
+                        hollowPurple = Main.projectile[index];
+                    },
+                    chantStyles: [
+                        new CharacterGlow(
+                            new Color(237, 225, 190, 255),
+                            glowRadius: 6f
+                        ),
+                        new CharacterStroke(
+                            new Color(191, 128, 38, 255),
+                            borderWidth: 2f
+                        ),
+                        new CharacterWave(amplitude: 2f, frequency: 0.05f)
+                    ],
+                    perCharacterAnimationTime: 15,
+                    characterStartOffset: new Vector2(20f, 10f),
+                    characterAnimationOpacityFadeIn: true,
+                    perCharacterEvent: (currentIndex, remaining) => {
+                        SoundEngine.PlaySound(SoundID.MenuTick with { PitchVariance = 0.25f, MaxInstances = 0 });
+                    }
+                ));
             }
 
             if (hollowPurple == null) return;
