@@ -66,6 +66,11 @@ namespace sorceryFight
         public static SoundStyle ChantingChargeUp;
         public static SoundStyle ChantingFinished;
 
+        public static SoundStyle DivineDogsHowl;
+        public static SoundStyle MahoragaMouthOpen;
+        public static SoundStyle MahoragaBreakCacoon;
+
+        public static SoundStyle MahoragaAdaptation;
 
         public override void Load()
         {
@@ -130,6 +135,12 @@ namespace sorceryFight
             
             ChantingChargeUp = new("sorceryFight/Content/Sounds/Chanting/ChantingChargeUp") { Volume = 0.75f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 0.2f};
             ChantingFinished = new("sorceryFight/Content/Sounds/Chanting/ChantingFinished") { Volume = 0.75f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew, PitchVariance = 0.2f};
+
+            DivineDogsHowl = new("sorceryFight/Content/Sounds/Cutscenes/MahoragaSummon/WolfHowl") { Volume = 0.75f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew};
+            MahoragaMouthOpen = new("sorceryFight/Content/Sounds/Cutscenes/MahoragaSummon/MahoragaMouthOpen") { Volume = 0.75f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew};
+            MahoragaBreakCacoon = new("sorceryFight/Content/Sounds/Cutscenes/MahoragaSummon/MahoragaBreakCacoon") { Volume = 0.75f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew};
+            
+            MahoragaAdaptation = new("sorceryFight/Content/Sounds/NPCs/Mahoraga/MahoragaAdaptation") { Volume = 0.75f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew};
         }
     }
 }
