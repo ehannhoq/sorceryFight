@@ -35,6 +35,7 @@ namespace sorceryFight
                 list.Add(type);
         }
 
+
         /// <summary>
         /// Converts seconds into buff time.
         /// </summary>
@@ -45,6 +46,7 @@ namespace sorceryFight
             return (int)(seconds * 60);
         }
 
+
         /// <summary>
         /// Converts x/second into x/ticks. Usually used for CE regen and CE consumption.
         /// </summary>
@@ -54,6 +56,7 @@ namespace sorceryFight
         {
             return ticks / 60;
         }
+
 
         public static bool MoveableByBlue(this NPC npc)
         {
@@ -66,6 +69,7 @@ namespace sorceryFight
 
             return true;
         }
+
 
         public static bool MoveableByBlue(this Projectile proj)
         {
@@ -86,6 +90,7 @@ namespace sorceryFight
 
             return true;
         }
+
 
         /// <summary>
         /// Draws a line between two points using a sprite batch. TAKEN FROM CALAMITY MOD, MODIFIED BY EHANN
@@ -119,6 +124,7 @@ namespace sorceryFight
             return roll < percentChance;
         }
 
+
         /// <summary>
         /// Returns the square of the input value.
         /// </summary>
@@ -128,6 +134,7 @@ namespace sorceryFight
         {
             return value * value;
         }
+
 
         /// <summary>
         /// Determines the sign of a floating-point value.
@@ -139,6 +146,7 @@ namespace sorceryFight
         {
             return value > 0 ? 1 : (value < 0 ? -1 : 0);
         }
+
 
         /// <summary>
         /// Linearly interpolates between two angles by a given amount, taking
@@ -154,6 +162,7 @@ namespace sorceryFight
             return currentAngle + difference * amount;
         }
 
+
         /// <summary>
         /// Clamps each element of the given array to the given minimum and maximum values.
         /// </summary>
@@ -168,9 +177,10 @@ namespace sorceryFight
             }
         }
 
+
         /// <summary>
         /// Gets a value from an internal field in a Calamity type. This is used to access fields that are not publicly exposed.
-        /// 
+        ///
         /// developer's note: i love calamity but fuck you for whoever thought of the shit ass way to modify vanilla boss -e
         /// </summary>
         /// <typeparam name="T">The type of the value to get.</typeparam>
@@ -195,6 +205,7 @@ namespace sorceryFight
             return (T)f.GetValue(instance);
         }
 
+
         public static int Append<T>(this T[] array, T obj)
         {
             for (int i = 0; i < array.Length; i++)
@@ -208,6 +219,7 @@ namespace sorceryFight
 
             return -1;
         }
+
 
         public static int Prepend<T>(this T[] array, T obj)
         {
@@ -223,6 +235,7 @@ namespace sorceryFight
             return -1;
         }
 
+
         public static int FindIndex<T>(this T[] array, Predicate<T> predicate)
         {
             for (int i = 0; i < array.Length; i++)
@@ -233,6 +246,7 @@ namespace sorceryFight
 
             return -1;
         }
+
 
         public static bool TryGet<T>(this IEnumerable<T> array, Predicate<T> predicate, [MaybeNullWhen(false)] out T obj)
         {
@@ -250,6 +264,7 @@ namespace sorceryFight
             return false;
         }
 
+
         /// <summary>
         /// Copied from CalamityMod's PlayerUtils.
         /// </summary>
@@ -258,10 +273,12 @@ namespace sorceryFight
         /// <returns>Whether if the player is dead, inactive, or otherwise unable to use holdout items.</returns>
         public static bool CantUseHoldout(this Player player, bool needsToHold = true) => player == null || !player.active || player.dead || (!player.channel && needsToHold) || player.CCed || player.noItems;
 
+
         public static bool CantUseSword(this Player player, Projectile slash, bool needsToHold = true)
         {
             return player.CantUseHoldout(needsToHold) || player.HeldItem.shoot != slash.type;
         }
+
 
         public static SorceryFightPlayer SorceryFight(this Player player)
         {
@@ -312,6 +329,7 @@ namespace sorceryFight
             }
         }
 
+
         public static string GetClass(this object obj)
         {
             string typeName = obj.GetType().ToString();
@@ -328,21 +346,26 @@ namespace sorceryFight
             return typeName[index..];
         }
 
+
         public static void RotateVelocityTowardsCursor(this Projectile projectile)
         {
             Vector2 mousePos = Main.MouseWorld;
             projectile.velocity = mousePos - projectile.Center;
             projectile.velocity.Normalize();
         }
+
+
         public static IItemDropRule Add(this LeadingConditionRule mainRule, IItemDropRule chainedRule, bool hideLootReport = false)
         {
             return mainRule.OnSuccess(chainedRule, hideLootReport);
         }
 
+
         public static T ModProjectile<T>(this Projectile projectile) where T : ModProjectile
         {
             return projectile.ModProjectile as T;
         }
+
 
         public static Vector2 GetIntersectingVelocity(Vector2 startingPosA, Vector2 startingPosB, Vector2 velocityA, float speedB)
         {
@@ -369,6 +392,30 @@ namespace sorceryFight
             return (interceptPoint - startingPosB).SafeNormalize(Vector2.UnitX) * speedB;
         }
 
+
+        public static string CombineListOfStrings(List<string> list)
+        {
+            string str = "";
+            foreach (string s in list)
+            {
+                str += s + " ";
+            }
+            return str;
+        }
+
+
+        public static void HandleProjectileAnimation(this Projectile projectile, int frameCount, int timePerFrame)
+        {
+            if (projectile.frameCounter++ >= timePerFrame)
+            {
+                projectile.frameCounter = 0;
+
+                if (projectile.frame++ >= frameCount - 1)
+                {
+                    projectile.frame = 0;
+                }
+            }
+        }
     }
 
     public static class SFConstants
