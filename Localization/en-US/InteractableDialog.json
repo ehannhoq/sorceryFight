@@ -279,5 +279,27 @@
                 }
             ]
         }
+    },
+    "MegumiFushiguro": {
+        "Interact": {
+            "Text": "Hey.",
+            "Replies": [
+              {
+                "Text": "Summon Mahoraga.",
+                "Response": "MegumiFushiguro.MahoragaChant"
+              }
+            ],
+            "Actions": []
+        },
+        "MahoragaChant" : {
+          "Text": "With this treasure I summon...",
+          "Replies": [],
+          "Actions": [
+            {
+                "Type": "EndOfDialog",
+                "MethodName": "SummonMahoragaBoss"
+            }
+          ]
+        }
     }
 }
