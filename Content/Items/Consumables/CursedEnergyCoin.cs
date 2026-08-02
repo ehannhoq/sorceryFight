@@ -1,4 +1,3 @@
-using sorceryFight.Rarities;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using Terraria;
@@ -19,7 +18,7 @@ namespace sorceryFight.Content.Items.Consumables
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.HoldUp;
-            Item.rare = ModContent.RarityType<SorceryFightWeapon>();
+            Item.rare = ItemRarityID.White;
         }
 
         public override bool CanUseItem(Player player)

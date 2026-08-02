@@ -1,4 +1,3 @@
-using sorceryFight.Rarities;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Localization;
@@ -33,7 +32,7 @@ namespace sorceryFight.Content.Items.Accessories
         {
             Item.accessory = true;
             Item.maxStack = 1;
-            Item.rare = ModContent.RarityType<SorceryFightAccessory>();
+            Item.rare = ItemRarityID.White;
             Item.width = 54;
             Item.height = 50;
         }

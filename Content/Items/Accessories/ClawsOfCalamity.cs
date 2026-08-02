@@ -1,6 +1,5 @@
 using sorceryFight.Content.Items.Materials;
 using sorceryFight.SFPlayer;
-using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -22,7 +21,7 @@ namespace sorceryFight.Content.Items.Accessories
             Item.width = 32;
             Item.height = 32;
             Item.accessory = true;
-            Item.rare = ItemRarityID.LightRed;
+            Item.rare = ItemRarityID.White;
             Item.defense = 4;
         }
 

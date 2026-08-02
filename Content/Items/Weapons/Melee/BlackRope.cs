@@ -2,7 +2,6 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Projectiles.Melee;
-using sorceryFight.Rarities;
 using sorceryFight.Utilities;
 using Terraria;
 using Terraria.DataStructures;
@@ -43,7 +42,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.autoReuse = false;
             Item.knockBack = 5;
             Item.noUseGraphic = true;
-            Item.rare = ModContent.RarityType<SorceryFightWeapon>();
+            Item.rare = ItemRarityID.Pink;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.shoot = ModContent.ProjectileType<BlackRopeWhip>();
 

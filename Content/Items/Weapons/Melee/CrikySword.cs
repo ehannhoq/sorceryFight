@@ -1,10 +1,13 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Graphics;
 using sorceryFight.Content.Projectiles.Melee;
-using sorceryFight.Rarities;
 using sorceryFight.Utilities;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Enums;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -41,7 +44,6 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.knockBack = 5;
             Item.useAnimation = 1;
             Item.noUseGraphic = true;
-            Item.rare = ModContent.RarityType<SorceryFightWeapon>();
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.shoot = ModContent.ProjectileType<CrikySwordSlash>();
             Item.DamageType = CursedTechniqueDamageClass.Instance;
@@ -69,6 +71,44 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Vector2 origin = new Vector2(texture.Width / 2f, frameHeight / 2f);
 
             spriteBatch.Draw(texture, Item.Center - Main.screenPosition, srcRect, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);
+            return false;
+        }
+
+        public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
+        {
+            if (line.Index != 0) return true;
+
+            Vector2 position = new Vector2(line.X, line.Y);
+
+            for (int i = 0; i < 8; i++)
+            {
+                Vector2 offset = (MathHelper.TwoPi * i / 8f).ToRotationVector2();
+
+                Main.spriteBatch.DrawString(
+                    line.Font,
+                    line.Text,
+                    position + offset,
+                    Color.White,
+                    line.Rotation,
+                    line.Origin,
+                    1f,
+                    SpriteEffects.None,
+                    0
+                );
+            }
+
+            Main.spriteBatch.DrawString(
+                line.Font,
+                line.Text,
+                position,
+                Color.Black,
+                line.Rotation,
+                line.Origin,
+                1f,
+                SpriteEffects.None,
+                0
+            );
+
             return false;
         }
 

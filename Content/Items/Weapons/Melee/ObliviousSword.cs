@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using sorceryFight.Content.Projectiles.Melee;
-using sorceryFight.Content.Rarities;
 using sorceryFight.Misc;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
@@ -53,7 +52,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.noUseGraphic = true;
             Item.channel = true;
             Item.autoReuse = false;
-            Item.rare = ModContent.RarityType<SorceryFightLegendary>();
+            Item.rare = ItemRarityID.Orange;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.shoot = ModContent.ProjectileType<ObliviousSwordSlash>();
             Item.shootSpeed = 24f;
