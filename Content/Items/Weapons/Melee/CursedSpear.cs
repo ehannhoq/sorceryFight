@@ -4,12 +4,17 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Items.Weapons.Melee
 {
     public class CursedSpear : ModItem
     {
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Weapons.Melee.CursedSpear.DisplayName");
+
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Weapons.Melee.CursedSpear.Tooltip");
+
         public override void SetStaticDefaults()
         {
             ItemID.Sets.Spears[Item.type] = true;
@@ -58,7 +63,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         {
             Projectile.width = 140;
             Projectile.height = 20;
-            Projectile.DamageType = DamageClass.Melee;
+            Projectile.DamageType = CursedTechniqueDamageClass.Instance;
             Projectile.timeLeft = 300;
             Projectile.friendly = true;
             Projectile.hostile = false;

@@ -1,11 +1,15 @@
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Items.Weapons.Melee
 {
     public class SlaughterDemon : ModItem
-    {
+    { 
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Weapons.Melee.SlaughterDemon.DisplayName");
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Weapons.Melee.SlaughterDemon.Tooltip");
+
         public override void SetDefaults()
         {
             Item.width = 29;

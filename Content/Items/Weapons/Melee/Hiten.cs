@@ -4,12 +4,17 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Items.Weapons.Melee
 {
     public class Hiten : ModItem
     {
+        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Weapons.Melee.Hiten.DisplayName");
+
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Weapons.Melee.Hiten.Tooltip");
+
         public override void SetStaticDefaults()
         {
             ItemID.Sets.Spears[Item.type] = true;
