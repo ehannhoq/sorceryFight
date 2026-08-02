@@ -35,10 +35,24 @@ namespace sorceryFight.Content.Projectiles.VFX
 
         public override bool PreDraw(ref Color lightColor)
         {
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(
+                SpriteSortMode.Immediate,
+                BlendState.NonPremultiplied,
+                SamplerState.LinearClamp,
+                DepthStencilState.None,
+                RasterizerState.CullNone,
+                null,
+                Main.GameViewMatrix.ZoomMatrix
+            );
+
             int frameHeight = texture.Height / FRAMES;
             int frameY = Projectile.frame * frameHeight;
             Rectangle src = new Rectangle(0, frameY, texture.Width, frameHeight);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, src, Color.White, -MathF.PI / 2, src.Size() * 0.5f, 2f, SpriteEffects.None, 0f);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin();
             return false;
         }
     }
