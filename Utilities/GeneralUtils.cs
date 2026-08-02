@@ -311,9 +311,9 @@ namespace sorceryFight
         {
             Player player = Main.player[proj.owner];
             Vector2 playerRotatedPoint = player.RotatedRelativePoint(player.MountedCenter, true);
-            float velocityAngle = proj.velocity.ToRotation();
-
+            
             proj.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
+            float velocityAngle = proj.velocity.ToRotation();
             proj.direction = (Math.Cos(velocityAngle) > 0).ToDirectionInt();
             proj.rotation = velocityAngle + (proj.direction == -1).ToInt() * MathHelper.Pi;
             proj.Center = playerRotatedPoint + velocityAngle.ToRotationVector2() * offset;
