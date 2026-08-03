@@ -196,7 +196,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     float timeLeft = totalTime - collisionStartTime;
                     float progress = (time - collisionStartTime) / timeLeft;
 
-                    float lerp = EaseFunctions.EaseInCubic(progress);
+                    float lerp = EaseFunctions.EaseInExponential(3f, progress);
 
                     if (MathF.Round(progress, 1) == 0.5)
                         SoundEngine.PlaySound(SorceryFightSounds.CommonWoosh, Projectile.Center);
@@ -270,7 +270,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 float timeLeft = totalTime - collisionStartTime;
                 float progress = (time - collisionStartTime) / timeLeft;
-                progress = EaseFunctions.EaseInCubic(progress);
+                progress = EaseFunctions.EaseInExponential(3f, progress);
                 Rectangle flashSource = new Rectangle(0, 0, flashTexture.Width, flashTexture.Height);
 
                 spriteBatch.End();

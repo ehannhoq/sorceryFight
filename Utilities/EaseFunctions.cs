@@ -52,25 +52,25 @@ namespace sorceryFight.Utilities.EaseFunctions
         public static float EaseInOutZero(float x)
         {
             if (x < 0.0f) return 0.0f;
-            if (x > 1.0f) return 1.0f;
+            if (x > 1.0f) return 0.0f;
 
             return -0.5f * MathF.Cos(-MathHelper.TwoPi * x) + 0.5f;
         }
 
-        public static float EaseInCubic(float x)
+        public static float EaseInExponential(float power, float x)
         {
             if (x < 0.0f) return 0.0f;
             if (x > 1.0f) return 1.0f;
-            return x * x * x;
+            return MathF.Pow(x, power);
         }
 
 
-        public static float EaseOutCubic(float x)
+        public static float EaseOutExponential(float power, float x)
         {
             if (x < 0.0f) return 0.0f;
             if (x > 1.0f) return 1.0f;
 
-            return MathF.Pow(x - 1, 3) + 1;
+            return MathF.Pow(x - 1, power) + (power % 2 == 0 ? 0 : 1);
         }
     }
 }
