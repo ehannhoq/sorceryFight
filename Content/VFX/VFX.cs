@@ -55,7 +55,7 @@ namespace sorceryFight.Content.VFX
 
             Rectangle src = new Rectangle(0, frameY, Texture.Width, frameHeight);
 
-            spriteBatch.Draw(Texture, center - Main.screenPosition, src, new Color(color.R, color.G, color.B, opacity), rotation, src.Size() * 0.5f, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Texture, center - Main.screenPosition, src, new Color(color.R, color.G, color.B, (int)(opacity * 255)), rotation, src.Size() * 0.5f, scale, SpriteEffects.None, 0f);
         }
     }
 }
