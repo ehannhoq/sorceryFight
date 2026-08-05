@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
+using Terraria.ModLoader;
 
 namespace sorceryFight.Utilities.EaseFunctions
 {
@@ -71,6 +72,22 @@ namespace sorceryFight.Utilities.EaseFunctions
             if (x > 1.0f) return 1.0f;
 
             return MathF.Pow(x - 1, power) + (power % 2 == 0 ? 0 : 1);
+        }
+
+        public static float EaseInCircular(float x)
+        {
+            if (x < 0.0f) return 0.0f;
+            if (x > 1.0f) return 1.0f;
+
+            return -MathF.Sqrt(1 - x * x) + 1;
+        }
+
+        public static float EaseOutCircular(float x)
+        {
+            if (x < 0.0f) return 0.0f;
+            if (x > 1.0f) return 1.0f;
+
+            return MathF.Sqrt(1 - MathF.Pow(x - 1, 2));
         }
     }
 }
