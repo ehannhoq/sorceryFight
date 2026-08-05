@@ -1,17 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Steamworks;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using sorceryFight.Content.Items.Accessories;
+using sorceryFight.Content.VFX;
 using System;
-using sorceryFight.Content.Projectiles.VFX;
 using sorceryFight.Content.Particles;
 using sorceryFight.Content.Particles.UIParticles;
-using sorceryFight.Utilities;
+using Terraria.DataStructures;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {
@@ -19,19 +17,18 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
     {
         public static readonly int FRAME_COUNT = 4;
         public static readonly int TICKS_PER_FRAME = 5;
-        private static readonly float COLLISION_TIME = HollowPurpleCollision.FRAMES * HollowPurpleCollision.TICKS_PER_FRAME;
         private static readonly float WAIT_TIME = 90f;
 
         public override string InternalName => "HollowPurple";
 
         public static Texture2D texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/HollowPurple", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-        public static Texture2D prism1 = ModContent.Request<Texture2D>("sorceryFight/Content/VFXSprites/HollowPurplePrisms1", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-        public static Texture2D prism2 = ModContent.Request<Texture2D>("sorceryFight/Content/VFXSprites/HollowPurplePrisms2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-        public static Texture2D prism3 = ModContent.Request<Texture2D>("sorceryFight/Content/VFXSprites/HollowPurplePrisms3", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-        public static Texture2D ring = ModContent.Request<Texture2D>("sorceryFight/Content/VFXSprites/HollowPurpleRing", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-        public static Texture2D flash = ModContent.Request<Texture2D>("sorceryFight/Content/VFXSprites/WhiteFlash", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+        public static Texture2D prism1 = ModContent.Request<Texture2D>("sorceryFight/Content/VFX/HollowPurplePrisms1", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+        public static Texture2D prism2 = ModContent.Request<Texture2D>("sorceryFight/Content/VFX/HollowPurplePrisms2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+        public static Texture2D prism3 = ModContent.Request<Texture2D>("sorceryFight/Content/VFX/HollowPurplePrisms3", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+        public static Texture2D ring = ModContent.Request<Texture2D>("sorceryFight/Content/VFX/HollowPurpleRing", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+        public static Texture2D flash = ModContent.Request<Texture2D>("sorceryFight/Content/VFX/WhiteFlash", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
-        public Projectile collisionVFX;
+        public VFXObject collisionVFX;
         public int glareIndex;
         private bool summonedFromRCT => Projectile.ai[1] == 1f;
 
@@ -62,6 +59,20 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             return Color.White;
         }
 
+        public override void OnSpawn(IEntitySource source)
+        {
+            collisionVFX = VFXManager.AddVFX(
+                new VFXObject(
+                    ModContent.Request<Texture2D>("sorceryFight/Content/VFX/HollowPurpleCollision", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value,
+                    Projectile.Center,
+                    frames: 20,
+                    ticksPerFrame: 5,
+                    scale: 2f
+                )
+            );
+            SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleCollide, Projectile.Center);
+        }
+
         public override void AI()
         {
             Projectile.ai[0]++;
@@ -83,29 +94,22 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
             float trueWaitTime = sfPlayer.cursedOfuda ? MathF.Floor(CursedOfuda.cursedTechniqueCastTimeDecrease * WAIT_TIME) : WAIT_TIME;
 
-            if (Projectile.ai[0] < COLLISION_TIME)
+            if (Projectile.ai[0] < collisionVFX.lifetime)
             {
-                if (collisionVFX == null)
-                {
-                    int index = Projectile.NewProjectile(player.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<HollowPurpleCollision>(), 0, 0, player.whoAmI);
-                    collisionVFX = Main.projectile[index];
-                    SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleCollide, Projectile.Center);
-                }
-
                 if (!summonedFromRCT)
                     Projectile.Center = projOrigin;
 
                 Projectile.velocity = Vector2.Zero;
                 Projectile.damage = 0;
-                collisionVFX.Center = Projectile.Center;
+                collisionVFX.center = Projectile.Center;
                 Projectile.netUpdate = true;
                 sfPlayer.disableRegenFromProjectiles = true;
 
-                if (Projectile.ai[0] == COLLISION_TIME - 20)
+                if (Projectile.ai[0] == collisionVFX.lifetime - 20)
                     SoundEngine.PlaySound(SorceryFightSounds.HollowPurpleShine, Projectile.Center);
 
             }
-            else if (Projectile.ai[0] < COLLISION_TIME + trueWaitTime)
+            else if (Projectile.ai[0] < collisionVFX.lifetime + trueWaitTime)
             {
                 if (!summonedFromRCT)
                     if (Main.myPlayer == Projectile.owner)
@@ -113,7 +117,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                 Projectile.netUpdate = true;
             }
-            else if (Projectile.ai[0] == COLLISION_TIME + trueWaitTime)
+            else if (Projectile.ai[0] == collisionVFX.lifetime + trueWaitTime)
             {
                 Projectile.damage = (int)CalculateTrueDamage(player.SorceryFight());
 
@@ -160,9 +164,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             SorceryFightPlayer sfPlayer = player.SorceryFight();
             float trueWaitTime = sfPlayer.cursedOfuda ? CursedOfuda.cursedTechniqueCastTimeDecrease * WAIT_TIME : WAIT_TIME;
 
-            if (Projectile.ai[0] > COLLISION_TIME)
+            if (Projectile.ai[0] > collisionVFX.lifetime)
             {
-                if (Projectile.ai[0] < COLLISION_TIME + trueWaitTime)
+                if (Projectile.ai[0] < collisionVFX.lifetime + trueWaitTime)
                 {
                     Main.spriteBatch.End();
                     Main.spriteBatch.Begin(
@@ -182,7 +186,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                     for (int i = 0; i < 3; i++)
                     {
-                        float progress = (Projectile.ai[0] - COLLISION_TIME) / trueWaitTime;
+                        float progress = (Projectile.ai[0] - collisionVFX.lifetime) / trueWaitTime;
                         progress -= i * 0.3f;
                         progress = Math.Clamp(progress, 0f, 1f);
 
@@ -193,7 +197,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                         Main.EntitySpriteDraw(ring, Projectile.Center - Main.screenPosition, prismSrc, new Color(1f, 1f, 1f, opacity), 0f, prismSrc.Size() * 0.5f, scale, SpriteEffects.None);
                     }
 
-                    Texture2D glareTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/VFXSprites/HollowPurpleGlare{glareIndex + 1}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    Texture2D glareTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/VFX/HollowPurpleGlare{glareIndex + 1}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
                     if (Projectile.ai[0] % 3 == 0)
                         glareIndex = Main.rand.Next(0, 3);
@@ -208,7 +212,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             }
 
             int flashDuration = 10;
-            if (Projectile.ai[0] >= COLLISION_TIME - (flashDuration / 2))
+            if (Projectile.ai[0] >= collisionVFX.lifetime - (flashDuration / 2))
             {
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(
@@ -221,10 +225,10 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     Main.GameViewMatrix.ZoomMatrix
                 );
 
-                float progress = (Projectile.ai[0] - (COLLISION_TIME - flashDuration / 2f)) / flashDuration;
+                float progress = (Projectile.ai[0] - (collisionVFX.lifetime - flashDuration / 2f)) / flashDuration;
                 progress = Math.Clamp(progress, 0f, 1f);
 
-                if (Projectile.ai[0] >= COLLISION_TIME + (flashDuration / 2) && Projectile.ai[0] < COLLISION_TIME + trueWaitTime)
+                if (Projectile.ai[0] >= collisionVFX.lifetime + (flashDuration / 2) && Projectile.ai[0] < collisionVFX.lifetime + trueWaitTime)
                     progress = 0.1f;
 
                 float opacity = MathF.Sin(progress * MathF.PI);
@@ -237,7 +241,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 Main.spriteBatch.Begin();
             }
 
-            if (Projectile.ai[0] >= COLLISION_TIME + trueWaitTime)
+            if (Projectile.ai[0] >= collisionVFX.lifetime + trueWaitTime)
             {
                 int frameHeight = texture.Height / FRAME_COUNT;
                 int frameY = Projectile.frame * frameHeight;

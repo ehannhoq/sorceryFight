@@ -18,7 +18,6 @@ using Terraria;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.ModLoader;
-using sorceryFight.Content.Projectiles.VFX;
 using sorceryFight.Content.Items.Accessories;
 using sorceryFight.Content.UI.Chants;
 
@@ -163,13 +162,14 @@ namespace sorceryFight.Content.InnateTechniques
 
             if (hollowPurple == null) return;
 
+            HollowPurple hollowPurpleCT = hollowPurple.ModProjectile as HollowPurple;
+
             postHollowPurpleSummonTick++;
             float hollowPurpleCastTime = sf.cursedOfuda ? MathF.Floor(CursedOfuda.cursedTechniqueCastTimeDecrease * 90f) : 90f;
-            float hollowPurpleCollisionTime = HollowPurpleCollision.FRAMES * HollowPurpleCollision.TICKS_PER_FRAME;
+            float hollowPurpleCollisionTime = hollowPurpleCT.collisionVFX.lifetime;
 
             if (postHollowPurpleSummonTick == (int)(hollowPurpleCastTime + hollowPurpleCollisionTime + 1))
             {
-                CursedTechnique hollowPurpleCT = hollowPurple.ModProjectile as CursedTechnique;
 
                 hollowPurple.velocity = (planteraPos - hollowPurple.Center).SafeNormalize(Vector2.UnitX) * hollowPurpleCT.speed;
                 Filters.Scene["SF:LimitlessRCTFilter"].GetShader().UseProgress(0f);

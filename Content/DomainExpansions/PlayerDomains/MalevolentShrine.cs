@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs.Vessel;
 using sorceryFight.Content.CursedTechniques.Shrine;
-using sorceryFight.Content.Projectiles.VFX;
+using sorceryFight.Content.VFX;
 using sorceryFight.SFPlayer;
 using sorceryFight.StructureHelper;
 using System;
@@ -28,6 +28,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
         public override bool ClosedDomain => false;
 
         private static StructureTemplate msStructure => StructureHandler.GetStructure("MalevolentShrine");
+        private static Texture2D cleaveTexture = ModContent.Request<Texture2D>("sorceryFight/Content/VFX/CleaveMS", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         private StructureTemplate worldSnippet;
         private Point structureAnchor;
 
@@ -66,15 +67,10 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override void Update()
         {
-            if (Main.myPlayer == Main.player[owner].whoAmI)
-            {
-                var entitySource = Main.player[owner].GetSource_FromThis();
-                Vector2 randomOffset = new Vector2(Main.rand.NextFloat(-SureHitRange, SureHitRange), Main.rand.NextFloat(-SureHitRange, SureHitRange));
-
-                int type = ModContent.ProjectileType<CleaveMS>();
-
-                Projectile.NewProjectile(entitySource, Main.player[owner].Center + randomOffset, Vector2.Zero, type, 1, 0f, owner, Main.rand.NextFloat(0, 6));
-            }
+             VFXManager.AddVFX(new VFXObject(
+                cleaveTexture,
+                new Vector2(Main.rand.NextFloat(-SureHitRange, SureHitRange), Main.rand.NextFloat(-SureHitRange, SureHitRange))
+             ));
 
             if (Main.ingameOptionsWindow)
                 Main.ingameOptionsWindow = false;

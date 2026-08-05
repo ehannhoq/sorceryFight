@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.VFX;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
@@ -16,18 +17,15 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         public override string InternalName => "GroundShot";
 
         private static Texture2D texture;
-        private static Texture2D impactTexture;
         ref float tick => ref Projectile.ai[0];
         ref float scale => ref Projectile.ai[1];
         private Vector2 ownerFreezePos = Vector2.Zero;
         private Vector2 impactPos = Vector2.Zero;
         private int ownerDirection = 0;
 
-
         public override void SetStaticDefaults()
         {
             texture = ModContent.Request<Texture2D>(Texture, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            impactTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/HeavenlyRestriction/ImpactRing", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
 
 
@@ -95,6 +93,8 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
                 impactPos = Projectile.Center;
                 SoundEngine.PlaySound(SorceryFightSounds.GroundshotPunch, player.Center);
                 player.SorceryFight().disableRegenFromProjectiles = false;
+
+                VFXManager.AddVFX(new ImpactRingVFX(center: impactPos, lifetime: 60, rotation: Projectile.velocity.ToRotation(), scale: 2.0f));
             }
             else
                 Projectile.rotation = Projectile.velocity.ToRotation();
@@ -124,33 +124,6 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         {
             Rectangle src = new Rectangle(0, 0, texture.Width, texture.Height);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, src, Color.White, Projectile.rotation, src.Size() * 0.5f, scale, SpriteEffects.None);
-
-            if (tick > 30)
-            {
-                Rectangle impactSrc = new Rectangle(0, 0, impactTexture.Width, impactTexture.Height);
-
-                float impactTick = tick - 30;
-                float impactScale = MathF.Sqrt(1 - MathF.Pow((impactTick / 60) - 1, 2)) * 2f;
-                float impactOpacity = MathF.Sqrt(1 - MathF.Pow(impactTick / 60, 2));
-
-                impactOpacity = Math.Clamp(impactOpacity, 0f, 1f);
-
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(
-                    SpriteSortMode.Immediate,
-                    BlendState.NonPremultiplied,
-                    SamplerState.LinearClamp,
-                    DepthStencilState.None,
-                    RasterizerState.CullNone,
-                    null,
-                    Main.GameViewMatrix.ZoomMatrix
-                );
-
-                Main.EntitySpriteDraw(impactTexture, impactPos - Main.screenPosition, impactSrc, Color.White * impactOpacity, Projectile.velocity.ToRotation(), impactSrc.Size() * 0.5f, impactScale, SpriteEffects.None);
-
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin();
-            }
 
             return false;
         }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.VFX;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using Terraria;
@@ -15,15 +16,9 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 {
     public class StarRush : CursedTechnique
     {
-        private static Texture2D impactRing;
-        private static Texture2D impactCircle;
-
         public override string InternalName => "StarRush";
 
         ref float tick => ref Projectile.ai[0];
-        private Vector2 startPos;
-        private Vector2 startVel;
-        private Dictionary<Vector2, int> impactPositions = new();
 
         private const float minSpeed = 10f;
         private const float maxSpeed = 20f;
@@ -48,13 +43,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         }
 
 
-        public override void SetStaticDefaults()
-        {
-            impactRing = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/HeavenlyRestriction/ImpactRing", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            impactCircle = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/HeavenlyRestriction/ImpactCircle", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-        }
-
-
         public override void SetDefaults()
         {
             Projectile.width = Main.player[0].width * 2;
@@ -76,8 +64,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
             sfPlayer.immune = true;
             sfPlayer.disableRegenFromProjectiles = true;
 
-            startPos = player.Center;
-            startVel = Projectile.velocity;
+            VFXManager.AddVFX(new ImpactRingVFX(center: player.Center, lifetime: 60, rotation: Projectile.velocity.ToRotation(), scale: 2f));
 
             float speedDiff = maxSpeed - minSpeed;
             float trueSpeed = ((float)sfPlayer.numberBossesDefeated / SorceryFightMod.totalBosses * speedDiff) + minSpeed;
@@ -104,17 +91,6 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
                 player.SorceryFight().immune = false;
                 player.SorceryFight().disableRegenFromProjectiles = false;
-            }
-
-            if (startPos != Vector2.Zero)
-            {
-                startPos -= Projectile.velocity * 0.1f;
-            }
-
-            foreach (var kvp in impactPositions)
-            {
-                var key = kvp.Key;
-                impactPositions[key]++;
             }
 
             // Starry trail
@@ -178,7 +154,7 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            impactPositions.Add(target.Center, 0);
+            VFXManager.AddVFX(new ImpactCircleVFX(target.Center, lifetime: 60, scale: 2f));
             SoundEngine.PlaySound(SorceryFightSounds.DashImpact, target.Center);
 
             //make the player stop when hitting a target
@@ -197,51 +173,9 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
             return false;
         }
-        
 
         public override bool PreDraw(ref Color lightColor)
         {
-
-            //Main.spriteBatch.End();
-            //Main.spriteBatch.Begin(
-            //    SpriteSortMode.Immediate,
-            //    BlendState.NonPremultiplied,
-            //    SamplerState.LinearClamp,
-            //    DepthStencilState.None,
-            //    RasterizerState.CullNone,
-            //    null,
-            //    Main.GameViewMatrix.ZoomMatrix
-            //);
-
-            //Rectangle impactSrc = new Rectangle(0, 0, impactRing.Width, impactRing.Height);
-
-            //float impactScale = MathF.Sqrt(1 - MathF.Pow((tick / 60) - 1, 2)) * Projectile.velocity.Length() / 5f;
-            //float impactOpacity = MathF.Sqrt(1 - MathF.Pow(tick / 60, 2));
-
-            //impactOpacity = Math.Clamp(impactOpacity, 0f, 1f);
-
-            //Main.EntitySpriteDraw(impactRing, startPos - Main.screenPosition, impactSrc, Color.White * impactOpacity, startVel.ToRotation(), impactSrc.Size() * 0.5f, impactScale, SpriteEffects.None);
-
-            //foreach (var kvp in impactPositions)
-            //{
-            //    var tick = kvp.Value;
-            //    var position = kvp.Key;
-
-            //    Rectangle impactCircleSrc = new Rectangle(0, 0, impactCircle.Width, impactCircle.Height);
-
-            //    float t = Math.Clamp(tick / 30f, 0f, 1f);
-
-            //    float impactCircleOpacity = MathF.Sqrt(1f - t * t);
-
-            //    float scaleT = Math.Clamp(1f - MathF.Pow(t - 1f, 2f), 0f, 1f);
-            //    float impactCircleScale = MathF.Sqrt(scaleT) * 2.5f;
-
-            //    Main.EntitySpriteDraw(impactCircle, position - Main.screenPosition, impactCircleSrc, Color.White * impactCircleOpacity, 0f, impactCircleSrc.Size() * 0.5f, impactCircleScale, SpriteEffects.None);
-            //}
-
-            //Main.spriteBatch.End();
-            //Main.spriteBatch.Begin();
-
             return false;
         }
     }
