@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Projectiles.Melee;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -15,18 +16,31 @@ namespace sorceryFight.Content.Items.Weapons.Melee
 
         public override void SetDefaults()
         {
-            Item.width = 70;
-            Item.height = 70;
+            Item.width = 40;
+            Item.height = 113;
             Item.maxStack = 1;
-            Item.useTime = 30;
             Item.damage = 22;
             Item.crit = 8;
             Item.knockBack = 8;
-            Item.useAnimation = 30;
+            Item.useTime = 70;
+            Item.useAnimation = 70;
+            Item.shoot = ModContent.ProjectileType<MeiMeiAxeHoldout>();
             Item.DamageType = CursedTechniqueDamageClass.Instance;
-            Item.useStyle = ItemUseStyleID.Swing;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.UseSound = SoundID.Item1;
             Item.rare = ItemRarityID.Blue;
+            Item.noMelee = true;
+            Item.channel = true;
+            Item.autoReuse = true;
+            Item.noUseGraphic = true;
+            Item.shootSpeed = 24f;
+        }
+
+        public override bool CanUseItem(Player player)
+        {
+            if (player.ownedProjectileCounts[Item.shoot] > 0)
+                return false;
+            return true;
         }
     }
 }
