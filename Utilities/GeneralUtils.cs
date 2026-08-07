@@ -319,6 +319,10 @@ namespace sorceryFight
             proj.Center = playerRotatedPoint + velocityAngle.ToRotationVector2() * offset;
             player.ChangeDir(proj.direction);
 
+            player.itemTime = 2;
+            player.itemAnimation = 2;
+            player.heldProj = proj.whoAmI;
+
             if (Main.myPlayer == proj.owner)
             {
 
@@ -406,7 +410,7 @@ namespace sorceryFight
 
         public static void HandleProjectileAnimation(this Projectile projectile, int frameCount, int timePerFrame)
         {
-            if (projectile.frameCounter++ >= timePerFrame)
+            if (++projectile.frameCounter >= timePerFrame)
             {
                 projectile.frameCounter = 0;
 
