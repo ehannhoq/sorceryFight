@@ -42,9 +42,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public HollowPurple200Percent()
         {
-            Technique.baseDamage = 2000;
-            Technique.damagePerBoss = 200;
-            Technique.cost = 900f;
+            Technique.baseDamage = 3000;
+            Technique.damagePerBoss = 250;
+            Technique.cost = 1200f;
             Technique.speed = 50;
             Technique.lifetime = 500;
         }
