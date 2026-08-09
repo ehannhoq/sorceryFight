@@ -23,7 +23,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override float SureHitRange => 1000f;
 
-        public override float Cost => 150f;
+        public override float Cost => 75f;
 
         public override bool ClosedDomain => false;
 
@@ -69,7 +69,9 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
         {
              VFXManager.AddVFX(new VFXObject(
                 cleaveTexture,
-                new Vector2(Main.rand.NextFloat(-SureHitRange, SureHitRange), Main.rand.NextFloat(-SureHitRange, SureHitRange))
+                center + new Vector2(Main.rand.NextFloat(-SureHitRange, SureHitRange), Main.rand.NextFloat(-SureHitRange, SureHitRange)),
+                frames: 8,
+                ticksPerFrame: 2
              ));
 
             if (Main.ingameOptionsWindow)
