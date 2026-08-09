@@ -23,7 +23,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.useAnimation = 20;
             Item.damage = 56;
             Item.crit = 11;
-            Item.knockBack = 8;
+            Item.knockBack = 2;
             Item.autoReuse = true;
             Item.DamageType = CursedTechniqueDamageClass.Instance;
             Item.shoot = ModContent.ProjectileType<FesteringLifeBladeSlash>();

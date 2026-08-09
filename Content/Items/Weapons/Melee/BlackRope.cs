@@ -37,7 +37,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.useTime = 1;
             
             //set low to attempt to test pvp cte debuff
-            Item.damage = 1000;
+            Item.damage = 20;
             Item.shootSpeed = 4f;
             Item.autoReuse = false;
             Item.knockBack = 5;

@@ -22,7 +22,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.useTime = 13;
             Item.useAnimation = 13;
             Item.damage = 17;
-            Item.knockBack = 5;
+            Item.knockBack = 4;
             Item.autoReuse = true;
             Item.DamageType = CursedTechniqueDamageClass.Instance;
             Item.useStyle = ItemUseStyleID.Swing;

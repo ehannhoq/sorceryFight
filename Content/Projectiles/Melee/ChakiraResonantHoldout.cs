@@ -66,7 +66,7 @@ namespace sorceryFight.Content.Projectiles.Melee
                 if (charge == 1)
                 {
                     SoundEngine.PlaySound(SorceryFightSounds.ChakiraResonantChargeUp, Projectile.Center);
-                    damage = Projectile.damage;
+                    damage = Projectile.damage / 2;
                     Projectile.damage = 0;
                 }
 

@@ -10,15 +10,25 @@ namespace sorceryFight.Content.Items.Armors.JujutsuHigh
     [AutoloadEquip(EquipType.Legs)]
     public class JujutsuHighLeggings : ModItem
     {
+        public static int maxCeIncrease = 10;
+        public static float ctDamageIncrease = 0.08f;
+
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Armors.JujutsuHighLeggings.DisplayName");
-        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Armors.JujutsuHighLeggings.Tooltip");
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Armors.JujutsuHighLeggings.Tooltip").WithFormatArgs(maxCeIncrease, (int)(ctDamageIncrease * 100f));
 
         public override void SetDefaults()
         {
             Item.width = 42;
             Item.height = 42;
-            Item.rare = ItemRarityID.Pink;
-            Item.defense = 60;
+            Item.rare = ItemRarityID.White;
+            Item.defense = 4;
+        }
+
+        public override void UpdateEquip(Player player)
+        {
+            player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1 + ctDamageIncrease;
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
+            sfPlayer.maxCursedEnergyFromOtherSources += maxCeIncrease;
         }
     }
 }

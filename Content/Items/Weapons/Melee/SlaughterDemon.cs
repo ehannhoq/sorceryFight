@@ -18,7 +18,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.useTime = 19;
             Item.damage = 22;
             Item.crit = 8;
-            Item.knockBack = 8;
+            Item.knockBack = 3;
             Item.useAnimation = 19;
             Item.DamageType = CursedTechniqueDamageClass.Instance;
             Item.useStyle = ItemUseStyleID.Swing;

@@ -16,7 +16,7 @@ namespace sorceryFight.Content.Projectiles
 {
     public class KamutokeLightning : ModProjectile
     {
-        public static readonly int STARTING_RECURSIVE_LIGHTING_COUNT = 5;
+        public static readonly int STARTING_RECURSIVE_LIGHTING_COUNT = 3;
         public static readonly int MINIMUM_NPC_DISTANCE = 400;
 
         private static Dictionary<int, List<int>> hitTracker;

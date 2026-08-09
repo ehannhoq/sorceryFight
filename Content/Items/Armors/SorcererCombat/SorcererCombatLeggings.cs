@@ -10,15 +10,24 @@ namespace sorceryFight.Content.Items.Armors.SorcererCombat
     [AutoloadEquip(EquipType.Legs)]
     public class SorcererCombatLeggings : ModItem
     {
+        public static int ceRegenIncrease = 50;
+        public static float ctDamageIncrease = 0.12f;
         public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.Armors.SorcererCombatLeggings.DisplayName");
-        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Armors.SorcererCombatLeggings.Tooltip");
+        public override LocalizedText Tooltip => SFUtils.GetLocalization("Mods.sorceryFight.Armors.SorcererCombatLeggings.Tooltip").WithFormatArgs(ceRegenIncrease, (int)(ctDamageIncrease * 100f));
+
+        public override void UpdateEquip(Player player)
+        {
+            player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1 + ctDamageIncrease;
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
+            sfPlayer.cursedEnergyRegenFromOtherSources += ceRegenIncrease;
+        }
 
         public override void SetDefaults()
         {
             Item.width = 42;
             Item.height = 42;
-            Item.rare = ItemRarityID.Pink;
-            Item.defense = 60;
+            Item.rare = ItemRarityID.Blue;
+            Item.defense = 18;
         }
     }
 }

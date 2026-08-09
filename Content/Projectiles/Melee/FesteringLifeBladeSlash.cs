@@ -35,7 +35,7 @@ namespace sorceryFight.Content.Projectiles.Melee
             Projectile.penetrate = -1;
             Projectile.ownerHitCheck = true;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 28;
+            Projectile.localNPCHitCooldown = 18;
             Projectile.scale = 0.75f;
         }
 

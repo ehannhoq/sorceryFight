@@ -17,9 +17,9 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         {
             Item.width = 90;
             Item.height = 134;
-            Item.damage = 2200;
+            Item.damage = 310;
             Item.DamageType = CursedTechniqueDamageClass.Instance;
-            Item.crit = 61;
+            Item.crit = 10;
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.channel = true;

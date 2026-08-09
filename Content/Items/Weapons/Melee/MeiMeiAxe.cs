@@ -19,9 +19,9 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.width = 40;
             Item.height = 113;
             Item.maxStack = 1;
-            Item.damage = 22;
-            Item.crit = 8;
-            Item.knockBack = 8;
+            Item.damage = 160;
+            Item.crit = 30;
+            Item.knockBack = 10;
             Item.useTime = 70;
             Item.useAnimation = 70;
             Item.shoot = ModContent.ProjectileType<MeiMeiAxeHoldout>();

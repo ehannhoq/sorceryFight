@@ -33,7 +33,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.useTime = 10;
             Item.shootSpeed = 10f;
             Item.useAnimation = 10;
-            Item.damage = 56;
+            Item.damage = 130;
             Item.crit = 11;
             Item.knockBack = 15;
             Item.autoReuse = true;
@@ -150,7 +150,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
                 }
                 Vector2 lightningPos = closestNPCPos ?? Main.MouseWorld;
 
-                spawnedProj = Projectile.NewProjectile(player.GetSource_FromThis(), lightningPos, Vector2.Zero, ModContent.ProjectileType<KamutokeLightning>(), 2400, 4, Projectile.owner, ai0: KamutokeLightning.STARTING_RECURSIVE_LIGHTING_COUNT);
+                spawnedProj = Projectile.NewProjectile(player.GetSource_FromThis(), lightningPos, Vector2.Zero, ModContent.ProjectileType<KamutokeLightning>(), 250, 4, Projectile.owner, ai0: KamutokeLightning.STARTING_RECURSIVE_LIGHTING_COUNT);
             }
 
             float armRotation = MathHelper.Lerp(-MathHelper.PiOver2, MathHelper.PiOver2, progress);

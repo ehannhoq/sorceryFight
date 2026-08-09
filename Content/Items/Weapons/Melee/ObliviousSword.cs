@@ -23,7 +23,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         private static Texture2D texture;
 
         private const int baseDamage = 50;
-        private const float damageMultiplier = 3.5f;
+        private const float damageMultiplier = 1.5f;
         private const float critMultiplier = 1;
         private int addedDamage = 0;
         private float addedCrit = 0;
@@ -46,7 +46,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.maxStack = 1;
             Item.useTime = 20;
             Item.useAnimation = 20;
-            Item.damage = 50;
+            Item.damage = baseDamage;
             Item.knockBack = 5;
             Item.useAnimation = 1;
             Item.noUseGraphic = true;
@@ -67,7 +67,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         {
             SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
 
-            addedDamage = (int)Math.Ceiling(MathF.Pow(sfPlayer.numberBossesDefeated, damageMultiplier) / 750f);
+            addedDamage = (int)Math.Ceiling(MathF.Pow(sfPlayer.numberBossesDefeated, damageMultiplier));
 
             Item.damage = baseDamage + addedDamage;
 

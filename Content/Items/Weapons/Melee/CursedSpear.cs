@@ -28,14 +28,15 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.useTime = 10;
             Item.useAnimation = 10;
             Item.shootSpeed = 10;
-            Item.damage = 56;
-            Item.crit = 11;
+            Item.damage = 43;
+            Item.crit = 9;
             Item.knockBack = 8;
             Item.autoReuse = true;
             Item.DamageType = CursedTechniqueDamageClass.Instance;
             Item.shoot = ModContent.ProjectileType<CursedSpearProjectile>();
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.UseSound = SoundID.Item7;
+            Item.rare = ItemRarityID.Blue;
             Item.noUseGraphic = true;
             Item.noMelee = true;
             Item.useTurn = true;
@@ -99,6 +100,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         {
             Player player = Main.player[Projectile.owner];
             Projectile.Center = player.MountedCenter + (Vector2.UnitX * 20).RotatedBy(Projectile.rotation);
+            player.direction = Projectile.direction;
 
             if (SwingPhase == 0.0)
             {

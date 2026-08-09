@@ -32,7 +32,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.height = 90;
             Item.maxStack = 1;
             Item.useTime = 1;
-            Item.damage = 700;
+            Item.damage = 110;
             Item.knockBack = 5;
             Item.channel = true;
             Item.shootSpeed = 24f;
