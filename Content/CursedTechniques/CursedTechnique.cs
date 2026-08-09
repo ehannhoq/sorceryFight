@@ -157,7 +157,7 @@ namespace sorceryFight.Content.CursedTechniques
                 .WithFormatArgs(CalculateTrueDamage(sf)).Value;
 
             string ceCost = SFUtils.GetLocalization(localizationCategoryKey + ".Cost")
-                .WithFormatArgs(CalculateTrueCost(sf)).Value;
+                .WithFormatArgs((int)MathF.Round(CalculateTrueCost(sf))).Value;
 
             string stats = damage + "\n" + ceCost;
 
