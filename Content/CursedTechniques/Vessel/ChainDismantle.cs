@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Microsoft.Build.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.SFPlayer;
@@ -16,11 +17,38 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public static readonly int TICKS_PER_FRAME = 2;
         public static readonly int FRAME_COUNT = 6;
         public static Texture2D texture;
-        
+
         public override string InternalName => "ChainDismantle";
 
         ref float isBarrage => ref Projectile.ai[2];
 
+        public ChainDismantle()
+        {
+            Technique.baseDamage = 30;
+            Technique.damagePerBoss = 8;
+            Technique.cost = 60;
+            Technique.lifetime = FRAME_COUNT * TICKS_PER_FRAME;
+        }
+
+        public override void SetStaticDefaults()
+        {
+            Main.projFrames[Projectile.type] = FRAME_COUNT;
+
+            if (Main.dedServ) return;
+            texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Vessel/ChainDismantle", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+        }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Projectile.width = 170;
+            Projectile.height = 140;
+            Projectile.friendly = true;
+            Projectile.tileCollide = false;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+            Projectile.penetrate = -1;
+        }
 
         public override int UseTechnique(SorceryFightPlayer sf)
         {
@@ -32,6 +60,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                 Vector2 mousePos = Main.MouseWorld;
                 Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * speed;
                 var entitySource = player.GetSource_FromThis();
+                sf.cursedEnergy -= CalculateTrueCost(sf);
 
                 int index = Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), 1, 0, player.whoAmI);
                 Main.projectile[index].ai[2] = 0f;
@@ -41,42 +70,20 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         }
 
 
-        public override void SetStaticDefaults()
-        {
-            Main.projFrames[Projectile.type] = FRAME_COUNT;
-
-            if (Main.dedServ) return;
-            texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Vessel/ChainDismantle", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-        }
-
-
-        public override void SetDefaults()
-        {
-            base.SetDefaults();
-            Projectile.width = 170;
-            Projectile.height = 140;
-            Projectile.friendly = true;
-            Projectile.tileCollide = false;
-            Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = -1;
-        }
-
-
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             modifiers.DefenseEffectiveness *= 0;
             modifiers.FinalDamage.Flat = CalculateTrueDamage(Main.player[Projectile.owner].SorceryFight());
 
-                if (isBarrage == 0)
+            if (isBarrage == 0)
+            {
+                foreach (NPC npc in Main.ActiveNPCs)
                 {
-                    foreach (NPC npc in Main.ActiveNPCs)
+                    if (npc.friendly || npc.whoAmI == target.whoAmI) continue;
+                    float dist = Vector2.Distance(npc.Center, target.Center);
+                    if (dist < 250f)
                     {
-                        if (npc.friendly || npc.type == NPCID.TargetDummy || npc.whoAmI == target.whoAmI) continue;
-                        float dist = Vector2.Distance(npc.Center, target.Center);
-                        if (dist < 250f)
-                        {
-                            Player player = Main.player[Projectile.owner];
-                            SorceryFightPlayer sf = player.SorceryFight();
+                        Player player = Main.player[Projectile.owner];
 
                         Vector2 playerPos = player.MountedCenter;
                         Vector2 mousePos = Main.MouseWorld;
@@ -97,20 +104,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         {
             Projectile.ai[0]++;
 
-            if (Projectile.ai[0] >= lifetime)
-            {
-                Projectile.Kill();
-            }
-
-            if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
-            {
-                Projectile.frameCounter = 0;
-
-                if (Projectile.frame++ >= FRAME_COUNT - 1)
-                {
-                    Projectile.frame = 0;
-                }
-            }
+            Projectile.HandleProjectileAnimation(FRAME_COUNT, TICKS_PER_FRAME);
 
             Player player = Main.player[Projectile.owner];
 
@@ -120,7 +114,11 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                 float velocityAngle = Projectile.velocity.ToRotation();
                 float offset = 130f * Projectile.scale;
 
-                Projectile.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
+                if (Main.myPlayer == Projectile.owner)
+                {
+                    Projectile.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
+                    Projectile.netUpdate = true;
+                }
                 Projectile.Center = playerRotatedPoint + velocityAngle.ToRotationVector2() * offset;
                 Projectile.rotation = velocityAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
             }

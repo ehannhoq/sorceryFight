@@ -1,11 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
+using sorceryFight.Content.UI.CursedTechniqueMenu;
 using sorceryFight.SFPlayer;
 using System;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -32,6 +34,35 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         ref float justSpawned => ref Projectile.ai[0];
         ref float beamHeight => ref Projectile.ai[1];
 
+        public PiercingBlood()
+        {
+            Technique.baseDamage = 2;
+            Technique.damagePerBoss = 2;
+            Technique.cost = 20;
+        }
+
+        public override string GetStats(SorceryFightPlayer sf)
+        {
+            string localizationCategoryKey = "Mods.sorceryFight.Misc.CursedTechniques";
+
+            string damage = SFUtils.GetLocalization(localizationCategoryKey + ".Damage")
+                .WithFormatArgs(CalculateTrueDamage(sf)).Value;
+
+            string ceCost = SFUtils.GetLocalization(localizationCategoryKey + ".ContinuousBloodCost")
+                .WithFormatArgs((int)MathF.Round(base.CalculateTrueCost(sf))).Value;
+
+            string stats = damage + "\n" + ceCost;
+
+            return stats;
+        }
+
+        public override void DrainCost(SorceryFightPlayer sfPlayer)
+        {
+            sfPlayer.bloodEnergy -= CalculateTrueCost(sfPlayer);
+            if (sfPlayer.bloodEnergy <= 1)
+                Destroy(sfPlayer);
+        }
+
 
         public override void SetStaticDefaults()
         {
@@ -53,28 +84,31 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             beamHeight = 0.0f;
         }
 
-
-        public override int UseTechnique(SorceryFightPlayer sf)
+        public override void OnSpawn(IEntitySource source)
         {
-            int index = base.UseTechnique(sf);
-            Main.projectile[index].rotation = (Main.MouseWorld - sf.Player.Center).ToRotation();
-            return index;
+            if (Main.myPlayer == Projectile.owner)
+            {
+                Projectile.rotation = (Main.MouseWorld - Main.LocalPlayer.Center).ToRotation();
+                Projectile.netUpdate = true;
+            }
         }
-
 
         public override void AI()
         {
             base.AI();
 
+            Player player = Main.player[Projectile.owner];
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
+
             if (Main.myPlayer == Projectile.owner)
             {
-                Player player = Main.player[Projectile.owner];
                 Projectile.Center = player.Center;
 
                 float targetRotation = (Main.MouseWorld - player.Center).ToRotation();
                 Projectile.rotation = SFUtils.LerpAngle(Projectile.rotation, targetRotation, 0.2f);
                 Projectile.direction = Projectile.rotation.ToRotationVector2().X > 0 ? 1 : -1;
                 player.ChangeDir(Projectile.direction);
+                Projectile.netUpdate = true;
             }
 
 
@@ -108,36 +142,32 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                     }
                 }
                 justSpawned = 1f;
-                Main.player[Projectile.owner].SorceryFight().disableRegenFromProjectiles = true;
                 SoundEngine.PlaySound(SorceryFightSounds.PiercingBlood, Projectile.Center);
             }
 
-            if (beamHeight < 2.0f && keyHeld)
+            if (beamHeight < 2.0f && keyHeld && sfPlayer.bloodEnergy > 1)
                 beamHeight += 0.2f;
 
 
-            if (Main.myPlayer == Projectile.owner)
+            float beamLength = 0f;
+            Vector2 direction = Projectile.rotation.ToRotationVector2();
+            for (float i = 0f; i < MAX_LENGTH; i += STEP_SIZE)
             {
-                float beamLength = 0f;
-                Vector2 direction = Projectile.rotation.ToRotationVector2();
-                for (float i = 0f; i < MAX_LENGTH; i += STEP_SIZE)
+                Vector2 checkPos = Projectile.Center + direction * i;
+                if (!Collision.CanHitLine(Projectile.Center, 1, 1, checkPos, 1, 1))
                 {
-                    Vector2 checkPos = Projectile.Center + direction * i;
-                    if (!Collision.CanHitLine(Projectile.Center, 1, 1, checkPos, 1, 1))
-                    {
-                        break;
-                    }
-                    beamLength = i;
+                    break;
                 }
-                Projectile.localAI[0] = beamLength;
+                beamLength = i;
             }
+            Projectile.localAI[0] = beamLength;
         }
 
 
-        public override void Destroy()
+        public override void Destroy(SorceryFightPlayer sfPlayer)
         {
             beamHeight -= 0.2f;
-            Main.player[Projectile.owner].SorceryFight().disableRegenFromProjectiles = false;
+            sfPlayer.disableRegenFromProjectiles = false;
             if (beamHeight <= 0f)
                 Projectile.Kill();
         }

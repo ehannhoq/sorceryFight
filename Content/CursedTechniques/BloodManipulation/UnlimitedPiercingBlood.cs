@@ -180,10 +180,10 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         }
 
 
-        public override void Destroy()
+        public override void Destroy(SorceryFightPlayer sfPlayer)
         {
             beamHeight -= 0.2f;
-            Main.player[Projectile.owner].SorceryFight().disableRegenFromProjectiles = false;
+            sfPlayer.disableRegenFromProjectiles = false;
             if (beamHeight <= 0f)
                 Projectile.Kill();
         }

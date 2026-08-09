@@ -5,6 +5,7 @@ using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -20,21 +21,12 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         
         ref float spawnedFromDE => ref Projectile.ai[2];
 
-
-        public override int UseTechnique(SorceryFightPlayer sf)
+        public SoulDismantle()
         {
-            Player player = sf.Player;
-            
-            if (player.whoAmI == Main.myPlayer)
-            {
-                Vector2 playerPos = player.MountedCenter;
-                Vector2 mousePos = Main.MouseWorld;
-                Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * speed;
-                var entitySource = player.GetSource_FromThis();
-
-                return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), 1, 0, player.whoAmI);
-            }
-            return -1;
+            Technique.baseDamage = 4;
+            Technique.damagePerBoss = 4;
+            Technique.cost = 20;
+            Technique.lifetime = FRAME_COUNT * TICKS_PER_FRAME;
         }
 
 
@@ -56,6 +48,7 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
+            Projectile.penetrate = -1;
         }
 
 
@@ -66,25 +59,29 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             base.ModifyHitNPC(target, ref modifiers);
         }
 
+        public override void OnSpawn(IEntitySource source)
+        {                
+            Player player = Main.player[Projectile.owner];
+            Vector2 playerRotatedPoint = player.RotatedRelativePoint(player.MountedCenter, true);
+            float velocityAngle = Projectile.velocity.ToRotation();
+            float offset = 130f * Projectile.scale;
+
+            if (Main.myPlayer == Projectile.owner)
+            {
+                Projectile.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
+                Projectile.netUpdate = true;
+            }
+            
+            Projectile.Center = playerRotatedPoint + velocityAngle.ToRotationVector2() * offset;
+            Projectile.rotation = velocityAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
+        }
+
 
         public override void AI()
         {
             Projectile.ai[0]++;
 
-            if (Projectile.ai[0] >= lifetime)
-            {
-                Projectile.Kill();
-            }
-
-            if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
-            {
-                Projectile.frameCounter = 0;
-
-                if (Projectile.frame++ >= FRAME_COUNT - 1)
-                {
-                    Projectile.frame = 0;
-                }
-            }
+            Projectile.HandleProjectileAnimation(FRAME_COUNT, TICKS_PER_FRAME);
 
             if (spawnedFromDE == 0)
             {
@@ -93,7 +90,12 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                 float velocityAngle = Projectile.velocity.ToRotation();
                 float offset = 130f * Projectile.scale;
 
-                Projectile.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
+                if (Main.myPlayer == Projectile.owner)
+                {
+                    Projectile.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
+                    Projectile.netUpdate = true;
+                }
+
                 Projectile.Center = playerRotatedPoint + velocityAngle.ToRotationVector2() * offset;
                 Projectile.rotation = velocityAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
             }
@@ -104,7 +106,6 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                 SoundEngine.PlaySound(SorceryFightSounds.CleaveSwing with { Volume = 5f }, Projectile.Center);
                 SoundEngine.PlaySound(SorceryFightSounds.SoulDismantle, Projectile.Center);
             }
-            
         }
 
 

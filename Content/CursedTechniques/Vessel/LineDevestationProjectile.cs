@@ -28,6 +28,8 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = FRAME_COUNT * TICKS_PER_FRAME;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override void AI()
