@@ -1,3 +1,69 @@
+JujutsuHighChestplate: {
+	DisplayName: Jujutsu High Uniform
+	Tooltip:
+		'''
+		Increases max Cursed Energy by {0}
+		{1}% increased Cursed Technique damage
+		'''
+}
+
+JujutsuHighLeggings: {
+	DisplayName: Jujutsu High Pants
+	Tooltip:
+		'''
+		Increases max Cursed Energy by {0}
+		{1}% increased Cursed Technique damage
+		'''
+}
+
+JujutsuHighSetBonus: Increases Cursed Energy regeneration by {0}
+
+SorcererCombatChestplate: {
+	DisplayName: Sorcerer Combat Uniform
+	Tooltip:
+		'''
+		Increases max Cursed Energy by {0}
+		{1}% increased Cursed Technique damage
+		'''
+}
+
+SorcererCombatLeggings: {
+	DisplayName: Sorcerer Combat Pants
+	Tooltip:
+		'''
+		Increases Cursed Energy regeneration by {0}
+		{1}% increased Cursed Technique damage
+		'''
+}
+
+SorcererCombatSetBonus:
+	'''
+	{0}% increased movement speed
+	Increases defense by {1}
+	'''
+
+SpecialGradeChestplate: {
+	DisplayName: Special Grade Uniform
+	Tooltip:
+		'''
+		Increases max Cursed Energy by {0}
+		Increases Cursed Technique regeneration by {1}
+		{2}% increased Cursed Technique damage
+		'''
+}
+
+SpecialGradeLeggings: {
+	DisplayName: Special Grade Pants
+	Tooltip:
+		'''
+		Increases max Cursed Energy by {0}
+		Increases Cursed Technique regeneration by {1}
+		{2}% increased movement speed
+		'''
+}
+
+SpecialGradeSetBonus: "{0}% reduced costs from Cursed Techniques"
+
 LaurelWreath: {
 	DisplayName: Hallowed Laurel Wreath
 	Tooltip:

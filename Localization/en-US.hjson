@@ -88,6 +88,14 @@ Mods: {
 			ChainDismantle.DisplayName: Chain Dismantle
 			FullIncarnationKOC.DisplayName: Full Incarnation K O C
 			SoulDismantle.DisplayName: Soul Dismantle
+			FesteringLifeBladeSlash.DisplayName: Festering Life Blade Slash
+			DragonBoneSlash.DisplayName: Dragon Bone Slash
+			CursedSpearProjectile.DisplayName: Cursed Spear Projectile
+			KamutokeProjectile.DisplayName: Kamutoke Projectile
+			KamutokeLightning.DisplayName: Kamutoke Lightning
+			QueensBladeSlash.DisplayName: Queens Blade Slash
+			RikaPunchProjectile.DisplayName: Rika Punch Projectile
+			MeiMeiAxeHoldout.DisplayName: Mei Mei Axe Holdout
 		}
 
 		Configs: {
