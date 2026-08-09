@@ -37,11 +37,11 @@ namespace sorceryFight.Content.VFX
 
         internal virtual void Update()
         {
-            if (frameTime++ >= ticksPerFrame)
+            if (++frameTime > ticksPerFrame)
             {
                 frameTime = 0;
 
-                if (frame++ >= frames - 1)
+                if (++frame > frames)
                 {
                     frame = 0;
                 }
