@@ -36,6 +36,7 @@ namespace sorceryFight.Content.Buffs.BloodManipulation
 
             player.endurance += DAMAGE_NEGATION;
             player.statDefense += DEFENSE_ADDITION;
+            sfPlayer.bloodEnergyRegenPerSecond += BLOOD_REGEN_PER_SECOND;
 
             float multiplier = 1;
             if (AreThereAnyDamnBosses.BossActive)
