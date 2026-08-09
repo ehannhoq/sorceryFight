@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.Items.Armors.Hallowed
+namespace sorceryFight.Content.Items.Armors.Helmets
 {
     [AutoloadEquip(EquipType.Head)]
     public class LaurelWreath : ModItem
