@@ -52,14 +52,8 @@ namespace sorceryFight.Content.InnateTechniques
                     return new PrivatePureLoveTrainTechnique();
                 case "BloodManipulation":
                     return new BloodManipulationTechnique();
-                case "StarRage":
-                    return new StarRageTechnique();
                 case "HeavenlyRestriction":
                     return new HeavenlyRestriction();
-                case "IceFormation":
-                    return new IceFormationTechnique();
-                case "TenShadows":
-                    return new TenShadowsTechnique();
             }
 
             return null;
@@ -75,11 +69,8 @@ namespace sorceryFight.Content.InnateTechniques
                     new ShrineTechnique(),
                     new VesselTechnique(),
                     new BloodManipulationTechnique(),
-                    new StarRageTechnique(),
-                    new TenShadowsTechnique(),
                     new PrivatePureLoveTrainTechnique(),
                     new HeavenlyRestriction(),
-                    new IceFormationTechnique()
                 };
             }
         }
