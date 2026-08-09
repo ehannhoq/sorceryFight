@@ -22,6 +22,17 @@ namespace sorceryFight.Content.UI.GeneticEditor
         UITextField bossesCountInput;
         bool rctState;
 
+        bool cursedSkullState;
+        bool cursedMechanicalSoulState;
+        bool cursedPhantasmalEyeState;
+        bool cursedProfaneShardsState;
+        bool cursedEyeState;
+        bool cursedFleshState;
+        bool cursedBulbState;
+        bool cursedMaskState;
+        bool cursedEffulgentFeatherState;
+        bool cursedRuneOfKosState;
+
         List<int> bosses => new([
             // Pre Skeletron
             NPCID.KingSlime,
@@ -59,13 +70,14 @@ namespace sorceryFight.Content.UI.GeneticEditor
 
         public GeneticEditorUI()
         {
-            Width.Set(1200f, 0f);
-            Height.Set(400f, 0f);
+            Width.Set(1600f, 0f);
+            Height.Set(480f, 0f);
             Top.Set(Main.screenHeight / Main.UIScale / 2 - Height.Pixels / 2, 0f);
             Left.Set(Main.screenWidth / Main.UIScale / 2 - Width.Pixels / 2, 0f);
 
             BuildManualBossSide();
             BuildPresetSide();
+            BuildCursedEnergySide();
         }
 
 
@@ -112,7 +124,7 @@ namespace sorceryFight.Content.UI.GeneticEditor
             manualBossSide.Width.Set(rowWidth, 0f);
             manualBossSide.Height.Set(bossesCountInput.Height.Pixels + submit.Height.Pixels + 10f, 0f);
             manualBossSide.Top.Set(Height.Pixels / 2f - manualBossSide.Height.Pixels / 2f, 0f);
-            manualBossSide.Left.Set(Width.Pixels / 4f - manualBossSide.Width.Pixels / 2f, 0f);
+            manualBossSide.Left.Set(Width.Pixels / 6f - manualBossSide.Width.Pixels / 2f, 0f);
 
             manualBossSide.Append(bossesCountInput);
             manualBossSide.Append(rctGroup);
@@ -150,7 +162,7 @@ namespace sorceryFight.Content.UI.GeneticEditor
             presetSide.Width.Set(350f, 0f);
             presetSide.Height.Set(Height.Pixels - 20, 0f);
             presetSide.Top.Set(Height.Pixels / 2f - presetSide.Height.Pixels / 2f, 0f);
-            presetSide.Left.Set(3 * Width.Pixels / 4f - presetSide.Width.Pixels / 2f, 0f);
+            presetSide.Left.Set(Width.Pixels / 2f - presetSide.Width.Pixels / 2f, 0f);
 
             for (int i = 0; i < buttons.Count; i++)
             {
@@ -163,6 +175,126 @@ namespace sorceryFight.Content.UI.GeneticEditor
             }
 
             Append(presetSide);
+        }
+
+        private UIElement CreateToggleRow(string labelText, bool initialState, Action<bool> onToggle, float rowWidth)
+        {
+            UIText label = new UIText(labelText);
+
+            UIToggleImage toggle = new UIToggleImage(Main.Assets.Request<Texture2D>("Images/UI/Settings_Toggle"), 13, 13, new Point(17, 1), new Point(1, 1));
+            toggle.SetState(initialState);
+            toggle.OnLeftClick += (evt, el) => onToggle(((UIToggleImage)el).IsOn);
+
+            UIElement row = new UIElement();
+            row.Width.Set(rowWidth, 0f);
+            row.Height.Set(22f, 0f);
+
+            label.Left.Set(0f, 0f);
+            label.Top.Set(4f, 0f);
+
+            toggle.Left.Set(rowWidth - toggle.Width.Pixels, 0f);
+            toggle.Top.Set(row.Height.Pixels / 2f - toggle.Height.Pixels / 2f, 0f);
+
+            row.Append(label);
+            row.Append(toggle);
+
+            return row;
+        }
+
+        private void BuildCursedEnergySide()
+        {
+            SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
+
+            cursedSkullState = sfPlayer.cursedSkull;
+            cursedMechanicalSoulState = sfPlayer.cursedMechanicalSoul;
+            cursedPhantasmalEyeState = sfPlayer.cursedPhantasmalEye;
+            // cursedProfaneShardsState = sfPlayer.cursedProfaneShards;
+            cursedEyeState = sfPlayer.cursedEye;
+            cursedFleshState = sfPlayer.cursedFlesh;
+            cursedBulbState = sfPlayer.cursedBulb;
+            cursedMaskState = sfPlayer.cursedMask;
+            // cursedEffulgentFeatherState = sfPlayer.cursedEffulgentFeather;
+            // cursedRuneOfKosState = sfPlayer.cursedRuneOfKos;
+
+            float rowWidth = 300f;
+            float rowHeight = 22f;
+            float rowSpacing = 4f;
+            float headerHeight = 20f;
+
+            UIText maxEnergyHeader = new UIText("Max Cursed Energy Sources");
+            maxEnergyHeader.Top.Set(0f, 0f);
+
+            UIElement maxEnergyRow1 = CreateToggleRow("Cursed Skull", cursedSkullState, state => cursedSkullState = state, rowWidth);
+            maxEnergyRow1.Top.Set(headerHeight + 4f, 0f);
+
+            UIElement maxEnergyRow2 = CreateToggleRow("Cursed Mechanical Soul", cursedMechanicalSoulState, state => cursedMechanicalSoulState = state, rowWidth);
+            maxEnergyRow2.Top.Set(maxEnergyRow1.Top.Pixels + rowHeight + rowSpacing, 0f);
+
+            UIElement maxEnergyRow3 = CreateToggleRow("Cursed Phantasmal Eye", cursedPhantasmalEyeState, state => cursedPhantasmalEyeState = state, rowWidth);
+            maxEnergyRow3.Top.Set(maxEnergyRow2.Top.Pixels + rowHeight + rowSpacing, 0f);
+
+            // UIElement maxEnergyRow4 = CreateToggleRow("Cursed Profane Shards", cursedProfaneShardsState, state => cursedProfaneShardsState = state, rowWidth);
+            // maxEnergyRow4.Top.Set(maxEnergyRow3.Top.Pixels + rowHeight + rowSpacing, 0f);
+
+            float regenHeaderTop = maxEnergyRow3.Top.Pixels + rowHeight + 16f;
+
+            UIText regenHeader = new UIText("Cursed Energy Regen Sources");
+            regenHeader.Top.Set(regenHeaderTop, 0f);
+
+            UIElement regenRow1 = CreateToggleRow("Cursed Eye", cursedEyeState, state => cursedEyeState = state, rowWidth);
+            regenRow1.Top.Set(regenHeaderTop + headerHeight + 4f, 0f);
+
+            UIElement regenRow2 = CreateToggleRow("Cursed Flesh", cursedFleshState, state => cursedFleshState = state, rowWidth);
+            regenRow2.Top.Set(regenRow1.Top.Pixels + rowHeight + rowSpacing, 0f);
+
+            UIElement regenRow3 = CreateToggleRow("Cursed Bulb", cursedBulbState, state => cursedBulbState = state, rowWidth);
+            regenRow3.Top.Set(regenRow2.Top.Pixels + rowHeight + rowSpacing, 0f);
+
+            UIElement regenRow4 = CreateToggleRow("Cursed Rock", cursedMaskState, state => cursedMaskState = state, rowWidth);
+            regenRow4.Top.Set(regenRow3.Top.Pixels + rowHeight + rowSpacing, 0f);
+
+            // UIElement regenRow5 = CreateToggleRow("Cursed Effulgent Feather", cursedEffulgentFeatherState, state => cursedEffulgentFeatherState = state, rowWidth);
+            // regenRow5.Top.Set(regenRow4.Top.Pixels + rowHeight + rowSpacing, 0f);
+
+            // UIElement regenRow6 = CreateToggleRow("Cursed Rune of Kos", cursedRuneOfKosState, state => cursedRuneOfKosState = state, rowWidth);
+            // regenRow6.Top.Set(regenRow5.Top.Pixels + rowHeight + rowSpacing, 0f);
+
+            float sideHeight = regenRow4.Top.Pixels + rowHeight;
+
+            UIElement cursedEnergySide = new UIElement();
+            cursedEnergySide.Width.Set(rowWidth, 0f);
+            cursedEnergySide.Height.Set(sideHeight, 0f);
+            cursedEnergySide.Top.Set(Height.Pixels / 2f - sideHeight / 2f, 0f);
+            cursedEnergySide.Left.Set(5 * Width.Pixels / 6f - cursedEnergySide.Width.Pixels / 2f, 0f);
+
+            cursedEnergySide.Append(maxEnergyHeader);
+            cursedEnergySide.Append(maxEnergyRow1);
+            cursedEnergySide.Append(maxEnergyRow2);
+            cursedEnergySide.Append(maxEnergyRow3);
+            // cursedEnergySide.Append(maxEnergyRow4);
+            cursedEnergySide.Append(regenHeader);
+            cursedEnergySide.Append(regenRow1);
+            cursedEnergySide.Append(regenRow2);
+            cursedEnergySide.Append(regenRow3);
+            cursedEnergySide.Append(regenRow4);
+            // cursedEnergySide.Append(regenRow5);
+            // cursedEnergySide.Append(regenRow6);
+
+            Append(cursedEnergySide);
+        }
+
+        private void ApplyCursedEnergyToggles(SorceryFightPlayer sfPlayer)
+        {
+            sfPlayer.cursedSkull = cursedSkullState;
+            sfPlayer.cursedMechanicalSoul = cursedMechanicalSoulState;
+            sfPlayer.cursedPhantasmalEye = cursedPhantasmalEyeState;
+            sfPlayer.cursedProfaneShards = cursedProfaneShardsState;
+            sfPlayer.cursedEye = cursedEyeState;
+            sfPlayer.cursedFlesh = cursedFleshState;
+            sfPlayer.cursedBulb = cursedBulbState;
+            sfPlayer.cursedMask = cursedMaskState;
+            sfPlayer.cursedEffulgentFeather = cursedEffulgentFeatherState;
+            sfPlayer.cursedRuneOfKos = cursedRuneOfKosState;
         }
 
         private void OnSubmit(UIMouseEvent evt, UIElement listeningElement)
@@ -187,6 +319,7 @@ namespace sorceryFight.Content.UI.GeneticEditor
             }
 
             sfPlayer.unlockedRCT = rctState;
+            ApplyCursedEnergyToggles(sfPlayer);
             SorceryFightUI.UpdateTechniqueUI?.Invoke();
 
             TextInputEXT.TextInput -= bossesCountInput.OnTextInput;
@@ -209,6 +342,7 @@ namespace sorceryFight.Content.UI.GeneticEditor
 
             sfPlayer.bossesDefeated = trimmedList.ToHashSet();
             sfPlayer.unlockedRCT = i >= 14;
+            ApplyCursedEnergyToggles(sfPlayer);
             SorceryFightUI.UpdateTechniqueUI?.Invoke();
 
             SorceryFightUI sfUI = (SorceryFightUI)Parent;
