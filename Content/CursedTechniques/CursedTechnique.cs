@@ -208,6 +208,9 @@ namespace sorceryFight.Content.CursedTechniques
 
                 int index = Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), CalculateTrueDamage(sf), 0, player.whoAmI);
                 SyncCursedTechniqueInfo(index);
+
+                sf.cursedEnergy -= CalculateTrueCost(sf);
+
                 return index;
             }
             return -1;

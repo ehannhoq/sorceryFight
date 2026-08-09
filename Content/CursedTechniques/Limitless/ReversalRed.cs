@@ -27,9 +27,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public ReversalRed()
         {
-            Technique.baseDamage = 30;
-            Technique.damagePerBoss = 10;
-            Technique.cost = 300;
+            Technique.baseDamage = 80;
+            Technique.damagePerBoss = 8;
+            Technique.cost = 80;
             Technique.speed = 32;
             Technique.lifetime = 200;
         }

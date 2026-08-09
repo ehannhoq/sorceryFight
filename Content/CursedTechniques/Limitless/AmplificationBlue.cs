@@ -29,10 +29,10 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public AmplificationBlue()
         {
-            Technique.baseDamage = 30;
-            Technique.damagePerBoss = 10;
-            Technique.cost = 20;
-            Technique.speed = 15;
+            Technique.baseDamage = 5;
+            Technique.damagePerBoss = 5;
+            Technique.cost = 9;
+            Technique.speed = 12;
         }
 
 

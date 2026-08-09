@@ -42,9 +42,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public HollowPurple200Percent()
         {
-            Technique.baseDamage = 30;
-            Technique.damagePerBoss = 10;
-            Technique.cost = 1100f;
+            Technique.baseDamage = 2000;
+            Technique.damagePerBoss = 200;
+            Technique.cost = 900f;
             Technique.speed = 50;
             Technique.lifetime = 500;
         }
@@ -252,7 +252,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
 
             if (flashTexture == null && !Main.dedServ)
-                flashTexture = ModContent.Request<Texture2D>("sorceryFight/Content/Projectiles/VFX/HollowPurpleFlash", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                flashTexture = ModContent.Request<Texture2D>("sorceryFight/Content/VFX/HollowPurpleFlash", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
 
             int frameHeight = texture.Height / FRAME_COUNT;

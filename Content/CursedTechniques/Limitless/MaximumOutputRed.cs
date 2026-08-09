@@ -33,9 +33,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public MaximumOutputRed()
         {
-            Technique.baseDamage = 30;
-            Technique.damagePerBoss = 10;
-            Technique.cost = 750;
+            Technique.baseDamage = 350;
+            Technique.damagePerBoss = 14;
+            Technique.cost = 170;
             Technique.speed = 23;
             Technique.lifetime = 180;
         }
@@ -55,6 +55,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
+            Projectile.penetrate = -1;
 
             inAnimation = false;
         }

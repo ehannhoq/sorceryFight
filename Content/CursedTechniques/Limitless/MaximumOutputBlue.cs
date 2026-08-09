@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using sorceryFight.Content.Particles;
 using sorceryFight.Content.Particles.UIParticles;
+using sorceryFight.Utilities.EaseFunctions;
 
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
@@ -33,11 +34,11 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public MaximumOutputBlue()
         {
-            Technique.baseDamage = 30;
-            Technique.damagePerBoss = 10;
-            Technique.cost = 150;
+            Technique.baseDamage = 10;
+            Technique.damagePerBoss = 3;
+            Technique.cost = 80;
             Technique.speed = 20;
-            Technique.lifetime = 180;
+            Technique.lifetime = 300;
         }
 
 
@@ -53,7 +54,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             Projectile.width = 75;
             Projectile.height = 75;
             Projectile.tileCollide = true;
-            Projectile.penetrate = 10;
+            Projectile.penetrate = -1;
             animating = false;
             animScale = 0f;
             justSpawned = true;
@@ -62,7 +63,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public override void AI()
         {   
-            
             if (justSpawned)
             {
                 Projectile.Center += new Vector2(0, -20f);
@@ -96,10 +96,12 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 }
             }
 
-            if (Projectile.ai[0] > lifetime + beginAnimTime)
+            if (Projectile.ai[0] > lifetime - beginAnimTime)
             {
-                animScale -= 0.03f;
-                if (Projectile.ai[0] > lifetime + 2 * beginAnimTime)
+                float timeSince = Projectile.ai[0] - (lifetime - beginAnimTime);
+                float progress = timeSince / beginAnimTime;
+                animScale = 1.25f * (1 - EaseFunctions.EaseInOut(progress));
+                if (Projectile.ai[0] > lifetime - 2)
                     SpecialKill();
             }
     

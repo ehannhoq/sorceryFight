@@ -35,9 +35,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public HollowPurple()
         {
-            Technique.baseDamage = 30;
-            Technique.damagePerBoss = 10;
-            Technique.cost = 525;
+            Technique.baseDamage = 550;
+            Technique.damagePerBoss = 40;
+            Technique.cost = 400;
             Technique.speed = 45;
             Technique.lifetime = 500;
         }
@@ -50,6 +50,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             Projectile.height = 75;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
+            Projectile.penetrate = -1;
             collisionVFX = null;
             glareIndex = 0;
         }
