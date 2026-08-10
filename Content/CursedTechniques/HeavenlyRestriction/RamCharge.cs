@@ -89,8 +89,6 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             player.direction = Projectile.velocity.X > 0 ? 1 : -1;
             Projectile.velocity.Y += 0.3f;
 
-            Main.NewText(Projectile.timeLeft);
-
             if (++tick % 10 == 0)
             {
                 VFXManager.AddVFX(new ImpactRingVFX(center: player.Center, lifetime: 60, rotation: (playerLastPos - player.Center).ToRotation(), scale: 2f));
