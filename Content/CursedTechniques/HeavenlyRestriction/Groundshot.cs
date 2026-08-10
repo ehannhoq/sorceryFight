@@ -23,6 +23,14 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         private Vector2 impactPos = Vector2.Zero;
         private int ownerDirection = 0;
 
+        public Groundshot()
+        {
+            Technique.baseDamage = 60;
+            Technique.damagePerBoss = 6;
+            Technique.cost = 12;
+            Technique.speed = 20f;
+        }
+
         public override void SetStaticDefaults()
         {
             texture = ModContent.Request<Texture2D>(Texture, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
@@ -31,6 +39,8 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
         public override void SetDefaults()
         {
+            base.SetDefaults();
+            
             Projectile.width = 48;
             Projectile.height = 48;
             Projectile.friendly = true;
@@ -63,9 +73,6 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
-
-            if (tick > lifetime)
-                Projectile.Kill();
 
             if (tick < 30)
             {
