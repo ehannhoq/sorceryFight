@@ -11,7 +11,7 @@ using System;
 using sorceryFight.Content.Items.Accessories;
 using Terraria.DataStructures;
 using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
+
 using sorceryFight.Content.UI.Chants;
 using sorceryFight.Utilities.EaseFunctions;
 using Terraria.ID;

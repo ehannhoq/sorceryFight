@@ -10,7 +10,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using sorceryFight.Content.Particles.UIParticles;
+
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {

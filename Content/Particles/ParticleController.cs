@@ -6,7 +6,7 @@ using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace sorceryFight.Content.Particles.UIParticles
+namespace sorceryFight.Content.Particles
 {
     public class ParticleController : ModSystem
     {

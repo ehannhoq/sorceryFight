@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.Chat;
-using sorceryFight.Content.Particles.UIParticles;
+
 using sorceryFight.Content.Particles;
 using Terraria.Audio;
 using Terraria.Localization;

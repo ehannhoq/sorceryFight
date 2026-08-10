@@ -8,7 +8,7 @@ using sorceryFight.Content.Items.Accessories;
 using sorceryFight.Content.VFX;
 using System;
 using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
+
 using Terraria.DataStructures;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless

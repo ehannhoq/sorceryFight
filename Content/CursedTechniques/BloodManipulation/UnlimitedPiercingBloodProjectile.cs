@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
+
 using System;
 using System.Linq;
 using Terraria;

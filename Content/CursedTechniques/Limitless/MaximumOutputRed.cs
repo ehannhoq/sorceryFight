@@ -9,7 +9,7 @@ using sorceryFight.SFPlayer;
 using Terraria.Graphics.Effects;
 using System.IO;
 using System;
-using sorceryFight.Content.Particles.UIParticles;
+
 using sorceryFight.Content.Particles;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless

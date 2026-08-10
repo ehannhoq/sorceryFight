@@ -8,7 +8,7 @@ using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.Content.Items.Accessories;
 using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
+
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using Terraria;
