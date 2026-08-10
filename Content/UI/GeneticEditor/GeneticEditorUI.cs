@@ -334,11 +334,8 @@ namespace sorceryFight.Content.UI.GeneticEditor
 
             HashSet<int> mechanicalBossesDefeated = [NPCID.Retinazer, NPCID.TheDestroyer, NPCID.SkeletronPrime];
             mechanicalBossesDefeated.IntersectWith(trimmedList.ToHashSet());
-            foreach (int bossType in mechanicalBossesDefeated)
-            {
-                sfPlayer.AddDefeatedBoss(bossType);
-            }
 
+            sfPlayer.mechanicalBossesDefeatedFlags = (byte)(MathF.Pow(2, mechanicalBossesDefeated.Count) - 1);
 
             sfPlayer.bossesDefeated = trimmedList.ToHashSet();
             sfPlayer.unlockedRCT = i >= 14;
