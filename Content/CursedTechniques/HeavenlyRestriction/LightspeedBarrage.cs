@@ -119,6 +119,11 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             }
         }
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return false;
+        }
+
         private void TargetNearestNPC()
         {
             Player player = Main.player[Projectile.owner];
