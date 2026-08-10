@@ -28,7 +28,7 @@ namespace sorceryFight.Content.InnateTechniques
                 .SetUnlock(NPCID.EyeofCthulhu),
 
             new HakarisDoor()
-                .SetUnlock(NPCID.SkeletronHand),
+                .SetUnlock(NPCID.SkeletronHead),
 
             new PassingThrough()
                 .SetUnlock(NPCID.WallofFlesh),

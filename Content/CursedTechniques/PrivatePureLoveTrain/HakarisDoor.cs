@@ -20,6 +20,14 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
 
         public Color rarity;
 
+        public HakarisDoor()
+        {
+            Technique.baseDamage = 2;
+            Technique.damagePerBoss = 2;
+            Technique.cost = 30;
+            Technique.lifetime = FRAME_COUNT * TICKS_PER_FRAME + 15;
+        }
+
 
         public override int UseTechnique(SorceryFightPlayer sf)
         {
@@ -29,6 +37,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             {
                 Vector2 mousePos = Main.MouseWorld;
                 var entitySource = player.GetSource_FromThis();
+                sf.cursedEnergy -= CalculateTrueCost(sf);
                 return Projectile.NewProjectile(entitySource, mousePos, Vector2.Zero, GetProjectileType(), CalculateTrueDamage(sf), 0f, player.whoAmI);
             }
             return -1;
