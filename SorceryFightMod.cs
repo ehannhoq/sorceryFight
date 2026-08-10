@@ -103,12 +103,17 @@ namespace sorceryFight
 
 			float largestDistance = 0;
 
+			// List<(string, float, float, float, float)> l = new();
+
 			foreach (NPC boss in bosses)
 			{
 				float health = boss.lifeMax;
 				float damage = boss.damage;
+				float defense = boss.defense;
 
-				float distance = new Vector2(health, damage).Length();
+				float distance = new Vector3(health, damage, defense).Length();
+				// l.Add((boss.FullName, health, damage, defense, distance));
+
 				if (distance > largestDistance)
 				{
 					largestDistance = distance;
@@ -116,6 +121,11 @@ namespace sorceryFight
 				}
 			}
 
+			// l.Sort((a, b) => a.Item2.CompareTo(b.Item2));
+			// foreach (var item in l)
+			// {
+			// 	Logger.Debug($"Boss: {item.Item1}, Health: {item.Item2}, Damage: {item.Item3}, Defense: {item.Item4}, Distance: {item.Item5}");
+			// }
 			Logger.Debug($"Strongest Boss: {strongestBoss.FullName}");
 		}
 
