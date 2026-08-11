@@ -53,6 +53,8 @@ namespace sorceryFight.Content.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
+            if (target.friendly)
+                return false;
             return Projectile.frame == 7;
         }
 
