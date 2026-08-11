@@ -7,6 +7,8 @@ using System.IO;
 using JetBrains.Annotations;
 using Terraria.Cinematics;
 using Terraria.Localization;
+using System.Security.Policy;
+using System.Collections.Generic;
 namespace sorceryFight.Content.CursedTechniques
 {
     public abstract class CursedTechnique : ModProjectile
@@ -208,14 +210,16 @@ namespace sorceryFight.Content.CursedTechniques
 
                 int index = Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), CalculateTrueDamage(sf), 0, player.whoAmI);
                 SyncCursedTechniqueInfo(index);
-
-                sf.cursedEnergy -= CalculateTrueCost(sf);
-
                 return index;
             }
             return -1;
         }
 
+        
+        public virtual void ApplyCosts(SorceryFightPlayer sfPlayer)
+        {
+            sfPlayer.cursedEnergy -= CalculateTrueCost(sfPlayer);
+        }
 
         public void SyncCursedTechniqueInfo(int index)
         {
@@ -229,7 +233,6 @@ namespace sorceryFight.Content.CursedTechniques
             self.parentTechnique = this.parentTechnique;
         }
 
-
         public override void OnKill(int timeLeft)
         {
             if (Projectile.owner == Main.myPlayer)
@@ -238,16 +241,6 @@ namespace sorceryFight.Content.CursedTechniques
             }
             base.OnKill(timeLeft);
         }
-
-
-        // public virtual void ActiveDrain(SorceryFightPlayer sf)
-        // {
-        //     if (BloodCostPerSecond > 0)
-        //         sf.bloodEnergy -= (BloodCostPerSecond / 60);
-        //     if (sf.bloodEnergy < 0)
-        //         Projectile.Kill();
-        // }
-
 
 
         /// <summary>
