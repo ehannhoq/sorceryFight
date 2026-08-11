@@ -188,6 +188,8 @@ namespace sorceryFight.SFPlayer
             var defeatedBosses = tag.ContainsKey("bossesDefeated") ? tag.GetList<int>("bossesDefeated") : new List<int>();
             bossesDefeated = defeatedBosses.ToHashSet();
 
+            bloodEnergy = tag.ContainsKey("bloodEnergy") ? tag.GetFloat("bloodEnergy") : 1f;
+
             CTSelectorPos = tag.ContainsKey("ctSelector")
             ? new Microsoft.Xna.Framework.Vector2(tag.Get<List<float>>("ctSelector")[0], tag.Get<List<float>>("ctSelector")[1])
             : Microsoft.Xna.Framework.Vector2.Zero;
