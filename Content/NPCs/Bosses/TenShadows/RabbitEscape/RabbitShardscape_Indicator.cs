@@ -7,7 +7,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
 using Terraria.DataStructures;
 using System;
 using Microsoft.Build.Evaluation;

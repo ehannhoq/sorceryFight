@@ -7,7 +7,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
 using Terraria.DataStructures;
 using System;
 using Microsoft.Build.Evaluation;
@@ -29,8 +28,8 @@ namespace sorceryFight.Content.NPCs.Bosses.TenShadows.RabbitEscape
         public override void OnSpawn(IEntitySource source)
         {
             if (Main.dedServ) return;
-                texture = ModContent.Request<Texture2D>("sorceryFight/Content/NPCs/Bosses/TenShadows/RabbitEscape/RabbitShardscape", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                texture2 = ModContent.Request<Texture2D>("sorceryFight/Content/NPCs/Bosses/TenShadows/RabbitEscape/RabbitShardscape_2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            texture = ModContent.Request<Texture2D>("sorceryFight/Content/NPCs/Bosses/TenShadows/RabbitEscape/RabbitShardscape", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            texture2 = ModContent.Request<Texture2D>("sorceryFight/Content/NPCs/Bosses/TenShadows/RabbitEscape/RabbitShardscape_2", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             inverted = Main.rand.NextBool();
         }
         public override void SetDefaults()
@@ -48,7 +47,7 @@ namespace sorceryFight.Content.NPCs.Bosses.TenShadows.RabbitEscape
 
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
-            if(Projectile.ai[0] == 0)
+            if (Projectile.ai[0] == 0)
                 behindProjectiles.Add(index);
         }
 
@@ -71,7 +70,7 @@ namespace sorceryFight.Content.NPCs.Bosses.TenShadows.RabbitEscape
             float progress = (int)Projectile.ai[1] / 40f;
             progress = MathHelper.Clamp(progress, 0f, 1f);
             float scaleY = 1f - (float)Math.Pow(1f - progress, 3);
-            
+
             Vector2 origin = new Vector2(texture.Width / 2f, texture.Height);
 
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);

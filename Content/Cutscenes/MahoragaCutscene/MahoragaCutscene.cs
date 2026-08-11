@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.NPCs.Mahoraga;
 using sorceryFight.Content.NPCs.TownNPCs;
 using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
 using sorceryFight.Content.UI.Chants;
 using sorceryFight.Packets;
 using sorceryFight.Utilities.EaseFunctions;
