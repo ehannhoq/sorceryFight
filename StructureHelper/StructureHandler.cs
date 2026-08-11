@@ -144,6 +144,12 @@ namespace sorceryFight.StructureHelper
                         {
                             var moddedTileType = SFUtils.FindTypeAcrossMods(tileClass);
 
+                            if (moddedTileType == null)
+                            {
+                                SorceryFightMod.Log.Error($"Could not resolve modded tile type '{tileClass}' at ({x}, {y}) in structure template. Skipping tile.");
+                                continue;
+                            }
+
                             var method = typeof(ModContent).GetMethods().First(m => m.Name == "TileType" && m.IsGenericMethodDefinition);
                             var generic = method.MakeGenericMethod(moddedTileType);
                             int moddedTileID = (int)generic.Invoke(null, null);
