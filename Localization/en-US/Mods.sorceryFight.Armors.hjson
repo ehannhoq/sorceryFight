@@ -18,6 +18,30 @@ JujutsuHighLeggings: {
 
 JujutsuHighSetBonus: Increases Cursed Energy regeneration by {0}
 
+DeathWombPaintingChestplate: {
+	DisplayName: Death Womb Painting Uniform
+	Tooltip:
+		'''
+		Increases max Cursed Energy by {0}
+		{1}% increased Cursed Technique damage
+		'''
+}
+
+DeathWombPaintingLeggings: {
+	DisplayName: Death Womb Painting Pants
+	Tooltip:
+		'''
+		Increases Cursed Energy regeneration by {0} CE/s
+		{1}% increased Cursed Technique damage
+		'''
+}
+
+DeathWombPaintingSetBonus:
+	'''
+	Increases Cursed Energy regeneration by {0} CE/s
+	Increases health regeneration by {1} HP/s
+	'''
+
 SorcererCombatChestplate: {
 	DisplayName: Sorcerer Combat Uniform
 	Tooltip:
