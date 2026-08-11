@@ -101,3 +101,18 @@ MegumiFushiguro: {
 }
 
 MahoragaBoss.DisplayName: Mahoraga
+
+JuzoKumiya: {
+	TownNPCMood: {
+		NoHome: I hate not having a home.
+		Content: I am content.
+		FarFromHome: I am too far from home.
+		LoveSpace: I love having so much space.
+		DislikeCrowded: I dislike how crowded I am.
+		HateCrowded: I hate how crowded I am.
+		LikeNPC_Princess: I like {NPCName}.
+		Princess_LovesNPC: I like {NPCName}.
+	}
+
+	DisplayName: Juzo Kumiya
+}
