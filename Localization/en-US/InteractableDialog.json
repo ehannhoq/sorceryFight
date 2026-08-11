@@ -287,7 +287,7 @@
             "Actions": [
                 {
                     "Type": "OpenShop",
-                    "UIText": "Do you sell any waapons??",
+                    "UIText": "Do you sell any waapons?",
                     "ShopName": "JuzoKumiyaShop"
                 }
             ]
