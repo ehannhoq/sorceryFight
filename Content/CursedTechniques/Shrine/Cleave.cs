@@ -60,7 +60,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 Vector2 mousePos = Main.MouseWorld;
                 Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * speed;
                 var entitySource = player.GetSource_FromThis();
-                sf.cursedEnergy -= CalculateTrueCost(sf);
 
                 return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), CalculateTrueDamage(sf), 0, player.whoAmI);
             }

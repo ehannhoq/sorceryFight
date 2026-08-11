@@ -43,7 +43,6 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 Main.projectile[index].ai[0] = 0;
                 Main.projectile[index].ai[1] = Main.rand.Next(0, 3);
                 Main.projectile[index].ai[2] = Main.rand.NextFloat(0, 6);
-                sf.cursedEnergy -= CalculateTrueCost(sf);
                 return index;
             }
             return -1;

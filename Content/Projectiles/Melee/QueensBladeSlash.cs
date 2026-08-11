@@ -30,7 +30,6 @@ namespace sorceryFight.Content.Projectiles.Melee
             Projectile.scale = 1.25f;
             Projectile.DamageType = CursedTechniqueDamageClass.Instance;
             Projectile.friendly = true;
-            Projectile.hostile = false;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.penetrate = -1;

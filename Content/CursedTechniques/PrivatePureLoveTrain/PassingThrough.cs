@@ -47,7 +47,6 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
 
                 SoundEngine.PlaySound(SorceryFightSounds.CommonWoosh, pos);
 
-                sf.cursedEnergy -= CalculateTrueCost(sf);
                 sf.disableRegenFromProjectiles = true;
 
                 return Projectile.NewProjectile(entitySource, pos, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 4f, player.whoAmI);

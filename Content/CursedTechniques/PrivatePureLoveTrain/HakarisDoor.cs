@@ -37,7 +37,6 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             {
                 Vector2 mousePos = Main.MouseWorld;
                 var entitySource = player.GetSource_FromThis();
-                sf.cursedEnergy -= CalculateTrueCost(sf);
                 return Projectile.NewProjectile(entitySource, mousePos, Vector2.Zero, GetProjectileType(), CalculateTrueDamage(sf), 0f, player.whoAmI);
             }
             return -1;

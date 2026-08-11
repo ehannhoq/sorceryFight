@@ -74,14 +74,16 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
                 var entitySource = player.GetSource_FromThis();
                 int index = Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
 
-                LightspeedBarrage lsBarrage = Main.projectile[index].ModProjectile as LightspeedBarrage;
-
-                if (lsBarrage.GetNearestNPCPos(out Vector2 _))
-                    sf.cursedEnergy -= CalculateTrueCost(sf);
-
                 return index;
             }
             return -1;
+        }
+
+        public override void ApplyCosts(SorceryFightPlayer sfPlayer)
+        {
+            LightspeedBarrage lsBarrage = Projectile.ModProjectile as LightspeedBarrage;
+            if (lsBarrage.GetNearestNPCPos(out Vector2 _))
+                sfPlayer.cursedEnergy -= CalculateTrueCost(sfPlayer);
         }
 
 

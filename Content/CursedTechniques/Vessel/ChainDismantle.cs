@@ -60,7 +60,6 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                 Vector2 mousePos = Main.MouseWorld;
                 Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * speed;
                 var entitySource = player.GetSource_FromThis();
-                sf.cursedEnergy -= CalculateTrueCost(sf);
 
                 int index = Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), 1, 0, player.whoAmI);
                 Main.projectile[index].ai[2] = 0f;

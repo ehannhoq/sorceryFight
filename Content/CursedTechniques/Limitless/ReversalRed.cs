@@ -8,6 +8,7 @@ using sorceryFight.SFPlayer;
 using sorceryFight.Content.Particles;
 
 using Terraria.Audio;
+using Terraria.DataStructures;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {
@@ -74,26 +75,18 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             }
         }
 
+        public override void OnSpawn(IEntitySource source)
+        {
+            SoundEngine.PlaySound(SorceryFightSounds.CommonFire, Projectile.Center);
+            Vector2 dir = Projectile.velocity.SafeNormalize(Vector2.UnitX);
+            dir *= 10;
 
-        public override int UseTechnique(SorceryFightPlayer sf)
-        {            int i = base.UseTechnique(sf);
-
-            if (i != -1)
+            for (int j = 0; j < 8; j++)
             {
-                SoundEngine.PlaySound(SorceryFightSounds.CommonFire, Main.projectile[i].Center);
-
-                Vector2 dir = Main.projectile[i].velocity.SafeNormalize(Vector2.UnitX);
-                dir *= 10;
-
-                for (int j = 0; j < 8; j++)
-                {
-                    Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 2), Main.rand.NextFloat(-7, 2));
-                    LinearParticle linearParticle = new LinearParticle(Main.projectile[i].Center, dir + variation, new Color(235, 52, 52), false, 0.9f, 1f, 30);
-                    ParticleController.SpawnParticle(linearParticle);
-                }
+                Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 2), Main.rand.NextFloat(-7, 2));
+                LinearParticle linearParticle = new LinearParticle(Projectile.Center, dir + variation, new Color(235, 52, 52), false, 0.9f, 1f, 30);
+                ParticleController.SpawnParticle(linearParticle);
             }
-            
-            return i;
         }
 
 

@@ -33,6 +33,9 @@ namespace sorceryFight.Content.UI.GeneticEditor
         bool cursedEffulgentFeatherState;
         bool cursedRuneOfKosState;
 
+        UITextField sukunasFingersCountInput;
+        UITextField deathPaintingsCountInput;
+
         List<int> bosses => new([
             // Pre Skeletron
             NPCID.KingSlime,
@@ -70,7 +73,7 @@ namespace sorceryFight.Content.UI.GeneticEditor
 
         public GeneticEditorUI()
         {
-            Width.Set(1600f, 0f);
+            Width.Set(2400f, 0f);
             Height.Set(480f, 0f);
             Top.Set(Main.screenHeight / Main.UIScale / 2 - Height.Pixels / 2, 0f);
             Left.Set(Main.screenWidth / Main.UIScale / 2 - Width.Pixels / 2, 0f);
@@ -78,6 +81,7 @@ namespace sorceryFight.Content.UI.GeneticEditor
             BuildManualBossSide();
             BuildPresetSide();
             BuildCursedEnergySide();
+            BuildFingersAndPaintingsSide();
         }
 
 
@@ -124,7 +128,7 @@ namespace sorceryFight.Content.UI.GeneticEditor
             manualBossSide.Width.Set(rowWidth, 0f);
             manualBossSide.Height.Set(bossesCountInput.Height.Pixels + submit.Height.Pixels + 10f, 0f);
             manualBossSide.Top.Set(Height.Pixels / 2f - manualBossSide.Height.Pixels / 2f, 0f);
-            manualBossSide.Left.Set(Width.Pixels / 6f - manualBossSide.Width.Pixels / 2f, 0f);
+            manualBossSide.Left.Set(Width.Pixels / 8f - manualBossSide.Width.Pixels / 2f, 0f);
 
             manualBossSide.Append(bossesCountInput);
             manualBossSide.Append(rctGroup);
@@ -162,7 +166,7 @@ namespace sorceryFight.Content.UI.GeneticEditor
             presetSide.Width.Set(350f, 0f);
             presetSide.Height.Set(Height.Pixels - 20, 0f);
             presetSide.Top.Set(Height.Pixels / 2f - presetSide.Height.Pixels / 2f, 0f);
-            presetSide.Left.Set(Width.Pixels / 2f - presetSide.Width.Pixels / 2f, 0f);
+            presetSide.Left.Set(3 * Width.Pixels / 8f - presetSide.Width.Pixels / 2f, 0f);
 
             for (int i = 0; i < buttons.Count; i++)
             {
@@ -265,7 +269,7 @@ namespace sorceryFight.Content.UI.GeneticEditor
             cursedEnergySide.Width.Set(rowWidth, 0f);
             cursedEnergySide.Height.Set(sideHeight, 0f);
             cursedEnergySide.Top.Set(Height.Pixels / 2f - sideHeight / 2f, 0f);
-            cursedEnergySide.Left.Set(5 * Width.Pixels / 6f - cursedEnergySide.Width.Pixels / 2f, 0f);
+            cursedEnergySide.Left.Set(5 * Width.Pixels / 8f - cursedEnergySide.Width.Pixels / 2f, 0f);
 
             cursedEnergySide.Append(maxEnergyHeader);
             cursedEnergySide.Append(maxEnergyRow1);
@@ -283,6 +287,31 @@ namespace sorceryFight.Content.UI.GeneticEditor
             Append(cursedEnergySide);
         }
 
+        private void BuildFingersAndPaintingsSide()
+        {
+            SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
+
+            sukunasFingersCountInput = new UITextField($"Sukuna's Fingers consumed [0 - {sfPlayer.sukunasFingers.Length}]");
+            sukunasFingersCountInput.Width.Set(300f, 0f);
+            sukunasFingersCountInput.Height.Set(25f, 0f);
+
+            deathPaintingsCountInput = new UITextField($"Death Paintings consumed [0 - {sfPlayer.deathPaintings.Length}]");
+            deathPaintingsCountInput.Width.Set(300f, 0f);
+            deathPaintingsCountInput.Height.Set(25f, 0f);
+            deathPaintingsCountInput.Top.Set(sukunasFingersCountInput.Height.Pixels + 10f, 0f);
+
+            UIElement fingersPaintingsSide = new UIElement();
+            fingersPaintingsSide.Width.Set(300f, 0f);
+            fingersPaintingsSide.Height.Set(sukunasFingersCountInput.Height.Pixels + deathPaintingsCountInput.Height.Pixels + 10f, 0f);
+            fingersPaintingsSide.Top.Set(Height.Pixels / 2f - fingersPaintingsSide.Height.Pixels / 2f, 0f);
+            fingersPaintingsSide.Left.Set(7 * Width.Pixels / 8f - fingersPaintingsSide.Width.Pixels / 2f, 0f);
+
+            fingersPaintingsSide.Append(sukunasFingersCountInput);
+            fingersPaintingsSide.Append(deathPaintingsCountInput);
+
+            Append(fingersPaintingsSide);
+        }
+
         private void ApplyCursedEnergyToggles(SorceryFightPlayer sfPlayer)
         {
             sfPlayer.cursedSkull = cursedSkullState;
@@ -295,6 +324,25 @@ namespace sorceryFight.Content.UI.GeneticEditor
             sfPlayer.cursedMask = cursedMaskState;
             sfPlayer.cursedEffulgentFeather = cursedEffulgentFeatherState;
             sfPlayer.cursedRuneOfKos = cursedRuneOfKosState;
+        }
+
+        private void ApplyFingersAndPaintings(SorceryFightPlayer sfPlayer)
+        {
+            if (int.TryParse(sukunasFingersCountInput.Text, out int fingersCount))
+            {
+                fingersCount = Math.Clamp(fingersCount, 0, sfPlayer.sukunasFingers.Length);
+                sfPlayer.sukunasFingers = new bool[sfPlayer.sukunasFingers.Length];
+                for (int i = 0; i < fingersCount; i++)
+                    sfPlayer.sukunasFingers[i] = true;
+            }
+
+            if (int.TryParse(deathPaintingsCountInput.Text, out int paintingsCount))
+            {
+                paintingsCount = Math.Clamp(paintingsCount, 0, sfPlayer.deathPaintings.Length);
+                sfPlayer.deathPaintings = new bool[sfPlayer.deathPaintings.Length];
+                for (int i = 0; i < paintingsCount; i++)
+                    sfPlayer.deathPaintings[i] = true;
+            }
         }
 
         private void OnSubmit(UIMouseEvent evt, UIElement listeningElement)
@@ -320,9 +368,12 @@ namespace sorceryFight.Content.UI.GeneticEditor
 
             sfPlayer.unlockedRCT = rctState;
             ApplyCursedEnergyToggles(sfPlayer);
+            ApplyFingersAndPaintings(sfPlayer);
             SorceryFightUI.UpdateTechniqueUI?.Invoke();
 
             TextInputEXT.TextInput -= bossesCountInput.OnTextInput;
+            TextInputEXT.TextInput -= sukunasFingersCountInput.OnTextInput;
+            TextInputEXT.TextInput -= deathPaintingsCountInput.OnTextInput;
             SorceryFightUI sfUI = (SorceryFightUI)Parent;
             sfUI.RemoveElement(this);
         }
@@ -340,10 +391,13 @@ namespace sorceryFight.Content.UI.GeneticEditor
             sfPlayer.bossesDefeated = trimmedList.ToHashSet();
             sfPlayer.unlockedRCT = i >= 14;
             ApplyCursedEnergyToggles(sfPlayer);
+            ApplyFingersAndPaintings(sfPlayer);
             SorceryFightUI.UpdateTechniqueUI?.Invoke();
 
             SorceryFightUI sfUI = (SorceryFightUI)Parent;
             TextInputEXT.TextInput -= bossesCountInput.OnTextInput;
+            TextInputEXT.TextInput -= sukunasFingersCountInput.OnTextInput;
+            TextInputEXT.TextInput -= deathPaintingsCountInput.OnTextInput;
             sfUI.RemoveElement(this);
         }
 

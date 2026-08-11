@@ -42,7 +42,7 @@ namespace sorceryFight.Content.InnateTechniques
                 .SetUnlock(NPCID.EyeofCthulhu),
 
             new SelfBloodBlade()
-                .SetUnlock(NPCID.SkeletronHand),
+                .SetUnlock(NPCID.SkeletronHead),
 
             new PiercingBlood()
                 .SetUnlock(NPCID.WallofFlesh),
