@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Items.Materials;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -47,6 +48,23 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             if (player.ownedProjectileCounts[Item.shoot] > 0)
                 return false;
             return true;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipeCrimtane = Recipe.Create(Item.type);
+            recipeCrimtane.AddIngredient(ItemID.Spear);
+            recipeCrimtane.AddIngredient(ItemID.CrimtaneBar, 10);
+            recipeCrimtane.AddIngredient(ModContent.ItemType<CursedFragment>(), 8);
+            recipeCrimtane.AddTile(TileID.Anvils);
+            recipeCrimtane.Register();
+
+            Recipe recipeDemonite = Recipe.Create(Item.type);
+            recipeDemonite.AddIngredient(ItemID.Spear);
+            recipeDemonite.AddIngredient(ItemID.DemoniteBar, 10);
+            recipeDemonite.AddIngredient(ModContent.ItemType<CursedFragment>(), 8);
+            recipeDemonite.AddTile(TileID.Anvils);
+            recipeDemonite.Register();
         }
     }
 

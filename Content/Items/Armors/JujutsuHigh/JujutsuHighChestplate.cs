@@ -1,4 +1,5 @@
 using sorceryFight.Content.Items.Armors.QuantumCoulomb;
+using sorceryFight.Content.Items.Materials;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using Terraria;
@@ -24,7 +25,7 @@ namespace sorceryFight.Content.Items.Armors.JujutsuHigh
             Item.width = 42;
             Item.height = 42;
             Item.rare = ItemRarityID.White;
-            Item.defense = 10;
+            Item.defense = 7;
         }
 
         public override void UpdateEquip(Player player)
@@ -47,6 +48,15 @@ namespace sorceryFight.Content.Items.Armors.JujutsuHigh
 
             SorceryFightPlayer sfPlayer = player.SorceryFight();
             sfPlayer.cursedEnergyRegenFromOtherSources += ceRegenFromSetBonus;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = Recipe.Create(Item.type);
+            recipe.AddIngredient(ItemID.Silk, 23);
+            recipe.AddIngredient(ModContent.ItemType<CursedFragment>(), 5);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
         }
     }
 }

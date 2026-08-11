@@ -1,3 +1,4 @@
+using sorceryFight.Content.Items.Materials;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using Terraria;
@@ -29,6 +30,15 @@ namespace sorceryFight.Content.Items.Armors.JujutsuHigh
             player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1 + ctDamageIncrease;
             SorceryFightPlayer sfPlayer = player.SorceryFight();
             sfPlayer.maxCursedEnergyFromOtherSources += maxCeIncrease;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = Recipe.Create(Item.type);
+            recipe.AddIngredient(ItemID.Silk, 14);
+            recipe.AddIngredient(ModContent.ItemType<CursedFragment>(), 3);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
         }
     }
 }

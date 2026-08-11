@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Items.Materials;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -28,6 +29,23 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.useStyle = ItemUseStyleID.Swing;
             Item.UseSound = SoundID.Item1;
             Item.rare = ItemRarityID.Blue;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipeCrimtane = Recipe.Create(Item.type);
+            recipeCrimtane.AddIngredient(ItemID.CrimtaneBar, 26);
+            recipeCrimtane.AddIngredient(ItemID.BlackInk, 5);
+            recipeCrimtane.AddIngredient(ModContent.ItemType<CursedFragment>(), 12);
+            recipeCrimtane.AddTile(TileID.Anvils);
+            recipeCrimtane.Register();
+
+            Recipe recipeDemonite = Recipe.Create(Item.type);
+            recipeDemonite.AddIngredient(ItemID.DemoniteBar, 26);
+            recipeCrimtane.AddIngredient(ItemID.BlackInk, 5);
+            recipeDemonite.AddIngredient(ModContent.ItemType<CursedFragment>(), 12);
+            recipeDemonite.AddTile(TileID.Anvils);
+            recipeDemonite.Register();
         }
     }
 }

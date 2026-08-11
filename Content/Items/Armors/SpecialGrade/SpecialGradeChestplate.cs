@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using sorceryFight.Content.Items.Armors.QuantumCoulomb;
+using sorceryFight.Content.Items.Materials;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using Terraria;
@@ -27,7 +28,7 @@ namespace sorceryFight.Content.Items.Armors.SpecialGrade
             Item.width = 42;
             Item.height = 42;
             Item.rare = ItemRarityID.Pink;
-            Item.defense = 28;
+            Item.defense = 23;
         }
 
         public override void UpdateEquip(Player player)
@@ -50,6 +51,16 @@ namespace sorceryFight.Content.Items.Armors.SpecialGrade
             ).Value;
             
             player.SorceryFight().ctCostReduction += costReductionFromSetBonus;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = Recipe.Create(Item.type);
+            recipe.AddIngredient(ItemID.ChlorophyteBar, 15);
+            recipe.AddIngredient(ModContent.ItemType<InfusedCursedFragment>(), 13);
+            recipe.AddIngredient(ItemID.Ectoplasm, 5);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
         }
     }
 }
