@@ -19,7 +19,7 @@
             "Actions": []
         },
         "WhoAreYou": {
-            "Text": "I'm the last person to ever stand head to head to Yharim, the Godseeker himself.",
+            "Text": "I'm the last person to ever stand head to head with Cthulhu.",
             "Replies": [
                 {
                     "Text": "What happened to you?",
@@ -29,7 +29,7 @@
             "Actions": []
         },
         "WhatHappened": {
-            "Text": "I was sealed in this eternal prison over 20 years ago by both Yharim and the Supreme Witch.\nWhile my power lay largely constricted, I am still able to communicate to the outside world.\nTo you, young sorcerer.",
+            "Text": "I was sealed in this eternal prison over 20 years ago by the crazed cultists.\nWhile my power lay largely constricted, I am still able to communicate to the outside world.\nTo you, young sorcerer.",
             "Replies": [],
             "Actions": []
         },
@@ -39,7 +39,7 @@
             "Actions": []
         },
         "Worthy": {
-            "Text": "I've been watching you throughout your journey. At first I thought you were just another unfortunate soul brough into this forsakened world.\nBut you've proven to be... much more... extraordinary.\nI saw glimpses of myself in your battles, and such want to give you a special gift.\nTake these, and do what I could not.\nDefeat the Supreme Witch.\nAnd then all that stands between you and Him is your own strength.",
+            "Text": "I've been watching you throughout your journey. At first I thought you were just another unfortunate soul brough into this forsakened world.\nBut you've proven to be... much more... extraordinary.\nI saw glimpses of myself in your battles, and such want to give you a special gift.\nTake these, and do what I could not.\nDefeat Cthulhu once and for all.\nAnd then all that stands between you and Him is your own strength.",
             "Replies": [],
             "Actions": [
                 {
@@ -49,12 +49,12 @@
                 }
             ]
         },
-        "PreSupremeCalamitas": {
-            "Text": "Defeat the Supreme Witch, and finish what I've started.",
+        "PreMoonLord": {
+            "Text": "Defeat what remains of Cthulhu, and finish what I've started.",
             "Replies": [],
             "Actions": []
         },
-        "PostSupremeCalamitas": {
+        "PostMoonLord": {
             "Text": "You now stand where I once stood. I'm sure he's waiting for you.\nGood luck, young sorcerer.",
             "Replies": [],
             "Actions": []
@@ -276,6 +276,19 @@
                     "Type": "OpenShop",
                     "UIText": "Do you sell any cursed energy potions?",
                     "ShopName": "CursedEnergyPotionsShop"
+                }
+            ]
+        }
+    },
+    "JuzoKumiya": {
+        "Interact": {
+            "Text": "What can I get you?",
+            "Replies": [],
+            "Actions": [
+                {
+                    "Type": "OpenShop",
+                    "UIText": "Do you sell any waapons??",
+                    "ShopName": "JuzoKumiyaShop"
                 }
             ]
         }

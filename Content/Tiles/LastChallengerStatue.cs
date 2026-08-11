@@ -75,41 +75,41 @@ namespace sorceryFight.Content.Tiles
 
         public override bool RightClick(int i, int j)
         {
-            // SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
-            // LastChallengerStatueManager lcsManager = Main.LocalPlayer.GetModPlayer<LastChallengerStatueManager>();
+            SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
+            LastChallengerStatueManager lcsManager = Main.LocalPlayer.GetModPlayer<LastChallengerStatueManager>();
 
-            // string dialogKey = "LastChallenger.Unworthy";
-            // bool worthy = sfPlayer.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
-            // bool postScal = sfPlayer.HasDefeatedBoss(ModContent.NPCType<SupremeCalamitas>());
+            string dialogKey = "LastChallenger.Unworthy";
+            bool worthy = sfPlayer.HasDefeatedBoss(NPCID.CultistBoss);
+            bool postMoonLord = sfPlayer.HasDefeatedBoss(NPCID.MoonLordCore);
 
-            // if (lcsManager.interactionProgress == PlayerInteractions.DidntGetArmorSet)
-            // {
-            //     if (worthy)
-            //     {
-            //         lcsManager.interactionProgress = PlayerInteractions.GotArmorSet;
-            //         dialogKey = "LastChallenger.Worthy";
-            //     }
-            // }
-            // else
-            // {
-            //     dialogKey = "LastChallenger.PreSupremeCalamitas";
-            //     if (postScal)
-            //     {
-            //         dialogKey = "LastChallenger.PostSupremeCalamitas";
-            //     }
-            // }
+            if (lcsManager.interactionProgress == PlayerInteractions.DidntGetArmorSet)
+            {
+                if (worthy)
+                {
+                    lcsManager.interactionProgress = PlayerInteractions.GotArmorSet;
+                    dialogKey = "LastChallenger.Worthy";
+                }
+            }
+            else
+            {
+                dialogKey = "LastChallenger.PreMoonLord";
+                if (postMoonLord)
+                {
+                    dialogKey = "LastChallenger.PostMoonLord";
+                }
+            }
 
 
-            // ModContent.GetInstance<SorceryFightUISystem>().ActivateDialogUI(Dialog.Create(dialogKey), this);
+            ModContent.GetInstance<SorceryFightUISystem>().ActivateDialogUI(Dialog.Create(dialogKey), this);
             return true;
         }
 
         public void GrantQuantumCoulombSet()
         {
             var player = Main.LocalPlayer;
-            player.QuickSpawnItem(player.GetSource_Misc("QuantumCoulombBottle"), ModContent.ItemType<QuantumCoulombBottle>());
-            player.QuickSpawnItem(player.GetSource_Misc("QuantumCoulombBodyArmor"), ModContent.ItemType<QuantumCoulombBodyArmor>());
-            player.QuickSpawnItem(player.GetSource_Misc("QuantumCoulombChausses"), ModContent.ItemType<QuantumCoulombChausses>());
+            // player.QuickSpawnItem(player.GetSource_Misc("QuantumCoulombBottle"), ModContent.ItemType<QuantumCoulombBottle>());
+            // player.QuickSpawnItem(player.GetSource_Misc("QuantumCoulombBodyArmor"), ModContent.ItemType<QuantumCoulombBodyArmor>());
+            // player.QuickSpawnItem(player.GetSource_Misc("QuantumCoulombChausses"), ModContent.ItemType<QuantumCoulombChausses>());
             player.QuickSpawnItem(player.GetSource_Misc("SuspiciouslyWellPerservedEye"), ModContent.ItemType<SuspiciouslyWellPerservedEye>());
         }
     }
