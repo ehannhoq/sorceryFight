@@ -41,10 +41,7 @@ Home: {
 		within its barrier, and striking enemies at their
 		soul, ignoring defense.
 		'''
-	LockedDescription:
-		'''
-		Consume atleast 19 of Ryomen Sukuna's fingers.
-		'''
+	LockedDescription: Consume atleast 19 of Ryomen Sukuna's fingers.
 }
 
 IdleDeathGamble: {
