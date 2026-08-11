@@ -19,7 +19,15 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public ref float spawnedByDE => ref Projectile.ai[0];
         public ref float randomSprite => ref Projectile.ai[1];
         public ref float randomRotation => ref Projectile.ai[2];
-        bool hasHit;
+
+
+        public InstantDismantle()
+        {
+            Technique.baseDamage = 40;
+            Technique.damagePerBoss = 15;
+            Technique.cost = 33;
+            Technique.lifetime = 2;
+        }
 
 
         public override int UseTechnique(SorceryFightPlayer sf)
@@ -48,7 +56,9 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Projectile.height = 176;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
-            hasHit = false;
+            Projectile.penetrate = -1;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
 
@@ -63,18 +73,12 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (!hasHit)
+            if (spawnedByDE == 1)
             {
-                if (spawnedByDE == 1)
-                {
-                    float targetHealth = target.life;
-                    float additionalDamage = targetHealth * 0.001f;
-                    modifiers.FinalDamage.Flat += additionalDamage;
-                }
-                hasHit = true;
+                float targetHealth = target.life;
+                float additionalDamage = targetHealth * 0.001f;
+                modifiers.FinalDamage.Flat += additionalDamage;
             }
-            else
-                Projectile.damage = 0;
 
             base.ModifyHitNPC(target, ref modifiers);
         }

@@ -7,7 +7,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
+
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {
@@ -18,8 +18,13 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public override string InternalName => "AmplificationBlue";
 
-        public float attractionRadius = 100f;
-        public float attractionStrength = 12f;
+        private const float minAttractionRadius = 50f;
+        private const float maxAttractionRadius = 100f;
+        private const float minAttractionStrength = 3f;
+        private const float maxAttractionStrength = 12f;
+
+        private float AttractionRadius => Main.player[Projectile.owner].SorceryFight().numberBossesDefeated / (float)SorceryFightMod.totalBosses * (maxAttractionRadius - minAttractionRadius) + minAttractionRadius;
+        private float AttractionStrength => Main.player[Projectile.owner].SorceryFight().numberBossesDefeated / (float)SorceryFightMod.totalBosses * (maxAttractionStrength - minAttractionStrength) + minAttractionStrength;
 
         public static Texture2D texture;
 
@@ -121,10 +126,10 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 {
                     float distance = Vector2.Distance(proj.Center, Projectile.Center);
 
-                    if (distance <= attractionRadius)
+                    if (distance <= AttractionRadius)
                     {
                         Vector2 direction = proj.Center.DirectionTo(Projectile.Center);
-                        Vector2 newVelocity = Vector2.Lerp(proj.velocity, direction * attractionStrength, 0.1f);
+                        Vector2 newVelocity = Vector2.Lerp(proj.velocity, direction * AttractionStrength, 0.1f);
 
                         proj.velocity = newVelocity;
                     }
@@ -136,10 +141,10 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                 if (!npc.friendly && npc.type != NPCID.TargetDummy && npc.MoveableByBlue())
                 {
                     float distance = Vector2.Distance(npc.Center, Projectile.Center);
-                    if (distance <= attractionRadius)
+                    if (distance <= AttractionRadius)
                     {
                         Vector2 direction = npc.Center.DirectionTo(Projectile.Center);
-                        Vector2 newVelocity = Vector2.Lerp(npc.velocity, direction * attractionStrength, 0.1f);
+                        Vector2 newVelocity = Vector2.Lerp(npc.velocity, direction * AttractionStrength, 0.1f);
 
                         npc.velocity = newVelocity;
                     }

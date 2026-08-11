@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.VFX;
 using sorceryFight.Utilities.EaseFunctions;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -50,6 +51,8 @@ namespace sorceryFight.Content.Projectiles.Melee
 
             Projectile.Center = player.Center + (Vector2.UnitX * Projectile.width).RotatedBy(Projectile.rotation);
             Projectile.timeLeft = lifetime + postSwingDelay;
+
+            SoundEngine.PlaySound(SoundID.Item1 with { Pitch = -0.5f, PitchVariance = 0.125f}, Projectile.Center);
         }
 
         public override void AI()
@@ -101,6 +104,8 @@ namespace sorceryFight.Content.Projectiles.Melee
                 center: target.Center,
                 lifetime: 30
             ));
+
+            SoundEngine.PlaySound(SorceryFightSounds.InvertedSpearOfHeavenImpact with { PitchVariance = 0.125f}, Projectile.Center);
         }
 
         public override bool PreDraw(ref Color lightColor)

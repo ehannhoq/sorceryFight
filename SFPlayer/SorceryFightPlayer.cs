@@ -470,6 +470,7 @@ namespace sorceryFight.SFPlayer
             }
 
             selectedTechnique.UseTechnique(this);
+            selectedTechnique.ApplyCosts(this);
         }
 
 

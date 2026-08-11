@@ -28,7 +28,6 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.DamageType = CursedTechniqueDamageClass.Instance;
             Item.shoot = ModContent.ProjectileType<FesteringLifeBladeSlash>();
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.UseSound = SoundID.Item7;
             Item.channel = true;
             Item.noUseGraphic = true;
             Item.noMelee = true;

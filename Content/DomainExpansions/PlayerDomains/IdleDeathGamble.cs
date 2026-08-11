@@ -7,6 +7,7 @@ using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.GameContent.Events;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -215,11 +216,11 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
                 SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
                 if (rolls[0] == rolls[1] && rolls[0] == rolls[2])
                 {
-                    // if (sfPlayer.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()))
-                    // {
-                    //     StageIIIReward();
-                    //     return;
-                    // }
+                    if (sfPlayer.HasDefeatedBoss(NPCID.CultistBoss))
+                    {
+                        StageIIIReward();
+                        return;
+                    }
 
                     if (sfPlayer.unlockedRCT)
                     {
@@ -282,20 +283,20 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
         {
             int bossesKilled = player.SorceryFight().numberBossesDefeated;
 
-            float mean = 5 + (0.07f * bossesKilled);
+            float mean = 5 + (0.17f * bossesKilled);
             float std = 3;
 
-            rolls[0] = (int)(GaussianCurve(mean, std));
+            rolls[0] = (int)GaussianCurve(mean, std);
 
             for (int i = 1; i < 3; i++)
             {
-                if (SFUtils.Roll((int)(bossesKilled * 1.25)))
+                if (SFUtils.Roll((int)(bossesKilled * 4.7f)))
                 {
                     rolls[i] = rolls[i - 1];
                     continue;
                 }
 
-                rolls[i] = (int)(GaussianCurve(mean, std));
+                rolls[i] = (int)GaussianCurve(mean, std);
             }
 
             rolls.Clamp(1, 9);

@@ -1,10 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
+
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.Projectiles.Melee
@@ -46,6 +47,9 @@ namespace sorceryFight.Content.Projectiles.Melee
 
         public override void AI()
         {
+            if (Projectile.frame == 4)
+                    SoundEngine.PlaySound(SoundID.Item1 with { Volume = 1.2f, Pitch = 0.25f, PitchVariance = 0.125f}, Projectile.Center);
+
             Projectile.HandleProjectileAnimation(FRAME_COUNT, TICKS_PER_FRAME);
             Projectile.PositionProjectileForSlash(35f);
 
@@ -53,7 +57,7 @@ namespace sorceryFight.Content.Projectiles.Melee
             float swingProgress = (float)Projectile.frame / (FRAME_COUNT - 1);
             float armRotation = MathHelper.Lerp(-MathHelper.PiOver2, MathHelper.PiOver2, swingProgress);
 
-            player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Quarter, (armRotation - MathHelper.PiOver2) * player.direction);
+            player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (armRotation - MathHelper.PiOver2) * player.direction);
             player.itemRotation = armRotation;
         }
 

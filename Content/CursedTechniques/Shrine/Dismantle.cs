@@ -17,7 +17,14 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         static Texture2D texture;
 
         public override string InternalName => "Dismantle";
-
+        
+        public Dismantle()
+        {
+            Technique.baseDamage = 5;
+            Technique.damagePerBoss = 8;
+            Technique.cost = 15;
+            Technique.speed = 28f;
+        }
 
         public override void SetStaticDefaults()
         {
@@ -29,9 +36,11 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 89;
-            Projectile.height = 258;
+            Projectile.width = 60;
+            Projectile.height = 60;
+            Projectile.scale = 0.50f;
             Projectile.friendly = true;
+            Projectile.penetrate = -1;
         }
 
 
@@ -54,19 +63,19 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Projectile.rotation = velocityRotation + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
         }
 
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            Projectile.damage /= 2;
+
+            if (Projectile.damage == 0)
+                Projectile.Kill();
+        }
 
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteEffects spriteEffects = Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), 1f, spriteEffects, 0f);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale, spriteEffects, 0f);
             return false;
-        }
-
-
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            base.OnHitNPC(target, hit, damageDone);
-            Projectile.Kill();
         }
     }
 }

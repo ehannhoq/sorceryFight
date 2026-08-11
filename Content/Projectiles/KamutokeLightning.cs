@@ -5,9 +5,10 @@ using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
+
 using sorceryFight.Content.VFX;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ModLoader;
@@ -73,6 +74,8 @@ namespace sorceryFight.Content.Projectiles
             }
 
             hitTrackerRefCount[(int)hitTrackerID]++;
+
+            SoundEngine.PlaySound(SorceryFightSounds.KamutokeLightningSFX, Projectile.Center);
         }
 
         public override void AI()
@@ -97,6 +100,8 @@ namespace sorceryFight.Content.Projectiles
                     {
                         foreach (NPC npc in Main.ActiveNPCs)
                         {
+                            if (npc.friendly) continue;
+                            
                             float distance = (npc.Center - lightningBottomPosition).Length();
 
                             if (distance > MINIMUM_NPC_DISTANCE) continue;
@@ -128,6 +133,9 @@ namespace sorceryFight.Content.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
+            if (target.friendly)
+                return false;
+
             if (Projectile.frame < FRAMES - 1)
                 return false;
 

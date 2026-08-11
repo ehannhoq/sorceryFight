@@ -21,6 +21,13 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         Dictionary<int, List<int>> enemyRicochets = new Dictionary<int, List<int>>();
         Dictionary<int, Color> rarity = new Dictionary<int, Color>();
 
+        public PachinkoBalls()
+        {
+            Technique.baseDamage = 2;
+            Technique.damagePerBoss = 6;
+            Technique.cost = 9;
+            Technique.speed = 13;
+        }
 
         public override void SetStaticDefaults()
         {

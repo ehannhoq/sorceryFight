@@ -10,7 +10,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using sorceryFight.Content.Particles.UIParticles;
+
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
@@ -22,12 +22,41 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public override string InternalName => "SuperNova";
 
+        public float BloodCost => Technique.cost;
+        public SuperNova()
+        {
+            Technique.baseDamage = 60;
+            Technique.damagePerBoss = 6;
+            Technique.cost = 100;
+            Technique.speed = 20f;
+        }
+
+        public override bool CanUse(SorceryFightPlayer sf)
+        {
+            return sf.bloodEnergy > BloodCost;
+        }
+
+        public override void ApplyCosts(SorceryFightPlayer sfPlayer)
+        {
+            base.ApplyCosts(sfPlayer);
+            sfPlayer.bloodEnergy -= BloodCost;
+        }
+
+        public override string GetStats(SorceryFightPlayer sf)
+        {
+            string localizationCategoryKey = "Mods.sorceryFight.Misc.CursedTechniques";
+            
+            string bloodCost = SFUtils.GetLocalization(localizationCategoryKey + ".BloodCost")
+                    .WithFormatArgs((int)BloodCost).Value;
+
+            return base.GetStats(sf) + "\n" + bloodCost;
+        }
+
 
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = FRAME_COUNT;
         }
-
 
         public override int UseTechnique(SorceryFightPlayer sf)
         {

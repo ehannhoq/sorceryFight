@@ -1,7 +1,9 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Items.Materials;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
@@ -35,7 +37,6 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.DamageType = CursedTechniqueDamageClass.Instance;
             Item.shoot = ModContent.ProjectileType<CursedSpearProjectile>();
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.UseSound = SoundID.Item7;
             Item.rare = ItemRarityID.Blue;
             Item.noUseGraphic = true;
             Item.noMelee = true;
@@ -47,6 +48,23 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             if (player.ownedProjectileCounts[Item.shoot] > 0)
                 return false;
             return true;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipeCrimtane = Recipe.Create(Item.type);
+            recipeCrimtane.AddIngredient(ItemID.Spear);
+            recipeCrimtane.AddIngredient(ItemID.CrimtaneBar, 10);
+            recipeCrimtane.AddIngredient(ModContent.ItemType<CursedFragment>(), 8);
+            recipeCrimtane.AddTile(TileID.Anvils);
+            recipeCrimtane.Register();
+
+            Recipe recipeDemonite = Recipe.Create(Item.type);
+            recipeDemonite.AddIngredient(ItemID.Spear);
+            recipeDemonite.AddIngredient(ItemID.DemoniteBar, 10);
+            recipeDemonite.AddIngredient(ModContent.ItemType<CursedFragment>(), 8);
+            recipeDemonite.AddTile(TileID.Anvils);
+            recipeDemonite.Register();
         }
     }
 
@@ -82,6 +100,9 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Projectile.direction = (Math.Cos(Projectile.velocity.ToRotation()) > 0).ToDirectionInt();
             player.ChangeDir(Projectile.direction);
 
+            SoundEngine.PlaySound(SoundID.Item1 with { Volume = 2f, Pitch = -0.25f, PitchVariance = 0.125f}, Projectile.Center);
+
+
             if (Main.myPlayer == Projectile.owner)
             {
                 Vector2 direction = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.UnitX);
@@ -107,6 +128,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
                 Projectile.rotation = float.Lerp(Projectile.rotation, PhaseOneTarget, 0.20f);
                 if (Math.Abs(Projectile.rotation - PhaseOneTarget) < 0.01)
                 {
+                    SoundEngine.PlaySound(SoundID.Item1 with { Volume = 2f, Pitch = -0.25f, PitchVariance = 0.125f}, Projectile.Center);
                     SwingPhase = 1.0f;
                 }
             }
@@ -117,6 +139,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
                 if (Math.Abs(Projectile.rotation - PhaseTwoTarget) < 0.01)
                 {
                     SwingPhase = 2.0f;
+                    SoundEngine.PlaySound(SoundID.Item1 with { Volume = 2f, Pitch = -0.25f, PitchVariance = 0.125f}, Projectile.Center);
 
                     if (Main.myPlayer == Projectile.owner)
                     {
@@ -130,6 +153,9 @@ namespace sorceryFight.Content.Items.Weapons.Melee
 
             if (SwingPhase == 2.0)
             {
+                if (Tick == 1)
+                    SoundEngine.PlaySound(SoundID.Item1 with { Volume = 2f, Pitch = 0.25f, PitchVariance = 0.125f}, Projectile.Center);
+
                 Tick *= 0.5f;
 
                 Vector2 target = player.MountedCenter + (Vector2.UnitX * 100).RotatedBy(FinalRotation);

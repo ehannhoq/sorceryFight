@@ -9,7 +9,7 @@ using sorceryFight.SFPlayer;
 using Terraria.Graphics.Effects;
 using System.IO;
 using System;
-using sorceryFight.Content.Particles.UIParticles;
+
 using sorceryFight.Content.Particles;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
@@ -34,7 +34,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public MaximumOutputRed()
         {
             Technique.baseDamage = 350;
-            Technique.damagePerBoss = 14;
+            Technique.damagePerBoss = 20;
             Technique.cost = 170;
             Technique.speed = 23;
             Technique.lifetime = 180;

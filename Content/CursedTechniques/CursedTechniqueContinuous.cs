@@ -1,8 +1,11 @@
+using System;
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using ReLogic.Peripherals.RGB;
 using sorceryFight.SFPlayer;
 using Terraria;
+using Terraria.DataStructures;
 
 namespace sorceryFight.Content.CursedTechniques
 {
@@ -23,6 +26,30 @@ namespace sorceryFight.Content.CursedTechniques
         }
 
 
+        public override string GetStats(SorceryFightPlayer sf)
+        {
+            string localizationCategoryKey = "Mods.sorceryFight.Misc.CursedTechniques";
+
+            string damage = SFUtils.GetLocalization(localizationCategoryKey + ".Damage")
+                .WithFormatArgs(CalculateTrueDamage(sf)).Value;
+
+            string ceCost = SFUtils.GetLocalization(localizationCategoryKey + ".ContinuousCost")
+                .WithFormatArgs((int)MathF.Round(base.CalculateTrueCost(sf))).Value;
+
+            string stats = damage + "\n" + ceCost;
+
+            return stats;
+        }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+
+            Projectile.tileCollide = false;
+            Projectile.penetrate = -1;
+        }
+
+
         /// <summary>
         /// Base AI() method for ModProjectiles. This override automatically handles keybind status and destroys the projectile.
         /// </summary>
@@ -37,9 +64,25 @@ namespace sorceryFight.Content.CursedTechniques
                 }
             }
 
+            Projectile.timeLeft = 2;
+
+            SorceryFightPlayer sfPlayer = Main.player[Projectile.owner].SorceryFight();
+            sfPlayer.disableRegenFromProjectiles = true;
+
+            DrainCost(sfPlayer);
+
             if (!keyHeld)
             {
-                Destroy();
+                Destroy(sfPlayer);
+            }
+        }
+
+        public virtual void DrainCost(SorceryFightPlayer sfPlayer)
+        {
+            sfPlayer.cursedEnergy -= CalculateTrueCost(sfPlayer);
+            if (sfPlayer.cursedEnergy <= 0)
+            {
+                Destroy(sfPlayer);
             }
         }
 
@@ -47,9 +90,10 @@ namespace sorceryFight.Content.CursedTechniques
         /// <summary>
         /// Kills the projectile. Called when keyHeld is false. Override this to implement custom behavior when key is no longer held down.
         /// </summary>
-        public virtual void Destroy()
+        public virtual void Destroy(SorceryFightPlayer sfPlayer)
         {
             Projectile.Kill();
+            sfPlayer.disableRegenFromProjectiles = false;
         }
 
 

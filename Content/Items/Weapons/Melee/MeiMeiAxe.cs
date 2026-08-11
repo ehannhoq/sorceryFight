@@ -27,7 +27,6 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.shoot = ModContent.ProjectileType<MeiMeiAxeHoldout>();
             Item.DamageType = CursedTechniqueDamageClass.Instance;
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.UseSound = SoundID.Item1;
             Item.rare = ItemRarityID.Blue;
             Item.noMelee = true;
             Item.channel = true;

@@ -34,9 +34,9 @@ namespace sorceryFight
                 Filters.Scene["SF:Blackhole"].Load();
 
 
-                Asset<Effect> mindlessBarrage = Mod.Assets.Request<Effect>("Content/Shaders/MindlessBarrage", AssetRequestMode.ImmediateLoad);
-                Filters.Scene["SF:MindlessBarrage"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(mindlessBarrage, "MindlessBarrage"), EffectPriority.Medium);
-                Filters.Scene["SF:MindlessBarrage"].Load();
+                Asset<Effect> mindlessCarnage = Mod.Assets.Request<Effect>("Content/Shaders/MindlessCarnage", AssetRequestMode.ImmediateLoad);
+                Filters.Scene["SF:MindlessCarnage"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(mindlessCarnage, "MindlessCarnage"), EffectPriority.Medium);
+                Filters.Scene["SF:MindlessCarnage"].Load();
 
 
                 Asset<Effect> worldCuttingSlash = Mod.Assets.Request<Effect>("Content/Shaders/WorldCuttingSlash", AssetRequestMode.ImmediateLoad);

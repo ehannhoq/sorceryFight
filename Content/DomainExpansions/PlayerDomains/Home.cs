@@ -20,7 +20,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override float SureHitRange => 1150f;
 
-        public override float Cost => 75f;
+        public override float Cost => 50f;
 
         public override bool ClosedDomain => true;
 
@@ -70,7 +70,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(NPCID.Golem);
+            return sf.sukunasFingerConsumed >= 19;
         }
 
         public override void Update()

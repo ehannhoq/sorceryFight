@@ -1,4 +1,5 @@
 using sorceryFight.Content.Items.Armors.QuantumCoulomb;
+using sorceryFight.Content.Items.Materials;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using Terraria;
@@ -25,7 +26,7 @@ namespace sorceryFight.Content.Items.Armors.SorcererCombat
             Item.width = 42;
             Item.height = 42;
             Item.rare = ItemRarityID.Blue;
-            Item.defense = 25;
+            Item.defense = 19;
         }
 
         public override void UpdateEquip(Player player)
@@ -49,6 +50,15 @@ namespace sorceryFight.Content.Items.Armors.SorcererCombat
             
             player.moveSpeed += movementSpeedFromSetBonus;
             player.statDefense += defenseFromSetBonus;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = Recipe.Create(Item.type);
+            recipe.AddIngredient(ItemID.HallowedBar, 18);
+            recipe.AddIngredient(ModContent.ItemType<InfusedCursedFragment>(), 14);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
         }
     }
 }

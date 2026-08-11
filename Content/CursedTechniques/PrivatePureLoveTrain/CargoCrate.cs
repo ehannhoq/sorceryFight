@@ -22,10 +22,21 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public Vector2 direction;
         public bool impactFrame = false;
         float distance = 0f;
+        
+        public CargoCrate()
+        {
+            Technique.baseDamage = 40;
+            Technique.damagePerBoss = 10;
+            Technique.cost = 30;
+            Technique.speed = 0f;
+            Technique.lifetime = 180;
+        }
 
 
         public override void SetDefaults()
         {
+            base.SetDefaults();
+
             Projectile.width = 88;
             Projectile.height = 88;
             Projectile.tileCollide = true;

@@ -46,10 +46,10 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public WorldCuttingSlash()
         {
-            Technique.baseDamage = 20000;
-            Technique.damagePerBoss = 525;
-            Technique.cost = 1225;
-            Technique.speed = 1;
+            Technique.baseDamage = 4000;
+            Technique.damagePerBoss = 200;
+            Technique.cost = 1200f;
+            Technique.speed = 50;
             Technique.lifetime = 600;
         }
 

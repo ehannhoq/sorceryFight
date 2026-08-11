@@ -11,7 +11,7 @@ using System;
 using sorceryFight.Content.Items.Accessories;
 using Terraria.DataStructures;
 using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
+
 using sorceryFight.Content.UI.Chants;
 using sorceryFight.Utilities.EaseFunctions;
 using Terraria.ID;
@@ -42,9 +42,9 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public HollowPurple200Percent()
         {
-            Technique.baseDamage = 2000;
-            Technique.damagePerBoss = 200;
-            Technique.cost = 900f;
+            Technique.baseDamage = 3000;
+            Technique.damagePerBoss = 250;
+            Technique.cost = 1200f;
             Technique.speed = 50;
             Technique.lifetime = 500;
         }

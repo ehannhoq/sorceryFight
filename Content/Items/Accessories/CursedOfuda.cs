@@ -43,9 +43,10 @@ namespace sorceryFight.Content.Items.Accessories
         {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<InfusedCursedFragment>(), 10);
-            // recipe.AddIngredient(ModContent.ItemType<DivineGeode>(), 7);
-            // recipe.AddIngredient(ModContent.ItemType<CoreofCalamity>(), 12);
-            // recipe.AddIngredient(ModContent.ItemType<UnholyCore>(), 2);
+            recipe.AddIngredient(ItemID.SoulBottleFright, 15);
+            recipe.AddIngredient(ItemID.SoulBottleMight, 15);
+            recipe.AddIngredient(ItemID.SoulBottleSight, 15);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
     }

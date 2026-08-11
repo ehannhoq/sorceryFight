@@ -124,12 +124,5 @@ namespace sorceryFight.Content.Items.Weapons.Melee
                 return false;
             return true;
         }
-
-        public override void AddRecipes()
-        {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.Katana);
-            recipe.Register();
-        }
     }
 }

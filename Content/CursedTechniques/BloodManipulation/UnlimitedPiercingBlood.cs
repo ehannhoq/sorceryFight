@@ -37,6 +37,39 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         ref float justSpawned => ref Projectile.ai[0];
         ref float beamHeight => ref Projectile.ai[1];
 
+        public UnlimitedPiercingBlood()
+        {
+            Technique.baseDamage = 30;
+            Technique.damagePerBoss = 6;
+            Technique.cost = 60;
+        }
+
+        public override string GetStats(SorceryFightPlayer sf)
+        {
+            string localizationCategoryKey = "Mods.sorceryFight.Misc.CursedTechniques";
+
+            string damage = SFUtils.GetLocalization(localizationCategoryKey + ".Damage")
+                .WithFormatArgs(CalculateTrueDamage(sf)).Value;
+
+            string ceCost = SFUtils.GetLocalization(localizationCategoryKey + ".ContinuousCost")
+                .WithFormatArgs((int)base.CalculateTrueCost(sf)).Value;
+
+            string bloodCost = SFUtils.GetLocalization(localizationCategoryKey + ".ContinuousBloodCost")
+                .WithFormatArgs((int)Technique.cost / 2).Value;
+
+            string stats = damage + "\n" + ceCost + "\n" + bloodCost;
+
+            return stats;
+        }
+
+        public override void DrainCost(SorceryFightPlayer sfPlayer)
+        {
+            sfPlayer.cursedEnergy -= CalculateTrueCost(sfPlayer);
+            sfPlayer.bloodEnergy -= SFUtils.RateSecondsToTicks(Technique.cost / 2);
+            if (sfPlayer.bloodEnergy <= 1)
+                Destroy(sfPlayer);
+        }
+
 
         public override void SetStaticDefaults()
         {
@@ -69,6 +102,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public override void AI()
         {
+            base.AI();
+
             if (Main.myPlayer == Projectile.owner)
             {
                 Player player = Main.player[Projectile.owner];
@@ -98,7 +133,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 }
             }
 
-            //if (convergenceFrame != CONVERGENCE_FRAMES - 1) return;
+            if (convergenceFrame != CONVERGENCE_FRAMES - 1) return;
 
             if (justSpawned == 0f)
             {
@@ -180,10 +215,10 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         }
 
 
-        public override void Destroy()
+        public override void Destroy(SorceryFightPlayer sfPlayer)
         {
             beamHeight -= 0.2f;
-            Main.player[Projectile.owner].SorceryFight().disableRegenFromProjectiles = false;
+            sfPlayer.disableRegenFromProjectiles = false;
             if (beamHeight <= 0f)
                 Projectile.Kill();
         }
@@ -200,14 +235,11 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             //Vector2 beamOrigin = new Vector2(0, texture.Height / 2);
             Vector2 beamScale = new Vector2((beamLength - convergenceTexture.Width / 2) / texture.Width, BASE_BEAM_HEIGHT * beamHeight);
 
-
-            int beamFrameHeight = convergenceTexture.Height / CONVERGENCE_FRAMES;
-            int beamFrameY = convergenceFrame * beamFrameHeight;
-
+            int beamFrameHeight = texture.Height / BEAM_FRAMES;
+            int beamFrameY = beamFrame * beamFrameHeight;
 
             Vector2 beamOrigin = new Vector2(0, beamFrameHeight / 2);
-            Rectangle beamSourceRectangle = new Rectangle(0, beamFrameY, convergenceTexture.Width, beamFrameHeight);
-
+            Rectangle beamSourceRectangle = new Rectangle(0, beamFrameY, texture.Width, beamFrameHeight);
 
             Main.EntitySpriteDraw(texture, beamStart, beamSourceRectangle, Color.White, Projectile.rotation, beamOrigin, beamScale, SpriteEffects.None, 0f);
 

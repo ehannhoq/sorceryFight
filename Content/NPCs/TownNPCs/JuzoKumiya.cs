@@ -1,16 +1,12 @@
-using sorceryFight.Content.Cutscenes;
-using sorceryFight.Content.Cutscenes.MahoragaCutscene;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-
 namespace sorceryFight.Content.NPCs.TownNPCs
 {
     [AutoloadHead]
-    public class MegumiFushiguro : SorceryFightNPC
+    public class JuzoKumiya : SorceryFightNPC
     {
-        public bool summoningMahoraga = false;
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 26;
@@ -25,43 +21,27 @@ namespace sorceryFight.Content.NPCs.TownNPCs
 
         public override void SetDefaults()
         {
-            base.SetDefaults();
-
-            SFNPC.name = "MegumiFushiguro";
-            SFNPC.attackDamage = 20;
-            SFNPC.knockback = 10f;
-            SFNPC.attackCooldown = 15;
+            SFNPC.name = "JuzoKumiya";
+            SFNPC.attackDamage = 10;
+            SFNPC.knockback = 4f;
+            SFNPC.attackCooldown = 30;
             SFNPC.attackProjectile = 0;
 
-            NPC.defense = 20;
-            NPC.lifeMax = 150;
+            NPC.defense = 15;
+            NPC.lifeMax = 250;
             NPC.knockBackResist = 0.5f;
             AnimationType = NPCID.Guide;
-        }
 
+            base.SetDefaults();
+        }
 
         public override bool CanTownNPCSpawn(int numTownNPCs)
         {
-            if (NPC.downedMechBoss3)
+            if (NPC.downedPlantBoss)
             {
                 return true;
             }
             return false;
-        }
-
-        public void SummonMahoragaBoss() {
-            if (Main.dedServ) return;
-            CutsceneManager.QueueCutscene(new MahoragaCutscene());
-        }
-
-        public override void FindFrame(int frameHeight)
-        {
-            if (summoningMahoraga)
-            {
-                NPC.frame.Y = frameHeight * 25;
-                return;
-            }
-            base.FindFrame(frameHeight);
         }
     }
 }

@@ -13,10 +13,10 @@ namespace sorceryFight.SFPlayer
         public HashSet<int> bossesDefeated;
         public int numberBossesDefeated => bossesDefeated.Count;
 
-        private byte mechanicalBossesDefeatedFlags;
-        public bool defeatedMechBossOne => (mechanicalBossesDefeatedFlags & 0b0001) == 1;
-        public bool defeatedMechBossTwo => (mechanicalBossesDefeatedFlags & 0b0010) == 1;
-        public bool defeatedMechBossThree => (mechanicalBossesDefeatedFlags & 0b0100) == 1;
+        public byte mechanicalBossesDefeatedFlags;
+        public bool defeatedMechBossOne => (mechanicalBossesDefeatedFlags & 0b0001) != 0;
+        public bool defeatedMechBossTwo => (mechanicalBossesDefeatedFlags & 0b0010) != 0;
+        public bool defeatedMechBossThree => (mechanicalBossesDefeatedFlags & 0b0100) != 0;
         public bool defeatedEvilBoss => HasDefeatedBoss(NPCID.BrainofCthulhu) || HasDefeatedBoss(NPCID.EaterofWorldsHead);
 
         public void AddDefeatedBoss(int bossType)
@@ -63,6 +63,7 @@ namespace sorceryFight.SFPlayer
                         return;
 
                 mechanicalBossesDefeatedFlags = 0b0001;
+                return;
             }
 
             if (!defeatedMechBossTwo)
@@ -75,6 +76,7 @@ namespace sorceryFight.SFPlayer
                         return;
 
                 mechanicalBossesDefeatedFlags = 0b0011;
+                return;
             }
 
             if (!defeatedMechBossThree)

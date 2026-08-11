@@ -44,16 +44,16 @@ namespace sorceryFight.Content.Items.Armors.Jetstream
             return head.type == ModContent.ItemType<JetstreamMask>() && body.type == Type && legs.type == ModContent.ItemType<JetstreamLeggings>();
         }
 
-        public override void AddRecipes()
-        {
-            Recipe recipe = CreateRecipe();
-            // recipe.AddIngredient(ModContent.ItemType<BloodflareBodyArmor>(), 1);
-            // recipe.AddIngredient(ModContent.ItemType<ShadowspecBar>(), 5);
-            // recipe.AddIngredient(ModContent.ItemType<DubiousPlating>(), 10);
-            // recipe.AddIngredient(ModContent.ItemType<ExoPrism>(), 10);
-            // recipe.AddTile(ModContent.TileType<DraedonsForge>());
-            recipe.Register();
-        }
+        // public override void AddRecipes()
+        // {
+        //     Recipe recipe = CreateRecipe();
+        //     recipe.AddIngredient(ModContent.ItemType<BloodflareBodyArmor>(), 1);
+        //     recipe.AddIngredient(ModContent.ItemType<ShadowspecBar>(), 5);
+        //     recipe.AddIngredient(ModContent.ItemType<DubiousPlating>(), 10);
+        //     recipe.AddIngredient(ModContent.ItemType<ExoPrism>(), 10);
+        //     recipe.AddTile(ModContent.TileType<DraedonsForge>());
+        //     recipe.Register();
+        // }
 
         public override void UpdateArmorSet(Player player)
         {

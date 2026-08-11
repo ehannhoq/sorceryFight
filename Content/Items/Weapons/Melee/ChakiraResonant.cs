@@ -191,6 +191,10 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<ObliviousSword>());
+            recipe.AddIngredient(ItemID.FragmentSolar, 4);
+            recipe.AddIngredient(ItemID.FragmentNebula, 4);
+            recipe.AddIngredient(ItemID.FragmentStardust, 4);
+            recipe.AddIngredient(ItemID.FragmentVortex, 4);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }

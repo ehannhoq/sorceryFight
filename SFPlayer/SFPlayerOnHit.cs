@@ -2,7 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
+
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;

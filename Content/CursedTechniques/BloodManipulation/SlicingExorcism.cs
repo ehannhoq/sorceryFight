@@ -10,7 +10,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using sorceryFight.Content.Particles.UIParticles;
+
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
@@ -23,6 +23,37 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override string InternalName => "SlicingExorcism";
 
         public bool animating;
+
+        private float BloodCost => Technique.cost / 3;
+
+        public SlicingExorcism()
+        {
+            Technique.baseDamage = 10;
+            Technique.damagePerBoss = 6;
+            Technique.cost = 10;
+            Technique.speed = 12f;
+        }
+
+        public override bool CanUse(SorceryFightPlayer sf)
+        {
+            return sf.bloodEnergy > BloodCost;
+        }
+
+        public override void ApplyCosts(SorceryFightPlayer sfPlayer)
+        {
+            base.ApplyCosts(sfPlayer);
+            sfPlayer.bloodEnergy -= BloodCost;
+        }
+
+        public override string GetStats(SorceryFightPlayer sf)
+        {
+            string localizationCategoryKey = "Mods.sorceryFight.Misc.CursedTechniques";
+            
+            string bloodCost = SFUtils.GetLocalization(localizationCategoryKey + ".BloodCost")
+                    .WithFormatArgs((int)BloodCost).Value;
+
+            return base.GetStats(sf) + "\n" + bloodCost;
+        }
 
         public override void SetStaticDefaults()
         {
@@ -48,20 +79,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             float beginAnimTime = 30f;
             Player player = Main.player[Projectile.owner];
 
-            if (Projectile.ai[0] > lifetime + beginAnimTime)
-            {
-                Projectile.Kill();
-            }
-
-            if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
-            {
-                Projectile.frameCounter = 0;
-
-                if (Projectile.frame++ >= FRAME_COUNT - 1)
-                {
-                    Projectile.frame = 0;
-                }
-            }
+            Projectile.HandleProjectileAnimation(FRAME_COUNT, TICKS_PER_FRAME);
 
             if (Projectile.ai[0] < beginAnimTime)
             {

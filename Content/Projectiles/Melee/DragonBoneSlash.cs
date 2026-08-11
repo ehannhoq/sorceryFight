@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
+
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -48,12 +48,8 @@ namespace sorceryFight.Content.Projectiles.Melee
             Projectile.HandleProjectileAnimation(FRAME_COUNT, TICKS_PER_FRAME);
             Projectile.PositionProjectileForSlash(20f);
 
-            // Player player = Main.player[Projectile.owner];
-            // float swingProgress = (float)Projectile.frame / (FRAME_COUNT - 1);
-            // float armRotation = MathHelper.Lerp(-MathHelper.PiOver2, MathHelper.PiOver2, swingProgress);
-
-            // player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Quarter, (armRotation - MathHelper.PiOver2) * player.direction);
-            // player.itemRotation = armRotation;
+            if (Projectile.frame == 0 || Projectile.frame == 6)
+                SoundEngine.PlaySound(SorceryFightSounds.InvertedSpearOfHeavenSlash with { Pitch = -0.25f }, Projectile.Center);
         }
 
         public override bool PreDraw(ref Color lightColor)

@@ -15,6 +15,7 @@ using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using sorceryFight.Content.Projectiles.Melee;
 
 namespace sorceryFight
 {
@@ -40,6 +41,16 @@ namespace sorceryFight
             MoonLordDrops(ref npc, ref npcLoot, ref nonExpertRule);
             WallOfFleshDrops(ref npc, ref npcLoot, ref nonExpertRule);
             CursedEnergyPotions(ref npc, ref npcLoot, ref nonExpertRule);
+
+            if (npc.type == NPCID.CultistBoss)
+            {
+                nonExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InvertedSpear>(), 2));
+            }
+
+            if (npc.type == NPCID.Golem)
+            {
+                nonExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<QueensBlade>(), 4));
+            }
         }
 
         // Non-Expert only
@@ -155,7 +166,7 @@ namespace sorceryFight
             if (npc.type != NPCID.MoonLordCore) return;
 
             nonExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CelestialAmulet>(), CelestialAmulet.ChanceDenominator));
-            nonExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InvertedSpear>(), 5));
+            nonExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Kamutoke>(), 6));
             nonExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<LunarCursedFragment>(), 1, 9, 12));
         }
 

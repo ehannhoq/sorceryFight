@@ -18,7 +18,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
     {
         public override string InternalName => "LightspeedBarrage";
 
-        ref float lifeTimer => ref Projectile.ai[0];
+        ref float tick => ref Projectile.ai[0];
         ref float ricochets => ref Projectile.ai[1];
         private List<int> enemiesHit = new List<int>();
 
@@ -26,6 +26,16 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         private const float minSpeed = 30f;
         private const float maxSpeed = 80f;
         private const float minTargetDistance = 1000f;
+
+        private Vector2 playerLastPos;
+
+        public LightspeedBarrage()
+        {
+            Technique.baseDamage = 200;
+            Technique.damagePerBoss = 10;
+            Technique.cost = 350;
+            Technique.lifetime = 30;
+        }
 
         public override void SetDefaults()
         {
@@ -45,13 +55,9 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             Player player = Main.player[Projectile.owner];
             SorceryFightPlayer sfPlayer = player.SorceryFight();
 
-
-            Projectile.rotation = Projectile.velocity.ToRotation();
-            VFXManager.AddVFX(new ImpactRingVFX(center: player.Center, lifetime: 60, scale: 2f, rotation: Projectile.rotation));
-
             sfPlayer.immune = true;
             sfPlayer.disableRegenFromProjectiles = true;
-
+            playerLastPos = player.Center;
             TargetNearestNPC();
         }
 
@@ -68,14 +74,16 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
                 var entitySource = player.GetSource_FromThis();
                 int index = Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
 
-                LightspeedBarrage lsBarrage = Main.projectile[index].ModProjectile as LightspeedBarrage;
-
-                if (lsBarrage.GetNearestNPCPos(out Vector2 _))
-                    sf.cursedEnergy -= CalculateTrueCost(sf);
-
                 return index;
             }
             return -1;
+        }
+
+        public override void ApplyCosts(SorceryFightPlayer sfPlayer)
+        {
+            LightspeedBarrage lsBarrage = Projectile.ModProjectile as LightspeedBarrage;
+            if (lsBarrage.GetNearestNPCPos(out Vector2 _))
+                sfPlayer.cursedEnergy -= CalculateTrueCost(sfPlayer);
         }
 
 
@@ -83,8 +91,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         {
             if (ricochets >= maxRicochets)
             {
-                Player player = Main.player[Projectile.owner];
-                KillProjectile(player.SorceryFight());
+                Projectile.Kill();
                 return;
             }
 
@@ -107,13 +114,16 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             Projectile.Center = player.Center;
             player.direction = Projectile.velocity.X > 0 ? 1 : -1;
 
-            if (lifeTimer > lifetime)
+            if (++tick % 5 == 0)
             {
-
-                KillProjectile(player.SorceryFight());
+                VFXManager.AddVFX(new ImpactRingVFX(center: player.Center, lifetime: 60, rotation: (playerLastPos - player.Center).ToRotation(), scale: 2f));
+                playerLastPos = player.Center;
             }
+        }
 
-            lifeTimer++;
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return false;
         }
 
         private void TargetNearestNPC()
@@ -127,12 +137,12 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
             if (GetNearestNPCPos(out Vector2 position))
             {
-                lifeTimer = 0;
+                Projectile.timeLeft = lifetime;
                 Projectile.velocity = Projectile.Center.DirectionTo(position) * trueSpeed;
             }
             else
             {
-                KillProjectile(sfPlayer);
+                Projectile.Kill();
             }
         }
 
@@ -144,7 +154,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
             foreach (NPC npc in Main.ActiveNPCs)
             {
-                if (npc.friendly || npc.type == NPCID.TargetDummy) continue;
+                if (npc.friendly) continue;
                 if (enemiesHit.Contains(npc.whoAmI)) continue;
 
                 float dist = (Projectile.Center - npc.Center).Length();
@@ -198,9 +208,9 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         }
 
 
-        private void KillProjectile(SorceryFightPlayer sfPlayer)
+        public override void OnKill(int timeLeft)
         {
-            Projectile.Kill();
+            SorceryFightPlayer sfPlayer = Main.player[Projectile.owner].SorceryFight();
             sfPlayer.immune = false;
             sfPlayer.disableRegenFromProjectiles = false;
             sfPlayer.Player.velocity = Vector2.Zero;

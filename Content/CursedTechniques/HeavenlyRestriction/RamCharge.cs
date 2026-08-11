@@ -10,6 +10,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using XPT.Core.Audio.MP3Sharp.Decoding.Decoders.LayerIII;
 
 namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 {
@@ -20,6 +21,17 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
         ref float tick => ref Projectile.ai[0];
         private const float minSpeed = 10f;
         private const float maxSpeed = 20f;
+
+        private Vector2 playerLastPos;
+
+        public RamCharge()
+        {
+            Technique.baseDamage = 100;
+            Technique.damagePerBoss = 6;
+            Technique.cost = 5;
+            Technique.speed = minSpeed;
+            Technique.lifetime = 40;
+        }
 
         public override float CalculateTrueCost(SorceryFightPlayer sf)
         {
@@ -36,6 +48,8 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
         public override void SetDefaults()
         {
+            base.SetDefaults();
+            
             Projectile.width = Main.player[0].width * 2;
             Projectile.height = 1;
             Projectile.friendly = true;
@@ -55,7 +69,6 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             sfPlayer.immune = true;
             sfPlayer.disableRegenFromProjectiles = true;
 
-            VFXManager.AddVFX(new ImpactRingVFX(center: player.Center, lifetime: 60, rotation: Projectile.velocity.ToRotation(), scale: 2f));
 
             float speedDiff = maxSpeed - minSpeed;
             float trueSpeed = ((float)sfPlayer.numberBossesDefeated / SorceryFightMod.totalBosses * speedDiff) + minSpeed;
@@ -64,6 +77,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             trueSpeed *= sfPlayer.unlockedRCT ? 1.5f : 1f;
             Projectile.velocity.Normalize();
             Projectile.velocity *= trueSpeed;
+            playerLastPos = player.Center;
         }
 
 
@@ -73,17 +87,20 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             player.velocity = Projectile.velocity;
             Projectile.Center = player.Center;
             player.direction = Projectile.velocity.X > 0 ? 1 : -1;
-
             Projectile.velocity.Y += 0.3f;
 
-            if (tick++ >= lifetime)
+            if (++tick % 10 == 0)
             {
-                Projectile.Kill();
-
-                player.SorceryFight().immune = false;
-                player.SorceryFight().disableRegenFromProjectiles = false;
-
+                VFXManager.AddVFX(new ImpactRingVFX(center: player.Center, lifetime: 60, rotation: (playerLastPos - player.Center).ToRotation(), scale: 2f));
+                playerLastPos = player.Center;
             }
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            SorceryFightPlayer sfPlayer = Main.player[Projectile.owner].SorceryFight();
+            sfPlayer.immune = false;
+            sfPlayer.disableRegenFromProjectiles = false;
         }
 
 

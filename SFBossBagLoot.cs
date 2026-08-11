@@ -28,6 +28,8 @@ namespace sorceryFight
 
             MoonlordBag(ref item, ref itemLoot);
             WallOfFleshBag(ref item, ref itemLoot);
+            CultistBag(ref item, ref itemLoot);
+            GolemBag(ref item, ref itemLoot);
         }
 
         private void CursedModifiers(ref Item item, ref LeadingConditionRule firstTimeRule)
@@ -117,7 +119,7 @@ namespace sorceryFight
             if (item.type != ItemID.MoonLordBossBag) return;
 
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CelestialAmulet>(), CelestialAmulet.ChanceDenominator, 1, 1));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<InvertedSpear>(), 5, 1, 1));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Kamutoke>(), 6));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<LunarCursedFragment>(), 1, 14, 17));
         }
 
@@ -137,5 +139,16 @@ namespace sorceryFight
             itemLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, emblems));
         }
 
+        private void CultistBag(ref Item item, ref ItemLoot itemLoot)
+        {
+            if (item.type != ItemID.CultistBossBag) return;
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<InvertedSpear>(), 2, 1, 1));
+        }
+
+        private void GolemBag(ref Item item, ref ItemLoot itemLoot)
+        {
+            if (item.type != ItemID.GolemBossBag) return;
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<QueensBlade>(), 4, 1, 1));
+        }
     }
 }

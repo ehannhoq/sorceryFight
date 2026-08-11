@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
+
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -30,7 +30,6 @@ namespace sorceryFight.Content.Projectiles.Melee
             Projectile.scale = 1.25f;
             Projectile.DamageType = CursedTechniqueDamageClass.Instance;
             Projectile.friendly = true;
-            Projectile.hostile = false;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.penetrate = -1;
@@ -60,10 +59,20 @@ namespace sorceryFight.Content.Projectiles.Melee
                 Projectile.HandleProjectileAnimation(FRAME_COUNT, TICKS_PER_FRAME);
 
             Projectile.PositionProjectileForSlash(20f);
+
+            int[] slashFrames = [6, 17, 28];
+
+            if (slashFrames.Contains(Projectile.frame))
+                SoundEngine.PlaySound(SorceryFightSounds.QueensBladeSlash, Projectile.Center);
+            if (Projectile.frame == 45)
+                SoundEngine.PlaySound(SorceryFightSounds.QueensBladeBigSlash, Projectile.Center);
         }
 
         public override bool? CanHitNPC(NPC target)
         {
+            if (target.friendly)
+                return false;
+                
             int[] frames = [6, 17, 28, 45];
             if (frames.Contains(Projectile.frame))
                 return true;

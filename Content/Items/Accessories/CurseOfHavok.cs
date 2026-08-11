@@ -84,11 +84,9 @@ namespace sorceryFight.Content.Items.Accessories
         public override void AddRecipes()
         {
             Recipe recipe = Recipe.Create(Type);
-            // recipe.AddIngredient(ModContent.ItemType<EssenceofHavoc>(), 3);
-            recipe.AddIngredient(ItemID.SoulofNight, 3);
-            recipe.AddIngredient(ModContent.ItemType<InfusedCursedFragment>(), 5);
-            // recipe.AddIngredient(ModContent.ItemType<CursedDust>(), 2);
-            recipe.AddTile(TileID.LunarCraftingStation);
+            recipe.AddIngredient(ItemID.SoulofNight, 10);
+            recipe.AddIngredient(ItemID.Ectoplasm, 10);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
     }

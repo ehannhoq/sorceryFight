@@ -7,8 +7,9 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
+
 using sorceryFight.Utilities.EaseFunctions;
+using Terraria.DataStructures;
 
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
@@ -21,8 +22,14 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
         public override string InternalName => "MaximumOutputBlue";
 
-        public virtual float AttractionRadius { get; set; } = 130f;
-        public virtual float AttractionStrength { get; set; } = 15f;
+
+        private const float minAttractionRadius = 70f;
+        private const float maxAttractionRadius = 150f;
+        private const float minAttractionStrength = 5f;
+        private const float maxAttractionStrength = 15f;
+
+        private float AttractionRadius => Main.player[Projectile.owner].SorceryFight().numberBossesDefeated / (float)SorceryFightMod.totalBosses * (maxAttractionRadius - minAttractionRadius) + minAttractionRadius;
+        private float AttractionStrength => Main.player[Projectile.owner].SorceryFight().numberBossesDefeated / (float)SorceryFightMod.totalBosses * (maxAttractionStrength - minAttractionStrength) + minAttractionStrength;
 
         public static Texture2D texture;
 
@@ -58,6 +65,10 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             animating = false;
             animScale = 0f;
             justSpawned = true;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
         }
 
 

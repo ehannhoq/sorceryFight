@@ -12,11 +12,14 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
     {
         public override string InternalName => "FlashStep";
 
-        ref float tick => ref Projectile.ai[0];
         private const float tileSize = 16f;
         private float minDistance = 30f * tileSize;
         private float maxDistance = 50f * tileSize;
 
+        public FlashStep()
+        {
+            Technique.cost = 230;
+        }
 
         public override void OnSpawn(IEntitySource source)
         {
@@ -49,7 +52,10 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
                 CameraController.SetCameraPosition(player.Center);
                 player.Center += dir * currentDistance;
-                CameraController.ResetCameraPosition();
+
+                TaskScheduler.Instance.AddDelayedTask(() => {
+                    CameraController.ResetCameraPosition();
+                }, 15);
             }
             Projectile.Kill();
         }

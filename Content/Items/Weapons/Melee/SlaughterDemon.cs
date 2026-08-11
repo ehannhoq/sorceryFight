@@ -1,3 +1,4 @@
+using sorceryFight.Content.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -23,6 +24,16 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.DamageType = CursedTechniqueDamageClass.Instance;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.UseSound = SoundID.Item1;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = Recipe.Create(Item.type);
+            recipe.AddIngredient(ItemID.SilverBar, 7);
+            recipe.AddIngredient(ItemID.Silk, 3);
+            recipe.AddIngredient(ModContent.ItemType<CursedFragment>(), 3);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
         }
     }
 }

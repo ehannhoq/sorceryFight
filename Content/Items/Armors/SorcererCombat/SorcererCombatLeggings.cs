@@ -1,3 +1,4 @@
+using sorceryFight.Content.Items.Materials;
 using sorceryFight.SFPlayer;
 using sorceryFight.Utilities;
 using Terraria;
@@ -27,7 +28,16 @@ namespace sorceryFight.Content.Items.Armors.SorcererCombat
             Item.width = 42;
             Item.height = 42;
             Item.rare = ItemRarityID.Blue;
-            Item.defense = 18;
+            Item.defense = 12;
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = Recipe.Create(Item.type);
+            recipe.AddIngredient(ItemID.HallowedBar, 11);
+            recipe.AddIngredient(ModContent.ItemType<InfusedCursedFragment>(), 9);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
         }
     }
 }

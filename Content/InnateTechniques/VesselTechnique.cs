@@ -24,28 +24,35 @@ namespace sorceryFight.Content.InnateTechniques
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
             new FlowingRedScale()
-                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 5),
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 5)
+                .SetUnlockRequirement(SFUtils.GetLocalization("Mods.sorceryFight.UnlockRequirements.SukunasFingers").WithFormatArgs(5).Value),
 
             new FlowingRedScaleStack()
-                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 15),
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 15)
+                .SetUnlockRequirement(SFUtils.GetLocalization("Mods.sorceryFight.UnlockRequirements.SukunasFingers").WithFormatArgs(15).Value),
         };
 
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
             new SoulDismantle()
-                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 1),
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 1)
+                .SetUnlockRequirement(SFUtils.GetLocalization("Mods.sorceryFight.UnlockRequirements.SukunasFingers").WithFormatArgs(1).Value),
 
             new PiercingBlood()
-                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 3),
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 3)
+                .SetUnlockRequirement(SFUtils.GetLocalization("Mods.sorceryFight.UnlockRequirements.SukunasFingers").WithFormatArgs(3).Value),
 
             new ChainDismantle()
-                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 10),
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 10)
+                .SetUnlockRequirement(SFUtils.GetLocalization("Mods.sorceryFight.UnlockRequirements.SukunasFingers").WithFormatArgs(10).Value),
 
             new BloodDaggerStorm()
-                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 12),
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 12)
+                .SetUnlockRequirement(SFUtils.GetLocalization("Mods.sorceryFight.UnlockRequirements.SukunasFingers").WithFormatArgs(12).Value),
 
             new LineDevestation()
-                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 20),
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasFingerConsumed >= 20)
+                .SetUnlockRequirement(SFUtils.GetLocalization("Mods.sorceryFight.UnlockRequirements.SukunasFingers").WithFormatArgs(20).Value),
 
             new FullIncarnationKOC()
                 .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.sukunasSkull)
@@ -60,15 +67,15 @@ namespace sorceryFight.Content.InnateTechniques
             sf.Player.GetDamage(DamageClass.Ranged) *= 1 + (0.05f * sf.sukunasFingerConsumed);
             sf.Player.GetDamage(DamageClass.Magic) *= 1 + (0.05f * sf.sukunasFingerConsumed);
             sf.Player.GetDamage(DamageClass.Summon) *= 1 + (0.05f * sf.sukunasFingerConsumed);
+            sf.Player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1 + (0.05f * sf.sukunasFingerConsumed);
 
-            sf.Player.statDefense *= 1 + (0.03f * sf.sukunasFingerConsumed);
-
+            sf.Player.statDefense *= 1 + (0.005f * sf.sukunasFingerConsumed);
             sf.blackFlashWindowTime += 1;
         }
 
         public override void UpdateLifeRegen(SorceryFightPlayer sf)
         {
-            sf.Player.lifeRegen += 2 * sf.sukunasFingerConsumed;
+            sf.Player.lifeRegen += sf.sukunasFingerConsumed / 2;
         }
     }
 }
