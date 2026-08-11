@@ -59,10 +59,20 @@ namespace sorceryFight.Content.Projectiles.Melee
                 Projectile.HandleProjectileAnimation(FRAME_COUNT, TICKS_PER_FRAME);
 
             Projectile.PositionProjectileForSlash(20f);
+
+            int[] slashFrames = [6, 17, 28];
+
+            if (slashFrames.Contains(Projectile.frame))
+                SoundEngine.PlaySound(SorceryFightSounds.QueensBladeSlash, Projectile.Center);
+            if (Projectile.frame == 45)
+                SoundEngine.PlaySound(SorceryFightSounds.QueensBladeBigSlash, Projectile.Center);
         }
 
         public override bool? CanHitNPC(NPC target)
         {
+            if (target.friendly)
+                return false;
+                
             int[] frames = [6, 17, 28, 45];
             if (frames.Contains(Projectile.frame))
                 return true;

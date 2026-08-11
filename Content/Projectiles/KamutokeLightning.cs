@@ -8,6 +8,7 @@ using sorceryFight.Content.Particles;
 
 using sorceryFight.Content.VFX;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ModLoader;
@@ -73,6 +74,8 @@ namespace sorceryFight.Content.Projectiles
             }
 
             hitTrackerRefCount[(int)hitTrackerID]++;
+
+            SoundEngine.PlaySound(SorceryFightSounds.KamutokeLightningSFX, Projectile.Center);
         }
 
         public override void AI()
@@ -128,6 +131,9 @@ namespace sorceryFight.Content.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
+            if (target.friendly)
+                return false;
+
             if (Projectile.frame < FRAMES - 1)
                 return false;
 

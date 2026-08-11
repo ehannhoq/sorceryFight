@@ -50,6 +50,9 @@ namespace sorceryFight
         public static SoundStyle OblivionSwordImpact;
         public static SoundStyle OblivionSwordBigImpact;
 
+        public static SoundStyle QueensBladeSlash;
+        public static SoundStyle QueensBladeBigSlash;
+
         public static SoundStyle ChakiraResonantChargeUp;
         public static SoundStyle ChakiraResonantProjectileAmbiance;
         public static SoundStyle ChakiraResonantProjectileFire;
@@ -71,6 +74,8 @@ namespace sorceryFight
         public static SoundStyle MahoragaBreakCacoon;
 
         public static SoundStyle MahoragaAdaptation;
+
+        public static SoundStyle KamutokeLightningSFX;
 
         public override void Load()
         {
@@ -119,6 +124,9 @@ namespace sorceryFight
             OblivionSwordImpact = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordImpact") { Volume = 1f, PitchVariance = 0.75f };
             OblivionSwordBigImpact = new("sorceryFight/Content/Sounds/Items/OblivionSword/OblivionSwordBigImpact") { Volume = 1f, PitchVariance = 0.75f };
 
+            QueensBladeSlash = new("sorceryFight/Content/Sounds/Items/QueensBlade/QueensBladeSlash") { Volume = 1f, PitchVariance = 0.5f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
+            QueensBladeBigSlash = new("sorceryFight/Content/Sounds/Items/QueensBlade/QueensBladeBigSlash") { Volume = 1f, PitchVariance = 0.5f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
+
             ChakiraResonantChargeUp = new("sorceryFight/Content/Sounds/Items/ChakiraResonant/ChakiraResonantChargeUp") { Volume = 1f, PitchVariance = 0.15f };
             ChakiraResonantProjectileAmbiance = new("sorceryFight/Content/Sounds/Projectiles/ChakiraResonantProjectileAmbiance") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
             ChakiraResonantProjectileFire = new("sorceryFight/Content/Sounds/Projectiles/ChakiraResonantProjectileFire") { Volume = 1f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew };
@@ -141,6 +149,8 @@ namespace sorceryFight
             MahoragaBreakCacoon = new("sorceryFight/Content/Sounds/Cutscenes/MahoragaSummon/MahoragaBreakCacoon") { Volume = 0.75f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew};
             
             MahoragaAdaptation = new("sorceryFight/Content/Sounds/NPCs/Mahoraga/MahoragaAdaptation") { Volume = 0.75f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew};
+            
+            KamutokeLightningSFX = new("sorceryFight/Content/Sounds/Items/Kamutoke/KamutokeLightning") { Volume = 0.75f, PitchVariance = 0.5f, MaxInstances = 0, SoundLimitBehavior = SoundLimitBehavior.IgnoreNew};
         }
     }
 }
