@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -15,95 +16,97 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
     public class SelfBloodBlade : CursedTechnique
     {
         public static readonly int FRAME_COUNT = 16;
-        public static readonly int TICKS_PER_FRAME = 1;
+        public static readonly int TICKS_PER_FRAME = 2;
         public static Texture2D texture;
-
+        
         public override string InternalName => "SelfBloodBlade";
 
+        private float spriteRotation => MathF.Atan2(targetOffsetY, targetOffsetX) + Projectile.frame * MathF.PI / 8f * Main.player[Projectile.owner].direction + MathF.PI;
+        private ref float targetOffsetX => ref Projectile.ai[1];
+        private ref float targetOffsetY => ref Projectile.ai[2];
 
-        public override int UseTechnique(SorceryFightPlayer sf)
+        private float BloodCost => Technique.cost / 1f;
+
+        public SelfBloodBlade()
         {
-            Player player = sf.Player;
+            Technique.baseDamage = 10;
+            Technique.damagePerBoss = 7;
+            Technique.speed = 20f;
+            Technique.cost = 15;
+            Technique.lifetime = FRAME_COUNT * TICKS_PER_FRAME;
+        }
 
-            if (player.whoAmI == Main.myPlayer)
-            {
-                var entitySource = player.GetSource_FromThis();
-                return Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, GetProjectileType(), CalculateTrueDamage(sf), 0, player.whoAmI);
-            }
-            return -1;
+        public override bool CanUse(SorceryFightPlayer sf)
+        {
+            return sf.bloodEnergy > BloodCost;
+        }
+
+        public override void ApplyCosts(SorceryFightPlayer sfPlayer)
+        {
+            base.ApplyCosts(sfPlayer);
+            sfPlayer.bloodEnergy -= BloodCost;
+        }
+
+        public override string GetStats(SorceryFightPlayer sf)
+        {
+            string localizationCategoryKey = "Mods.sorceryFight.Misc.CursedTechniques";
+            
+            string bloodCost = SFUtils.GetLocalization(localizationCategoryKey + ".BloodCost")
+                    .WithFormatArgs((int)BloodCost).Value;
+
+            return base.GetStats(sf) + "\n" + bloodCost;
         }
 
 
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 188;
-            Projectile.height = 188;
+            Projectile.width = 70;
+            Projectile.height = 70;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 30;
+            Projectile.localNPCHitCooldown = -1;
+            Projectile.penetrate = -1;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            SoundEngine.PlaySound(SorceryFightSounds.CleaveSwing with { Volume = 3f }, Projectile.Center);
+
+            if (Main.myPlayer == Projectile.owner)
+            {
+                targetOffsetX = Main.MouseWorld.X - Main.LocalPlayer.Center.X;
+                targetOffsetY = Main.MouseWorld.Y - Main.LocalPlayer.Center.Y;
+
+                Vector2 direction = new Vector2(targetOffsetX, targetOffsetY);
+
+                Projectile.direction = (Math.Cos(direction.ToRotation()) > 0).ToDirectionInt();
+                Main.LocalPlayer.direction = Projectile.direction;
+
+                Projectile.netUpdate = true;
+            }
         }
 
 
         public override void AI()
         {
-            Projectile.ai[0]++;
-
-            if (Main.myPlayer == Projectile.owner && SFKeybinds.UseTechnique.Current)
-            {
-                Projectile.ai[0]--;
-
-            }
-                if (Projectile.ai[0] >= lifetime)
-            {
-                Projectile.Kill();
-            }
-
-            if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
-            {
-                Projectile.frameCounter = 0;
-
-                if (Projectile.frame++ >= FRAME_COUNT - 1)
-                {
-                    Projectile.frame = 0;
-                }
-            }
-
+            Projectile.HandleProjectileAnimation(FRAME_COUNT, TICKS_PER_FRAME);
 
             Player player = Main.player[Projectile.owner];
-            Vector2 playerRotatedPoint = player.RotatedRelativePoint(player.MountedCenter, true);
+            Vector2 target = player.Center + new Vector2(targetOffsetX, targetOffsetY);
+            Vector2 rotationCenter = (player.Center + target) / 2f;
 
-            Vector2 aimDirection = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
-            float aimAngle = aimDirection.ToRotation();
+            float progress = 1 - Projectile.timeLeft / (float)Technique.lifetime; 
 
-            Projectile.velocity = aimDirection;
-            Projectile.direction = (Math.Cos(aimAngle) > 0).ToDirectionInt();
-            Projectile.rotation = aimAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
-            Projectile.Center = playerRotatedPoint + aimDirection * 120f;
+            float distanceMultiplier = 0.25f * MathF.Cos(4 * MathF.PI * progress) + 0.75f;
+            float distance = (player.Center - rotationCenter).Length() * distanceMultiplier;
 
-            player.ChangeDir(Projectile.direction);
-
-            if (Projectile.ai[0] == 1)
-            {
-                SoundEngine.PlaySound(SorceryFightSounds.CleaveSwing with { Volume = 3f }, player.Center);
-            }
-
+            Projectile.Center = rotationCenter + Vector2.UnitX.RotatedBy(spriteRotation) * distance;
         }
-
-
-
+        
         public override bool PreDraw(ref Color lightColor)
         {
-            //int frameHeight = texture.Height / FRAME_COUNT;
-            //int frameY = Projectile.frame * frameHeight;
-
-            //Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
-            //Vector2 projOrigin = sourceRectangle.Size() * 0.5f;
-            //SpriteEffects spriteEffects = Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            //Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, -32).RotatedBy(Projectile.rotation), sourceRectangle, Color.White, Projectile.rotation, projOrigin, animScale, spriteEffects, 0f);
-            //return false;
-
             SpriteBatch spriteBatch = Main.spriteBatch;
 
             if (texture == null && !Main.dedServ)

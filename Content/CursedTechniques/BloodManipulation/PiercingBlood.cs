@@ -36,9 +36,9 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public PiercingBlood()
         {
-            Technique.baseDamage = 2;
-            Technique.damagePerBoss = 2;
-            Technique.cost = 20;
+            Technique.baseDamage = 7;
+            Technique.damagePerBoss = 7;
+            Technique.cost = 50;
         }
 
         public override string GetStats(SorceryFightPlayer sf)
@@ -48,17 +48,21 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             string damage = SFUtils.GetLocalization(localizationCategoryKey + ".Damage")
                 .WithFormatArgs(CalculateTrueDamage(sf)).Value;
 
-            string ceCost = SFUtils.GetLocalization(localizationCategoryKey + ".ContinuousBloodCost")
-                .WithFormatArgs((int)MathF.Round(base.CalculateTrueCost(sf))).Value;
+            string ceCost = SFUtils.GetLocalization(localizationCategoryKey + ".ContinuousCost")
+                .WithFormatArgs((int)base.CalculateTrueCost(sf)).Value;
 
-            string stats = damage + "\n" + ceCost;
+            string bloodCost = SFUtils.GetLocalization(localizationCategoryKey + ".ContinuousBloodCost")
+                .WithFormatArgs((int)Technique.cost / 2).Value;
+
+            string stats = damage + "\n" + ceCost + "\n" + bloodCost;
 
             return stats;
         }
 
         public override void DrainCost(SorceryFightPlayer sfPlayer)
         {
-            sfPlayer.bloodEnergy -= CalculateTrueCost(sfPlayer);
+            sfPlayer.cursedEnergy -= CalculateTrueCost(sfPlayer);
+            sfPlayer.bloodEnergy -= SFUtils.RateSecondsToTicks(Technique.cost / 2);
             if (sfPlayer.bloodEnergy <= 1)
                 Destroy(sfPlayer);
         }

@@ -15,16 +15,42 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         private float spawnTimer = 0;
 
+        private float BloodCost => Technique.cost;
+
         public BloodDaggerStorm()
         {
             Technique.baseDamage = 20;
             Technique.damagePerBoss = 4;
-            Technique.cost = 20;
-            Technique.speed = 12f;
+            Technique.cost = 40;
+            Technique.speed = 16f;
+        }
+
+        public override string GetStats(SorceryFightPlayer sf)
+        {
+            string localizationCategoryKey = "Mods.sorceryFight.Misc.CursedTechniques";
+
+            string damage = SFUtils.GetLocalization(localizationCategoryKey + ".Damage")
+                .WithFormatArgs(CalculateTrueDamage(sf)).Value;
+
+            string ceCost = SFUtils.GetLocalization(localizationCategoryKey + ".ContinuousCost")
+                .WithFormatArgs((int)base.CalculateTrueCost(sf)).Value;
+
+            string bloodCost = SFUtils.GetLocalization(localizationCategoryKey + ".ContinuousBloodCost")
+                .WithFormatArgs((int)Technique.cost / 2).Value;
+
+            string stats = damage + "\n" + ceCost + "\n" + bloodCost;
+
+            return stats;
+        }
+
+        public override bool CanUse(SorceryFightPlayer sf)
+        {
+            return sf.bloodEnergy > BloodCost;
         }
 
         public override void DrainCost(SorceryFightPlayer sfPlayer)
         {
+            base.DrainCost(sfPlayer);
             sfPlayer.bloodEnergy -= CalculateTrueCost(sfPlayer);
             if (sfPlayer.bloodEnergy <= 1)
                 Destroy(sfPlayer);
