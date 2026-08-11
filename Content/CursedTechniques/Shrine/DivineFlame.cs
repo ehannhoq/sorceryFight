@@ -36,8 +36,8 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public DivineFlame()
         {
-            Technique.baseDamage = 600;
-            Technique.damagePerBoss = 40;
+            Technique.baseDamage = 700;
+            Technique.damagePerBoss = 45;
             Technique.cost = 450;
             Technique.speed = 30;
             Technique.lifetime = 400;

@@ -23,9 +23,9 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public InstantDismantle()
         {
-            Technique.baseDamage = 30;
-            Technique.damagePerBoss = 8;
-            Technique.cost = 30;
+            Technique.baseDamage = 40;
+            Technique.damagePerBoss = 15;
+            Technique.cost = 33;
             Technique.lifetime = 2;
         }
 

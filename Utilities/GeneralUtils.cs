@@ -60,12 +60,17 @@ namespace sorceryFight
 
         public static bool MoveableByBlue(this NPC npc)
         {
-            if (npc.type == NPCID.DD2LanePortal)
-                return false;
+            switch (npc.type)
+            {
+                case NPCID.DD2LanePortal:
+                case NPCID.TheDestroyerBody:
+                case NPCID.TheDestroyerTail:
+                    return false;
+                default:
+                    break;
+            }
 
-            //if (npc.type == ModContent.NPCType<DevourerofGodsBody>() || npc.type == ModContent.NPCType<DevourerofGodsHead>() || npc.type == ModContent.NPCType<DevourerofGodsTail>())
-            //    return false;
-
+            if (npc.boss) return false;
 
             return true;
         }

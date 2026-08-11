@@ -21,7 +21,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public Dismantle()
         {
             Technique.baseDamage = 5;
-            Technique.damagePerBoss = 5;
+            Technique.damagePerBoss = 8;
             Technique.cost = 15;
             Technique.speed = 28f;
         }
@@ -36,10 +36,11 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 89;
-            Projectile.height = 258;
+            Projectile.width = 60;
+            Projectile.height = 60;
             Projectile.scale = 0.50f;
             Projectile.friendly = true;
+            Projectile.penetrate = -1;
         }
 
 
@@ -62,6 +63,13 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Projectile.rotation = velocityRotation + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
         }
 
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            Projectile.damage /= 2;
+
+            if (Projectile.damage == 0)
+                Projectile.Kill();
+        }
 
         public override bool PreDraw(ref Color lightColor)
         {

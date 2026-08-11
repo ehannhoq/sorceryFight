@@ -25,7 +25,7 @@ namespace sorceryFight.Content.Items.Armors.SorcererCombat
             Item.width = 42;
             Item.height = 42;
             Item.rare = ItemRarityID.Blue;
-            Item.defense = 25;
+            Item.defense = 23;
         }
 
         public override void UpdateEquip(Player player)

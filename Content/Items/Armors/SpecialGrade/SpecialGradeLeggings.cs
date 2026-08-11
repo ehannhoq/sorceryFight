@@ -22,7 +22,7 @@ namespace sorceryFight.Content.Items.Armors.SpecialGrade
             Item.width = 42;
             Item.height = 42;
             Item.rare = ItemRarityID.Pink;
-            Item.defense = 23;
+            Item.defense = 19;
         }
 
         public override void UpdateEquip(Player player)

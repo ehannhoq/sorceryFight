@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs.Vessel;
@@ -21,7 +22,9 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override string InternalName => "Cleave";
 
-        float baseDamagePercent = 0.05f;
+        private float baseDamagePercent = 0.03f;
+
+        private HashSet<int> bossSegmentTracker = new();
 
         public Cleave()
         {
@@ -41,7 +44,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public override float CalculateTrueCost(SorceryFightPlayer sf)
         {
             float masteryMultiplier = 1 - (sf.bossesDefeated.Count / 100f);
-            float maxCEPenalty = sf.maxCursedEnergy * 0.11f;
+            float maxCEPenalty = sf.maxCursedEnergy * 0.45f;
             float finalCost = maxCEPenalty * masteryMultiplier;
             finalCost *= 1 - sf.ctCostReduction;
             return finalCost;
@@ -128,6 +131,14 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
+            if (bossSegmentTracker.Contains(target.type))
+            {
+                modifiers.FinalDamage *= 0.01f;
+                return;
+            }
+            else if (target.dontCountMe)
+                bossSegmentTracker.Add(target.type);
+
             modifiers.FinalDamage.Flat += target.life * baseDamagePercent;
         }
     }
