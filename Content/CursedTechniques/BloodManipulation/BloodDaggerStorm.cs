@@ -19,8 +19,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public BloodDaggerStorm()
         {
-            Technique.baseDamage = 20;
-            Technique.damagePerBoss = 4;
+            Technique.baseDamage = 25;
+            Technique.damagePerBoss = 10;
             Technique.cost = 40;
             Technique.speed = 16f;
         }

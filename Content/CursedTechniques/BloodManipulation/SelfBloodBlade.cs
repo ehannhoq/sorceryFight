@@ -29,8 +29,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public SelfBloodBlade()
         {
-            Technique.baseDamage = 10;
-            Technique.damagePerBoss = 7;
+            Technique.baseDamage = 12;
+            Technique.damagePerBoss = 10;
             Technique.speed = 20f;
             Technique.cost = 15;
             Technique.lifetime = FRAME_COUNT * TICKS_PER_FRAME;

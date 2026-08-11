@@ -25,8 +25,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public float BloodCost => Technique.cost;
         public SuperNova()
         {
-            Technique.baseDamage = 50;
-            Technique.damagePerBoss = 4;
+            Technique.baseDamage = 60;
+            Technique.damagePerBoss = 6;
             Technique.cost = 100;
             Technique.speed = 20f;
         }

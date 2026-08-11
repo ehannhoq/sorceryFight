@@ -28,8 +28,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public SlicingExorcism()
         {
-            Technique.baseDamage = 5;
-            Technique.damagePerBoss = 5;
+            Technique.baseDamage = 10;
+            Technique.damagePerBoss = 6;
             Technique.cost = 10;
             Technique.speed = 12f;
         }
