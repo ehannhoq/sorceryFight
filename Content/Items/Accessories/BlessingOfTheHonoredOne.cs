@@ -81,11 +81,9 @@ namespace sorceryFight.Content.Items.Accessories
         public override void AddRecipes()
         {
             Recipe recipe = Recipe.Create(Type);
-            // recipe.AddIngredient(ModContent.ItemType<EssenceofEleum>(), 3);
-            recipe.AddIngredient(ItemID.SoulofMight, 5);
-            recipe.AddIngredient(ItemID.SoulofLight, 3);
-            recipe.AddIngredient(ItemID.Ectoplasm, 2);
-            recipe.AddTile(TileID.LunarCraftingStation);
+            recipe.AddIngredient(ItemID.SoulofLight, 10);
+            recipe.AddIngredient(ItemID.Ectoplasm, 10);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
     }

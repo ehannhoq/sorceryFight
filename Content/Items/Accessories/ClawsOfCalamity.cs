@@ -42,8 +42,8 @@ namespace sorceryFight.Content.Items.Accessories
         {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.MechanicalGlove);
-            recipe.AddIngredient(ModContent.ItemType<LunarCursedFragment>(), 10);
-            // recipe.AddIngredient(ModContent.ItemType<CalamityMod.Items.Weapons.Magic.MadAlchemistsCocktailGlove>());
+            recipe.AddIngredient(ItemID.ChlorophyteBar, 10);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
     }
