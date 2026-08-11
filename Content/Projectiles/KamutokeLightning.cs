@@ -100,6 +100,8 @@ namespace sorceryFight.Content.Projectiles
                     {
                         foreach (NPC npc in Main.ActiveNPCs)
                         {
+                            if (npc.friendly) continue;
+                            
                             float distance = (npc.Center - lightningBottomPosition).Length();
 
                             if (distance > MINIMUM_NPC_DISTANCE) continue;
