@@ -41,6 +41,14 @@ namespace sorceryFight.Content.CursedTechniques
             return stats;
         }
 
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+
+            Projectile.tileCollide = false;
+            Projectile.penetrate = -1;
+        }
+
 
         /// <summary>
         /// Base AI() method for ModProjectiles. This override automatically handles keybind status and destroys the projectile.
@@ -73,7 +81,9 @@ namespace sorceryFight.Content.CursedTechniques
         {
             sfPlayer.cursedEnergy -= CalculateTrueCost(sfPlayer);
             if (sfPlayer.cursedEnergy <= 0)
+            {
                 Destroy(sfPlayer);
+            }
         }
 
 

@@ -51,9 +51,12 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override void DrainCost(SorceryFightPlayer sfPlayer)
         {
             base.DrainCost(sfPlayer);
-            sfPlayer.bloodEnergy -= CalculateTrueCost(sfPlayer);
+            sfPlayer.bloodEnergy -= SFUtils.RateSecondsToTicks(BloodCost / 2);
             if (sfPlayer.bloodEnergy <= 1)
+            {
                 Destroy(sfPlayer);
+            }
+
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -64,11 +67,13 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         public override void AI()
         {
             base.AI();
+
             if (keyHeld)
             {
                 spawnTimer++;
 
                 SorceryFightPlayer sf = Main.player[Projectile.owner].SorceryFight();
+                Projectile.Center = sf.Player.Center;
 
                 if (spawnTimer >= 10f)
                 {
@@ -86,6 +91,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                     (int)CalculateTrueDamage(sf),
                     0f,
                     player.whoAmI,
+                    ai0: Projectile.whoAmI,
                     ai1: -1f
                     );
                 }
