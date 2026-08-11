@@ -41,6 +41,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.shoot = ModContent.ProjectileType<KamutokeProjectile>();
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.UseSound = SoundID.Item7;
+            Item.rare = ItemRarityID.Red;
             Item.noUseGraphic = true;
             Item.noMelee = true;
             Item.useTurn = true;
@@ -139,6 +140,8 @@ namespace sorceryFight.Content.Items.Weapons.Melee
                 float closetDistance = 100f;
                 foreach (NPC npc in Main.ActiveNPCs)
                 {
+                    if (npc.friendly) continue;
+                    
                     float distance = npc.Center.Distance(Main.MouseWorld);
                     if (distance > KamutokeLightning.MINIMUM_NPC_DISTANCE) continue;
 

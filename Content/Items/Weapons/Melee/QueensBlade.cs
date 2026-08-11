@@ -25,6 +25,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.channel = true;
             Item.useAnimation = 25;
             Item.useStyle = ItemUseStyleID.Shoot;
+            Item.rare = ItemRarityID.Orange;
             Item.useTime = 5;
             Item.knockBack = 6.5f;
             Item.autoReuse = false;
