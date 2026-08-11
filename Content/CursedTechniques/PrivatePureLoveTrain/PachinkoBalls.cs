@@ -1,5 +1,3 @@
-using CalamityMod.Particles;
-using CalamityMod.Sounds;
 using Microsoft.Build.Graph;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,40 +9,32 @@ using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using System.Collections.Generic;
 using System;
-using CalamityMod.NPCs.DesertScourge;
 
 namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
 {
     public class PachinkoBalls : CursedTechnique
     {
         public static Texture2D texture;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.PachinkoBalls.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PachinkoBalls.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PachinkoBalls.LockedDescription");
-        public override float Cost => 30f;
-        public override Color textColor => new Color(108, 158, 240);
-        public override bool DisplayNameInGame => true;
-        public override int Damage => 30;
-        public override int MasteryDamageMultiplier => 35;
-        public override float Speed => 30f;
-        public override float LifeTime => 300f;
+
+        public override string InternalName => "PachinkoBalls";
 
         Dictionary<int, List<int>> enemyRicochets = new Dictionary<int, List<int>>();
         Dictionary<int, Color> rarity = new Dictionary<int, Color>();
-        public override bool Unlocked(SorceryFightPlayer sf)
+
+        public PachinkoBalls()
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<DesertScourgeHead>());
-        }
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<PachinkoBalls>();
+            Technique.baseDamage = 2;
+            Technique.damagePerBoss = 6;
+            Technique.cost = 9;
+            Technique.speed = 13;
         }
 
         public override void SetStaticDefaults()
-        {            
+        {
             if (Main.dedServ) return;
             texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/PrivatePureLoveTrain/PachinkoBalls", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
+
 
         public override void SetDefaults()
         {
@@ -53,8 +43,8 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             Projectile.height = 32;
             Projectile.tileCollide = true;
             Projectile.penetrate = -1;
-            Projectile.timeLeft = (int)LifeTime;
         }
+
 
         public override void AI()
         {
@@ -63,7 +53,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 // the first index is the number of ricochets
                 // everything after is the npc.whoAmI of all the npc's has already hit; preventing them from being hit again.
                 enemyRicochets[Projectile.whoAmI] = new List<int> { 0 };
-                
+
                 int roll = Main.rand.Next(0, 100);
                 if (roll < 89)
                     rarity[Projectile.whoAmI] = Color.Green;
@@ -79,6 +69,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 }
             }
         }
+
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
@@ -107,7 +98,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 if (closestNPCIndex != -1)
                 {
                     NPC targetNPC = Main.npc[closestNPCIndex];
-                    Projectile.velocity = Projectile.Center.DirectionTo(targetNPC.Center) * Speed;
+                    Projectile.velocity = Projectile.Center.DirectionTo(targetNPC.Center) * speed;
                     SoundEngine.PlaySound(SorceryFightSounds.PachinkoBallCollision, Projectile.Center);
 
                     enemyRicochets[Projectile.whoAmI][0]++;
@@ -119,6 +110,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             else
                 Projectile.Kill();
         }
+
 
         public override bool PreDraw(ref Color lightColor)
         {

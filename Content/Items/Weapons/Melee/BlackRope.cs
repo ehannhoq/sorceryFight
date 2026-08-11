@@ -1,10 +1,8 @@
 using System;
-using CalamityMod;
-using CalamityMod.Items.Materials;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Projectiles.Melee;
-using sorceryFight.Rarities;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -39,12 +37,12 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.useTime = 1;
             
             //set low to attempt to test pvp cte debuff
-            Item.damage = 1000;
+            Item.damage = 20;
             Item.shootSpeed = 4f;
             Item.autoReuse = false;
             Item.knockBack = 5;
             Item.noUseGraphic = true;
-            Item.rare = ModContent.RarityType<SorceryFightWeapon>();
+            Item.rare = ItemRarityID.Pink;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.shoot = ModContent.ProjectileType<BlackRopeWhip>();
 
@@ -72,7 +70,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         public override void AddRecipes()
         {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<ShadowspecBar>(), 5);
+            recipe.AddIngredient(ItemID.LunarBar, 5);
             recipe.AddIngredient(ItemID.Katana);
             recipe.Register();
         }

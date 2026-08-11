@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using CalamityMod.NPCs.DevourerofGods;
-using CalamityMod.NPCs.SupremeCalamitas;
-using Humanizer;
 using sorceryFight.Content.Items.Armors.QuantumCoulomb;
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.UI;
 using sorceryFight.Content.UI.Dialog;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -83,8 +79,8 @@ namespace sorceryFight.Content.Tiles
             LastChallengerStatueManager lcsManager = Main.LocalPlayer.GetModPlayer<LastChallengerStatueManager>();
 
             string dialogKey = "LastChallenger.Unworthy";
-            bool worthy = sfPlayer.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
-            bool postScal = sfPlayer.HasDefeatedBoss(ModContent.NPCType<SupremeCalamitas>());
+            bool worthy = sfPlayer.HasDefeatedBoss(NPCID.CultistBoss);
+            bool postMoonLord = sfPlayer.HasDefeatedBoss(NPCID.MoonLordCore);
 
             if (lcsManager.interactionProgress == PlayerInteractions.DidntGetArmorSet)
             {
@@ -96,10 +92,10 @@ namespace sorceryFight.Content.Tiles
             }
             else
             {
-                dialogKey = "LastChallenger.PreSupremeCalamitas";
-                if (postScal)
+                dialogKey = "LastChallenger.PreMoonLord";
+                if (postMoonLord)
                 {
-                    dialogKey = "LastChallenger.PostSupremeCalamitas";
+                    dialogKey = "LastChallenger.PostMoonLord";
                 }
             }
 
@@ -111,9 +107,9 @@ namespace sorceryFight.Content.Tiles
         public void GrantQuantumCoulombSet()
         {
             var player = Main.LocalPlayer;
-            player.QuickSpawnItem(player.GetSource_Misc("QuantumCoulombBottle"), ModContent.ItemType<QuantumCoulombBottle>());
-            player.QuickSpawnItem(player.GetSource_Misc("QuantumCoulombBodyArmor"), ModContent.ItemType<QuantumCoulombBodyArmor>());
-            player.QuickSpawnItem(player.GetSource_Misc("QuantumCoulombChausses"), ModContent.ItemType<QuantumCoulombChausses>());
+            // player.QuickSpawnItem(player.GetSource_Misc("QuantumCoulombBottle"), ModContent.ItemType<QuantumCoulombBottle>());
+            // player.QuickSpawnItem(player.GetSource_Misc("QuantumCoulombBodyArmor"), ModContent.ItemType<QuantumCoulombBodyArmor>());
+            // player.QuickSpawnItem(player.GetSource_Misc("QuantumCoulombChausses"), ModContent.ItemType<QuantumCoulombChausses>());
             player.QuickSpawnItem(player.GetSource_Misc("SuspiciouslyWellPerservedEye"), ModContent.ItemType<SuspiciouslyWellPerservedEye>());
         }
     }

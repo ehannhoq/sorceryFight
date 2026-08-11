@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using Terraria;
 using Terraria.ModLoader;
 
 namespace sorceryFight
@@ -18,9 +16,10 @@ namespace sorceryFight
             tasks = new List<Task>();
         }
 
-        public void AddDelayedTask(Action action, int delay)
+        public bool AddDelayedTask(Action action, int delay)
         {
             tasks.Add(new DelayedTask(action, delay));
+            return true;
         }
 
         public void AddIntervalTask(Action action, int totalTime, int executions)

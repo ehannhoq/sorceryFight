@@ -4,10 +4,13 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using sorceryFight.Content.Particles;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
+using sorceryFight.Utilities.EaseFunctions;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
@@ -20,32 +23,22 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         public static readonly int FRAME_COUNT = 5;
         public static readonly int TICKS_PER_FRAME = 8;
         public static Texture2D texture;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.LineDevestation.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.LineDevestation.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.LineDevestation.LockedDescription");
-        public override float Cost => 400f;
-        public override Color textColor => new Color(120, 21, 8);
-        public override bool DisplayNameInGame => false;
-        public override int Damage => 3000;
-        public override int MasteryDamageMultiplier => 40;
-        public override float Speed => 12f;
-        public override float LifeTime => 180f;
 
-        public bool animating;
-        public float animScale;
+        private ref float currentSpeed => ref Projectile.ai[1];
+
+        public override string InternalName => "LineDevestation";
+
+        public LineDevestation()
+        {
+            Technique.baseDamage = 3000;
+            Technique.damagePerBoss = 250;
+            Technique.cost = 1200f;
+            Technique.speed = 30;
+            Technique.lifetime = 500;
+        }
 
         public int childDamage = 10000;
-
         private List<Vector2> dotPositions = new List<Vector2>();
-        private bool initialized = false;
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<LineDevestation>();
-        }
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.sukunasFingerConsumed >= 15;
-        }
 
         public override void SetDefaults()
         {
@@ -53,66 +46,42 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             Projectile.width = 65;
             Projectile.height = 65;
             Projectile.tileCollide = true;
-            animating = false;
             Projectile.penetrate = 1;
-            animScale = 1.25f;
+            currentSpeed = 0f;
         }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
+        }
+
         public override void AI()
         {
+            const float speedUpTime = 30f;
+            
+            if (++Projectile.ai[0] <= speedUpTime)
+                currentSpeed = EaseFunctions.EaseInCircular(Projectile.ai[0] / speedUpTime) * Technique.speed;
+
             Projectile.rotation = Projectile.velocity.ToRotation();
-            Projectile.ai[0] += 1;
-            float beginAnimTime = 30f;
+            Projectile.HandleProjectileAnimation(FRAME_COUNT, TICKS_PER_FRAME);
 
-            if (Projectile.ai[0] > LifeTime + beginAnimTime)
-                Projectile.Kill();
+            Vector2 spawnPos = Projectile.Center;
+            Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
+            Projectile.velocity = direction * currentSpeed;
 
-            if (++Projectile.frameCounter >= TICKS_PER_FRAME)
-            {
-                Projectile.frameCounter = 0;
-                if (++Projectile.frame >= FRAME_COUNT)
-                    Projectile.frame = 0;
-            }
+            float maxLength = 3000f;
+            float dotSpacing = 40f;
 
-            if (Projectile.ai[0] < beginAnimTime)
-            {
-                if (!animating)
-                {
-                    animating = true;
-                    SoundEngine.PlaySound(SorceryFightSounds.AmplificationBlueChargeUp, Projectile.Center);
-                }
-                return;
-            }
+            float forwardLength = GetRayLength(spawnPos, direction, maxLength);
+            float backwardLength = GetRayLength(spawnPos, -direction, maxLength);
 
-            if (animating)
-            {
-                Projectile.tileCollide = true;
-                animating = false;
-            }
+            int forwardCount = (int)(forwardLength / dotSpacing);
+            int backwardCount = (int)(backwardLength / dotSpacing);
 
-            // Run once after the anim delay
-            if (!initialized)
-            {
-                initialized = true;
-
-                Projectile.localAI[0] = Projectile.Center.X;
-                Projectile.localAI[1] = Projectile.Center.Y;
-
-                Vector2 spawnPos = Projectile.Center;
-                Vector2 direction = Projectile.velocity.SafeNormalize(Vector2.Zero);
-
-                float maxLength = 3000f;
-                float dotSpacing = 40f;
-
-                float forwardLength = GetRayLength(spawnPos, direction, maxLength);
-                float backwardLength = GetRayLength(spawnPos, -direction, maxLength);
-
-                int forwardCount = (int)(forwardLength / dotSpacing);
-                int backwardCount = (int)(backwardLength / dotSpacing);
-
-                for (int i = -backwardCount; i <= forwardCount; i++)
-                    dotPositions.Add(spawnPos + direction * (dotSpacing * i));
-            }
+            for (int i = -backwardCount; i <= forwardCount; i++)
+                dotPositions.Add(spawnPos + direction * (dotSpacing * i));
         }
+
 
         public override bool PreDraw(ref Color lightColor)
         {
@@ -135,8 +104,8 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                     screenPos.Y < -50 || screenPos.Y > Main.screenHeight + 50)
                     continue;
 
-                int dotWidth = 16;  // line length
-                int dotHeight = 4;  // line thickness
+                int dotWidth = 8;  // line length
+                int dotHeight = 2;  // line thickness
 
                 Rectangle destination = new Rectangle(
                     (int)screenPos.X - dotWidth / 2,
@@ -156,9 +125,10 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2 + 3);
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
 
-            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, 1.25f, SpriteEffects.None, 0f);
             return false;
         }
+
 
         private static float GetRayLength(Vector2 start, Vector2 direction, float maxLength, float step = 8f)
         {
@@ -171,18 +141,19 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
                 if (!WorldGen.InWorld(tileX, tileY)) return dist;
 
                 Tile tile = Main.tile[tileX, tileY];
-                if (tile != null && tile.HasTile && Main.tileSolid[tile.TileType])
+                if (tile != null && tile.HasTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType])
                     return dist;
             }
             return maxLength;
         }
+        
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             base.OnHitNPC(target, hit, damageDone);
             Projectile.Kill();
-
         }
+
 
         public override void OnKill(int timeLeft)
         {
@@ -210,6 +181,9 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
             {
                 childDamage = 3 * childDamage;
             }
+
+            ImpactFrameController.ImpactFrame(Color.White, 6);
+            CameraController.CameraShake(6, 25, 7);
 
             Projectile.NewProjectile(
                 Projectile.GetSource_Death(),

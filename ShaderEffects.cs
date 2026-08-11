@@ -1,5 +1,3 @@
-using System;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
@@ -8,9 +6,9 @@ using Terraria.ModLoader;
 
 namespace sorceryFight
 {
+    [Autoload(Side = ModSide.Client)]
     public class ShaderEffects : ModSystem
     {
-
         public override void Load()
         {
             if (!Main.dedServ)
@@ -36,14 +34,22 @@ namespace sorceryFight
                 Filters.Scene["SF:Blackhole"].Load();
 
 
-                Asset<Effect> mindlessBarrage = Mod.Assets.Request<Effect>("Content/Shaders/MindlessBarrage", AssetRequestMode.ImmediateLoad);
-                Filters.Scene["SF:MindlessBarrage"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(mindlessBarrage, "MindlessBarrage"), EffectPriority.Medium);
-                Filters.Scene["SF:MindlessBarrage"].Load();
+                Asset<Effect> mindlessCarnage = Mod.Assets.Request<Effect>("Content/Shaders/MindlessCarnage", AssetRequestMode.ImmediateLoad);
+                Filters.Scene["SF:MindlessCarnage"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(mindlessCarnage, "MindlessCarnage"), EffectPriority.Medium);
+                Filters.Scene["SF:MindlessCarnage"].Load();
 
 
                 Asset<Effect> worldCuttingSlash = Mod.Assets.Request<Effect>("Content/Shaders/WorldCuttingSlash", AssetRequestMode.ImmediateLoad);
                 Filters.Scene["SF:WorldCuttingSlash"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(worldCuttingSlash, "WorldCuttingSlash"), EffectPriority.Medium);
                 Filters.Scene["SF:WorldCuttingSlash"].Load();
+
+                Asset<Effect> limitlessRCTFilter = Mod.Assets.Request<Effect>("Content/Shaders/LimitlessRCTFilter", AssetRequestMode.ImmediateLoad);
+                Filters.Scene["SF:LimitlessRCTFilter"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(limitlessRCTFilter, "LimitlessRCTFilter"), EffectPriority.Medium);
+                Filters.Scene["SF:LimitlessRCTFilter"].Load();
+
+                Asset<Effect> blackScreen = Mod.Assets.Request<Effect>("Content/Shaders/BlackScreen", AssetRequestMode.ImmediateLoad);
+                Filters.Scene["SF:BlackScreen"] = new Filter(new Terraria.Graphics.Shaders.ScreenShaderData(blackScreen, "BlackScreen"), EffectPriority.High);
+                Filters.Scene["SF:BlackScreen"].Load();
             }
         }
     }

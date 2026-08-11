@@ -1,5 +1,3 @@
-using System;
-using CalamityMod.NPCs.DevourerofGods;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.CursedTechniques.Vessel;
@@ -7,6 +5,7 @@ using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.DomainExpansions.PlayerDomains
@@ -21,7 +20,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override float SureHitRange => 1150f;
 
-        public override float Cost => 75f;
+        public override float Cost => 50f;
 
         public override bool ClosedDomain => true;
 
@@ -71,7 +70,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
+            return sf.sukunasFingerConsumed >= 19;
         }
 
         public override void Update()

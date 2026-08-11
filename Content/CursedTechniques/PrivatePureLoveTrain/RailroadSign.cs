@@ -1,6 +1,3 @@
-using CalamityMod.Particles;
-using CalamityMod.Sounds;
-using Microsoft.Build.Graph;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -10,18 +7,11 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using sorceryFight.SFPlayer;
-using System.Collections.Generic;
 using System;
-using CalamityMod.NPCs.Providence;
-using System.Linq;
-using CalamityMod.Balancing;
-using CalamityMod.Buffs.StatDebuffs;
-using CalamityMod.Graphics.Primitives;
-using CalamityMod.Items.Weapons.Melee;
-using CalamityMod.Projectiles.Healing;
-using Terraria.Graphics.Shaders;
-using static CalamityMod.CalamityUtils;
-using System.ComponentModel;
+using sorceryFight.Utilities.EaseFunctions;
+using ReLogic.Reflection;
+using sorceryFight.Content.VFX;
+using sorceryFight.Content.Particles;
 
 
 namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
@@ -29,94 +19,45 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
     public class RailroadSign : CursedTechnique
     {
         public static Texture2D texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/PrivatePureLoveTrain/RailroadSign", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.RailroadSign.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.RailroadSign.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.RailroadSign.LockedDescription");
-        public override float Cost => 120f;
-        public override Color textColor => new Color(108, 158, 240);
-        public override bool DisplayNameInGame => true;
-        public override int Damage => 15000;
-        public override int MasteryDamageMultiplier => 700;
-        public override float Speed => 0;
-        public override float LifeTime => 60f;
+
+        public override string InternalName => "RailroadSign";
 
         public Player Owner => Main.player[Projectile.owner];
+        private ref float topRotation => ref Projectile.ai[0];
+        private ref float bottomRotation => ref Projectile.ai[1];
+        private ref float initialDir => ref Projectile.ai[2];
 
-        public int Direction => Math.Sign(Main.MouseWorld.X - Owner.Center.X);
-       
-        public int SwingTime = 60;
+        private const float ROTATION_OFFSET = 3 * MathHelper.PiOver4;
 
-        public float SwingCompletion => MathHelper.Clamp(Time / SwingTime, 0f, 1f);
+        private const int swingTime = 15;
+        private const int windupTime = 20;
+        private const int windDownTime = 10;
 
-        public float SwingCompletionAtStartOfTrail
+        public RailroadSign()
         {
-            get
-            {
-                float swingCompletion = SwingCompletion - 0.2f;
-                return MathHelper.Clamp(swingCompletion, SwingCompletionRatio, 1f);
-            }
-        }
-
-        public float SwordRotation
-        {
-            get
-            {
-                float swordRotation = InitialRotation + GetSwingOffsetAngle(SwingCompletion) * Projectile.spriteDirection + MathHelper.PiOver4;
-                if (Projectile.spriteDirection == -1)
-                    swordRotation += MathHelper.PiOver2;
-                return swordRotation;
-            }
-        }
-
-        public Vector2 SwordDirection => SwordRotation.ToRotationVector2() * Direction;
-
-        public ref float Time => ref Projectile.ai[0];
-
-        public ref float InitialRotation => ref Projectile.ai[1];
-
-        public static float SwingCompletionRatio => 0.37f;
-
-        public static float RecoveryCompletionRatio => 0.84f;
-        public float SlashWidthFunction(float completionRatio) => Projectile.scale * 22f;
-
-        public static CurveSegment AnticipationWait => new(EasingType.PolyOut, 0f, -1.67f, 0f);
-        public static CurveSegment Anticipation => new(EasingType.PolyOut, 0.14f, AnticipationWait.EndingHeight, -1.1f, 3);
-        public static CurveSegment Swing => new(EasingType.PolyIn, SwingCompletionRatio, Anticipation.EndingHeight, 6.5f, 5);
-        public static CurveSegment Recovery => new(EasingType.PolyOut, RecoveryCompletionRatio, Swing.EndingHeight, 0.97f, 3);
-
-        public static float GetSwingOffsetAngle(float completion) => PiecewiseAnimation(completion, AnticipationWait, Anticipation, Swing, Recovery);
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(ModContent.NPCType<Providence>());
-        }
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<RailroadSign>();
-        }
-
-        public override void SetStaticDefaults()
-        {
-            if (Main.dedServ) return;
-
+            Technique.baseDamage = 150;
+            Technique.damagePerBoss = 40;
+            Technique.cost = 90;
+            Technique.lifetime = swingTime + windupTime + windDownTime;
+            Technique.speed = 24f;
         }
 
         public override void SetDefaults()
         {
             base.SetDefaults();
+            Projectile.width = 70;
+            Projectile.height = 230;
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
-            Projectile.timeLeft = (int)LifeTime;
-            Projectile.scale = 1.75f;
+            Projectile.scale = 1f;
+            Projectile.ignoreWater = true;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
-        public override int UseTechnique(SorceryFightPlayer sf)
-        {
-            return base.UseTechnique(sf);
-        }
 
         public override void OnSpawn(IEntitySource source)
         {
-
             for (int i = 0; i < Main.projectile.Length; i++)
             {
                 if (i == Projectile.whoAmI)
@@ -126,10 +67,24 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
 
                 if (proj.type == ModContent.ProjectileType<RailroadSign>() && proj.owner == Projectile.owner)
                 {
-                    proj.active = false;
+                    proj.Kill();
                 }
-
             }
+
+            Player player = Main.player[Projectile.owner];
+            Projectile.direction = (Math.Cos(Projectile.velocity.ToRotation()) > 0).ToDirectionInt();
+            player.ChangeDir(Projectile.direction);
+
+            float initialRotation = Projectile.velocity.ToRotation();
+            if (Projectile.direction == -1 && initialRotation < 0)
+                initialRotation += MathHelper.TwoPi;
+            topRotation = initialRotation - ROTATION_OFFSET * Projectile.direction;
+            bottomRotation = initialRotation + ROTATION_OFFSET * Projectile.direction;
+            initialDir = Projectile.direction;
+
+            Projectile.velocity = Vector2.Zero;
+            Projectile.rotation = topRotation;
+            Projectile.Center = player.Center + (Vector2.UnitX * Projectile.height * 0.5f).RotatedBy(Projectile.rotation);
         }
 
 
@@ -137,70 +92,88 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         {
             Player player = Main.player[Projectile.owner];
             player.SorceryFight().disableRegenFromProjectiles = true;
-            if (InitialRotation == 0f)
-            {
-                InitialRotation = Projectile.velocity.ToRotation();
-                Projectile.netUpdate = true;
-            }
-            if(Projectile.timeLeft == 30)
+
+            player.direction = (int)initialDir;
+            Projectile.direction = (int)initialDir;
+            float angle;
+            float overshoot = 0.5f * Projectile.direction;
+
+
+            int timeSinceSpawn = lifetime - Projectile.timeLeft;
+
+            if (timeSinceSpawn == windupTime + (swingTime / 4))
                 SoundEngine.PlaySound(SoundID.DD2_MonkStaffSwing, player.Center);
 
-            Projectile.scale = Utils.GetLerpValue(0f, 0.13f, SwingCompletion, true) * Utils.GetLerpValue(1f, 0.87f, SwingCompletion, true) * 0.7f + 0.3f;
+            if (timeSinceSpawn < windupTime)
+            {
+                float percent = timeSinceSpawn / (float)windupTime;
+                float progress = EaseFunctions.EaseOut(percent);
+                angle = MathHelper.Lerp(topRotation, topRotation - overshoot, progress);
+            }
+            else if (timeSinceSpawn < windupTime + swingTime)
+            {
+                float percent = (timeSinceSpawn - windupTime) / (float)swingTime;
+                float progress = EaseFunctions.EaseInOut(percent);
+                angle = MathHelper.Lerp(topRotation - overshoot, bottomRotation + overshoot, progress);
+            }
+            else if (timeSinceSpawn < windupTime + swingTime + windDownTime)
+            {
+                float percent = (timeSinceSpawn - windupTime - swingTime) / (float)windDownTime;
+                float progress = EaseFunctions.EaseOut(percent);
+                angle = MathHelper.Lerp(bottomRotation + overshoot, bottomRotation, progress);
+            }
+            else
+            {
+                angle = bottomRotation;
+            }
 
-            AdjustPlayerValues();
-            StickToOwner();
-            Projectile.rotation = SwordRotation;
-            Time++;
-
+            Projectile.rotation = angle;
+            Projectile.Center = player.Center + (Vector2.UnitX * Projectile.height * 0.5f).RotatedBy(Projectile.rotation);
             
-        }
-
-        public void AdjustPlayerValues()
-        {
-            Projectile.spriteDirection = Projectile.direction = Direction;
-            float armRotation = SwordRotation - Direction * 1.67f;
-            Owner.SetCompositeArmFront(Math.Abs(armRotation) > 0.01f, Player.CompositeArmStretchAmount.Full, armRotation);
-        }
-
-        public void StickToOwner()
-        {
-           Vector2 holdOffset = new Vector2(0f, texture.Height * 0.1f) * Projectile.scale;
-            Projectile.Center = Owner.RotatedRelativePoint(Owner.MountedCenter, true)
-                - SwordDirection * holdOffset;
-            Owner.ChangeDir(Direction);
+            player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, Projectile.rotation - MathHelper.PiOver2);
+            player.itemRotation = Projectile.rotation;
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
-
-            Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-            Vector2 drawPosition = Projectile.Center - Main.screenPosition;
-            Vector2 origin = texture.Size() * Vector2.UnitY;
-            if (Projectile.spriteDirection == -1)
-                origin.X += texture.Width;
-
-            SpriteEffects direction = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Main.spriteBatch.Draw(texture, drawPosition, null, Color.White, Projectile.rotation, origin, Projectile.scale, direction, 0f);
+            Rectangle src = new Rectangle(0, 0, texture.Width, texture.Height);
+            Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, src, Color.White, Projectile.rotation + MathHelper.PiOver2, src.Size() * 0.5f, Projectile.scale, SpriteEffects.None, 0f);
             return false;
         }
 
+
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            float collisionPoint = 0f;
-            float rotation = SwordRotation;
-            if (Projectile.spriteDirection == -1)
-                rotation += MathHelper.Pi;
-            Vector2 direction = rotation.ToRotationVector2();
-
-            Vector2 start = Projectile.Center;
-
-            Vector2 end = start + direction * texture.Height * Projectile.scale * 0.9f;
-
-            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), start, end,Projectile.width * 0.25f, ref collisionPoint) && Projectile.timeLeft <= 35;
+            Vector2 center = Main.player[Projectile.owner].Center;
+            Vector2 end = center + (Vector2.UnitX * Projectile.height).RotatedBy(Projectile.rotation);
+            float lineWidth = Projectile.width;
+            float _ = 0f;
+            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), center, end, lineWidth, ref _);
         }
+
+
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.velocity = Vector2.Zero;
+
+            VFXManager.AddVFX(new ImpactCircleVFX(
+                center: target.Center,
+                lifetime: 30,
+                scale: 1.5f
+            ));
+
+            for (int i = 0; i < 3; i++)
+            {
+                StarParticle particle = new StarParticle(
+                    position: target.Center + Main.rand.NextVector2Circular(target.width * 0.75f, target.height * 0.75f),
+                    velocity: Vector2.Zero,
+                    color: Color.White,
+                    changeOpacity: true,
+                    lifetime: 15,
+                    scale: 1f
+                );
+                ParticleController.SpawnParticle(particle);
+            }
         }
 
         public override void OnKill(int timeLeft)
@@ -208,6 +181,5 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             Player player = Main.player[Projectile.owner];
             player.SorceryFight().disableRegenFromProjectiles = false;
         }
-
     }
 }

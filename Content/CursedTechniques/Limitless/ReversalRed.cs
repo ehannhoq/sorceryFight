@@ -6,8 +6,9 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
 using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
+
 using Terraria.Audio;
+using Terraria.DataStructures;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {
@@ -16,38 +17,30 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public static readonly int FRAME_COUNT = 4; 
         public static readonly int TICKS_PER_FRAME = 3;
 
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.ReversalRed.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.ReversalRed.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.ReversalRed.LockedDescription");
-        public override float Cost { get; } = 300f;
-        public override Color textColor { get; } = new Color(224, 74, 74);
-
-       
-        public override int Damage => 3000;
-        public override int MasteryDamageMultiplier => 80;
-        public override float Speed { get; } = 32f;
-        public override float LifeTime { get; } = 200f;
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.unlockedRCT;
-        }
+        public override string InternalName => "ReversalRed";
 
         public static Texture2D texture;
-        public override bool DisplayNameInGame { get; } = true;
 
         public bool animating;
         public float animScale;
         public Rectangle hitbox;
-        
-        public override int GetProjectileType()
+
+
+        public ReversalRed()
         {
-            return ModContent.ProjectileType<ReversalRed>();
-        } 
+            Technique.baseDamage = 50;
+            Technique.damagePerBoss = 6;
+            Technique.cost = 90;
+            Technique.speed = 32;
+            Technique.lifetime = 200;
+        }
+        
 
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = FRAME_COUNT;
         }
+
 
         public override void SetDefaults()
         {
@@ -60,10 +53,12 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             hitbox = Projectile.Hitbox;
         }
 
+
         public override Color? GetAlpha(Color lightColor)
         {
             return Color.White;
         }
+
 
         public override void AI()
         {
@@ -80,28 +75,20 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             }
         }
 
-        public override int UseTechnique(SorceryFightPlayer sf)
+        public override void OnSpawn(IEntitySource source)
         {
-            int i = base.UseTechnique(sf);
+            SoundEngine.PlaySound(SorceryFightSounds.CommonFire, Projectile.Center);
+            Vector2 dir = Projectile.velocity.SafeNormalize(Vector2.UnitX);
+            dir *= 10;
 
-            if (i != -1)
+            for (int j = 0; j < 8; j++)
             {
-                SoundEngine.PlaySound(SorceryFightSounds.CommonFire, Main.projectile[i].Center);
-
-                Vector2 dir = Main.projectile[i].velocity.SafeNormalize(Vector2.UnitX);
-                dir *= 10;
-
-                for (int j = 0; j < 8; j++)
-                {
-                    Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 2), Main.rand.NextFloat(-7, 2));
-                    LinearParticle linearParticle = new LinearParticle(Main.projectile[i].Center, dir + variation, textColor, false, 0.9f, 1f, 30);
-                    ParticleController.SpawnParticle(linearParticle);
-                }
+                Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 2), Main.rand.NextFloat(-7, 2));
+                LinearParticle linearParticle = new LinearParticle(Projectile.Center, dir + variation, new Color(235, 52, 52), false, 0.9f, 1f, 30);
+                ParticleController.SpawnParticle(linearParticle);
             }
-            
-            return i;
-
         }
+
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
@@ -111,10 +98,11 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             for (int i = 0; i < 10; i++)
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 7), Main.rand.NextFloat(-7, 7));
-                LinearParticle linearParticle = new LinearParticle(Projectile.Center, Projectile.velocity + variation, textColor, false, 0.9f, 1.5f, 30);
+                LinearParticle linearParticle = new LinearParticle(Projectile.Center, Projectile.velocity + variation, new Color(235, 52, 52), false, 0.9f, 1.5f, 30);
                 ParticleController.SpawnParticle(linearParticle);
             }
         }
+
 
         public override bool PreDraw(ref Color lightColor)
         {

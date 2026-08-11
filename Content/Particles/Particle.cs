@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -32,16 +31,13 @@ namespace sorceryFight.Content.Particles
             this.scale = scale;
             this.lifetime = lifetime;
 
-            rotation = position.DirectionTo(position + velocity).ToRotation();
+            rotation = velocity != Vector2.Zero ? position.DirectionTo(position + velocity).ToRotation() : 0f;
         }
 
         public virtual void Update()
         {
             position += velocity;
             velocity *= drag;
-
-            // Main.NewText($"Pos: {position} Vel: {velocity} Drag: {drag} Scale: {scale} Color: {color} Lifetime: {lifetime} Rotation: {rotation}");
-
             time++;
         }
 

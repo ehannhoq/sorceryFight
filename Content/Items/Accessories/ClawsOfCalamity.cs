@@ -1,5 +1,3 @@
-using System;
-using CalamityMod.Items.Accessories;
 using sorceryFight.Content.Items.Materials;
 using sorceryFight.SFPlayer;
 using Terraria;
@@ -23,7 +21,7 @@ namespace sorceryFight.Content.Items.Accessories
             Item.width = 32;
             Item.height = 32;
             Item.accessory = true;
-            Item.rare = ItemRarityID.LightRed;
+            Item.rare = ItemRarityID.White;
             Item.defense = 4;
         }
 
@@ -44,8 +42,8 @@ namespace sorceryFight.Content.Items.Accessories
         {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.MechanicalGlove);
-            recipe.AddIngredient(ModContent.ItemType<LunarCursedFragment>(), 10);
-            recipe.AddIngredient(ModContent.ItemType<CalamityMod.Items.Weapons.Magic.MadAlchemistsCocktailGlove>());
+            recipe.AddIngredient(ItemID.ChlorophyteBar, 10);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
     }

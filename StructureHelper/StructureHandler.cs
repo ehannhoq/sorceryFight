@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CalamityMod.Items.Placeables.FurnitureProfaned;
-using CalamityMod.Tiles.FurnitureProfaned;
 using Microsoft.Xna.Framework;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -106,7 +105,7 @@ namespace sorceryFight.StructureHelper
         {
             if (template == null)
             {
-                ModContent.GetInstance<SorceryFight>().Logger.Error("Structure template is null!");
+                SorceryFightMod.Log.Error("Structure template is null!");
                 return;
             }
 
@@ -145,7 +144,13 @@ namespace sorceryFight.StructureHelper
                         {
                             var moddedTileType = SFUtils.FindTypeAcrossMods(tileClass);
 
-                            var method = typeof(ModContent).GetMethod("TileType", Type.EmptyTypes);
+                            if (moddedTileType == null)
+                            {
+                                SorceryFightMod.Log.Error($"Could not resolve modded tile type '{tileClass}' at ({x}, {y}) in structure template. Skipping tile.");
+                                continue;
+                            }
+
+                            var method = typeof(ModContent).GetMethods().First(m => m.Name == "TileType" && m.IsGenericMethodDefinition);
                             var generic = method.MakeGenericMethod(moddedTileType);
                             int moddedTileID = (int)generic.Invoke(null, null);
 

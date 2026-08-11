@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
-using sorceryFight.Content.Buffs;
 using sorceryFight.SFPlayer;
-using Steamworks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -12,39 +10,15 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 {
     public class FlashStep : CursedTechnique
     {
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.FlashStep.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.FlashStep.Description");
+        public override string InternalName => "FlashStep";
 
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.FlashStep.LockedDescription");
-
-        public override float Cost => 250f;
-
-        public override Color textColor => Color.White;
-
-        public override bool DisplayNameInGame => false;
-
-        public override int Damage => 50;
-
-        public override int MasteryDamageMultiplier => 50;
-
-        public override float Speed => 15f;
-
-        public override float LifeTime => 1;
-
-        ref float tick => ref Projectile.ai[0];
         private const float tileSize = 16f;
         private float minDistance = 30f * tileSize;
         private float maxDistance = 50f * tileSize;
 
-
-        public override int GetProjectileType()
+        public FlashStep()
         {
-            return ModContent.ProjectileType<FlashStep>();
-        }
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.SkeletronPrime);
+            Technique.cost = 230;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -55,7 +29,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
             {
                 SorceryFightPlayer sfPlayer = player.SorceryFight();
                 float distanceDiff = maxDistance - minDistance;
-                float trueMaxDistance = minDistance + ((sfPlayer.numberBossesDefeated / SorceryFight.totalBosses) * distanceDiff);
+                float trueMaxDistance = minDistance + ((sfPlayer.numberBossesDefeated / SorceryFightMod.totalBosses) * distanceDiff);
 
                 Vector2 dir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.UnitX);
 
@@ -78,7 +52,10 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 
                 CameraController.SetCameraPosition(player.Center);
                 player.Center += dir * currentDistance;
-                CameraController.ResetCameraPosition();
+
+                TaskScheduler.Instance.AddDelayedTask(() => {
+                    CameraController.ResetCameraPosition();
+                }, 15);
             }
             Projectile.Kill();
         }

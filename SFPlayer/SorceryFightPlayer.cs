@@ -8,17 +8,14 @@ using Terraria.DataStructures;
 using sorceryFight.Content.Buffs.PlayerAttributes;
 using Terraria.Chat;
 using Terraria.ID;
-using CalamityMod.CalPlayer.Dashes;
 using System;
-using sorceryFight.Content.Buffs.Vessel;    
 using sorceryFight.Content.Items.Consumables;
 using sorceryFight.Content.DomainExpansions;
 using System.Linq;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
 using sorceryFight.Content.Buffs.CursedEnergyTraits;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Terraria.Localization;
+using sorceryFight.Content.InnateTechniques;
 
 
 namespace sorceryFight.SFPlayer
@@ -74,8 +71,6 @@ namespace sorceryFight.SFPlayer
         #region One-off Variables
         public bool yourPotentialSwitch;
         public bool usedYourPotentialBefore;
-        public bool usedCursedFists;
-        private HashSet<int> npcsHitWithCursedFists;
         public int idleDeathGambleBuffStrength;
         public SorceryFightUI sfUI;
         #endregion
@@ -121,6 +116,8 @@ namespace sorceryFight.SFPlayer
         #endregion
 
         #region RCT
+        public Action onRevive;
+        public Action onDeath;
         public bool unlockedRCT;
         public int rctAuraIndex;
         public int rctBaseHealPerSecond { get; private set; }
@@ -160,6 +157,9 @@ namespace sorceryFight.SFPlayer
         public NPC garudaCurrentTarget;
         #endregion
 
+        #region TenShadows
+        public bool TotalityToggle;
+        #endregion
 
         public override void UpdateEquips()
         {
@@ -177,19 +177,13 @@ namespace sorceryFight.SFPlayer
         {
             if (innateTechnique == null || Main.dedServ) return;
 
-            if (innateTechnique.Name == "StarRage")
+            if (innateTechnique.InternalName == "StarRage")
                 maxStarEnergy = 100f;
             else
                 maxStarEnergy = 0;
 
-            if (preventDeath && deathPosition != Vector2.Zero && Player.position != deathPosition)
-            {
-                Player.position = deathPosition;
-                preventDeath = false;
-            }
-
             innateTechnique.PreUpdate(this);
-            RCTAnimation();
+
             AttributeIcons();
             Keybinds();
 
@@ -228,7 +222,6 @@ namespace sorceryFight.SFPlayer
             }
         }
 
-        private int TEMP_disabledRegenTimer = 0;
         public override void PostUpdate()
         {
             cursedEnergyRegenPerSecond += cursedEnergyRegenFromOtherSources;
@@ -274,7 +267,7 @@ namespace sorceryFight.SFPlayer
             if (bloodEnergy < 0)
             {
                 AddDeductableDebuff(ModContent.BuffType<BurntTechnique>(), DefaultBurntTechniqueDuration);
-                Player.Hurt(PlayerDeathReason.ByCustomReason($"{Player.name} overexerted their blood energy."), (int)(Math.Abs(bloodEnergy)) , 0, false, false, default, default, 9999);
+                Player.Hurt(PlayerDeathReason.ByCustomReason($"{Player.name} overexerted their blood energy."), (int)(Math.Abs(bloodEnergy)), 0, false, false, default, default, 9999);
                 bloodEnergy = 0;
             }
 
@@ -313,16 +306,11 @@ namespace sorceryFight.SFPlayer
 
             starEnergyRegenPerSecond = 0f;
 
-            if (disabledRegen)
+            if (disabledRegen && !Main.projectile.Any(proj => proj.active && proj.ModProjectile is CursedTechnique && proj.owner == Player.whoAmI))
             {
-                TEMP_disabledRegenTimer++;
-                if (TEMP_disabledRegenTimer >= 300)
-                {
-                    disableRegenFromBuffs = false;
-                    disableRegenFromProjectiles = false;
-                    disableRegenFromDE = false;
-                    TEMP_disabledRegenTimer = 0;
-                }
+                disableRegenFromBuffs = false;
+                disableRegenFromProjectiles = false;
+                disableRegenFromDE = false;
             }
 
             CheckQuests();
@@ -344,7 +332,7 @@ namespace sorceryFight.SFPlayer
 
             if (SFKeybinds.UseTechnique.JustPressed)
             {
-                //ModContent.GetInstance<SorceryFight>().Logger.Info("Keybing Just Pressed" + SFKeybinds.UseTechnique.JustPressed + "Is: " + disableCurseTechniques);
+                //SorceryFightMod.Log.Info("Keybing Just Pressed" + SFKeybinds.UseTechnique.JustPressed + "Is: " + disableCurseTechniques);
 
                 if (!disableCurseTechniques || uniqueBodyStructure)
                     ShootTechnique();
@@ -414,7 +402,7 @@ namespace sorceryFight.SFPlayer
                 CameraController.ResetCameraZoom();
             }
 
-            if(SFKeybinds.DomainExpansion.JustReleased && noInnateDomain == true)
+            if (SFKeybinds.DomainExpansion.JustReleased && noInnateDomain == true)
             {
                 ToggleSimpleDomain();
             }
@@ -426,28 +414,8 @@ namespace sorceryFight.SFPlayer
 
                 int variation = pictureLocket ? Main.rand.Next(-3, 2) : Main.rand.Next(-5, 4);
 
-                lowerWindowTime = innateTechnique.Name == "Vessel" ? 14 - blackFlashCounter / 2 + variation : 15 - blackFlashCounter / 2 + variation;
+                lowerWindowTime = innateTechnique.InternalName == "Vessel" ? 14 - blackFlashCounter / 2 + variation : 15 - blackFlashCounter / 2 + variation;
                 sfUI.BlackFlashWindow(lowerWindowTime, lowerWindowTime + blackFlashWindowTime);
-            }
-
-            // if (SFKeybinds.CursedFist.JustPressed)
-            // {
-            //     if (Player.HasBuff<BurntTechnique>())
-            //     {
-            //         int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
-            //         Main.combatText[index].lifeTime = 60;
-            //         return;
-            //     }
-
-            //     CursedFist();
-            // }
-
-            if (usedCursedFists)
-            {
-                if (Player.dashDelay <= 15)
-                    usedCursedFists = false;
-                else
-                    CalculateCursedFistsHitbox();
             }
 
             if (SFKeybinds.ConsumeCursedEnergyPotion.JustPressed)
@@ -463,7 +431,7 @@ namespace sorceryFight.SFPlayer
                 return;
             }
 
-            if (!selectedTechnique.UseCondition(this))
+            if (!selectedTechnique.CanUse(this))
             {
                 return;
             }
@@ -502,6 +470,7 @@ namespace sorceryFight.SFPlayer
             }
 
             selectedTechnique.UseTechnique(this);
+            selectedTechnique.ApplyCosts(this);
         }
 
 
@@ -557,7 +526,7 @@ namespace sorceryFight.SFPlayer
 
                         if (Main.netMode == NetmodeID.MultiplayerClient)
                         {
-                            ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
+                            ModPacket packet = SorceryFightMod.Instance.GetPacket();
                             packet.Write((byte)MessageType.PlayerCastingDomain);
                             packet.Write(Player.whoAmI);
                             packet.Send();
@@ -626,54 +595,6 @@ namespace sorceryFight.SFPlayer
                 index = CombatText.NewText(Player.getRect(), Color.LightCyan, "New Shadow Style: Simple Domain");
                 Main.combatText[index].lifeTime = 60;
 
-            }
-        }
-
-
-
-        void CursedFist()
-        {
-            if (Player.dashDelay > 0) return;
-            npcsHitWithCursedFists.Clear();
-            usedCursedFists = true;
-
-            Player.dashDelay = 45;
-            float runSpeed = Math.Max(Player.accRunSpeed, Player.maxRunSpeed);
-            Player.velocity.X += runSpeed * Player.direction;
-
-            CalculateCursedFistsHitbox();
-        }
-
-
-        void CalculateCursedFistsHitbox()
-        {
-            Rectangle hitArea = new Rectangle((int)(Player.position.X + Player.velocity.X * 0.5 - 4f), (int)(Player.position.Y + Player.velocity.Y * 0.5 - 4f), Player.width + 8, Player.height + 8);
-            foreach (NPC npc in Main.ActiveNPCs)
-            {
-                if (npcsHitWithCursedFists.Contains(npc.whoAmI)) continue;
-                if (Player.dontHurtCritters && NPCID.Sets.CountsAsCritter[npc.type]) continue;
-                if (npc.dontTakeDamage && npc.friendly) continue;
-
-                if (hitArea.Intersects(npc.getRect()) && (npc.noTileCollide || Player.CanHit(npc)))
-                {
-                    DashHitContext hitContext = new DashHitContext
-                    {
-                        BaseDamage = 50,
-                        BaseKnockback = 6f,
-                        HitDirection = Player.direction,
-                        damageClass = DamageClass.Melee,
-                        PlayerImmunityFrames = 10
-                    };
-
-                    int dashDamage = (int)Player.GetTotalDamage(hitContext.damageClass).ApplyTo(hitContext.BaseDamage);
-                    float dashKB = Player.GetTotalKnockback(hitContext.damageClass).ApplyTo(hitContext.BaseKnockback);
-                    bool rollCrit = Main.rand.Next(100) < Player.GetTotalCritChance(hitContext.damageClass);
-
-                    Player.ApplyDamageToNPC(npc, dashDamage, dashKB, hitContext.HitDirection, rollCrit, hitContext.damageClass, true);
-                    Player.GiveImmuneTimeForCollisionAttack(hitContext.PlayerImmunityFrames);
-
-                    npcsHitWithCursedFists.Add(npc.whoAmI);
-                }
             }
         }
 
@@ -766,7 +687,7 @@ namespace sorceryFight.SFPlayer
             if (blessedByBlackFlash)
                 Player.AddBuff(ModContent.BuffType<BlessedByBlackSparksBuff>(), 2);
 
-            if (innateTechnique.Name == "Vessel")
+            if (innateTechnique.InternalName == "Vessel")
                 Player.AddBuff(ModContent.BuffType<SukunasVesselBuff>(), 2);
 
             if (explosiveCursedEnergy)

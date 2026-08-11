@@ -16,7 +16,9 @@ Mods: {
 			IdleDeathGambleJackpotProjectileIII.DisplayName: Idle Death Gamble Jackpot Projectile I I I
 			InvertedSpearCharge.DisplayName: Inverted Spear Charge
 			CleaveMS.DisplayName: Cleave M S
+			Cleave.DisplayName: Cleave
 			HollowPurpleCollision.DisplayName: Hollow Purple Collision
+			HollowPurple.DisplayName: Hollow Purple
 			InvertedSpearProjectile.DisplayName: Inverted Spear Projectile
 			ChakiraResonantSlash.DisplayName: Chakira Resonant Slash
 			ChakiraResonantHoldout.DisplayName: Chakira Resonant Holdout
@@ -24,19 +26,76 @@ Mods: {
 			ExampleBlackRopeSlash.DisplayName: Example Black Rope Slash
 			BlackRopeWhip.DisplayName: Black Rope Whip
 			UnlimitedPiercingBloodProjectile.DisplayName: Unlimited Piercing Blood Projectile
+			UnlimitedPiercingBlood.DisplayName: Unlimited Piercing Blood
 			SuperNovaShard.DisplayName: Super Nova Shard
+			SuperNova.DisplayName: Super Nova
 			GarudaBody.DisplayName: Garuda Body
 			GarudaHead.DisplayName: Garuda Head
 			GarudaTail.DisplayName: Garuda Tail
 			BloodDaggerStormProjectile.DisplayName: Blood Dagger Storm Projectile
+			BloodDaggerStorm.DisplayName: Blood Dagger Storm
 			BlackholeProjectile.DisplayName: Blackhole Projectile
 			ChakiraResonantBeam.DisplayName: Chakira Resonant Beam
 			GarudaWhipProjectile.DisplayName: Garuda Whip Projectile
+			GarudaWhip.DisplayName: Garuda Whip
 			CakeBlastProjectile.DisplayName: Cake Blast Projectile
 			RoundDeerBolt.DisplayName: Round Deer Bolt
+			RoundDeer.DisplayName: Round Deer
 			NueLightning.DisplayName: Nue Lightning
+			Nue.DisplayName: Nue
 			IcicleHailProjectile.DisplayName: Icicle Hail Projectile
+			IcicleHail.DisplayName: Icicle Hail
 			LineDevestationProjectile.DisplayName: Line Devestation Projectile
+			LineDevestation.DisplayName: Line Devestation
+			RabbitLaser.DisplayName: Rabbit Laser
+			RabbitMoonlord.DisplayName: Rabbit Moonlord
+			RabbitShardscape.DisplayName: Rabbit Shardscape
+			RabbitShardscape_Indicator.DisplayName: Rabbit Shardscape_ Indicator
+			MaxElephantBeam.DisplayName: Max Elephant Beam
+			MaxElephant.DisplayName: Max Elephant
+			ToadTongue.DisplayName: Toad Tongue
+			Toad.DisplayName: Toad
+			PiercingBlood.DisplayName: Piercing Blood
+			SelfBloodBlade.DisplayName: Self Blood Blade
+			SlicingExorcism.DisplayName: Slicing Exorcism
+			FlashStep.DisplayName: Flash Step
+			Groundshot.DisplayName: Groundshot
+			LightspeedBarrage.DisplayName: Lightspeed Barrage
+			RamCharge.DisplayName: Ram Charge
+			IcePlace.DisplayName: Ice Place
+			IceShard.DisplayName: Ice Shard
+			AmplificationBlue.DisplayName: Amplification Blue
+			HollowPurple200Percent.DisplayName: Hollow Purple200 Percent
+			MaximumOutputBlue.DisplayName: Maximum Output Blue
+			MaximumOutputRed.DisplayName: Maximum Output Red
+			ReversalRed.DisplayName: Reversal Red
+			CargoCrate.DisplayName: Cargo Crate
+			HakarisDoor.DisplayName: Hakaris Door
+			PachinkoBalls.DisplayName: Pachinko Balls
+			PassingThrough.DisplayName: Passing Through
+			RailroadSign.DisplayName: Railroad Sign
+			Dismantle.DisplayName: Dismantle
+			DivineFlame.DisplayName: Divine Flame
+			InstantDismantle.DisplayName: Instant Dismantle
+			WorldCuttingSlash.DisplayName: World Cutting Slash
+			GarudaKick.DisplayName: Garuda Kick
+			MassKick.DisplayName: Mass Kick
+			MassPunch.DisplayName: Mass Punch
+			StarChannel.DisplayName: Star Channel
+			StarRush.DisplayName: Star Rush
+			DivineBlack.DisplayName: Divine Black
+			DivineWhite.DisplayName: Divine White
+			ChainDismantle.DisplayName: Chain Dismantle
+			FullIncarnationKOC.DisplayName: Full Incarnation K O C
+			SoulDismantle.DisplayName: Soul Dismantle
+			FesteringLifeBladeSlash.DisplayName: Festering Life Blade Slash
+			DragonBoneSlash.DisplayName: Dragon Bone Slash
+			CursedSpearProjectile.DisplayName: Cursed Spear Projectile
+			KamutokeProjectile.DisplayName: Kamutoke Projectile
+			KamutokeLightning.DisplayName: Kamutoke Lightning
+			QueensBladeSlash.DisplayName: Queens Blade Slash
+			RikaPunchProjectile.DisplayName: Rika Punch Projectile
+			MeiMeiAxeHoldout.DisplayName: Mei Mei Axe Holdout
 		}
 
 		Configs: {
@@ -277,6 +336,21 @@ Mods: {
 			MegumiSwordShibuya: {
 				Tooltip: ""
 				DisplayName: Megumi Sword Shibuya
+			}
+
+			CursedKatana: {
+				Tooltip: ""
+				DisplayName: Cursed Katana
+			}
+
+			SlaughterDemon: {
+				Tooltip: ""
+				DisplayName: Slaughter Demon
+			}
+
+			CursedSpear: {
+				DisplayName: Cursed Spear
+				Tooltip: ""
 			}
 		}
 	}

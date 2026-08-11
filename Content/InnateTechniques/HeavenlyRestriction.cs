@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.Buffs;
@@ -8,13 +7,14 @@ using sorceryFight.SFPlayer;
 using sorceryFight.Content.CursedTechniques.HeavenlyRestriction;
 using Terraria;
 using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
+using Terraria.ID;
 
 namespace sorceryFight.Content.InnateTechniques
 {
     public class HeavenlyRestriction : InnateTechnique
     {
-        public override string Name => "HeavenlyRestriction";
-        public override string DisplayName => SFUtils.GetLocalizationValue($"Mods.sorceryFight.Misc.InnateTechniques.{Name}.DisplayName");
+        public override string InternalName => "HeavenlyRestriction";
 
         public override Color innateBGColor => new Color(120, 120, 120, 70);
 
@@ -22,15 +22,21 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
-            new MindlessCarnage(),
+            new MindlessCarnage()
+                .SetUnlock(NPCID.WallofFlesh)
             // new InorganicPerception()
         };
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
-            new Groundshot(),
-            new RamCharge(),
-            new FlashStep(),
+            new Groundshot()
+                .SetUnlock(NPCID.EyeofCthulhu),
+            new RamCharge()
+                .SetUnlock(NPCID.SkeletronHead),
+            new FlashStep()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.unlockedRCT)
+                .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.RCT"),
             new LightspeedBarrage()
+                .SetUnlock(NPCID.Golem)
         };
         public override PlayerDomainExpansion DomainExpansion => null;
 

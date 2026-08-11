@@ -1,13 +1,10 @@
-using sorceryFight.Rarities;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.DataStructures;
 using Terraria.ID;
 using sorceryFight.Content.Items.Materials;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Items.Accessories
 {
@@ -25,7 +22,7 @@ namespace sorceryFight.Content.Items.Accessories
         {
             Item.accessory = true;
             Item.maxStack = 1;
-            Item.rare = ModContent.RarityType<SorceryFightAccessory>();
+            Item.rare = ItemRarityID.White;
             Item.width = 54;
             Item.height = 50;
         }
@@ -39,7 +36,7 @@ namespace sorceryFight.Content.Items.Accessories
             
             if (sfPlayer.innateTechnique != null)
             {
-                if (sfPlayer.innateTechnique.Name.Equals("Limitless"))
+                if (sfPlayer.innateTechnique.InternalName.Equals("Limitless"))
                     player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1f + limitlessDamageIncrease;
                 else
                     player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1f + cursedTechniqueDamageIncrease;

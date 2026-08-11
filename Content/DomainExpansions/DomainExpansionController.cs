@@ -8,9 +8,9 @@ using sorceryFight.Content.Buffs;
 using sorceryFight.Content.DomainExpansions.NPCDomains;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -190,7 +190,7 @@ namespace sorceryFight.Content.DomainExpansions
 
                 if (Main.netMode == NetmodeID.MultiplayerClient && Main.myPlayer == whoAmI)
                 {
-                    ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
+                    ModPacket packet = SorceryFightMod.Instance.GetPacket();
                     packet.Write((byte)MessageType.SyncDomain);
                     packet.Write(whoAmI);
                     packet.Write((byte)DomainNetMessage.ExpandDomain);
@@ -253,7 +253,7 @@ namespace sorceryFight.Content.DomainExpansions
 
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
-                        ModPacket packet = ModContent.GetInstance<SorceryFight>().GetPacket();
+                        ModPacket packet = SorceryFightMod.Instance.GetPacket();
                         packet.Write((byte)MessageType.SyncDomain);
                         packet.Write(de.owner);
                         packet.Write((byte)DomainNetMessage.CloseDomain);

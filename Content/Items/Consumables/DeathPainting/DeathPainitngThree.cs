@@ -1,4 +1,5 @@
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -28,7 +29,7 @@ namespace sorceryFight.Content.Items.Consumables.DeathPainting
 
         public override bool CanUseItem(Player player)
         {
-            string techName = player.SorceryFight().innateTechnique.Name;
+            string techName = player.SorceryFight().innateTechnique.InternalName;
             return techName == "Vessel" || techName == "BloodManipulation";
         }
 

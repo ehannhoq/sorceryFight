@@ -1,6 +1,4 @@
-﻿using CalamityMod.Particles;
-using CalamityMod.Sounds;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Particles;
@@ -8,6 +6,7 @@ using System.Linq;
 using System;
 using Terraria;
 using Terraria.ModLoader;
+
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
@@ -40,20 +39,21 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
         public override void AI()
         {
-            if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
+            Projectile.HandleProjectileAnimation(FRAME_COUNT, TICKS_PER_FRAME);
+            
+            if (Main.projectile[(int)Projectile.ai[0]].active)
             {
-                Projectile.frameCounter = 0;
-
-                if (Projectile.frame++ >= FRAME_COUNT - 1)
+                if (Main.myPlayer == Projectile.owner)
                 {
-                    Projectile.frame = 0;
+                    Vector2 mouseVelocity = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 20f;
+                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, mouseVelocity, 0.25f);
+                    noTargetCounter++;
+                    Projectile.rotation = Projectile.velocity.ToRotation();
+                    Projectile.netUpdate = true;
                 }
             }
-
-            //Main.NewText("Target State" + Projectile.ai[1]);
-            if (Main.myPlayer == Projectile.owner)
+            else
             {
-                // Validate target first
                 if (Projectile.ai[1] < 0 || !Main.npc[(int)Projectile.ai[1]].active)
                     Projectile.ai[1] = FindTarget();
 
@@ -62,27 +62,14 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                     Vector2 targetVelocity = (Main.npc[(int)Projectile.ai[1]].Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 20f;
                     Projectile.velocity = Vector2.Lerp(Projectile.velocity, targetVelocity, 0.25f);
                 }
-                else
-                {
-                    Vector2 mouseVelocity = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 20f;
-                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, mouseVelocity, 0.25f);
-                    noTargetCounter++;
-                }
-
-                if (160 < noTargetCounter)
-                {
-                    Projectile.Kill();
-                }
-
-                Projectile.rotation = Projectile.velocity.ToRotation();
             }
+
             Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(10f, 40f);
             Vector2 particleOffset = Projectile.Center + behindOffset;
             Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-            LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 20, 1f, textColor);
-            GeneralParticleHandler.SpawnParticle(particle);
+            LinearParticle particle = new LinearParticle(particleOffset, particleVelocity * 3, textColor, false, 0.9f, 1f, 20);
+            ParticleController.SpawnParticle(particle);
             return;
-
         }
 
         int FindTarget()

@@ -1,15 +1,46 @@
-BlackRope: {
-	DisplayName: Black Rope
-	Tooltip: A Rope that nullifies stuff
+CursedKatana: {
+	DisplayName: Cursed Katana
+	Tooltip: An ordinary katana imbued with Cursed Energy
 }
 
-CrikySword: {
-	DisplayName: Subatomic Particle Splitter
-	Tooltip:
-		'''
-		A blade that splits through the subatomic particles that make up atoms.
-		[c/6D2673:Dedicated to TheRealCriky]
-		'''
+SlaughterDemon: {
+	DisplayName: Slaughter Demon
+	Tooltip: A low-grade cursed combat knife
+}
+
+CursedSpear: {
+	DisplayName: Cursed Naginata
+	Tooltip: A light and agile naginata imbued with Cursed Energy
+}
+
+PotentialSword: {
+	DisplayName: Jet-Black Shadow Sword
+	Tooltip: A jet black cursed tool with great cutting power
+}
+
+FesteringLifeBlade: {
+	DisplayName: Festering Life Sword
+	Tooltip: A short cleaver-like blade festering with life and death
+}
+
+MeiMeiAxe: {
+	DisplayName: Giant Battle Axe
+	Tooltip: A ginormous cursed battle axe
+}
+
+DragonBone: {
+	DisplayName: Dragon-Bone
+	Tooltip: The finest blade ever forged by Juzo Kumiya
+}
+
+BlackRope: {
+	DisplayName: Black Rope
+	Tooltip: A Rope that nullifies anything
+}
+
+QueensBlade: {
+	DisplayName: Queen's Blade
+	Tooltip: A blade forged by the Queen of curses. Every fourth hit she punches the target.
 }
 
 InvertedSpear: {
@@ -19,7 +50,25 @@ InvertedSpear: {
 		Imbued with a foreign cursed technique, it's blade can nullify any cursed
 		technique.
 		[c/E0DA5A:Right click to toggle to a swinging charge up, which upon]
-		[c/E0DA5A:releasing throws out the spear for an undefined distance.]
+		[c/E0DA5A:releasing throws out the spear for an undefined distance]
+		'''
+}
+
+Kamutoke: {
+	DisplayName: Supreme Martial Solution
+	Tooltip:
+		'''
+		An ancient cursed tool imbued with lighting
+		[c/E0DA5A:Right click to fire lightning at enemies, each hit chaining to more enemies]
+		'''
+}
+
+CrikySword: {
+	DisplayName: Subatomic Particle Splitter
+	Tooltip:
+		'''
+		A blade that splits through the subatomic particles that make up atoms
+		[c/6D2673:Dedicated to TheRealCriky]
 		'''
 }
 

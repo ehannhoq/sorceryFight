@@ -1,13 +1,13 @@
 using System;
-using CalamityMod.Projectiles.Magic;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs.Vessel;
-using sorceryFight.Content.Items.Accessories;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.ItemDropRules;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -17,43 +17,34 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
     public class Cleave : CursedTechnique
     {
         public static readonly int FRAME_COUNT = 8;
-        public static readonly int TICKS_PER_FRAME = 1;
+        public static readonly int TICKS_PER_FRAME = 2;
         public static Texture2D texture;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.Cleave.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Cleave.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.Cleave.LockedDescription");
-        public override float Cost => 75f;
-        public override Color textColor => new Color(120, 21, 8);
-        public override bool DisplayNameInGame => false;
-        public override int Damage => 50;
-        public override int MasteryDamageMultiplier => 25;
-        public override float Speed => 0f;
-        public override float LifeTime => 16f;
-        float baseDamagePercent = 0.05f;
 
-        ref float attacked => ref Projectile.ai[1];
+        public override string InternalName => "Cleave";
 
-        public override int GetProjectileType()
+        private float baseDamagePercent = 0.03f;
+
+        private HashSet<int> bossSegmentTracker = new();
+
+        public Cleave()
         {
-            return ModContent.ProjectileType<Cleave>();
-        }
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
+            Technique.baseDamage = 30;
+            Technique.damagePerBoss = 2;
+            Technique.cost = 55;
+            Technique.speed = 24f;
+            Technique.lifetime = FRAME_COUNT * TICKS_PER_FRAME;
         }
 
         public override string GetStats(SorceryFightPlayer sf)
         {
-            float cost = CalculateTrueCost(sf);
-            float percent = cost / sf.maxCursedEnergy;
-            return $"Damage: {Math.Round(CalculateTrueDamage(sf), 2)} + {Math.Round(baseDamagePercent * 100, 2)}% of target's health\n"
+            return $"Damage: {MathF.Round(CalculateTrueDamage(sf), 2)} + {Math.Round(baseDamagePercent * 100, 2)}% of target's health\n"
                 + $"Cost: {Math.Round(CalculateTrueCost(sf), 2)} CE\n";
         }
 
         public override float CalculateTrueCost(SorceryFightPlayer sf)
         {
             float masteryMultiplier = 1 - (sf.bossesDefeated.Count / 100f);
-            float maxCEPenalty = sf.maxCursedEnergy * 0.11f;
+            float maxCEPenalty = sf.maxCursedEnergy * 0.45f;
             float finalCost = maxCEPenalty * masteryMultiplier;
             finalCost *= 1 - sf.ctCostReduction;
             return finalCost;
@@ -67,14 +58,14 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             {
                 Vector2 playerPos = player.MountedCenter;
                 Vector2 mousePos = Main.MouseWorld;
-                Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * Speed;
+                Vector2 dir = (mousePos - playerPos).SafeNormalize(Vector2.Zero) * speed;
                 var entitySource = player.GetSource_FromThis();
-                sf.cursedEnergy -= CalculateTrueCost(sf);
 
-                return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 0, player.whoAmI);
+                return Projectile.NewProjectile(entitySource, player.Center, dir, GetProjectileType(), CalculateTrueDamage(sf), 0, player.whoAmI);
             }
             return -1;
         }
+
 
         public override void SetStaticDefaults()
         {
@@ -83,57 +74,46 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             if (Main.dedServ) return;
             texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Shrine/Cleave", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
+
+
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 90;
-            Projectile.height = 90;
+            Projectile.width = 188;
+            Projectile.height = 188;
+            Projectile.scale = 0.5f;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
+            Projectile.penetrate = -1;
+        }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            SoundEngine.PlaySound(SorceryFightSounds.CleaveSwing with { Volume = 3f }, Main.player[Projectile.owner].Center);
         }
 
         public override void AI()
         {
-            Projectile.ai[0]++;
-
-            if (Projectile.ai[0] >= LifeTime)
-            {
-                Projectile.Kill();
-            }
-
-            if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
-            {
-                Projectile.frameCounter = 0;
-
-                if (Projectile.frame++ >= FRAME_COUNT - 1)
-                {
-                    Projectile.frame = 0;
-                }
-            }
-
-            /**
-            Thank you MurasamaSlash.cs source code i'm too lazy to figure ts out -ehann
-            */
+            Projectile.HandleProjectileAnimation(FRAME_COUNT, TICKS_PER_FRAME);
 
             Player player = Main.player[Projectile.owner];
             Vector2 playerRotatedPoint = player.RotatedRelativePoint(player.MountedCenter, true);
-            float velocityAngle = Projectile.velocity.ToRotation();
-            float offset = 30f * Projectile.scale;
-
-            Projectile.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
-            Projectile.direction = (Math.Cos(velocityAngle) > 0).ToDirectionInt();
-            Projectile.rotation = velocityAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
-            Projectile.Center = playerRotatedPoint + new Vector2(0.0f, 20.0f) + velocityAngle.ToRotationVector2() * offset;
-            player.ChangeDir(Projectile.direction);
-
-            if (Projectile.ai[0] == 1)
+            if (Main.myPlayer == Projectile.owner)
             {
-                SoundEngine.PlaySound(SorceryFightSounds.CleaveSwing with { Volume = 3f }, player.Center);
+                Projectile.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
+                Projectile.netUpdate = true;
+                Projectile.netUpdate2 = false;
             }
 
+            float velocityAngle = Projectile.velocity.ToRotation();
+            Projectile.direction = (Math.Cos(velocityAngle) > 0).ToDirectionInt();
+            Projectile.rotation = velocityAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
+            Projectile.Center = (playerRotatedPoint + new Vector2(0f, 10f)) + velocityAngle.ToRotationVector2() * 45f;
+            player.ChangeDir(Projectile.direction);
         }
+
 
         public override bool PreDraw(ref Color lightColor)
         {
@@ -143,19 +123,22 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
             Vector2 projOrigin = sourceRectangle.Size() * 0.5f;
             SpriteEffects spriteEffects = Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, -32).RotatedBy(Projectile.rotation), sourceRectangle, Color.White, Projectile.rotation, projOrigin, 0.33f, spriteEffects, 0f);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, -32).RotatedBy(Projectile.rotation), sourceRectangle, Color.White, Projectile.rotation, projOrigin, Projectile.scale, spriteEffects, 0f);
             return false;
         }
+        
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (attacked == 0)
+            if (bossSegmentTracker.Contains(target.type))
             {
-                attacked = 1.0f;
-                modifiers.FinalDamage.Flat += target.life * baseDamagePercent;
+                modifiers.FinalDamage *= 0.01f;
                 return;
             }
-            modifiers.FinalDamage.Flat *= 0;
+            else if (target.dontCountMe)
+                bossSegmentTracker.Add(target.type);
+
+            modifiers.FinalDamage.Flat += target.life * baseDamagePercent;
         }
     }
 }

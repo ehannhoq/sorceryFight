@@ -1,42 +1,183 @@
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.CursedTechniques.Limitless;
 using sorceryFight.Content.DomainExpansions;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Buffs.Limitless;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
+using Microsoft.Xna.Framework;
+using sorceryFight.SFPlayer;
+using Terraria.ID;
+using sorceryFight.Content.Buffs.Shrine;
+using sorceryFight.Content.Quests;
+using Terraria.Graphics.Effects;
+using System.Linq;
+using Terraria.Audio;
+using System;
+using Terraria;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
+using Terraria.ModLoader;
+using sorceryFight.Content.Items.Accessories;
+using sorceryFight.Content.UI.Chants;
 
 namespace sorceryFight.Content.InnateTechniques
 {
     public class LimitlessTechnique : InnateTechnique
     {
-        public override string Name => "Limitless";
-        public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.Limitless.DisplayName");
+        public override string InternalName => "Limitless";
 
         public override Color innateBGColor => new Color(150, 219, 235, 85);
 
         public override Color innateBorderColor => new Color(0, 0, 0, 128);
 
+
+        private Projectile hollowPurple = null;
+        private int postHollowPurpleSummonTick = 0;
+
         public override List<PassiveTechnique> PassiveTechniques { get; } = new List<PassiveTechnique>
         {
-            new InfinityBuff(),
-            new AmplifiedAuraBuff(),
-            new MaximumAmplifiedAuraBuff(),
-            new FallingBlossomEmotionBuff()
+            new Infinity()
+                .SetUnlock(NPCID.EyeofCthulhu),
+
+            new AmplifiedAura()
+                .SetUnlock(NPCID.SkeletronHead),
+
+            new MaximumAmplifiedAura()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedMechBossThree)
+                .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.MechBossThree"),
+
+            new FallingBlossomEmotion()
+                .SetUnlock(NPCID.HallowBoss)
         };
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
-            new AmplificationBlue(),
-            new MaximumOutputBlue(),
+            new AmplificationBlue()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedEvilBoss)
+                .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.EvilBoss"),
 
-            new ReversalRed(),
-            new MaximumOutputRed(),
-        
-            new HollowPurple(),
+            new MaximumOutputBlue()
+                .SetUnlock(NPCID.WallofFlesh),
+
+            new ReversalRed()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.unlockedRCT)
+                .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.RCT"),
+
+            new MaximumOutputRed()
+                .SetUnlock(NPCID.Golem),
+
+            new HollowPurple()
+                .SetUnlock(NPCID.CultistBoss),
+
             new HollowPurple200Percent()
+                .SetUnlock(NPCID.MoonLordCore)
         };
 
         public override PlayerDomainExpansion DomainExpansion => new UnlimitedVoid();
+
+
+        public override void RCTAnimation(SorceryFightPlayer sf)
+        {
+            SetupRCTAnimation(sf);
+
+            if (rctTimer < 120)
+            {
+                if (!Filters.Scene["SF:BlackScreen"].IsActive())
+                {
+                    Filters.Scene.Activate("SF:BlackScreen").GetShader().UseProgress(1f);
+                    SoundController.MuteSounds();
+                    Main.hideUI = true;
+                }
+                return;
+            }
+
+            int tick1 = rctTimer - 120;
+            if (tick1 < 120)
+            {
+                if (Filters.Scene["SF:BlackScreen"].IsActive())
+                {
+                    Filters.Scene["SF:BlackScreen"].GetShader().UseProgress(0f);
+                    Filters.Scene.Deactivate("SF:BlackScreen");
+                    SoundController.UnmuteSounds();
+                    Main.hideUI = false;
+                }
+
+                float easeInProgress = tick1 / 60f;
+                easeInProgress = Math.Clamp(easeInProgress, 0f, 1f);
+
+                if (!Filters.Scene["SF:LimitlessRCTFilter"].IsActive())
+                {
+                    Filters.Scene.Activate("SF:LimitlessRCTFilter");
+                }
+                Filters.Scene["SF:LimitlessRCTFilter"].GetShader().UseProgress(easeInProgress);
+
+                float yFunc = (MathF.Sin((MathHelper.TwoPi * easeInProgress) - MathHelper.PiOver2) / 2f) + 0.5f;
+                float y = 5 * yFunc;
+
+                sf.deathPosition.Y -= y;
+                return;
+            }
+
+            Vector2 planteraPos = Main.npc[RCTGranter.planteraIndex].Center;
+            Vector2 hollowPurplePos = sf.Player.MountedCenter + sf.Player.MountedCenter.DirectionTo(planteraPos) * 50f;
+
+            if (tick1 == 120)
+            {
+                string line = SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.UnlockedRCT.Limitless");
+                string[] parts = line.Split('~');
+
+                ChantManager.InitiateChant(new Chant(
+                    text: SFUtils.CombineListOfStrings([.. parts]),
+                    colors: [
+                        new Color(245, 225, 171, 255),
+                        new Color(227, 191, 141, 255),
+                    ],
+                    timeBetweenCharacters: 5,
+                    timeBetweenWords: 60,
+                    delayAfterChant: 120,
+                    onEnd: () =>
+                    {
+                        int index = Projectile.NewProjectile(sf.Player.GetSource_FromThis(), hollowPurplePos, Vector2.Zero, ModContent.ProjectileType<HollowPurple>(), 0, 0, sf.Player.whoAmI, ai1: 1f);
+                        hollowPurple = Main.projectile[index];
+                    },
+                    chantStyles: [
+                        new CharacterGlow(
+                            new Color(237, 225, 190, 255),
+                            glowRadius: 6f
+                        ),
+                        new CharacterStroke(
+                            new Color(191, 128, 38, 255),
+                            borderWidth: 2f
+                        ),
+                        new CharacterWave(amplitude: 2f, frequency: 0.05f)
+                    ],
+                    perCharacterAnimationTime: 15,
+                    characterStartOffset: new Vector2(20f, 10f),
+                    characterAnimationOpacityFadeIn: true,
+                    perCharacterEvent: (currentIndex, remaining) => {
+                        SoundEngine.PlaySound(SoundID.MenuTick with { PitchVariance = 0.25f, MaxInstances = 0 });
+                    }
+                ));
+            }
+
+            if (hollowPurple == null) return;
+
+            HollowPurple hollowPurpleCT = hollowPurple.ModProjectile as HollowPurple;
+
+            postHollowPurpleSummonTick++;
+            float hollowPurpleCastTime = sf.cursedOfuda ? MathF.Floor(CursedOfuda.cursedTechniqueCastTimeDecrease * 90f) : 90f;
+            float hollowPurpleCollisionTime = hollowPurpleCT.collisionVFX.lifetime;
+
+            if (postHollowPurpleSummonTick == (int)(hollowPurpleCastTime + hollowPurpleCollisionTime + 1))
+            {
+
+                hollowPurple.velocity = (planteraPos - hollowPurple.Center).SafeNormalize(Vector2.UnitX) * hollowPurpleCT.speed;
+                Filters.Scene["SF:LimitlessRCTFilter"].GetShader().UseProgress(0f);
+                Filters.Scene.Deactivate("SF:LimitlessRCTFilter");
+                GrantRCT(sf);
+
+                hollowPurple = null;
+            }
+        }
     }
 }

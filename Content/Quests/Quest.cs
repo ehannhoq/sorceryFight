@@ -1,7 +1,7 @@
 using System;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 
@@ -73,7 +73,7 @@ namespace sorceryFight.Content.Quests
 
         public static Quest QuestBuilder(string typeName)
         {
-            foreach (var type in AssemblyManager.GetLoadableTypes(ModContent.GetInstance<SorceryFight>().Code))
+            foreach (var type in AssemblyManager.GetLoadableTypes(SorceryFightMod.Instance.Code))
             {
                 if (type.IsAbstract || !typeof(Quest).IsAssignableFrom(type))
                     continue;

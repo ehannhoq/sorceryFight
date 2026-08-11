@@ -13,6 +13,7 @@ InnateTechniques: {
 UnlockedRCT: {
 	GeneralMessage: At the brink of death, you understand the nature of the Reverse Cursed Technique.
 	KeyBindMessage: ": Hold down to use your cursed energy to heal yourself!"
+	Limitless: Throughout Heaven and Earth,~I alone am the honored one.
 }
 
 SukunaRevive: {
@@ -48,4 +49,13 @@ InnateTechniqueUnlocker: {
 		OverflowingEnergy: You feel your cursed energy overflowing.
 		FailedReroll: Your cursed energy seems to be the same as before.
 	}
+}
+
+CursedTechniques: {
+	Damage: "{0} cursed damage"
+	Cost: "{0} cursed energy"
+	ContinuousCost: "{0} cursed energy per second"
+	BloodCost: "{0} blood"
+	ContinuousBloodCost: "{0} blood per second"
+	StarCost: "{0} mass overcharge"
 }

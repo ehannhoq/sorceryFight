@@ -1,5 +1,3 @@
-using CalamityMod.Particles;
-using CalamityMod.Sounds;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,48 +11,53 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
+
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
     public class SlicingExorcism : CursedTechnique
     {
-
         public static readonly int FRAME_COUNT = 8;
         public static readonly int TICKS_PER_FRAME = 5;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.SlicingExorcism.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SlicingExorcism.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SlicingExorcism.LockedDescription");
-        public override float Cost => 20f;
-
-        public override float BloodCost => 20f;
-
-        public override Color textColor => new Color(255, 0, 0);
-        public override bool DisplayNameInGame => true;
-
-        public override int Damage => 18;
-        public override int MasteryDamageMultiplier => 50;
-
-        public override float Speed => 25f;
-        public override float LifeTime => 300f;
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.KingSlime);
-        }
-
-
         public static Texture2D texture;
 
-        public bool animating;
-        public float animScale;
+        public override string InternalName => "SlicingExorcism";
 
+        public bool animating;
+
+        private float BloodCost => Technique.cost / 3;
+
+        public SlicingExorcism()
+        {
+            Technique.baseDamage = 10;
+            Technique.damagePerBoss = 6;
+            Technique.cost = 10;
+            Technique.speed = 12f;
+        }
+
+        public override bool CanUse(SorceryFightPlayer sf)
+        {
+            return sf.bloodEnergy > BloodCost;
+        }
+
+        public override void ApplyCosts(SorceryFightPlayer sfPlayer)
+        {
+            base.ApplyCosts(sfPlayer);
+            sfPlayer.bloodEnergy -= BloodCost;
+        }
+
+        public override string GetStats(SorceryFightPlayer sf)
+        {
+            string localizationCategoryKey = "Mods.sorceryFight.Misc.CursedTechniques";
+            
+            string bloodCost = SFUtils.GetLocalization(localizationCategoryKey + ".BloodCost")
+                    .WithFormatArgs((int)BloodCost).Value;
+
+            return base.GetStats(sf) + "\n" + bloodCost;
+        }
 
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = FRAME_COUNT;
-        }
-
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<SlicingExorcism>();
         }
 
 
@@ -66,8 +69,9 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Projectile.tileCollide = true;
             animating = false;
             Projectile.penetrate = -1;
-            animScale = 1.25f;
         }
+
+
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
@@ -75,20 +79,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             float beginAnimTime = 30f;
             Player player = Main.player[Projectile.owner];
 
-            if (Projectile.ai[0] > LifeTime + beginAnimTime)
-            {
-                Projectile.Kill();
-            }
-
-            if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
-            {
-                Projectile.frameCounter = 0;
-
-                if (Projectile.frame++ >= FRAME_COUNT - 1)
-                {
-                    Projectile.frame = 0;
-                }
-            }
+            Projectile.HandleProjectileAnimation(FRAME_COUNT, TICKS_PER_FRAME);
 
             if (Projectile.ai[0] < beginAnimTime)
             {
@@ -112,8 +103,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 Vector2 behindOffset = -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(10f, 40f);
                 Vector2 particleOffset = Projectile.Center + behindOffset;
                 Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 20, 1f, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
+                LinearParticle particle = new LinearParticle(particleOffset, particleVelocity * 3, new Color(140, 13, 13), false, 0.9f, 1f, 20);
+                ParticleController.SpawnParticle(particle);
                 return;
             }
 
@@ -139,7 +130,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
 
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
-            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, 1.25f, SpriteEffects.None, 0f);
 
             return false;
         }
@@ -154,8 +145,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
 
-                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, new Color(140, 13, 13), false, 0.9f, 1f, 30);
+                ParticleController.SpawnParticle(particle);
             }
         }
 

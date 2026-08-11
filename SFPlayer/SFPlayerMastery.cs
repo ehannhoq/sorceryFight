@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,17 +12,83 @@ namespace sorceryFight.SFPlayer
         public static Action OnNewBossDefeated;
         public HashSet<int> bossesDefeated;
         public int numberBossesDefeated => bossesDefeated.Count;
+
+        public byte mechanicalBossesDefeatedFlags;
+        public bool defeatedMechBossOne => (mechanicalBossesDefeatedFlags & 0b0001) != 0;
+        public bool defeatedMechBossTwo => (mechanicalBossesDefeatedFlags & 0b0010) != 0;
+        public bool defeatedMechBossThree => (mechanicalBossesDefeatedFlags & 0b0100) != 0;
+        public bool defeatedEvilBoss => HasDefeatedBoss(NPCID.BrainofCthulhu) || HasDefeatedBoss(NPCID.EaterofWorldsHead);
+
         public void AddDefeatedBoss(int bossType)
         {
             if (!bossesDefeated.Contains(bossType))
                 OnNewBossDefeated?.Invoke();
-            
+
+            if (IsMechanicalBoss(bossType) && (!defeatedMechBossOne || !defeatedMechBossTwo || !defeatedMechBossThree))
+                SetMechanicalBossFlags(bossType);
+
             bossesDefeated.Add(bossType);
             SorceryFightUI.UpdateTechniqueUI?.Invoke();
 
             if (Main.netMode == NetmodeID.Server)
             {
                 SendBossDefeatedToClients(bossType);
+            }
+        }
+
+
+        private bool IsMechanicalBoss(int bossType)
+        {
+            switch (bossType)
+            {
+                case NPCID.Retinazer:
+                case NPCID.Spazmatism:
+                case NPCID.SkeletronPrime:
+                case NPCID.TheDestroyer:
+                    return true;
+            }
+            return false;
+        }
+
+
+        private void SetMechanicalBossFlags(int bossType)
+        {
+            if (!defeatedMechBossOne)
+            {
+                if (bossType == NPCID.Retinazer)
+                    if (Main.npc.Any(npc => npc.boss && npc.type == NPCID.Spazmatism))
+                        return;
+                if (bossType == NPCID.Spazmatism)
+                    if (Main.npc.Any(npc => npc.boss && npc.type == NPCID.Retinazer))
+                        return;
+
+                mechanicalBossesDefeatedFlags = 0b0001;
+                return;
+            }
+
+            if (!defeatedMechBossTwo)
+            {
+                if (bossType == NPCID.Retinazer)
+                    if (Main.npc.Any(npc => npc.boss && npc.type == NPCID.Spazmatism))
+                        return;
+                if (bossType == NPCID.Spazmatism)
+                    if (Main.npc.Any(npc => npc.boss && npc.type == NPCID.Retinazer))
+                        return;
+
+                mechanicalBossesDefeatedFlags = 0b0011;
+                return;
+            }
+
+            if (!defeatedMechBossThree)
+            {
+                if (bossType == NPCID.Retinazer)
+                    if (Main.npc.Any(npc => npc.boss && npc.type == NPCID.Spazmatism))
+                        return;
+                if (bossType == NPCID.Spazmatism)
+                    if (Main.npc.Any(npc => npc.boss && npc.type == NPCID.Retinazer))
+                        return;
+
+                mechanicalBossesDefeatedFlags = 0b0111;
             }
         }
 

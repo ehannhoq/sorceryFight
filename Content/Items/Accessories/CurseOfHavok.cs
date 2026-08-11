@@ -1,4 +1,3 @@
-using sorceryFight.Rarities;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Localization;
@@ -8,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Terraria.ID;
 using sorceryFight.Content.Items.Materials;
-using CalamityMod.Items.Materials;
 
 namespace sorceryFight.Content.Items.Accessories
 {
@@ -34,7 +32,7 @@ namespace sorceryFight.Content.Items.Accessories
         {
             Item.accessory = true;
             Item.maxStack = 1;
-            Item.rare = ModContent.RarityType<SorceryFightAccessory>();
+            Item.rare = ItemRarityID.White;
             Item.width = 54;
             Item.height = 50;
         }
@@ -51,7 +49,7 @@ namespace sorceryFight.Content.Items.Accessories
             SorceryFightPlayer sfPlayer = player.SorceryFight();
             if (sfPlayer.innateTechnique != null)
             {
-                if (sfPlayer.innateTechnique.Name.Equals("Shrine"))
+                if (sfPlayer.innateTechnique.InternalName.Equals("Shrine"))
                     player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1f + shrineDamageIncrease;
                 else
                     player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1f + cursedTechniqueDamageIncrease;
@@ -86,11 +84,9 @@ namespace sorceryFight.Content.Items.Accessories
         public override void AddRecipes()
         {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<EssenceofHavoc>(), 3);
-            recipe.AddIngredient(ItemID.SoulofNight, 3);
-            recipe.AddIngredient(ModContent.ItemType<InfusedCursedFragment>(), 5);
-            // recipe.AddIngredient(ModContent.ItemType<CursedDust>(), 2);
-            recipe.AddTile(TileID.LunarCraftingStation);
+            recipe.AddIngredient(ItemID.SoulofNight, 10);
+            recipe.AddIngredient(ItemID.Ectoplasm, 10);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
     }

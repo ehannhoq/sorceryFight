@@ -1,5 +1,3 @@
-using CalamityMod.Particles;
-using CalamityMod.Sounds;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,40 +10,47 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using CalamityMod.NPCs.AstrumDeus;
+
 
 namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 {
     public class SuperNova : CursedTechnique
     {
-
         public static readonly int FRAME_COUNT = 3;
         public static readonly int TICKS_PER_FRAME = 5;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.SuperNova.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SuperNova.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.SuperNova.LockedDescription");
-        public override float Cost => 40f;
-
-        public override float BloodCost => 100f;
-
-        public override Color textColor => new Color(255, 0, 0);
-        public override bool DisplayNameInGame => true;
-
-        public override int Damage => 30;
-        public override int MasteryDamageMultiplier => 100;
-
-        public override float Speed => 25f;
-        public override float LifeTime => 120f;
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(ModContent.NPCType<AstrumDeusHead>());
-        }
-
-
         public static Texture2D texture;
 
-        public bool animating;
-        public float animScale;
+        public override string InternalName => "SuperNova";
+
+        public float BloodCost => Technique.cost;
+        public SuperNova()
+        {
+            Technique.baseDamage = 60;
+            Technique.damagePerBoss = 6;
+            Technique.cost = 100;
+            Technique.speed = 20f;
+        }
+
+        public override bool CanUse(SorceryFightPlayer sf)
+        {
+            return sf.bloodEnergy > BloodCost;
+        }
+
+        public override void ApplyCosts(SorceryFightPlayer sfPlayer)
+        {
+            base.ApplyCosts(sfPlayer);
+            sfPlayer.bloodEnergy -= BloodCost;
+        }
+
+        public override string GetStats(SorceryFightPlayer sf)
+        {
+            string localizationCategoryKey = "Mods.sorceryFight.Misc.CursedTechniques";
+            
+            string bloodCost = SFUtils.GetLocalization(localizationCategoryKey + ".BloodCost")
+                    .WithFormatArgs((int)BloodCost).Value;
+
+            return base.GetStats(sf) + "\n" + bloodCost;
+        }
 
 
         public override void SetStaticDefaults()
@@ -53,28 +58,14 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Main.projFrames[Projectile.type] = FRAME_COUNT;
         }
 
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<SuperNova>();
-        }
-
         public override int UseTechnique(SorceryFightPlayer sf)
         {
             Player player = sf.Player;
-            sf.bloodEnergy -= BloodCost;
-            sf.cursedEnergy -= CalculateTrueCost(sf);
-
             if (Main.myPlayer == player.whoAmI)
             {
-                if (DisplayNameInGame)
-                {
-                    int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
-                    Main.combatText[index1].lifeTime = 180;
-                }
-
                 Vector2 mousePos = Main.MouseWorld;
                 var entitySource = player.GetSource_FromThis();
-                int index = Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, GetProjectileType(), (int)CalculateTrueDamage(sf), 0f, player.whoAmI);
+                int index = Projectile.NewProjectile(entitySource, player.Center, Vector2.Zero, GetProjectileType(), CalculateTrueDamage(sf), 0f, player.whoAmI);
                 Main.projectile[index].ai[0] = Main.MouseWorld.X;
                 Main.projectile[index].ai[1] = Main.MouseWorld.Y;
                 return index;
@@ -89,13 +80,12 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Projectile.width = 16;
             Projectile.height = 16;
             Projectile.tileCollide = false;
-            animating = false;
             Projectile.penetrate = -1;
-            animScale = 1.25f;
-            Projectile.timeLeft = (int)LifeTime;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 30;
         }
+
+
         public override void AI()
         {
             if (Projectile.frameCounter++ >= TICKS_PER_FRAME)
@@ -110,9 +100,9 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
 
             Vector2 targetPos = new Vector2(Projectile.ai[0], Projectile.ai[1]);
 
-            if (Vector2.Distance(Projectile.Center, targetPos) > Speed)
+            if (Vector2.Distance(Projectile.Center, targetPos) > speed)
             {
-                Projectile.velocity = Projectile.DirectionTo(targetPos) * Speed;
+                Projectile.velocity = Projectile.DirectionTo(targetPos) * speed;
             }
             else
             {
@@ -121,9 +111,8 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
                 Projectile.penetrate = 1;
                 Projectile.tileCollide = true;
             }
-
-
         }
+
 
         public override void OnKill(int timeLeft)
         {
@@ -139,6 +128,7 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             }
         }
 
+
         public override bool PreDraw(ref Color lightColor)
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
@@ -153,10 +143,11 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             Vector2 origin = new Vector2(texture.Width / 2, frameHeight / 2);
 
             Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
-            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, animScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, origin, 1.25f, SpriteEffects.None, 0f);
 
             return false;
         }
+
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
@@ -168,10 +159,9 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
 
-                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, new Color(140, 13, 13), false, 0.9f, 1, 30);
+                ParticleController.SpawnParticle(particle);
             }
         }
-
     }
 }

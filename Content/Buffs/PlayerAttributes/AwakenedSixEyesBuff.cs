@@ -1,5 +1,3 @@
-using System;
-using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -27,7 +25,7 @@ namespace sorceryFight.Content.Buffs.PlayerAttributes
 
         public override bool RightClick(int buffIndex)
         {
-            if (SorceryFight.IsDevMode())
+            if (SorceryFightMod.IsDevMode())
             {
                 Main.LocalPlayer.SorceryFight().sixEyesLevel = 0;
                 return true;

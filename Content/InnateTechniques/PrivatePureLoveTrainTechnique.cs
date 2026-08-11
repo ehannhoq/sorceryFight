@@ -5,13 +5,15 @@ using sorceryFight.Content.Buffs;
 using sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain;
 using sorceryFight.Content.DomainExpansions.PlayerDomains;
 using Microsoft.Xna.Framework;
+using sorceryFight.Utilities;
+using Terraria.ID;
+using sorceryFight.SFPlayer;
 
 namespace sorceryFight.Content.InnateTechniques
 {
     public class PrivatePureLoveTrainTechnique : InnateTechnique
     {
-        public override string Name => "PrivatePureLoveTrain";
-        public override string DisplayName => SFUtils.GetLocalizationValue("Mods.sorceryFight.Misc.InnateTechniques.PrivatePureLoveTrain.DisplayName");
+        public override string InternalName => "PrivatePureLoveTrain";
 
         public override Color innateBGColor => new Color(160, 232, 64, 85);
 
@@ -22,11 +24,21 @@ namespace sorceryFight.Content.InnateTechniques
         };
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
-            new PachinkoBalls(),
-            new HakarisDoor(),
-            new PassingThrough(),
-            new CargoCrate(),
+            new PachinkoBalls()
+                .SetUnlock(NPCID.EyeofCthulhu),
+
+            new HakarisDoor()
+                .SetUnlock(NPCID.SkeletronHead),
+
+            new PassingThrough()
+                .SetUnlock(NPCID.WallofFlesh),
+
+            new CargoCrate()
+                .SetUnlock((SorceryFightPlayer sfPlayer) => sfPlayer.defeatedMechBossThree)
+                .SetUnlockRequirement("Mods.sorceryFight.UnlockRequirements.MechBossThree"),
+
             new RailroadSign()
+                .SetUnlock(NPCID.HallowBoss)
         };
 
         public override PlayerDomainExpansion DomainExpansion { get; } = new IdleDeathGamble();

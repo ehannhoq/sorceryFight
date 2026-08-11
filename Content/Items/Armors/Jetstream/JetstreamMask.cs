@@ -1,6 +1,3 @@
-using CalamityMod.Items.Armor.Bloodflare;
-using CalamityMod.Items.Materials;
-using CalamityMod.Tiles.Furniture.CraftingStations;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -34,15 +31,15 @@ namespace sorceryFight.Content.Items.Armors.Jetstream
             player.GetCritChance(DamageClass.Melee) += critChance;
         }
 
-        public override void AddRecipes()
-        {
-            Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ModContent.ItemType<BloodflareHeadMelee>(), 1);
-            recipe.AddIngredient(ModContent.ItemType<ShadowspecBar>(), 5);
-            recipe.AddIngredient(ModContent.ItemType<DubiousPlating>(), 5);
-            recipe.AddIngredient(ModContent.ItemType<MiracleMatter>(), 1);
-            recipe.AddTile(ModContent.TileType<DraedonsForge>());
-            recipe.Register();
-        }
+        // public override void AddRecipes()
+        // {
+        //     Recipe recipe = CreateRecipe();
+        //     recipe.AddIngredient(ModContent.ItemType<BloodflareHeadMelee>(), 1);
+        //     recipe.AddIngredient(ModContent.ItemType<ShadowspecBar>(), 5);
+        //     recipe.AddIngredient(ModContent.ItemType<DubiousPlating>(), 5);
+        //     recipe.AddIngredient(ModContent.ItemType<MiracleMatter>(), 1);
+        //     recipe.AddTile(ModContent.TileType<DraedonsForge>());
+        //     recipe.Register();
+        // }
     }
 }

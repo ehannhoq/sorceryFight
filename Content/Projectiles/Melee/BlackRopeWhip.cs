@@ -1,11 +1,9 @@
 using System;
-using CalamityMod;
-using CalamityMod.Particles;
 using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Particles;
-using sorceryFight.Content.Particles.UIParticles;
+
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -155,8 +153,8 @@ namespace sorceryFight.Content.Projectiles.Melee
                 int colVariation = Main.rand.Next(-38, 100);
                 float scale = Main.rand.NextFloat(1f, 1.25f);
                 float scalar = Main.rand.NextFloat(15f, 30f);
-                SparkParticle particle = new SparkParticle(target.Center, (Projectile.velocity * scalar) + veloVariation, false, 30, scale, new Color(109 + colVariation, 38 + colVariation, 115 + colVariation));
-                GeneralParticleHandler.SpawnParticle(particle);
+                // SparkParticle particle = new SparkParticle(target.Center, (Projectile.velocity * scalar) + veloVariation, false, 30, scale, new Color(109 + colVariation, 38 + colVariation, 115 + colVariation));
+                // GeneralParticleHandler.SpawnParticle(particle);
             }
 
         }
@@ -172,10 +170,9 @@ namespace sorceryFight.Content.Projectiles.Melee
                 int colVariation = Main.rand.Next(-38, 100);
                 float scale = Main.rand.NextFloat(1f, 1.25f);
                 float scalar = Main.rand.NextFloat(15f, 30f);
-                SparkParticle particle = new SparkParticle(target.Center, (Projectile.velocity * scalar) + veloVariation, false, 30, scale, new Color(109 + colVariation, 38 + colVariation, 115 + colVariation));
-                GeneralParticleHandler.SpawnParticle(particle);
+                // SparkParticle particle = new SparkParticle(target.Center, (Projectile.velocity * scalar) + veloVariation, false, 30, scale, new Color(109 + colVariation, 38 + colVariation, 115 + colVariation));
+                // GeneralParticleHandler.SpawnParticle(particle);
             }
-
         }
     }
 }

@@ -1,4 +1,3 @@
-using sorceryFight.Rarities;
 using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Localization;
@@ -7,7 +6,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Terraria.ID;
-using CalamityMod.Items.Materials;
 
 namespace sorceryFight.Content.Items.Accessories
 {
@@ -33,7 +31,7 @@ namespace sorceryFight.Content.Items.Accessories
         {
             Item.accessory = true;
             Item.maxStack = 1;
-            Item.rare = ModContent.RarityType<SorceryFightAccessory>();
+            Item.rare = ItemRarityID.White;
             Item.width = 54;
             Item.height = 50;
         }
@@ -50,7 +48,7 @@ namespace sorceryFight.Content.Items.Accessories
             SorceryFightPlayer sfPlayer = player.SorceryFight();
             if (sfPlayer.innateTechnique != null)
             {
-                if (sfPlayer.innateTechnique.Name.Equals("Limitless"))
+                if (sfPlayer.innateTechnique.InternalName.Equals("Limitless"))
                     player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1f + limitlessDamageIncrease;
                 else
                     player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1f + cursedTechniqueDamageIncrease;
@@ -83,11 +81,9 @@ namespace sorceryFight.Content.Items.Accessories
         public override void AddRecipes()
         {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<EssenceofEleum>(), 3);
-            recipe.AddIngredient(ItemID.SoulofMight, 5);
-            recipe.AddIngredient(ItemID.SoulofLight, 3);
-            recipe.AddIngredient(ItemID.Ectoplasm, 2);
-            recipe.AddTile(TileID.LunarCraftingStation);
+            recipe.AddIngredient(ItemID.SoulofLight, 10);
+            recipe.AddIngredient(ItemID.Ectoplasm, 10);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
     }

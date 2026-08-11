@@ -5,6 +5,7 @@ using sorceryFight.Content.Buffs;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.UI.CursedTechniqueMenu;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -39,11 +40,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 Rectangle borderRect = bgRect;
                 borderRect.Inflate(2, 2);
 
-                Color borderColor;
-                if (sfPlayer.innateTechnique.PassiveTechniques[id].selectorBorderColor != default)
-                    borderColor = sfPlayer.innateTechnique.PassiveTechniques[id].selectorBorderColor;
-                else
-                    borderColor = sfPlayer.innateTechnique.innateBorderColor;
+                Color borderColor = sfPlayer.innateTechnique.innateBorderColor;
 
                 Color bgColor;
                 if (ModContent.GetInstance<ClientConfig>().AllUIBackgroundsGrayToggle)
@@ -53,13 +50,11 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 }
                 else
                 {
-                    if (sfPlayer.innateTechnique.PassiveTechniques[id].selectorBGColor != default)
-                        bgColor = sfPlayer.innateTechnique.PassiveTechniques[id].selectorBGColor;
-                    else
-                        bgColor = sfPlayer.innateTechnique.innateBGColor;
+                    bgColor = sfPlayer.innateTechnique.innateBGColor;
                 }
+
                 //darken the background when the technique is active
-                if (sfPlayer.innateTechnique.PassiveTechniques[id].isActive)
+                if (sfPlayer.innateTechnique.PassiveTechniques[id].active)
                     bgColor = new Color((int)(bgColor.R * 0.8f), (int)(bgColor.G * 0.8f), (int)(bgColor.B * 0.8f), bgColor.A);
 
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X, bgRect.Y - 2, bgRect.Width, 2), borderColor);
@@ -78,7 +73,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
                 base.DrawSelf(spriteBatch);
 
-                if (sfPlayer.innateTechnique.PassiveTechniques[id].isActive)
+                if (sfPlayer.innateTechnique.PassiveTechniques[id].active)
                     spriteBatch.Draw(TextureAssets.MagicPixel.Value, dims.ToRectangle(), new Color(0, 0, 0, 150));
             }
 
@@ -87,14 +82,19 @@ namespace sorceryFight.Content.UI.TechniqueSelector
             public override void OnClick()
             {
                 PassiveTechnique passiveTechnique = sfPlayer.innateTechnique.PassiveTechniques[id];
-                passiveTechnique.isActive = !passiveTechnique.isActive;
+
+                if (!passiveTechnique.active)
+                    passiveTechnique.Apply(sfPlayer.Player);
+                else
+                    passiveTechnique.Remove(sfPlayer.Player);
+
 
                 if (passiveTechnique.isAura)
                 {
                     foreach (PassiveTechnique other in sfPlayer.innateTechnique.PassiveTechniques)
                     {
                         if (other.isAura && other != passiveTechnique)
-                            other.isActive = false;
+                            other.Remove(sfPlayer.Player);
                     }
                 }
 
@@ -201,10 +201,10 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
             for (int i = 0; i < sfPlayer.innateTechnique.PassiveTechniques.Count; i++)
             {
-                if (sfPlayer.innateTechnique.PassiveTechniques[i].Unlocked(sfPlayer))
+                if (sfPlayer.innateTechnique.PassiveTechniques[i].IsUnlocked(sfPlayer))
                 {
-                    Texture2D ptTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueSelector/{sfPlayer.innateTechnique.Name}/p{i}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                    string ptHoverText = $"{sfPlayer.innateTechnique.PassiveTechniques[i].DisplayName.Value}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip")}";
+                    Texture2D ptTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueIcons/{sfPlayer.innateTechnique.InternalName}/{sfPlayer.innateTechnique.PassiveTechniques[i].InternalName}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                    string ptHoverText = $"{sfPlayer.innateTechnique.PassiveTechniques[i].DisplayName}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip")}";
                     TechniqueSelectorButton ptIcon = new TechniqueSelectorButton(ptTexture, ptHoverText, i);
                     ptIcon.Left.Set(0f, 0f);
                     ptIcon.Top.Set(unlockedTechniques * (ptIcon.texture.Height + ButtonGap), 0f);
@@ -232,5 +232,3 @@ namespace sorceryFight.Content.UI.TechniqueSelector
         }
     }
 }
-
-

@@ -1,16 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using CalamityMod;
-using CalamityMod.Items.Materials;
-using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Projectiles.Melee;
-using sorceryFight.Content.Rarities;
+using sorceryFight.Misc;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameInput;
@@ -27,7 +26,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         private static Texture2D texture;
 
         private const int baseDamage = 50;
-        private const float damageMultiplier = 3.67f;
+        private const float damageMultiplier = 1.75f;
         private const float critMultiplier = 1;
         private int addedDamage = 0;
         private float addedCrit = 0;
@@ -51,12 +50,12 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.maxStack = 1;
             Item.useTime = 20;
             Item.useAnimation = 20;
-            Item.damage = 50;
+            Item.damage = baseDamage;
             Item.knockBack = 5;
             Item.noUseGraphic = true;
             Item.channel = true;
             Item.autoReuse = false;
-            Item.rare = ModContent.RarityType<SorceryFightLegendary>();
+            Item.rare = ItemRarityID.Orange;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.shoot = ModContent.ProjectileType<ChakiraResonantHoldout>();
             Item.shootSpeed = 24f;
@@ -70,7 +69,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         public override void UpdateInventory(Player player)
         {
             SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
-            addedDamage = (int)Math.Ceiling(MathF.Pow(sfPlayer.numberBossesDefeated, damageMultiplier) / 750f);
+            addedDamage = (int)Math.Ceiling(MathF.Pow(sfPlayer.numberBossesDefeated, damageMultiplier));
             Item.damage = baseDamage + addedDamage;
             addedCrit = critMultiplier * sfPlayer.numberBossesDefeated;
         }
@@ -80,7 +79,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             if (player.whoAmI != Main.myPlayer)
                 return;
 
-            SorceryFightPlayer sfPlayer = player.SorceryFight(); 
+            SorceryFightPlayer sfPlayer = player.SorceryFight();
 
             if ((!sfPlayer.uniqueBodyStructure && sfPlayer.disableCurseTechniques) || player.HasBuff(ModContent.BuffType<BurntTechnique>()) || sfPlayer.heavenlyRestriction)
                 return;
@@ -96,9 +95,9 @@ namespace sorceryFight.Content.Items.Weapons.Melee
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            tooltips.FindAndReplace("[BOSSES]", Main.LocalPlayer.SorceryFight().numberBossesDefeated.ToString());
-            tooltips.FindAndReplace("[DAMAGE]", addedDamage.ToString());
-            tooltips.FindAndReplace("[CRIT]", addedCrit.ToString());
+            // tooltips.FindAndReplace("[BOSSES]", Main.LocalPlayer.SorceryFight().numberBossesDefeated.ToString());
+            // tooltips.FindAndReplace("[DAMAGE]", addedDamage.ToString());
+            // tooltips.FindAndReplace("[CRIT]", addedCrit.ToString());
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -142,6 +141,12 @@ namespace sorceryFight.Content.Items.Weapons.Melee
                 0
             );
 
+            return true;
+        }
+
+        public override bool PreDrawTooltip(ReadOnlyCollection<TooltipLine> lines, ref int x, ref int y)
+        {
+            TooltipOverride.ShaderOverride(lines, ref x, ref y,  "sorceryFight/Content/Shaders/ResonantTooltip");
             return true;
         }
 

@@ -1,11 +1,8 @@
 Sorcery Fight is heavily inspired by anime/manga Jujutsu Kaisen.
 
 The mod adds:
-Four innate techniques, Limitless, Shrine, Private Pure Love Train, Vessel, and the 'Physically Gifted' Heavenly Restriction,
-for a total of 22 cursed techniques, 7 passive techniques, and 4 domain expansions, 
+Seven innate techniques, Limitless, Shrine, Private Pure Love Train, Vessel, the 'Physically Gifted' Heavenly Restriction, Blood Manipulation, and Star Rage,
 as well as 2 custom boss domains!
-
-NOTE: This mod requires Calamity Mod and its dependencies in order to install.
 
 Changelog:
 https://docs.google.com/document/d/1avF8o3fXDvVdUV7az7U6Lp_6NkAF-goxyddqzmgr-Js/edit?usp=sharing
@@ -26,6 +23,7 @@ rend, Developer
 Ryomen, Developer
 gooloohoodoo, Sprite Artist
 KaiTheExaminer, Sprite Artist
+Marcy, Sprite Artist
 Sicko, Sprite Artist
 TheRealCriky, Sprite Artist
 

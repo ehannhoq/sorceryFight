@@ -1,17 +1,16 @@
 
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Diagnostics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
-using CalamityMod.NPCs.Providence;
 using Terraria.Graphics.Effects;
 using System.IO;
 using System;
+
+using sorceryFight.Content.Particles;
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {
@@ -22,30 +21,23 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public static readonly int TICKS_PER_FRAME = 3;
         public static Texture2D texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/MaximumOutputRed", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public static Texture2D lineTexture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/MaximumOutputRedLineFX", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+        public override string InternalName => "MaximumOutputRed";
+
         public bool inAnimation;
         public ref float scale => ref Projectile.ai[2];
         public float[] lineFX = { -1, -1, -1 };
         public int lineFrame = 0;
         public int lineFrameTime = 0;
 
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.MaximumOutputRed.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.MaximumOutputRed.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.MaximumOutputRed.LockedDescription");
-        public override float Cost { get; } = 750f;
-        public override Color textColor { get; } = new Color(224, 74, 74);
-        public override int Damage => 4500;
-        public override int MasteryDamageMultiplier => 310;
-        public override float Speed { get; } = 23f;
-        public override float LifeTime { get; } = 180f;
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(ModContent.NPCType<Providence>()) && sf.unlockedRCT;
-        }
-        public override bool DisplayNameInGame { get; } = true;
 
-        public override int GetProjectileType()
+        public MaximumOutputRed()
         {
-            return ModContent.ProjectileType<MaximumOutputRed>();
+            Technique.baseDamage = 350;
+            Technique.damagePerBoss = 20;
+            Technique.cost = 170;
+            Technique.speed = 23;
+            Technique.lifetime = 180;
         }
 
 
@@ -54,23 +46,27 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             Main.projFrames[Projectile.type] = FRAME_COUNT;
         }
 
+
         public override void SetDefaults()
         {
             base.SetDefaults();
             Projectile.width = 100;
             Projectile.height = 100;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = (int)LifeTime;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
+            Projectile.penetrate = -1;
 
             inAnimation = false;
         }
+
 
         public override Color? GetAlpha(Color lightColor)
         {
             return Color.White;
         }
+
+
 
         public override void AI()
         {
@@ -118,7 +114,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                     if (!Filters.Scene["SF:MaximumRed"].IsActive())
                     {
-                        Filters.Scene.Activate("SF:MaximumRed").GetShader().UseColor(textColor).UseOpacity(1f);
+                        Filters.Scene.Activate("SF:MaximumRed").GetShader().UseColor(new Color(235, 52, 52)).UseOpacity(1f);
                     }
                     else
                     {
@@ -166,7 +162,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     {
                         if (!spawnedFromPurple)
                         {
-                            Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * Speed;
+                            Projectile.velocity = Projectile.Center.DirectionTo(Main.MouseWorld) * speed;
                             player.SorceryFight().disableRegenFromProjectiles = false;
                         }
 
@@ -179,19 +175,20 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     Projectile.netUpdate = true;
                 }
             }
-
-
         }
+
 
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(inAnimation);
         }
 
+
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             inAnimation = reader.ReadBoolean();
         }
+
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
@@ -201,10 +198,11 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-7, 7), Main.rand.NextFloat(-7, 7));
 
-                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, new Color(235, 52, 52), false, 0.9f, 1, 30);
+                ParticleController.SpawnParticle(particle);
             }
         }
+
 
         public override bool PreDraw(ref Color lightColor)
         {

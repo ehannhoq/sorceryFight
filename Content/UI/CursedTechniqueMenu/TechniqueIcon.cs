@@ -1,11 +1,7 @@
-using System;
 using System.Collections.Generic;
-using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.SFPlayer;
 using Terraria;
-using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -41,7 +37,6 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
         public void DrawIcon()
         {
-
             Width.Set(texture.Width, 0f);
             Height.Set(texture.Height, 0f);
 
@@ -49,10 +44,23 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
                 Main.hoverItemName = hoverText;
 
             CalculatedStyle dim = GetDimensions();
-            Texture2D finalTexture = unlocked ? texture : lockedTexture;
             Color finalColor = unlocked ? Color.White : Color.Gray;
 
-            Main.spriteBatch.Draw(finalTexture, new Vector2(dim.X, dim.Y), finalColor);
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
+
+            Main.spriteBatch.Draw(texture, new Vector2(dim.X, dim.Y), finalColor);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Main.UIScaleMatrix);
+
+            if (!unlocked)
+                Main.spriteBatch.Draw(lockedTexture, new Vector2(dim.X, dim.Y), finalColor);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            return;
         }
     }
 }

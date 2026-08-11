@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using sorceryFight;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -67,7 +68,7 @@ public class StarUI : ModSystem
         SorceryFightPlayer sf = Main.LocalPlayer.SorceryFight();
 
         // If not drawing the star meter, save its latest position to config and leave.
-        if (sf.innateTechnique?.Name == "StarRage")
+        if (sf.innateTechnique?.InternalName == "StarRage")
         {
             DrawStarBar(spriteBatch, sf, screenPos);
         }

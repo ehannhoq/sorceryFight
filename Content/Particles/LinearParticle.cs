@@ -1,6 +1,6 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Utilities.EaseFunctions;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -11,18 +11,18 @@ namespace sorceryFight.Content.Particles
         public static Texture2D Texture => ModContent.Request<Texture2D>("sorceryFight/Content/Particles/LinearParticle", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
         public Vector2 scaleVec;
+        public Vector2 originalScale;
         public LinearParticle(Vector2 position, Vector2 velocity, Color color, bool isUIParticle = false, float drag = 1, float scale = 1, int lifetime = 60) : base(Texture, position, velocity, color, isUIParticle, drag, scale, lifetime)
         {
             scaleVec = new Vector2(scale * 1.25f, scale * 0.75f);
+            originalScale = scaleVec;
         }
 
         public override void Update()
         {
             base.Update();
-            scaleVec *= new Vector2(0.98f, 0.95f);
-
-            if (scaleVec.Y < 0.01f)
-                scaleVec *= new Vector2(1f, 0f);
+            float progress = (float)time / lifetime;
+            scaleVec = Vector2.Lerp(originalScale, Vector2.Zero, EaseFunctions.EaseInCircular(progress));
         }
 
         public override void Draw(SpriteBatch spriteBatch)

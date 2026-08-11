@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using CalamityMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.CursedTechniques;
-using sorceryFight.Content.CursedTechniques.Limitless;
-using sorceryFight.Content.InnateTechniques;
-using sorceryFight.Content.UI.InnateTechniqueSelector;
 using sorceryFight.SFPlayer;
+using sorceryFight.Content.InnateTechniques;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
@@ -19,13 +16,15 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 {
     public class CursedTechniqueTree : UIElement
     {
+        private const float ICON_SIZE = 60f;
+
         public Vector2 center;
         List<TechniqueIcon> techniqueIcons;
         public CursedTechniqueTree(Texture2D closeButtonTexture, Texture2D backgroundTexture)
         {
             if (Main.dedServ) return;
 
-            SorceryFightPlayer player = Main.LocalPlayer.SorceryFight();
+            SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
             techniqueIcons = new List<TechniqueIcon>();
 
             UIImage background = new UIImage(backgroundTexture);
@@ -35,19 +34,21 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
 
             center = new Vector2(18f + backgroundTexture.Width / 2, closeButtonTexture.Height + 24f + backgroundTexture.Height / 2);
 
-            Texture2D centerIconBackgroundTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{player.innateTechnique.Name}_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            Texture2D centerIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{player.innateTechnique.Name}_Icon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D centerIconBackgroundTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{sfPlayer.innateTechnique.InternalName}_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D centerIconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{sfPlayer.innateTechnique.InternalName}_Icon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
             SpecialUIElement centerIconBG = new SpecialUIElement(centerIconBackgroundTexture, default, -1f, 0.05f, 1.5f);
             centerIconBG.Left.Set(center.X - centerIconBackgroundTexture.Width / 2, 0f);
             centerIconBG.Top.Set(center.Y - centerIconBackgroundTexture.Height / 2, 0f);
 
-            SpecialUIElement centerIcon = new SpecialUIElement(centerIconTexture, player.innateTechnique.DisplayName, default, default, 1.0f);
+            SpecialUIElement centerIcon = new SpecialUIElement(centerIconTexture, sfPlayer.innateTechnique.DisplayName, default, default, 1.0f);
             centerIcon.Left.Set(center.X - centerIconTexture.Width / 2, 0f);
             centerIcon.Top.Set(center.Y - centerIconTexture.Height / 2, 0f);
 
             Append(centerIconBG);
             Append(centerIcon);
+
+            BuildTechniqueIcons(sfPlayer);
 
             /**
             Why did I choose to draw each individual innate technique tree line by line?
@@ -58,81 +59,80 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             - ehann.
             **/
 
-            switch (player.innateTechnique.Name)
+            switch (sfPlayer.innateTechnique.InternalName)
             {
                 case "Limitless":
-                    DrawLimitless(center, player);
+                    DrawLimitless(center, sfPlayer);
                     break;
                 case "Shrine":
-                    DrawShrine(center, player);
+                    DrawShrine(center, sfPlayer);
                     break;
                 case "Vessel":
-                    DrawVessel(center, player);
+                    DrawVessel(center, sfPlayer);
                     break;
                 case "BloodManipulation":
-                    DrawBloodManipulation(center, player);
+                    DrawBloodManipulation(center, sfPlayer);
                     break;
                 case "StarRage":
-                    DrawStarRage(center, player);
+                    DrawStarRage(center, sfPlayer);
                     break;
                 case "IceFormation":
-                    DrawIceFormation(center, player);
+                    DrawIceFormation(center, sfPlayer);
                     break;
                 case "TenShadows":
-                    DrawTenShadows(center, player);
+                    DrawTenShadows(center, sfPlayer);
                     break;
                 case "PrivatePureLoveTrain":
-                    DrawPPLT(center, player);
+                    DrawPPLT(center, sfPlayer);
                     break;
                 case "HeavenlyRestriction":
-                    DrawHeavenlyRestriction(center, player);
+                    DrawHeavenlyRestriction(center, sfPlayer);
                     break;
             }
-
         }
 
-        void DrawLimitless(Vector2 center, SorceryFightPlayer player)
+        private void BuildTechniqueIcons(SorceryFightPlayer sfPlayer)
         {
-            List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
-            List<PassiveTechnique> passiveTechniques = player.innateTechnique.PassiveTechniques;
-
-            float iconSize = 30;
-            int originIconCount = 5;
-            float distance = 80f;
-            Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance, 1f / 3f);
-
-            List<TechniqueIcon> ctIcons = new List<TechniqueIcon>();
-            List<TechniqueIcon> ptIcons = new List<TechniqueIcon>();
-
-            for (int i = 0; i < cursedTechniques.Count; i++)
+            foreach (CursedTechnique ct in sfPlayer.innateTechnique.CursedTechniques)
             {
-                CursedTechnique ct = cursedTechniques[i];
-                string texturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Limitless/c{i}";
-                Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-                bool unlocked = ct.Unlocked(player);
-                string hoverText = unlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
-
-                TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
-                ctIcons.Add(icon);
+                TechniqueIcon icon = new TechniqueIcon(
+                    texture: ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueIcons/{sfPlayer.innateTechnique.InternalName}/{ct.InternalName}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value,
+                    unlocked: ct.IsUnlocked(sfPlayer),
+                    hoverText: ct.IsUnlocked(sfPlayer) ? $"{ct.DisplayName}\n{ct.GetStats(sfPlayer)}\n{ct.Description}" : $"{ct.GetUnlockRequirement()}"
+                );
+                techniqueIcons.Add(icon);
+                Append(icon);
             }
 
-            for (int i = 0; i < passiveTechniques.Count; i++)
+            foreach (PassiveTechnique pt in sfPlayer.innateTechnique.PassiveTechniques)
             {
-                PassiveTechnique pt = passiveTechniques[i];
-                string texturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Limitless/p{i}";
-                Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-                bool unlocked = pt.Unlocked(player);
-                string hoverText = unlocked ? $"{pt.DisplayName}\n{pt.Stats}\n{pt.Description}" : $"{pt.LockedDescription}";
-
-                TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
-                ptIcons.Add(icon);
+                TechniqueIcon icon = new TechniqueIcon(
+                    texture: ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueIcons/{sfPlayer.innateTechnique.InternalName}/{pt.InternalName}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value,
+                    unlocked: pt.IsUnlocked(sfPlayer),
+                    hoverText: pt.IsUnlocked(sfPlayer) ? $"{pt.DisplayName}\n{pt.GetStats(sfPlayer)}\n{pt.Description}" : $"{pt.GetUnlockRequirement()}"
+                );
+                techniqueIcons.Add(icon);
+                Append(icon);
             }
+        }
 
+        private List<TechniqueIcon> GetCursedTechniqueIcons(SorceryFightPlayer sfPlayer)
+        {
+            return techniqueIcons.GetRange(0, sfPlayer.innateTechnique.CursedTechniques.Count);
+        }
 
-            Span<TechniqueIcon> ctIconsSpan = CollectionsMarshal.AsSpan(ctIcons);
-            Span<TechniqueIcon> ptIconsSpan = CollectionsMarshal.AsSpan(ptIcons);
+        private List<TechniqueIcon> GetPassiveTechniqueIcons(SorceryFightPlayer sfPlayer)
+        {
+            return techniqueIcons.GetRange(sfPlayer.innateTechnique.CursedTechniques.Count, sfPlayer.innateTechnique.PassiveTechniques.Count);
+        }
+
+        private void DrawLimitless(Vector2 center, SorceryFightPlayer sfPlayer)
+        {
+            float distance = 100f;
+            var originPositions = OriginPositionHelper(iconSize: 60, n: 5, distanceFromCenter: distance, rotationOffset: 1f / 3f);
+
+            Span<TechniqueIcon> ctIconsSpan = CollectionsMarshal.AsSpan(GetCursedTechniqueIcons(sfPlayer));
+            Span<TechniqueIcon> ptIconsSpan = CollectionsMarshal.AsSpan(GetPassiveTechniqueIcons(sfPlayer));
 
             ref TechniqueIcon amplifiedBlueIcon = ref ctIconsSpan[0];
             ref TechniqueIcon maximumBlueIcon = ref ctIconsSpan[1];
@@ -172,50 +172,50 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             float vectorRotation = 1f / 3f;
 
             // Maximum Blue
-            Vector2 maximumBluePos = new Vector2(amplifiedBluePos.X + iconSize / 2, amplifiedBluePos.Y + iconSize / 2);
+            Vector2 maximumBluePos = new Vector2(amplifiedBluePos.X + ICON_SIZE / 2, amplifiedBluePos.Y + ICON_SIZE / 2);
             maximumBluePos = maximumBluePos.DirectionFrom(center);
             maximumBluePos = maximumBluePos.RotatedBy(vectorRotation);
             maximumBluePos.Normalize();
             maximumBluePos *= distance * 2;
-            maximumBlueIcon.Left.Set(maximumBluePos.X + center.X - iconSize / 2, 0f);
-            maximumBlueIcon.Top.Set(maximumBluePos.Y + center.Y - iconSize / 2, 0f);
+            maximumBlueIcon.Left.Set(maximumBluePos.X + center.X - ICON_SIZE / 2, 0f);
+            maximumBlueIcon.Top.Set(maximumBluePos.Y + center.Y - ICON_SIZE / 2, 0f);
 
             // Maximum Red
-            Vector2 maximumRedPos = new Vector2(reversalRedPos.X + iconSize / 2, reversalRedPos.Y + iconSize / 2);
+            Vector2 maximumRedPos = new Vector2(reversalRedPos.X + ICON_SIZE / 2, reversalRedPos.Y + ICON_SIZE / 2);
             maximumRedPos = maximumRedPos.DirectionFrom(center);
             maximumRedPos = maximumRedPos.RotatedBy(vectorRotation);
             maximumRedPos.Normalize();
             maximumRedPos *= distance * 2;
-            maximumRedIcon.Left.Set(maximumRedPos.X + center.X - iconSize / 2, 0f);
-            maximumRedIcon.Top.Set(maximumRedPos.Y + center.Y - iconSize / 2, 0f);
+            maximumRedIcon.Left.Set(maximumRedPos.X + center.X - ICON_SIZE / 2, 0f);
+            maximumRedIcon.Top.Set(maximumRedPos.Y + center.Y - ICON_SIZE / 2, 0f);
 
             // Maximum Aura
-            Vector2 maximumAuraPos = new Vector2(amplifiedAuraPos.X + iconSize / 2, amplifiedAuraPos.Y + iconSize / 2);
+            Vector2 maximumAuraPos = new Vector2(amplifiedAuraPos.X + ICON_SIZE / 2, amplifiedAuraPos.Y + ICON_SIZE / 2);
             maximumAuraPos = maximumAuraPos.DirectionFrom(center);
             maximumAuraPos = maximumAuraPos.RotatedBy(vectorRotation);
             maximumAuraPos.Normalize();
             maximumAuraPos *= distance * 2;
-            maximumAuraIcon.Left.Set(maximumAuraPos.X + center.X - iconSize / 2, 0f);
-            maximumAuraIcon.Top.Set(maximumAuraPos.Y + center.Y - iconSize / 2, 0f);
+            maximumAuraIcon.Left.Set(maximumAuraPos.X + center.X - ICON_SIZE / 2, 0f);
+            maximumAuraIcon.Top.Set(maximumAuraPos.Y + center.Y - ICON_SIZE / 2, 0f);
 
             // Falling Blossom Emotion
-            Vector2 fallingBlossomEmotionPos = new Vector2(infinityPos.X + iconSize / 2, infinityPos.Y + iconSize / 2);
+            Vector2 fallingBlossomEmotionPos = new Vector2(infinityPos.X + ICON_SIZE / 2, infinityPos.Y + ICON_SIZE / 2);
             fallingBlossomEmotionPos = fallingBlossomEmotionPos.DirectionFrom(center);
             fallingBlossomEmotionPos = fallingBlossomEmotionPos.RotatedBy(vectorRotation);
             fallingBlossomEmotionPos.Normalize();
             fallingBlossomEmotionPos *= distance * 2;
-            fallingBlossomEmotionIcon.Left.Set(fallingBlossomEmotionPos.X + center.X - iconSize / 2, 0f);
-            fallingBlossomEmotionIcon.Top.Set(fallingBlossomEmotionPos.Y + center.Y - iconSize / 2, 0f);
+            fallingBlossomEmotionIcon.Left.Set(fallingBlossomEmotionPos.X + center.X - ICON_SIZE / 2, 0f);
+            fallingBlossomEmotionIcon.Top.Set(fallingBlossomEmotionPos.Y + center.Y - ICON_SIZE / 2, 0f);
 
 
             // 200 % Hollow Purple
-            Vector2 hollowPurple200Pos = new Vector2(hollowPurplePos.X + iconSize / 2, hollowPurplePos.Y + iconSize / 2);
+            Vector2 hollowPurple200Pos = new Vector2(hollowPurplePos.X + ICON_SIZE / 2, hollowPurplePos.Y + ICON_SIZE / 2);
             hollowPurple200Pos = hollowPurple200Pos.DirectionFrom(center);
             hollowPurple200Pos = hollowPurple200Pos.RotatedBy(vectorRotation);
             hollowPurple200Pos.Normalize();
             hollowPurple200Pos *= distance * 2f;
-            hollowPurple200Icon.Left.Set(hollowPurple200Pos.X + center.X - iconSize / 2, 0f);
-            hollowPurple200Icon.Top.Set(hollowPurple200Pos.Y + center.Y - iconSize / 2, 0f);
+            hollowPurple200Icon.Left.Set(hollowPurple200Pos.X + center.X - ICON_SIZE / 2, 0f);
+            hollowPurple200Icon.Top.Set(hollowPurple200Pos.Y + center.Y - ICON_SIZE / 2, 0f);
 
 
             maximumAuraIcon.parents.Add(amplifiedAuraIcon);
@@ -223,61 +223,15 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             maximumRedIcon.parents.Add(reversalRedIcon);
             fallingBlossomEmotionIcon.parents.Add(infinityIcon);
             hollowPurple200Icon.parents.Add(hollowPurpleIcon);
-
-            foreach (TechniqueIcon icon in ctIcons)
-            {
-                Append(icon);
-                techniqueIcons.Add(icon);
-            }
-
-            foreach (TechniqueIcon icon in ptIcons)
-            {
-                Append(icon);
-                techniqueIcons.Add(icon);
-            }
         }
 
-        void DrawShrine(Vector2 center, SorceryFightPlayer player)
+        void DrawShrine(Vector2 center, SorceryFightPlayer sfPlayer)
         {
-            List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
-            List<PassiveTechnique> passiveTechniques = player.innateTechnique.PassiveTechniques;
+            float distance = 100f;
+            Vector2[] originPositions = OriginPositionHelper(ICON_SIZE, n: 3, distanceFromCenter: distance);
 
-            float iconSize = 30;
-            int originIconCount = 3;
-            float distance = 80f;
-            Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
-
-            List<TechniqueIcon> ctIcons = new List<TechniqueIcon>();
-            List<TechniqueIcon> ptIcons = new List<TechniqueIcon>();
-
-            for (int i = 0; i < cursedTechniques.Count; i++)
-            {
-                CursedTechnique ct = cursedTechniques[i];
-                string texturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Shrine/c{i}";
-                Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-                bool unlocked = ct.Unlocked(player);
-                string hoverText = unlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
-
-                TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
-                ctIcons.Add(icon);
-            }
-
-            for (int i = 0; i < passiveTechniques.Count; i++)
-            {
-                PassiveTechnique pt = passiveTechniques[i];
-                string texturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Shrine/p{i}";
-                Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-                bool unlocked = pt.Unlocked(player);
-                string hoverText = unlocked ? $"{pt.DisplayName}\n{pt.Stats}\n{pt.Description}" : $"{pt.LockedDescription}";
-
-                TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
-                ptIcons.Add(icon);
-            }
-
-            Span<TechniqueIcon> ctIconsSpan = CollectionsMarshal.AsSpan(ctIcons);
-            Span<TechniqueIcon> ptIconsSpan = CollectionsMarshal.AsSpan(ptIcons);
+            Span<TechniqueIcon> ctIconsSpan = CollectionsMarshal.AsSpan(GetCursedTechniqueIcons(sfPlayer));
+            Span<TechniqueIcon> ptIconsSpan = CollectionsMarshal.AsSpan(GetPassiveTechniqueIcons(sfPlayer));
 
             ref TechniqueIcon dismantleIcon = ref ctIconsSpan[0];
             ref TechniqueIcon cleaveIcon = ref ctIconsSpan[1];
@@ -305,370 +259,108 @@ namespace sorceryFight.Content.UI.CursedTechniqueMenu
             hollowWickerBasketIcon.Left.Set(hollowWickerBasketPos.X, 0f);
             hollowWickerBasketIcon.Top.Set(hollowWickerBasketPos.Y, 0f);
 
-            Vector2 instantDismantlePos = new Vector2(dismantlePos.X + iconSize / 2, dismantlePos.Y + iconSize / 2);
+            Vector2 instantDismantlePos = new Vector2(dismantlePos.X + ICON_SIZE / 2, dismantlePos.Y + ICON_SIZE / 2);
             instantDismantlePos = instantDismantlePos.DirectionFrom(center);
             instantDismantlePos = instantDismantlePos.RotatedBy(0.2f);
             instantDismantlePos.Normalize();
             instantDismantlePos *= distance * 2;
-            instantDismantleIcon.Left.Set(instantDismantlePos.X + center.X - iconSize / 2, 0f);
-            instantDismantleIcon.Top.Set(instantDismantlePos.Y + center.Y - iconSize / 2, 0f);
+            instantDismantleIcon.Left.Set(instantDismantlePos.X + center.X - ICON_SIZE / 2, 0f);
+            instantDismantleIcon.Top.Set(instantDismantlePos.Y + center.Y - ICON_SIZE / 2, 0f);
 
-            Vector2 divineFlamePos = new Vector2(cleavePos.X + iconSize / 2, cleavePos.Y + iconSize / 2);
+            Vector2 divineFlamePos = new Vector2(cleavePos.X + ICON_SIZE / 2, cleavePos.Y + ICON_SIZE / 2);
             divineFlamePos = divineFlamePos.DirectionFrom(center);
             divineFlamePos = divineFlamePos.RotatedBy(-0.2f);
             divineFlamePos.Normalize();
             divineFlamePos *= distance * 2;
-            divineFlameIcon.Left.Set(divineFlamePos.X + center.X - iconSize / 2, 0f);
-            divineFlameIcon.Top.Set(divineFlamePos.Y + center.Y - iconSize / 2, 0f);
+            divineFlameIcon.Left.Set(divineFlamePos.X + center.X - ICON_SIZE / 2, 0f);
+            divineFlameIcon.Top.Set(divineFlamePos.Y + center.Y - ICON_SIZE / 2, 0f);
 
             Vector2 worldCuttingSlashPos = instantDismantlePos + new Vector2(-distance, 0f);
-            worldCuttingSlashIcon.Left.Set(worldCuttingSlashPos.X + center.X - iconSize / 2, 0f);
-            worldCuttingSlashIcon.Top.Set(worldCuttingSlashPos.Y + center.Y - iconSize / 2, 0f);
+            worldCuttingSlashIcon.Left.Set(worldCuttingSlashPos.X + center.X - ICON_SIZE / 2, 0f);
+            worldCuttingSlashIcon.Top.Set(worldCuttingSlashPos.Y + center.Y - ICON_SIZE / 2, 0f);
 
             hollowWickerBasketIcon.parents.Add(domainAmpIcon);
             instantDismantleIcon.parents.Add(dismantleIcon);
             divineFlameIcon.parents.AddRange([dismantleIcon, cleaveIcon]);
             worldCuttingSlashIcon.parents.Add(instantDismantleIcon);
-
-
-            foreach (TechniqueIcon icon in ctIcons)
-            {
-                Append(icon);
-                techniqueIcons.Add(icon);
-            }
-
-            foreach (TechniqueIcon icon in ptIcons)
-            {
-                Append(icon);
-                techniqueIcons.Add(icon);
-            }
         }
 
-        void DrawVessel(Vector2 _, SorceryFightPlayer player)
+        void DrawVessel(Vector2 _, SorceryFightPlayer sfPlayer)
         {
-            List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
-            List<PassiveTechnique> passiveTechniques = player.innateTechnique.PassiveTechniques;
+            Vector2[] originPositions = OriginPositionHelper(iconSize: ICON_SIZE, n: 8, distanceFromCenter: 120f);
 
-            float iconSize = 30;
-            int originIconCount = 8;
-            float distance = 70f;
-
-            Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
-
-
-            for (int i = 0; i < cursedTechniques.Count + passiveTechniques.Count; i++)
+            for (int i = 0; i < sfPlayer.innateTechnique.CursedTechniques.Count + sfPlayer.innateTechnique.PassiveTechniques.Count; i++)
             {
-                if (i >= cursedTechniques.Count)
-                {
-                    int j = i - cursedTechniques.Count;
-                    PassiveTechnique pt = passiveTechniques[j];
-                    string ptTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Vessel/p{j}";
-                    Texture2D ptTexture = ModContent.Request<Texture2D>(ptTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-                    bool ptUnlocked = pt.Unlocked(player);
-                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.LockedDescription}";
-
-                    TechniqueIcon ptIcon = new TechniqueIcon(ptTexture, ptUnlocked, ptHoverText);
-                    ptIcon.Left.Set(originPositions[i].X, 0f);
-                    ptIcon.Top.Set(originPositions[i].Y, 0f);
-                    Append(ptIcon);
-                    techniqueIcons.Add(ptIcon);
-                }
-                else
-                {
-                    CursedTechnique ct = cursedTechniques[i];
-                    string ctTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/Vessel/c{i}";
-                    Texture2D ctTexture = ModContent.Request<Texture2D>(ctTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-                    bool ctUnlocked = ct.Unlocked(player);
-                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
-
-                    TechniqueIcon ctIcon = new TechniqueIcon(ctTexture, ctUnlocked, ctHoverText);
-                    ctIcon.Left.Set(originPositions[i].X, 0f);
-                    ctIcon.Top.Set(originPositions[i].Y, 0f);
-                    Append(ctIcon);
-                    techniqueIcons.Add(ctIcon);
-                }
-
-            }
-
-
-        }
-
-        void DrawBloodManipulation(Vector2 _, SorceryFightPlayer player)
-        {
-            List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
-            List<PassiveTechnique> passiveTechniques = player.innateTechnique.PassiveTechniques;
-
-            float iconSize = 30;
-            int originIconCount = 9;
-            float distance = 70f;
-
-            Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
-
-
-            for (int i = 0; i < cursedTechniques.Count + passiveTechniques.Count; i++)
-            {
-                if (i >= cursedTechniques.Count)
-                {
-                    int j = i - cursedTechniques.Count;
-                    PassiveTechnique pt = passiveTechniques[j];
-                    string ptTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/BloodManipulation/p{j}";
-                    Texture2D ptTexture = ModContent.Request<Texture2D>(ptTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-                    bool ptUnlocked = pt.Unlocked(player);
-                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.LockedDescription}";
-
-                    TechniqueIcon ptIcon = new TechniqueIcon(ptTexture, ptUnlocked, ptHoverText);
-                    ptIcon.Left.Set(originPositions[i].X, 0f);
-                    ptIcon.Top.Set(originPositions[i].Y, 0f);
-                    Append(ptIcon);
-                    techniqueIcons.Add(ptIcon);
-                }
-                else
-                {
-                    CursedTechnique ct = cursedTechniques[i];
-                    string ctTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/BloodManipulation/c{i}";
-                    Texture2D ctTexture = ModContent.Request<Texture2D>(ctTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-                    bool ctUnlocked = ct.Unlocked(player);
-                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
-
-                    TechniqueIcon ctIcon = new TechniqueIcon(ctTexture, ctUnlocked, ctHoverText);
-                    ctIcon.Left.Set(originPositions[i].X, 0f);
-                    ctIcon.Top.Set(originPositions[i].Y, 0f);
-                    Append(ctIcon);
-                    techniqueIcons.Add(ctIcon);
-                }
-
-            }
-
-
-        }
-
-        void DrawStarRage(Vector2 _, SorceryFightPlayer player)
-        {
-            List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
-            List<PassiveTechnique> passiveTechniques = player.innateTechnique.PassiveTechniques;
-
-            float iconSize = 30;
-            int originIconCount = 8;
-            float distance = 70f;
-
-            Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
-
-
-            for (int i = 0; i < cursedTechniques.Count + passiveTechniques.Count; i++)
-            {
-                if (i >= cursedTechniques.Count)
-                {
-                    int j = i - cursedTechniques.Count;
-                    PassiveTechnique pt = passiveTechniques[j];
-                    string ptTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/StarRage/p{j}";
-                    Texture2D ptTexture = ModContent.Request<Texture2D>(ptTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-                    bool ptUnlocked = pt.Unlocked(player);
-                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.LockedDescription}";
-
-                    TechniqueIcon ptIcon = new TechniqueIcon(ptTexture, ptUnlocked, ptHoverText);
-                    ptIcon.Left.Set(originPositions[i].X, 0f);
-                    ptIcon.Top.Set(originPositions[i].Y, 0f);
-                    Append(ptIcon);
-                    techniqueIcons.Add(ptIcon);
-                }
-                else
-                {
-                    CursedTechnique ct = cursedTechniques[i];
-                    string ctTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/StarRage/c{i}";
-                    Texture2D ctTexture = ModContent.Request<Texture2D>(ctTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-                    bool ctUnlocked = ct.Unlocked(player);
-                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
-
-                    TechniqueIcon ctIcon = new TechniqueIcon(ctTexture, ctUnlocked, ctHoverText);
-                    ctIcon.Left.Set(originPositions[i].X, 0f);
-                    ctIcon.Top.Set(originPositions[i].Y, 0f);
-                    Append(ctIcon);
-                    techniqueIcons.Add(ctIcon);
-                }
-
-            }
-
-
-        }
-
-        void DrawIceFormation(Vector2 _, SorceryFightPlayer player)
-        {
-            List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
-            List<PassiveTechnique> passiveTechniques = player.innateTechnique.PassiveTechniques;
-
-            float iconSize = 30;
-            int originIconCount = 1;
-            float distance = 70f;
-
-            Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
-
-
-            for (int i = 0; i < cursedTechniques.Count + passiveTechniques.Count; i++)
-            {
-                if (i >= cursedTechniques.Count)
-                {
-                    int j = i - cursedTechniques.Count;
-                    PassiveTechnique pt = passiveTechniques[j];
-                    string ptTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/IceFromation/p{j}";
-                    Texture2D ptTexture = ModContent.Request<Texture2D>(ptTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-                    bool ptUnlocked = pt.Unlocked(player);
-                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.LockedDescription}";
-
-                    TechniqueIcon ptIcon = new TechniqueIcon(ptTexture, ptUnlocked, ptHoverText);
-                    ptIcon.Left.Set(originPositions[i].X, 0f);
-                    ptIcon.Top.Set(originPositions[i].Y, 0f);
-                    Append(ptIcon);
-                    techniqueIcons.Add(ptIcon);
-                }
-                else
-                {
-                    CursedTechnique ct = cursedTechniques[i];
-                    string ctTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/IceFormation/c{i}";
-                    Texture2D ctTexture = ModContent.Request<Texture2D>(ctTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-                    bool ctUnlocked = ct.Unlocked(player);
-                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
-
-                    TechniqueIcon ctIcon = new TechniqueIcon(ctTexture, ctUnlocked, ctHoverText);
-                    ctIcon.Left.Set(originPositions[i].X, 0f);
-                    ctIcon.Top.Set(originPositions[i].Y, 0f);
-                    Append(ctIcon);
-                    techniqueIcons.Add(ctIcon);
-                }
-
-            }
-        }
-
-        void DrawTenShadows(Vector2 _, SorceryFightPlayer player)
-        {
-            List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
-            List<PassiveTechnique> passiveTechniques = player.innateTechnique.PassiveTechniques;
-
-            float iconSize = 30;
-            int originIconCount = 1;
-            float distance = 70f;
-
-            Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
-
-
-            for (int i = 0; i < cursedTechniques.Count + passiveTechniques.Count; i++)
-            {
-                if (i >= cursedTechniques.Count)
-                {
-                    int j = i - cursedTechniques.Count;
-                    PassiveTechnique pt = passiveTechniques[j];
-                    string ptTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/TenShadows/p{j}";
-                    Texture2D ptTexture = ModContent.Request<Texture2D>(ptTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-                    bool ptUnlocked = pt.Unlocked(player);
-                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.LockedDescription}";
-
-                    TechniqueIcon ptIcon = new TechniqueIcon(ptTexture, ptUnlocked, ptHoverText);
-                    ptIcon.Left.Set(originPositions[i].X, 0f);
-                    ptIcon.Top.Set(originPositions[i].Y, 0f);
-                    Append(ptIcon);
-                    techniqueIcons.Add(ptIcon);
-                }
-                else
-                {
-                    CursedTechnique ct = cursedTechniques[i];
-                    string ctTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/TenShadows/c{i}";
-                    Texture2D ctTexture = ModContent.Request<Texture2D>(ctTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-                    bool ctUnlocked = ct.Unlocked(player);
-                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
-
-                    TechniqueIcon ctIcon = new TechniqueIcon(ctTexture, ctUnlocked, ctHoverText);
-                    ctIcon.Left.Set(originPositions[i].X, 0f);
-                    ctIcon.Top.Set(originPositions[i].Y, 0f);
-                    Append(ctIcon);
-                    techniqueIcons.Add(ctIcon);
-                }
-
-            }
-        }
-
-        void DrawPPLT(Vector2 _, SorceryFightPlayer player)
-        {
-            List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
-
-            float iconSize = 30;
-            int originIconCount = 5;
-            float distance = 120f;
-            Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
-
-
-            for (int i = 0; i < cursedTechniques.Count; i++)
-            {
-                CursedTechnique ct = cursedTechniques[i];
-                string texturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/PrivatePureLoveTrain/c{i}";
-                Texture2D texture = ModContent.Request<Texture2D>(texturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-
-                bool unlocked = ct.Unlocked(player);
-                string hoverText = unlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
-
-                TechniqueIcon icon = new TechniqueIcon(texture, unlocked, hoverText);
-                icon.Left.Set(originPositions[i].X, 0f);
-                icon.Top.Set(originPositions[i].Y, 0f);
-                Append(icon);
-                techniqueIcons.Add(icon);
+                techniqueIcons[i].Left.Set(originPositions[i].X, 0f);
+                techniqueIcons[i].Top.Set(originPositions[i].Y, 0f);
             }
         }
 
 
-        void DrawHeavenlyRestriction(Vector2 _, SorceryFightPlayer player)
+        void DrawBloodManipulation(Vector2 _, SorceryFightPlayer sfPlayer)
         {
-            List<CursedTechnique> cursedTechniques = player.innateTechnique.CursedTechniques;
-            List<PassiveTechnique> passiveTechniques = player.innateTechnique.PassiveTechniques;
+            Vector2[] originPositions = OriginPositionHelper(iconSize: ICON_SIZE, n: 9, distanceFromCenter: 120f);
 
-            float iconSize = 30;
-            int originIconCount = 5;
-            float distance = 80f;
-
-            Vector2[] originPositions = OriginPositionHelper(iconSize, originIconCount, distance);
-
-
-            for (int i = 0; i < cursedTechniques.Count + passiveTechniques.Count; i++)
+            for (int i = 0; i < sfPlayer.innateTechnique.CursedTechniques.Count + sfPlayer.innateTechnique.PassiveTechniques.Count; i++)
             {
-                if (i >= cursedTechniques.Count)
-                {
-                    int j = i - cursedTechniques.Count;
-                    PassiveTechnique pt = passiveTechniques[j];
-                    string ptTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/HeavenlyRestriction/p{j}";
-                    Texture2D ptTexture = ModContent.Request<Texture2D>(ptTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                techniqueIcons[i].Left.Set(originPositions[i].X, 0f);
+                techniqueIcons[i].Top.Set(originPositions[i].Y, 0f);
+            }
+        }
 
-                    bool ptUnlocked = pt.Unlocked(player);
-                    string ptHoverText = ptUnlocked ? $"{pt.DisplayName}\n{pt.Description}" : $"{pt.LockedDescription}";
+        void DrawStarRage(Vector2 _, SorceryFightPlayer sfPlayer)
+        {
+            Vector2[] originPositions = OriginPositionHelper(iconSize: ICON_SIZE, n: 8, distanceFromCenter: 150f);
 
-                    TechniqueIcon ptIcon = new TechniqueIcon(ptTexture, ptUnlocked, ptHoverText);
-                    ptIcon.Left.Set(originPositions[i].X, 0f);
-                    ptIcon.Top.Set(originPositions[i].Y, 0f);
-                    Append(ptIcon);
-                    techniqueIcons.Add(ptIcon);
-                }
-                else
-                {
-                    CursedTechnique ct = cursedTechniques[i];
-                    string ctTexturePath = $"sorceryFight/Content/UI/CursedTechniqueMenu/HeavenlyRestriction/c{i}";
-                    Texture2D ctTexture = ModContent.Request<Texture2D>(ctTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            for (int i = 0; i < sfPlayer.innateTechnique.CursedTechniques.Count + sfPlayer.innateTechnique.PassiveTechniques.Count; i++)
+            {
+                techniqueIcons[i].Left.Set(originPositions[i].X, 0f);
+                techniqueIcons[i].Top.Set(originPositions[i].Y, 0f);
+            }
+        }
 
-                    bool ctUnlocked = ct.Unlocked(player);
-                    string ctHoverText = ctUnlocked ? $"{ct.DisplayName}\n{ct.GetStats(player)}\n{ct.Description}" : $"{ct.LockedDescription}";
+        void DrawIceFormation(Vector2 _, SorceryFightPlayer sfPlayer)
+        {
+            Vector2[] originPositions = OriginPositionHelper(iconSize: ICON_SIZE, n: 3, distanceFromCenter: 80f);
 
-                    TechniqueIcon ctIcon = new TechniqueIcon(ctTexture, ctUnlocked, ctHoverText);
-                    ctIcon.Left.Set(originPositions[i].X, 0f);
-                    ctIcon.Top.Set(originPositions[i].Y, 0f);
-                    Append(ctIcon);
-                    techniqueIcons.Add(ctIcon);
-                }
+            for (int i = 0; i < sfPlayer.innateTechnique.CursedTechniques.Count + sfPlayer.innateTechnique.PassiveTechniques.Count; i++)
+            {
+                techniqueIcons[i].Left.Set(originPositions[i].X, 0f);
+                techniqueIcons[i].Top.Set(originPositions[i].Y, 0f);
+            }
+        }
 
+        void DrawTenShadows(Vector2 _, SorceryFightPlayer sfPlayer)
+        {
+            Vector2[] originPositions = OriginPositionHelper(iconSize: ICON_SIZE, n: 6, distanceFromCenter: 80f);
+
+            for (int i = 0; i < sfPlayer.innateTechnique.CursedTechniques.Count + sfPlayer.innateTechnique.PassiveTechniques.Count; i++)
+            {
+                techniqueIcons[i].Left.Set(originPositions[i].X, 0f);
+                techniqueIcons[i].Top.Set(originPositions[i].Y, 0f);
+            }
+        }
+
+        void DrawPPLT(Vector2 _, SorceryFightPlayer sfPlayer)
+        {
+            Vector2[] originPositions = OriginPositionHelper(iconSize: ICON_SIZE, n: 5, distanceFromCenter: 120f);
+
+            for (int i = 0; i < sfPlayer.innateTechnique.CursedTechniques.Count + sfPlayer.innateTechnique.PassiveTechniques.Count; i++)
+            {
+                techniqueIcons[i].Left.Set(originPositions[i].X, 0f);
+                techniqueIcons[i].Top.Set(originPositions[i].Y, 0f);
+            }
+        }
+
+
+        void DrawHeavenlyRestriction(Vector2 _, SorceryFightPlayer sfPlayer)
+        {
+            Vector2[] originPositions = OriginPositionHelper(iconSize: ICON_SIZE, n: 5, distanceFromCenter: 100f);
+
+            for (int i = 0; i < sfPlayer.innateTechnique.CursedTechniques.Count + sfPlayer.innateTechnique.PassiveTechniques.Count; i++)
+            {
+                techniqueIcons[i].Left.Set(originPositions[i].X, 0f);
+                techniqueIcons[i].Top.Set(originPositions[i].Y, 0f);
             }
 
         }

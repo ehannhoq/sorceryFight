@@ -1,11 +1,7 @@
-using sorceryFight.Rarities;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using sorceryFight.SFPlayer;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 
 namespace sorceryFight.Content.Items.Accessories
 {
@@ -19,7 +15,7 @@ namespace sorceryFight.Content.Items.Accessories
         {
             Item.accessory = true;
             Item.maxStack = 1;
-            Item.rare = ModContent.RarityType<SorceryFightAccessory>();
+            Item.rare = ItemRarityID.White;
             Item.width = 30;
             Item.height = 30;
         }

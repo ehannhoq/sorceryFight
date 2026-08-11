@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using System.IO;
 using Microsoft.Xna.Framework;
 using sorceryFight.Content.Quests;
 using sorceryFight.Content.UI;
 using sorceryFight.Content.UI.Dialog;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -33,6 +34,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
         public float attackProjectileSpeed = 10f;
 
         private const float maxInteractionDistance = 150f;
+        public int interactingWithPlayer = -1;
 
         private void HandleDialog()
         {
@@ -50,6 +52,8 @@ namespace sorceryFight.Content.NPCs.TownNPCs
                     if (Main.LocalPlayer.talkNPC == -1)
                     {
                         SorceryFightPlayer sfPlayer = Main.LocalPlayer.SorceryFight();
+                        interactingWithPlayer = Main.LocalPlayer.whoAmI;
+                        NPC.netUpdate = true;
 
                         foreach (Quest npcQuest in quests)
                         {
@@ -64,7 +68,7 @@ namespace sorceryFight.Content.NPCs.TownNPCs
                                 }
                             }
                         }
-                        
+
                         ModContent.GetInstance<SorceryFightUISystem>().ActivateDialogUI(Dialog.Create($"{name}.Interact"), this);
                     }
                 }
@@ -132,9 +136,21 @@ namespace sorceryFight.Content.NPCs.TownNPCs
         public override void AI()
         {
             HandleDialog();
+
+            if (interactingWithPlayer != -1)
+            {
+                NPC.direction = NPC.Center.X - Main.player[interactingWithPlayer].Center.X > 0 ? -1 : 1;
+                NPC.velocity = Vector2.Zero;
+            }
         }
 
-
+        public override void FindFrame(int frameHeight)
+        {
+            if (interactingWithPlayer != -1) {  }
+            else {
+                base.FindFrame(frameHeight);
+            }
+        }
 
         public override bool UsesPartyHat()
         {
@@ -172,6 +188,16 @@ namespace sorceryFight.Content.NPCs.TownNPCs
         public override void TownNPCAttackProjSpeed(ref float multiplier, ref float gravityCorrection, ref float randomOffset)
         {
             multiplier = attackProjectileSpeed;
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(interactingWithPlayer);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            interactingWithPlayer = reader.ReadInt32();
         }
 
         private static string SplitFullName(string name)

@@ -1,0 +1,77 @@
+SoulDismantle: {
+	DisplayName: Dismantle
+	Description:
+		'''
+		A devastating slash that targets the soul,
+		ignoring any and all defense.
+		'''
+}
+
+ChainDismantle: {
+	DisplayName: Chain Dismantle
+	Description:
+		'''
+		A slash attack that chains onto any other
+		enemies within a radius upon first successful
+		hit. Also ignores defense.
+		'''
+}
+
+PiercingBlood: {
+	DisplayName: Piercing Blood
+	Description:
+		'''
+		Converging your blood into a single point,
+		you shoot a concetrated beam of blood; piercing
+		through anything.
+		'''
+}
+
+BloodDaggerStorm: {
+	DisplayName: Blood Dagger Storm
+	Description:
+		'''
+		By constantly compressing blood into daggers and firing them with tiny lines of blood attached
+		they can be redirected mid air towards your cursor, seeking out enemies as they get closer
+		'''
+}
+
+LineDevestation: {
+	DisplayName: Line of Devastation
+	Description:
+		'''
+		A devastating slash cuts the air, detonating on impact with anything,
+		This detonation will cut everything around it. It can be futher enhanced
+		by having maximum blood, at which point the slash will consume half of it and
+		explode with blood dealing triple damage.
+		'''
+}
+
+FlowingRedScaleBuff: {
+	DisplayName: Flowing Red Scale
+	Description:
+		'''
+		An ancient technique. It pumps blood
+		actively through the user's body, increasing
+		defense and reducing incoming damage taken.
+		'''
+}
+
+FlowingRedScaleStackBuff: {
+	DisplayName: Flowing Red Scale Stack
+	Description:
+		'''
+		An Improved technique. It pumps blood
+		actively through the user's body, further increasing
+		defense and reducing incoming damage taken.
+		'''
+}
+
+FullIncarnationKOC: {
+	DisplayName: Full Incarnation King of Curses
+	Description:
+		'''
+		After consuming enough you now have the ability to take form at will.
+		The only way back from this transformation is death
+		'''
+}

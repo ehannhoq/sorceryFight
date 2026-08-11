@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using sorceryFight.Content.InnateTechniques;
 using Terraria;
 using Terraria.Chat;
 using Terraria.GameContent.UI.Elements;
 using sorceryFight.SFPlayer;
 using Terraria.ModLoader;
 using Terraria.UI;
+using sorceryFight.Utilities;
+using sorceryFight.Content.InnateTechniques;
 
 namespace sorceryFight.Content.UI.InnateTechniqueSelector
 {
@@ -56,8 +56,8 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
             for (int i = 0; i < InnateTechnique.InnateTechniques.Count; i++)
             {
                 InnateTechnique t = InnateTechnique.InnateTechniques[i];
-                Texture2D iconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.Name}_Icon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                Texture2D backgroundTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.Name}_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                Texture2D iconTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.InternalName}_Icon", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                Texture2D backgroundTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/InnateTechniqueSelector/{t.InternalName}_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
                 SpecialUIElement background = new SpecialUIElement(backgroundTexture, default, -1f, 0.05f);
                 background.Left.Set(iconPositions[i].X - (backgroundTexture.Width / 2), 0f);
@@ -99,7 +99,7 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
                     sfPlayer.DisablePTBooleans();
                     sfPlayer.cursedEnergy = sfPlayer.maxCursedEnergy;
                     sfPlayer.bloodEnergy = 10f;
-                    ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.{selectedTechnique.Name}"), Color.Khaki, player.whoAmI);
+                    ChatHelper.SendChatMessageToClient(SFUtils.GetNetworkText($"Mods.sorceryFight.Misc.InnateTechniqueUnlocker.{selectedTechnique.InternalName}"), Color.Khaki, player.whoAmI);
 
                     if (!sfPlayer.usedYourPotentialBefore)
                     {
@@ -114,28 +114,28 @@ namespace sorceryFight.Content.UI.InnateTechniqueSelector
 
                 int particleCount = timeCounter / 120 + 1;
 
-                if (timeCounter <= 300)
-                {
-                    for (int i = 0; i < particleCount; i++)
-                    {
-                        Vector2 offsetPos = pos + new Vector2(Main.rand.NextFloat(-100, 100), Main.rand.NextFloat(-100, 100));
-                        Vector2 vel = offsetPos.DirectionTo(pos) * 2;
+                // if (timeCounter <= 300)
+                // {
+                //     for (int i = 0; i < particleCount; i++)
+                //     {
+                //         Vector2 offsetPos = pos + new Vector2(Main.rand.NextFloat(-100, 100), Main.rand.NextFloat(-100, 100));
+                //         Vector2 vel = offsetPos.DirectionTo(pos) * 2;
 
-                        SparkleParticle particle = new SparkleParticle(offsetPos, vel, Color.Wheat, Color.White, 0.5f, 35);
-                        GeneralParticleHandler.SpawnParticle(particle);
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < 20; i++)
-                    {
-                        Vector2 targetPos = pos + new Vector2(Main.rand.NextFloat(-100, 100), Main.rand.NextFloat(-100, 100));
-                        Vector2 vel = pos.DirectionTo(targetPos) * 5;
+                //         SparkleParticle particle = new SparkleParticle(offsetPos, vel, Color.Wheat, Color.White, 0.5f, 35);
+                //         GeneralParticleHandler.SpawnParticle(particle);
+                //     }
+                // }
+                // else
+                // {
+                //     for (int i = 0; i < 20; i++)
+                //     {
+                //         Vector2 targetPos = pos + new Vector2(Main.rand.NextFloat(-100, 100), Main.rand.NextFloat(-100, 100));
+                //         Vector2 vel = pos.DirectionTo(targetPos) * 5;
 
-                        SparkleParticle particle = new SparkleParticle(pos, vel, Color.Wheat, Color.White, 0.5f, 60);
-                        GeneralParticleHandler.SpawnParticle(particle);
-                    }
-                }
+                //         SparkleParticle particle = new SparkleParticle(pos, vel, Color.Wheat, Color.White, 0.5f, 60);
+                //         GeneralParticleHandler.SpawnParticle(particle);
+                //     }
+                // }
             }
         }
         public void OnClick(InnateTechnique selectedTechnique)

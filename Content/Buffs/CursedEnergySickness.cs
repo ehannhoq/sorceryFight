@@ -1,5 +1,3 @@
-using System;
-using sorceryFight.SFPlayer;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -21,7 +19,7 @@ namespace sorceryFight.Content.Buffs
         }
         public override bool RightClick(int buffIndex)
         {
-            return SorceryFight.IsDevMode();
+            return SorceryFightMod.IsDevMode();
         }
 
         public override void ModifyBuffText(ref string buffName, ref string tip, ref int rare)

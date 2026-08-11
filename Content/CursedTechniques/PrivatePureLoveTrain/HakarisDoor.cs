@@ -1,8 +1,7 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -16,47 +15,29 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public static readonly int FRAME_COUNT = 8;
         public static readonly int TICKS_PER_FRAME = 2;
         public static Texture2D texture;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.HakarisDoor.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HakarisDoor.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.HakarisDoor.LockedDescription");
-        public override float Cost => 100f;
-        public override Color textColor => new Color(108, 158, 240);
-        public override bool DisplayNameInGame => true;
-        public override int Damage => 25;
-        public override int MasteryDamageMultiplier => 11;
-        public override float Speed => 0f;
-        public override float LifeTime => 40f;
+
+        public override string InternalName => "HakarisDoor";
+
         public Color rarity;
 
-        //public override Color selectorBGColor => new Color(20, 50, 155, 255);
-
-        //public override Color selectorBorderColor => new Color(0, 100, 0, 200);
-        public override int GetProjectileType()
+        public HakarisDoor()
         {
-            return ModContent.ProjectileType<HakarisDoor>();
+            Technique.baseDamage = 2;
+            Technique.damagePerBoss = 2;
+            Technique.cost = 30;
+            Technique.lifetime = FRAME_COUNT * TICKS_PER_FRAME + 15;
         }
 
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
-        }
 
         public override int UseTechnique(SorceryFightPlayer sf)
         {
             Player player = sf.Player;
-            sf.cursedEnergy -= Cost;
 
             if (Main.myPlayer == player.whoAmI)
             {
-                if (DisplayNameInGame)
-                {
-                    int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
-                    Main.combatText[index1].lifeTime = 180;
-                }
-
                 Vector2 mousePos = Main.MouseWorld;
                 var entitySource = player.GetSource_FromThis();
-                return Projectile.NewProjectile(entitySource, mousePos, Vector2.Zero, GetProjectileType(), (int)CalculateTrueDamage(sf), 0f, player.whoAmI);
+                return Projectile.NewProjectile(entitySource, mousePos, Vector2.Zero, GetProjectileType(), CalculateTrueDamage(sf), 0f, player.whoAmI);
             }
             return -1;
         }
@@ -70,6 +51,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/PrivatePureLoveTrain/HakarisDoor", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
 
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -77,10 +59,10 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             Projectile.height = 200;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = (int)LifeTime;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 4;
         }
+
 
         public override void AI()
         {
@@ -130,6 +112,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
             }
 
         }
+
 
         public override bool PreDraw(ref Color lightColor)
         {

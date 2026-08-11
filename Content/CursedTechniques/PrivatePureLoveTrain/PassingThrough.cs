@@ -1,9 +1,14 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using sorceryFight.Content.Particles;
+using sorceryFight.Content.VFX;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
+using sorceryFight.Utilities.EaseFunctions;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -13,28 +18,16 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
     public class PassingThrough : CursedTechnique
     {
         public static Texture2D texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/PrivatePureLoveTrain/PassingThrough", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.PassingThrough.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PassingThrough.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.PassingThrough.LockedDescription");
-        public override float Cost => 300f;
-        public override Color textColor => new Color(59, 64, 112);
-        public override bool DisplayNameInGame => true;
-        public override int Damage => 200;
-        public override int MasteryDamageMultiplier => 30;
-        public override float Speed => 30f;
-        public override float LifeTime => 180f;
 
-        //public override Color selectorBGColor => new Color(0, 5, 75, 220);
+        public override string InternalName => "PassingThrough";
 
-        //public override Color selectorBorderColor => new Color(0, 200, 0, 200);
-        public override int GetProjectileType()
+        public PassingThrough()
         {
-            return ModContent.ProjectileType<PassingThrough>();
-        }
-
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.SkeletronPrime);
+            Technique.baseDamage = 60;
+            Technique.damagePerBoss = 23;
+            Technique.cost = 55;
+            Technique.speed = 30f;
+            Technique.lifetime = 90;
         }
 
         public override int UseTechnique(SorceryFightPlayer sf)
@@ -43,15 +36,6 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
 
             if (player.whoAmI == Main.myPlayer)
             {
-
-                sf.cursedEnergy -= CalculateTrueCost(sf);
-
-                if (DisplayNameInGame)
-                {
-                    int index1 = CombatText.NewText(player.getRect(), textColor, DisplayName.Value);
-                    Main.combatText[index1].lifeTime = 180;
-                }
-
                 var entitySource = player.GetSource_FromThis();
 
                 Vector2 mousePos = Main.MouseWorld;
@@ -59,37 +43,77 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
                 posOffset = posOffset.RotatedByRandom(2 * MathF.PI);
                 Vector2 pos = mousePos + posOffset;
 
-                Vector2 dir = pos.DirectionTo(mousePos) * Speed;
+                Vector2 dir = pos.DirectionTo(mousePos);
 
                 SoundEngine.PlaySound(SorceryFightSounds.CommonWoosh, pos);
+
+                sf.disableRegenFromProjectiles = true;
 
                 return Projectile.NewProjectile(entitySource, pos, dir, GetProjectileType(), (int)CalculateTrueDamage(sf), 4f, player.whoAmI);
             }
             return -1;
         }
 
+
         public override void SetDefaults()
         {
+            base.SetDefaults();
+
             Projectile.width = 300;
             Projectile.height = 175;
             Projectile.tileCollide = false;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
-            Projectile.timeLeft = (int)LifeTime;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 4;
+            Projectile.localNPCHitCooldown = -1;
         }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            Projectile.rotation = Projectile.velocity.ToRotation();
+
+        }
+
 
         public override void AI()
         {
-            Projectile.rotation = Projectile.velocity.ToRotation();
+            Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.UnitX) * (speed * EaseFunctions.EaseInExponential(power: 2, x: (Technique.lifetime - Projectile.timeLeft) / 30f) + 0.1f);
         }
+
 
         public override bool PreDraw(ref Color lightColor)
         {
             Rectangle sourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, sourceRectangle, Color.White, Projectile.rotation, sourceRectangle.Size() * 0.5f, 1f, SpriteEffects.None, 0f);
             return false;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            VFXManager.AddVFX(new ImpactCircleVFX(
+                center: target.Center,
+                lifetime: 30,
+                scale: 1.5f
+            ));
+
+            for (int i = 0; i < 3; i++)
+            {
+                StarParticle particle = new StarParticle(
+                    position: target.Center + Main.rand.NextVector2Circular(target.width * 0.75f, target.height * 0.75f),
+                    velocity: Vector2.Zero,
+                    color: Color.White,
+                    changeOpacity: true,
+                    lifetime: 15,
+                    scale: 1f
+                );
+                ParticleController.SpawnParticle(particle);
+            }
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            Player player = Main.player[Projectile.owner];
+            player.SorceryFight().disableRegenFromProjectiles = false;
         }
     }
 

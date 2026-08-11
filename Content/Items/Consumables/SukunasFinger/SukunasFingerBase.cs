@@ -1,6 +1,5 @@
-using sorceryFight.Content.Rarities;
-using sorceryFight.Rarities;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -23,7 +22,7 @@ namespace sorceryFight.Content.Items.Consumables
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.HoldUp;
-            Item.rare = ModContent.RarityType<SorceryFightConsumable>();
+            Item.rare = ItemRarityID.White;
         }
 
         public override bool? UseItem(Player player)
@@ -32,14 +31,14 @@ namespace sorceryFight.Content.Items.Consumables
             {
                 SorceryFightPlayer sf = player.SorceryFight();
 
-                if (!sf.innateTechnique.Name.Equals("Vessel")) return false;
+                if (!sf.innateTechnique.InternalName.Equals("Vessel")) return false;
 
                 if (!sf.sukunasFingers[Id - 1])
                 {
                     sf.sukunasFingers[Id - 1] = true;
                     SoundEngine.PlaySound(SoundID.Item2, player.Center);
 
-                    if (sf.innateTechnique.Name.Equals("Vessel"))
+                    if (sf.innateTechnique.InternalName.Equals("Vessel"))
                         SorceryFightUI.UpdateTechniqueUI.Invoke();
                 }
                 return true;

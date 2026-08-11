@@ -6,7 +6,7 @@ UnlimitedVoid: {
 		their brain with information, rendering
 		them unable to move or think.
 		'''
-	LockedDescription: Defeat the Devourer of Gods.
+	LockedDescription: Defeat the Moon Lord
 }
 
 MalevolentShrine: {
@@ -18,7 +18,7 @@ MalevolentShrine: {
 		down by Dismantles and Cleaves. There is
 		no range on this domain.
 		'''
-	LockedDescription: Defeat the Devourer of Gods.
+	LockedDescription: Defeat the Moon Lord
 }
 
 StarCastle: {
@@ -30,7 +30,7 @@ StarCastle: {
 		down by Dismantles and Cleaves. There is
 		no range on this domain.
 		'''
-	LockedDescription: Defeat the Devourer of Gods.
+	LockedDescription: Defeat the Moon Lord
 }
 
 Home: {
@@ -41,11 +41,7 @@ Home: {
 		within its barrier, and striking enemies at their
 		soul, ignoring defense.
 		'''
-	LockedDescription:
-		'''
-		Defeat the Devourer of Gods, as well as consume
-		20 of Ryomen Sukuna's fingers.
-		'''
+	LockedDescription: Consume atleast 19 of Ryomen Sukuna's fingers.
 }
 
 IdleDeathGamble: {

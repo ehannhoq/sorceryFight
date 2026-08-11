@@ -1,11 +1,7 @@
-using System;
-using System.Linq;
-using MonoMod.Cil;
-using Mono.Cecil.Cil;
 using sorceryFight.Content.Items.Accessories;
 using sorceryFight.SFPlayer;
-using Terraria;
 using Terraria.ModLoader;
+using sorceryFight.Utilities;
 
 namespace sorceryFight.Content.Quests
 {

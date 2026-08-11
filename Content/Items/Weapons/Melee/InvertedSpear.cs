@@ -3,8 +3,9 @@ using System.Linq;
 using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Graphics;
 using sorceryFight.Content.Projectiles.Melee;
-using sorceryFight.Rarities;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -31,19 +32,19 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             Item.height = 90;
             Item.maxStack = 1;
             Item.useTime = 1;
-            Item.damage = 700;
+            Item.damage = 110;
             Item.knockBack = 5;
             Item.channel = true;
             Item.shootSpeed = 24f;
             Item.autoReuse = false;
             Item.useAnimation = 1;
             Item.noUseGraphic = true;
-            Item.rare = ModContent.RarityType<SorceryFightWeapon>();
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.shoot = ModContent.ProjectileType<InvertedSpearSlash>();
             Item.DamageType = DamageClass.Melee;
             Item.noMelee = true;
             Item.ArmorPenetration = 1000;
+            Item.rare = ItemRarityID.Orange;
         }
 
         public override void ModifyWeaponCrit(Player player, ref float crit) => crit = 1;
@@ -59,6 +60,7 @@ namespace sorceryFight.Content.Items.Weapons.Melee
             spriteBatch.Draw(texture, Item.Center - Main.screenPosition, null, lightColor, rotation, texture.Size() * 0.5f, scale, SpriteEffects.None, 0f);
             return false;
         }
+
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {

@@ -1,6 +1,3 @@
-using CalamityMod.Particles;
-using CalamityMod.Sounds;
-using Microsoft.Build.Graph;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -9,36 +6,25 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using sorceryFight.SFPlayer;
+using sorceryFight.Content.Particles;
+
 
 namespace sorceryFight.Content.CursedTechniques.Limitless
 {
     public class AmplificationBlue : CursedTechnique
     {
-
         public static readonly int FRAME_COUNT = 8;
         public static readonly int TICKS_PER_FRAME = 5;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.AmplificationBlue.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.AmplificationBlue.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.AmplificationBlue.LockedDescription");
-        public override float Cost => 30f;
-        public override Color textColor => new Color(108, 158, 240);
-        public override bool DisplayNameInGame => true;
 
-        public override int Damage => 30;
-        public override int MasteryDamageMultiplier => 50;
+        public override string InternalName => "AmplificationBlue";
 
-        public override float Speed => 25f;
-        public override float LifeTime => 300f;
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(NPCID.SkeletronHead);
-        }
+        private const float minAttractionRadius = 50f;
+        private const float maxAttractionRadius = 100f;
+        private const float minAttractionStrength = 3f;
+        private const float maxAttractionStrength = 12f;
 
-
-
-
-        public virtual float AttractionRadius { get; } = 100f;
-        public virtual float AttractionStrength { get; } = 12f;
+        private float AttractionRadius => Main.player[Projectile.owner].SorceryFight().numberBossesDefeated / (float)SorceryFightMod.totalBosses * (maxAttractionRadius - minAttractionRadius) + minAttractionRadius;
+        private float AttractionStrength => Main.player[Projectile.owner].SorceryFight().numberBossesDefeated / (float)SorceryFightMod.totalBosses * (maxAttractionStrength - minAttractionStrength) + minAttractionStrength;
 
         public static Texture2D texture;
 
@@ -46,26 +32,33 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         public float animScale;
 
 
+        public AmplificationBlue()
+        {
+            Technique.baseDamage = 5;
+            Technique.damagePerBoss = 5;
+            Technique.cost = 9;
+            Technique.speed = 12;
+        }
+
+
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = FRAME_COUNT;
-        }
 
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<AmplificationBlue>();
+            if (!Main.dedServ)
+                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/AmplificationBlue", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         }
-
 
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Projectile.width = 65;
-            Projectile.height = 65;
+            Projectile.width = 60;
+            Projectile.height = 60;
             Projectile.tileCollide = true;
             animating = false;
             animScale = 1.25f;
         }
+
         public override void AI()
         {
             Projectile.ai[0] += 1;
@@ -73,7 +66,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             bool spawnedFromPurple = Projectile.ai[1] == 1;
             Player player = Main.player[Projectile.owner];
 
-            if (Projectile.ai[0] > LifeTime + beginAnimTime)
+            if (Projectile.ai[0] > lifetime + beginAnimTime)
             {
                 Projectile.Kill();
             }
@@ -114,8 +107,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                 Vector2 particleOffset = Projectile.Center + new Vector2(Main.rand.NextFloat(-40f, 40f), Main.rand.NextFloat(-40f, 40f));
                 Vector2 particleVelocity = particleOffset.DirectionTo(Projectile.Center);
-                LineParticle particle = new LineParticle(particleOffset, particleVelocity * 3, false, 10, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
+                LinearParticle particle = new LinearParticle(particleOffset, particleVelocity * 3, new Color(108, 218, 240), false, 0.9f, 1f, 10);
+                ParticleController.SpawnParticle(particle);
 
                 return;
             }
@@ -164,10 +157,6 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
 
-            if (texture == null && !Main.dedServ)
-                texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Limitless/AmplificationBlue").Value;
-
-
             int frameHeight = texture.Height / FRAME_COUNT;
             int frameY = Projectile.frame * frameHeight;
 
@@ -188,8 +177,8 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             {
                 Vector2 variation = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
 
-                LineParticle particle = new LineParticle(target.Center, Projectile.velocity + variation, false, 30, 1, textColor);
-                GeneralParticleHandler.SpawnParticle(particle);
+                LinearParticle particle = new LinearParticle(target.Center, Projectile.velocity + variation, new Color(108, 218, 240), false, 0.9f, 1, 30);
+                ParticleController.SpawnParticle(particle);
             }
         }
 

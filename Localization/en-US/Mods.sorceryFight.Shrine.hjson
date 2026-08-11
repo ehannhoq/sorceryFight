@@ -1,0 +1,44 @@
+Dismantle: {
+	DisplayName: Dismantle
+	Description:
+		'''
+		The default shashing technique of Shrine,
+		it fires a slash towards the user's cursor.
+		'''
+}
+
+Cleave: {
+	DisplayName: Cleave
+	Description:
+		'''
+		Cleave is a slashing technique that adjusts
+		its power based off of the target's current
+		health.
+		'''
+}
+
+InstantDismantle: {
+	DisplayName: Instantaneous Dismantle
+	Description: Slashes near instantly at the user's cursor.
+}
+
+DivineFlame: {
+	DisplayName: Divine Flame
+	Description:
+		'''
+		Flames hotter than hell take shape into an
+		arrow, in which launches and deals a massive
+		amount of damage despite its slow speed.
+		'''
+}
+
+WorldCuttingSlash: {
+	DisplayName: The Slash that Cuts the World
+	Description:
+		'''
+		Instead of aiming a Dismantle at a target,
+		the user instead targets the entire world.
+		This powerful slash cuts through everything
+		and anything.
+		'''
+}

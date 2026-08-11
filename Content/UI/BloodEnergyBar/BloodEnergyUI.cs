@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using sorceryFight;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -66,7 +67,7 @@ public class BloodEnergyUI : ModSystem
         SorceryFightPlayer sf = Main.LocalPlayer.SorceryFight();
 
         // If not drawing the blood meter, save its latest position to config and leave.
-        if (sf.innateTechnique?.Name == "Vessel" || sf.innateTechnique?.Name == "BloodManipulation")
+        if (sf.innateTechnique?.InternalName == "Vessel" || sf.innateTechnique?.InternalName == "BloodManipulation")
         {
             DrawBloodEnergyBar(spriteBatch, sf, screenPos);
         }

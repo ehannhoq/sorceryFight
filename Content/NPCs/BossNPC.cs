@@ -1,0 +1,60 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.ModLoader;
+
+namespace sorceryFight.Content.NPCs
+{
+    [Autoload(false)]
+    public abstract class BossNPC : ModNPC
+    {
+        public AIState currentState;
+
+        public override void SetDefaults()
+        {
+            NPC.boss = true;
+            NPC.friendly = false;
+        }
+
+        public override void AI()
+        {
+            currentState?.AI(NPC);
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (currentState == null) return true;
+
+            return currentState.PreDraw(NPC, spriteBatch, screenPos, drawColor);
+        }
+
+        public void SetState(AIState newState)
+        {
+            if (currentState.GetType() == newState.GetType()) return;
+
+            // Main.NewText($"{currentState.ToString()} -> {newState.ToString()}");
+            currentState?.OnExit(NPC);
+            currentState = newState;
+            currentState.OnEnter(NPC);
+        }
+
+        public float GetDistanceToTarget(Vector2? targetPos = null)
+        {
+            if (!NPC.HasValidTarget) return -1f;
+
+            Vector2 playerPos = targetPos ?? Main.player[NPC.target].Center;
+            return (NPC.Center - playerPos).Length();
+        }
+
+        public Player GetTarget()
+        {
+            if (!NPC.HasValidTarget) return null;
+            return Main.player[NPC.target];
+        }
+
+        public float GetHealthPercentage()
+        {
+            return (float)NPC.life / NPC.lifeMax;
+        }
+    }
+}

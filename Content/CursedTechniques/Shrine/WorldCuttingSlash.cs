@@ -1,16 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Composition.Hosting.Core;
-using System.Security.Cryptography.X509Certificates;
-using CalamityMod.NPCs.DevourerofGods;
-using CalamityMod.NPCs.Providence;
-using CalamityMod.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using sorceryFight.Content.Buffs;
 using sorceryFight.Content.Buffs.Vessel;
 using sorceryFight.Content.Items.Accessories;
+using sorceryFight.Content.UI.Chants;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -26,32 +23,15 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
         public static readonly int FRAME_COUNT = 4;
         public static readonly int TICKS_PER_FRAME = 5;
         static List<string> incantations;
-        static Texture2D texture;
-        public override LocalizedText DisplayName => SFUtils.GetLocalization("Mods.sorceryFight.CursedTechniques.WorldCuttingSlash.DisplayName");
-        public override string Description => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.WorldCuttingSlash.Description");
-        public override string LockedDescription => SFUtils.GetLocalizationValue("Mods.sorceryFight.CursedTechniques.WorldCuttingSlash.LockedDescription");
-        public override float Cost => 1225f;
-        public override Color textColor => new Color(245, 214, 208);
-        public override bool DisplayNameInGame => false;
-        public override int Damage => 20000;
-        public override int MasteryDamageMultiplier => 525;
-        public override float Speed => 60f;
-        public override float LifeTime => 300f;
+
+        public override string InternalName => "WorldCuttingSlash";
+
         ref float castTime => ref Projectile.ai[0];
-        ref float totalCastTime => ref Projectile.localAI[0];
-        ref float multiplier => ref Projectile.localAI[1];
-        ref float slashed => ref Projectile.localAI[2];
-        private const float INCANTATION_TIME = 90.0f;
-        private const float BUFFER_TIME = 30.0f;
-        private const float SHADER_TIME = 120.0f;
-        public override int GetProjectileType()
-        {
-            return ModContent.ProjectileType<WorldCuttingSlash>();
-        }
-        public override bool Unlocked(SorceryFightPlayer sf)
-        {
-            return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>()) || sf.Player.HasBuff(ModContent.BuffType<KingOfCursesBuff>());
-        }
+        ref float multiplier => ref Projectile.localAI[0];
+        ref float slashed => ref Projectile.localAI[1];
+        ref float finishedChanting => ref Projectile.localAI[2];
+        private const int SLASH_TIME = 120;
+        private const int BUFFER_TIME = 30;
 
         public override void SetStaticDefaults()
         {
@@ -61,9 +41,16 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 "Repulsion.",
                 "Paired Falling Stars."
             };
+        }
 
-            if (Main.dedServ) return;
-            texture = ModContent.Request<Texture2D>("sorceryFight/Content/CursedTechniques/Shrine/WorldCuttingSlash", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+
+        public WorldCuttingSlash()
+        {
+            Technique.baseDamage = 4000;
+            Technique.damagePerBoss = 200;
+            Technique.cost = 1200f;
+            Technique.speed = 50;
+            Technique.lifetime = 600;
         }
 
         public override void SetDefaults()
@@ -78,6 +65,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Projectile.localNPCHitCooldown = -1;
         }
 
+
         public override void OnSpawn(IEntitySource source)
         {
             Projectile.Hitbox = new Rectangle((int)Projectile.position.X, (int)Projectile.position.Y, 1, 1);
@@ -89,12 +77,42 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             sfPlayer.disableRegenFromProjectiles = true;
 
             multiplier = sfPlayer.cursedOfuda ? CursedOfuda.cursedTechniqueCastTimeDecrease : 1.0f;
-            totalCastTime = (incantations.Count * INCANTATION_TIME + SHADER_TIME + BUFFER_TIME) * multiplier;
+
+            ChantManager.InitiateChant(new Chant(
+                text: SFUtils.CombineListOfStrings(incantations),
+                timeBetweenCharacters: (int)(5 * multiplier),
+                timeBetweenWords: (int)(30 * multiplier),
+                colors: [
+                    Color.Black,
+                    new Color(41, 11, 9, 255)
+                ],
+                delayAfterChant: BUFFER_TIME,
+                chantStyles: [
+                    new CharacterGlow(new Color(245, 209, 196, 255), glowRadius: 6f),
+                    new CharacterStroke(new Color(230, 206, 179, 255), 2),
+                ],
+                onEnd: () => {
+                    int index = Projectile.whoAmI;
+                    Main.projectile[index].localAI[2] = 1.0f;
+                },
+                                perCharacterEvent: (currentIndex, remaining) => {
+                    SoundEngine.PlaySound(SoundID.MenuTick with { PitchVariance = 0.25f, MaxInstances = 0 });
+                },
+                perSentenceEvent: (currentSentenceIndex, remainingSentences) => {
+                    if (remainingSentences > 1)
+                        SoundEngine.PlaySound(SorceryFightSounds.ChantingChargeUp);
+                    else    
+                        SoundEngine.PlaySound(SorceryFightSounds.ChantingFinished);
+                },
+                perCharacterAnimationTime: 15,
+                characterStartOffset: new Vector2(20f, 10f),
+                characterAnimationOpacityFadeIn: true
+            ));
         }
+
 
         public override void AI()
         {
-            castTime++;
             Player player = Main.player[Projectile.owner];
             Projectile.Center = player.Center;
 
@@ -103,26 +121,11 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                 Projectile.velocity = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.UnitX);
             }
 
-            float incantationTime = INCANTATION_TIME * incantations.Count * multiplier;
-            if (castTime == 1)
-            {
-                player.SorceryFight().sfUI.InitializeChant(incantations, (int)(INCANTATION_TIME * multiplier), (int)BUFFER_TIME, new UI.Chants.ChantTextStyle(
-                    textColor: Color.Black,
-                    text2Color: new Color(41, 11, 9, 255),
-                    borderWidth: 2.0f,
-                    borderColor: Color.White,
-                    border2Color: new Color(230, 206, 179, 255),
-                    glowRadius: 3.0f,
-                    glowColor: new Color(245, 209, 196, 255)
-                ));
-            }
-
-            if (castTime <= incantationTime + BUFFER_TIME)
-            {
+            if (finishedChanting == 0.0)
                 return;
-            }
 
-            if (castTime < totalCastTime)
+            castTime++;
+            if (castTime < SLASH_TIME)
             {
                 if (slashed == 0.0f)
                 {
@@ -135,7 +138,7 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
                     SoundEngine.PlaySound(SorceryFightSounds.WorldCuttingSlash, Projectile.Center);
                 }
 
-                float percent = (castTime - totalCastTime) / (totalCastTime - incantationTime) + 1;
+                float percent = castTime / SLASH_TIME;
                 float progress = MathF.Pow((percent * 2) - 1, 3);
                 progress = 1 - Math.Clamp(progress, 0.0f, 1.0f);
 
@@ -153,11 +156,13 @@ namespace sorceryFight.Content.CursedTechniques.Shrine
             Projectile.Kill();
         }
 
+
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             modifiers.Defense *= 0.0f;
             modifiers.DefenseEffectiveness *= 0.0f;
         }
+
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {

@@ -1,4 +1,3 @@
-using System;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -15,7 +14,7 @@ namespace sorceryFight.Content.Buffs
 
         public override bool RightClick(int buffIndex)
         {
-            return SorceryFight.IsDevMode();
+            return SorceryFightMod.IsDevMode();
         }
     }
 }

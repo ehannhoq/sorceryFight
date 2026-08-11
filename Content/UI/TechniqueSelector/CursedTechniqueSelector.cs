@@ -5,6 +5,7 @@ using sorceryFight.Content.Buffs;
 using sorceryFight.Content.CursedTechniques;
 using sorceryFight.Content.UI.CursedTechniqueMenu;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -42,11 +43,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 borderRect.Inflate(2, 2);
 
                 //fall back on innateBGColor if there is no selector color in the Cursed Technique
-                Color borderColor;
-                if (sfPlayer.innateTechnique.CursedTechniques[id].selectorBorderColor != default)
-                    borderColor = sfPlayer.innateTechnique.CursedTechniques[id].selectorBorderColor;
-                else
-                    borderColor = sfPlayer.innateTechnique.innateBorderColor;
+                Color borderColor = sfPlayer.innateTechnique.innateBorderColor;
 
                 Color bgColor;
                 if (ModContent.GetInstance<ClientConfig>().AllUIBackgroundsGrayToggle)
@@ -56,10 +53,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 }
                 else
                 {
-                    if (sfPlayer.innateTechnique.CursedTechniques[id].selectorBGColor != default)
-                        bgColor = sfPlayer.innateTechnique.CursedTechniques[id].selectorBGColor;
-                    else
-                        bgColor = sfPlayer.innateTechnique.innateBGColor;
+                    bgColor = sfPlayer.innateTechnique.innateBGColor;
                 }
 
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(bgRect.X, bgRect.Y - 2, bgRect.Width, 2), borderColor);
@@ -77,7 +71,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
                 spriteBatch.Draw(TextureAssets.MagicPixel.Value, bgRect, bgColor);
 
                 //rewrite this later
-                Color iconColor = sfPlayer.innateTechnique.CursedTechniques[id].UseCondition(sfPlayer)
+                Color iconColor = sfPlayer.innateTechnique.CursedTechniques[id].CanUse(sfPlayer)
                     ? Color.White
                     : Color.Gray;
 
@@ -170,7 +164,7 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
             if (selectorIndex != -1)
                 sfPlayer.selectedTechnique = sfPlayer.innateTechnique.CursedTechniques[icons[selectorIndex].id];
-            
+
             #region Screen Position Logic
             Vector2 screenRatioPosition = new Vector2(
                  ModContent.GetInstance<ClientConfig>().CTSelectorPosX,
@@ -245,11 +239,11 @@ namespace sorceryFight.Content.UI.TechniqueSelector
 
             for (int i = 0; i < sfPlayer.innateTechnique.CursedTechniques.Count; i++)
             {
-                Texture2D ctTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueSelector/{sfPlayer.innateTechnique.Name}/c{i}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-                string ctHoverText = $"{sfPlayer.innateTechnique.CursedTechniques[i].DisplayName.Value}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip")}";
+                Texture2D ctTexture = ModContent.Request<Texture2D>($"sorceryFight/Content/UI/TechniqueIcons/{sfPlayer.innateTechnique.InternalName}/{sfPlayer.innateTechnique.CursedTechniques[i].InternalName}", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+                string ctHoverText = $"{sfPlayer.innateTechnique.CursedTechniques[i].DisplayName}\n{SFUtils.GetLocalizationValue("Mods.sorceryFight.UI.CursedEnergyBar.ToolTip")}";
                 TechniqueSelectorButton ctIcon = new TechniqueSelectorButton(ctTexture, ctHoverText, i);
 
-                if (sfPlayer.innateTechnique.CursedTechniques[i].Unlocked(sfPlayer))
+                if (sfPlayer.innateTechnique.CursedTechniques[i].IsUnlocked(sfPlayer))
                 {
                     ctIcon.Left.Set(unlockedTechniques * (ctIcon.texture.Width + ButtonGap), 0f);
                     ctIcon.Top.Set(0f, 0f);
@@ -303,5 +297,3 @@ namespace sorceryFight.Content.UI.TechniqueSelector
         }
     }
 }
-
-

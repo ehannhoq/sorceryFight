@@ -1,0 +1,168 @@
+// GENERAL/SHARED
+
+FallingBlossomEmotion: {
+	DisplayName: Falling Blossom Emotion
+	Description:
+		'''
+		An anti-domain technique passed down
+		among the Big Three clans.
+		'''
+	AdditionalStats:
+		'''
+		+{0} defense
+		Grants immunity to enemy domains
+		Grants immunity to knockback
+		You must be standing still in order to recieve the buffs
+		You cannot use Cursed Techniques while this is active,
+		unless you have a unique body structure
+
+		'''
+}
+
+// LIMITLESS
+
+Infinity: {
+	DisplayName: Infinity
+	Description:
+		'''
+		Infinity is the convergence of an
+		immeasurable series, anything that
+		approaches the infinity slows down
+		and never reaches you.
+		'''
+	AdditionalStats:
+		'''
+		Each object blocked by Infinity
+		increases Cursed Energy consumption
+		depending on the object's damage.
+		Drains {0}x more Cursed Energy during boss fights
+		'''
+}
+
+AmplifiedAura: {
+	DisplayName: Amplified Aura
+	Description:
+		'''
+		Covering yourself in a shroud of
+		the amplified Limitless, you gain
+		an increase in movement speed and damage.
+		'''
+	AdditionalStats:
+		'''
+		+{0}% movement speed
+		+{1}% damage
+		You cannot use Cursed Techniques while this is active,
+		unless you have a unique body structure
+		'''
+}
+
+MaximumAmplifiedAura: {
+	DisplayName: Maximum Output: Amplified Aura
+	Description:
+		'''
+		Covering yourself in a shroud
+		of the amplified Limitless using
+		maximum Cursed Energy output,
+		you gain a major increase in
+		movement speed and damage.
+		'''
+}
+
+// SHRINE
+
+DomainAmplification: {
+	DisplayName: Domain Amplification
+	Description:
+		'''
+		A simple technique that casts
+		a barrier around the user,
+		nullifying partial damage taken.
+		'''
+	AdditionalStats:
+		'''
+		{0}% damage negation
+		You cannot use Cursed Techniques while this is active,
+		unless you have a unique body structure
+		Drains {1}x more Cursed Energy during boss fights
+		'''
+}
+
+HollowWickerBasket: {
+	DisplayName: Hollow Wicker Basket
+	Description:
+		'''
+		An ancient technique. It shrouds
+		the user in a basket of Cursed
+		Energy, nullifying any damage taken.
+		'''
+	AdditionalStats:
+		'''
+		{0}% damage negation
+		Grants immunity to enemy domains
+		-{1}% movement speed inside enemy domains
+		You cannot use Cursed Techniques while this is active,
+		unless you have a unique body structure
+		Drains {2}x more Cursed Energy during boss fights
+		'''
+}
+
+// BLOOD MANIPULTION / VESSEL
+
+FlowingRedScale: {
+	DisplayName: Flowing Red Scale
+	Description:
+		'''
+		An ancient technique. It pumps blood
+		actively through the user's body, increasing
+		defense and reducing incoming damage taken.
+		'''
+	AdditionalStats:
+		'''
+		{0}% defense boost
+		+{1}% damage negation
+		+{2} blood per second
+		If you don't have RCT it will consume health instead
+		You cannot use Cursed Techniques while this is active
+		unless you have a unique body structure
+		Drains {3}x more Cursed Energy during boss fights
+		'''
+}
+
+FlowingRedScaleStack: {
+	DisplayName: Flowing Red Scale Stack
+	Description:
+		'''
+		An Improved technique. It pumps blood
+		actively through the user's body, further increasing
+		defense and reducing incoming damage taken.
+		'''
+}
+
+// HEAVENLY RESTRICTION
+
+MindlessCarnage: {
+	DisplayName: Mindless Carnage
+	Description:
+		'''
+		Your mind goes blank, eyes go gray.
+		Damage and movement speed scales to the strongest
+		enemy near you.
+		Stamina drain also increases the stronger
+		the enemy.
+		'''
+}
+
+// STAR RAGE
+
+SummonGaruda: {
+	DisplayName: Garuda
+	Description: Summon Garuda
+	AdditionalStats: "   Drains {0}x more Cursed Energy during boss fights"
+}
+
+// TEN SHADOWS
+
+Totality: {
+	DisplayName: Totality
+	Description: Turns Divine Dogs into Totality
+}

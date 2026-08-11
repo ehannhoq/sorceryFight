@@ -1,7 +1,6 @@
-using CalamityMod.Items.Materials;
 using sorceryFight.Content.Items.Materials;
-using sorceryFight.Rarities;
 using sorceryFight.SFPlayer;
+using sorceryFight.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -21,7 +20,7 @@ namespace sorceryFight.Content.Items.Accessories
         {
             Item.accessory = true;
             Item.maxStack = 1;
-            Item.rare = ModContent.RarityType<SorceryFightAccessory>();
+            Item.rare = ItemRarityID.White;
             Item.width = 54;
             Item.height = 50;
         }
@@ -44,9 +43,10 @@ namespace sorceryFight.Content.Items.Accessories
         {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<InfusedCursedFragment>(), 10);
-            recipe.AddIngredient(ModContent.ItemType<DivineGeode>(), 7);
-            recipe.AddIngredient(ModContent.ItemType<CoreofCalamity>(), 12);
-            recipe.AddIngredient(ModContent.ItemType<UnholyCore>(), 2);
+            recipe.AddIngredient(ItemID.SoulBottleFright, 15);
+            recipe.AddIngredient(ItemID.SoulBottleMight, 15);
+            recipe.AddIngredient(ItemID.SoulBottleSight, 15);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
     }

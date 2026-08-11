@@ -26,7 +26,7 @@ RCTIcon: {
 		multiplying negative Cursed Energy together. This positive energy
 		allows one to heal any wound of the user, fatal or not.
 		'''
-	LockedInfo: Be at the brink of death at the hands of the lunar god.
+	LockedInfo: Be at the brink of death at the hands of the queen of the jungle.
 }
 
 LeftItAllBehindIcon: {
@@ -37,7 +37,7 @@ LeftItAllBehindIcon: {
 		your heavenly restriction has been realized to its full potential.
 		Increases overall stats.
 		'''
-	LockedInfo: Be at the brink of death at the hands of the lunar god.
+	LockedInfo: Be at the brink of death at the hands of the queen of the jungle.
 }
 
 SimpleDomainIcon: {

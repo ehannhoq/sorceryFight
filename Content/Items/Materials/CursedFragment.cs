@@ -1,9 +1,7 @@
-using sorceryFight.Rarities;
-using sorceryFight.SFPlayer;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace sorceryFight.Content.Items.Materials
 {
@@ -17,7 +15,7 @@ namespace sorceryFight.Content.Items.Materials
         public override void SetDefaults()
         {
             Item.material = true;
-            Item.rare = ModContent.RarityType<SorceryFightMaterial>();
+            Item.rare = ItemRarityID.White;
             Item.width = 50;
             Item.height = 50;
             Item.maxStack = 999;
