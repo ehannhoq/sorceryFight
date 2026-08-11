@@ -119,7 +119,7 @@ namespace sorceryFight
             if (item.type != ItemID.MoonLordBossBag) return;
 
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CelestialAmulet>(), CelestialAmulet.ChanceDenominator, 1, 1));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<InvertedSpear>(), 5, 1, 1));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Kamutoke>(), 6));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<LunarCursedFragment>(), 1, 14, 17));
         }
 

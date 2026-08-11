@@ -166,7 +166,7 @@ namespace sorceryFight
             if (npc.type != NPCID.MoonLordCore) return;
 
             nonExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CelestialAmulet>(), CelestialAmulet.ChanceDenominator));
-            nonExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<InvertedSpear>(), 5));
+            nonExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Kamutoke>(), 6));
             nonExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<LunarCursedFragment>(), 1, 9, 12));
         }
 
