@@ -67,15 +67,15 @@ namespace sorceryFight.Content.InnateTechniques
             sf.Player.GetDamage(DamageClass.Ranged) *= 1 + (0.05f * sf.sukunasFingerConsumed);
             sf.Player.GetDamage(DamageClass.Magic) *= 1 + (0.05f * sf.sukunasFingerConsumed);
             sf.Player.GetDamage(DamageClass.Summon) *= 1 + (0.05f * sf.sukunasFingerConsumed);
+            sf.Player.GetDamage(CursedTechniqueDamageClass.Instance) *= 1 + (0.05f * sf.sukunasFingerConsumed);
 
-            sf.Player.statDefense *= 1 + (0.03f * sf.sukunasFingerConsumed);
-
+            sf.Player.statDefense *= 1 + (0.005f * sf.sukunasFingerConsumed);
             sf.blackFlashWindowTime += 1;
         }
 
         public override void UpdateLifeRegen(SorceryFightPlayer sf)
         {
-            sf.Player.lifeRegen += 2 * sf.sukunasFingerConsumed;
+            sf.Player.lifeRegen += sf.sukunasFingerConsumed / 2;
         }
     }
 }

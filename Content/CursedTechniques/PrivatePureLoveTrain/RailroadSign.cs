@@ -36,7 +36,7 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public RailroadSign()
         {
             Technique.baseDamage = 150;
-            Technique.damagePerBoss = 50;
+            Technique.damagePerBoss = 40;
             Technique.cost = 90;
             Technique.lifetime = swingTime + windupTime + windDownTime;
             Technique.speed = 24f;

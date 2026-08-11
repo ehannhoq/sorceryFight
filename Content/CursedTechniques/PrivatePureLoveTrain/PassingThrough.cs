@@ -24,8 +24,8 @@ namespace sorceryFight.Content.CursedTechniques.PrivatePureLoveTrain
         public PassingThrough()
         {
             Technique.baseDamage = 60;
-            Technique.damagePerBoss = 17;
-            Technique.cost = 50;
+            Technique.damagePerBoss = 23;
+            Technique.cost = 55;
             Technique.speed = 30f;
             Technique.lifetime = 90;
         }

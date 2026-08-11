@@ -60,20 +60,23 @@ namespace sorceryFight.Content.CursedTechniques.Vessel
         }
 
         public override void OnSpawn(IEntitySource source)
-        {                
-            Player player = Main.player[Projectile.owner];
-            Vector2 playerRotatedPoint = player.RotatedRelativePoint(player.MountedCenter, true);
-            float velocityAngle = Projectile.velocity.ToRotation();
-            float offset = 130f * Projectile.scale;
-
-            if (Main.myPlayer == Projectile.owner)
+        {
+            if (spawnedFromDE == 0)
             {
-                Projectile.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
-                Projectile.netUpdate = true;
+                Player player = Main.player[Projectile.owner];
+                Vector2 playerRotatedPoint = player.RotatedRelativePoint(player.MountedCenter, true);
+                float velocityAngle = Projectile.velocity.ToRotation();
+                float offset = 130f * Projectile.scale;
+
+                if (Main.myPlayer == Projectile.owner)
+                {
+                    Projectile.velocity = (Main.MouseWorld - playerRotatedPoint).SafeNormalize(Vector2.UnitX * player.direction);
+                    Projectile.netUpdate = true;
+                }
+                
+                Projectile.Center = playerRotatedPoint + velocityAngle.ToRotationVector2() * offset;
+                Projectile.rotation = velocityAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
             }
-            
-            Projectile.Center = playerRotatedPoint + velocityAngle.ToRotationVector2() * offset;
-            Projectile.rotation = velocityAngle + (Projectile.direction == -1).ToInt() * MathHelper.Pi;
         }
 
 
