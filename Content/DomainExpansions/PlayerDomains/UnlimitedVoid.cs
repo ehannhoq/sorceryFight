@@ -51,8 +51,7 @@ namespace sorceryFight.Content.DomainExpansions.PlayerDomains
 
         public override bool Unlocked(SorceryFightPlayer sf)
         {
-            return true;
-            // return sf.HasDefeatedBoss(ModContent.NPCType<DevourerofGodsHead>());
+            return sf.HasDefeatedBoss(NPCID.CultistBoss);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
