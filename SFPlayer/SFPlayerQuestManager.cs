@@ -98,7 +98,7 @@ namespace sorceryFight.SFPlayer
         {
             if (Main.dedServ)
             {
-                //SendKilledNPCToClients(npcType);
+                SendKilledNPCToClients(npcType);
                 return;
             }
 
