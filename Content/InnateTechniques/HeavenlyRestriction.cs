@@ -42,6 +42,7 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override void PreUpdate(SorceryFightPlayer sf)
         {
+            base.PreUpdate(sf);
             sf.heavenlyRestriction = true;
         }
 
