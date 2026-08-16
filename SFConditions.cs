@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -68,5 +69,16 @@ namespace sorceryFight
                 return "not implemented";
             }
         }
+
+        
+        public class SolarEclipse : IItemDropRuleCondition
+        {
+            public bool CanDrop(DropAttemptInfo info) => Main.eclipse;
+
+            public bool CanShowItemDropInUI() => true;
+
+            public string GetConditionDescription() => "Dropped during a Solar Eclipse";
+        }
     }
+
 }

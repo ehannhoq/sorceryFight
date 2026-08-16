@@ -16,6 +16,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using sorceryFight.Content.Projectiles.Melee;
+using sorceryFight.Content.NPCs.FingerBearer;
 
 namespace sorceryFight
 {
@@ -97,7 +98,7 @@ namespace sorceryFight
                 { NPCID.SkeletronHead, ModContent.ItemType<SukunasFingerV>() },
                 { NPCID.Deerclops, ModContent.ItemType<SukunasFingerVI>() },
                 { NPCID.WallofFlesh, ModContent.ItemType<SukunasFingerVII>() },
-                // Sukuna's Finger VIII is dropped by Finger Bearer I.
+                // Sukuna's Finger VIII is dropped by Finger Bearer I. Handled below.
                 { NPCID.QueenSlimeBoss, ModContent.ItemType<SukunasFingerIX>() },
                 // Sukuna's Finger X is dropped by the Twins; Handled below.
                 { NPCID.TheDestroyer, ModContent.ItemType<SukunasFingerXI>() },
@@ -105,7 +106,7 @@ namespace sorceryFight
                 { NPCID.Plantera, ModContent.ItemType<SukunasFingerXIII>() },
                 // Sukuna's Finger XIV is dropped by the Ice Queen; Handled below.
                 // Sukuna's Finger XV is dropped by the Pumpking; Handled below.
-                // Sukuna's Finger XVI is dropped by Finger Bearer II.
+                // Sukuna's Finger XVI is dropped by Finger Bearer II. Handled Below.
                 { NPCID.DukeFishron, ModContent.ItemType<SukunasFingerXVII>() },
                 { NPCID.HallowBoss, ModContent.ItemType<SukunasFingerXVIII>() },
                 { NPCID.CultistBoss, ModContent.ItemType<SukunasFingerXIX>() },
@@ -128,6 +129,12 @@ namespace sorceryFight
 
             if (expertInclusiveLootMap.TryGetValue(npc.type, out int itemID2))
                 npcLoot.Add(ItemDropRule.Common(itemID2));
+
+            if (npc.type == ModContent.NPCType<FingerBearer>())
+            {
+                npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsBloodMoonAndNotFromStatue(), ModContent.ItemType<SukunasFingerVIII>()));
+                npcLoot.Add(ItemDropRule.ByCondition(new SFConditions.SolarEclipse(), ModContent.ItemType<SukunasFingerXVI>()));
+            }
         }
 
         private void DeathPaintings(ref NPC npc, ref NPCLoot npcLoot, ref LeadingConditionRule nonExpertRule)
