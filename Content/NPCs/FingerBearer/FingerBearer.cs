@@ -130,7 +130,7 @@ namespace sorceryFight.Content.NPCs.FingerBearer
             if (Main.bloodMoon && !Main.dayTime && spawnInfo.Player.ZoneOverworldHeight && Main.hardMode)
                 return 0.03f;
 
-            if (Main.eclipse && spawnInfo.Player.ZoneOverworldHeight && Main.hardMode)
+            if (Main.eclipse && spawnInfo.Player.ZoneOverworldHeight && NPC.downedPlantBoss)
                 return 0.06f;
 
             return 0f;
