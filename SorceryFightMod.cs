@@ -137,30 +137,30 @@ namespace sorceryFight
         }
 
 
-        public override void HandlePacket(BinaryReader reader, int whoAmI) => SorceryFightNetcode.HandlePacket(this, reader, whoAmI);
+        // public override void HandlePacket(BinaryReader reader, int whoAmI) => SorceryFightNetcode.HandlePacket(this, reader, whoAmI);
 
-  //      public override void HandlePacket(BinaryReader reader, int _)
-		//{
-		//	byte messageType = reader.ReadByte();
-		//	switch (messageType)
-		//	{
-		//		case (byte)MessageType.DefeatedBoss:
-		//			HandleBossDefeatedPacket(reader);
-		//			break;
+       public override void HandlePacket(BinaryReader reader, int _)
+		{
+			byte messageType = reader.ReadByte();
+			switch (messageType)
+			{
+				case (byte)MessageType.DefeatedBoss:
+					HandleBossDefeatedPacket(reader);
+					break;
 
-		//		case (byte)MessageType.SyncDomain:
-		//			HandleDomainSyncingPacket(reader);
-		//			break;
+				case (byte)MessageType.SyncDomain:
+					HandleDomainSyncingPacket(reader);
+					break;
 
-		//		case (byte)MessageType.PlayerCastingDomain:
-		//			HandlePlayerCastingDomainPacket(reader);
-		//			break;
+				case (byte)MessageType.PlayerCastingDomain:
+					HandlePlayerCastingDomainPacket(reader);
+					break;
 
-		//		case (byte)MessageType.KilledNPC:
-		//			HandleKilledNPCPacket(reader);
-		//			break;
-		//	}
-		//}
+				case (byte)MessageType.KilledNPC:
+					HandleKilledNPCPacket(reader);
+					break;
+			}
+		}
 
 		private void HandleBossDefeatedPacket(BinaryReader reader)
 		{

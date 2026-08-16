@@ -11,7 +11,7 @@ namespace sorceryFight.Content.Buffs.Shrine
 {
     public class DomainAmplification : PassiveTechnique
     {
-        public override string InternalName => "DomainAmplificaton";
+        public override string InternalName => "DomainAmplification";
 
         public DomainAmplification()
         {

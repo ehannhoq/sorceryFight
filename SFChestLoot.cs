@@ -25,7 +25,7 @@ namespace sorceryFight
                         chest.item[0].SetDefaults(ModContent.ItemType<MeiMeiAxe>());
 
                     if (SFUtils.Roll(13))
-                        chest.item[0].SetDefaults(ModContent.ItemType<PotentialSword>());
+                        chest.item[0].SetDefaults(ModContent.ItemType<FesteringLifeBlade>());
 				}
 			}
         }
