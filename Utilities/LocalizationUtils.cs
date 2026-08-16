@@ -36,5 +36,12 @@ namespace sorceryFight
 
             return GetLocalizationValue($"Mods.sorceryFight.UnlockRequirements.{npcName}");
         }
+
+        public static void FindAndReplace(this List<TooltipLine> tooltips, string value, string newValue)
+        {
+            TooltipLine line = tooltips.FirstOrDefault(x => x.Mod == "Terraria" && x.Text.Contains(value));
+            if (line != null)
+                line.Text = line.Text.Replace(value, newValue);
+        }
     }
 }
