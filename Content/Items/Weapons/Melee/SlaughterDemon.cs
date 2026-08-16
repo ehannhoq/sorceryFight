@@ -28,12 +28,19 @@ namespace sorceryFight.Content.Items.Weapons.Melee
 
         public override void AddRecipes()
         {
-            Recipe recipe = Recipe.Create(Item.type);
-            recipe.AddIngredient(ItemID.SilverBar, 7);
-            recipe.AddIngredient(ItemID.Silk, 3);
-            recipe.AddIngredient(ModContent.ItemType<CursedFragment>(), 3);
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();
+            Recipe recipeSilver = Recipe.Create(Item.type);
+            recipeSilver.AddIngredient(ItemID.SilverBar, 7);
+            recipeSilver.AddIngredient(ItemID.Silk, 3);
+            recipeSilver.AddIngredient(ModContent.ItemType<CursedFragment>(), 3);
+            recipeSilver.AddTile(TileID.Anvils);
+            recipeSilver.Register();
+
+            Recipe recipeTungsten = Recipe.Create(Item.type);
+            recipeTungsten.AddIngredient(ItemID.TungstenBar, 7);
+            recipeTungsten.AddIngredient(ItemID.Silk, 3);
+            recipeTungsten.AddIngredient(ModContent.ItemType<CursedFragment>(), 3);
+            recipeTungsten.AddTile(TileID.Anvils);
+            recipeTungsten.Register();
         }
     }
 }
