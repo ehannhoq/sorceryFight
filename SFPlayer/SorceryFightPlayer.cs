@@ -438,15 +438,15 @@ namespace sorceryFight.SFPlayer
 
             if (Player.HasBuff<BurntTechnique>())
             {
-                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
-                Main.combatText[index].lifeTime = 180;
+                int combatIndex = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your technique is exhausted!");
+                Main.combatText[combatIndex].lifeTime = 180;
                 return;
             }
 
             if (Player.HasBuff<Exhaustion>())
             {
-                int index = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your body is exhausted!");
-                Main.combatText[index].lifeTime = 180;
+                int combatIndex = CombatText.NewText(Player.getRect(), Color.DarkRed, "Your body is exhausted!");
+                Main.combatText[combatIndex].lifeTime = 180;
                 return;
             }
 
@@ -469,8 +469,12 @@ namespace sorceryFight.SFPlayer
                 }
             }
 
-            selectedTechnique.UseTechnique(this);
-            selectedTechnique.ApplyCosts(this);
+            int index = selectedTechnique.UseTechnique(this);
+            if (index != -1)
+            {
+                CursedTechnique spawnedTechnique = Main.projectile[index].ModProjectile as CursedTechnique;
+                spawnedTechnique.ApplyCosts(this);
+            }
         }
 
 
