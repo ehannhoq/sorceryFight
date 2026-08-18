@@ -31,6 +31,13 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         // public override int MasteryDamageMultiplier => 18;
         // public override float Speed => 0f;
 
+        public StarChannel()
+        {
+            Technique.baseDamage = 10;
+            Technique.damagePerBoss = 6;
+            Technique.cost = 10;
+            Technique.speed = 0f;
+        }
 
         public override void SetStaticDefaults()
         {
@@ -61,6 +68,8 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
 
         public override void AI()
         {
+            base.AI();
+
             if (Main.myPlayer == Projectile.owner)
             {
                 Projectile.Center = Main.MouseWorld;
@@ -78,14 +87,14 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
                         SoundEngine.PlaySound(SorceryFightSounds.PachinkoBallCollision, Projectile.Center);
                         hasPlayedSound = true;
                     }
-
+                    Main.NewText("BLACKHOLE THRESHOLd: " + blackholeThreshold);
                     blackholeThreshold--;
                 }
 
 
                 if(blackholeThreshold <= 0)
                 {
-                    //Main.NewText("BLACKHOLE TRIGGERED");
+                    Main.NewText("BLACKHOLE TRIGGERED");
                     //Spawn black hole at Garuda position then kill him
 
 

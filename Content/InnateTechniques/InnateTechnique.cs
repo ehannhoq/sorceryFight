@@ -54,6 +54,8 @@ namespace sorceryFight.Content.InnateTechniques
                     return new BloodManipulationTechnique();
                 case "HeavenlyRestriction":
                     return new HeavenlyRestriction();
+                case "StarRage":
+                    return new StarRageTechnique();
             }
 
             return null;
@@ -71,6 +73,7 @@ namespace sorceryFight.Content.InnateTechniques
                     new BloodManipulationTechnique(),
                     new PrivatePureLoveTrainTechnique(),
                     new HeavenlyRestriction(),
+                    new StarRageTechnique()
                 };
             }
         }

@@ -31,6 +31,13 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         // public override float Speed => 25f;
         // public override float LifeTime => 300f;
 
+        public GarudaKick()
+        {
+            Technique.baseDamage = 10;
+            Technique.damagePerBoss = 6;
+            Technique.cost = 10;
+            Technique.speed = 25f;
+        }
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = FRAME_COUNT;

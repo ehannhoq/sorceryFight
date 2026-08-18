@@ -31,6 +31,13 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         // public override float Speed => 30f;
         // public override float LifeTime => 300f;
 
+        public GarudaWhip()
+        {
+            Technique.baseDamage = 10;
+            Technique.damagePerBoss = 6;
+            Technique.cost = 10;
+            Technique.speed = 30f;
+        }
 
         public override int UseTechnique(SorceryFightPlayer sf)
         {

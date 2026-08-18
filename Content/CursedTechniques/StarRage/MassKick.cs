@@ -32,6 +32,14 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         // public override float LifeTime => 36f;
 
 
+        public MassKick()
+        {
+            Technique.baseDamage = 10;
+            Technique.damagePerBoss = 6;
+            Technique.cost = 10;
+            Technique.speed = 0f;
+        }
+
         //this is only here to try and set velocity to zero to make the projecitle not move based on mouse position
         public override int UseTechnique(SorceryFightPlayer sf)
         {

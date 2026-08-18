@@ -23,6 +23,14 @@ namespace sorceryFight.Content.CursedTechniques.StarRage
         private const float minSpeed = 10f;
         private const float maxSpeed = 20f;
 
+        public StarRush()
+        {
+            Technique.baseDamage = 10;
+            Technique.damagePerBoss = 6;
+            Technique.cost = 10;
+            Technique.speed = minSpeed;
+        }
+
         // public override float Cost => 5f;
         // public override int Damage => 150;
         // public override int MasteryDamageMultiplier => 175;

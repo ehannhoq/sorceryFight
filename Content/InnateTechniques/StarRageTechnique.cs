@@ -35,10 +35,11 @@ namespace sorceryFight.Content.InnateTechniques
 
         public override List<CursedTechnique> CursedTechniques { get; } = new List<CursedTechnique>
         {
-            new StarChannel(),
+            new StarChannel()
+                .SetUnlock(NPCID.EyeofCthulhu),
 
             new GarudaKick()
-                .SetUnlock(NPCID.SkeletronHead),
+                .SetUnlock(NPCID.EyeofCthulhu),
 
             new GarudaWhip()
                 .SetUnlock(NPCID.SkeletronHead),
