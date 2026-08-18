@@ -29,18 +29,10 @@ namespace sorceryFight.Content.CursedTechniques.BloodManipulation
         {
             string localizationCategoryKey = "Mods.sorceryFight.Misc.CursedTechniques";
 
-            string damage = SFUtils.GetLocalization(localizationCategoryKey + ".Damage")
-                .WithFormatArgs(CalculateTrueDamage(sf)).Value;
-
-            string ceCost = SFUtils.GetLocalization(localizationCategoryKey + ".ContinuousCost")
-                .WithFormatArgs((int)base.CalculateTrueCost(sf)).Value;
-
             string bloodCost = SFUtils.GetLocalization(localizationCategoryKey + ".ContinuousBloodCost")
                 .WithFormatArgs((int)Technique.cost / 2).Value;
 
-            string stats = damage + "\n" + ceCost + "\n" + bloodCost;
-
-            return stats;
+            return base.GetStats(sf) + "\n" + bloodCost;
         }
 
         public override bool CanUse(SorceryFightPlayer sf)

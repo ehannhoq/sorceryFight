@@ -34,15 +34,15 @@ namespace sorceryFight.Content.Items.Weapons.Melee
         public override void AddRecipes()
         {
             Recipe recipeCrimtane = Recipe.Create(Item.type);
-            recipeCrimtane.AddIngredient(ItemID.CrimtaneBar, 26);
+            recipeCrimtane.AddIngredient(ItemID.CrimtaneBar, 14);
             recipeCrimtane.AddIngredient(ItemID.BlackInk, 5);
             recipeCrimtane.AddIngredient(ModContent.ItemType<CursedFragment>(), 12);
             recipeCrimtane.AddTile(TileID.Anvils);
             recipeCrimtane.Register();
 
             Recipe recipeDemonite = Recipe.Create(Item.type);
-            recipeDemonite.AddIngredient(ItemID.DemoniteBar, 26);
-            recipeCrimtane.AddIngredient(ItemID.BlackInk, 5);
+            recipeDemonite.AddIngredient(ItemID.DemoniteBar, 14);
+            recipeDemonite.AddIngredient(ItemID.BlackInk, 5);
             recipeDemonite.AddIngredient(ModContent.ItemType<CursedFragment>(), 12);
             recipeDemonite.AddTile(TileID.Anvils);
             recipeDemonite.Register();

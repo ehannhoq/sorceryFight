@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace sorceryFight.Content.NPCs.FingerBearer
@@ -13,8 +14,9 @@ namespace sorceryFight.Content.NPCs.FingerBearer
         public Vector2 furthestTargetPos;
 
         public bool readyForOrb = true;
-        private const int runawayDashCooldown = 600;
+        private int runawayDashCooldown = 600;
         public bool onRunawayDashCooldown = false;
+        public bool isSolarEclipse = false;
 
         public override void SetDefaults()
         {
@@ -31,6 +33,19 @@ namespace sorceryFight.Content.NPCs.FingerBearer
             NPC.Hitbox = new Rectangle(0, 0, NPC.width, NPC.height);
             currentState = new FingerBearerDefaultState(this);
         }
+
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (Main.eclipse)
+            {
+                isSolarEclipse = true;
+                NPC.defense *= 2;
+                NPC.damage = 180;
+                NPC.lifeMax = 5000;
+                runawayDashCooldown = 300;
+            }
+        }
+
 
         public override void AI()
         {
@@ -50,7 +65,7 @@ namespace sorceryFight.Content.NPCs.FingerBearer
                     SetState(new FingerBearerPunch(this));
             }
 
-            if (GetHealthPercentage() < 0.25)
+            if (GetHealthPercentage() < 0.25 || isSolarEclipse)
             {
                 if (GetDistanceToTarget() > FingerBearer.MINIMUM_DISTANCE_TO_PLAYER - 200 && readyForOrb)
                 {
@@ -108,6 +123,17 @@ namespace sorceryFight.Content.NPCs.FingerBearer
                 return false;
 
             return true;
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (Main.bloodMoon && !Main.dayTime && spawnInfo.Player.ZoneOverworldHeight && Main.hardMode)
+                return 0.03f;
+
+            if (Main.eclipse && spawnInfo.Player.ZoneOverworldHeight && NPC.downedPlantBoss)
+                return 0.06f;
+
+            return 0f;
         }
     }
 }

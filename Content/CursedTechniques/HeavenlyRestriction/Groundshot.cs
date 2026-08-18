@@ -14,7 +14,7 @@ namespace sorceryFight.Content.CursedTechniques.HeavenlyRestriction
 {
     public class Groundshot : CursedTechnique
     {
-        public override string InternalName => "GroundShot";
+        public override string InternalName => "Groundshot";
 
         private static Texture2D texture;
         ref float tick => ref Projectile.ai[0];

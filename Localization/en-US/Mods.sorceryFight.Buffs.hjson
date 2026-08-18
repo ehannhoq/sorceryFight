@@ -117,14 +117,9 @@ FlowState: {
 		'''
 }
 
-KingOfCursesBuff: {
-	DisplayName: King Of Curses Mode
-	Description: Give me your body, kid.
-}
-
 KingOfCurses: {
 	DisplayName: King Of Curses
-	Description: Mods.sorceryFight.Buffs.KingOfCurses.Description
+	Description: Give me your body, kid.
 }
 
 BrainDamage: {

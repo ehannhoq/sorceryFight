@@ -95,9 +95,9 @@ namespace sorceryFight.Content.Items.Weapons.Melee
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            // tooltips.FindAndReplace("[BOSSES]", Main.LocalPlayer.SorceryFight().numberBossesDefeated.ToString());
-            // tooltips.FindAndReplace("[DAMAGE]", addedDamage.ToString());
-            // tooltips.FindAndReplace("[CRIT]", addedCrit.ToString());
+            tooltips.FindAndReplace("[BOSSES]", Main.LocalPlayer.SorceryFight().numberBossesDefeated.ToString());
+            tooltips.FindAndReplace("[DAMAGE]", addedDamage.ToString());
+            tooltips.FindAndReplace("[CRIT]", addedCrit.ToString());
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
