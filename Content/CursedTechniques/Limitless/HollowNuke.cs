@@ -28,7 +28,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     {
                         if (proj2.type != ModContent.ProjectileType<MaximumOutputRed>() || proj.whoAmI == proj2.whoAmI) continue;
 
-                        if (!IsValidCollision(proj, proj2, 0.99f)) continue;
+                        if (!IsValidCollision(proj, proj2, 0.90f)) continue;
 
                         maxRed = proj2;
                         validHollowNuke = true;
@@ -38,7 +38,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
             if (maxRed != null && maxBlue != null)
             {
-                if (!IsValidCollision(maxBlue, maxRed, 0.99f))
+                if (!IsValidCollision(maxBlue, maxRed, 0.90f))
                 {
                     maxBlue = null;
                     maxRed = null;
@@ -64,7 +64,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     float velocity = maxRed.velocity.Length();
                     float incrementOpacity = velocity / travelDistance;
 
-                    if (distance > 50f)
+                    if (distance > 80f)
                     {
                         opacity += incrementOpacity;
                         opacity = Math.Clamp(opacity, 0f, 1f);
@@ -85,7 +85,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
                     }
                 }
 
-                if (distance <= 50f)
+                if (maxBlue.Hitbox.Intersects(maxRed.Hitbox))
                 {
                     Vector2 center = maxBlue.Center + (maxBlue.Center.DirectionTo(maxRed.Center) * (distance / 2f));
 
@@ -152,14 +152,14 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
 
                 if (!ModContent.GetInstance<ServerConfig>().HollowNukeDamagesFriendlyNPCs && npc.friendly) continue;
 
-                Main.player[owner].ApplyDamageToNPC(npc, 100000, 0f, 1, false, CursedTechniqueDamageClass.Instance, false);
+                Main.player[owner].ApplyDamageToNPC(npc, 50000, 0f, 1, false, CursedTechniqueDamageClass.Instance, false);
             }
 
             foreach (Player player in Main.ActivePlayers)
             {
                 if (Vector2.Distance(player.Center, center) > minDist) continue;
 
-                player.statLife = (int)((float)player.statLifeMax2 * 0.10f);
+                player.statLife = (int)((float)player.statLifeMax2 * 0.07f);
             }
 
             if (!Main.dedServ && Filters.Scene["SF:MaximumRed"].IsActive())
