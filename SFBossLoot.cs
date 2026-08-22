@@ -57,7 +57,7 @@ namespace sorceryFight
         // Non-Expert only
         private void CursedModifiers(ref NPC npc, ref NPCLoot npcLoot, ref LeadingConditionRule nonExpertRule)
         {
-            LeadingConditionRule firstTimeRule = new LeadingConditionRule(new SFConditions.FirstTimeDefeatingBoss());
+            LeadingConditionRule firstTimeRule = new LeadingConditionRule(new SFDropConditions.FirstTimeDefeatingBoss());
             nonExpertRule.Add(firstTimeRule);
 
             Dictionary<int, int> npcLootMap = new()
@@ -83,7 +83,7 @@ namespace sorceryFight
         // Non-Expert only
         private void SukunasFingers(ref NPC npc, ref NPCLoot npcLoot, ref LeadingConditionRule nonExpertRule)
         {
-            LeadingConditionRule firstTimeRule = new LeadingConditionRule(new SFConditions.FirstTimeDefeatingBoss());
+            LeadingConditionRule firstTimeRule = new LeadingConditionRule(new SFDropConditions.FirstTimeDefeatingBoss());
             nonExpertRule.Add(firstTimeRule);
 
             Dictionary<int, int> npcLootMap = new()
@@ -133,13 +133,13 @@ namespace sorceryFight
             if (npc.type == ModContent.NPCType<FingerBearer>())
             {
                 npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsBloodMoonAndNotFromStatue(), ModContent.ItemType<SukunasFingerVIII>()));
-                npcLoot.Add(ItemDropRule.ByCondition(new SFConditions.SolarEclipse(), ModContent.ItemType<SukunasFingerXVI>()));
+                npcLoot.Add(ItemDropRule.ByCondition(new SFDropConditions.SolarEclipse(), ModContent.ItemType<SukunasFingerXVI>()));
             }
         }
 
         private void DeathPaintings(ref NPC npc, ref NPCLoot npcLoot, ref LeadingConditionRule nonExpertRule)
         {
-            LeadingConditionRule firstTimeRule = new LeadingConditionRule(new SFConditions.FirstTimeDefeatingBoss());
+            LeadingConditionRule firstTimeRule = new LeadingConditionRule(new SFDropConditions.FirstTimeDefeatingBoss());
             nonExpertRule.Add(firstTimeRule);
 
             Dictionary<int, int> npcLootMap = new()

@@ -19,7 +19,7 @@ namespace sorceryFight
 
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
         {
-            LeadingConditionRule firstTimeRule = new LeadingConditionRule(new SFConditions.FirstTimeDefeatingBoss());
+            LeadingConditionRule firstTimeRule = new LeadingConditionRule(new SFDropConditions.FirstTimeDefeatingBoss());
             itemLoot.Add(firstTimeRule);
 
             CursedModifiers(ref item, ref firstTimeRule);
