@@ -41,6 +41,7 @@ namespace sorceryFight.Content.NPCs.FingerBearer
                 isSolarEclipse = true;
                 NPC.defense *= 2;
                 NPC.damage = 180;
+                NPC.life = 5000;
                 NPC.lifeMax = 5000;
                 runawayDashCooldown = 300;
             }
@@ -86,6 +87,8 @@ namespace sorceryFight.Content.NPCs.FingerBearer
 
         private void CalculateTargetPosition()
         {
+            if (NPC.target < 0) return;
+            
             Vector2 targetPosCenter = GetTarget().Center - new Vector2(0.0f, Math.Abs(GetTarget().height - NPC.height) / 2f);
 
             float heightDifference = Math.Abs(NPC.height - GetTarget().height);
@@ -134,6 +137,14 @@ namespace sorceryFight.Content.NPCs.FingerBearer
                 return 0.06f;
 
             return 0f;
+        }
+
+        public override void OnKill()
+        {
+            if (!isSolarEclipse)
+                SorceryFightDownedBossSystem.downedFingerBearerI = true;
+            else
+                SorceryFightDownedBossSystem.downedFingerBearerII = true;
         }
     }
 }
