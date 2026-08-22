@@ -22,7 +22,7 @@ namespace sorceryFight
 {
     public class SFBossLoot : GlobalNPC
     {
-        public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.boss;
+        public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.boss || entity.type == NPCID.IceQueen || entity.type == NPCID.Pumpking;
 
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
