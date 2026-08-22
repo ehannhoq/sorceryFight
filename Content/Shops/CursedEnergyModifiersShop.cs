@@ -17,9 +17,6 @@ namespace sorceryFight.Content.Shops
             AddItem(ModContent.ItemType<CursedBulb>(), Item.buyPrice(gold: 15), Condition.DownedPlantera);
             AddItem(ModContent.ItemType<CursedRock>(), Item.buyPrice(gold: 23), Condition.DownedGolem);
             AddItem(ModContent.ItemType<CursedPhantasmalEye>(), Item.buyPrice(gold: 29), Condition.DownedMoonLord);
-            // AddItem(ModContent.ItemType<CursedEffulgentFeather>(), Item.buyPrice(gold: 35), downedDragonfolly);
-            // AddItem(ModContent.ItemType<CursedProfanedShards>(), Item.buyPrice(gold: 42), downedProvidence);
-            // AddItem(ModContent.ItemType<CursedRuneOfKos>(), Item.buyPrice(gold: 50), downedCeaselessVoid);
         }
     }
 }
