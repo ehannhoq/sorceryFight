@@ -229,10 +229,32 @@ namespace sorceryFight.Content.UI.Shop
             DrawItemIconsRecursive(this, spriteBatch);
         }
 
+        private Rectangle GetClippingRectangleRecursive(UIElement element, SpriteBatch spriteBatch)
+        {
+            Rectangle clip = Main.graphics.GraphicsDevice.Viewport.Bounds;
+
+            UIElement current = element;
+            while (current != null)
+            {
+                if (current.OverflowHidden)
+                    clip = Rectangle.Intersect(clip, current.GetClippingRectangle(spriteBatch));
+
+                current = current.Parent;
+            }
+
+            return clip;
+        }
+
         private void DrawItemIconsRecursive(UIElement element, SpriteBatch spriteBatch)
         {
             if (element is UIItemIcon icon)
-                icon.DrawIcon(spriteBatch);
+            {
+                Rectangle iconBounds = icon.GetDimensions().ToRectangle();
+                Rectangle clip = GetClippingRectangleRecursive(icon, spriteBatch);
+
+                if (clip.Intersects(iconBounds))
+                    icon.DrawIcon(spriteBatch);
+            }
 
             foreach (UIElement child in element.Children)
                 DrawItemIconsRecursive(child, spriteBatch);
