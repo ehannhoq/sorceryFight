@@ -51,6 +51,7 @@ namespace sorceryFight.Content.CursedTechniques.Limitless
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
             Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
             collisionVFX = null;
             glareIndex = 0;
         }
